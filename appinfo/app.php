@@ -1,5 +1,4 @@
 <?php
-// $l=new OC_L10N('Notes');
 $l=OC_L10N::get('notes');
 
 OCP\App::addNavigationEntry( array(

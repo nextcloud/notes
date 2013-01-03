@@ -2,7 +2,7 @@
 /**************************************************
  * ownCloud - Notes Plugin                        *
  *                                                *
- * (c) Copyright 2012 by George Ruinell           *
+ * (c) Copyright 2012 - 2013 by George Ruinelli   *
  * This file is licensed under the GPL2           *
  *************************************************/
 
