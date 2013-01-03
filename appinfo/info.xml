@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<info>
+	<id>notes</id>
+	<name>Notes</name>
+	<version>0.5.2</version>
+	<licence>GPL</licence>
+	<author>George Ruinelli</author>
+	<require>4.5</require>
+	<shipped>true</shipped>
+	<description>A simple Notes viewer and editor</description>
+</info>
