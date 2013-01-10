@@ -1,0 +1,16 @@
+0.5.3 (10.01.2013):
+ - Updated Italian and added Hungarian translation
+
+0.5.2 (03.01.2013):
+- Fixed issue on iPad
+- Added French and Italian translation
+- Moved delete button into preview window
+- Removed empty left column
+
+0.5.1 (20.12.2012):
+- Bug fixes
+- Check for invalid titles
+- Added language support (feel free to translate it and send me the file)
+- Splitted into Preview and Edit mode
+- Preview shows MarkDown correctly
+- Extended Help
