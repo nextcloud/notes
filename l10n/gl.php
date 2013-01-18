@@ -1,11 +1,26 @@
 <?php $TRANSLATIONS = array(
+"Notes" => "Notas",
+"Back to Notes" => "Voltar a notas",
 "Help" => "Axuda",
+"Categories" => "Categorías",
 "Delete" => "Eliminar",
 "Save" => "Gardar",
+"No categories available yet" => "Sen categorías polo de agora",
+"New category" => "Nova categoría",
 "Add" => "Engadir",
 "Note" => "Nota",
+"If you delete a category, all containing notes get moved to the following category" => "Se borra unha categoría, todas as notas irán parar a seguinte categoría",
 "General" => "Xeral",
+"Add Note" => "Engadir unha nota",
+"Edit Categories" => "Editar categorías",
+"No note available in this category" => "Sen notas nesta categoría",
 "Edit" => "Editar",
 "Category" => "Categoría",
-"Title" => "Título"
+"Title" => "Título",
+"Content" => "Contido",
+"Restore content" => "Restablecer contido",
+"Restore" => "Restablecer",
+"The title can not be empty" => "O título non pode quedar baldeiro",
+"Invalid title" => "Título non válido",
+"The following characters are not allowed" => "Os seguintes caracteres non están permitidos"
 );

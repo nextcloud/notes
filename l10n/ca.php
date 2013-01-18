@@ -1,11 +1,26 @@
 <?php $TRANSLATIONS = array(
+"Notes" => "Anotacions",
+"Back to Notes" => "Torna a anotacions",
 "Help" => "Ajuda",
+"Categories" => "Categories",
 "Delete" => "Esborra",
 "Save" => "Desa",
+"No categories available yet" => "Encara no hi ha categories disponibles",
+"New category" => "Nova categoria",
 "Add" => "Afegeix",
 "Note" => "Nota",
+"If you delete a category, all containing notes get moved to the following category" => "Si esborreu una categoria, totes les anotacions que conté es mouràn a la categoria següent",
 "General" => "General",
+"Add Note" => "Afegeix anotació",
+"Edit Categories" => "Edita categories",
+"No note available in this category" => "No hia ha anotacions disponibles en aquesta categoria",
 "Edit" => "Edita",
 "Category" => "Categoria",
-"Title" => "Títol"
+"Title" => "Títol",
+"Content" => "Contingut",
+"Restore content" => "Recupera el contingut",
+"Restore" => "Recupera",
+"The title can not be empty" => "El títol no pot ser buit",
+"Invalid title" => "Títol no vàlid",
+"The following characters are not allowed" => "Els caràcters següents no són permesos"
 );
