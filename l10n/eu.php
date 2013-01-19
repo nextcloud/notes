@@ -1,11 +1,26 @@
 <?php $TRANSLATIONS = array(
+"Notes" => "Oharrak",
+"Back to Notes" => "Itzuli Oharretara",
 "Help" => "Laguntza",
+"Categories" => "Kategoriak",
 "Delete" => "Ezabatu",
 "Save" => "Gorde",
+"No categories available yet" => "Oraindik ez dago kategoriarik",
+"New category" => "Kategoria berria",
 "Add" => "Gehitu",
 "Note" => "Oharra",
+"If you delete a category, all containing notes get moved to the following category" => "Kategoria bat ezabatzen baduzu, dituen ohar guztiak hurrengo kategoriara mugituko dira",
 "General" => "Orokorra",
+"Add Note" => "Gehitu oharra",
+"Edit Categories" => "Editatu kategoriak",
+"No note available in this category" => "Ez dago oharrik kategoria honetan",
 "Edit" => "Editatu",
 "Category" => "Kategoria",
-"Title" => "Izenburua"
+"Title" => "Izenburua",
+"Content" => "Edukia",
+"Restore content" => "Berrezarri edukia",
+"Restore" => "Berrezarri",
+"The title can not be empty" => "Izenburua ezin da hutsik egon",
+"Invalid title" => "Izenburu ez egokia",
+"The following characters are not allowed" => "Hurrengo karaktereak ez dira onartzen"
 );
