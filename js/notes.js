@@ -33,5 +33,9 @@ $(document).ready(function () {
 			window.open(url, "_self");
 		}
 	};
+
+	$('#notes_cat_select').on('change', function(){
+		window.open('?app=notes&category='+this.options[this.selectedIndex].value, '_self');
+	})
 });
 

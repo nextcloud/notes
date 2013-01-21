@@ -57,7 +57,7 @@
 <div style="float:left;">
 <form action="?app=notes" method="get" target="_self">
 	<input type="hidden" name="app" value="notes">
-	<select name="category" size="1" style="width: 150px" onchange="window.open('?app=notes&category='+this.options[this.selectedIndex].value, '_self');">
+	<select name="category" size="1" style="width: 150px" id="notes_cat_select">
 <option value='General'><?php echo $l->t('General'); ?></option>
 <?php
   foreach( $arr_rootfilelist as $i ) {
