@@ -1,5 +1,6 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Notatki",
+"Back to Notes" => "Wróć do notesu",
 "Help" => "Pomoc",
 "Categories" => "Kategorie",
 "Delete" => "Usuń",
@@ -9,6 +10,7 @@
 "Add" => "Dodaj",
 "Note" => "Uwaga",
 "General" => "Ogólne",
+"Add Note" => "Dodać notatkę",
 "Edit Categories" => "Edutuj kategorie",
 "Edit" => "Edytuj",
 "Category" => "Kategoria",
