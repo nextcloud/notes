@@ -2,7 +2,7 @@
 <info>
 	<id>notes</id>
 	<name>Notes</name>
-	<version>0.5.3</version>
+	<version>0.5.4</version>
 	<licence>GPL</licence>
 	<author>George Ruinelli</author>
 	<require>4.5</require>
