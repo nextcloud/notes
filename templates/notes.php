@@ -175,7 +175,9 @@ if($show_Warnings == true){
 	  $version = $_POST['version']; 
 // 	  print "check if File is versioned: "  . $root . "/" . $old_category . '/' . $file . ", Version: " . $version;
 
-	  if( OCA_Versions\Storage::isversioned($root . "/" . $old_category . '/' . $file ) ) {
+// 	  if( OCA_Versions\Storage::isversioned($root . "/" . $old_category . '/' . $file ) ) {
+        $count = 999; //show the newest revisions
+        if( ($versions = OCA_Versions\Storage::getVersions( $root . "/" . $old_category . '/' . $file, $count)) ){
 // 	      print "File is versioned: "  . $root . "/" . $old_category . '/' . $file . ", Version: " . $version;
 	      $versions = new OCA_Versions\Storage();
 	      $ret = $versions->rollback("/" . $root . "/" . $old_category . '/' . $file, (int)$version );
@@ -335,7 +337,7 @@ if($show_Warnings == true){
 	    <button type="submit" name="edit" value="true" ><?php echo $l->t('Edit'); ?></button>
 	</form>
 </div>
-<div>
+<div style="float:left;">
 	<form action="?app=notes" method="post" target="_self">
 	    <input type="hidden" name="app" value="notes">
 	    <input type="hidden" name="post" value="true">
@@ -345,6 +347,7 @@ if($show_Warnings == true){
 	    <button type="submit" name="delete" value="true" ><?php echo $l->t('Delete'); ?></button>
 	</form>
 </div>
+<br><br>
 <div style="float:none;">
 <?php
 	echo "$html<br><br>";
@@ -397,7 +400,9 @@ else{ //versions enabled
   $source = $root . "/" . $category . "/" . $file;
 //   print "Source: $source";
 
-if( OCA_Versions\Storage::isversioned( $source ) ) {
+// if( OCA_Versions\Storage::isversioned( $source ) ) {
+$count = 999; //show the newest revisions
+if( ($versions = OCA_Versions\Storage::getVersions( $source, $count)) ){
 
 	$count=50; //show the newest revisions
 	$versions = OCA_Versions\Storage::getVersions( $source, $count);
