@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Anotacions",
+"The title can not be empty" => "El títol no pot ser buit",
+"Invalid title" => "Títol no vàlid",
+"The following characters are not allowed" => "Els caràcters següents no són permesos",
 "Back to Notes" => "Torna a anotacions",
 "Help" => "Ajuda",
 "Categories" => "Categories",
@@ -19,8 +22,5 @@
 "Title" => "Títol",
 "Content" => "Contingut",
 "Restore content" => "Recupera el contingut",
-"Restore" => "Recupera",
-"The title can not be empty" => "El títol no pot ser buit",
-"Invalid title" => "Títol no vàlid",
-"The following characters are not allowed" => "Els caràcters següents no són permesos"
+"Restore" => "Recupera"
 );

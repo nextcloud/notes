@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Poznámky",
+"The title can not be empty" => "Názov nemôže byť prázdny",
+"Invalid title" => "Nesprávny názov",
+"The following characters are not allowed" => "Nasledovné znaky nie sú povolené",
 "Back to Notes" => "Návrat do poznámok",
 "Help" => "Pomoc",
 "Categories" => "Kategórie",
@@ -19,8 +22,5 @@
 "Title" => "Nadpis",
 "Content" => "Obsah",
 "Restore content" => "Obnovenie obsahu",
-"Restore" => "Obnoviť",
-"The title can not be empty" => "Názov nemôže byť prázdny",
-"Invalid title" => "Nesprávny názov",
-"The following characters are not allowed" => "Nasledovné znaky nie sú povolené"
+"Restore" => "Obnoviť"
 );

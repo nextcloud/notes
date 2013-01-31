@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Muistiot",
+"The title can not be empty" => "Otsikko ei voi olla tyhjä",
+"Invalid title" => "Virheellinen otsikko",
+"The following characters are not allowed" => "Seuraavat merkit eivät ole sallittuja",
 "Back to Notes" => "Takaisin muistioihin",
 "Help" => "Ohje",
 "Categories" => "Luokat",
@@ -19,8 +22,5 @@
 "Title" => "Otsikko",
 "Content" => "Sisältö",
 "Restore content" => "Palauta sisältö",
-"Restore" => "Palauta",
-"The title can not be empty" => "Otsikko ei voi olla tyhjä",
-"Invalid title" => "Virheellinen otsikko",
-"The following characters are not allowed" => "Seuraavat merkit eivät ole sallittuja"
+"Restore" => "Palauta"
 );

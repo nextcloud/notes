@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Σημειώσεις",
+"The title can not be empty" => "Ο τίτλος δεν μπορεί να είναι κενός",
+"Invalid title" => "Μη έγκυρος τίτλος",
+"The following characters are not allowed" => "Δεν επιτρέπονται οι παρακάτω χαρακτήρες",
 "Back to Notes" => "Πίσω στις Σημειώσεις",
 "Help" => "Βοήθεια",
 "Categories" => "Κατηγορίες",
@@ -19,8 +22,5 @@
 "Title" => "Τίτλος",
 "Content" => "Περιεχόμενο",
 "Restore content" => "Επαναφορά περιεχομένου",
-"Restore" => "Επαναφορά",
-"The title can not be empty" => "Ο τίτλος δεν μπορεί να είναι κενός",
-"Invalid title" => "Μη έγκυρος τίτλος",
-"The following characters are not allowed" => "Δεν επιτρέπονται οι παρακάτω χαρακτήρες"
+"Restore" => "Επαναφορά"
 );

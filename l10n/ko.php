@@ -1,11 +1,26 @@
 <?php $TRANSLATIONS = array(
+"Notes" => "메모",
+"The title can not be empty" => "제목을 입력해야 합니다",
+"Invalid title" => "잘못된 제목",
+"The following characters are not allowed" => "다음 문자를 사용할 수 없습니다",
+"Back to Notes" => "메모로 돌아가기",
 "Help" => "도움말",
+"Categories" => "분류",
 "Delete" => "삭제",
 "Save" => "저장",
+"No categories available yet" => "사용 가능한 분류가 없음",
+"New category" => "새 분류",
 "Add" => "추가",
 "Note" => "메모",
+"If you delete a category, all containing notes get moved to the following category" => "분류를 삭제하면 분류에 포함된 모든 메모가 다음으로 이동됩니다",
 "General" => "일반",
+"Add Note" => "메모 추가",
+"Edit Categories" => "분류 편집",
+"No note available in this category" => "이 분류에 메모 없음",
 "Edit" => "편집",
 "Category" => "분류",
-"Title" => "직위"
+"Title" => "제목",
+"Content" => "내용",
+"Restore content" => "내용 복원",
+"Restore" => "복원"
 );

@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Note",
+"The title can not be empty" => "Il titolo non può essere vuoto",
+"Invalid title" => "Titolo non valido",
+"The following characters are not allowed" => "I seguenti caratteri non sono consentiti",
 "Back to Notes" => "Torna a Note",
 "Help" => "Aiuto",
 "Categories" => "Categorie",
@@ -19,8 +22,5 @@
 "Title" => "Titolo",
 "Content" => "Contenuto",
 "Restore content" => "Ripristina contenuto",
-"Restore" => "Ripristina",
-"The title can not be empty" => "Il titolo non può essere vuoto",
-"Invalid title" => "Titolo non valido",
-"The following characters are not allowed" => "I seguenti caratteri non sono consentiti"
+"Restore" => "Ripristina"
 );

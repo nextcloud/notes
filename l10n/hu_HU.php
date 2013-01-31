@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Jegyzetek",
+"The title can not be empty" => "A cím nem maradhat kitöltetlenül",
+"Invalid title" => "Érvénytelen cím",
+"The following characters are not allowed" => "A következő karaktereket nem szabad használni",
 "Back to Notes" => "Vissza a Jegyzetekhez",
 "Help" => "Súgó",
 "Categories" => "Kategóriák",
@@ -19,8 +22,5 @@
 "Title" => "Cím",
 "Content" => "Tartalom",
 "Restore content" => "Visszaállítás egy másik változatra",
-"Restore" => "Visszaállítás",
-"The title can not be empty" => "A cím nem maradhat kitöltetlenül",
-"Invalid title" => "Érvénytelen cím",
-"The following characters are not allowed" => "A következő karaktereket nem szabad használni"
+"Restore" => "Visszaállítás"
 );

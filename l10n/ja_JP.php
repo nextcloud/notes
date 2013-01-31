@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "ノート",
+"The title can not be empty" => "タイトルは空にできません",
+"Invalid title" => "無効なタイトル",
+"The following characters are not allowed" => "以下の文字は利用できません",
 "Back to Notes" => "ノートに戻る",
 "Help" => "ヘルプ",
 "Categories" => "カテゴリ",
@@ -19,8 +22,5 @@
 "Title" => "タイトル",
 "Content" => "内容",
 "Restore content" => "内容を復元",
-"Restore" => "復元",
-"The title can not be empty" => "タイトルは空にできません",
-"Invalid title" => "無効なタイトル",
-"The following characters are not allowed" => "以下の文字は利用できません"
+"Restore" => "復元"
 );

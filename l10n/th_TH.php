@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "บันทึกย่อ",
+"The title can not be empty" => "หัวเรื่องไม่สามารถเว้นว่างได้",
+"Invalid title" => "หัวเรื่องไม่ถูกต้อง",
+"The following characters are not allowed" => "ตัวอักษรต่อไปนี้ไม่อนุญาตให้ใช้งานได้",
 "Back to Notes" => "กลับไปที่บันทึกย่อ",
 "Help" => "ช่วยเหลือ",
 "Categories" => "หมวดหมู่",
@@ -19,8 +22,5 @@
 "Title" => "ชื่อ",
 "Content" => "เนื้อหา",
 "Restore content" => "คืนค่าเนื้อหา",
-"Restore" => "คืนค่า",
-"The title can not be empty" => "หัวเรื่องไม่สามารถเว้นว่างได้",
-"Invalid title" => "หัวเรื่องไม่ถูกต้อง",
-"The following characters are not allowed" => "ตัวอักษรต่อไปนี้ไม่อนุญาตให้ใช้งานได้"
+"Restore" => "คืนค่า"
 );

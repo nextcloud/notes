@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Oharrak",
+"The title can not be empty" => "Izenburua ezin da hutsik egon",
+"Invalid title" => "Izenburu ez egokia",
+"The following characters are not allowed" => "Hurrengo karaktereak ez dira onartzen",
 "Back to Notes" => "Itzuli Oharretara",
 "Help" => "Laguntza",
 "Categories" => "Kategoriak",
@@ -19,8 +22,5 @@
 "Title" => "Izenburua",
 "Content" => "Edukia",
 "Restore content" => "Berrezarri edukia",
-"Restore" => "Berrezarri",
-"The title can not be empty" => "Izenburua ezin da hutsik egon",
-"Invalid title" => "Izenburu ez egokia",
-"The following characters are not allowed" => "Hurrengo karaktereak ez dira onartzen"
+"Restore" => "Berrezarri"
 );

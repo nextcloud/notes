@@ -1,5 +1,8 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Anteckningar",
+"The title can not be empty" => "Titel kan inte vara tom",
+"Invalid title" => "Felaktig titel",
+"The following characters are not allowed" => "Följande tecken är inte tillåtna",
 "Back to Notes" => "Tillbaka till Anteckningar",
 "Help" => "Hjälp",
 "Categories" => "Kategorier",
@@ -19,8 +22,5 @@
 "Title" => "Titel",
 "Content" => "Innehåll",
 "Restore content" => "Återskapa innehåll",
-"Restore" => "Återskapa",
-"The title can not be empty" => "Titel kan inte vara tom",
-"Invalid title" => "Felaktig titel",
-"The following characters are not allowed" => "Följande tecken är inte tillåtna"
+"Restore" => "Återskapa"
 );

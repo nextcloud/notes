@@ -16,6 +16,7 @@
 "General" => "Общие",
 "Add Note" => "Добавить заметку",
 "Edit Categories" => "Редактировать категории",
+"No note available in this category" => "Нет доступных заметок в этой категории",
 "Edit" => "Редактировать",
 "Category" => "Категория",
 "Title" => "Название",
