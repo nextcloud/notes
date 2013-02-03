@@ -4,5 +4,6 @@
 "Save" => "Saglabāt",
 "Edit" => "Rediģēt",
 "Category" => "Kategorija",
-"Title" => "Nosaukums"
+"Title" => "Nosaukums",
+"Restore" => "Atjaunot"
 );
