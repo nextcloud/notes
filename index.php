@@ -1,31 +1,24 @@
 <?php
-/**************************************************
- * ownCloud - Notes Plugin                        *
- *                                                *
- * (c) Copyright 2012 - 2013 by George Ruinelli   *
- * This file is licensed under the GPL2           *
- *************************************************/
+/**
+ * Copyright (c) 2013 Robin Appelman <icewind@owncloud.com>
+ * This file is licensed under the Affero General Public License version 3 or
+ * later.
+ * See the COPYING-README file.
+ */
 
-OCP\User::checkLoggedIn();
-OCP\App::checkAppEnabled('notes');
-OCP\Util::addStyle('notes', 'notes');
+namespace OCA\Notes;
 
-OCP\App::setActiveNavigationEntry('notes_index');
+\OCP\User::checkLoggedIn();
+\OCP\App::checkAppEnabled('notes');
+\OCP\Util::addStyle('notes', 'notes');
+\OCP\Util::addscript('notes', 'notes');
 
-if(isset($_GET['page'])){
-  $page = $_GET['page'];
-}
-else{
-  $page = ""; //show main page
-}
+\OCP\App::setActiveNavigationEntry('notes_index');
 
-if($page == "Help"){
-    $output = new OCP\Template('notes', 'help', 'user');
-}
-else if($page == "Edit Categories"){
-    $output = new OCP\Template('notes', 'categories', 'user');
-}
-else{
-    $output = new OCP\Template('notes', 'notes', 'user');
-}
-$output -> printPage();
+$categories = new Categories(\OCP\User::getUser());
+$notes = new Notes(\OCP\User::getUser());
+
+$tmpl = new \OCP\Template('notes', 'notes', 'user');
+$tmpl->assign('categories', $categories->listCategories());
+$tmpl->assign('notes', $notes->getTitles(''));
+$tmpl->printPage();

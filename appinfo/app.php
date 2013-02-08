@@ -1,6 +1,9 @@
 <?php
 $l=OC_L10N::get('notes');
 
+OC::$CLASSPATH['OCA\Notes\Notes'] = 'notes/lib/notes.php';
+OC::$CLASSPATH['OCA\Notes\Categories'] = 'notes/lib/categories.php';
+
 OCP\App::addNavigationEntry( array(
   'id' => 'notes_index',
   'order' => 11,
@@ -8,4 +11,3 @@ OCP\App::addNavigationEntry( array(
   'icon' => OCP\Util::imagePath( 'notes', 'icon.png' ),
   'name' => $l->t('Notes'))
 );
- 
