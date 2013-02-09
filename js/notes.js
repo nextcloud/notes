@@ -111,6 +111,7 @@ Notes.rename = function (old, newName) {
 	left.children().first().after(li);
 	if (Notes.active == old) {
 		Notes.active = newName;
+		location.hash = newName;
 	}
 };
 
