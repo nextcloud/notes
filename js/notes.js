@@ -6,9 +6,7 @@ $(document).ready(function () {
 		var li = $(this).parent();
 		$('#leftcontent').find('li').removeClass('active');
 		Notes.save.current();
-		console.log('click');
 		if (li.data('new')) {
-			console.log('new');
 			Notes.active = '';
 			textArea.val('');
 		} else {
@@ -101,7 +99,9 @@ Notes.onType = function () {
 };
 
 Notes.setTitle = function (title) {
-	document.title = title + ' | ownCloud(' + OC.currentUser + ')';
+	if (title) {
+		document.title = title + ' | ownCloud(' + OC.currentUser + ')';
+	}
 };
 
 Notes.rename = function (old, newName) {
@@ -109,6 +109,9 @@ Notes.rename = function (old, newName) {
 	li.attr('data-note', newName);
 	li.children('a').attr('href', '#' + newName);
 	left.children().first().after(li);
+	if (Notes.active == old) {
+		Notes.active = newName;
+	}
 };
 
 Notes.remove = function (old) {
