@@ -15,7 +15,6 @@ $notes = new \OCA\Notes\Notes(\OCP\User::getUser());
 $category = $_POST['category'];
 $old = $_POST['oldname'];
 $content = $_POST['content'];
-$content = trim($content);
 
 $new = \OCA\Notes\Notes::createFileName($content);
 
