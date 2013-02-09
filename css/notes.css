@@ -21,12 +21,19 @@
 }
 
 #rightcontent textarea {
-	width: 90%;
-	height: 80%;
+	display: block;
+	height: 100%;
+	width: 100%;
 	font-size: 18px;
 	line-height: 150%;
 	border: 0;
 	background: none;
 	box-shadow: none;
 	resize: none;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 30px;
+	padding-bottom: 100px;
+	padding-right: 20%;
 }
