@@ -1,7 +1,9 @@
 #leftcontent a {
-	width: 100%;
+	width: 94%;
 	padding: 8px;
 	padding-left: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #leftcontent li {
