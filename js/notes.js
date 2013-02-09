@@ -101,10 +101,7 @@ Notes.onType = function () {
 };
 
 Notes.setTitle = function (title) {
-	var titleParts = document.title.split(' | ');
-	titleParts.shift();
-	titleParts.unshift(title);
-	document.title = titleParts.join(' | ');
+	document.title = title + ' | ownCloud(' + OC.currentUser + ')';
 };
 
 Notes.rename = function (old, newName) {
