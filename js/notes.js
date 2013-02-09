@@ -10,7 +10,8 @@ $(document).ready(function () {
 			Notes.active = '';
 			textArea.val('');
 		} else {
-			var note = li.data('note');
+			var note = li.attr('data-note');
+			console.log(note);
 			Notes.active = note;
 			Notes.loadNote(note);
 		}
