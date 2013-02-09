@@ -1,7 +1,9 @@
 #leftcontent a {
-	width: 100%;
+	width: 94%;
 	padding: 8px;
 	padding-left: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #leftcontent li {
@@ -10,6 +12,15 @@
 
 #leftcontent li.active {
 	font-weight: bold;
+}
+
+#leftcontent #note-add span {
+	display: none;
+	font-weight: bold;
+	padding-left: 2px;
+}
+#leftcontent #note-add:hover span, #leftcontent #note-add:focus span {
+	display: inline;
 }
 
 #rightcontent {
