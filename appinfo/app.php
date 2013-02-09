@@ -8,6 +8,6 @@ OCP\App::addNavigationEntry( array(
   'id' => 'notes_index',
   'order' => 11,
   'href' => OCP\Util::linkTo( 'notes', 'index.php' ),
-  'icon' => OCP\Util::imagePath( 'notes', 'icon.png' ),
+  'icon' => OCP\Util::imagePath( 'notes', 'notes.svg' ),
   'name' => $l->t('Notes'))
 );
