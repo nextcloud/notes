@@ -151,6 +151,6 @@ class Notes {
 
 	public static function createFileName($content) {
 		list($title,) = explode("\n", $content);
-		return preg_replace("/[^A-Za-z0-9 ]/", '_', $title) . '.txt';
+		return preg_replace("/[^A-Za-z0-9 ]/", '-', $title) . '.txt';
 	}
 }
