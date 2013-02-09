@@ -143,14 +143,14 @@ class Notes {
 		$titles = array();
 		foreach ($notes as $note => $mtime) {
 			$content = $this->getSource($category, $note);
-			list($title,) = explode("\n", $content);
+			list($title,) = explode("\n", trim($content));
 			$titles[$note] = $title;
 		}
 		return $titles;
 	}
 
 	public static function createFileName($content) {
-		list($title,) = explode("\n", $content);
+		list($title,) = explode("\n", trim($content));
 		$title = substr($title, 0, 40);
 		return preg_replace("/[^A-Za-z0-9 ]/", '-', $title) . '.txt';
 	}

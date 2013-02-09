@@ -60,7 +60,7 @@ Notes.loadNote = function (note) {
 };
 
 Notes.getTitle = function (text) {
-	return text.split('\n').shift();
+	return text.trim().split('\n').shift();
 };
 
 Notes.newNote = function (title) {
