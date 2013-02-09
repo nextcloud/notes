@@ -19,6 +19,9 @@ class Notes {
 	public function __construct($user) {
 		$this->user = $user;
 		$this->view = new \OC\Files\View('/' . $this->user . '/files/Notes');
+		if ($this->view->file_exists('/')) {
+			$this->view->mkdir('/');
+		}
 	}
 
 	/**
@@ -68,10 +71,14 @@ class Notes {
 	 *
 	 * @param string $catergory
 	 * @param string $note
-	 * @return mixed
+	 * @return bool
 	 */
 	public function remove($category, $note) {
-		return $this->view->unlink('/' . $category . '/' . $note);
+		if ($note) {
+			return $this->view->unlink('/' . $category . '/' . $note);
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -140,5 +147,10 @@ class Notes {
 			$titles[$note] = $title;
 		}
 		return $titles;
+	}
+
+	public static function createFileName($content) {
+		list($title,) = explode("\n", $content);
+		return preg_replace("/[^A-Za-z0-9 ]/", '_', $title) . '.txt';
 	}
 }

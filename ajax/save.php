@@ -13,15 +13,19 @@ OC_JSON::checkAppEnabled('notes');
 $notes = new \OCA\Notes\Notes(\OCP\User::getUser());
 
 $category = $_POST['category'];
-$old = $_POST['old'];
-$new = $_POST['new'];
+$old = $_POST['oldname'];
 $content = $_POST['content'];
+$content = trim($content);
+
+$new = \OCA\Notes\Notes::createFileName($content);
 
 if ($new != $old) {
 	$notes->remove($category, $old);
 }
 
-$notes->save($category, $new, $content);
+if ($content) {
+	$notes->save($category, $new, $content);
+}
 
-echo $notes->get($category, $new);
+echo $new;
 
