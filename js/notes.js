@@ -116,6 +116,9 @@ Notes.rename = function (old, newName) {
 
 Notes.remove = function (old) {
 	var li = $('#leftcontent').find('li[data-note="' + old + '"]').remove();
+	if (Notes.active == old) {
+		Notes.active = '';
+	}
 };
 
 Notes.save = function (oldName, content, sync) {
