@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Anteckningar",
-"The title can not be empty" => "Titel kan inte vara tom",
-"Invalid title" => "Felaktig titel",
-"The following characters are not allowed" => "Följande tecken är inte tillåtna",
-"Back to Notes" => "Tillbaka till Anteckningar",
-"Help" => "Hjälp",
-"Categories" => "Kategorier",
-"Delete" => "Radera",
-"Save" => "Spara",
-"No categories available yet" => "Inga kategorier finns tillgängliga än",
-"New category" => "Ny kategori",
-"Add" => "Lägg till",
-"Note" => "Notering",
-"If you delete a category, all containing notes get moved to the following category" => "Om du raderar en kategori, kommer alla anteckningar i aktuell kategori att flyttas till följande kategori",
-"General" => "Allmänt",
-"Add Note" => "Lägg till anteckning",
-"Edit Categories" => "Redigera kategorier",
-"No note available in this category" => "Ingen anteckning tillgänglig i denna kategori",
-"Edit" => "Redigera",
-"Category" => "Kategori",
-"Title" => "Titel",
-"Content" => "Innehåll",
-"Restore content" => "Återskapa innehåll",
-"Restore" => "Återskapa"
+"Notes" => "Anteckningar"
 );

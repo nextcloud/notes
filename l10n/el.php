@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Σημειώσεις",
-"The title can not be empty" => "Ο τίτλος δεν μπορεί να είναι κενός",
-"Invalid title" => "Μη έγκυρος τίτλος",
-"The following characters are not allowed" => "Δεν επιτρέπονται οι παρακάτω χαρακτήρες",
-"Back to Notes" => "Πίσω στις Σημειώσεις",
-"Help" => "Βοήθεια",
-"Categories" => "Κατηγορίες",
-"Delete" => "Διαγραφή",
-"Save" => "Αποθήκευση",
-"No categories available yet" => "Δεν είναι διαθέσιμες ακόμα οι κατηγορίες",
-"New category" => "Νέα κατηγορία",
-"Add" => "Προσθήκη",
-"Note" => "Σημείωση",
-"If you delete a category, all containing notes get moved to the following category" => "Εάν διαγράψετε μια κατηγορία, όλες οι σημειώσεις μετακινούνται στην παρακάτω κατηγορία",
-"General" => "Γενικά",
-"Add Note" => "Προσθήκη Σημείωσης",
-"Edit Categories" => "Επεξεργασία Κατηγοριών",
-"No note available in this category" => "Καμία διαθέσιμη σημείωση σε αυτή την κατηγορία",
-"Edit" => "Επεξεργασία",
-"Category" => "Κατηγορία",
-"Title" => "Τίτλος",
-"Content" => "Περιεχόμενο",
-"Restore content" => "Επαναφορά περιεχομένου",
-"Restore" => "Επαναφορά"
+"Notes" => "Σημειώσεις"
 );

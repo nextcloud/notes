@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "ノート",
-"The title can not be empty" => "タイトルは空にできません",
-"Invalid title" => "無効なタイトル",
-"The following characters are not allowed" => "以下の文字は利用できません",
-"Back to Notes" => "ノートに戻る",
-"Help" => "ヘルプ",
-"Categories" => "カテゴリ",
-"Delete" => "削除",
-"Save" => "保存",
-"No categories available yet" => "カテゴリはまだ利用できません",
-"New category" => "新しいカテゴリ",
-"Add" => "追加",
-"Note" => "メモ",
-"If you delete a category, all containing notes get moved to the following category" => "カテゴリを削除すると、含まれている全てのノートは以下のカテゴリに移動します",
-"General" => "一般",
-"Add Note" => "ノートを追加",
-"Edit Categories" => "カテゴリを編集",
-"No note available in this category" => "このカテゴリには利用可能なノートはありません",
-"Edit" => "編集",
-"Category" => "カテゴリー",
-"Title" => "タイトル",
-"Content" => "内容",
-"Restore content" => "内容を復元",
-"Restore" => "復元"
+"Notes" => "ノート"
 );

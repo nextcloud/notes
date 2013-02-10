@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Заметки",
-"The title can not be empty" => "Название не может быть пустым",
-"Invalid title" => "Недопустимое название",
-"The following characters are not allowed" => "Данные символы недопустимы",
-"Back to Notes" => "Вернуться к заметкам",
-"Help" => "Помощь",
-"Categories" => "Категории",
-"Delete" => "Удалить",
-"Save" => "Сохранить",
-"No categories available yet" => "Пока недоступна ни одна категория",
-"New category" => "Новая категория",
-"Add" => "Добавить",
-"Note" => "Заметка",
-"If you delete a category, all containing notes get moved to the following category" => "Если Вы удалите категорию, то все содержащиеся заметки будут перекинуты в следующую категорию",
-"General" => "Главные",
-"Add Note" => "Добавить запись",
-"Edit Categories" => "Править категорию",
-"No note available in this category" => "Нет ни одной доступной записи в этой категории",
-"Edit" => "Редактировать",
-"Category" => "Категория",
-"Title" => "Заголовок",
-"Content" => "Содержание",
-"Restore content" => "Восстановить содержание",
-"Restore" => "Восстановить"
+"Notes" => "Заметки"
 );

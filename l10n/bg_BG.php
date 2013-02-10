@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Бележки",
-"The title can not be empty" => "Заглавието не може да е празно",
-"Invalid title" => "Невалидно заглавие",
-"The following characters are not allowed" => "Следните знаци не са позволени за използване",
-"Back to Notes" => "Назад към бележките",
-"Help" => "Помощ",
-"Categories" => "Категории",
-"Delete" => "Изтриване",
-"Save" => "Запис",
-"No categories available yet" => "Няма налични категории",
-"New category" => "Нова категория",
-"Add" => "Добавяне",
-"Note" => "Бележка",
-"If you delete a category, all containing notes get moved to the following category" => "Ако изтриете категория, бележките от същатата ще бъдат преместени в следната категория",
-"General" => "Общи",
-"Add Note" => "Добави бележка",
-"Edit Categories" => "Промяна на категории",
-"No note available in this category" => "Няма бележки в тази категория",
-"Edit" => "Промяна",
-"Category" => "Категория",
-"Title" => "Заглавие",
-"Content" => "Съдържание",
-"Restore content" => "Възтановяване на съдържанието",
-"Restore" => "Възтановяване"
+"Notes" => "Бележки"
 );

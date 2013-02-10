@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Poznámky",
-"The title can not be empty" => "Názov nemôže byť prázdny",
-"Invalid title" => "Nesprávny názov",
-"The following characters are not allowed" => "Nasledovné znaky nie sú povolené",
-"Back to Notes" => "Návrat do poznámok",
-"Help" => "Pomoc",
-"Categories" => "Kategórie",
-"Delete" => "Zmazať",
-"Save" => "Uložiť",
-"No categories available yet" => "Žiadne kategórie ešte nie sú k dispozícii",
-"New category" => "Nová kategória",
-"Add" => "Pridať",
-"Note" => "Poznámka",
-"If you delete a category, all containing notes get moved to the following category" => "Ak odstránite kategóriu, všetky poznámky z nej budú presunuté do nasledujúcej kategórie",
-"General" => "Všeobecné",
-"Add Note" => "Vložiť poznámku",
-"Edit Categories" => "Upraviť kategóriu",
-"No note available in this category" => "Nie sú žiadne poznámky v tejto kategórii",
-"Edit" => "Upraviť",
-"Category" => "Kategória",
-"Title" => "Nadpis",
-"Content" => "Obsah",
-"Restore content" => "Obnovenie obsahu",
-"Restore" => "Obnoviť"
+"Notes" => "Poznámky"
 );

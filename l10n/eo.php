@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Notoj",
-"The title can not be empty" => "La titolo devas ne malpleni",
-"Invalid title" => "Nevalida titolo",
-"The following characters are not allowed" => "La jenaj signoj ne permesatas",
-"Back to Notes" => "Reen al notoj",
-"Help" => "Helpo",
-"Categories" => "Kategorioj",
-"Delete" => "Forigi",
-"Save" => "Konservi",
-"No categories available yet" => "Neniu kategorio haveblas ankoraŭ",
-"New category" => "Nova kategorio",
-"Add" => "Aldoni",
-"Note" => "Noto",
-"If you delete a category, all containing notes get moved to the following category" => "Se vi forigas kategorion, ĉiuj notoj enhavataj en ĝi moviĝos en la jenan kategorion",
-"General" => "Ĝenerala",
-"Add Note" => "Aldoni noton",
-"Edit Categories" => "Redakti kategoriojn",
-"No note available in this category" => "Neniu noto haveblas en ĉi tiu kategorio",
-"Edit" => "Redakti",
-"Category" => "Kategorio",
-"Title" => "Titolo",
-"Content" => "Enhavo",
-"Restore content" => "Restaŭri enhavon",
-"Restore" => "Restaŭri"
+"Notes" => "Notoj"
 );

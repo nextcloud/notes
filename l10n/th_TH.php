@@ -1,26 +1,3 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "บันทึกย่อ",
-"The title can not be empty" => "หัวเรื่องไม่สามารถเว้นว่างได้",
-"Invalid title" => "หัวเรื่องไม่ถูกต้อง",
-"The following characters are not allowed" => "ตัวอักษรต่อไปนี้ไม่อนุญาตให้ใช้งานได้",
-"Back to Notes" => "กลับไปที่บันทึกย่อ",
-"Help" => "ช่วยเหลือ",
-"Categories" => "หมวดหมู่",
-"Delete" => "ลบ",
-"Save" => "บันทึก",
-"No categories available yet" => "ยังไม่มีหมวดหมู่",
-"New category" => "สร้างหมวดหมู่ใหม่",
-"Add" => "เพิ่ม",
-"Note" => "หมายเหตุ",
-"If you delete a category, all containing notes get moved to the following category" => "หากคุณลบหมวดหมู่ทิ้งไป บันทึกย่อทั้งหมดที่อยู่ในหมวดหมู่ดังกล่าวจะถูกย้ายไปยังหมวดหมู่ต่อไปนี้",
-"General" => "ทั่วไป",
-"Add Note" => "เพิ่มบันทึกย่อ",
-"Edit Categories" => "แก้ไขหมวดหมู่",
-"No note available in this category" => "ยังไม่มีบันทึกอยู่ในหมวดหมู่นี้",
-"Edit" => "แก้ไข",
-"Category" => "หมวดหมู่",
-"Title" => "ชื่อ",
-"Content" => "เนื้อหา",
-"Restore content" => "คืนค่าเนื้อหา",
-"Restore" => "คืนค่า"
+"Notes" => "บันทึกย่อ"
 );
