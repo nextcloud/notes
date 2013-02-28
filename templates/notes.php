@@ -1,6 +1,6 @@
 <ul id="leftcontent">
 	<li id="note-add" data-new='1'>
-		<a href='#'>+ <span><?php echo $l->t('New Note'); ?></span></a>
+		<a href='#'>+ <span><?php p($l->t('New Note')); ?></span></a>
 	</li>
 	<?php foreach ($_['notes'] as $note => $title): ?>
 		<li data-note='<?php echo $note;?>'>
