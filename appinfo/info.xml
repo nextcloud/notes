@@ -3,7 +3,7 @@
 	<id>notes</id>
 	<name>Notes</name>
 	<licence>AGPL</licence>
-	<author>Robin Appelman, George Ruinelli</author>
+	<author>Robin Appelman, Jan-Christoph Borchardt, George Ruinelli</author>
 	<require>4.5</require>
 	<shipped>true</shipped>
 	<description>A simple Notes viewer and editor</description>
