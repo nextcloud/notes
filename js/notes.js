@@ -1,19 +1,18 @@
 $(document).ready(function () {
 
-	var container = $('#rightcontent'), left = $('#leftcontent'), textArea = container.children('textarea');
+	var container = $('#app-content'), left = $('#app-navigation ul'), textArea = container.children('textarea');
 
 	left.on('click', 'a', function () {
 		var li = $(this).parent();
-		$('#leftcontent').find('li').removeClass('active');
 		Notes.save.current();
+		$('#app-navigation ul').find('li').removeClass('active');
 		if (li.data('new')) {
 			Notes.active = '';
 			textArea.val('');
 		} else {
 			var note = li.attr('data-note');
-			console.log(note);
-			Notes.active = note;
 			Notes.loadNote(note);
+			Notes.active = note;
 		}
 		textArea.focus();
 	});
@@ -46,10 +45,10 @@ Notes.get = function (category, note) {
 
 Notes.loadNote = function (note) {
 	Notes.get(Notes.category, note).then(function (text) {
-		$('#rightcontent').children('textarea').val(text);
+		$('#app-content').children('textarea').val(text);
 		if (text) {
 			var title = Notes.getTitle(text);
-			$('#leftcontent').find('li[data-note="' + note + '"]').addClass('active');
+			$('#app-navigation ul').find('li[data-note="' + note + '"]').addClass('active');
 			Notes.setTitle(title);
 			Notes.oldContent = text;
 		} else {
@@ -67,19 +66,19 @@ Notes.newNote = function (title) {
 	if (!title) {
 		return;
 	}
-	var right = $('#rightcontent'),
+	var right = $('#app-content'),
 		li = $('<li/>'),
 		link = $('<a/>');
 	li.append(link);
 	li.attr('data-note', '');
 	link.text(title);
 	li.addClass('active');
-	$('#leftcontent').children().first().after(li);
+	$('#app-navigation ul').children().first().after(li);
 };
 
 Notes.onType = function () {
 	setTimeout(function () {
-		var li, left = $('#leftcontent'), right = $('#rightcontent'), text = right.find('textarea').val(),
+		var li, left = $('#app-navigation ul'), right = $('#app-content'), text = right.find('textarea').val(),
 			title = Notes.getTitle(text),
 			link = left.find('a.active');
 		link.text(title);
@@ -106,7 +105,7 @@ Notes.setTitle = function (title) {
 };
 
 Notes.rename = function (old, newName) {
-	var left = $('#leftcontent'), li = left.find('li[data-note="' + old + '"]');
+	var left = $('#app-navigation ul'), li = left.find('li[data-note="' + old + '"]');
 	li.attr('data-note', newName);
 	li.children('a').attr('href', '#' + newName);
 	left.children().first().after(li);
@@ -117,7 +116,7 @@ Notes.rename = function (old, newName) {
 };
 
 Notes.remove = function (old) {
-	var li = $('#leftcontent').find('li[data-note="' + old + '"]').remove();
+	var li = $('#app-navigation ul').find('li[data-note="' + old + '"]').remove();
 	if (Notes.active == old) {
 		Notes.active = '';
 	}
@@ -156,7 +155,7 @@ Notes.save = function (oldName, content, sync) {
 ;
 
 Notes.save.current = function (sync) {
-	var content = $('#rightcontent').find('textarea').val();
+	var content = $('#app-content').find('textarea').val();
 	if (content != Notes.oldContent && !Notes.save.active) {
 		Notes.save(Notes.active, content, sync);
 	}
