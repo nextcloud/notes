@@ -1,37 +1,18 @@
-#leftcontent a {
-	width: 94%;
-	padding: 8px;
-	padding-left: 15px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#leftcontent li {
-	padding: 0;
-}
-
-#leftcontent li.active {
+#app-navigation li.active {
 	font-weight: bold;
 }
 
-#leftcontent #note-add span {
+#app-navigation #note-add span {
 	display: none;
 	font-weight: bold;
 	padding-left: 2px;
 }
-#leftcontent #note-add:hover span, #leftcontent #note-add:focus span {
+#app-navigation #note-add:hover span,
+#app-navigation #note-add:focus span {
 	display: inline;
 }
 
-#rightcontent {
-	left: 25em;
-	right: 0;
-	bottom: 0;
-	top: 3.6em;
-	overflow: hidden;
-}
-
-#rightcontent textarea {
+#app-content textarea {
 	display: block;
 	height: 100%;
 	width: 100%;
