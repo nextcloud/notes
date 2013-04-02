@@ -12,8 +12,6 @@ OC_JSON::checkAppEnabled('notes');
 
 $notes = new \OCA\Notes\Notes(\OCP\User::getUser());
 
-$category = $_GET['category'];
-$note = $_GET['note'];
-
-header('Content-Type: text/plain');
-echo $notes->getSource($category, $note);
+\OCP\JSON::success(
+	array('data' => $notes->getAll(''))
+);

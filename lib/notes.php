@@ -115,8 +115,11 @@ class Notes {
 		$notes = array();
 		foreach ($content as $item) {
 			if ($item['type'] === 'file') {
-				$note = $this->getSource($category, $item['name']);
-				$notes[$item['name']] = Markdown($note);
+				$note = array(
+					'content' => $this->getSource($category, $item['name']),
+					'modified' => (int) $item['mtime']
+				);
+				$notes[$item['name']] = $note;
 			}
 		}
 		return $notes;

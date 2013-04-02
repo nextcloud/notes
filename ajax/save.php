@@ -13,10 +13,17 @@ OC_JSON::checkAppEnabled('notes');
 $notes = new \OCA\Notes\Notes(\OCP\User::getUser());
 
 $category = $_POST['category'];
-$old = $_POST['oldname'];
+
+// oldname is used to get the existing text file which is identified by the 
+// first line
+$oldName = $_POST['oldname'];
+$old = explode('\n', $oldName);
+$old = $old[0] . '.txt';
+
 $content = $_POST['content'];
 
 $new = \OCA\Notes\Notes::createFileName($content);
+
 
 if ($new != $old) {
 	$notes->remove($category, $old);
@@ -25,6 +32,3 @@ if ($new != $old) {
 if ($content) {
 	$notes->save($category, $new, $content);
 }
-
-echo $new;
-

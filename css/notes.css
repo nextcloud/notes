@@ -1,3 +1,8 @@
+#app-navigation {
+	/* No settings bar */
+	padding-bottom: 0;
+}
+
 #app-navigation li.active {
 	font-weight: bold;
 }
@@ -28,4 +33,11 @@
 	padding: 30px;
 	padding-bottom: 100px;
 	padding-right: 20%;
+}
+
+
+#app-content.loading {
+	background-image: url('%webroot%/core/img/loading.gif');
+	background-position: center;
+	background-repeat: no-repeat;
 }
