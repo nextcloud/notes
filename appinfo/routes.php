@@ -44,3 +44,9 @@ $this->create('notes_save', '/note/save')->post()->action(
 		App::main('NotesController', 'save', $params, new DIContainer());
 	}
 );
+
+$this->create('notes_save', '/note/delete')->post()->action(
+	function($params){
+		App::main('NotesController', 'delete', $params, new DIContainer());
+	}
+);

@@ -3,8 +3,9 @@
 	<id>notes</id>
 	<name>Notes</name>
 	<licence>AGPL</licence>
-	<author>Robin Appelman, Jan-Christoph Borchardt, George Ruinelli</author>
-	<require>4.5</require>
+	<author>Bernhard Posselt, Jan-Christoph Borchardt</author>
+	<require>5.0</require>
 	<shipped>true</shipped>
-	<description>A simple Notes viewer and editor</description>
+	<version>0.1</version>
+	<description>Distraction-free notes and writing</description>
 </info>
