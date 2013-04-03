@@ -3,7 +3,9 @@
 \OCP\Util::addScript('appframework', 'vendor/angular/angular');
 \OCP\Util::addScript('appframework', 'public/app');
 
-\OCP\Util::addScript('notes', 'app');
+\OCP\Util::addScript('notes', 'public/app');
+
+\OCP\Util::addStyle('notes', 'notes');
 
 ?>
 

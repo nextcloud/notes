@@ -10,7 +10,6 @@ namespace OCA\Notes;
 
 \OCP\User::checkLoggedIn();
 \OCP\App::checkAppEnabled('notes');
-\OCP\Util::addStyle('notes', 'notes');
 //\OCP\Util::addscript('notes', 'notes');
 
 \OCP\App::setActiveNavigationEntry('notes_index');
