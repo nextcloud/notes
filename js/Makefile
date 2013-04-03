@@ -34,3 +34,7 @@ test: deps
 clean:
 	rm -rf $(CURDIR)/node_modules/
 	rm -rf $(CURDIR)/test-results.xml
+
+phpcoverage:
+	cd $(CURDIR)/../
+	phpunit --coverage-html ./report tests/
