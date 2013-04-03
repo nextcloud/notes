@@ -19,7 +19,6 @@ files = [
 	'vendor/jquery/jquery.js',
 	'vendor/angular/angular.js',
 	'vendor/angular/angular-mocks.js',
-	'vendor/angular-ui/angular-ui.js',
 	'../../appframework/js/tests/stubs/owncloud.js',
 	'../../appframework/js/public/app.js',
 	'tests/stubs/modules.js',
@@ -71,7 +70,7 @@ autoWatch = true;
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['Chrome'];
+browsers = ['Firefox', 'Chrome'];
 
 
 // If browser does not capture in given timeout [ms], kill it
