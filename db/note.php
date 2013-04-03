@@ -16,7 +16,7 @@ class Note {
 
 	public function fromFile($file){
 		$this->modified = (int) $file['mtime'];
-		$this->title = $file['name'];
+		$this->title = substr($file['name'], 0, -4); // remove trailing .txt
 		$this->content = $file['content'];
 	}
 

@@ -44,7 +44,7 @@ class NotesBusinessLayer {
 		$note = new Note();
 
 		$note->fromFile(array(
-			'name' => $title,
+			'name' => $title . '.txt',
 			'content' => $this->fileSystem->file_get_contents('/' . $title . '.txt'),
 			'mtime' => $this->fileSystem->filemtime('/' . $title . '.txt')
 		));

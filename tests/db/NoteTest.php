@@ -30,7 +30,7 @@ class NoteTest extends TestUtility {
 		$note->fromFile($file);
 
 		$this->assertEquals($file['mtime'], $note->getModified());
-		$this->assertEquals($file['name'], $note->getTitle());
+		$this->assertEquals('hi', $note->getTitle());
 		$this->assertEquals($file['content'], $note->getContent());
 	}
 
