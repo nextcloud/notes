@@ -7,15 +7,17 @@ chrome_bin=/usr/bin/chromium
 grunt=$(CURDIR)/node_modules/grunt-cli/bin/grunt
 phantomjs=$(CURDIR)/node_modules/phantomjs/bin/phantomjs
 
-all: watch
+all: build
+
+build: deps
+	mkdir -p $(CURDIR)/public
+	$(grunt) --config $(CURDIR)/Gruntfile.js build
 
 deps:
 	cd $(CURDIR)/
 	npm install --deps
 
-watch: deps
-	mkdir -p $(CURDIR)/build
-	mkdir -p $(CURDIR)/public
+watch: build
 	$(grunt) --config $(CURDIR)/Gruntfile.js watchjs
 
 testacular: deps
@@ -30,6 +32,5 @@ test: deps
 	$(grunt) --config $(CURDIR)/Gruntfile.js ci
 
 clean:
-	rm -rf $(CURDIR)/build
 	rm -rf $(CURDIR)/node_modules/
 	rm -rf $(CURDIR)/test-results.xml

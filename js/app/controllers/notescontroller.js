@@ -6,7 +6,7 @@
 
 
 // This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController', 
+app.controller('NotesController',
 
 	// inject the dependencies
 	['$scope', 'Storage', 'NotesModel', 'conflictHandler', 'Loading',
@@ -54,7 +54,7 @@ app.controller('NotesController',
 			console.log('saving');
 			Storage.save(note, oldTitle);
 		}
-		
+
 	};
 
 	// create a new note when you click on the + button
