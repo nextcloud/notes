@@ -36,5 +36,4 @@ clean:
 	rm -rf $(CURDIR)/test-results.xml
 
 phpcoverage:
-	cd $(CURDIR)/../
-	phpunit --coverage-html ./report tests/
+	phpunit --coverage-html $(CURDIR)/../report $(CURDIR)/../tests/
