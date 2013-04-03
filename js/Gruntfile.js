@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com>
  * This file is licensed under the Affero General Public License version 3 or later.
- * See the COPYING-README file. 
+ * See the COPYING file. 
  */
 
 module.exports = function(grunt) {
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 				'<nukeawhale@gmail.com> \n' +
 				' * This file is licensed under the Affero ' +
 				'General Public License version 3 or later. \n' +
-				' * See the COPYING-README file.\n */\n\n'
+				' * See the COPYING file.\n */\n\n'
 			},
 			dist: {
 				src: [

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com>
  * This file is licensed under the Affero General Public License version 3 or later.
- * See the COPYING-README file. 
+ * See the COPYING file. 
  */
 
 // used to store the notes data and create hashes and caches for quick access

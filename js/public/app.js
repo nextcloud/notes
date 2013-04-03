@@ -5,7 +5,7 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com> 
  * This file is licensed under the Affero General Public License version 3 or later. 
- * See the COPYING-README file.
+ * See the COPYING file.
  */
 
 // Create the main module and add OC (appframework js) to the container
@@ -158,11 +158,11 @@ app.factory('NotesModel',
 }]);
 
 // class for loading and saving
-app.factory('Storage', 
+app.factory('Storage',
 
 	['Loading', 'Utils', '$rootScope', 'NotesModel',
 	function(Loading, Utils, $rootScope, NotesModel){
-	
+
 	var Storage = function(){};
 
 	// save a note to the server
@@ -186,7 +186,7 @@ app.factory('Storage',
 		var data = {};
 
 		$.post(url, data, function(json){
-			
+
 			angular.forEach(json.data, function(data){
 				var note = {
 					title: data.content.substr(0, 50),
