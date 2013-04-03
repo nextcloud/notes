@@ -36,3 +36,8 @@ To clear the build/ folder run:
 To run js unittests with the ci server, use 
 
 	make test
+
+## Create PHP code coverage report
+To generate a code coverage report folder in the app directory run:
+
+        make phpcoverage
