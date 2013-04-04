@@ -82,7 +82,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'notes' => array('hi')
 		);
 		$getParams = array('title' => 'tests');
-		$request = new Request($getParams);
+		$request = new Request(array('get' => $getParams));
 		$this->controller = new NotesController($this->api, $request, 
 			                                    $this->bizLayer);
 		$this->bizLayer->expects($this->once())
@@ -115,7 +115,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'newTitle' => 'tests2',
 			'content' => 'cont'
 		);
-		$request = new Request($postParams);
+		$request = new Request(array('post' => $postParams));
 		$this->controller = new NotesController($this->api, $request, 
 			                                    $this->bizLayer);
 
@@ -144,7 +144,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$postParams = array(
 			'title' => 'tests'
 		);
-		$request = new Request($postParams);
+		$request = new Request(array('post' => $postParams));
 		$this->controller = new NotesController($this->api, $request, 
 			                                    $this->bizLayer);
 
