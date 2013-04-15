@@ -27,13 +27,13 @@ $this->create('notes_index', '/')->get()->action(
 /**
  * Ajax requests
  */
-$this->create('notes_save', '/notes')->get()->action(
+$this->create('notes_get_all', '/notes')->get()->action(
 	function($params){
 		App::main('NotesController', 'getAll', $params, new DIContainer());
 	}
 );
 
-$this->create('notes_save', '/note')->get()->action(
+$this->create('notes_get', '/note')->get()->action(
 	function($params){
 		App::main('NotesController', 'get', $params, new DIContainer());
 	}
@@ -45,7 +45,7 @@ $this->create('notes_save', '/note/save')->post()->action(
 	}
 );
 
-$this->create('notes_save', '/note/delete')->post()->action(
+$this->create('notes_delete', '/note/delete')->post()->action(
 	function($params){
 		App::main('NotesController', 'delete', $params, new DIContainer());
 	}

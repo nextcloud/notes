@@ -20,6 +20,7 @@ app.controller('NotesController',
 		$scope.activeNote = note;
 	};
 
+
 	// loading spinner
 	$scope.loading = Loading;
 
