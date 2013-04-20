@@ -36,4 +36,7 @@ if(\OCP\App::isEnabled('appframework')){
 
 	));
 	
+} else {
+	$msg = 'Can not enable the Notes app because the App Framework App is disabled';
+	\OCP\Util::writeLog('notes', $msg, \OCP\Util::ERROR);
 }
