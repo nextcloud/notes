@@ -13,13 +13,8 @@
 var app = angular.module('Notes', ['OC']);
 
 // This will be executed directly after angular has finished to initialize
-app.run(['Storage', '$rootScope', function(Storage, $rootScope){
-
-	// loads the notes from the server
-	Storage.getAll(function() {
-		$rootScope.$broadcast('notesLoaded');
-	});
-
+app.run(['Storage', function(Storage){
+	Storage.getAll(); // loads the notes from the server
 }]);
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController',
@@ -58,8 +53,6 @@ app.controller('NotesController',
 
 	// loading spinner
 	$scope.loading = Loading;
-
-
 
 
 }]);

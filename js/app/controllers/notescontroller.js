@@ -44,6 +44,4 @@ app.controller('NotesController',
 	$scope.loading = Loading;
 
 
-
-
 }]);

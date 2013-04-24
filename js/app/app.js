@@ -10,11 +10,6 @@
 var app = angular.module('Notes', ['OC']);
 
 // This will be executed directly after angular has finished to initialize
-app.run(['Storage', '$rootScope', function(Storage, $rootScope){
-
-	// loads the notes from the server
-	Storage.getAll(function() {
-		$rootScope.$broadcast('notesLoaded');
-	});
-
+app.run(['Storage', function(Storage){
+	Storage.getAll(); // loads the notes from the server
 }]);

@@ -27,7 +27,10 @@
 			<!-- notes list -->
 			<li ng-repeat="note in notes|orderBy:'modified':'reverse'" 
 				ng-class="{ active: note == activeNote }">
-				<a href="#{{ note.id }}">{{ note.title }}</a>
+				<a href="#{{ note.id }}"
+					oc-click-focus="{ selector: '#app-content textarea' }">
+					{{ note.title }}
+				</a>
 			</li>
 			
 		</ul>
@@ -38,7 +41,8 @@
 		<textarea ng-change="update()" 
 				  ng-model="activeNote.content"
 				  ng-hide="loading.isLoading()"
-				  autofocus>
+				  autofocus
+				  tabindex="-1">
 		</textarea>
 	</div>
 </div>
