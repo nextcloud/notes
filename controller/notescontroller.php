@@ -84,9 +84,9 @@ class NotesController extends Controller {
 	 * @Ajax
 	 */
 	public function delete() {
-		$title = $this->params('title');
+		$id = (int) $this->params('id');
 
-		$this->businessLayer->deleteNote($title);
+		$this->businessLayer->deleteNote($id);
 	
 		return $this->renderJSON();	
 	}

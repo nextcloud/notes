@@ -142,7 +142,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 	public function testDeleteCallsBizLayer(){
 		$postParams = array(
-			'title' => 'tests'
+			'id' => '3'
 		);
 		$request = new Request(array('post' => $postParams));
 		$this->controller = new NotesController($this->api, $request, 
@@ -150,7 +150,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 		$this->bizLayer->expects($this->once())
 			->method('deleteNote')
-			->with($this->equalTo($postParams['title']));
+			->with($this->equalTo(3));
 		$result = $this->controller->delete();
 	}
 

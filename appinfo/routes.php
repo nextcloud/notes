@@ -33,19 +33,25 @@ $this->create('notes_get_all', '/notes')->get()->action(
 	}
 );
 
-$this->create('notes_get', '/note')->get()->action(
+$this->create('notes_get', '/notes/{id}')->get()->action(
 	function($params){
 		App::main('NotesController', 'get', $params, new DIContainer());
 	}
 );
 
-$this->create('notes_save', '/note/save')->post()->action(
+$this->create('notes_save', '/notes')->post()->action(
 	function($params){
 		App::main('NotesController', 'save', $params, new DIContainer());
 	}
 );
 
-$this->create('notes_delete', '/note/delete')->post()->action(
+$this->create('notes_update', '/notes')->put()->action(
+	function($params){
+		App::main('NotesController', 'update', $params, new DIContainer());
+	}
+);
+
+$this->create('notes_delete', '/note/{id}')->delete()->action(
 	function($params){
 		App::main('NotesController', 'delete', $params, new DIContainer());
 	}

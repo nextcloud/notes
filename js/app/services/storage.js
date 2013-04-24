@@ -55,7 +55,7 @@ app.factory('Storage',
 		this._loading.increase();
 
 		this._request.get('notes_get', {
-			data: {
+			routeParams: {
 				id: id
 			},
 			onSuccess: function() {
@@ -63,6 +63,17 @@ app.factory('Storage',
 			},
 			onFailure: function() {
 				self._loading.decrease();
+			}
+		});
+	};
+
+
+	// delete the note
+	Storage.prototype.deleteById = function(id) {
+		/*jslint es5: true */
+		this._request.delete('notes_delete', {
+			routeParams: {
+				id: id
 			}
 		});
 	};
