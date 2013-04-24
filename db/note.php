@@ -7,21 +7,21 @@
 
 namespace OCA\Notes\Db;
 
+use \OCA\AppFramework\Db\Entity;
 
-class Note {
+
+class Note extends Entity {
 
 	public $modified;
 	public $title;
 	public $content;
 
 	public function fromFile($file){
+		$this->id = (int) $file['fileid'];
 		$this->modified = (int) $file['mtime'];
 		$this->title = substr($file['name'], 0, -4); // remove trailing .txt
 		$this->content = $file['content'];
 	}
 
 
-	public function getModified(){ return $this->modified; }
-	public function getTitle(){ return $this->title; }
-	public function getContent(){ return $this->content; }
 }

@@ -29,7 +29,7 @@ class NotesBusinessLayerTest extends TestUtility {
 				'getDirectoryContent',
 				'unlink',
 				'file_get_contents',
-				'filemtime',
+				'getFileInfo',
 				'file_exists',
 				'rename',
 				'file_put_contents'
@@ -39,17 +39,20 @@ class NotesBusinessLayerTest extends TestUtility {
 		// reusable test data
 		$this->filesystemNotes = array(
 			array(
+				'fileid' => 2,
 				'type' => 'file',
 				'mtime' => 50,
 				'name' => 'hi.txt',
 				'content' => ''
 			),
 			array(
+				'fileid' => 1,
 				'type' => 'directory',
 				'mtime' => 50,
 				'name' => ''
 			),
 			array(
+				'fileid' => 3,
 				'type' => 'file',
 				'mtime' => 502,
 				'name' => 'yo.txt',
@@ -106,9 +109,9 @@ class NotesBusinessLayerTest extends TestUtility {
 			->with($this->equalTo('/' . $title . '.txt' ))
 			->will($this->returnValue($this->filesystemNotes[0]['content']));
 		$this->fileSystem->expects($this->once())
-			->method('filemtime')
+			->method('getFileInfo')
 			->with($this->equalTo('/' . $title . '.txt' ))
-			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
+			->will($this->returnValue($this->filesystemNotes[0]));
 
 		$result = $this->bizLayer->getNote($title);
 

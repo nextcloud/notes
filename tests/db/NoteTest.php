@@ -20,6 +20,7 @@ class NoteTest extends TestUtility {
 
 	public function testFromFile(){
 		$file = array(
+			'fileid' => 1,
 			'type' => 'file',
 			'mtime' => 50,
 			'name' => 'hi.txt',
@@ -29,6 +30,7 @@ class NoteTest extends TestUtility {
 		$note = new Note();
 		$note->fromFile($file);
 
+		$this->assertEquals($file['fileid'], $note->getId());
 		$this->assertEquals($file['mtime'], $note->getModified());
 		$this->assertEquals('hi', $note->getTitle());
 		$this->assertEquals($file['content'], $note->getContent());
