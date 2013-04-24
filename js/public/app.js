@@ -9,75 +9,57 @@
  */
 
 // Create the main module and add OC (appframework js) to the container
+// and register routes so the url is cool :)
 var app = angular.module('Notes', ['OC']);
 
 // This will be executed directly after angular has finished to initialize
-app.run(['Storage', function(Storage){
-	Storage.getAll(); // loads the notes from the server
+app.run(['Storage', '$rootScope', function(Storage, $rootScope){
+
+	// loads the notes from the server
+	Storage.getAll(function() {
+		$rootScope.$broadcast('notesLoaded');
+	});
+
 }]);
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController',
 
-	// inject the dependencies
-	['$scope', 'Storage', 'NotesModel', 'conflictHandler', 'Loading',
-	function($scope, Storage, NotesModel, conflictHandler, Loading) {
+	['$scope', '$location', 'NotesModel', 'Storage', 'Loading',
+	function($scope, $location, NotesModel, Storage, Loading) {
 
+	// extracts the id from the url
+	var getNoteId = function() {
+		return parseInt( $location.path().substring(1), 10 );
+	};
 
-	$scope.notes = NotesModel.getAll();
+	// load a note from the server if it does not yet exist
+	var updateNote = function(id) {
+		var note = NotesModel.getById(id);
 
-	// load a new note into the right field
-	$scope.load = function(note){
+		// in case the note does not exist yet locally
+		if(angular.isDefined(note) && note.content === '') {
+			Storage.getById(id);
+		}
+
 		$scope.activeNote = note;
 	};
 
+	// we want to check if the # changes in the url and conditionally load the
+	// note if it does not have content. Consider using Angular routes if your
+	// system is more complex
+	$scope.$watch(getNoteId, updateNote);
+	$scope.$on('notesLoaded', function() {
+		updateNote(getNoteId());
+	});
+
+
+	// bind all the notes to the scope
+	$scope.notes = NotesModel.getAll();
 
 	// loading spinner
 	$scope.loading = Loading;
 
-	// if all notes are loaded, load the newest one
-	$scope.$on('loaded', function(){
-		if(NotesModel.size() > 0){
-			$scope.load(NotesModel.getNewest());
-		}
-	});
 
-	// every time you type, the note is being updated
-	$scope.update = function(note){
-		if(note.content === ''){
-
-			// TODO: delete via ajax
-			console.log('deleted');
-			NotesModel.removeById(note.id);
-
-		} else {
-			// in case
-			if(angular.isUndefined(NotesModel.getById(note.id))){
-				$scope.createNew();
-				$scope.activeNote.content = note.content;
-			}
-			var oldTitle = $scope.activeNote.title;
-			// TODO: conflict resolution
-			// $scope.activeNote.title = 
-			//	conflictHandler(note.content.substr(0, 50));
-			$scope.activeNote.title = note.content.substr(0, 50);
-			$scope.activeNote.modified = new Date().getTime();
-
-			console.log('saving');
-			Storage.save(note, oldTitle);
-		}
-
-	};
-
-	// create a new note when you click on the + button
-	$scope.createNew = function() {
-		var newNote = {
-			title: '',
-			content: '',
-			modified: new Date().getTime()
-		};
-		NotesModel.add(newNote);
-		$scope.activeNote = newNote;
-	};
 
 
 }]);
@@ -109,11 +91,6 @@ app.factory('conflictHandler', ['NotesModel', function(NotesModel){
 	return handler;
 }]);
 
-// loading spinner
-app.factory('Loading', ['_Loading', function(_Loading){
-	return new _Loading();
-}]);
-
 // used to store the notes data and create hashes and caches for quick access
 app.factory('NotesModel',
 
@@ -125,19 +102,6 @@ app.factory('NotesModel',
 
 	// overwrite to set an id
 	NotesModel.prototype.add = function(data) {
-
-		// in case there is no id, get the highest id
-		var query = new _MaximumQuery('id');
-		var result = this.get(query);
-
-		var id = 1;
-		// if there is no id (no notes), start with 1
-		if(angular.isDefined(result)){
-			id = result.id + 1;
-		}
-
-		data.id = id;
-
 		_Model.prototype.add.call(this, data);
 	};
 
@@ -158,57 +122,107 @@ app.factory('NotesModel',
 
 }]);
 
+// Use this to instantiate and build the objects from the appframework
+
+
+// dependency of the request object
+app.factory('Publisher',
+
+	['_Publisher', 'NotesModel',
+	function(_Publisher, NotesModel) {
+
+
+	var publisher = new _Publisher();
+
+	// distribute all content that is being returned in the data.notes json array
+	// to the model. This adds new notes and updates existing ones
+	publisher.subscribeObjectTo(NotesModel, 'notes');
+
+	return publisher;
+
+}]);
+
+
+// this allows you to make ajax requests 
+app.factory('Request',
+
+	['_Request', '$http', 'Publisher', 'Router',
+	function(_Request, $http, Publisher, Router) {
+
+	return new _Request($http, Publisher, Router);
+
+}]);
+
+
+// loading spinner
+app.factory('Loading', ['_Loading', function(_Loading){
+	return new _Loading();
+}]);
+
 // class for loading and saving
 app.factory('Storage',
 
-	['Loading', 'Utils', '$rootScope', 'NotesModel',
-	function(Loading, Utils, $rootScope, NotesModel){
+	['Loading', '$rootScope', 'Request',
+	function(Loading, $rootScope, Request){
 
-	var Storage = function(){};
+
+	var Storage = function(loading, $rootScope, request){
+		this._loading = loading;
+		this._$rootScope = $rootScope;
+		this._request = request;
+	};
+
 
 	// save a note to the server
-	Storage.prototype.save = function(note, oldTitle){
-		var url = Utils.filePath('notes', 'ajax', 'save.php');
-		var data = {
-			oldname: oldTitle,
-			content: note.content,
-			category: ''
-		};
+	Storage.prototype.save = function(note){
 
-		$.post(url, data);
+		this._request.post('notes_save', {
+			data: {
+				note: note
+			}
+		});
+
 	};
 
 
 	// get all from the server and populate the notes model
 	Storage.prototype.getAll = function() {
-		Loading.increase();
+		var self = this;
 
-		var url = Utils.filePath('notes', 'ajax', 'get.php');
-		var data = {};
+		this._loading.increase();
 
-		$.post(url, data, function(json){
-
-			angular.forEach(json.data, function(data){
-				var note = {
-					title: data.content.substr(0, 50),
-					content: data.content,
-					modified: data.modified
-				};
-
-				NotesModel.add(note);
-			});
-
-			$rootScope.$broadcast('loaded');
-
-			Loading.decrease();
-
-			// because we make requests with jquery instead of $http
-			// we have to tell angular manually that something changed
-			$rootScope.$apply();
+		this._request.get('notes_get_all', {
+			onSuccess: function() {
+				$rootScope.$broadcast('notesLoaded');
+				self._loading.decrease();
+			},
+			onFailure: function() {
+				self._loading.decrease();
+			}
 		});
 	};
 
 
-	return new Storage();
+	// update the note by id
+	Storage.prototype.getById = function(id) {
+		var self = this;
+
+		this._loading.increase();
+
+		this._request.get('notes_get', {
+			data: {
+				id: id
+			},
+			onSuccess: function() {
+				self._loading.decrease();
+			},
+			onFailure: function() {
+				self._loading.decrease();
+			}
+		});
+	};
+
+
+	return new Storage(Loading, $rootScope, Request);
 }]);
 })(window.angular, jQuery);

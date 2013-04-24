@@ -51,8 +51,8 @@ class NotesController extends Controller {
 	 * @Ajax
 	 */
 	public function get() {
-		$title = $this->params('title');
-		$note = $this->businessLayer->getNote($title);
+		$id = (int) $this->params('id');
+		$note = $this->businessLayer->getNote($id);
 
 		$params = array(
 			'notes' => array($note)

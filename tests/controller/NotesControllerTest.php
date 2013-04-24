@@ -81,13 +81,13 @@ class NotesControllerTest extends ControllerTestUtility {
 		$expected = array(
 			'notes' => array('hi')
 		);
-		$getParams = array('title' => 'tests');
+		$getParams = array('id' => '3');
 		$request = new Request(array('get' => $getParams));
 		$this->controller = new NotesController($this->api, $request, 
 			                                    $this->bizLayer);
 		$this->bizLayer->expects($this->once())
 			->method('getNote')
-			->with($this->equalTo($getParams['title']))
+			->with($this->equalTo(3))
 			->will($this->returnValue($expected['notes'][0]));
 
 		$result = $this->controller->get();

@@ -8,66 +8,42 @@
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController',
 
-	// inject the dependencies
-	['$scope', 'Storage', 'NotesModel', 'conflictHandler', 'Loading',
-	function($scope, Storage, NotesModel, conflictHandler, Loading) {
+	['$scope', '$location', 'NotesModel', 'Storage', 'Loading',
+	function($scope, $location, NotesModel, Storage, Loading) {
 
+	// extracts the id from the url
+	var getNoteId = function() {
+		return parseInt( $location.path().substring(1), 10 );
+	};
 
-	$scope.notes = NotesModel.getAll();
+	// load a note from the server if it does not yet exist
+	var updateNote = function(id) {
+		var note = NotesModel.getById(id);
 
-	// load a new note into the right field
-	$scope.load = function(note){
+		// in case the note does not exist yet locally
+		if(angular.isDefined(note) && note.content === '') {
+			Storage.getById(id);
+		}
+
 		$scope.activeNote = note;
 	};
 
+	// we want to check if the # changes in the url and conditionally load the
+	// note if it does not have content. Consider using Angular routes if your
+	// system is more complex
+	$scope.$watch(getNoteId, updateNote);
+	$scope.$on('notesLoaded', function() {
+		updateNote(getNoteId());
+	});
+
+
+	// bind all the notes to the scope
+	$scope.notes = NotesModel.getAll();
 
 	// loading spinner
 	$scope.loading = Loading;
 
-	// if all notes are loaded, load the newest one
-	$scope.$on('loaded', function(){
-		if(NotesModel.size() > 0){
-			$scope.load(NotesModel.getNewest());
-		}
-	});
 
-	// every time you type, the note is being updated
-	$scope.update = function(note){
-		if(note.content === ''){
-
-			// TODO: delete via ajax
-			console.log('deleted');
-			NotesModel.removeById(note.id);
-
-		} else {
-			// in case
-			if(angular.isUndefined(NotesModel.getById(note.id))){
-				$scope.createNew();
-				$scope.activeNote.content = note.content;
-			}
-			var oldTitle = $scope.activeNote.title;
-			// TODO: conflict resolution
-			// $scope.activeNote.title = 
-			//	conflictHandler(note.content.substr(0, 50));
-			$scope.activeNote.title = note.content.substr(0, 50);
-			$scope.activeNote.modified = new Date().getTime();
-
-			console.log('saving');
-			Storage.save(note, oldTitle);
-		}
-
-	};
-
-	// create a new note when you click on the + button
-	$scope.createNew = function() {
-		var newNote = {
-			title: '',
-			content: '',
-			modified: new Date().getTime()
-		};
-		NotesModel.add(newNote);
-		$scope.activeNote = newNote;
-	};
 
 
 }]);

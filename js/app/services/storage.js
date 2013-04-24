@@ -7,53 +7,66 @@
 // class for loading and saving
 app.factory('Storage',
 
-	['Loading', 'Utils', '$rootScope', 'NotesModel',
-	function(Loading, Utils, $rootScope, NotesModel){
+	['Loading', '$rootScope', 'Request',
+	function(Loading, $rootScope, Request){
 
-	var Storage = function(){};
+
+	var Storage = function(loading, $rootScope, request){
+		this._loading = loading;
+		this._$rootScope = $rootScope;
+		this._request = request;
+	};
+
 
 	// save a note to the server
-	Storage.prototype.save = function(note, oldTitle){
-		var url = Utils.filePath('notes', 'ajax', 'save.php');
-		var data = {
-			oldname: oldTitle,
-			content: note.content,
-			category: ''
-		};
+	Storage.prototype.save = function(note){
 
-		$.post(url, data);
+		this._request.post('notes_save', {
+			data: {
+				note: note
+			}
+		});
+
 	};
 
 
 	// get all from the server and populate the notes model
 	Storage.prototype.getAll = function() {
-		Loading.increase();
+		var self = this;
 
-		var url = Utils.filePath('notes', 'ajax', 'get.php');
-		var data = {};
+		this._loading.increase();
 
-		$.post(url, data, function(json){
-
-			angular.forEach(json.data, function(data){
-				var note = {
-					title: data.content.substr(0, 50),
-					content: data.content,
-					modified: data.modified
-				};
-
-				NotesModel.add(note);
-			});
-
-			$rootScope.$broadcast('loaded');
-
-			Loading.decrease();
-
-			// because we make requests with jquery instead of $http
-			// we have to tell angular manually that something changed
-			$rootScope.$apply();
+		this._request.get('notes_get_all', {
+			onSuccess: function() {
+				$rootScope.$broadcast('notesLoaded');
+				self._loading.decrease();
+			},
+			onFailure: function() {
+				self._loading.decrease();
+			}
 		});
 	};
 
 
-	return new Storage();
+	// update the note by id
+	Storage.prototype.getById = function(id) {
+		var self = this;
+
+		this._loading.increase();
+
+		this._request.get('notes_get', {
+			data: {
+				id: id
+			},
+			onSuccess: function() {
+				self._loading.decrease();
+			},
+			onFailure: function() {
+				self._loading.decrease();
+			}
+		});
+	};
+
+
+	return new Storage(Loading, $rootScope, Request);
 }]);

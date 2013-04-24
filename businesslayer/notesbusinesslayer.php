@@ -36,18 +36,16 @@ class NotesBusinessLayer {
 	}
 
 
-	public function getNote($title) {
+	public function getNote($id) {
 
-		// prevent directory traversal
-		$title = str_replace(array('/', '\\'), '',  $title);
-		$path = '/' . $title . '.txt';
+		$path = $this->fileSystem->getPath($id);
 		$fileInfo = $this->fileSystem->getFileInfo($path);
 
 		$note = new Note();
 
 		$note->fromFile(array(
 			'fileid' => $fileInfo['fileid'],
-			'name' => $title . '.txt',
+			'name' => basename($path),
 			'content' => $this->fileSystem->file_get_contents($path),
 			'mtime' => $fileInfo['mtime']
 		));

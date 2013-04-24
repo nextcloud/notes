@@ -20,23 +20,22 @@
 		<ul>
 			<!-- new note button -->
 			<li id="note-add" ng-click="createNew()"
-				oc-click-focus="{selector: '#app-content textarea'}">
+				oc-click-focus="{ selector: '#app-content textarea' }">
 				<a href='#'>+ <span><?php p($l->t('New Note')); ?></span></a>
 			</li>
 			
 			<!-- notes list -->
 			<li ng-repeat="note in notes|orderBy:'modified':'reverse'" 
-				ng-show="note.content"
-				ng-class="{active: note==activeNote}">
-				<a href="#" ng-click="load(note)">{{ note.title }}</a>
+				ng-class="{ active: note == activeNote }">
+				<a href="#{{ note.id }}">{{ note.title }}</a>
 			</li>
 			
 		</ul>
 	</div>
 
-	<div id="app-content" ng-class="{loading: loading.isLoading()}">
+	<div id="app-content" ng-class="{ loading: loading.isLoading() }">
 		<!-- actual note -->
-		<textarea ng-change="update(activeNote)" 
+		<textarea ng-change="update()" 
 				  ng-model="activeNote.content"
 				  ng-hide="loading.isLoading()"
 				  autofocus>

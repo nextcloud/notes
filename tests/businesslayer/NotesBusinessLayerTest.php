@@ -32,7 +32,8 @@ class NotesBusinessLayerTest extends TestUtility {
 				'getFileInfo',
 				'file_exists',
 				'rename',
-				'file_put_contents'
+				'file_put_contents',
+				'getPath'
 			));
 		$this->bizLayer = new NotesBusinessLayer($this->fileSystem);
 
@@ -102,18 +103,21 @@ class NotesBusinessLayerTest extends TestUtility {
 		$expected->fromFile(
 			$this->filesystemNotes[0]
 		);
-		$title = $expected->getTitle();
 
 		$this->fileSystem->expects($this->once())
 			->method('file_get_contents')
-			->with($this->equalTo('/' . $title . '.txt' ))
+			->with($this->equalTo($expected->getTitle() . '.txt'))
 			->will($this->returnValue($this->filesystemNotes[0]['content']));
 		$this->fileSystem->expects($this->once())
 			->method('getFileInfo')
-			->with($this->equalTo('/' . $title . '.txt' ))
+			->with($this->equalTo($expected->getTitle() . '.txt'))
 			->will($this->returnValue($this->filesystemNotes[0]));
+		$this->fileSystem->expects($this->once())
+			->method('getPath')
+			->with($this->equalTo(2))
+			->will($this->returnValue($expected->getTitle() . '.txt'));
 
-		$result = $this->bizLayer->getNote($title);
+		$result = $this->bizLayer->getNote(2);
 
 		$this->assertEquals($expected, $result);
 	}

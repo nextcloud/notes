@@ -15,19 +15,6 @@ app.factory('NotesModel',
 
 	// overwrite to set an id
 	NotesModel.prototype.add = function(data) {
-
-		// in case there is no id, get the highest id
-		var query = new _MaximumQuery('id');
-		var result = this.get(query);
-
-		var id = 1;
-		// if there is no id (no notes), start with 1
-		if(angular.isDefined(result)){
-			id = result.id + 1;
-		}
-
-		data.id = id;
-
 		_Model.prototype.add.call(this, data);
 	};
 
