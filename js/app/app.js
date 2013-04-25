@@ -7,7 +7,12 @@
 
 // Create the main module and add OC (appframework js) to the container
 // and register routes so the url is cool :)
-var app = angular.module('Notes', ['OC']);
+var app = angular.module('Notes', ['OC']).
+config(['$provide', function($provide) {
+	$provide.value('Config', {
+		saveInterval: 15*1000  // miliseconds
+	});
+}]);
 
 // This will be executed directly after angular has finished to initialize
 app.run(['Storage', function(Storage){

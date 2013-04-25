@@ -15,15 +15,58 @@ app.factory('Storage',
 		this._loading = loading;
 		this._$rootScope = $rootScope;
 		this._request = request;
+		this._saving = {};
+		this._saveQueue = [];
 	};
 
 
 	// save a note to the server
 	Storage.prototype.save = function(note){
+		var self = this;
+
+		// first make sure that only one note can be saved at a time
+		// to do that check if the note is currently being saved in the 
+		// saving hashmap and queue it if needed
+		var saveQueue = this._saving[note.id] || [];
+
+		saveQueue.push(note);
+
+		if(saveQueue.length > 1) {
+			return;
+		}
+
+		// on successful save we can unluck the note and execute queued up
+		// requests
+		var onSuccess = function() {
+
+			// remove the just saved item
+			var saveQueue = self._saving[note.id];
+			saveQueue.shift();
+
+			// if there are any left, take the last one because its the
+			// newest
+			if(saveQueue.length > 0) {
+				var nextNote = saveQueue[saveQueue.length-1];
+
+				self._saving[note.id].length = 0;
+
+				self.save(nextNote);
+			}
+		};
+
 
 		this._request.post('notes_save', {
 			data: {
-				note: note
+				id: note.id,
+				content: note.content
+			},
+			onSuccess: onSuccess,
+			// if saving failed, bad luck ;D, let the user know and unlock the
+			// note for saving
+			onFailure: function () {
+				$rootScope.$broadcast('noteSaveFailed');
+
+				onSuccess();
 			}
 		});
 

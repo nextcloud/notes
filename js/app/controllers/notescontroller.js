@@ -8,8 +8,10 @@
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController',
 
-	['$scope', '$location', 'NotesModel', 'Storage', 'Loading',
-	function($scope, $location, NotesModel, Storage, Loading) {
+	['$scope', '$location', '$timeout', 'NotesModel', 'Storage', 'Loading',
+	'Config',
+	function($scope, $location, $timeout, NotesModel, Storage, Loading, Config) {
+
 
 	// extracts the id from the url
 	var getNoteId = function() {
@@ -43,5 +45,16 @@ app.controller('NotesController',
 	// loading spinner
 	$scope.loading = Loading;
 
+	// notes should be saved if they are dirty only, see ng-change in the
+	// template
+	setInterval(function() {
 
+		angular.forEach($scope.notes, function(note) {
+			if(note.dirty) {
+				Storage.save(note);
+				note.dirty = false;
+			}
+		});
+
+	}, Config.saveInterval);
 }]);

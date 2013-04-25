@@ -23,7 +23,6 @@
 				oc-click-focus="{ selector: '#app-content textarea' }">
 				<a href='#'>+ <span><?php p($l->t('New Note')); ?></span></a>
 			</li>
-			
 			<!-- notes list -->
 			<li ng-repeat="note in notes|orderBy:'modified':'reverse'" 
 				ng-class="{ active: note == activeNote }">
@@ -38,11 +37,12 @@
 
 	<div id="app-content" ng-class="{ loading: loading.isLoading() }">
 		<!-- actual note -->
-		<textarea ng-change="update()" 
-				  ng-model="activeNote.content"
-				  ng-hide="loading.isLoading()"
-				  autofocus
-				  tabindex="-1">
+		<textarea
+			  ng-model="activeNote.content"
+			  ng-change="activeNote.dirty=true"
+			  ng-hide="loading.isLoading()"
+			  autofocus
+			  tabindex="-1">
 		</textarea>
 	</div>
 </div>

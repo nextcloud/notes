@@ -68,11 +68,10 @@ class NotesController extends Controller {
 	 * @Ajax
 	 */
 	public function save() {
-		$oldTitle = $this->params('oldTitle');
-		$newTitle = $this->params('newTitle');
+		$id = $this->params('id');
 		$content = $this->params('content');
 
-		$this->businessLayer->saveNote($oldTitle, $newTitle, $content);
+		$this->businessLayer->saveNote($id, $content);
 
 		return $this->renderJSON();
 	}

@@ -57,13 +57,14 @@ class NotesBusinessLayer {
 	/**
 	 * If the file exists, rename the file, otherwise create a new file
 	 */
-	public function saveNote($oldTitle, $newTitle, $content){
+	public function saveNote($id, $content){
 
 		// prevent directory traversal
+		/*
 		$oldTitle = str_replace(array('/', '\\'), '',  $oldTitle);
 		$newTitle = str_replace(array('/', '\\'), '',  $newTitle);
 
-		// update the file name
+		 update the file name
 		if($this->fileSystem->file_exists('/' . $oldTitle . '.txt')){
 			$this->fileSystem->rename('/' . $oldTitle . '.txt', '/' . 
 				$newTitle . '.txt');
@@ -71,8 +72,8 @@ class NotesBusinessLayer {
 
 		// in any case save the content
 		// in case there is no file, this function creates one
-		$this->fileSystem->file_put_contents('/' . $newTitle . '.txt', 
-			                                 $content);
+		//	$this->fileSystem->file_put_contents('/' . $newTitle . '.txt', 
+		/	                                 $content);*/
 	}
 
 

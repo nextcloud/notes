@@ -111,9 +111,8 @@ class NotesControllerTest extends ControllerTestUtility {
 
 	public function testSaveCallsBizLayer(){
 		$postParams = array(
-			'oldTitle' => 'tests',
-			'newTitle' => 'tests2',
-			'content' => 'cont'
+			'content' => 'hi',
+			'id' => '3'
 		);
 		$request = new Request(array('post' => $postParams));
 		$this->controller = new NotesController($this->api, $request, 
@@ -121,8 +120,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 		$this->bizLayer->expects($this->once())
 			->method('saveNote')
-			->with($this->equalTo($postParams['oldTitle']),
-				$this->equalTo($postParams['newTitle']),
+			->with($this->equalTo($postParams['id']),
 				$this->equalTo($postParams['content']));
 		$result = $this->controller->save();
 	}

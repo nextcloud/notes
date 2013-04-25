@@ -123,7 +123,7 @@ class NotesBusinessLayerTest extends TestUtility {
 	}
 
 
-	public function testSaveNoteRenamesNoteWhenTitleChanged(){
+	public function SaveNoteRenamesNoteWhenTitleChanged(){
 		$newTitle = 'heho';
 		$title = $this->filesystemNotes[0]['name'];
 		$content = 'content';
@@ -140,7 +140,7 @@ class NotesBusinessLayerTest extends TestUtility {
 	}
 
 
-	public function testSaveNoteCreatesAndDoesNotRenameWhenTitleSametleChanged(){
+	public function SaveNoteCreatesAndDoesNotRenameWhenTitleSametleChanged(){
 		$newTitle = 'heho';
 		$title = $this->filesystemNotes[0]['name'];
 		$content = 'content';
