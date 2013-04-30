@@ -228,10 +228,9 @@ app.factory('Storage',
 			},
 			onSuccess: onSuccess,
 			// if saving failed, bad luck ;D, let the user know and unlock the
-			// note for saving
+			// note for saving the next entry
 			onFailure: function () {
 				$rootScope.$broadcast('noteSaveFailed');
-
 				onSuccess();
 			}
 		});
