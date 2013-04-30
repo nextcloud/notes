@@ -39,9 +39,9 @@ $this->create('notes_get', '/notes/{id}')->get()->action(
 	}
 );
 
-$this->create('notes_save', '/notes')->post()->action(
+$this->create('notes_create', '/notes')->post()->action(
 	function($params){
-		App::main('NotesController', 'save', $params, new DIContainer());
+		App::main('NotesController', 'create', $params, new DIContainer());
 	}
 );
 

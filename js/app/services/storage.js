@@ -11,7 +11,7 @@ app.factory('Storage',
 	function(Loading, $rootScope, Request){
 
 
-	var Storage = function(loading, $rootScope, request){
+	var Storage = function($rootScope, request, loading){
 		this._loading = loading;
 		this._$rootScope = $rootScope;
 		this._request = request;
@@ -20,8 +20,22 @@ app.factory('Storage',
 	};
 
 
-	// save a note to the server
-	Storage.prototype.save = function(note){
+	// create and save a new note to the server
+	Storage.prototype.create = function() {
+		var self = this;
+
+		this._loading.increase();
+
+		this._request.post('notes_create', {
+			onSuccess: function() {
+				self._loading.decrease();
+			}
+		});
+	};
+
+
+	// update a note
+	Storage.prototype.update = function(note){
 		var self = this;
 
 		// first make sure that only one note can be saved at a time
@@ -50,7 +64,7 @@ app.factory('Storage',
 
 				self._saving[note.id].length = 0;
 
-				self.save(nextNote);
+				self.update(nextNote);
 			}
 		};
 
@@ -121,5 +135,5 @@ app.factory('Storage',
 	};
 
 
-	return new Storage(Loading, $rootScope, Request);
+	return new Storage($rootScope, Request, Loading);
 }]);
