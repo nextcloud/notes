@@ -8,7 +8,6 @@ describe('Storage', function() {
 
 	// global injected objects
 	var $httpBackend,
-		scope,
 		router,
 		storage,
 		notesModel,
@@ -37,28 +36,26 @@ describe('Storage', function() {
 
 
 	// get a new instance with the replaced values from the container
-	beforeEach(inject(function($injector, Storage, NotesModel, $rootScope,
-	                           Loading) {
-		$httpBackend = $injector.get('$httpBackend'); // use a mock backend
+	beforeEach(inject(function(_$httpBackend_, Storage, NotesModel, $rootScope,
+								Loading) {
+		$httpBackend = _$httpBackend_; // use a mock backend
 		storage = Storage;
 		notesModel = NotesModel;
-		scope = $rootScope.$new();
 		loading = Loading;
 
 		// generate a fake route when we get the expected route
 		router.generate.andCallFake(function(route, params) {
 			params = params || {};
 
-			if(route === 'notes_get_all' || route === 'notes_create' ||
-				route === 'notes_update') {
+			if(route === 'notes_get_all' || route === 'notes_create') {
 				return '/notes';
-			} else if(
-				(route === 'notes_get' || route === 'notes_delete') &&
-				params.id === 1) {
-				return '/notes/1';
+			} else if(route === 'notes_get' || route === 'notes_delete' ||
+				route === 'notes_update') {
+				return '/notes/' + params.id;
 			}
 
 		});
+
 	}));
 
 
@@ -73,7 +70,14 @@ describe('Storage', function() {
 		};
 		$httpBackend.expectPOST('/notes').respond(200, serverResponse);
 
-		storage.create();
+		// test the returned promise
+		var ok = false;
+		var notOk = false;
+		storage.create().then(function() {
+			ok = true;
+		}, function() {
+			notOk = true;
+		});
 
 		expect(loading.isLoading()).toBe(true);
 
@@ -81,16 +85,95 @@ describe('Storage', function() {
 
 		expect(notesModel.getById(3)).toBe(serverResponse.data.notes[0]);
 		expect(loading.isLoading()).toBe(false);
+		expect(ok).toBe(true);
+		expect(notOk).toBe(false);
+	});
+
+
+	it ('should execute the failure callback when create failed', function() {
+		// provide a fake return when the url is hit
+		$httpBackend.expectPOST('/notes').respond(500, '');
+
+		// test the returned promise
+		var ok = false;
+		var notOk = false;
+		storage.create().then(function() {
+			ok = true;
+		}, function() {
+			notOk = true;
+		});
+
+		$httpBackend.flush();
+
+		expect(loading.isLoading()).toBe(false);
+		expect(ok).toBe(false);
+		expect(notOk).toBe(true);
+	});
+
+
+	it ('should update a note', function() {
+		// provide a fake return when the url is hit
+		var note = {
+			id: 3,
+			title: 'john'
+		};
+		var serverResponse = {
+			data: {
+				notes: [
+					{id: 3, title: 'test'}
+				]
+			}
+		};
+		$httpBackend.expectPUT('/notes/3').respond(200, serverResponse);
+
+		// test the returned promise
+		var ok = false;
+		var notOk = false;
+		storage.update(note).then(function() {
+			ok = true;
+		}, function() {
+			notOk = true;
+		});
+
+		$httpBackend.flush();
+
+		expect(notesModel.getById(3).title).toBe(
+			serverResponse.data.notes[0].title);
+		expect(ok).toBe(true);
+		expect(notOk).toBe(false);
+	});
+
+
+	it ('should not update the same note twice at the same time', function() {
+		var first = false;
+		var second = false;
+		$httpBackend.expectPUT('/notes/3').respond(200, 'abc');
+
+		storage.update({id: 3}).then(function(data) {
+			console.log(data);
+			console.log('hi');
+			$httpBackend.expectPUT('/notes/3').respond(200, 'test');
+			first = true;
+		});
+		storage.update({id: 3}).then(function() {
+			console.log('executed');
+			second = true;
+		});
+
+
+		$httpBackend.flush();
+
+
+		expect(first).toBe(true);
+		expect(second).toBe(false);
+
+		$httpBackend.flush();
+
+		expect(second).toBe(true);
 	});
 
 
 	it('should get all notes', function() {
-		// expect a broadcast
-		var broadcast = false;
-		scope.$on('notesLoaded', function() {
-			broadcast = true;
-		});
-
 		// provide a fake return when the url is hit
 		var serverResponse = {
 			data: {
@@ -99,9 +182,17 @@ describe('Storage', function() {
 				]
 			}
 		};
+
 		$httpBackend.expectGET('/notes?').respond(201, serverResponse);
 
-		storage.getAll();
+		// test the returned promise
+		var ok = false;
+		var notOk = false;
+		storage.getAll().then(function() {
+			ok = true;
+		}, function() {
+			notOk = true;
+		});
 
 		// there should be a loading sign
 		expect(loading.isLoading()).toBe(true);
@@ -112,14 +203,21 @@ describe('Storage', function() {
 
 		expect(notesModel.getById(3)).toBe(serverResponse.data.notes[0]);
 		expect(loading.isLoading()).toBe(false);
-		expect(broadcast).toBe(true);
+		expect(ok).toBe(true);
+		expect(notOk).toBe(false);
 	});
 
 
 	it('should not show a loading sign if get all failed', function() {
 		$httpBackend.expectGET('/notes?').respond(500, '');
 
-		storage.getAll();
+		var ok = false;
+		var notOk = false;
+		storage.getAll().then(function() {
+			ok = true;
+		}, function() {
+			notOk = true;
+		});
 
 		// there should be a loading sign
 		expect(loading.isLoading()).toBe(true);
@@ -129,6 +227,8 @@ describe('Storage', function() {
 		$httpBackend.flush();
 
 		expect(loading.isLoading()).toBe(false);
+		expect(ok).toBe(false);
+		expect(notOk).toBe(true);
 	});
 
 
@@ -143,7 +243,13 @@ describe('Storage', function() {
 		};
 		$httpBackend.expectGET('/notes/1?').respond(201, serverResponse);
 
-		storage.getById(1);
+		var ok = false;
+		var notOk = false;
+		storage.getById(1).then(function() {
+			ok = true;
+		}, function() {
+			notOk = true;
+		});
 
 		// there should be a loading sign
 		expect(loading.isLoading()).toBe(true);
@@ -154,6 +260,8 @@ describe('Storage', function() {
 
 		expect(notesModel.getById(1)).toBe(serverResponse.data.notes[0]);
 		expect(loading.isLoading()).toBe(false);
+		expect(ok).toBe(true);
+		expect(notOk).toBe(false);
 	});
 
 

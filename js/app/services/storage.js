@@ -7,16 +7,15 @@
 // class for loading and saving
 app.factory('Storage',
 
-	['Loading', '$rootScope', 'Request',
-	function(Loading, $rootScope, Request){
+	['$q', 'Request', 'Loading',
+	function($q, Request, Loading){
 
 
-	var Storage = function($rootScope, request, loading){
+	var Storage = function($q, request, loading){
+		this._$q = $q;
 		this._loading = loading;
-		this._$rootScope = $rootScope;
 		this._request = request;
-		this._saving = {};
-		this._saveQueue = [];
+		this._updating = {};
 	};
 
 
@@ -24,89 +23,110 @@ app.factory('Storage',
 	Storage.prototype.create = function() {
 		var self = this;
 
+		// this lets us bind success and failure methods to an object
+		// the object will be returned and gives us the possibility
+		// to chain success and failure callbacks like
+		// Storage.create().then(
+		//	function(){ alert('success'); }, 
+		//  function(){ alert('failure'); }
+		// );
+		var deferred = this._$q.defer();
+
 		this._loading.increase();
 
 		this._request.post('notes_create', {
-			onSuccess: function() {
+			onSuccess: function(data) {
+				// because the $http object will call $scope.$apply its not
+				// needed in here
+				deferred.resolve(data);
+				self._loading.decrease();
+			},
+			onFailure: function() {
+				deferred.reject();
 				self._loading.decrease();
 			}
 		});
+
+		return deferred.promise;
 	};
 
 
 	// update a note
 	Storage.prototype.update = function(note){
 		var self = this;
+		var deferred = this._$q.defer();
 
-		// first make sure that only one note can be saved at a time
-		// to do that check if the note is currently being saved in the 
-		// saving hashmap and queue it if needed
-		var saveQueue = this._saving[note.id] || [];
+		this._updating[note.id] = this._updating[note.id] || {};
+		var updating = this._updating[note.id];
 
-		saveQueue.push(note);
+		// if theres already an update request, save this one and exit
+		if(angular.isDefined(updating.current)) {
 
-		if(saveQueue.length > 1) {
-			return;
+			updating.next = note;
+			updating.promise = deferred.promise;
+
+		// if there is no current note execute the request and also
+		// execute saved ones
+		} else {
+
+			updating.current = note;
+
+			// execute the newest request if there is any
+			var nextUpdateCallback = function() {
+				delete updating.current;
+
+				if(angular.isDefined(updating.next)) {
+					self.update(updating.next);
+					delete updating.next;
+				}
+			};
+
+
+			this._request.put('notes_update', {
+				routeParams: {
+					id: note.id
+				},
+				onSuccess: function(data) {
+					deferred.resolve(data);
+					nextUpdateCallback();
+				},
+				onFailure: function() {
+					deferred.reject();
+					nextUpdateCallback();
+				}
+			});
 		}
 
-		// on successful save we can unluck the note and execute queued up
-		// requests
-		var onSuccess = function() {
-
-			// remove the just saved item
-			var saveQueue = self._saving[note.id];
-			saveQueue.shift();
-
-			// if there are any left, take the last one because its the
-			// newest
-			if(saveQueue.length > 0) {
-				var nextNote = saveQueue[saveQueue.length-1];
-
-				self._saving[note.id].length = 0;
-
-				self.update(nextNote);
-			}
-		};
-
-
-		this._request.post('notes_save', {
-			data: {
-				id: note.id,
-				content: note.content
-			},
-			onSuccess: onSuccess,
-			// if saving failed, bad luck ;D, let the user know and unlock the
-			// note for saving the next entry
-			onFailure: function () {
-				$rootScope.$broadcast('noteSaveFailed');
-				onSuccess();
-			}
-		});
-
+		return deferred.promise;
 	};
 
 
 	// get all from the server and populate the notes model
 	Storage.prototype.getAll = function() {
 		var self = this;
+		var deferred = this._$q.defer();
 
 		this._loading.increase();
 
 		this._request.get('notes_get_all', {
-			onSuccess: function() {
-				$rootScope.$broadcast('notesLoaded');
+			onSuccess: function(data) {
+				deferred.resolve(data);
 				self._loading.decrease();
 			},
 			onFailure: function() {
+				deferred.reject();
 				self._loading.decrease();
 			}
 		});
+
+		return deferred.promise;
 	};
 
 
 	// update the note by id
 	Storage.prototype.getById = function(id) {
 		var self = this;
+		var deferred = this._$q.defer();
 
 		this._loading.increase();
 
@@ -114,13 +134,17 @@ app.factory('Storage',
 			routeParams: {
 				id: id
 			},
-			onSuccess: function() {
+			onSuccess: function(data) {
 				self._loading.decrease();
+				deferred.resolve(data);
 			},
 			onFailure: function() {
 				self._loading.decrease();
+				deferred.reject();
 			}
 		});
+
+		return deferred.promise;
 	};
 
 
@@ -135,5 +159,5 @@ app.factory('Storage',
 	};
 
 
-	return new Storage($rootScope, Request, Loading);
+	return new Storage($q, Request, Loading);
 }]);
