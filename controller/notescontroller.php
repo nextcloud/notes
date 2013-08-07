@@ -10,38 +10,30 @@ namespace OCA\Notes\Controller;
 use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
+use \OCA\AppFramework\Http\JSONResponse;
 
 use \OCA\Notes\BusinessLayer\NotesBusinessLayer;
 
 
 class NotesController extends Controller {
 
-	private $businessLayer;
+	private $notesBusinessLayer;
 
 	public function __construct(API $api, Request $request, 
-		                        NotesBusinessLayer $notesBizLayer){
+		                        NotesBusinessLayer $notesBusinessLayer){
 		parent::__construct($api, $request);
-		$this->businessLayer = $notesBizLayer;
+		$this->notesBusinessLayer = $notesBusinessLayer;
 	}
 
 
 	/**
-	 * ATTENTION!!!
-	 * The following comments are needed "here" but turn off security checks
-	 * Please look up their meaning in the documentation:
-	 * http://doc.owncloud.org/server/master/developer_manual/app/appframework/controllers.html
-	 *
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 */
 	public function getAll() {
-		$notes = $this->businessLayer->getAllNotes();
-		$params = array(
-			'notes' => $notes
-		);
-
-		return $this->renderJSON($params);	
+		$notes = $this->notesBusinessLayer->getAll();
+		return new JSONResponse($notes);	
 	}
 
 
@@ -52,13 +44,8 @@ class NotesController extends Controller {
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
-		$note = $this->businessLayer->getNote($id);
-
-		$params = array(
-			'notes' => array($note)
-		);
-
-		return $this->renderJSON($params);
+		$note = $this->notesBusinessLayer->get($id);
+		return new JSONResponse($note);
 	}
 
 
@@ -67,13 +54,22 @@ class NotesController extends Controller {
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 */
-	public function save() {
+	public function create() {
+		$note = $this->notesBusinessLayer->create();
+		return new JSONResponse($note);
+	}
+
+
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @Ajax
+	 */
+	public function update() {
 		$id = $this->params('id');
 		$content = $this->params('content');
-
-		$this->businessLayer->saveNote($id, $content);
-
-		return $this->renderJSON();
+		$note = $this->notesBusinessLayer->update($id, $content);
+		return new JSONResponse($note);
 	}
 
 
@@ -84,10 +80,8 @@ class NotesController extends Controller {
 	 */
 	public function delete() {
 		$id = (int) $this->params('id');
-
-		$this->businessLayer->deleteNote($id);
-	
-		return $this->renderJSON();	
+		$this->notesBusinessLayer->delete($id);
+		return new JSONResponse();	
 	}
 
 

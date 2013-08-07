@@ -4,33 +4,30 @@
  * See the COPYING file. 
  */
 
-// used to store the notes data and create hashes and caches for quick access
-app.factory('NotesModel',
-
-	['_Model', '_EqualQuery', '_MaximumQuery',
-	function(_Model, _EqualQuery, _MaximumQuery){
-
-	var NotesModel = function(){};
-	NotesModel.prototype = new _Model();
-
-	// overwrite to set an id
-	NotesModel.prototype.add = function(data) {
-		_Model.prototype.add.call(this, data);
+// take care of fileconflicts by appending a number
+app.factory('NotesModel', function () {
+	var NotesModel = function () {
+		this.notes = [];
+		this.notesIds = {};
 	};
 
-
-	NotesModel.prototype.getNewest = function() {
-		var query = new _MaximumQuery('modified');
-		return this.get(query);
+	NotesModel.prototype = {
+		addAll: function (notes) {
+			for(var i=0; i<notes.length; i++) {
+				this.add(notes[i]);
+			}
+		},
+		add: function(note) {
+			this.notes.push(note);
+			this.notesIds[note.id] = note;
+		},
+		getAll: function () {
+			return this.notes;
+		},
+		get: function (id) {
+			return this.notesIds[id];
+		}
 	};
-
-
-	NotesModel.prototype.getByTitle = function(title){
-		var query = new _EqualQuery('title', title);
-		return this.get(query);
-	};
-
 
 	return new NotesModel();
-
-}]);
+});

@@ -11,145 +11,176 @@ use \OCA\AppFramework\Http\Request;
 use \OCA\AppFramework\Http\JSONResponse;
 use \OCA\AppFramework\Utility\ControllerTestUtility;
 
+use \OCA\Notes\DependencyInjection\DIContainer;
 
 require_once(__DIR__ . "/../classloader.php");
 
 
 class NotesControllerTest extends ControllerTestUtility {
 
-	private $api;
-	private $request;
-	private $controller;
-	private $bizLayer;
+	private $container;
 
 
 	/**
 	 * Gets run before each test
 	 */
 	public function setUp(){
-		$this->api = $this->getAPIMock();
-		$this->bizLayer = $this->getMockBuilder(
+		// use the container to test to check if its wired up correctly and
+		// replace needed components with mocks
+		$this->container = new DIContainer();
+		$this->container['API'] = $this->getMockBuilder(
+			'\OCA\AppFramework\Core\API')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->container['Request'] = new Request();
+		$this->container['NotesBusinessLayer'] = $this->getMockBuilder(
 			'\OCA\Notes\BusinessLayer\NotesBusinessLayer')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->request = new Request();
-		$this->controller = 
-			new NotesController($this->api, $this->request, $this->bizLayer);
 	}
 
 
+	private function assertDefaultAJAXAnnotations ($method) {
+		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
+		$this->assertAnnotations($this->container['NotesController'], 
+			$method, $annotations);
+	}
+
+
+	/**
+	 * GET /notes/
+	 */
 	public function testGetAllAnnotations(){
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
-		$this->assertAnnotations($this->controller, 'getAll', $annotations);
+		$this->assertDefaultAJAXAnnotations('getAll');
 	}
 
 
-	public function testGetAllReturnsJSON(){
-		$result = $this->controller->getAll();
-		$this->assertTrue($result instanceof JSONResponse);
-	}
-
-
-	public function testCallsNotesBizLayer(){
+	public function testGetAll(){
 		$expected = array(
-			'notes' => array('hi')
+			'hi'
 		);
-		$this->bizLayer->expects($this->once())
-			->method('getAllNotes')
-			->will($this->returnValue($expected['notes']));
 
-		$result = $this->controller->getAll();
-		$params = $result->getParams();
+		$this->container['NotesBusinessLayer']
+			->expects($this->once())
+			->method('getAll')
+			->will($this->returnValue($expected));
 
-		$this->assertEquals($expected, $params);
+		$response = $this->container['NotesController']->getAll();
+
+		$this->assertEquals($expected, $response->getData());
+		$this->assertTrue($response instanceof JSONResponse);
 	}
 
 
+	/**
+	 * GET /notes/1
+	 */
 	public function testGetAnnotations(){
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
-		$this->assertAnnotations($this->controller, 'get', $annotations);
+		$this->assertDefaultAJAXAnnotations('get');
 	}
 
 
-	public function testGetReturnsJSON(){
-		$result = $this->controller->get();
-		$this->assertTrue($result instanceof JSONResponse);			
-	}
-
-
-	public function testGetCallsBizLayer(){
+	public function testGet(){
+		$id = 1;
 		$expected = array(
-			'notes' => array('hi')
+			'hi'
 		);
-		$getParams = array('id' => '3');
-		$request = new Request(array('get' => $getParams));
-		$this->controller = new NotesController($this->api, $request, 
-			                                    $this->bizLayer);
-		$this->bizLayer->expects($this->once())
-			->method('getNote')
-			->with($this->equalTo(3))
-			->will($this->returnValue($expected['notes'][0]));
 
-		$result = $this->controller->get();
-		$params = $result->getParams();
+		$this->container['Request'] = new Request(array(
+			'urlParams' => array('id' => $id)
+		));
+		$this->container['NotesBusinessLayer']
+			->expects($this->once())
+			->method('get')
+			->with($this->equalTo($id))
+			->will($this->returnValue($expected));
 
-		$this->assertEquals($expected, $params);
+		$response = $this->container['NotesController']->get();
+
+		$this->assertEquals($expected, $response->getData());
+		$this->assertTrue($response instanceof JSONResponse);
 	}
 
 
-	public function testSaveAnnotations(){
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
-		$this->assertAnnotations($this->controller, 'save', $annotations);
+	/**
+	 * POST /notes
+	 */
+	public function testCreateAnnotations(){
+		$this->assertDefaultAJAXAnnotations('create');
 	}
 
 
-	public function testSaveReturnsJSON(){
-		$result = $this->controller->save();
-		$this->assertTrue($result instanceof JSONResponse);			
-	}
-
-
-	public function testSaveCallsBizLayer(){
-		$postParams = array(
-			'content' => 'hi',
-			'id' => '3'
+	public function testCreate(){
+		$expected = array(
+			'hi'
 		);
-		$request = new Request(array('post' => $postParams));
-		$this->controller = new NotesController($this->api, $request, 
-			                                    $this->bizLayer);
 
-		$this->bizLayer->expects($this->once())
-			->method('saveNote')
-			->with($this->equalTo($postParams['id']),
-				$this->equalTo($postParams['content']));
-		$result = $this->controller->save();
+		$this->container['NotesBusinessLayer']
+			->expects($this->once())
+			->method('create')
+			->will($this->returnValue($expected));
+
+		$response = $this->container['NotesController']->create();
+
+		$this->assertEquals($expected, $response->getData());
+		$this->assertTrue($response instanceof JSONResponse);
 	}
 
 
+	/**
+	 * PUT /notes/
+	 */	
+	public function testUpdateAnnotations(){
+		$this->assertDefaultAJAXAnnotations('update');
+	}
+
+
+	public function testUpdate(){
+		$id = 1;
+		$content = 'yo';
+		$expected = array(
+			'hi'
+		);
+
+		$this->container['Request'] = new Request(array(
+			'urlParams' => array('id' => $id),
+			'params' => array('content' => $content)
+		));
+		$this->container['NotesBusinessLayer']
+			->expects($this->once())
+			->method('update')
+			->with($this->equalTo($id), $this->equalTo($content))
+			->will($this->returnValue($expected));
+
+		$response = $this->container['NotesController']->update();
+
+		$this->assertEquals($expected, $response->getData());
+		$this->assertTrue($response instanceof JSONResponse);
+	}
+
+
+	/**
+	 * DELETE /notes/
+	 */
 	public function testDeleteAnnotations(){
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
-		$this->assertAnnotations($this->controller, 'delete', $annotations);
+		$this->assertDefaultAJAXAnnotations('delete');
 	}
 
 
-	public function testDeleteReturnsJSON(){
-		$result = $this->controller->delete();
-		$this->assertTrue($result instanceof JSONResponse);			
+	public function testDelete(){
+		$id = 1;
+
+		$this->container['Request'] = new Request(array(
+			'urlParams' => array('id' => $id)
+		));
+		$this->container['NotesBusinessLayer']
+			->expects($this->once())
+			->method('delete');
+
+		$response = $this->container['NotesController']->delete();
+
+		$this->assertTrue($response instanceof JSONResponse);
 	}
 
-
-	public function testDeleteCallsBizLayer(){
-		$postParams = array(
-			'id' => '3'
-		);
-		$request = new Request(array('post' => $postParams));
-		$this->controller = new NotesController($this->api, $request, 
-			                                    $this->bizLayer);
-
-		$this->bizLayer->expects($this->once())
-			->method('deleteNote')
-			->with($this->equalTo(3));
-		$result = $this->controller->delete();
-	}
 
 }

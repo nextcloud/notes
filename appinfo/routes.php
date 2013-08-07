@@ -45,13 +45,13 @@ $this->create('notes_create', '/notes')->post()->action(
 	}
 );
 
-$this->create('notes_update', '/notes')->put()->action(
+$this->create('notes_update', '/notes/{id}')->put()->action(
 	function($params){
 		App::main('NotesController', 'update', $params, new DIContainer());
 	}
 );
 
-$this->create('notes_delete', '/note/{id}')->delete()->action(
+$this->create('notes_delete', '/notes/{id}')->delete()->action(
 	function($params){
 		App::main('NotesController', 'delete', $params, new DIContainer());
 	}

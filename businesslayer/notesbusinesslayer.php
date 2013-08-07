@@ -19,7 +19,7 @@ class NotesBusinessLayer {
 	}
 
 
-	public function getAllNotes(){
+	public function getAll(){
 		$files = $this->fileSystem->getDirectoryContent('/');
 		$notes = array();
 		
@@ -36,7 +36,7 @@ class NotesBusinessLayer {
 	}
 
 
-	public function getNote($id) {
+	public function get($id) {
 
 		$path = $this->fileSystem->getPath($id);
 		$fileInfo = $this->fileSystem->getFileInfo($path);
@@ -57,7 +57,7 @@ class NotesBusinessLayer {
 	/**
 	 * If the file exists, rename the file, otherwise create a new file
 	 */
-	public function saveNote($id, $content){
+	public function update($id, $content){
 
 		// prevent directory traversal
 		/*
@@ -77,7 +77,12 @@ class NotesBusinessLayer {
 	}
 
 
-	public function deleteNote($title) {
+	public function create() {
+
+	}
+
+
+	public function delete($title) {
 
 		// prevent directory traversal
 		$title = str_replace(array('/', '\\'), '',  $title);

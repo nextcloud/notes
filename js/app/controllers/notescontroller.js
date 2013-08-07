@@ -4,57 +4,23 @@
  * See the COPYING file. 
  */
 
-
 // This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController',
+app.controller('NotesController', ['$routeParams', '$scope', 'Restangular',
+	'NotesModel', 'Config',
+	function($routeParams, $scope, Restangular, NotesModel, Config) {
+	
+	$scope.route = $routeParams;
 
-	['$scope', '$location', '$timeout', 'NotesModel', 'Storage', 'Loading',
-	'Config',
-	function($scope, $location, $timeout, NotesModel, Storage, Loading, Config) {
+	// initial request for getting all notes
+	Restangular.all('notes').getList().then(function (notes) {
 
+		NotesModel.addAll(notes);
+		$scope.notes = NotesModel.getAll();
 
-	// extracts the id from the url
-	var getNoteId = function() {
-		return parseInt( $location.path().substring(1), 10 );
-	};
-
-	// load a note from the server if it does not yet exist
-	var updateNote = function(id) {
-		var note = NotesModel.getById(id);
-
-		// in case the note does not exist yet locally
-		if(angular.isDefined(note) && note.content === '') {
-			Storage.getById(id);
-		}
-
-		$scope.activeNote = note;
-	};
-
-	// we want to check if the # changes in the url and conditionally load the
-	// note if it does not have content. Consider using Angular routes if your
-	// system is more complex
-	$scope.$watch(getNoteId, updateNote);
-	$scope.$on('notesLoaded', function() {
-		updateNote(getNoteId());
 	});
 
+	$scope.create = function () {
+		console.log('tbd');
+	};
 
-	// bind all the notes to the scope
-	$scope.notes = NotesModel.getAll();
-
-	// loading spinner
-	$scope.loading = Loading;
-
-	// notes should be saved if they are dirty only, see ng-change in the
-	// template
-	setInterval(function() {
-
-		angular.forEach($scope.notes, function(note) {
-			if(note.dirty) {
-				Storage.save(note);
-				note.dirty = false;
-			}
-		});
-
-	}, Config.saveInterval);
 }]);

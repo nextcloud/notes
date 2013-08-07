@@ -11,15 +11,14 @@
 	"bugs": "https://github.com/owncloud/notes/issues",
 	"dependencies": {},
 	"devDependencies": {
-		"grunt": "~0.4.0",
-		"grunt-cli": "~0.1.6",
-		"grunt-contrib-concat": "~0.1.2",
-		"grunt-contrib-jshint": "*",
-		"grunt-contrib-watch": "~0.2.0",
-		"gruntacular": "~0.1.1",
-		"grunt-wrap": "~0.2.0",
-		"phantomjs": "~1.8.1-3",
-		"grunt-phpunit": "0.2.0"
+		"grunt": "*",
+		"grunt-cli": "*",
+		"grunt-contrib-concat": "*",
+		"grunt-contrib-watch": "*",
+		"grunt-coffeelint": "*",
+		"grunt-karma": "*",
+		"grunt-wrap": "*",
+		"grunt-phpunit": "*"
 	},
 	"engine": "node >= 0.8"
 }
