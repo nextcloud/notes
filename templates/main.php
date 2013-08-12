@@ -16,7 +16,7 @@
 
 ?>
 
-<div id="app" ng-app="Notes">
+<div id="app" ng-app="Notes" ng-controller="AppController">
 
 	<script type="text/ng-template" id="note.html">
 		<?php print_unescaped($this->inc('note')); ?>
@@ -40,5 +40,5 @@
 		</ul>
 	</div>
 
-	<div id="app-content" ng-view></div>
+	<div id="app-content" ng-view ng-class="{loading: is.loading}"></div>
 </div>

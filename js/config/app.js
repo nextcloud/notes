@@ -22,9 +22,23 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		controller: 'NoteController',
 		resolve: {
 			// $routeParams does not work inside resolve so use $route
-			note: ['$route', 'Restangular', 
-				function ($route, Restangular) {
-				return Restangular.one('notes', $route.current.params.noteId).get();
+			// note is the name of the argument that will be injected into the
+			// controller
+			note: ['$route', '$q', 'is', 'Restangular', 
+				function ($route, $q, is, Restangular) {
+				var deferred = $q.defer();
+				is.loading = true;
+
+				Restangular.one('notes', $route.current.params.noteId).get().
+				then(function (note) {
+					is.loading = false;
+					deferred.resolve(note);
+				}, function () {
+					is.loading = false;
+					deferred.reject();
+				});
+
+				return deferred.promise;
 			}]
 		}
 	});
@@ -39,4 +53,5 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	// Always send the CSRF token by default
 	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
+// bind global configuration to rootscope
 }]);

@@ -23,7 +23,7 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note'
 		// create note title by using the first line
 		note.title = note.content.split('\n')[0] || 'Empty note';
 		console.log(note);
-		//noteResource.put();
+		//note.put();
 	};
 
 
