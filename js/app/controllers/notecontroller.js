@@ -4,26 +4,27 @@
  * See the COPYING file. 
  */
 
-app.controller('NoteController', ['$routeParams', '$scope', 'Restangular', 
-	'NotesModel',
-	function($routeParams, $scope, Restangular, NotesModel) {
+app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note',
+	function($routeParams, $scope, NotesModel, note) {
 
-	// because the initial request may be very big, the content of a note is
-	// not loaded. That's why it has to be loaded on demand and added here
-	Restangular.one('notes', $routeParams.noteId).get().then(function (note) {
+	// update currently available note
+	var oldNote = NotesModel.update(note);
+	if(oldNote) {
+		oldNote.content = note.content;
+		oldNote.title = note.title;
+		oldNote.modified = note.modified;
+		oldNote.id = note.id;
+	}
+	$scope.note = oldNote;
 
-		// update currently available note
-		var oldNote = NotesModel.get(note.id);
+	$scope.save = function() {
+		var note = $scope.note;
 
-		if(oldNote) {
-			oldNote.content = note.content;
-			oldNote.title = note.title;
-			oldNote.modified = note.modified;
-			oldNote.id = note.id;
-		}
+		// create note title by using the first line
+		note.title = note.content.split('\n')[0] || 'Empty note';
+		console.log(note);
+		//noteResource.put();
+	};
 
-		$scope.note = oldNote;
-		
-	});
 
 }]);

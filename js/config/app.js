@@ -19,7 +19,14 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	// define your routes that that load templates into the ng-view
 	$routeProvider.when('/notes/:noteId', {
 		templateUrl: 'note.html',
-		controller: 'NoteController'
+		controller: 'NoteController',
+		resolve: {
+			// $routeParams does not work inside resolve so use $route
+			note: ['$route', 'Restangular', 
+				function ($route, Restangular) {
+				return Restangular.one('notes', $route.current.params.noteId).get();
+			}]
+		}
 	});
 
 	// dynamically set base URL for HTTP requests, assume that there is no other

@@ -25,7 +25,7 @@
 	<div id="app-navigation" ng-controller="NotesController">
 		<ul>
 			<!-- new note button -->
-			<li id="note-add" ng-click="createNew()"
+			<li id="note-add" ng-click="create()"
 				oc-click-focus="{ selector: '#app-content textarea' }">
 				<a href='#'>+ <span><?php p($l->t('New Note')); ?></span></a>
 			</li>

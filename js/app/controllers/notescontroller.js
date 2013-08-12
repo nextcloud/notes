@@ -5,22 +5,26 @@
  */
 
 // This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController', ['$routeParams', '$scope', 'Restangular',
-	'NotesModel', 'Config',
-	function($routeParams, $scope, Restangular, NotesModel, Config) {
+app.controller('NotesController', ['$routeParams', '$scope', '$location', 
+	'Restangular', 'NotesModel', 'Config',
+	function($routeParams, $scope, $location, Restangular, NotesModel, Config) {
 	
 	$scope.route = $routeParams;
 
-	// initial request for getting all notes
-	Restangular.all('notes').getList().then(function (notes) {
+	var notesResource = Restangular.all('notes');
 
+	// initial request for getting all notes
+	notesResource.getList().then(function (notes) {
 		NotesModel.addAll(notes);
 		$scope.notes = NotesModel.getAll();
-
 	});
 
 	$scope.create = function () {
-		console.log('tbd');
+		notesResource.post().then(function (note) {
+			NotesModel.add(note);
+			$location.path('/notes/' + note.id);
+		});
+
 	};
 
 }]);

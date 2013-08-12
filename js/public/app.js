@@ -1,12 +1,3 @@
-(function(angular, $, oc_requesttoken, undefined){
-
-'use strict';
-
-/**
- * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com> 
- * This file is licensed under the Affero General Public License version 3 or later. 
- * See the COPYING file.
- */
 
 var app = angular.module('Notes', ['restangular']).
 config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
@@ -23,7 +14,14 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	// define your routes that that load templates into the ng-view
 	$routeProvider.when('/notes/:noteId', {
 		templateUrl: 'note.html',
-		controller: 'NoteController'
+		controller: 'NoteController',
+		resolve: {
+			// $routeParams does not work inside resolve so use $route
+			note: ['$route', 'Restangular', 
+				function ($route, Restangular) {
+				return Restangular.one('notes', $route.current.params.noteId).get();
+			}]
+		}
 	});
 
 	// dynamically set base URL for HTTP requests, assume that there is no other
@@ -38,6 +36,59 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 }]);
 
+app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note',
+	function($routeParams, $scope, NotesModel, note) {
+
+	// update currently available note
+	var oldNote = NotesModel.update(note);
+	if(oldNote) {
+		oldNote.content = note.content;
+		oldNote.title = note.title;
+		oldNote.modified = note.modified;
+		oldNote.id = note.id;
+	}
+	$scope.note = oldNote;
+
+	$scope.save = function() {
+		var note = $scope.note;
+
+		// create note title by using the first line
+		note.title = note.content.split('\n')[0] || 'Empty note';
+		console.log(note);
+		//noteResource.put();
+	};
+
+
+}]);
+// This is available by using ng-controller="NotesController" in your HTML
+app.controller('NotesController', ['$routeParams', '$scope', '$location', 
+	'Restangular', 'NotesModel', 'Config',
+	function($routeParams, $scope, $location, Restangular, NotesModel, Config) {
+	
+	$scope.route = $routeParams;
+
+	var notesResource = Restangular.all('notes');
+
+	// initial request for getting all notes
+	notesResource.getList().then(function (notes) {
+		NotesModel.addAll(notes);
+		$scope.notes = NotesModel.getAll();
+	});
+
+	$scope.create = function () {
+		notesResource.post().then(function (note) {
+			NotesModel.add(note);
+			$location.path('/notes/' + note.id);
+		});
+
+	};
+
+}]);
+
+/**
+ * Like ng-change only that it does not fire when you type faster than
+ * 300 ms
+ */
 app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 	return {
 		restrict: 'A',
@@ -63,50 +114,6 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 	};
 }]);
 
-app.controller('NoteController', ['$routeParams', '$scope', 'Restangular', 
-	'NotesModel',
-	function($routeParams, $scope, Restangular, NotesModel) {
-
-	// because the initial request may be very big, the content of a note is
-	// not loaded. That's why it has to be loaded on demand and added here
-	Restangular.one('notes', $routeParams.noteId).get().then(function (note) {
-
-		// update currently available note
-		var oldNote = NotesModel.get(note.id);
-
-		if(oldNote) {
-			oldNote.content = note.content;
-			oldNote.title = note.title;
-			oldNote.modified = note.modified;
-			oldNote.id = note.id;
-		}
-
-		$scope.note = oldNote;
-		
-	});
-
-}]);
-// This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController', ['$routeParams', '$scope', 'Restangular',
-	'NotesModel', 'Config',
-	function($routeParams, $scope, Restangular, NotesModel, Config) {
-	
-	$scope.route = $routeParams;
-
-	// initial request for getting all notes
-	Restangular.all('notes').getList().then(function (notes) {
-
-		NotesModel.addAll(notes);
-		$scope.notes = NotesModel.getAll();
-
-	});
-
-	$scope.create = function () {
-		console.log('tbd');
-	};
-
-}]);
-
 // take care of fileconflicts by appending a number
 app.factory('NotesModel', function () {
 	var NotesModel = function () {
@@ -129,9 +136,20 @@ app.factory('NotesModel', function () {
 		},
 		get: function (id) {
 			return this.notesIds[id];
+		},
+		update: function(updated) {
+			var keys = Object.keys(updated);
+			var note = this.notesIds[updated.id];
+
+			for(var i=0; i<keys.length; i++) {
+				var key = keys[i];
+				
+				if(key !== 'id') {
+					note[key] = updated[key];
+				}
+			}
 		}
 	};
 
 	return new NotesModel();
 });
-})(window.angular, jQuery, oc_requesttoken);
