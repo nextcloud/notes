@@ -24,8 +24,7 @@ class NoteTest extends TestUtility {
 			'content' => 'hehe'
 		);
 
-		$note = new Note();
-		$note->fromFile($file);
+		$note = Note::fromFile($file);
 
 		$this->assertEquals($file['fileid'], $note->getId());
 		$this->assertEquals($file['mtime'], $note->getModified());

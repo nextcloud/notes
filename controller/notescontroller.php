@@ -66,9 +66,10 @@ class NotesController extends Controller {
 	 * @Ajax
 	 */
 	public function update() {
-		$id = $this->params('id');
+		$id = (int) $this->params('id');
+		$title = $this->params('title');
 		$content = $this->params('content');
-		$note = $this->notesService->update($id, $content);
+		$note = $this->notesService->update($id, $title, $content);
 		return new JSONResponse($note);
 	}
 

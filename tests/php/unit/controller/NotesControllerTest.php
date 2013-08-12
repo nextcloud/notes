@@ -136,18 +136,20 @@ class NotesControllerTest extends ControllerTestUtility {
 	public function testUpdate(){
 		$id = 1;
 		$content = 'yo';
+		$title = 'yyy';
 		$expected = array(
 			'hi'
 		);
 
 		$this->container['Request'] = new Request(array(
 			'urlParams' => array('id' => $id),
-			'params' => array('content' => $content)
+			'params' => array('content' => $content, 'title' => $title)
 		));
 		$this->container['NotesService']
 			->expects($this->once())
 			->method('update')
-			->with($this->equalTo($id), $this->equalTo($content))
+			->with($this->equalTo($id), $this->equalTo($title), 
+				$this->equalTo($content))
 			->will($this->returnValue($expected));
 
 		$response = $this->container['NotesController']->update();

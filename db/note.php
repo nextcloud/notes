@@ -16,11 +16,13 @@ class Note extends Entity {
 	public $title;
 	public $content;
 
-	public function fromFile($file){
-		$this->id = (int) $file['fileid'];
-		$this->modified = (int) $file['mtime'];
-		$this->title = substr($file['name'], 0, -4); // remove trailing .txt
-		$this->content = $file['content'];
+	public static function fromFile($file){
+		$note = new static();
+		$note->setId((int) $file['fileid']);
+		$note->setModified((int) $file['mtime']);
+		$note->setTitle(substr($file['name'], 0, -4)); // remove trailing .txt
+		$note->setContent($file['content']);
+		return $note;
 	}
 
 

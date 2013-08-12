@@ -66,15 +66,10 @@ class NotesServiceTest extends TestUtility {
 			)
 		);
 
-		$note1 = new Note();
-		$note1->fromFile($this->filesystemNotes[0]);
-
-		$note2 = new Note();
-		$note2->fromFile($this->filesystemNotes[2]);
 
 		$this->notes = array(
-			$note1, 
-			$note2
+			Note::fromFile($this->filesystemNotes[0]),
+			Note::fromFile($this->filesystemNotes[2])
 		);
 	}
 
@@ -94,10 +89,7 @@ class NotesServiceTest extends TestUtility {
 
 
 	public function testGetNote(){
-		$expected = new Note();
-		$expected->fromFile(
-			$this->filesystemNotes[0]
-		);
+		$expected = Note::fromFile($this->filesystemNotes[0]);
 
 		$this->container['FileSystem']->expects($this->once())
 			->method('file_get_contents')
@@ -128,43 +120,131 @@ class NotesServiceTest extends TestUtility {
 	}
 
 
-
-
-/*
-	public function SaveNoteRenamesNoteWhenTitleChanged(){
-		$newTitle = 'heho';
-		$title = $this->filesystemNotes[0]['name'];
-		$content = 'content';
-		$this->container['FileSystem']->expects($this->once())
+	public function testNoCollision() {
+		$title = 'test';
+		$id = 2;
+		$this->container['FileSystem']->expects($this->any())
 			->method('file_exists')
-			->with($this->equalTo('/' . $title . '.txt'))
 			->will($this->returnValue(true));
 		$this->container['FileSystem']->expects($this->once())
-			->method('rename')
-			->with($this->equalTo('/' . $title . '.txt'),
-				$this->equalTo('/' . $newTitle . '.txt'));
-
-		$result = $this->container['NotesService']->saveNote($title, $newTitle, $content);
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . '.txt'))
+			->will($this->returnValue(array('fileid' => $id)));
+		$fileName = $this->container['NotesService']
+			->generateFileName($title, $id);
+		$this->assertEquals($title . '.txt', $fileName);
 	}
 
 
-	public function SaveNoteCreatesAndDoesNotRenameWhenTitleSametleChanged(){
-		$newTitle = 'heho';
-		$title = $this->filesystemNotes[0]['name'];
-		$content = 'content';
+	public function testNoCollisionFileDoesNotExist() {
+		$title = 'test';
+		$id = 2;
+		$this->container['FileSystem']->expects($this->any())
+			->method('file_exists')
+			->will($this->returnValue(false));
+		$fileName = $this->container['NotesService']
+			->generateFileName($title, $id);
+		$this->assertEquals($title . '.txt', $fileName);
+	}
+
+
+	public function testCollisionAddParenthesis() {
+		$title = 'test';
+		$id = 3;
+		$this->container['FileSystem']->expects($this->at(0))
+			->method('file_exists')
+			->will($this->returnValue(true));
+		$this->container['FileSystem']->expects($this->at(1))
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . '.txt'))
+			->will($this->returnValue(array('fileid' => $id+1)));
+		$this->container['FileSystem']->expects($this->at(2))
+			->method('file_exists')
+			->will($this->returnValue(true));
+		$this->container['FileSystem']->expects($this->at(3))
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . ' (2).txt'))
+			->will($this->returnValue(array('fileid' => $id)));
+
+		$fileName = $this->container['NotesService']
+			->generateFileName($title, $id);
+		$this->assertEquals($title . ' (2).txt', $fileName);
+	}
+
+
+	public function testCollisionIncrementParenthesis() {
+		$title = 'test';
+		$id = 3;
+		$this->container['FileSystem']->expects($this->at(0))
+			->method('file_exists')
+			->will($this->returnValue(true));
+		$this->container['FileSystem']->expects($this->at(1))
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . '.txt'))
+			->will($this->returnValue(array('fileid' => $id+1)));
+		$this->container['FileSystem']->expects($this->at(2))
+			->method('file_exists')
+			->will($this->returnValue(true));
+		$this->container['FileSystem']->expects($this->at(3))
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . ' (2).txt'))
+			->will($this->returnValue(array('fileid' => $id+2)));
+		$this->container['FileSystem']->expects($this->at(4))
+			->method('file_exists')
+			->will($this->returnValue(true));
+		$this->container['FileSystem']->expects($this->at(5))
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . ' (3).txt'))
+			->will($this->returnValue(array('fileid' => $id)));
+
+
+		$fileName = $this->container['NotesService']
+			->generateFileName($title, $id);
+		$this->assertEquals($title . ' (3).txt', $fileName);
+	}
+
+
+	public function testCreate() {
+		$this->notes[0]->setTitle('New note');
 		$this->container['FileSystem']->expects($this->once())
 			->method('file_exists')
-			->with($this->equalTo('/' . $title . '.txt'))
 			->will($this->returnValue(false));
-		$this->container['FileSystem']->expects($this->never())
-			->method('rename');
-
 		$this->container['FileSystem']->expects($this->once())
 			->method('file_put_contents')
-			->with($this->equalTo('/' . $newTitle . '.txt'),
-				$this->equalTo($content));
+			->with($this->equalTo('/New note.txt'));
+		$this->container['FileSystem']->expects($this->once())
+			->method('getFileInfo')
+			->will($this->returnValue($this->filesystemNotes[0]));
 
-		$result = $this->container['NotesService']->saveNote($title, $newTitle, $content);
+		$note = $this->container['NotesService']->create();
+		$this->assertEquals($this->notes[0], $note);
+	}	
+
+
+	public function testUpdate() {
+		$id = 3;
+		$content = 'yo';
+		$title = 'title';
+		$this->container['FileSystem']->expects($this->at(0))
+			->method('getPath')
+			->with($this->equalTo($id))
+			->will($this->returnValue('/' . $title . 'txt'));
+		$this->container['FileSystem']->expects($this->at(1))
+			->method('file_exists')
+			->will($this->returnValue(false));
+		$this->container['FileSystem']->expects($this->at(2))
+			->method('getFileInfo')
+			->with($this->equalTo('/' . $title . '.txt'))
+			->will($this->returnValue(array('fileid' => $id)));
+
+
+		$note = $this->container['NotesService']->update($id, $title, $content);
 	}
-*/
+
+
+	public function testUpdateRenames() {
+
+	}
+
+
 }
