@@ -1,6 +1,6 @@
 {
-	"name": "owncloud-notes",
-	"description": "ownCloud Notes app",
+	"name": "notes",
+	"description": "Notes app",
 	"version": "0.0.1",
 	"private": true,
 	"homepage": "https://github.com/owncloud/notes",
@@ -14,10 +14,12 @@
 		"grunt": "*",
 		"grunt-cli": "*",
 		"grunt-contrib-concat": "*",
+		"grunt-contrib-jshint": "*",
 		"grunt-contrib-watch": "*",
-		"grunt-coffeelint": "*",
+		"karma": "*",
 		"grunt-karma": "*",
 		"grunt-wrap": "*",
+		"phantomjs": "*",
 		"grunt-phpunit": "*"
 	},
 	"engine": "node >= 0.8"

@@ -12,17 +12,17 @@ use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
 use \OCA\AppFramework\Http\JSONResponse;
 
-use \OCA\Notes\BusinessLayer\NotesBusinessLayer;
+use \OCA\Notes\Service\NotesService;
 
 
 class NotesController extends Controller {
 
-	private $notesBusinessLayer;
+	private $notesService;
 
 	public function __construct(API $api, Request $request, 
-		                        NotesBusinessLayer $notesBusinessLayer){
+		                        NotesService $notesService){
 		parent::__construct($api, $request);
-		$this->notesBusinessLayer = $notesBusinessLayer;
+		$this->notesService = $notesService;
 	}
 
 
@@ -32,7 +32,7 @@ class NotesController extends Controller {
 	 * @Ajax
 	 */
 	public function getAll() {
-		$notes = $this->notesBusinessLayer->getAll();
+		$notes = $this->notesService->getAll();
 		return new JSONResponse($notes);	
 	}
 
@@ -44,7 +44,7 @@ class NotesController extends Controller {
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
-		$note = $this->notesBusinessLayer->get($id);
+		$note = $this->notesService->get($id);
 		return new JSONResponse($note);
 	}
 
@@ -55,7 +55,7 @@ class NotesController extends Controller {
 	 * @Ajax
 	 */
 	public function create() {
-		$note = $this->notesBusinessLayer->create();
+		$note = $this->notesService->create();
 		return new JSONResponse($note);
 	}
 
@@ -68,7 +68,7 @@ class NotesController extends Controller {
 	public function update() {
 		$id = $this->params('id');
 		$content = $this->params('content');
-		$note = $this->notesBusinessLayer->update($id, $content);
+		$note = $this->notesService->update($id, $content);
 		return new JSONResponse($note);
 	}
 
@@ -80,7 +80,7 @@ class NotesController extends Controller {
 	 */
 	public function delete() {
 		$id = (int) $this->params('id');
-		$this->notesBusinessLayer->delete($id);
+		$this->notesService->delete($id);
 		return new JSONResponse();	
 	}
 

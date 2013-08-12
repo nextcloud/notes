@@ -12,9 +12,6 @@ use \OCA\AppFramework\Http\TemplateResponse;
 use \OCA\AppFramework\Utility\ControllerTestUtility;
 
 
-require_once(__DIR__ . "/../classloader.php");
-
-
 class PageControllerTest extends ControllerTestUtility {
 
 	private $api;

@@ -5,12 +5,12 @@
  * See the COPYING file.
  */
 
-namespace OCA\Notes\BusinessLayer;
+namespace OCA\Notes\Service;
 
 use \OCA\Notes\Db\Note;
 
 
-class NotesBusinessLayer {
+class NotesService {
 
 	private $fileSystem;
 
@@ -25,7 +25,7 @@ class NotesBusinessLayer {
 		
 		foreach($files as $file) {
 			if($file['type'] === 'file') {
-				$file['content'] = ''; // no content because this is fast ;)
+				$file['content'] = ''; // no content because to make it faster
 				$note = new Note();
 				$note->fromFile($file);
 				array_push($notes, $note);
@@ -37,7 +37,6 @@ class NotesBusinessLayer {
 
 
 	public function get($id) {
-
 		$path = $this->fileSystem->getPath($id);
 		$fileInfo = $this->fileSystem->getFileInfo($path);
 

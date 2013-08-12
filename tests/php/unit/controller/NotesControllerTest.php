@@ -13,8 +13,6 @@ use \OCA\AppFramework\Utility\ControllerTestUtility;
 
 use \OCA\Notes\DependencyInjection\DIContainer;
 
-require_once(__DIR__ . "/../classloader.php");
-
 
 class NotesControllerTest extends ControllerTestUtility {
 
@@ -33,8 +31,8 @@ class NotesControllerTest extends ControllerTestUtility {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['Request'] = new Request();
-		$this->container['NotesBusinessLayer'] = $this->getMockBuilder(
-			'\OCA\Notes\BusinessLayer\NotesBusinessLayer')
+		$this->container['NotesService'] = $this->getMockBuilder(
+			'\OCA\Notes\Service\NotesService')
 			->disableOriginalConstructor()
 			->getMock();
 	}
@@ -60,7 +58,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['NotesBusinessLayer']
+		$this->container['NotesService']
 			->expects($this->once())
 			->method('getAll')
 			->will($this->returnValue($expected));
@@ -89,7 +87,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = new Request(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['NotesBusinessLayer']
+		$this->container['NotesService']
 			->expects($this->once())
 			->method('get')
 			->with($this->equalTo($id))
@@ -115,7 +113,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['NotesBusinessLayer']
+		$this->container['NotesService']
 			->expects($this->once())
 			->method('create')
 			->will($this->returnValue($expected));
@@ -146,7 +144,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
-		$this->container['NotesBusinessLayer']
+		$this->container['NotesService']
 			->expects($this->once())
 			->method('update')
 			->with($this->equalTo($id), $this->equalTo($content))
@@ -173,7 +171,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = new Request(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['NotesBusinessLayer']
+		$this->container['NotesService']
 			->expects($this->once())
 			->method('delete');
 

@@ -14,7 +14,7 @@ use \OCA\AppFramework\DependencyInjection\DIContainer as BaseContainer;
 use \OCA\Notes\Controller\PageController;
 use \OCA\Notes\Controller\NotesController;
 
-use \OCA\Notes\BusinessLayer\NotesBusinessLayer;
+use \OCA\Notes\Service\NotesService;
 
 
 class DIContainer extends BaseContainer {
@@ -29,7 +29,7 @@ class DIContainer extends BaseContainer {
 
 
 		/** 
-		 * CONTROLLERS
+		 * Controllers
 		 */
 		$this['PageController'] = $this->share(function($c){
 			return new PageController($c['API'], $c['Request']);
@@ -38,14 +38,14 @@ class DIContainer extends BaseContainer {
 
 		$this['NotesController'] = $this->share(function($c){
 			return new NotesController($c['API'], $c['Request'],
-				$c['NotesBusinessLayer']);
+				$c['NotesService']);
 		});
 
 		/**
-		 * Business Layer
+		 * Services
 		 */
-		$this['NotesBusinessLayer'] = $this->share(function($c){
-			return new NotesBusinessLayer($c['FileSystem']);
+		$this['NotesService'] = $this->share(function($c){
+			return new NotesService($c['FileSystem']);
 		});
 
 

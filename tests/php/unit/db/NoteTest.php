@@ -12,9 +12,6 @@ use \OCA\AppFramework\Http\JSONResponse;
 use \OCA\AppFramework\Utility\TestUtility;
 
 
-require_once(__DIR__ . "/../classloader.php");
-
-
 class NoteTest extends TestUtility {
 
 
