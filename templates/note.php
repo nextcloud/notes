@@ -1,1 +1,1 @@
-<textarea ng-model="content" notes-timeout-change="save()" autofocus tabindex="-1"></textarea>
+<textarea ng-model="note.content" notes-timeout-change="save()" autofocus tabindex="-1"></textarea>

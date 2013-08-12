@@ -25,7 +25,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 			// note is the name of the argument that will be injected into the
 			// controller
 			note: ['$route', '$q', 'is', 'Restangular', 
-				function ($route, $q, is, Restangular) {
+			function ($route, $q, is, Restangular) {
 				var deferred = $q.defer();
 				is.loading = true;
 

@@ -58,8 +58,8 @@ class DIContainer extends BaseContainer {
 			$userName = $c['API']->getUserId();
 
 			$view = new View('/' . $userName . '/files/Notes'); 
-			if (!$view->file_exists('/')) {
-				$view->mkdir('/');
+			if (!$view->file_exists('')) {
+				$view->mkdir('');
 			}
 
 			return $view;
