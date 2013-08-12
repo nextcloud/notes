@@ -8,14 +8,18 @@
 namespace OCA\Notes\Service;
 
 use \OCA\Notes\Db\Note;
+use \OCA\Notes\Utility\FileSystemUtility;
 
 
 class NotesService {
 
 	private $fileSystem;
+	private $fileSystemUtility;
 
-	public function __construct($fileSystem) {
+	public function __construct($fileSystem, 
+	                            FileSystemUtility $fileSystemUtility) {
 		$this->fileSystem = $fileSystem;
+		$this->fileSystemUtility = $fileSystemUtility;
 	}
 
 
@@ -39,14 +43,12 @@ class NotesService {
 		$path = $this->fileSystem->getPath($id);
 		$fileInfo = $this->fileSystem->getFileInfo($path);
 
-		$note = Note::fromFile(array(
+		return Note::fromFile(array(
 			'fileid' => $fileInfo['fileid'],
 			'name' => basename($path),
 			'content' => $this->fileSystem->file_get_contents($path),
 			'mtime' => $fileInfo['mtime']
 		));
-
-		return $note;
 	}
 
 
@@ -57,7 +59,8 @@ class NotesService {
 		$title = str_replace(array('/', '\\'), '',  $title);
 
 		$currentFilePath = $this->fileSystem->getPath($id);
-		$newFilePath = '/' . $this->generateFileName($title, $id);
+		$newFilePath = '/' . $this->fileSystemUtility
+			->generateFileName($title, $id);
 
 		// if the current path is not the new path, the file has to be renamed
 		if($currentFilePath !== $newFilePath) {
@@ -66,8 +69,14 @@ class NotesService {
 
 		// now update the content
 		$this->fileSystem->file_put_contents($newFilePath, $content);
+		$fileInfo = $this->fileSystem->getFileInfo($newFilePath);
 
-		return $this->get($id);
+		return Note::fromFile(array(
+			'fileid' => $id,
+			'name' => basename($newFilePath),
+			'content' => $content,
+			'mtime' => $fileInfo['mtime']
+		));
 	}
 
 
@@ -77,7 +86,8 @@ class NotesService {
 		// check new note exists already and we need to number it
 		// pass -1 because no file has id -1 and that will ensure
 		// to only return filenames that dont yet exist
-		$filePath = $this->generateFileName($title, -1);
+		$filePath = $this->fileSystemUtility
+			->generateFileName($title, -1);
 		$this->fileSystem->file_put_contents('/' . $filePath, '');
 		$fileInfo = $this->fileSystem->getFileInfo($filePath);
 
@@ -97,37 +107,7 @@ class NotesService {
 	}
 
 
-	/**
-	 * get path of file and the title.txt and check if they are the same
-	 * file. If not the title needs to be renamed
-	 */
-	public function generateFileName($title, $id) {
-		$path = '/' . $title . '.txt';
 
-		// if file does not exist, that name has not been taken
-		if (!$this->fileSystem->file_exists($path)) {
-			return $title . '.txt';
-		}
-
-		$fileInfo = $this->fileSystem->getFileInfo($path);
-
-		if($fileInfo['fileid'] === $id) {
-			return $title . '.txt';
-		} else {
-			// increments name (2) to name (3)
-			$match = preg_match('/\((?P<id>\d+)\)$/', $title, $matches);
-			if($match) {
-				$newId = ((int) $matches['id']) + 1;
-				$newTitle = preg_replace('/(.*)\s\((\d+)\)$/', 
-					'$1 (' . $newId . ')', $title);
-			} else {
-				$newTitle = $title . ' (2)'; 
-			}
-
-			return $this->generateFileName($newTitle, $id);
-		}
-
-	}
 
 
 }

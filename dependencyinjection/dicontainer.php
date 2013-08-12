@@ -16,6 +16,8 @@ use \OCA\Notes\Controller\NotesController;
 
 use \OCA\Notes\Service\NotesService;
 
+use \OCA\Notes\Utility\FileSystemUtility;
+
 
 class DIContainer extends BaseContainer {
 
@@ -45,7 +47,7 @@ class DIContainer extends BaseContainer {
 		 * Services
 		 */
 		$this['NotesService'] = $this->share(function($c){
-			return new NotesService($c['FileSystem']);
+			return new NotesService($c['FileSystem'], $c['FileSystemUtility']);
 		});
 
 
@@ -61,6 +63,10 @@ class DIContainer extends BaseContainer {
 			}
 
 			return $view;
+		});
+
+		$this['FileSystemUtility'] = $this->share(function($c){
+			return new FileSystemUtility($c['FileSystem']);
 		});
 
 		
