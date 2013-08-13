@@ -62,6 +62,8 @@ class NotesService {
 		$newFilePath = '/' . $this->fileSystemUtility
 			->generateFileName($title, $id);
 
+		echo $currentFilePath . '\n ' . $newFilePath;
+
 		// if the current path is not the new path, the file has to be renamed
 		if($currentFilePath !== $newFilePath) {
 			$this->fileSystem->rename($currentFilePath, $newFilePath);
@@ -74,7 +76,7 @@ class NotesService {
 		return Note::fromFile(array(
 			'fileid' => $id,
 			'name' => basename($newFilePath),
-			'content' => $content,
+			'content' => $this->fileSystem->file_get_contents($newFilePath),
 			'mtime' => $fileInfo['mtime']
 		));
 	}

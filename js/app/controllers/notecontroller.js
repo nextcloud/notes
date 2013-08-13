@@ -7,6 +7,8 @@
 app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note',
 	function($routeParams, $scope, NotesModel, note) {
 
+	NotesModel.update(note);
+
 	$scope.note = NotesModel.get($routeParams.noteId);
 
 	$scope.save = function() {
@@ -14,10 +16,7 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note'
 
 		// create note title by using the first line
 		note.title = note.content.split('\n')[0] || 'Empty note';
-		note.put().then(function (updated) {
-			NotesModel.update(updated);
-		});
+		note.put();
 	};
-
 
 }]);

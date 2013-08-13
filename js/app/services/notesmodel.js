@@ -28,16 +28,10 @@ app.factory('NotesModel', function () {
 			return this.notesIds[id];
 		},
 		update: function(updated) {
-			var keys = Object.keys(updated);
 			var note = this.notesIds[updated.id];
-
-			for(var i=0; i<keys.length; i++) {
-				var key = keys[i];
-				
-				if(key !== 'id') {
-					note[key] = updated[key];
-				}
-			}
+			note.title = updated.title;
+			note.modified = updated.modified;
+			note.content = updated.content;
 		}
 	};
 

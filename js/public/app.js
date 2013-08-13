@@ -19,13 +19,14 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 			// $routeParams does not work inside resolve so use $route
 			// note is the name of the argument that will be injected into the
 			// controller
-			note: ['$route', '$q', 'is', 'Restangular', 
+			note: ['$route', '$q', 'is', 'Restangular',
 			function ($route, $q, is, Restangular) {
+
 				var deferred = $q.defer();
+				var noteId = $route.current.params.noteId;
 				is.loading = true;
 
-				Restangular.one('notes', $route.current.params.noteId).get().
-				then(function (note) {
+				Restangular.one('notes', noteId).get().then(function (note) {
 					is.loading = false;
 					deferred.resolve(note);
 				}, function () {
@@ -57,6 +58,8 @@ app.controller('AppController', ['$scope', 'is', function ($scope, is) {
 app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note',
 	function($routeParams, $scope, NotesModel, note) {
 
+	NotesModel.update(note);
+
 	$scope.note = NotesModel.get($routeParams.noteId);
 
 	$scope.save = function() {
@@ -64,11 +67,8 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note'
 
 		// create note title by using the first line
 		note.title = note.content.split('\n')[0] || 'Empty note';
-		note.put().then(function (updated) {
-			NotesModel.update(updated);
-		});
+		note.put();
 	};
-
 
 }]);
 // This is available by using ng-controller="NotesController" in your HTML
@@ -154,16 +154,10 @@ app.factory('NotesModel', function () {
 			return this.notesIds[id];
 		},
 		update: function(updated) {
-			var keys = Object.keys(updated);
 			var note = this.notesIds[updated.id];
-
-			for(var i=0; i<keys.length; i++) {
-				var key = keys[i];
-				
-				if(key !== 'id') {
-					note[key] = updated[key];
-				}
-			}
+			note.title = updated.title;
+			note.modified = updated.modified;
+			note.content = updated.content;
 		}
 	};
 

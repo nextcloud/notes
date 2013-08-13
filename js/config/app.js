@@ -24,13 +24,14 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 			// $routeParams does not work inside resolve so use $route
 			// note is the name of the argument that will be injected into the
 			// controller
-			note: ['$route', '$q', 'is', 'Restangular', 
+			note: ['$route', '$q', 'is', 'Restangular',
 			function ($route, $q, is, Restangular) {
+
 				var deferred = $q.defer();
+				var noteId = $route.current.params.noteId;
 				is.loading = true;
 
-				Restangular.one('notes', $route.current.params.noteId).get().
-				then(function (note) {
+				Restangular.one('notes', noteId).get().then(function (note) {
 					is.loading = false;
 					deferred.resolve(note);
 				}, function () {
