@@ -69,13 +69,13 @@ class NotesService {
 
 		// now update the content
 		$this->fileSystem->file_put_contents($newFilePath, $content);
-		$fileInfo = $this->fileSystem->getFileInfo($newFilePath);
+		$mtime = $this->fileSystem->filemtime($newFilePath);
 
 		return Note::fromFile(array(
 			'fileid' => $id,
 			'name' => basename($newFilePath),
-			'content' => $this->fileSystem->file_get_contents($newFilePath),
-			'mtime' => $fileInfo['mtime']
+			'content' => $content,
+			'mtime' => $mtime
 		));
 	}
 

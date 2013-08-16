@@ -19,7 +19,7 @@ class NotesController extends Controller {
 
 	private $notesService;
 
-	public function __construct(API $api, Request $request, 
+	public function __construct(API $api, Request $request,
 		                        NotesService $notesService){
 		parent::__construct($api, $request);
 		$this->notesService = $notesService;
@@ -33,7 +33,7 @@ class NotesController extends Controller {
 	 */
 	public function getAll() {
 		$notes = $this->notesService->getAll();
-		return new JSONResponse($notes);	
+		return new JSONResponse($notes);
 	}
 
 
@@ -82,7 +82,7 @@ class NotesController extends Controller {
 	public function delete() {
 		$id = (int) $this->params('id');
 		$this->notesService->delete($id);
-		return new JSONResponse();	
+		return new JSONResponse();
 	}
 
 

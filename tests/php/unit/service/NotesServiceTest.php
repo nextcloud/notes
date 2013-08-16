@@ -33,7 +33,7 @@ class NotesServiceTest extends TestUtility {
 			->getMock();
 		$this->container['Request'] = new Request();
 
-		$this->container['FileSystem'] = $this->getMock('Filesystem', 
+		$this->container['FileSystem'] = $this->getMock('Filesystem',
 			array(
 				'getDirectoryContent',
 				'unlink',
@@ -42,7 +42,8 @@ class NotesServiceTest extends TestUtility {
 				'file_exists',
 				'rename',
 				'file_put_contents',
-				'getPath'
+				'getPath',
+				'filemtime'
 			));
 
 
@@ -77,7 +78,7 @@ class NotesServiceTest extends TestUtility {
 		);
 	}
 
-	
+
 	public function testGetAll(){
 		$this->container['FileSystem']->expects($this->once())
 			->method('getDirectoryContent')
@@ -139,7 +140,7 @@ class NotesServiceTest extends TestUtility {
 
 		$note = $this->container['NotesService']->create();
 		$this->assertEquals($this->notes[0], $note);
-	}	
+	}
 
 
 	public function testUpdate() {
@@ -161,8 +162,8 @@ class NotesServiceTest extends TestUtility {
 			->with($this->equalTo('/' . $title . '.txt'))
 			->will($this->returnValue(array('fileid' => $id)));
 		$this->container['FileSystem']->expects($this->once())
-			->method('getFileInfo')
-			->will($this->returnValue($this->filesystemNotes[0]));
+			->method('filemtime')
+			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
 		$note = $this->container['NotesService']->update($id, $title, $content);
 		$this->assertEquals(Note::fromFile(array(
@@ -190,15 +191,15 @@ class NotesServiceTest extends TestUtility {
 
 		$this->container['FileSystem']->expects($this->once())
 			->method('rename')
-			->with($this->equalTo('/' . $title . '.txt'), 
+			->with($this->equalTo('/' . $title . '.txt'),
 				$this->equalTo('/' . $title . ' (3).txt'));
 		$this->container['FileSystem']->expects($this->once())
 			->method('file_put_contents')
 			->with($this->equalTo('/' . $title . ' (3).txt'))
 			->will($this->returnValue(array('fileid' => $id)));
 		$this->container['FileSystem']->expects($this->once())
-			->method('getFileInfo')
-			->will($this->returnValue($this->filesystemNotes[0]));
+			->method('filemtime')
+			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
 		$note = $this->container['NotesService']->update($id, $title, $content);
 		$this->assertEquals(Note::fromFile(array(
