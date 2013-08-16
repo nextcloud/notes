@@ -55,8 +55,8 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 app.controller('AppController', ['$scope', 'is', function ($scope, is) {
 	$scope.is = is;
 }]);
-app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note',
-	function($routeParams, $scope, NotesModel, note) {
+app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'SaveQueue', 'note',
+	function($routeParams, $scope, NotesModel, SaveQueue, note) {
 
 	NotesModel.update(note);
 
@@ -64,26 +64,25 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'note'
 
 	$scope.save = function() {
 		var note = $scope.note;
-
-		// create note title by using the first line
 		note.title = note.content.split('\n')[0] || 'Empty note';
-		note.put();
+
+		SaveQueue.add(note);
 	};
 
 }]);
 // This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController', ['$routeParams', '$scope', '$location', 
+app.controller('NotesController', ['$routeParams', '$scope', '$location',
 	'Restangular', 'NotesModel', 'Config',
 	function($routeParams, $scope, $location, Restangular, NotesModel, Config) {
-	
+
 	$scope.route = $routeParams;
+	$scope.notes = NotesModel.getAll();
 
 	var notesResource = Restangular.all('notes');
 
 	// initial request for getting all notes
 	notesResource.getList().then(function (notes) {
 		NotesModel.addAll(notes);
-		$scope.notes = NotesModel.getAll();
 	});
 
 	$scope.create = function () {
@@ -105,15 +104,11 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 		restrict: 'A',
 		link: function (scope, element, attributes) {
 			var interval = 300;  // 300 miliseconds timeout after typing
-			var lastChange = new Date().getTime();
 			var timeout;
 
 			$(element).keyup(function () {
 				var now = new Date().getTime();
-				
-				if(now - lastChange < interval) {
-					$timeout.cancel(timeout);
-				}
+				$timeout.cancel(timeout);
 
 				timeout = $timeout(function () {
 					scope.$apply(attributes.notesTimeoutChange);
@@ -163,3 +158,45 @@ app.factory('NotesModel', function () {
 
 	return new NotesModel();
 });
+app.factory('SaveQueue', ['$q', function($q) {
+	var SaveQueue = function () {
+		this.queue = {};
+		this.flushLock = false;
+	};
+
+	SaveQueue.prototype = {
+		add: function (note) {
+			this.queue[note.id] = note;
+			this.flush();
+		},
+		flush: function () {
+			// if there are no changes dont execute the requests
+			var keys = Object.keys(this.queue);
+			if(keys.length === 0 || this.flushLock) {
+				return;
+			} else {
+				this.flushLock = true;
+			}
+
+			var self = this;
+			var requests = [];
+
+			for(var i=0; i<keys.length; i++) {
+				var note = this.queue[keys[i]];
+				requests.push(note.put().then(this._noteUpdateRequest.bind(null, note)));
+				this.queue = {};
+			}
+
+			$q.all(requests).then(function () {
+				self.flushLock = false;
+				self.flush();
+			});
+		},
+		_noteUpdateRequest: function (note, response) {
+			note.title = response.title;
+			note.modified = response.modified;
+		}
+	};
+
+	return new SaveQueue();
+}]);

@@ -16,7 +16,7 @@ class NotesService {
 	private $fileSystem;
 	private $fileSystemUtility;
 
-	public function __construct($fileSystem, 
+	public function __construct($fileSystem,
 	                            FileSystemUtility $fileSystemUtility) {
 		$this->fileSystem = $fileSystem;
 		$this->fileSystemUtility = $fileSystemUtility;
@@ -26,7 +26,7 @@ class NotesService {
 	public function getAll(){
 		$files = $this->fileSystem->getDirectoryContent('/');
 		$notes = array();
-		
+
 		foreach($files as $file) {
 			if($file['type'] === 'file') {
 				$file['content'] = ''; // no content because to make it faster
@@ -61,8 +61,6 @@ class NotesService {
 		$currentFilePath = $this->fileSystem->getPath($id);
 		$newFilePath = '/' . $this->fileSystemUtility
 			->generateFileName($title, $id);
-
-		echo $currentFilePath . '\n ' . $newFilePath;
 
 		// if the current path is not the new path, the file has to be renamed
 		if($currentFilePath !== $newFilePath) {
