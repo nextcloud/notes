@@ -87,6 +87,7 @@ app.controller('NotesController', ['$routeParams', '$scope', '$location',
 
 	$scope.create = function () {
 		notesResource.post().then(function (note) {
+			NotesModel.add(note);
 			$location.path('/notes/' + note.id);
 		});
 
@@ -183,8 +184,8 @@ app.factory('SaveQueue', ['$q', function($q) {
 			for(var i=0; i<keys.length; i++) {
 				var note = this.queue[keys[i]];
 				requests.push(note.put().then(this._noteUpdateRequest.bind(null, note)));
-				this.queue = {};
 			}
+			this.queue = {};
 
 			$q.all(requests).then(function () {
 				self.flushLock = false;

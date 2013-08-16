@@ -24,8 +24,8 @@ app.factory('SaveQueue', ['$q', function($q) {
 			for(var i=0; i<keys.length; i++) {
 				var note = this.queue[keys[i]];
 				requests.push(note.put().then(this._noteUpdateRequest.bind(null, note)));
-				this.queue = {};
 			}
+			this.queue = {};
 
 			$q.all(requests).then(function () {
 				self.flushLock = false;

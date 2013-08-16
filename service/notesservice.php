@@ -55,6 +55,26 @@ class NotesService {
 	/**
 	 * If the file exists, rename the file. In both cases update the content
 	 */
+	public function create() {
+		$title = 'New note';
+
+		// check new note exists already and we need to number it
+		// pass -1 because no file has id -1 and that will ensure
+		// to only return filenames that dont yet exist
+		$filePath = $this->fileSystemUtility
+			->generateFileName($title, -1);
+		$this->fileSystem->file_put_contents('/' . $filePath, '');
+		$fileInfo = $this->fileSystem->getFileInfo($filePath);
+
+		return Note::fromFile(array(
+			'fileid' => $fileInfo['fileid'],
+			'name' => basename($filePath),
+			'content' => '',
+			'mtime' => $fileInfo['mtime']
+		));
+	}
+
+
 	public function update($id, $title, $content){
 		$title = str_replace(array('/', '\\'), '',  $title);
 
@@ -76,26 +96,6 @@ class NotesService {
 			'name' => basename($newFilePath),
 			'content' => $content,
 			'mtime' => $mtime
-		));
-	}
-
-
-	public function create() {
-		$title = 'New note';
-
-		// check new note exists already and we need to number it
-		// pass -1 because no file has id -1 and that will ensure
-		// to only return filenames that dont yet exist
-		$filePath = $this->fileSystemUtility
-			->generateFileName($title, -1);
-		$this->fileSystem->file_put_contents('/' . $filePath, '');
-		$fileInfo = $this->fileSystem->getFileInfo($filePath);
-
-		return Note::fromFile(array(
-			'fileid' => $fileInfo['fileid'],
-			'name' => basename($filePath),
-			'content' => '',
-			'mtime' => $fileInfo['mtime']
 		));
 	}
 
