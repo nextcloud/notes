@@ -1,0 +1,4 @@
+owncloud-news (0.2)
+* Move to App Framework and AngularJS
+* Remember last note
+* Fixed various bugs
