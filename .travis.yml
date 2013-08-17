@@ -3,6 +3,11 @@ php:
   - 5.3
   - 5.4
 
+before_install:
+  - cd ..
+  - git clone https://github.com/owncloud/appframework
+  - cd -
+
 script:
   - sudo add-apt-repository -y ppa:chris-lea/node.js
   - sudo apt-get update
@@ -10,4 +15,5 @@ script:
   - wget https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2
   - tar xjf phantomjs-1.9.0-linux-x86_64.tar.bz2
   - sudo ln -s $(pwd)/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-  - cd build && make unit-tests
+  - cd build
+  - make unit-tests
