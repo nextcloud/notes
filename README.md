@@ -7,3 +7,6 @@ Simple ownCloud notes app. Requires the App Framework.
 # Maintainers
 
 Maintainers wanted for additional features!
+
+# API
+The [API documentation is available on the wiki](https://github.com/owncloud/notes/wiki)
