@@ -19,11 +19,11 @@
 <div id="app" ng-app="Notes" ng-controller="AppController"
 	ng-init="init(<?php p($_['lastViewedNote']); ?>)">
 
+	<?php print_unescaped($this->inc('translations')); ?>
+
 	<script type="text/ng-template" id="note.html">
 		<?php print_unescaped($this->inc('note')); ?>
 	</script>
-
-	<notes-translate key="New note"><?php p($l->t('New note')); ?></notes-translate>
 
 	<div id="app-navigation" ng-controller="NotesController">
 		<ul>
