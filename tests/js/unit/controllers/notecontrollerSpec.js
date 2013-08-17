@@ -62,4 +62,12 @@ describe('NoteController', function() {
 	});
 
 
+	it ('should use new note if content is empty', function() {
+		scope.note.content = '';
+		scope.translations = {};
+		scope.translations['New note'] = 'ya';
+		scope.updateTitle();
+		expect(note.title).toBe('ya');
+	});
+
 });
