@@ -57,8 +57,22 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
 // bind global configuration to rootscope
-}]).run(['$rootScope', '$location', function ($rootScope, $location) {
+}]).run(['$rootScope', '$location', 'NotesModel',
+	function ($rootScope, $location, NotesModel) {
 	$rootScope.$on('$routeChangeError', function () {
-		$location.path('/');
+		var notes = NotesModel.getAll();
+
+		if (notes.length > 0) {
+			var sorted = notes.sort(function (a, b) {
+				if(a.modified > b.modified) return 1;
+				if(a.modified < b.modified) return -1;
+				return 0;
+			});
+
+			var note = notes[notes.length-1];
+			$location.path('/notes/' + note.id);
+		} else {
+			$location.path('/');
+		}
 	});
 }]);

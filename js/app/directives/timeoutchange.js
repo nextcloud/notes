@@ -15,7 +15,7 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 			var interval = 300;  // 300 miliseconds timeout after typing
 			var timeout;
 
-			$(element).keyup(function () {
+			$(element).change(function () {
 				var now = new Date().getTime();
 				$timeout.cancel(timeout);
 
