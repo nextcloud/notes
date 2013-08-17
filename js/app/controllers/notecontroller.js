@@ -4,7 +4,8 @@
  * See the COPYING file.
  */
 
-app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'SaveQueue', 'note',
+app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
+	'SaveQueue', 'note',
 	function($routeParams, $scope, NotesModel, SaveQueue, note) {
 
 	NotesModel.update(note);

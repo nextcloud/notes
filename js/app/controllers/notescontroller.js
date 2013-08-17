@@ -6,8 +6,8 @@
 
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController', ['$routeParams', '$scope', '$location',
-	'Restangular', 'NotesModel', 'Config',
-	function($routeParams, $scope, $location, Restangular, NotesModel, Config) {
+	'Restangular', 'NotesModel',
+	function($routeParams, $scope, $location, Restangular, NotesModel) {
 
 	$scope.route = $routeParams;
 	$scope.notes = NotesModel.getAll();

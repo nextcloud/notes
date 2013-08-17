@@ -52,10 +52,12 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 // bind global configuration to rootscope
 }]);
 
-app.controller('AppController', ['$scope', 'is', function ($scope, is) {
+app.controller('AppController', ['$scope', 'is',
+	function ($scope, is) {
 	$scope.is = is;
 }]);
-app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'SaveQueue', 'note',
+app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
+	'SaveQueue', 'note',
 	function($routeParams, $scope, NotesModel, SaveQueue, note) {
 
 	NotesModel.update(note);
@@ -72,8 +74,8 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel', 'SaveQ
 }]);
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController', ['$routeParams', '$scope', '$location',
-	'Restangular', 'NotesModel', 'Config',
-	function($routeParams, $scope, $location, Restangular, NotesModel, Config) {
+	'Restangular', 'NotesModel',
+	function($routeParams, $scope, $location, Restangular, NotesModel) {
 
 	$scope.route = $routeParams;
 	$scope.notes = NotesModel.getAll();
