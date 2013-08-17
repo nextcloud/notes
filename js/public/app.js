@@ -138,9 +138,10 @@ app.directive('notesTranslate', function () {
 	return {
 		restrict: 'E',
 		link: function (scope, element, attributes) {
-			$(element).hide();
+			var $element = $(element);
+			$element.hide();
 			scope.translations = scope.translations || {};
-			scope.translations[attributes.key] = $(element).text();
+			scope.translations[attributes.key] = $element.text();
 		}
 	};
 });
