@@ -71,7 +71,7 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	$scope.note = NotesModel.get($routeParams.noteId);
 
 	$scope.updateTitle = function () {
-		$scope.note.title = $scope.note.content.split('\n')[0] || 'Empty note';
+		$scope.note.title = $scope.note.content.split('\n')[0];
 	};
 
 	$scope.save = function() {
