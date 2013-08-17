@@ -42,6 +42,8 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 				return deferred.promise;
 			}]
 		}
+	}).otherwise({
+		redirectTo: '/'
 	});
 
 	// dynamically set base URL for HTTP requests, assume that there is no other
@@ -55,4 +57,8 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
 // bind global configuration to rootscope
+}]).run(['$rootScope', '$location', function ($rootScope, $location) {
+	$rootScope.$on('$routeChangeError', function () {
+		$location.path('/');
+	});
 }]);
