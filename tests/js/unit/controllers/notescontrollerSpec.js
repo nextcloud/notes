@@ -28,7 +28,7 @@ describe('NotesController', function() {
 		location = {
 			path: jasmine.createSpy('path')
 		};
-		controller = $controller
+		controller = $controller;
 	}));
 
 

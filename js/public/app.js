@@ -60,7 +60,7 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	'SaveQueue', 'note',
 	function($routeParams, $scope, NotesModel, SaveQueue, note) {
 
-	NotesModel.update(note);
+	NotesModel.updateIfExists(note);
 
 	$scope.note = NotesModel.get($routeParams.noteId);
 
@@ -150,11 +150,15 @@ app.factory('NotesModel', function () {
 		get: function (id) {
 			return this.notesIds[id];
 		},
-		update: function(updated) {
+		updateIfExists: function(updated) {
 			var note = this.notesIds[updated.id];
-			note.title = updated.title;
-			note.modified = updated.modified;
-			note.content = updated.content;
+			if(angular.isDefined(note)) {
+				note.title = updated.title;
+				note.modified = updated.modified;
+				note.content = updated.content;
+			} else {
+				this.add(updated);
+			}
 		}
 	};
 

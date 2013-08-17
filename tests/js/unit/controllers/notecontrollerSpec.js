@@ -29,7 +29,6 @@ describe('NoteController', function() {
 			content: 'hi im here\nand this is a line'
 		};
 		model = NotesModel;
-		model.add(note);
 
 		SaveQueue = {
 			add: jasmine.createSpy('add')

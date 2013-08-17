@@ -8,7 +8,7 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	'SaveQueue', 'note',
 	function($routeParams, $scope, NotesModel, SaveQueue, note) {
 
-	NotesModel.update(note);
+	NotesModel.updateIfExists(note);
 
 	$scope.note = NotesModel.get($routeParams.noteId);
 
