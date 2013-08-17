@@ -1,2 +1,45 @@
-# Mac OS
-.DS_Store
+node_modules/
+*.log
+build/artifacts
+.rvm
+
+# just sane ignores
+.*.sw[po]
+*.bak
+*.BAK
+*~
+*.orig
+*.class
+.cvsignore
+Thumbs.db
+*.py[co]
+_darcs/*
+CVS/*
+.svn/*
+RCS/*
+
+# kdevelop
+.kdev
+*.kdev4
+
+# Lokalize
+*lokalize*
+
+# eclipse
+.project
+.settings
+
+# netbeans
+nbproject
+
+# phpStorm
+.idea
+
+# geany
+*.geany
+
+# Cloud9IDE
+.settings.xml
+
+# vim ex mode
+.vimrc

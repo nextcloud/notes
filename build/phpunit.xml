@@ -1,0 +1,2 @@
+<phpunit bootstrap="../tests/php/autoloader.php">
+</phpunit>

@@ -1,31 +1,47 @@
-#app-navigation li.active {
-	font-weight: bold;
+/**
+ * Copyright (c) 2013, Jan-Christoph Borchardt http://jancborchardt.net
+ * This file is licensed under the Affero General Public License version 3 or later.
+ * See the COPYING file.
+ */
+
+#app-navigation {
+	padding-bottom: 0; /* no settings bar, so no padding needed */
 }
 
+#app-navigation li.active {
+	font-weight: bold; /* bold currently active note */
+}
+
+/* fancy handling of 'New Note' text */
 #app-navigation #note-add span {
 	display: none;
 	font-weight: bold;
 	padding-left: 2px;
 }
-#app-navigation #note-add:hover span,
-#app-navigation #note-add:focus span {
-	display: inline;
-}
+	#app-navigation #note-add:hover span,
+	#app-navigation #note-add:focus span {
+		display: inline;
+	}
 
+/* special styling to make textarea subtle and fit the window */
 #app-content textarea {
 	display: block;
 	height: 100%;
 	width: 100%;
+	margin: 0;
+	padding: 30px 20% 100px 30px;
 	font-size: 18px;
 	line-height: 150%;
 	border: 0;
 	background: none;
 	box-shadow: none;
 	resize: none;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	margin: 0;
-	padding: 30px;
-	padding-bottom: 100px;
-	padding-right: 20%;
+	-moz-box-sizing: border-box; box-sizing: border-box;
+}
+
+/* TODO: move into core app styles */
+#app-content.loading {
+	background-image: url('%webroot%/core/img/loading.gif');
+	background-position: center;
+	background-repeat: no-repeat;
 }
