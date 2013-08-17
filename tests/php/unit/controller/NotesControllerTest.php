@@ -9,9 +9,11 @@ namespace OCA\Notes\Controller;
 
 use \OCA\AppFramework\Http\Request;
 use \OCA\AppFramework\Http\JSONResponse;
+use \OCA\AppFramework\Http\Http;
 use \OCA\AppFramework\Utility\ControllerTestUtility;
 
 use \OCA\Notes\DependencyInjection\DIContainer;
+use \OCA\Notes\Service\NoteDoesNotExistException;
 
 
 class NotesControllerTest extends ControllerTestUtility {
@@ -101,6 +103,33 @@ class NotesControllerTest extends ControllerTestUtility {
 		$response = $this->container['NotesController']->get();
 
 		$this->assertEquals($expected, $response->getData());
+		$this->assertTrue($response instanceof JSONResponse);
+	}
+
+
+	public function testGetDoesNotExist(){
+		$id = 1;
+		$expected = array(
+			'hi'
+		);
+
+		$this->container['Request'] = new Request(array(
+			'urlParams' => array('id' => $id)
+		));
+		$this->container['API']->expects($this->once())
+			->method('setUserValue')
+			->with($this->equalTo('notesLastViewedNote'),
+				$this->equalTo($id));
+
+		$this->container['NotesService']
+			->expects($this->once())
+			->method('get')
+			->with($this->equalTo($id))
+			->will($this->throwException(new NoteDoesNotExistException()));
+
+		$response = $this->container['NotesController']->get();
+
+		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
 	}
 

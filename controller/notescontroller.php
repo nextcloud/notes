@@ -11,8 +11,10 @@ use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
 use \OCA\AppFramework\Http\JSONResponse;
+use \OCA\AppFramework\Http\Http;
 
 use \OCA\Notes\Service\NotesService;
+use \OCA\Notes\Service\NoteDoesNotExistException;
 
 
 class NotesController extends Controller {
@@ -47,9 +49,11 @@ class NotesController extends Controller {
 
 		// save the last viewed note
 		$this->api->setUserValue('notesLastViewedNote', $id);
-
-		$note = $this->notesService->get($id);
-		return new JSONResponse($note);
+		try {
+			return new JSONResponse($this->notesService->get($id));
+		} catch(NoteDoesNotExistException $ex) {
+			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
+		}
 	}
 
 
