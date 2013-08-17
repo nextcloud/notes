@@ -4,7 +4,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',
 	function($provide, $routeProvider, RestangularProvider, $httpProvider,
 			$windowProvider) {
-	
+
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
 	$provide.value('Config', {
@@ -52,9 +52,15 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 // bind global configuration to rootscope
 }]);
 
-app.controller('AppController', ['$scope', 'is',
-	function ($scope, is) {
+app.controller('AppController', ['$scope', '$location', 'is',
+	function ($scope, $location, is) {
 	$scope.is = is;
+
+	$scope.init = function (lastViewedNote) {
+		if(lastViewedNote !== 0) {
+			$location.path('/notes/' + lastViewedNote);
+		}
+	};
 }]);
 app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	'SaveQueue', 'note',

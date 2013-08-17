@@ -31,7 +31,11 @@ class PageController extends Controller {
 	 * @CSRFExemption
 	 */
 	public function index() {
-		return $this->render('main');
+		$lastViewedNote = (int) $this->api->getUserValue('notesLastViewedNote');
+
+		return $this->render('main', array(
+			'lastViewedNote' => $lastViewedNote
+		));
 	}
 
 

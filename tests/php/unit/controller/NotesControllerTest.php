@@ -40,7 +40,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 	private function assertDefaultAJAXAnnotations ($method) {
 		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
-		$this->assertAnnotations($this->container['NotesController'], 
+		$this->assertAnnotations($this->container['NotesController'],
 			$method, $annotations);
 	}
 
@@ -87,6 +87,11 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = new Request(array(
 			'urlParams' => array('id' => $id)
 		));
+		$this->container['API']->expects($this->once())
+			->method('setUserValue')
+			->with($this->equalTo('notesLastViewedNote'),
+				$this->equalTo($id));
+
 		$this->container['NotesService']
 			->expects($this->once())
 			->method('get')
@@ -127,7 +132,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 	/**
 	 * PUT /notes/
-	 */	
+	 */
 	public function testUpdateAnnotations(){
 		$this->assertDefaultAJAXAnnotations('update');
 	}
@@ -148,7 +153,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['NotesService']
 			->expects($this->once())
 			->method('update')
-			->with($this->equalTo($id), $this->equalTo($title), 
+			->with($this->equalTo($id), $this->equalTo($title),
 				$this->equalTo($content))
 			->will($this->returnValue($expected));
 

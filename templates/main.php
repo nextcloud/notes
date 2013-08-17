@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com>
  * Copyright (c) 2013, Jan-Christoph Borchardt http://jancborchardt.net
@@ -16,7 +16,8 @@
 
 ?>
 
-<div id="app" ng-app="Notes" ng-controller="AppController">
+<div id="app" ng-app="Notes" ng-controller="AppController"
+	ng-init="init(<?php p($_['lastViewedNote']); ?>)">
 
 	<script type="text/ng-template" id="note.html">
 		<?php print_unescaped($this->inc('note')); ?>
@@ -30,13 +31,13 @@
 				<a href='#'>+ <span><?php p($l->t('New Note')); ?></span></a>
 			</li>
 			<!-- notes list -->
-			<li ng-repeat="note in notes|orderBy:'modified':'reverse'" 
+			<li ng-repeat="note in notes|orderBy:'modified':'reverse'"
 				ng-class="{ active: note.id == route.noteId }">
 				<a href="#/notes/{{ note.id }}">
-					{{ note.title }} 
+					{{ note.title }}
 				</a>
 			</li>
-			
+
 		</ul>
 	</div>
 

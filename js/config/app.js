@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com>
  * This file is licensed under the Affero General Public License version 3 or later.
- * See the COPYING file. 
+ * See the COPYING file.
  */
 
 var app = angular.module('Notes', ['restangular']).
@@ -9,7 +9,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',
 	function($provide, $routeProvider, RestangularProvider, $httpProvider,
 			$windowProvider) {
-	
+
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
 	$provide.value('Config', {

@@ -44,6 +44,10 @@ class NotesController extends Controller {
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
+
+		// save the last viewed note
+		$this->api->setUserValue('notesLastViewedNote', $id);
+
 		$note = $this->notesService->get($id);
 		return new JSONResponse($note);
 	}
