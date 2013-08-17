@@ -51,7 +51,7 @@ describe('NoteController', function() {
 
 
 	it ('should set the first line as title on save', function() {
-		scope.save();
+		scope.updateTitle();
 		expect(note.title).toBe('hi im here');
 	});
 
