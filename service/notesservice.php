@@ -7,6 +7,8 @@
 
 namespace OCA\Notes\Service;
 
+use \OCA\AppFramework\Core\API;
+
 use \OCA\Notes\Db\Note;
 use \OCA\Notes\Utility\FileSystemUtility;
 
@@ -15,11 +17,14 @@ class NotesService {
 
 	private $fileSystem;
 	private $fileSystemUtility;
+	private $api;
 
 	public function __construct($fileSystem,
-	                            FileSystemUtility $fileSystemUtility) {
+	                            FileSystemUtility $fileSystemUtility,
+	                            API $api) {
 		$this->fileSystem = $fileSystem;
 		$this->fileSystemUtility = $fileSystemUtility;
+		$this->api = $api;
 	}
 
 
@@ -56,7 +61,7 @@ class NotesService {
 	 * If the file exists, rename the file. In both cases update the content
 	 */
 	public function create() {
-		$title = 'New note';
+		$title = $this->api->getTrans()->t('New note');
 
 		// check new note exists already and we need to number it
 		// pass -1 because no file has id -1 and that will ensure

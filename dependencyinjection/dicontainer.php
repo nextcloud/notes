@@ -30,7 +30,7 @@ class DIContainer extends BaseContainer {
 		parent::__construct('notes');
 
 
-		/** 
+		/**
 		 * Controllers
 		 */
 		$this['PageController'] = $this->share(function($c){
@@ -47,7 +47,9 @@ class DIContainer extends BaseContainer {
 		 * Services
 		 */
 		$this['NotesService'] = $this->share(function($c){
-			return new NotesService($c['FileSystem'], $c['FileSystemUtility']);
+			return new NotesService($c['FileSystem'],
+				$c['FileSystemUtility'],
+				$c['API']);
 		});
 
 
@@ -57,7 +59,7 @@ class DIContainer extends BaseContainer {
 		$this['FileSystem'] = $this->share(function($c){
 			$userName = $c['API']->getUserId();
 
-			$view = new View('/' . $userName . '/files/Notes'); 
+			$view = new View('/' . $userName . '/files/Notes');
 			if (!$view->file_exists('')) {
 				$view->mkdir('');
 			}
@@ -69,7 +71,7 @@ class DIContainer extends BaseContainer {
 			return new FileSystemUtility($c['FileSystem']);
 		});
 
-		
+
 
 	}
 }

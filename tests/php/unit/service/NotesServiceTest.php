@@ -126,14 +126,22 @@ class NotesServiceTest extends TestUtility {
 
 
 	public function testCreate() {
-		$this->notes[0]->setTitle('New note');
+		$this->notes[0]->setTitle('Na nute');
+		$transMock = $this->getMock('trans', array('t'));
+		$transMock->expects($this->once())
+			->method('t')
+			->with('New note')
+			->will($this->returnValue('Na nute'));
+		$this->container['API']->expects($this->once())
+			->method('getTrans')
+			->will($this->returnValue($transMock));
 		$this->container['FileSystemUtility']->expects($this->once())
 			->method('generateFileName')
-			->with($this->equalTo('New note'), $this->equalTo(-1))
-			->will($this->returnValue('New note.txt'));
+			->with($this->equalTo('Na nute'), $this->equalTo(-1))
+			->will($this->returnValue('Na nute.txt'));
 		$this->container['FileSystem']->expects($this->once())
 			->method('file_put_contents')
-			->with($this->equalTo('/New note.txt'));
+			->with($this->equalTo('/Na nute.txt'));
 		$this->container['FileSystem']->expects($this->once())
 			->method('getFileInfo')
 			->will($this->returnValue($this->filesystemNotes[0]));
