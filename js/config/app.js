@@ -56,12 +56,13 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	// Always send the CSRF token by default
 	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
-// bind global configuration to rootscope
+
 }]).run(['$rootScope', '$location', 'NotesModel',
 	function ($rootScope, $location, NotesModel) {
 	$rootScope.$on('$routeChangeError', function () {
 		var notes = NotesModel.getAll();
 
+		// route change error should redirect to the latest note if possible
 		if (notes.length > 0) {
 			var sorted = notes.sort(function (a, b) {
 				if(a.modified > b.modified) return 1;

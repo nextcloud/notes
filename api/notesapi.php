@@ -5,7 +5,7 @@
  * See the COPYING file.
  */
 
-namespace OCA\Notes\Controller;
+namespace OCA\Notes\API;
 
 use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
@@ -17,7 +17,7 @@ use \OCA\Notes\Service\NotesService;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
 
-class NotesController extends Controller {
+class NotesAPI extends Controller {
 
 	private $notesService;
 
@@ -32,6 +32,7 @@ class NotesController extends Controller {
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @Ajax
+	 * @API
 	 */
 	public function getAll() {
 		$notes = $this->notesService->getAll();
@@ -43,6 +44,7 @@ class NotesController extends Controller {
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @Ajax
+	 * @API
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
@@ -61,6 +63,7 @@ class NotesController extends Controller {
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @Ajax
+	 * @API
 	 */
 	public function create() {
 		$note = $this->notesService->create();
@@ -72,6 +75,7 @@ class NotesController extends Controller {
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @Ajax
+	 * @API
 	 */
 	public function update() {
 		$id = (int) $this->params('id');
@@ -90,6 +94,7 @@ class NotesController extends Controller {
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @Ajax
+	 * @API
 	 */
 	public function delete() {
 		$id = (int) $this->params('id');

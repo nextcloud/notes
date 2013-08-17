@@ -64,9 +64,6 @@ class NotesService {
 	}
 
 
-	/**
-	 * If the file exists, rename the file. In both cases update the content
-	 */
 	public function create() {
 		$title = $this->api->getTrans()->t('New note');
 
@@ -87,10 +84,17 @@ class NotesService {
 	}
 
 
+	/**
+	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
+	 */
 	public function update($id, $title, $content){
 		$title = str_replace(array('/', '\\'), '',  $title);
 
 		$currentFilePath = $this->fileSystem->getPath($id);
+		if($currentFilePath === null) {
+			throw new NoteDoesNotExistException();
+		}
+
 		$newFilePath = '/' . $this->fileSystemUtility
 			->generateFileName($title, $id);
 
@@ -112,10 +116,15 @@ class NotesService {
 	}
 
 
-	public function delete($title) {
-		// prevent directory traversal
-		$title = str_replace(array('/', '\\'), '',  $title);
-		$this->fileSystem->unlink('/' . $title . '.txt');
+	/**
+	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
+	 */
+	public function delete($id) {
+		$path = $this->fileSystem->getPath($id);
+		if($path === null) {
+			throw new NoteDoesNotExistException();
+		}
+		$this->fileSystem->unlink($path);
 	}
 
 

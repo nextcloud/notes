@@ -127,12 +127,26 @@ class NotesServiceTest extends TestUtility {
 
 
 	public function testDelete(){
-		$title = 'hi';
+		$id = 3;
+		$this->container['FileSystem']->expects($this->once())
+			->method('getPath')
+			->with($this->equalTo($id))
+			->will($this->returnValue('hi'));
 		$this->container['FileSystem']->expects($this->once())
 			->method('unlink')
-			->with($this->equalTo('/' . $title . '.txt' ))
-			->will($this->returnValue($this->filesystemNotes));
-		$this->container['NotesService']->delete($title);
+			->with($this->equalTo('hi'));
+		$this->container['NotesService']->delete($id);
+	}
+
+
+	public function testDeleteDoesNotExist(){
+		$id = 3;
+		$this->container['FileSystem']->expects($this->once())
+			->method('getPath')
+			->with($this->equalTo($id))
+			->will($this->returnValue(null));
+		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
+		$this->container['NotesService']->delete($id);
 	}
 
 
@@ -191,6 +205,17 @@ class NotesServiceTest extends TestUtility {
 			'name' => $title . '.txt',
 			'mtime' => 50
 		)), $note);
+	}
+
+
+	public function testUpdateDoesNotExist(){
+		$id = 3;
+		$this->container['FileSystem']->expects($this->once())
+			->method('getPath')
+			->with($this->equalTo($id))
+			->will($this->returnValue(null));
+		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
+		$this->container['NotesService']->update($id, '', '');
 	}
 
 

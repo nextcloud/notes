@@ -5,7 +5,7 @@
  * See the COPYING file.
  */
 
-namespace OCA\Notes\Controller;
+namespace OCA\Notes\API;
 
 use \OCA\AppFramework\Http\Request;
 use \OCA\AppFramework\Http\JSONResponse;
@@ -16,7 +16,7 @@ use \OCA\Notes\DependencyInjection\DIContainer;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
 
-class NotesControllerTest extends ControllerTestUtility {
+class NotesAPITest extends ControllerTestUtility {
 
 	private $container;
 
@@ -41,8 +41,8 @@ class NotesControllerTest extends ControllerTestUtility {
 
 
 	private function assertDefaultAJAXAnnotations ($method) {
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
-		$this->assertAnnotations($this->container['NotesController'],
+		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax', 'API');
+		$this->assertAnnotations($this->container['NotesAPI'],
 			$method, $annotations);
 	}
 
@@ -65,7 +65,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->method('getAll')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->getAll();
+		$response = $this->container['NotesAPI']->getAll();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -100,7 +100,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->with($this->equalTo($id))
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->get();
+		$response = $this->container['NotesAPI']->get();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -127,7 +127,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->with($this->equalTo($id))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->get();
+		$response = $this->container['NotesAPI']->get();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -152,7 +152,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->method('create')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->create();
+		$response = $this->container['NotesAPI']->create();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -186,7 +186,7 @@ class NotesControllerTest extends ControllerTestUtility {
 				$this->equalTo($content))
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->update();
+		$response = $this->container['NotesAPI']->update();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -209,7 +209,7 @@ class NotesControllerTest extends ControllerTestUtility {
 				$this->equalTo($content))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->update();
+		$response = $this->container['NotesAPI']->update();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -234,7 +234,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->expects($this->once())
 			->method('delete');
 
-		$response = $this->container['NotesController']->delete();
+		$response = $this->container['NotesAPI']->delete();
 
 		$this->assertTrue($response instanceof JSONResponse);
 	}
@@ -251,7 +251,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->method('delete')
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->delete();
+		$response = $this->container['NotesAPI']->delete();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
