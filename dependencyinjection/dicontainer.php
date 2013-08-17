@@ -34,7 +34,8 @@ class DIContainer extends BaseContainer {
 		 * Controllers
 		 */
 		$this['PageController'] = $this->share(function($c){
-			return new PageController($c['API'], $c['Request']);
+			return new PageController($c['API'], $c['Request'],
+				$c['NotesService']);
 		});
 
 

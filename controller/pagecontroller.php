@@ -11,12 +11,19 @@ use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
 
+use \OCA\Notes\Service\NotesService;
+use \OCA\Notes\Service\NoteDoesNotExistException;
+
 
 class PageController extends Controller {
 
+	private $notesService;
 
-	public function __construct(API $api, Request $request){
+	public function __construct(API $api,
+	                            Request $request,
+	                            NotesService $notesService){
 		parent::__construct($api, $request);
+		$this->notesService = $notesService;
 	}
 
 
@@ -32,6 +39,12 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$lastViewedNote = (int) $this->api->getUserValue('notesLastViewedNote');
+		// check if note exists
+		try {
+			$this->notesService->get($lastViewedNote);
+		} catch(NoteDoesNotExistException $ex) {
+			$lastViewedNote = 0;
+		}
 
 		return $this->render('main', array(
 			'lastViewedNote' => $lastViewedNote

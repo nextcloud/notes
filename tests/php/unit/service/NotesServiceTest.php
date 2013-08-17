@@ -93,7 +93,7 @@ class NotesServiceTest extends TestUtility {
 	}
 
 
-	public function testGetNote(){
+	public function testGet(){
 		$expected = Note::fromFile($this->filesystemNotes[0]);
 
 		$this->container['FileSystem']->expects($this->once())
@@ -112,6 +112,17 @@ class NotesServiceTest extends TestUtility {
 		$result = $this->container['NotesService']->get(2);
 
 		$this->assertEquals($expected, $result);
+	}
+
+
+	public function testGetDoesNotExist(){
+		$this->container['FileSystem']->expects($this->once())
+			->method('getPath')
+			->will($this->returnValue(null));
+
+		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
+		$result = $this->container['NotesService']->get(2);
+
 	}
 
 

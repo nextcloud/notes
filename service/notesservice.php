@@ -44,8 +44,15 @@ class NotesService {
 	}
 
 
+	/**
+	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
+	 */
 	public function get($id) {
 		$path = $this->fileSystem->getPath($id);
+		if($path === null) {
+			throw new NoteDoesNotExistException();
+		}
+
 		$fileInfo = $this->fileSystem->getFileInfo($path);
 
 		return Note::fromFile(array(

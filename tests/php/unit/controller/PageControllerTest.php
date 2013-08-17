@@ -12,7 +12,7 @@ use \OCA\AppFramework\Http\TemplateResponse;
 use \OCA\AppFramework\Utility\ControllerTestUtility;
 
 use \OCA\Notes\DependencyInjection\DIContainer;
-
+use \OCA\Notes\Service\NoteDoesNotExistException;
 
 class PageControllerTest extends ControllerTestUtility {
 
@@ -27,6 +27,10 @@ class PageControllerTest extends ControllerTestUtility {
 		$this->container = new DIContainer();
 		$this->container['API'] = $this->getMockBuilder(
 			'\OCA\AppFramework\Core\API')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->container['NotesService'] = $this->getMockBuilder(
+			'\OCA\Notes\Service\NotesService')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['Request'] = new Request();
@@ -62,6 +66,21 @@ class PageControllerTest extends ControllerTestUtility {
 			->method('getUserValue')
 			->with($this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue(''));
+		$result = $this->container['PageController']->index();
+
+		$this->assertEquals(array('lastViewedNote' => 0), $result->getParams());
+	}
+
+
+	public function testIndexShouldSetZeroWhenLastViewedNotDoesNotExist(){
+		$this->container['API']->expects($this->once())
+			->method('getUserValue')
+			->with($this->equalTo('notesLastViewedNote'))
+			->will($this->returnValue('3'));
+		$this->container['NotesService']->expects($this->once())
+			->method('get')
+			->with($this->equalTo(3))
+			->will($this->throwException(new NoteDoesNotExistException('hi')));
 		$result = $this->container['PageController']->index();
 
 		$this->assertEquals(array('lastViewedNote' => 0), $result->getParams());

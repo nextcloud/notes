@@ -71,7 +71,8 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	$scope.note = NotesModel.get($routeParams.noteId);
 
 	$scope.updateTitle = function () {
-		$scope.note.title = $scope.note.content.split('\n')[0];
+		$scope.note.title = $scope.note.content.split('\n')[0] ||
+			$scope.translations['New note'];
 	};
 
 	$scope.save = function() {
@@ -129,6 +130,20 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 		}
 	};
 }]);
+
+/**
+ * Binds translated values to scope and hides the element
+ */
+app.directive('notesTranslate', function () {
+	return {
+		restrict: 'E',
+		link: function (scope, element, attributes) {
+			$(element).hide();
+			scope.translations = scope.translations || {};
+			scope.translations[attributes.key] = $(element).text();
+		}
+	};
+});
 
 app.factory('is', function () {
 	return {
