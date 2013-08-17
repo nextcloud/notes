@@ -28,7 +28,7 @@
 			<!-- new note button -->
 			<li id="note-add" ng-click="create()"
 				oc-click-focus="{ selector: '#app-content textarea' }">
-				<a href='#'>+ <span><?php p($l->t('New Note')); ?></span></a>
+				<a href='#'>+ <span><?php p($l->t('New note')); ?></span></a>
 			</li>
 			<!-- notes list -->
 			<li ng-repeat="note in notes|orderBy:'modified':'reverse'"
