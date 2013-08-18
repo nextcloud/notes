@@ -14,6 +14,7 @@ use \OCA\AppFramework\Utility\ControllerTestUtility;
 
 use \OCA\Notes\DependencyInjection\DIContainer;
 use \OCA\Notes\Service\NoteDoesNotExistException;
+use \OCA\Notes\Db\Note;
 
 
 class NotesAPITest extends ControllerTestUtility {
@@ -143,18 +144,31 @@ class NotesAPITest extends ControllerTestUtility {
 
 
 	public function testCreate(){
-		$expected = array(
-			'hi'
-		);
+		$title = 'yaa';
+		$content = 'yii';
+		$note = new Note();
+		$note->setId(4);
+
+		$this->container['Request'] = new Request(array(
+			'params' => array('content' => $content, 'title' => $title)
+		));
 
 		$this->container['NotesService']
 			->expects($this->once())
 			->method('create')
-			->will($this->returnValue($expected));
+			->will($this->returnValue($note));
+
+		$this->container['NotesService']
+			->expects($this->once())
+			->method('update')
+			->with($this->equalTo($note->getId()),
+				$this->equalTo($title),
+				$this->equalTo($content))
+			->will($this->returnValue($note));
 
 		$response = $this->container['NotesAPI']->create();
 
-		$this->assertEquals($expected, $response->getData());
+		$this->assertEquals($note, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
 	}
 

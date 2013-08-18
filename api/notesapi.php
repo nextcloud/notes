@@ -66,8 +66,16 @@ class NotesAPI extends Controller {
 	 * @API
 	 */
 	public function create() {
+		$title = $this->params('title');
+		$content = $this->params('content');
 		$note = $this->notesService->create();
-		return new JSONResponse($note);
+
+		try {
+			$note = $this->notesService->update($note->getId(), $title,	$content);
+			return new JSONResponse($note);
+		} catch(NoteDoesNotExistException $ex) {
+			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
+		}
 	}
 
 
