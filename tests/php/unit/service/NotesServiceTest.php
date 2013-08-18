@@ -54,20 +54,23 @@ class NotesServiceTest extends TestUtility {
 				'type' => 'file',
 				'mtime' => 50,
 				'name' => 'hi.txt',
-				'content' => ''
+				'content' => '',
+				'path' => ''
 			),
 			array(
 				'fileid' => 1,
 				'type' => 'directory',
 				'mtime' => 50,
-				'name' => ''
+				'name' => '',
+				'path' => ''
 			),
 			array(
 				'fileid' => 3,
 				'type' => 'file',
 				'mtime' => 502,
 				'name' => 'yo.txt',
-				'content' => ''
+				'content' => '',
+				'path' => ''
 			)
 		);
 

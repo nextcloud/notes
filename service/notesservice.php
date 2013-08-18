@@ -34,6 +34,7 @@ class NotesService {
 
 		foreach($files as $file) {
 			if($file['type'] === 'file') {
+				$file['content'] = $this->fileSystem->file_get_contents($file['path']);
 				$note = Note::fromFile($file);
 				array_push($notes, $note);
 			}
