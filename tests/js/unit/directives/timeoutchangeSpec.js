@@ -32,7 +32,7 @@ describe('notesTimeoutChange', function() {
 		rootScope.$digest();
 		host.append(element);
 
-		element.trigger('keypress').val('ho');
+		element.trigger('propertychange').val('ho');
 
 		// no change before timeout
 		expect(rootScope.changed).not.toBeDefined();
@@ -44,8 +44,31 @@ describe('notesTimeoutChange', function() {
 	});
 
 
+	it ('should reset the timeout if fast input happens', function () {
+		var element = angular.element(
+			'<input ng-init="counter=0"' +
+			' type="text" notes-timeout-change="counter=counter+1"/>'
+		);
+		compile(element)(rootScope);
+		rootScope.$digest();
+		host.append(element);
+
+		element.trigger('propertychange').val('ho');
+		element.trigger('propertychange').val('ho');
+
+		// no change before timeout
+		expect(rootScope.changed).not.toBeDefined();
+
+		timeout.flush();
+
+		// now the timeout has been triggered and it should work
+		expect(rootScope.counter).toBe(1);
+	});
+
+
 	afterEach(function () {
 		host.remove();
 	});
+
 
 });
