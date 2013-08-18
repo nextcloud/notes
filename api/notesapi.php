@@ -66,12 +66,11 @@ class NotesAPI extends Controller {
 	 * @API
 	 */
 	public function create() {
-		$title = $this->params('title');
 		$content = $this->params('content');
 		$note = $this->notesService->create();
 
 		try {
-			$note = $this->notesService->update($note->getId(), $title,	$content);
+			$note = $this->notesService->update($note->getId(), $content);
 			return new JSONResponse($note);
 		} catch(NoteDoesNotExistException $ex) {
 			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
@@ -87,11 +86,9 @@ class NotesAPI extends Controller {
 	 */
 	public function update() {
 		$id = (int) $this->params('id');
-		$title = $this->params('title');
 		$content = $this->params('content');
 		try {
-			return new JSONResponse($this->notesService->update($id, $title,
-				$content));
+			return new JSONResponse($this->notesService->update($id, $content));
 		} catch(NoteDoesNotExistException $ex) {
 			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
 		}

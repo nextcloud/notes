@@ -75,11 +75,9 @@ class NotesController extends Controller {
 	 */
 	public function update() {
 		$id = (int) $this->params('id');
-		$title = $this->params('title');
 		$content = $this->params('content');
 		try {
-			return new JSONResponse($this->notesService->update($id, $title,
-				$content));
+			return new JSONResponse($this->notesService->update($id, $content));
 		} catch(NoteDoesNotExistException $ex) {
 			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
 		}

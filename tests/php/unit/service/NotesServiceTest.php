@@ -178,7 +178,7 @@ class NotesServiceTest extends TestUtility {
 
 	public function testUpdate() {
 		$id = 3;
-		$content = 'yo';
+		$content = "title\nman";
 		$title = 'title';
 		$this->container['FileSystem']->expects($this->once())
 			->method('getPath')
@@ -198,7 +198,48 @@ class NotesServiceTest extends TestUtility {
 			->method('filemtime')
 			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
-		$note = $this->container['NotesService']->update($id, $title, $content);
+		$note = $this->container['NotesService']->update($id, $content);
+		$this->assertEquals(Note::fromFile(array(
+			'fileid' => $id,
+			'content' => $content,
+			'name' => $title . '.txt',
+			'mtime' => 50
+		)), $note);
+	}
+
+
+	public function testUpdateWithEmptyTitleUsesNewNote() {
+		$id = 3;
+		$content = "\nman";
+		$title = 'Na nute';
+		$transMock = $this->getMock('trans', array('t'));
+		$transMock->expects($this->once())
+			->method('t')
+			->with('New note')
+			->will($this->returnValue($title));
+		$this->container['API']->expects($this->once())
+			->method('getTrans')
+			->will($this->returnValue($transMock));
+
+		$this->container['FileSystem']->expects($this->once())
+			->method('getPath')
+			->with($this->equalTo($id))
+			->will($this->returnValue('/' . $title . '.txt'));
+
+		$this->container['FileSystemUtility']->expects($this->once())
+			->method('generateFileName')
+			->with($this->equalTo($title), $this->equalTo($id))
+			->will($this->returnValue($title . '.txt'));
+
+		$this->container['FileSystem']->expects($this->once())
+			->method('file_put_contents')
+			->with($this->equalTo('/' . $title . '.txt'))
+			->will($this->returnValue(array('fileid' => $id)));
+		$this->container['FileSystem']->expects($this->once())
+			->method('filemtime')
+			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
+
+		$note = $this->container['NotesService']->update($id, $content);
 		$this->assertEquals(Note::fromFile(array(
 			'fileid' => $id,
 			'content' => $content,
@@ -215,13 +256,13 @@ class NotesServiceTest extends TestUtility {
 			->with($this->equalTo($id))
 			->will($this->returnValue(null));
 		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
-		$this->container['NotesService']->update($id, '', '');
+		$this->container['NotesService']->update($id, '');
 	}
 
 
 	public function testUpdateRenames() {
 		$id = 3;
-		$content = 'yo';
+		$content = "title\nyo";
 		$title = 'title';
 		$this->container['FileSystem']->expects($this->once())
 			->method('getPath')
@@ -245,7 +286,7 @@ class NotesServiceTest extends TestUtility {
 			->method('filemtime')
 			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
-		$note = $this->container['NotesService']->update($id, $title, $content);
+		$note = $this->container['NotesService']->update($id, $content);
 		$this->assertEquals(Note::fromFile(array(
 			'fileid' => $id,
 			'content' => $content,

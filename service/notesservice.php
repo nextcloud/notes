@@ -87,14 +87,24 @@ class NotesService {
 	/**
 	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
 	 */
-	public function update($id, $title, $content){
-		$title = str_replace(array('/', '\\'), '',  $title);
-
+	public function update($id, $content){
 		$currentFilePath = $this->fileSystem->getPath($id);
 		if($currentFilePath === null) {
 			throw new NoteDoesNotExistException();
 		}
 
+		// generate content from the first line of the title
+		$splitContent = split("\n", $content);
+		$title = $splitContent[0];
+
+		if(!$title) {
+			$title = $this->api->getTrans()->t('New note');
+		}
+
+		// prevent directory traversal
+		$title = str_replace(array('/', '\\'), '',  $title);
+
+		// generate filename if there were collisions
 		$newFilePath = '/' . $this->fileSystemUtility
 			->generateFileName($title, $id);
 
@@ -103,7 +113,6 @@ class NotesService {
 			$this->fileSystem->rename($currentFilePath, $newFilePath);
 		}
 
-		// now update the content
 		$this->fileSystem->file_put_contents($newFilePath, $content);
 		$mtime = $this->fileSystem->filemtime($newFilePath);
 

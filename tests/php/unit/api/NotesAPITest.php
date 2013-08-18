@@ -144,13 +144,12 @@ class NotesAPITest extends ControllerTestUtility {
 
 
 	public function testCreate(){
-		$title = 'yaa';
 		$content = 'yii';
 		$note = new Note();
 		$note->setId(4);
 
 		$this->container['Request'] = new Request(array(
-			'params' => array('content' => $content, 'title' => $title)
+			'params' => array('content' => $content)
 		));
 
 		$this->container['NotesService']
@@ -162,7 +161,6 @@ class NotesAPITest extends ControllerTestUtility {
 			->expects($this->once())
 			->method('update')
 			->with($this->equalTo($note->getId()),
-				$this->equalTo($title),
 				$this->equalTo($content))
 			->will($this->returnValue($note));
 
@@ -184,19 +182,18 @@ class NotesAPITest extends ControllerTestUtility {
 	public function testUpdate(){
 		$id = 1;
 		$content = 'yo';
-		$title = 'yyy';
 		$expected = array(
 			'hi'
 		);
 
 		$this->container['Request'] = new Request(array(
 			'urlParams' => array('id' => $id),
-			'params' => array('content' => $content, 'title' => $title)
+			'params' => array('content' => $content)
 		));
 		$this->container['NotesService']
 			->expects($this->once())
 			->method('update')
-			->with($this->equalTo($id), $this->equalTo($title),
+			->with($this->equalTo($id),
 				$this->equalTo($content))
 			->will($this->returnValue($expected));
 
@@ -210,16 +207,15 @@ class NotesAPITest extends ControllerTestUtility {
 	public function testUpdateDoesNotExist(){
 		$id = 1;
 		$content = 'yo';
-		$title = 'yyy';
 
 		$this->container['Request'] = new Request(array(
 			'urlParams' => array('id' => $id),
-			'params' => array('content' => $content, 'title' => $title)
+			'params' => array('content' => $content)
 		));
 		$this->container['NotesService']
 			->expects($this->once())
 			->method('update')
-			->with($this->equalTo($id), $this->equalTo($title),
+			->with($this->equalTo($id),
 				$this->equalTo($content))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
