@@ -138,15 +138,12 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 			var interval = 300;  // 300 miliseconds timeout after typing
 			var timeout;
 
-			$(element).change(function () {
-				var now = new Date().getTime();
+			$(element).bind('input propertychange', function () {
 				$timeout.cancel(timeout);
 
 				timeout = $timeout(function () {
 					scope.$apply(attributes.notesTimeoutChange);
 				}, interval);
-
-				lastChange = now;
 			});
 		}
 	};
