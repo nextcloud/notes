@@ -34,7 +34,6 @@ class NotesService {
 
 		foreach($files as $file) {
 			if($file['type'] === 'file') {
-				$file['content'] = ''; // no content because to make it faster
 				$note = Note::fromFile($file);
 				array_push($notes, $note);
 			}
