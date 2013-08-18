@@ -24,7 +24,7 @@ describe('notesTimeoutChange', function() {
 	}));
 
 
-	xit ('should fire a change event on changed content after timeout', function () {
+	it ('should fire a change event on changed content after timeout', function () {
 		var element = angular.element(
 			'<input type="text" notes-timeout-change="changed=true"/>'
 		);
@@ -32,7 +32,8 @@ describe('notesTimeoutChange', function() {
 		rootScope.$digest();
 		host.append(element);
 
-		$(element).val('ho');
+		element.trigger('keypress').val('ho');
+
 		// no change before timeout
 		expect(rootScope.changed).not.toBeDefined();
 

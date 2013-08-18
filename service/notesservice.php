@@ -94,7 +94,7 @@ class NotesService {
 		}
 
 		// generate content from the first line of the title
-		$splitContent = split("\n", $content);
+		$splitContent = explode("\n", $content);
 		$title = $splitContent[0];
 
 		if(!$title) {
