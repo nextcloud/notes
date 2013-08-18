@@ -6,36 +6,42 @@
 
 app.factory('SaveQueue', ['$q', function($q) {
 	var SaveQueue = function () {
-		this.queue = {};
-		this.flushLock = false;
+		this._queue = {};
+		this._flushLock = false;
 	};
 
 	SaveQueue.prototype = {
 		add: function (note) {
-			this.queue[note.id] = note;
-			this.flush();
+			this._queue[note.id] = note;
+			this._flush();
 		},
-		flush: function () {
+		_flush: function () {
 			// if there are no changes dont execute the requests
-			var keys = Object.keys(this.queue);
-			if(keys.length === 0 || this.flushLock) {
+			var keys = Object.keys(this._queue);
+			if(keys.length === 0 || this._flushLock) {
 				return;
 			} else {
-				this.flushLock = true;
+				this._flushLock = true;
 			}
 
 			var self = this;
 			var requests = [];
 
+			// iterate over updated objects and run an update request for
+			// each one of them
 			for(var i=0; i<keys.length; i++) {
-				var note = this.queue[keys[i]];
+				var note = this._queue[keys[i]];
+				// if the update finished, update the modified and title
+				// attributes on the note
 				requests.push(note.put().then(this._noteUpdateRequest.bind(null, note)));
 			}
-			this.queue = {};
+			this._queue = {};
 
+			// if all update requests are completed, run the flush
+			// again to update the next batch of queued notes
 			$q.all(requests).then(function () {
-				self.flushLock = false;
-				self.flush();
+				self._flushLock = false;
+				self._flush();
 			});
 		},
 		_noteUpdateRequest: function (note, response) {
