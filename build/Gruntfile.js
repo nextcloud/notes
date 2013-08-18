@@ -58,7 +58,7 @@ module.exports = function(grunt) {
 		wrap: {
 			app: {
 				src: ['<%= meta.production %>app.js'],
-				dest: '',
+				dest: '<%= meta.production %>',
 				wrapper: [
 					'(function(angular, $, oc_requesttoken, undefined){\n\n\'use strict\';\n\n',
 					'\n})(angular, jQuery, oc_requesttoken);'
@@ -121,6 +121,6 @@ module.exports = function(grunt) {
 	});
 
 	// make tasks available under simpler commands
-	grunt.registerTask('build', ['jshint', 'concat', 'wrap']);
+	grunt.registerTask('build', ['jshint', 'concat', 'wrap:app']);
 
 };

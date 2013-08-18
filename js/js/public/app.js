@@ -1,3 +1,4 @@
+
 var app = angular.module('Notes', ['restangular']).
 config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',

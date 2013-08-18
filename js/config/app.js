@@ -9,6 +9,8 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',
 	function($provide, $routeProvider, RestangularProvider, $httpProvider,
 			$windowProvider) {
+	// Always send the CSRF token by default
+	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
@@ -53,8 +55,6 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	var baseUrl = url.split('index.php')[0] + 'index.php/apps/notes';
 	RestangularProvider.setBaseUrl(baseUrl);
 
-	// Always send the CSRF token by default
-	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
 
 }]).run(['$rootScope', '$location', 'NotesModel',

@@ -30,7 +30,7 @@ describe('notesTranslate', function() {
 		rootScope.$digest();
 		host.append(element);
 
-		expect(rootScope.translations['is']).toBe('translated');
+		expect(rootScope.translations.is).toBe('translated');
 	});
 
 
