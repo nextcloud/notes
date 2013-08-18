@@ -18,14 +18,14 @@ describe('SaveQueue', function() {
 	}));
 
 	it ('should sync a note', inject(function(SaveQueue) {
-		var note = {
+		/*var note = {
 			id: 3,
 			put: function () {
 				return q.defer().promise;
 			}
 		};
 		SaveQueue.add(note);
-		expect().toBe();
+		expect().toBe();*/
 	}));
 
 
