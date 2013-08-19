@@ -8,34 +8,79 @@
 describe('SaveQueue', function() {
 
 	var http,
-		q;
+		q,
+		rootScope;
 
 	beforeEach(module('Notes'));
 
-	beforeEach(inject(function ($httpBackend, $q) {
+	beforeEach(inject(function ($httpBackend, $q, $rootScope) {
 		http = $httpBackend;
 		q = $q;
+		rootScope = $rootScope;
 	}));
 
 	it ('should sync a note', inject(function(SaveQueue) {
-		/*var note = {
+		var request = q.defer();
+		var note = {
 			id: 3,
 			put: function () {
-				return q.defer().promise;
+				return request.promise;
 			}
 		};
 		SaveQueue.add(note);
-		expect().toBe();*/
+
+		request.resolve({
+			title: 'yo',
+			modified: 4
+		});
+
+		// $q needs a digest on $rootScope
+		rootScope.$apply();
+
+		expect(note.title).toBe('yo');
+		expect(note.modified).toBe(4);
 	}));
 
 
-	it ('should sync a note synchronously', inject(function(SaveQueue) {
+	it ('should sync more notes', inject(function(SaveQueue) {
+		// note 1
+		var requestNote1 = q.defer();
+		var note1 = {
+			id: 3,
+			put: function () {
+				return requestNote1.promise;
+			}
+		};
+		SaveQueue.add(note1);
 
-	}));
+		// note 2
+		var requestNote2 = q.defer();
+		var note2 = {
+			id: 4,
+			put: function () {
+				return requestNote2.promise;
+			}
+		};
+		SaveQueue.add(note2);
 
+		requestNote1.resolve({
+			title: 'note1',
+			modified: 6
+		});
 
-	it ('should sync updated notes', inject(function(SaveQueue) {
+		requestNote2.resolve({
+			title: 'note2',
+			modified: 7
+		});
 
+		// $q needs a digest on $rootScope
+		rootScope.$apply();
+
+		expect(note1.title).toBe('note1');
+		expect(note1.modified).toBe(6);
+
+		expect(note2.title).toBe('note2');
+		expect(note2.modified).toBe(7);
 	}));
 
 
