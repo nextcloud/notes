@@ -2,6 +2,7 @@ node_modules/
 *.log
 build/artifacts
 .rvm
+report
 
 # just sane ignores
 .*.sw[po]
