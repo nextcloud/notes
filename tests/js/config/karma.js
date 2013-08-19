@@ -29,6 +29,7 @@ module.exports = function(config) {
 		basePath: '../../../',
 		// list of files / patterns to load in the browser
 		files: [
+			'js/polyfills/**/*.js',
 			'tests/js/vendor/jquery/jquery.js',
 			'js/vendor/angular/angular.js',
 			'js/vendor/underscore/underscore.js',

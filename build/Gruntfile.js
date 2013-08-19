@@ -48,6 +48,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
+					'../js/polyfills/**/*.js',
 					'../js/config/app.js',
 					'../js/app/**/*.js'
 				],
@@ -86,6 +87,7 @@ module.exports = function(grunt) {
 			// and wrap tasks if something changed
 			concat: {
 				files: [
+					'../js/polyfills/**/*.js',
 					'../js/app/**/*.js',
 					'../js/config/*.js'
 				],
