@@ -19,6 +19,13 @@ class NotesService {
 	private $fileSystemUtility;
 	private $api;
 
+	/**
+	 * @param \OC\Files\View $fileSystem a filesystem which points to the users
+	 * notes directory
+	 * @param \OCA\Notes\Utility\FileSystemUtility $fileSystemUtility utility
+	 * for handling conflicting resolution for files with the same title
+	 * @param \OCA\AppFramework\API $api api instance
+	 */
 	public function __construct($fileSystem,
 	                            FileSystemUtility $fileSystemUtility,
 	                            API $api) {
@@ -28,6 +35,9 @@ class NotesService {
 	}
 
 
+	/**
+	 * @return array with all notes in the current directory
+	 */
 	public function getAll(){
 		$files = $this->fileSystem->getDirectoryContent('/');
 		$notes = array();
@@ -47,7 +57,11 @@ class NotesService {
 
 
 	/**
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
+	 * Used to get a single note by id
+	 * @param int $id the id of the note to get
+	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
+	 * exist
+	 * @return \OCA\Notes\Db\Note
 	 */
 	public function get($id) {
 		$path = $this->fileSystem->getPath($id);
@@ -66,6 +80,11 @@ class NotesService {
 	}
 
 
+	/**
+	 * Creates a note and returns the empty note
+	 * @see update for setting note content
+	 * @return \OCA\Notes\Db\Note the newly created note
+	 */
 	public function create() {
 		$title = $this->api->getTrans()->t('New note');
 
@@ -87,7 +106,14 @@ class NotesService {
 
 
 	/**
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
+	 * Updates a note. Be sure to check the returned note since the title is
+	 * dynamically generated and filename conflicts are resolved
+	 * @param int $id the id of the note used to update
+	 * @param string $content the content which will be written into the note
+	 * the title is generated from the first line of the content
+	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
+	 * exist
+	 * @return \OCA\Notes\Db\Note the updated note
 	 */
 	public function update($id, $content){
 		$currentFilePath = $this->fileSystem->getPath($id);
@@ -128,7 +154,10 @@ class NotesService {
 
 
 	/**
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not exist
+	 * Deletes a note
+	 * @param int $id the id of the note which should be deleted
+	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
+	 * exist
 	 */
 	public function delete($id) {
 		$path = $this->fileSystem->getPath($id);

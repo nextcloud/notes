@@ -67,6 +67,8 @@ class DIContainer extends BaseContainer {
 		$this['FileSystem'] = $this->share(function($c){
 			$userName = $c['API']->getUserId();
 
+			// restrict fileaccess to /user/files/Notes directory and work
+			// relative to that path
 			$view = new View('/' . $userName . '/files/Notes');
 			if (!$view->file_exists('')) {
 				$view->mkdir('');
@@ -79,8 +81,8 @@ class DIContainer extends BaseContainer {
 			return new FileSystemUtility($c['FileSystem']);
 		});
 
-
-
 	}
+
+
 }
 
