@@ -1,3 +1,4 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "ノート"
+"Notes" => "ノート",
+"New note" => "新しいノート"
 );
