@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2013, Bernhard Posselt <nukeawhale@gmail.com>
+ * Copyright (c) 2013, Bernhard Posselt <dev@bernhard-posselt.com>
  * Copyright (c) 2013, Jan-Christoph Borchardt http://jancborchardt.net
  * This file is licensed under the Affero General Public License version 3 or later.
  * See the COPYING file.
