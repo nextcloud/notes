@@ -42,7 +42,8 @@ class NotesAPITest extends ControllerTestUtility {
 
 
 	private function assertDefaultAJAXAnnotations ($method) {
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax', 'API');
+		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 
+			'Ajax', 'API', 'CSRFExemption');
 		$this->assertAnnotations($this->container['NotesAPI'],
 			$method, $annotations);
 	}

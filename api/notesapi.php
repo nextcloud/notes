@@ -33,6 +33,7 @@ class NotesAPI extends Controller {
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 * @API
+	 * @CSRFExemption
 	 */
 	public function getAll() {
 		$notes = $this->notesService->getAll();
@@ -45,6 +46,7 @@ class NotesAPI extends Controller {
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 * @API
+	 * @CSRFExemption
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
@@ -64,6 +66,7 @@ class NotesAPI extends Controller {
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 * @API
+	 * @CSRFExemption
 	 */
 	public function create() {
 		$content = $this->params('content');
@@ -83,6 +86,7 @@ class NotesAPI extends Controller {
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 * @API
+	 * @CSRFExemption
 	 */
 	public function update() {
 		$id = (int) $this->params('id');
@@ -100,6 +104,7 @@ class NotesAPI extends Controller {
 	 * @IsSubAdminExemption
 	 * @Ajax
 	 * @API
+	 * @CSRFExemption
 	 */
 	public function delete() {
 		$id = (int) $this->params('id');
