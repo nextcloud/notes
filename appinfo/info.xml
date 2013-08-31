@@ -4,7 +4,7 @@
 	<name>Notes</name>
 	<licence>AGPL</licence>
 	<author>Bernhard Posselt, Jan-Christoph Borchardt</author>
-	<require>5.0</require>
+	<require>5.80</require>
 	<shipped>true</shipped>
 	<version>0.2</version>
 	<description>Distraction-free notes and writing</description>
