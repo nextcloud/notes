@@ -23,6 +23,32 @@
 		display: inline;
 	}
 
+#app-navigation .utils button {
+	margin: 0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	box-shadow: none;
+	display: none;
+	height: 32px;
+	width: 32px;
+}
+
+	/* only display the delete button when the feed is active */
+	#app-navigation .utils .delete-button {
+		display: none;
+	}
+
+	#app-navigation .active > .utils .delete-icon {
+		display: block;
+	}
+
+.tooltip {
+	text-shadow: none;
+	text-transform: none;
+}
+
 /* special styling to make textarea subtle and fit the window */
 #app-content textarea {
 	display: block;

@@ -77,6 +77,32 @@ describe('NotesController', function() {
 	});
 
 
+	it ('should delete a note', function () {
+		var notes = [
+			{id: 3, title: 'hey'}
+		];
+
+		http.expectGET('/notes').respond(200, notes);
+
+		controller = controller('NotesController', {
+			$routeParams: routeParams,
+			$scope: scope,
+			$location: location,
+			NotesModel: model
+		});
+
+		http.flush(1);
+
+		http.expectDELETE('/notes/3').respond(200, {});
+		scope.$emit = jasmine.createSpy('$emit');
+		scope.delete(3);
+		http.flush(1);
+
+		expect(model.get(3)).not.toBeDefined();
+		expect(scope.$emit).toHaveBeenCalledWith('$routeChangeError');
+	});
+
+
 	afterEach(function() {
 		http.verifyNoOutstandingExpectation();
 		http.verifyNoOutstandingRequest();

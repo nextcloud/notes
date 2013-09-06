@@ -36,6 +36,16 @@ app.factory('NotesModel', function () {
 			} else {
 				this.add(updated);
 			}
+		},
+		remove: function (id) {
+			for(var i=0; i<this.notes.length; i++) {
+				var note = this.notes[i];
+				if(note.id === id) {
+					this.notes.splice(i, 1);
+					delete this.notesIds[id];
+					break;
+				}
+			}
 		}
 	};
 

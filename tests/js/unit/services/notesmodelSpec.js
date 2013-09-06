@@ -51,4 +51,14 @@ describe('NotesModel', function() {
 		expect(NotesModel.get(3).title).toBe('ha');
 	}));
 
+
+	it ('should remove a note', inject(function(NotesModel) {
+		NotesModel.add({id: 3, title: 'hey'});
+		NotesModel.add({id: 2, title: 'hey'});
+		NotesModel.remove(3);
+		expect(NotesModel.getAll().length).toBe(1);
+		expect(NotesModel.get(3)).not.toBeDefined();
+	}));
+
+
 });

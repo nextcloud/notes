@@ -7,11 +7,13 @@
  */
 
 
+\OCP\Util::addScript('notes', 'vendor/bootstrap/tooltip');
 \OCP\Util::addScript('notes', 'vendor/angular/angular');
 \OCP\Util::addScript('notes', 'vendor/restangular/restangular');
 \OCP\Util::addScript('notes', 'vendor/underscore/underscore');
 \OCP\Util::addScript('notes', 'public/app');
 
+\OCP\Util::addStyle('notes', 'vendor/bootstrap/tooltip');
 \OCP\Util::addStyle('notes', 'notes');
 
 ?>
@@ -38,6 +40,13 @@
 				<a href="#/notes/{{ note.id }}">
 					{{ note.title }}
 				</a>
+				<span class="utils">
+					<button class="svg action delete-icon"
+						title="<?php p($l->t('Delete note')); ?>"
+						notes-tooltip
+						data-placement="bottom"
+						ng-click="delete(note.id)"></button>	
+				</span>
 			</li>
 
 		</ul>

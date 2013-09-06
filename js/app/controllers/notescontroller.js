@@ -24,7 +24,14 @@ app.controller('NotesController', ['$routeParams', '$scope', '$location',
 			NotesModel.add(note);
 			$location.path('/notes/' + note.id);
 		});
+	};
 
+	$scope.delete = function (noteId) {
+		var note = NotesModel.get(noteId);
+		note.remove().then(function () {
+			NotesModel.remove(noteId);
+			$scope.$emit('$routeChangeError');
+		});	
 	};
 
 }]);
