@@ -31,6 +31,7 @@ phantomjs_bin=/usr/bin/phantomjs
 
 # common directories
 grunt_dir=$(CURDIR)/node_modules/grunt-cli/bin/grunt
+bower_dir=$(CURDIR)/node_modules/bower/bin/bower
 gruntfile_dir=$(CURDIR)/Gruntfile.js
 
 js_dir=$(CURDIR)/../js
@@ -51,6 +52,9 @@ build: deps
 
 watch: build
 	$(grunt_dir) --config $(gruntfile_dir) watch:concat
+
+update: deps
+	$(bower_dir) update
 
 # testing
 tests: js-unit-tests php-unit-tests php-integration-tests php-acceptance-tests

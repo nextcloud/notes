@@ -20,7 +20,8 @@
 		"grunt-karma": "*",
 		"grunt-wrap": "*",
 		"phantomjs": "*",
-		"grunt-phpunit": "*"
+		"grunt-phpunit": "*",
+		"bower": "*"
 	},
 	"engine": "node >= 0.8"
 }
