@@ -1,4 +1,4 @@
 node_modules/
 *.log
-build/
+/build/
 test-results.xml 
