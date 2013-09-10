@@ -9,7 +9,7 @@
 
 \OCP\Util::addScript('notes', 'vendor/bootstrap/tooltip');
 \OCP\Util::addScript('notes', 'vendor/angular/angular');
-\OCP\Util::addScript('notes', 'vendor/restangular/restangular');
+\OCP\Util::addScript('notes', 'vendor/restangular/dist/restangular');
 \OCP\Util::addScript('notes', 'vendor/underscore/underscore');
 \OCP\Util::addScript('notes', 'public/app');
 

@@ -13,6 +13,18 @@
 }
 
 /* fancy handling of 'New Note' text */
+#app-navigation .utils {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#app-navigation .utils > * {
+	float: right;
+}
+
+
 #app-navigation #note-add span {
 	display: none;
 	font-weight: bold;
