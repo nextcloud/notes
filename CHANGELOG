@@ -1,3 +1,7 @@
+owncloud-news (0.3)
+* Adjust to work on ownCloud 5 after bugfix was backported
+* Add a delete button
+
 owncloud-news (0.2)
 * Move to App Framework and AngularJS
 * Remember last note
