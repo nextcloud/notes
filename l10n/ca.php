@@ -1,4 +1,5 @@
 <?php $TRANSLATIONS = array(
 "Notes" => "Anotacions",
-"New note" => "Nova anotació"
+"New note" => "Nova anotació",
+"Delete note" => "Esborra l'anotació"
 );
