@@ -10,6 +10,7 @@ namespace OCA\Notes\Controller;
 use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
+use \OCA\AppFramework\Http\Response;
 use \OCA\AppFramework\Http\JSONResponse;
 use \OCA\AppFramework\Http\Http;
 
@@ -97,6 +98,33 @@ class NotesController extends Controller {
 		} catch(NoteDoesNotExistException $ex) {
 			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
 		}
+	}
+
+
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @CSRFExemption
+	 * @IsLoggedInExemption
+	 * @Ajax
+	 */
+	public function cors() {
+		// needed for webapps access due to cross origin request policy
+		if(isset($this->request->server['HTTP_ORIGIN'])) {
+			$origin = $this->request->server['HTTP_ORIGIN'];
+		} else {
+			$origin = '*';
+		}
+
+		$response = new Response();
+		$response->addHeader('Access-Control-Allow-Origin', $origin);
+		$response->addHeader('Access-Control-Allow-Methods', 
+			'PUT, POST, GET, DELETE');
+		$response->addHeader('Access-Control-Allow-Credentials', 'true');
+		$response->addHeader('Access-Control-Max-Age', '1728000');
+		$response->addHeader('Access-Control-Allow-Headers', 
+			'Authorization, Content-Type');
+		return $response;
 	}
 
 

@@ -61,31 +61,37 @@ $this->create('notes_delete', '/notes/{id}')->delete()->action(
 /**
  * API requests
  */
-$this->create('api_notes_get_all', '/api/v0.2/notes')->get()->action(
+$this->create('notes_api_cors', '/api/v0.2/{path}')->method('options')->action(
+	function($params) {
+		return App::main('NotesAPI', 'cors', $params, new DIContainer());
+	}
+)->requirements(array('path' => '.+'));
+
+$this->create('notes_api_get_all', '/api/v0.2/notes')->get()->action(
 	function($params){
 		App::main('NotesAPI', 'getAll', $params, new DIContainer());
 	}
 );
 
-$this->create('api_notes_get', '/api/v0.2/notes/{id}')->get()->action(
+$this->create('notes_api_get', '/api/v0.2/notes/{id}')->get()->action(
 	function($params){
 		App::main('NotesAPI', 'get', $params, new DIContainer());
 	}
 );
 
-$this->create('api_notes_create', '/api/v0.2/notes')->post()->action(
+$this->create('notes_api_create', '/api/v0.2/notes')->post()->action(
 	function($params){
 		App::main('NotesAPI', 'create', $params, new DIContainer());
 	}
 );
 
-$this->create('api_notes_update', '/api/v0.2/notes/{id}')->put()->action(
+$this->create('notes_api_update', '/api/v0.2/notes/{id}')->put()->action(
 	function($params){
 		App::main('NotesAPI', 'update', $params, new DIContainer());
 	}
 );
 
-$this->create('api_notes_delete', '/api/v0.2/notes/{id}')->delete()->action(
+$this->create('notes_api_delete', '/api/v0.2/notes/{id}')->delete()->action(
 	function($params){
 		App::main('NotesAPI', 'delete', $params, new DIContainer());
 	}

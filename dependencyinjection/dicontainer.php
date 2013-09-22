@@ -10,6 +10,7 @@ namespace OCA\Notes\DependencyInjection;
 use \OC\Files\View;
 
 use \OCA\AppFramework\DependencyInjection\DIContainer as BaseContainer;
+use \OCA\AppFramework\Middleware\MiddlewareDispatcher;
 
 use \OCA\Notes\Controller\PageController;
 use \OCA\Notes\Controller\NotesController;
@@ -19,6 +20,8 @@ use \OCA\Notes\API\NotesAPI;
 use \OCA\Notes\Service\NotesService;
 
 use \OCA\Notes\Utility\FileSystemUtility;
+
+use \OCA\News\Middleware\CORSMiddleware;
 
 
 class DIContainer extends BaseContainer {
@@ -80,6 +83,22 @@ class DIContainer extends BaseContainer {
 		$this['FileSystemUtility'] = $this->share(function($c){
 			return new FileSystemUtility($c['FileSystem']);
 		});
+
+
+		/** 
+		 * Middleware
+		 */
+		$this['MiddlewareDispatcher'] = $this->share(function($c){
+			$dispatcher = new MiddlewareDispatcher();
+			$dispatcher->registerMiddleware($c['HttpMiddleware']);
+			$dispatcher->registerMiddleware($c['SecurityMiddleware']);
+			$dispatcher->registerMiddleware($c['CORSMiddleware']);
+			return $dispatcher;
+		});
+
+		$this['CORSMiddleware'] = $this->share(function($c){
+			return new CORSMiddleware($c['Request']);
+		});	
 
 	}
 

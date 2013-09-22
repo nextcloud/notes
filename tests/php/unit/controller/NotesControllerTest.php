@@ -255,4 +255,32 @@ class NotesControllerTest extends ControllerTestUtility {
 	}
 
 
+	public function testCors() {
+		$this->container['Request'] = new Request(array(
+			'server' => array()
+		));
+		$response = $this->container['NotesController']->cors();
+
+		$headers = $response->getHeaders();
+
+		$this->assertEquals('*', $headers['Access-Control-Allow-Origin']);
+		$this->assertEquals('PUT, POST, GET, DELETE', $headers['Access-Control-Allow-Methods']);
+		$this->assertEquals('true', $headers['Access-Control-Allow-Credentials']);
+		$this->assertEquals('Authorization, Content-Type', $headers['Access-Control-Allow-Headers']);
+		$this->assertEquals('1728000', $headers['Access-Control-Max-Age']);
+	}
+
+
+	public function testCorsUsesOriginIfGiven() {
+		$this->container['Request'] = new Request(array(
+			'server' => array('HTTP_ORIGIN' => 'test')
+		));
+		$response = $this->container['NotesController']->cors();
+
+		$headers = $response->getHeaders();
+
+		$this->assertEquals('test', $headers['Access-Control-Allow-Origin']);
+	}
+
+
 }
