@@ -1,3 +1,5 @@
 <?php $TRANSLATIONS = array(
-"Notes" => "Jegyzetek"
+"Notes" => "Jegyzetek",
+"New note" => "Új jegyzet",
+"Delete note" => "Jegyzet törlése"
 );
