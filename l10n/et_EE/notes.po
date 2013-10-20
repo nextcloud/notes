@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: http://bugs.owncloud.org/\n"
-"POT-Creation-Date: 2013-09-11 07:21-0400\n"
-"PO-Revision-Date: 2013-09-11 11:21+0000\n"
-"Last-Translator: I Robot <owncloud-bot@tmit.eu>\n"
+"POT-Creation-Date: 2013-10-20 06:47-0400\n"
+"PO-Revision-Date: 2013-10-17 21:00+0000\n"
+"Last-Translator: Rivo Zängov <eraser@eraser.ee>\n"
 "Language-Team: Estonian (Estonia) (http://www.transifex.com/projects/p/owncloud/language/et_EE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +26,7 @@ msgstr "Märkmed"
 #: service/notesservice.php:89 service/notesservice.php:129
 #: templates/main.php:35 templates/translations.php:1
 msgid "New note"
-msgstr "Uus märkus"
+msgstr "Uus märge"
 
 #: templates/main.php:45
 msgid "Delete note"
