@@ -21,7 +21,7 @@ use \OCA\Notes\Service\NotesService;
 
 use \OCA\Notes\Utility\FileSystemUtility;
 
-use \OCA\News\Middleware\CORSMiddleware;
+use \OCA\Notes\Middleware\CORSMiddleware;
 
 
 class DIContainer extends BaseContainer {
