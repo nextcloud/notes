@@ -91,6 +91,9 @@ module.exports = function(grunt) {
 					'../js/app/**/*.js',
 					'../js/config/*.js'
 				],
+				options: {
+					livereload: true
+				},
 				tasks: ['build']
 			},
 			phpunit: {

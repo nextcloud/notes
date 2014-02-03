@@ -31,8 +31,11 @@ module.exports = function(config) {
 		files: [
 			'js/polyfills/**/*.js',
 			'js/vendor/jquery/jquery.js',
+			'js/vendor/showdown/src/showdown.js',
 			'js/vendor/angular/angular.js',
 			'js/vendor/underscore/underscore.js',
+			'js/vendor/angular-route/angular-route.js',
+			'js/vendor/angular-markdown-directive/markdown.js',
 			'js/vendor/restangular/dist/restangular.js',
 			'js/vendor/angular-mocks/angular-mocks.js',
 			'tests/js/stubs/**/*.js',

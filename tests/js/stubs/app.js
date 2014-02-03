@@ -4,7 +4,8 @@
  * See the COPYING file.
  */
 
-var app = angular.module('Notes', ['ngMock', 'restangular']).
+var app = angular.module('Notes', ['ngMock', 'restangular', 'ngRoute',
+'btford.markdown']).
 config(['RestangularProvider', function (RestangularProvider) {
 	RestangularProvider.setBaseUrl('/');
 }]);

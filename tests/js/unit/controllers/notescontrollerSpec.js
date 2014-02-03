@@ -53,7 +53,7 @@ describe('NotesController', function() {
 
 
 	it ('should do a create request', function() {
-		http.expectGET('/notes').respond(200, {});
+		http.expectGET('/notes').respond(200, [{}]);
 
 		controller = controller('NotesController', {
 			$routeParams: routeParams,

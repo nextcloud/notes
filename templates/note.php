@@ -1,3 +1,5 @@
+<checkbox ng-model="markdown">
+
 <textarea
 	ng-model="note.content"
 	ng-change="updateTitle()"
