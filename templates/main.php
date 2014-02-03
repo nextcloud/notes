@@ -7,8 +7,11 @@
  */
 
 
+\OCP\Util::addScript('notes', 'vendor/showdown/src/showdown');
 \OCP\Util::addScript('notes', 'vendor/bootstrap/tooltip');
 \OCP\Util::addScript('notes', 'vendor/angular/angular');
+\OCP\Util::addScript('notes', 'vendor/angular-markdown-directive/markdown');
+\OCP\Util::addScript('notes', 'vendor/angular-route/angular-route');
 \OCP\Util::addScript('notes', 'vendor/restangular/dist/restangular');
 \OCP\Util::addScript('notes', 'vendor/underscore/underscore');
 \OCP\Util::addScript('notes', 'public/app');

@@ -2,11 +2,14 @@
   "name": "ownCloud notes",
   "version": "0.0.1",
   "dependencies": {
-    "angular" : "",
-    "restangular" : "",
-    "jquery" : "",
-    "jquery-ui" : "",
+    "angular": "",
+    "restangular": "",
+    "jquery": "",
+    "jquery-ui": "",
     "underscore": "",
-    "angular-mocks": ""
+    "angular-mocks": "",
+    "showdown": "",
+    "angular-route": "",
+    "angular-markdown-directive": "~0.1.0"
   }
 }

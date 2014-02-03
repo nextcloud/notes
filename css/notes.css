@@ -65,7 +65,7 @@
 #app-content textarea {
 	display: block;
 	height: 100%;
-	width: 100%;
+	width: 50%;
 	margin: 0;
 	padding: 30px 20% 100px 30px;
 	font-size: 18px;
@@ -75,6 +75,7 @@
 	box-shadow: none;
 	resize: none;
 	-moz-box-sizing: border-box; box-sizing: border-box;
+	float: left;
 }
 
 /* TODO: move into core app styles */
@@ -83,3 +84,63 @@
 	background-position: center;
 	background-repeat: no-repeat;
 }
+
+#app-content .markdown {
+	height: 100%;
+	width: 50%;
+	margin: 0;
+	padding: 30px 20% 100px 30px;
+	font-size: 18px;
+	line-height: 1.5;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	resize: none;
+	-moz-box-sizing: border-box; box-sizing: border-box;
+	float: left;
+	border-left: 1px solid #ccc;
+	overflow: auto;
+}
+
+.markdown h1, h2, h3 {
+	font-weight: bold;
+	text-decoration: underline;
+	margin-top: 10px;
+}
+
+.markdown h1 {
+	font-size: 26px;
+}
+
+.markdown h2 {
+	font-size: 24px;
+}
+
+.markdown h3 {
+	font-size: 22px;
+}
+
+.markdown ul, ol {
+	margin: 0 0 10px 20px;
+}
+
+.markdown li {
+	cursor: auto;
+}
+
+.markdown p {
+	margin-bottom: 20px;
+}
+
+.markdown ul {
+	list-style-type: disc;
+	
+}
+
+.markdown a {
+	color: #4183C4;
+}
+
+	.markdown a:hover {
+		text-decoration: underline;
+	}

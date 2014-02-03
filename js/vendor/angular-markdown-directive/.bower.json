@@ -1,0 +1,20 @@
+{
+  "name": "angular-markdown-directive",
+  "version": "0.1.0",
+  "main": "markdown.js",
+  "dependencies": {
+    "angular": "~1.0.5",
+    "showdown": "~0.3.1"
+  },
+  "homepage": "https://github.com/btford/angular-markdown-directive",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.0",
+    "commit": "940366ad64facf0aa49013ff0ec72e8aa5c9ec60"
+  },
+  "_source": "git://github.com/btford/angular-markdown-directive.git",
+  "_target": "~0.1.0",
+  "_originalSource": "angular-markdown-directive",
+  "_direct": true
+}

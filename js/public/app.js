@@ -24,7 +24,7 @@ if (!Function.prototype.bind) {
 		return fBound;
 	};
 }
-var app = angular.module('Notes', ['restangular']).
+var app = angular.module('Notes', ['restangular', 'ngRoute', 'btford.markdown']).
 config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',
 	function($provide, $routeProvider, RestangularProvider, $httpProvider,
