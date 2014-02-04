@@ -8,8 +8,7 @@
     "jquery-ui": "",
     "underscore": "",
     "angular-mocks": "",
-    "showdown": "",
-    "angular-route": "",
-    "angular-markdown-directive": "~0.1.0"
+    "markdown": "~0.5.0",
+    "angular-route": ""
   }
 }

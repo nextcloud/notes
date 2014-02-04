@@ -4,7 +4,7 @@
  * See the COPYING file.
  */
 
-var app = angular.module('Notes', ['restangular', 'ngRoute', 'btford.markdown']).
+var app = angular.module('Notes', ['restangular', 'ngRoute']).
 config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',
 	function($provide, $routeProvider, RestangularProvider, $httpProvider,

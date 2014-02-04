@@ -1,3 +1,6 @@
+owncloud-notes (0.6)
+* Use markdown-js instead of showdown for rendering markdown because showdown has XSS problems and doesn't seem to be maintained anymore
+
 owncloud-notes (0.5)
 * Support Markdown preview when editing
 * Provide option to exclude fields when getting all notes through the API

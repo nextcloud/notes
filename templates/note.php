@@ -12,5 +12,5 @@
 	ng-change="updateTitle()"
 	notes-timeout-change="save()"
 	autofocus tabindex="-1"></textarea>
-<div btf-markdown="note.content" class="markdown" ng-show="config.isMarkdown()">
+<div markdown="note.content" class="markdown" ng-show="config.isMarkdown()">
 </div>

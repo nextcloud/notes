@@ -24,7 +24,7 @@ if (!Function.prototype.bind) {
 		return fBound;
 	};
 }
-var app = angular.module('Notes', ['restangular', 'ngRoute', 'btford.markdown']).
+var app = angular.module('Notes', ['restangular', 'ngRoute']).
 config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 		'$windowProvider',
 	function($provide, $routeProvider, RestangularProvider, $httpProvider,
@@ -170,6 +170,23 @@ app.controller('NotesController', ['$routeParams', '$scope', '$location',
 	};
 
 }]);
+
+app.directive('markdown', function () {
+		return {
+			restrict: 'AE',
+			link: function (scope, element, attrs) {
+				if (attrs.markdown) {
+					scope.$watch(attrs.markdown, function (newVal) {
+						var html = markdown.toHTML(newVal);
+						element.html(html);
+					});
+				} else {
+					var html = markdown.toHTML(element.text());
+					element.html(html);
+				}
+			}
+		};
+	});
 
 /**
  * Like ng-change only that it does not fire when you type faster than
