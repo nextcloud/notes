@@ -135,6 +135,52 @@ class NotesControllerTest extends ControllerTestUtility {
 
 
 	/**
+	 * GET /config
+	 */
+	public function testGetConfigAnnotations(){
+		$this->assertDefaultAJAXAnnotations('getConfig');
+	}
+
+	public function testGetConfig(){
+		$expected = array(
+			'markdown' => false
+		);
+
+		$this->container['API']->expects($this->once())
+			->method('getUserValue')
+			->with($this->equalTo('notesMarkdown'))
+			->will($this->returnValue('0'));
+
+		$response = $this->container['NotesController']->getConfig();
+
+		$this->assertEquals($expected, $response->getData());
+		$this->assertTrue($response instanceof JSONResponse);
+	}
+
+
+	/**
+	 * POST /config
+	 */
+	public function testSetConfigAnnotations(){
+		$this->assertDefaultAJAXAnnotations('setConfig');
+	}
+
+	public function testSetConfig(){
+		$this->container['Request'] = new Request(array(
+			'post' => array('markdown' => true)
+		));
+
+		$this->container['API']->expects($this->once())
+			->method('setUserValue')
+			->with($this->equalTo('notesMarkdown'), $this->equalTo(true));
+
+		$response = $this->container['NotesController']->setConfig();
+
+		$this->assertTrue($response instanceof JSONResponse);
+	}
+
+
+	/**
 	 * POST /notes
 	 */
 	public function testCreateAnnotations(){

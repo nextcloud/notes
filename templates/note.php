@@ -1,9 +1,16 @@
-<checkbox ng-model="markdown">
-
+<div class="utils">
+    <label for="markdown">
+        <input type="checkbox" 
+            ng-model="markdown" 
+            name="markdown"
+            ng-change="sync(markdown)"> Markdown
+    </label>
+</div>
 <textarea
 	ng-model="note.content"
+    ng-class="{markdown: config.isMarkdown()}"
 	ng-change="updateTitle()"
 	notes-timeout-change="save()"
 	autofocus tabindex="-1"></textarea>
-<div btf-markdown="note.content" class="markdown">
+<div btf-markdown="note.content" class="markdown" ng-show="config.isMarkdown()">
 </div>

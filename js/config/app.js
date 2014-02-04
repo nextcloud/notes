@@ -57,8 +57,13 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 
 
-}]).run(['$rootScope', '$location', 'NotesModel',
-	function ($rootScope, $location, NotesModel) {
+}]).run(['$rootScope', '$location', 'NotesModel', 'Config',
+	function ($rootScope, $location, NotesModel, Config) {
+
+	// get config
+	Config.load();
+
+	// handle route errors
 	$rootScope.$on('$routeChangeError', function () {
 		var notes = NotesModel.getAll();
 

@@ -104,6 +104,34 @@ class NotesController extends Controller {
 	/**
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
+	 * @Ajax
+	 */
+	public function getConfig() {
+		$markdown = $this->api->getUserValue('notesMarkdown') === '1';
+		$config = array(
+			'markdown' => $markdown
+		);
+		
+		return new JSONResponse($config);
+	}
+
+
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @Ajax
+	 */
+	public function setConfig() {
+		$markdown = $this->api->setUserValue('notesMarkdown', 
+			$this->params('markdown'));
+		
+		return new JSONResponse();
+	}
+
+
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 * @Ajax

@@ -5,12 +5,14 @@
  */
 
 app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
-	'SaveQueue', 'note',
-	function($routeParams, $scope, NotesModel, SaveQueue, note) {
+	'SaveQueue', 'note', 'Config',
+	function($routeParams, $scope, NotesModel, SaveQueue, note, Config) {
 
 	NotesModel.updateIfExists(note);
 
 	$scope.note = NotesModel.get($routeParams.noteId);
+	$scope.config = Config;
+	$scope.markdown = Config.isMarkdown();
 
 	$scope.updateTitle = function () {
 		$scope.note.title = $scope.note.content.split('\n')[0] ||
@@ -20,6 +22,11 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	$scope.save = function() {
 		var note = $scope.note;
 		SaveQueue.add(note);
+	};
+
+	$scope.sync = function (markdown) {
+		Config.setIsMarkdown(markdown);
+		Config.sync();
 	};
 
 }]);

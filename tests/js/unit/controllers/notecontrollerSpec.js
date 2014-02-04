@@ -70,4 +70,21 @@ describe('NoteController', function() {
 		expect(note.title).toBe('ya');
 	});
 
+
+	it('should enable markdown', inject(function (Config) {
+		Config.setIsMarkdown(true);
+		expect(scope.config.isMarkdown()).toBe(true);
+	}));
+
+
+	it('should sync markdown', inject(function (Config) {
+		Config.sync = jasmine.createSpy('sync');
+		Config.setIsMarkdown = jasmine.createSpy('setIsMarkdown');
+
+		scope.sync(true);
+
+		expect(Config.sync).toHaveBeenCalled();
+		expect(Config.setIsMarkdown).toHaveBeenCalledWith(true);
+	}));
+
 });

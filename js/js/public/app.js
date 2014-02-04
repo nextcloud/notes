@@ -78,8 +78,13 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 
 
-}]).run(['$rootScope', '$location', 'NotesModel',
-	function ($rootScope, $location, NotesModel) {
+}]).run(['$rootScope', '$location', 'NotesModel', 'Config',
+	function ($rootScope, $location, NotesModel, Config) {
+
+	// get config
+	Config.load();
+
+	// handle route errors
 	$rootScope.$on('$routeChangeError', function () {
 		var notes = NotesModel.getAll();
 
@@ -110,12 +115,14 @@ app.controller('AppController', ['$scope', '$location', 'is',
 	};
 }]);
 app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
-	'SaveQueue', 'note',
-	function($routeParams, $scope, NotesModel, SaveQueue, note) {
+	'SaveQueue', 'note', 'Config',
+	function($routeParams, $scope, NotesModel, SaveQueue, note, Config) {
 
 	NotesModel.updateIfExists(note);
 
 	$scope.note = NotesModel.get($routeParams.noteId);
+	$scope.config = Config;
+	$scope.markdown = Config.isMarkdown();
 
 	$scope.updateTitle = function () {
 		$scope.note.title = $scope.note.content.split('\n')[0] ||
@@ -125,6 +132,11 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	$scope.save = function() {
 		var note = $scope.note;
 		SaveQueue.add(note);
+	};
+
+	$scope.sync = function (markdown) {
+		Config.setIsMarkdown(markdown);
+		Config.sync();
 	};
 
 }]);
@@ -210,6 +222,35 @@ app.directive('notesTranslate', function () {
 	};
 });
 
+app.factory('Config', ['Restangular', function (Restangular) {
+    var Config = function (Restangular) {
+        this._markdown = false;
+        this._Restangular = Restangular;
+    };
+
+    Config.prototype.load = function () {
+        var self = this;
+        this._Restangular.one('config').get().then(function (config) {
+            self._markdown = config.markdown;
+        });
+    };
+
+    Config.prototype.isMarkdown = function () {
+        return this._markdown;
+    };
+
+    Config.prototype.setIsMarkdown = function (isMarkdown) {
+        this._markdown = isMarkdown;
+    };
+
+    Config.prototype.sync = function () {
+        return this._Restangular.one('config').customPOST({
+            markdown: this._markdown
+        });
+    };
+
+    return new Config(Restangular);
+}]);
 app.factory('is', function () {
 	return {
 		loading: false

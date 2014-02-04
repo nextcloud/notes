@@ -89,7 +89,9 @@ module.exports = function(grunt) {
 				files: [
 					'../js/polyfills/**/*.js',
 					'../js/app/**/*.js',
-					'../js/config/*.js'
+					'../js/config/*.js',
+					'../css/**/*.css',
+					'../templates/**/*.php'
 				],
 				options: {
 					livereload: true

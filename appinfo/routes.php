@@ -27,6 +27,18 @@ $this->create('notes_index', '/')->get()->action(
 /**
  * Ajax requests
  */
+$this->create('notes_get_config', '/config')->get()->action(
+	function($params){
+		App::main('NotesController', 'getConfig', $params, new DIContainer());
+	}
+);
+
+$this->create('notes_set_config', '/config')->post()->action(
+	function($params){
+		App::main('NotesController', 'setConfig', $params, new DIContainer());
+	}
+);
+
 $this->create('notes_get_all', '/notes')->get()->action(
 	function($params){
 		App::main('NotesController', 'getAll', $params, new DIContainer());
