@@ -74,6 +74,48 @@ class NotesAPITest extends ControllerTestUtility {
 	}
 
 
+	public function testGetAllHide(){
+		$note1 = Note::fromFile(array(
+			'fileid' => 3,
+			'mtime' => 123,
+			'name' => 'test',
+			'content' => 'yo'
+		));
+		$note2 = Note::fromFile(array(
+			'fileid' => 4,
+			'mtime' => 111,
+			'name' => 'abc',
+			'content' => 'deee'
+		));
+		$notes = array(
+			$note1, $note2	
+		);
+
+		$this->container['Request'] = new Request(array(
+			'get' => array('exclude' => 'title,content')
+		));
+
+		$this->container['NotesService']
+			->expects($this->once())
+			->method('getAll')
+			->will($this->returnValue($notes));
+
+		$response = $this->container['NotesAPI']->getAll();
+
+		$this->assertEquals(json_encode(array(
+			array(
+				'modified' => 123,
+				'id' => 3,
+			),
+			array(
+				'modified' => 111,
+				'id' => 4,
+			))
+		), json_encode($response->getData()));
+		$this->assertTrue($response instanceof JSONResponse);
+	}
+
+
 	/**
 	 * GET /notes/1
 	 */

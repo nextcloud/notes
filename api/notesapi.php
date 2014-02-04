@@ -36,7 +36,18 @@ class NotesAPI extends Controller {
 	 * @CSRFExemption
 	 */
 	public function getAll() {
+		$hide = explode(',', $this->params('exclude', ''));
 		$notes = $this->notesService->getAll();
+
+		// if there are hidden values remove them from the result
+		if(count($hide) > 0) {
+			foreach ($notes as $note) {
+				foreach ($hide as $field) {
+					unset($note->$field);
+				}
+			}
+		}
+
 		return new JSONResponse($notes);
 	}
 
