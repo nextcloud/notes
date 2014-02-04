@@ -5,6 +5,6 @@
 	<licence>AGPL</licence>
 	<author>Bernhard Posselt, Jan-Christoph Borchardt</author>
 	<require>5.0.12</require>
-	<version>0.4</version>
+	<version>0.5</version>
 	<description>Distraction-free notes and writing</description>
 </info>
