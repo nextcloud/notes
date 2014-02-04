@@ -269,8 +269,7 @@ app.factory('NotesModel', function () {
 			}
 		},
 		add: function(note) {
-			this.notes.push(note);
-			this.notesIds[note.id] = note;
+			this.updateIfExists(note);
 		},
 		getAll: function () {
 			return this.notes;
@@ -285,7 +284,8 @@ app.factory('NotesModel', function () {
 				note.modified = updated.modified;
 				note.content = updated.content;
 			} else {
-				this.add(updated);
+				this.notes.push(updated);
+				this.notesIds[updated.id] = updated;
 			}
 		},
 		remove: function (id) {
