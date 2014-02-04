@@ -1,5 +1,5 @@
 <div class="utils">
-    <label for="markdown">
+    <label>
         <input type="checkbox" 
             ng-model="markdown" 
             name="markdown"
