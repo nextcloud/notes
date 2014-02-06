@@ -43,7 +43,9 @@ class NotesAPI extends Controller {
 		if(count($hide) > 0) {
 			foreach ($notes as $note) {
 				foreach ($hide as $field) {
-					unset($note->$field);
+					if(property_exists($note, $field)) {
+						unset($note->$field);
+					}
 				}
 			}
 		}
@@ -71,7 +73,9 @@ class NotesAPI extends Controller {
 			// if there are hidden values remove them from the result
 			if(count($hide) > 0) {
 				foreach ($hide as $field) {
-					unset($note->$field);
+					if(property_exists($note, $field)) {
+						unset($note->$field);
+					}
 				}
 			}
 			return new JSONResponse($note);
