@@ -150,6 +150,32 @@ class NotesAPITest extends ControllerTestUtility {
 		$this->assertTrue($response instanceof JSONResponse);
 	}
 
+	public function testGetHide(){
+		$note = Note::fromFile(array(
+			'fileid' => 3,
+			'mtime' => 123,
+			'name' => 'test',
+			'content' => 'yo'
+		));
+
+		$this->container['Request'] = new Request(array(
+			'get' => array('exclude' => 'title,content')
+		));
+
+		$this->container['NotesService']
+			->expects($this->once())
+			->method('get')
+			->will($this->returnValue($note));
+
+		$response = $this->container['NotesAPI']->get();
+
+		$this->assertEquals(json_encode(array(
+			'modified' => 123,
+			'id' => 3,
+		)), json_encode($response->getData()));
+		$this->assertTrue($response instanceof JSONResponse);
+	}
+
 
 	public function testGetDoesNotExist(){
 		$id = 1;

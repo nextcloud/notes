@@ -61,11 +61,21 @@ class NotesAPI extends Controller {
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
+		$hide = explode(',', $this->params('exclude', ''));
 
 		// save the last viewed note
 		$this->api->setUserValue('notesLastViewedNote', $id);
 		try {
-			return new JSONResponse($this->notesService->get($id));
+			$note = $this->notesService->get($id);
+
+			// if there are hidden values remove them from the result
+			if(count($hide) > 0) {
+				foreach ($hide as $field) {
+					unset($note->$field);
+				}
+			}
+			return new JSONResponse($note);
+
 		} catch(NoteDoesNotExistException $ex) {
 			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
 		}
