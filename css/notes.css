@@ -62,7 +62,7 @@
 }
 
 #app-content {
-		background-image: linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
+	background-image: linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
 	background-image: -o-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
 	background-image: -moz-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
 	background-image: -webkit-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
@@ -92,7 +92,7 @@
 
 /* TODO: move into core app styles */
 #app-content.loading {
-	background-image: url('%webroot%/core/img/loading.gif');
+	background-image: url('../img/loading.gif');
 	background-position: center;
 	background-repeat: no-repeat;
 }
