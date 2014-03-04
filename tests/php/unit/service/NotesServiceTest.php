@@ -55,14 +55,16 @@ class NotesServiceTest extends TestUtility {
 				'mtime' => 50,
 				'name' => 'hi.txt',
 				'content' => '',
-				'path' => ''
+				'path' => '',
+				'mimetype' => 'text/plain'
 			),
 			array(
 				'fileid' => 1,
 				'type' => 'directory',
 				'mtime' => 50,
 				'name' => '',
-				'path' => ''
+				'path' => '',
+				'mimetype' => 'text/plain'
 			),
 			array(
 				'fileid' => 3,
@@ -70,7 +72,17 @@ class NotesServiceTest extends TestUtility {
 				'mtime' => 502,
 				'name' => 'yo.txt',
 				'content' => '',
-				'path' => ''
+				'path' => '',
+				'mimetype' => 'text/plain'
+			),
+			array(
+				'fileid' => 5,
+				'type' => 'file',
+				'mtime' => 502,
+				'name' => 'yo.png',
+				'content' => '',
+				'path' => '',
+				'mimetype' => 'image/png'
 			)
 		);
 
@@ -125,6 +137,17 @@ class NotesServiceTest extends TestUtility {
 
 		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
 		$result = $this->container['NotesService']->get(2);
+
+	}
+
+
+	public function testGetImageDoesNotExist(){
+		$this->container['FileSystem']->expects($this->once())
+			->method('getPath')
+			->will($this->returnValue(null));
+
+		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
+		$result = $this->container['NotesService']->get(5);
 
 	}
 
