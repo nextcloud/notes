@@ -43,7 +43,7 @@ class NotesService {
 		$notes = array();
 
 		foreach($files as $file) {
-			if($file['type'] === 'file') {
+			if($file['type'] === 'file' && $file['mimetype'] === 'text/plain') {
 				$path = $this->fileSystem->getPath($file['fileid']);
 				$content = $this->fileSystem->file_get_contents($path);
 				$file['content'] = $content;
@@ -70,6 +70,10 @@ class NotesService {
 		}
 
 		$fileInfo = $this->fileSystem->getFileInfo($path);
+
+		if($fileInfo['mimetype'] !== 'text/plain') {
+			throw new NoteDoesNotExistException();
+		}
 
 		return Note::fromFile(array(
 			'fileid' => $fileInfo['fileid'],
