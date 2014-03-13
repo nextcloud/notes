@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
-"Report-Msgid-Bugs-To: http://bugs.owncloud.org/\n"
-"POT-Creation-Date: 2013-09-22 11:54-0400\n"
+"Report-Msgid-Bugs-To: translations@owncloud.org\n"
+"POT-Creation-Date: 2014-03-13 17:29-0400\n"
 "PO-Revision-Date: 2013-09-21 13:30+0000\n"
 "Last-Translator: tt yn <tetuyano+transi@gmail.com>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/projects/p/owncloud/language/ja_JP/)\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Notes"
 msgstr "ノート"
 
-#: service/notesservice.php:89 service/notesservice.php:129
-#: templates/main.php:35 templates/translations.php:1
+#: service/notesservice.php:93 service/notesservice.php:133
+#: templates/main.php:37 templates/translations.php:1
 msgid "New note"
 msgstr "新しいノート"
 
-#: templates/main.php:45
+#: templates/main.php:47
 msgid "Delete note"
 msgstr "ノートを削除"
