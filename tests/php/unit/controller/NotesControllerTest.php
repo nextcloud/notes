@@ -264,7 +264,7 @@ class NotesControllerTest extends ControllerTestUtility {
 	 * DELETE /notes/
 	 */
 	public function testDeleteAnnotations(){
-		$this->assertDefaultAJAXAnnotations('delete');
+		$this->assertDefaultAJAXAnnotations('destroy');
 	}
 
 
@@ -278,13 +278,13 @@ class NotesControllerTest extends ControllerTestUtility {
 			->expects($this->once())
 			->method('delete');
 
-		$response = $this->container['NotesController']->delete();
+		$response = $this->container['NotesController']->destroy();
 
 		$this->assertTrue($response instanceof JSONResponse);
 	}
 
 
-		public function testDeleteDoesNotExist(){
+	public function testDeleteDoesNotExist(){
 		$id = 1;
 
 		$this->container['Request'] = $this->getRequest(array(
@@ -295,38 +295,10 @@ class NotesControllerTest extends ControllerTestUtility {
 			->method('delete')
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->delete();
+		$response = $this->container['NotesController']->destroy();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
-	}
-
-
-	public function testCors() {
-		$this->container['Request'] = $this->getRequest(array(
-			'server' => array()
-		));
-		$response = $this->container['NotesController']->cors();
-
-		$headers = $response->getHeaders();
-
-		$this->assertEquals('*', $headers['Access-Control-Allow-Origin']);
-		$this->assertEquals('PUT, POST, GET, DELETE', $headers['Access-Control-Allow-Methods']);
-		$this->assertEquals('true', $headers['Access-Control-Allow-Credentials']);
-		$this->assertEquals('Authorization, Content-Type', $headers['Access-Control-Allow-Headers']);
-		$this->assertEquals('1728000', $headers['Access-Control-Max-Age']);
-	}
-
-
-	public function testCorsUsesOriginIfGiven() {
-		$this->container['Request'] = $this->getRequest(array(
-			'server' => array('HTTP_ORIGIN' => 'test')
-		));
-		$response = $this->container['NotesController']->cors();
-
-		$headers = $response->getHeaders();
-
-		$this->assertEquals('test', $headers['Access-Control-Allow-Origin']);
 	}
 
 

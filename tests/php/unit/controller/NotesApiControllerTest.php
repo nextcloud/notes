@@ -44,7 +44,7 @@ class NotesAPITest extends ControllerTestUtility {
 
 	private function assertDefaultAJAXAnnotations ($method) {
 		$annotations = array('NoAdminRequired', 'API', 'NoCSRFRequired');
-		$this->assertAnnotations($this->container['NotesAPI'],
+		$this->assertAnnotations($this->container['NotesApiController'],
 			$method, $annotations);
 	}
 
@@ -67,7 +67,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->method('getAll')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesAPI']->getAll();
+		$response = $this->container['NotesApiController']->getAll();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -100,7 +100,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->method('getAll')
 			->will($this->returnValue($notes));
 
-		$response = $this->container['NotesAPI']->getAll();
+		$response = $this->container['NotesApiController']->getAll();
 
 		$this->assertEquals(json_encode(array(
 			array(
@@ -144,7 +144,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->with($this->equalTo($id))
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesAPI']->get();
+		$response = $this->container['NotesApiController']->get();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -167,7 +167,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->method('get')
 			->will($this->returnValue($note));
 
-		$response = $this->container['NotesAPI']->get();
+		$response = $this->container['NotesApiController']->get();
 
 		$this->assertEquals(json_encode(array(
 			'modified' => 123,
@@ -197,7 +197,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->with($this->equalTo($id))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesAPI']->get();
+		$response = $this->container['NotesApiController']->get();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -233,7 +233,7 @@ class NotesAPITest extends ControllerTestUtility {
 				$this->equalTo($content))
 			->will($this->returnValue($note));
 
-		$response = $this->container['NotesAPI']->create();
+		$response = $this->container['NotesApiController']->create();
 
 		$this->assertEquals($note, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -266,7 +266,7 @@ class NotesAPITest extends ControllerTestUtility {
 				$this->equalTo($content))
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesAPI']->update();
+		$response = $this->container['NotesApiController']->update();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -288,7 +288,7 @@ class NotesAPITest extends ControllerTestUtility {
 				$this->equalTo($content))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesAPI']->update();
+		$response = $this->container['NotesApiController']->update();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -299,7 +299,7 @@ class NotesAPITest extends ControllerTestUtility {
 	 * DELETE /notes/
 	 */
 	public function testDeleteAnnotations(){
-		$this->assertDefaultAJAXAnnotations('delete');
+		$this->assertDefaultAJAXAnnotations('destroy');
 	}
 
 
@@ -313,13 +313,13 @@ class NotesAPITest extends ControllerTestUtility {
 			->expects($this->once())
 			->method('delete');
 
-		$response = $this->container['NotesAPI']->delete();
+		$response = $this->container['NotesApiController']->destroy();
 
 		$this->assertTrue($response instanceof JSONResponse);
 	}
 
 
-		public function testDeleteDoesNotExist(){
+	public function testDeleteDoesNotExist(){
 		$id = 1;
 
 		$this->container['Request'] = getRequest(array(
@@ -330,10 +330,45 @@ class NotesAPITest extends ControllerTestUtility {
 			->method('delete')
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesAPI']->delete();
+		$response = $this->container['NotesApiController']->destroy();
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
+	}
+
+
+	// cors
+	public function testCORSAnnotations($method) {
+		$annotations = array('NoAdminRequired', 'PublicPage', 'NoCSRFRequired');
+		$this->assertAnnotations($this->container['NotesApiController'],
+			$method, $annotations);
+	}
+
+	public function testCors() {
+		$this->container['Request'] = $this->getRequest(array(
+			'server' => array()
+		));
+		$response = $this->container['NotesController']->cors();
+
+		$headers = $response->getHeaders();
+
+		$this->assertEquals('*', $headers['Access-Control-Allow-Origin']);
+		$this->assertEquals('PUT, POST, GET, DELETE', $headers['Access-Control-Allow-Methods']);
+		$this->assertEquals('true', $headers['Access-Control-Allow-Credentials']);
+		$this->assertEquals('Authorization, Content-Type', $headers['Access-Control-Allow-Headers']);
+		$this->assertEquals('1728000', $headers['Access-Control-Max-Age']);
+	}
+
+
+	public function testCorsUsesOriginIfGiven() {
+		$this->container['Request'] = $this->getRequest(array(
+			'server' => array('HTTP_ORIGIN' => 'test')
+		));
+		$response = $this->container['NotesController']->cors();
+
+		$headers = $response->getHeaders();
+
+		$this->assertEquals('test', $headers['Access-Control-Allow-Origin']);
 	}
 
 

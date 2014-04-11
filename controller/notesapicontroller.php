@@ -30,9 +30,9 @@ class NotesApiController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 * @API
-	 * @CSRFExemption
+	 * @NoCSRFRequired
 	 */
 	public function index() {
 		$hide = explode(',', $this->params('exclude', ''));
@@ -54,9 +54,9 @@ class NotesApiController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 * @API
-	 * @CSRFExemption
+	 * @NoCSRFRequired
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
@@ -84,9 +84,9 @@ class NotesApiController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 * @API
-	 * @CSRFExemption
+	 * @NoCSRFRequired
 	 */
 	public function create() {
 		$content = $this->params('content');
@@ -102,9 +102,9 @@ class NotesApiController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 * @API
-	 * @CSRFExemption
+	 * @NoCSRFRequired
 	 */
 	public function update() {
 		$id = (int) $this->params('id');
@@ -118,9 +118,9 @@ class NotesApiController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 * @API
-	 * @CSRFExemption
+	 * @NoCSRFRequired
 	 */
 	public function destroy() {
 		$id = (int) $this->params('id');
@@ -134,9 +134,9 @@ class NotesApiController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
-	 * @CSRFExemption
-	 * @IsLoggedInExemption
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @PublicPage
 	 */
 	public function cors() {
 		// needed for webapps access due to cross origin request policy

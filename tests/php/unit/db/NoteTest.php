@@ -7,9 +7,6 @@
 
 namespace OCA\Notes\Db;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Http\JSONResponse;
-
 
 class NoteTest extends \PHPUnit_Framework_TestCase {
 

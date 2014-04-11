@@ -33,9 +33,8 @@ class PageController extends Controller {
 	 * Please look up their meaning in the documentation:
 	 * http://doc.owncloud.org/server/master/developer_manual/app/appframework/controllers.html
 	 *
-	 * @IsAdminExemption
-	 * @IsSubAdminExemption
-	 * @CSRFExemption
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
 	 */
 	public function index() {
 		$lastViewedNote = (int) $this->api->getUserValue('notesLastViewedNote');

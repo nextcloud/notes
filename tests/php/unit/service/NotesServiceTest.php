@@ -7,8 +7,6 @@
 
 namespace OCA\Notes\Service;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Http\JSONResponse;
 
 use \OCA\Notes\Utility\ControllerTestUtility;
 use \OCA\Notes\App\Notes;

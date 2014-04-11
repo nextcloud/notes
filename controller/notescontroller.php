@@ -29,7 +29,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function index() {
 		$notes = $this->notesService->getAll();
@@ -38,7 +38,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function get() {
 		$id = (int) $this->params('id');
@@ -54,7 +54,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function create() {
 		$note = $this->notesService->create();
@@ -63,7 +63,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function update() {
 		$id = (int) $this->params('id');
@@ -77,7 +77,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function destroy() {
 		$id = (int) $this->params('id');
@@ -91,7 +91,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function getConfig() {
 		$markdown = $this->api->getUserValue('notesMarkdown') === '1';
@@ -104,7 +104,7 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @IsAdminExemption
+	 * @NoAdminRequired
 	 */
 	public function setConfig() {
 		$markdown = $this->api->setUserValue('notesMarkdown', 
