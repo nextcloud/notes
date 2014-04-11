@@ -21,7 +21,7 @@ $api->addNavigationEntry(array(
 	'order' => 10,
 
 	// the route that will be shown on startup
-	'href' => $api->linkToRoute('notes_index'),
+	'href' => $api->linkToRoute('notes.page.index'),
 
 	// the icon that will be shown in the navigation
 	// this file needs to exist in img/example.png

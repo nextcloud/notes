@@ -24,7 +24,7 @@ class NotesController extends Controller {
 
 	public function __construct(API $api, IRequest $request,
 		                        NotesService $notesService){
-		parent::__construct($api, $request);
+		parent::__construct($api->getAppName(), $request);
 		$this->notesService = $notesService;
 		$this->api = $api;
 	}

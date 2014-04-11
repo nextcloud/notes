@@ -84,6 +84,10 @@ class Notes extends App {
 			return new FileSystemUtility($c->query('FileSystem'));
 		});
 
+		$container->registerService('API', function($c){
+			return new API($c->query('AppName'));
+		});
+
 
 		/** 
 		 * Middleware
