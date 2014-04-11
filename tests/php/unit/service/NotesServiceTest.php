@@ -7,31 +7,32 @@
 
 namespace OCA\Notes\Service;
 
-use \OCA\AppFramework\Http\Request;
-use \OCA\AppFramework\Http\JSONResponse;
-use \OCA\AppFramework\Utility\TestUtility;
+use \OCP\IRequest;
+use \OCP\AppFramework\Http\JSONResponse;
 
-use \OCA\Notes\DependencyInjection\DIContainer;
+use \OCA\Notes\Utility\ControllerTestUtility;
+use \OCA\Notes\App\Notes;
 use \OCA\Notes\Db\Note;
 
 
-class NotesServiceTest extends TestUtility {
+class NotesServiceTest extends ControllerTestUtility {
 
 	private $container;
 
 	public function setUp(){
 		// use the container to test to check if its wired up correctly and
 		// replace needed components with mocks
-		$this->container = new DIContainer();
+		$notes = new Notes();
+		$this->container = $notes->getContainer();
 		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\AppFramework\Core\API')
+			'\OCA\Notes\Core\API')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['FileSystemUtility'] = $this->getMockBuilder(
 			'\OCA\Notes\Utility\FileSystemUtility')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->container['Request'] = new Request();
+		$this->container['Request'] = $this->getRequest();
 
 		$this->container['FileSystem'] = $this->getMock('Filesystem',
 			array(

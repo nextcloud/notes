@@ -7,10 +7,10 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCA\AppFramework\Controller\Controller;
-use \OCA\AppFramework\Core\API;
-use \OCA\AppFramework\Http\Request;
+use \OCP\AppFramework\Controller;
+use \OCP\IRequest;
 
+use \OCA\Notes\Core\API;
 use \OCA\Notes\Service\NotesService;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
@@ -20,7 +20,7 @@ class PageController extends Controller {
 	private $notesService;
 
 	public function __construct(API $api,
-	                            Request $request,
+	                            IRequest $request,
 	                            NotesService $notesService){
 		parent::__construct($api, $request);
 		$this->notesService = $notesService;

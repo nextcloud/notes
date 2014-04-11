@@ -7,13 +7,13 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCA\AppFramework\Http\Request;
-use \OCA\AppFramework\Http\JSONResponse;
-use \OCA\AppFramework\Http\Http;
-use \OCA\AppFramework\Utility\ControllerTestUtility;
+use \OCP\IRequest;
+use \OCP\AppFramework\Http\JSONResponse;
+use \OCP\AppFramework\Http;
 
-use \OCA\Notes\DependencyInjection\DIContainer;
+use \OCA\Notes\App\Notes;
 use \OCA\Notes\Service\NoteDoesNotExistException;
+use \OCA\Notes\Utility\ControllerTestUtility;
 
 
 class NotesControllerTest extends ControllerTestUtility {
@@ -27,12 +27,13 @@ class NotesControllerTest extends ControllerTestUtility {
 	public function setUp(){
 		// use the container to test to check if its wired up correctly and
 		// replace needed components with mocks
-		$this->container = new DIContainer();
+		$notes = new Notes();
+		$this->container = $notes->getContainer();
 		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\AppFramework\Core\API')
+			'\OCA\Notes\Core\API')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->container['Request'] = new Request();
+		$this->container['Request'] = $this->getRequest();
 		$this->container['NotesService'] = $this->getMockBuilder(
 			'\OCA\Notes\Service\NotesService')
 			->disableOriginalConstructor()
@@ -41,7 +42,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 
 	private function assertDefaultAJAXAnnotations ($method) {
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'Ajax');
+		$annotations = array('NoAdminRequired');
 		$this->assertAnnotations($this->container['NotesController'],
 			$method, $annotations);
 	}
@@ -86,7 +87,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['API']->expects($this->once())
@@ -113,7 +114,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['API']->expects($this->once())
@@ -166,7 +167,7 @@ class NotesControllerTest extends ControllerTestUtility {
 	}
 
 	public function testSetConfig(){
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'post' => array('markdown' => true)
 		));
 
@@ -220,7 +221,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -241,7 +242,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$id = 1;
 		$content = 'yo';
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -270,7 +271,7 @@ class NotesControllerTest extends ControllerTestUtility {
 	public function testDelete(){
 		$id = 1;
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
@@ -286,7 +287,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		public function testDeleteDoesNotExist(){
 		$id = 1;
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
@@ -302,7 +303,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 
 	public function testCors() {
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'server' => array()
 		));
 		$response = $this->container['NotesController']->cors();
@@ -318,7 +319,7 @@ class NotesControllerTest extends ControllerTestUtility {
 
 
 	public function testCorsUsesOriginIfGiven() {
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'server' => array('HTTP_ORIGIN' => 'test')
 		));
 		$response = $this->container['NotesController']->cors();

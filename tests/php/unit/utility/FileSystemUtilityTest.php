@@ -7,7 +7,7 @@
 
 namespace OCA\Notes\Utility;
 
-use \OCA\Notes\DependencyInjection\DIContainer;
+use \OCA\Notes\App\Notes;
 
 
 class NotesControllerTest extends \PHPUnit_Framework_TestCase {
@@ -21,7 +21,8 @@ class NotesControllerTest extends \PHPUnit_Framework_TestCase {
 	public function setUp(){
 		// use the container to test to check if its wired up correctly and
 		// replace needed components with mocks
-		$this->container = new DIContainer();
+		$notes = new Notes();
+		$this->container = $notes->getContainer();
 		$this->container['FileSystem'] = $this->getMock('Filesystem', 
 			array(
 				'getDirectoryContent',

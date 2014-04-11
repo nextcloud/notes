@@ -5,15 +5,15 @@
  * See the COPYING file.
  */
 
-namespace OCA\Notes\API;
+namespace OCA\Notes\Controller;
 
-use \OCA\AppFramework\Http\Request;
-use \OCA\AppFramework\Http\JSONResponse;
-use \OCA\AppFramework\Http\Http;
-use \OCA\AppFramework\Utility\ControllerTestUtility;
+use \OCP\IRequest;
+use \OCP\AppFramework\Http\JSONResponse;
+use \OCP\AppFramework\Http;
 
-use \OCA\Notes\DependencyInjection\DIContainer;
+use \OCA\Notes\App\Notes;
 use \OCA\Notes\Service\NoteDoesNotExistException;
+use \OCA\Notes\Utility\ControllerTestUtility;
 use \OCA\Notes\Db\Note;
 
 
@@ -28,12 +28,13 @@ class NotesAPITest extends ControllerTestUtility {
 	public function setUp(){
 		// use the container to test to check if its wired up correctly and
 		// replace needed components with mocks
-		$this->container = new DIContainer();
+		$notes = new Notes();
+		$this->container = $notes->getContainer();
 		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\AppFramework\Core\API')
+			'\OCA\Notes\Core\API')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->container['Request'] = new Request();
+		$this->container['Request'] = getRequest();
 		$this->container['NotesService'] = $this->getMockBuilder(
 			'\OCA\Notes\Service\NotesService')
 			->disableOriginalConstructor()
@@ -42,8 +43,7 @@ class NotesAPITest extends ControllerTestUtility {
 
 
 	private function assertDefaultAJAXAnnotations ($method) {
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 
-			'Ajax', 'API', 'CSRFExemption');
+		$annotations = array('NoAdminRequired', 'API', 'NoCSRFRequired');
 		$this->assertAnnotations($this->container['NotesAPI'],
 			$method, $annotations);
 	}
@@ -91,7 +91,7 @@ class NotesAPITest extends ControllerTestUtility {
 			$note1, $note2	
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'get' => array('exclude' => 'title,content')
 		));
 
@@ -130,7 +130,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['API']->expects($this->once())
@@ -158,7 +158,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'content' => 'yo'
 		));
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'get' => array('exclude' => 'title,content')
 		));
 
@@ -183,7 +183,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['API']->expects($this->once())
@@ -217,7 +217,7 @@ class NotesAPITest extends ControllerTestUtility {
 		$note = new Note();
 		$note->setId(4);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'params' => array('content' => $content)
 		));
 
@@ -255,7 +255,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -277,7 +277,7 @@ class NotesAPITest extends ControllerTestUtility {
 		$id = 1;
 		$content = 'yo';
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -306,7 +306,7 @@ class NotesAPITest extends ControllerTestUtility {
 	public function testDelete(){
 		$id = 1;
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
@@ -322,7 +322,7 @@ class NotesAPITest extends ControllerTestUtility {
 		public function testDeleteDoesNotExist(){
 		$id = 1;
 
-		$this->container['Request'] = new Request(array(
+		$this->container['Request'] = getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']

@@ -7,12 +7,11 @@
 
 namespace OCA\Notes\Db;
 
-use \OCA\AppFramework\Http\Request;
-use \OCA\AppFramework\Http\JSONResponse;
-use \OCA\AppFramework\Utility\TestUtility;
+use \OCP\IRequest;
+use \OCP\AppFramework\Http\JSONResponse;
 
 
-class NoteTest extends TestUtility {
+class NoteTest extends \PHPUnit_Framework_TestCase {
 
 
 	public function testFromFile(){

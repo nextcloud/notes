@@ -7,12 +7,13 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCA\AppFramework\Http\Request;
-use \OCA\AppFramework\Http\TemplateResponse;
-use \OCA\AppFramework\Utility\ControllerTestUtility;
+use \OCP\IRequest;
+use \OCP\AppFramework\Http\TemplateResponse;
 
-use \OCA\Notes\DependencyInjection\DIContainer;
+use \OCA\Notes\App\Notes;
 use \OCA\Notes\Service\NoteDoesNotExistException;
+use \OCA\Notes\Utility\ControllerTestUtility;
+
 
 class PageControllerTest extends ControllerTestUtility {
 
@@ -24,9 +25,10 @@ class PageControllerTest extends ControllerTestUtility {
 	public function setUp(){
 		// use the container to test to check if its wired up correctly and
 		// replace needed components with mocks
-		$this->container = new DIContainer();
+		$notes = new Notes();
+		$this->container = $notes->getContainer();
 		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\AppFramework\Core\API')
+			'\OCA\Notes\Core\API')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['NotesService'] = $this->getMockBuilder(
@@ -38,7 +40,7 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexAnnotations(){
-		$annotations = array('IsAdminExemption', 'IsSubAdminExemption', 'CSRFExemption');
+		$annotations = array('NoAdminRequired', 'NoCSRFRequired');
 		$this->assertAnnotations($this->container['PageController'], 'index', $annotations);
 	}
 

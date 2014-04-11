@@ -7,104 +7,28 @@
 
 namespace OCA\Notes;
 
-use \OCA\AppFramework\App;
+use \OCA\Notes\App\Notes;
 
-use \OCA\Notes\DependencyInjection\DIContainer;
+$application = new Notes();
+$application->registerRoutes($this, array('routes' => array(
+	// page
+	array('name' => 'page#index', 'url' => '/', 'verb' => 'GET'),
 
+	// notes
+	array('name' => 'notes#get_config', 'url' => '/config', 'verb' => 'GET'),
+	array('name' => 'notes#set_config', 'url' => '/config', 'verb' => 'POST'),
 
-/**
- * Webinterface
- */
+	array('name' => 'notes#index', 'url' => '/notes', 'verb' => 'GET'),
+	array('name' => 'notes#get', 'url' => '/notes/{id}', 'verb' => 'GET'),
+	array('name' => 'notes#create', 'url' => '/notes', 'verb' => 'POST'),
+	array('name' => 'notes#update', 'url' => '/notes/{id}', 'verb' => 'PUT'),
+	array('name' => 'notes#destroy', 'url' => '/notes/{id}', 'verb' => 'DELETE'),
 
-// matches /owncloud/index.php/apps/notes/
-$this->create('notes_index', '/')->get()->action(
-	function($params){
-		App::main('PageController', 'index', $params, new DIContainer());
-	}
-);
-
-
-/**
- * Ajax requests
- */
-$this->create('notes_get_config', '/config')->get()->action(
-	function($params){
-		App::main('NotesController', 'getConfig', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_set_config', '/config')->post()->action(
-	function($params){
-		App::main('NotesController', 'setConfig', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_get_all', '/notes')->get()->action(
-	function($params){
-		App::main('NotesController', 'getAll', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_get', '/notes/{id}')->get()->action(
-	function($params){
-		App::main('NotesController', 'get', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_create', '/notes')->post()->action(
-	function($params){
-		App::main('NotesController', 'create', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_update', '/notes/{id}')->put()->action(
-	function($params){
-		App::main('NotesController', 'update', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_delete', '/notes/{id}')->delete()->action(
-	function($params){
-		App::main('NotesController', 'delete', $params, new DIContainer());
-	}
-);
-
-
-/**
- * API requests
- */
-$this->create('notes_api_cors', '/api/v0.2/{path}')->method('options')->action(
-	function($params) {
-		return App::main('NotesAPI', 'cors', $params, new DIContainer());
-	}
-)->requirements(array('path' => '.+'));
-
-$this->create('notes_api_get_all', '/api/v0.2/notes')->get()->action(
-	function($params){
-		App::main('NotesAPI', 'getAll', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_api_get', '/api/v0.2/notes/{id}')->get()->action(
-	function($params){
-		App::main('NotesAPI', 'get', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_api_create', '/api/v0.2/notes')->post()->action(
-	function($params){
-		App::main('NotesAPI', 'create', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_api_update', '/api/v0.2/notes/{id}')->put()->action(
-	function($params){
-		App::main('NotesAPI', 'update', $params, new DIContainer());
-	}
-);
-
-$this->create('notes_api_delete', '/api/v0.2/notes/{id}')->delete()->action(
-	function($params){
-		App::main('NotesAPI', 'delete', $params, new DIContainer());
-	}
-);
+	// api
+	array('name' => 'notes_api#index', 'url' => '/api/v0.2/notes', 'verb' => 'GET'),
+	array('name' => 'notes_api#get', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'GET'),
+	array('name' => 'notes_api#create', 'url' => '/api/v0.2/notes', 'verb' => 'POST'),
+	array('name' => 'notes_api#update', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'PUT'),
+	array('name' => 'notes_api#destroy', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'DELETE'),	
+	array('name' => 'notes_api#cors', 'url' => '/api/v0.2/{path}', 'verb' => 'OPTIONS', 'requirements' => array('path' => '.+')),
+)));
