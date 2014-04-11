@@ -1,3 +1,7 @@
+owncloud-notes (0.7)
+* Port to ownCloud internal app framework. Additional installation of the appframework app is not needed anymore
+* Require ownCloud 6.0.3
+
 owncloud-notes (0.6)
 * Use markdown-js instead of showdown for rendering markdown because showdown has XSS problems and doesn't seem to be maintained anymore
 * Provide option to exclude fields when getting a single note through the API
