@@ -11,6 +11,8 @@ use \OC\Files\View;
 
 use \OCP\AppFramework\App;
 
+use \OCA\Notes\Core\API;
+
 use \OCA\Notes\Controller\PageController;
 use \OCA\Notes\Controller\NotesController;
 use \OCA\Notes\Controller\NotesApiController;
@@ -90,7 +92,7 @@ class Notes extends App {
 			return new CORSMiddleware($c->query('Request'));
 		});	
 
-		$this->registerMiddleware('CORSMiddleware');
+		$container->registerMiddleWare('CORSMiddleware');
 
 	}
 

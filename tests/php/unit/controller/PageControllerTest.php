@@ -35,7 +35,7 @@ class PageControllerTest extends ControllerTestUtility {
 			'\OCA\Notes\Service\NotesService')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->container['Request'] = new Request();
+		$this->container['Request'] = $this->getRequest();
 	}
 
 

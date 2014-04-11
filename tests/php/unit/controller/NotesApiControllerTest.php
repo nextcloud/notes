@@ -17,7 +17,7 @@ use \OCA\Notes\Utility\ControllerTestUtility;
 use \OCA\Notes\Db\Note;
 
 
-class NotesAPITest extends ControllerTestUtility {
+class NotesApiControllerTest extends ControllerTestUtility {
 
 	private $container;
 
@@ -34,7 +34,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'\OCA\Notes\Core\API')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->container['Request'] = getRequest();
+		$this->container['Request'] = $this->getRequest();
 		$this->container['NotesService'] = $this->getMockBuilder(
 			'\OCA\Notes\Service\NotesService')
 			->disableOriginalConstructor()
@@ -53,7 +53,7 @@ class NotesAPITest extends ControllerTestUtility {
 	 * GET /notes/
 	 */
 	public function testGetAllAnnotations(){
-		$this->assertDefaultAJAXAnnotations('getAll');
+		$this->assertDefaultAJAXAnnotations('index');
 	}
 
 
@@ -67,7 +67,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->method('getAll')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesApiController']->getAll();
+		$response = $this->container['NotesApiController']->index();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -91,7 +91,7 @@ class NotesAPITest extends ControllerTestUtility {
 			$note1, $note2	
 		);
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'get' => array('exclude' => 'title,content')
 		));
 
@@ -100,7 +100,7 @@ class NotesAPITest extends ControllerTestUtility {
 			->method('getAll')
 			->will($this->returnValue($notes));
 
-		$response = $this->container['NotesApiController']->getAll();
+		$response = $this->container['NotesApiController']->index();
 
 		$this->assertEquals(json_encode(array(
 			array(
@@ -130,7 +130,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['API']->expects($this->once())
@@ -158,7 +158,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'content' => 'yo'
 		));
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'get' => array('exclude' => 'title,content')
 		));
 
@@ -183,7 +183,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['API']->expects($this->once())
@@ -217,7 +217,7 @@ class NotesAPITest extends ControllerTestUtility {
 		$note = new Note();
 		$note->setId(4);
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'params' => array('content' => $content)
 		));
 
@@ -255,7 +255,7 @@ class NotesAPITest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -277,7 +277,7 @@ class NotesAPITest extends ControllerTestUtility {
 		$id = 1;
 		$content = 'yo';
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -306,7 +306,7 @@ class NotesAPITest extends ControllerTestUtility {
 	public function testDelete(){
 		$id = 1;
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
@@ -322,7 +322,7 @@ class NotesAPITest extends ControllerTestUtility {
 	public function testDeleteDoesNotExist(){
 		$id = 1;
 
-		$this->container['Request'] = getRequest(array(
+		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
@@ -338,17 +338,17 @@ class NotesAPITest extends ControllerTestUtility {
 
 
 	// cors
-	public function testCORSAnnotations($method) {
+	public function testCORSAnnotations() {
 		$annotations = array('NoAdminRequired', 'PublicPage', 'NoCSRFRequired');
 		$this->assertAnnotations($this->container['NotesApiController'],
-			$method, $annotations);
+			'cors', $annotations);
 	}
 
 	public function testCors() {
 		$this->container['Request'] = $this->getRequest(array(
 			'server' => array()
 		));
-		$response = $this->container['NotesController']->cors();
+		$response = $this->container['NotesApiController']->cors();
 
 		$headers = $response->getHeaders();
 
@@ -364,7 +364,7 @@ class NotesAPITest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'server' => array('HTTP_ORIGIN' => 'test')
 		));
-		$response = $this->container['NotesController']->cors();
+		$response = $this->container['NotesApiController']->cors();
 
 		$headers = $response->getHeaders();
 

@@ -5,6 +5,9 @@
  * See the COPYING file.
  */
 
+class OC {
+	public static $server;
+}
 
 // to execute without owncloud, we need to create our own classloader
 spl_autoload_register(function ($className){
@@ -26,15 +29,6 @@ spl_autoload_register(function ($className){
 	} else if(strpos($className, 'OC\\') === 0) {
 		$path = strtolower(str_replace('\\', '/', substr($className, 2)) . '.php');
 		$relPath = __DIR__ . '/../../../../lib/private' . $path;
-
-		if(file_exists($relPath)){
-			require_once $relPath;
-		}
-	} else {
-		$path = strtolower(str_replace('\\', '/', $className) . '.php');
-		$relPath = __DIR__ . '/../../../../3rdparty' . $path;
-
-		die($relPath);
 
 		if(file_exists($relPath)){
 			require_once $relPath;

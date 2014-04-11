@@ -7,7 +7,7 @@
 
 namespace OCA\Notes\Service;
 
-use \OCA\AppFramework\Core\API;
+use \OCA\Notes\Core\API;
 
 use \OCA\Notes\Db\Note;
 use \OCA\Notes\Utility\FileSystemUtility;
@@ -24,7 +24,7 @@ class NotesService {
 	 * notes directory
 	 * @param \OCA\Notes\Utility\FileSystemUtility $fileSystemUtility utility
 	 * for handling conflicting resolution for files with the same title
-	 * @param \OCA\AppFramework\API $api api instance
+	 * @param \OCA\Notes\API $api api instance
 	 */
 	public function __construct($fileSystem,
 	                            FileSystemUtility $fileSystemUtility,

@@ -52,7 +52,7 @@ class NotesControllerTest extends ControllerTestUtility {
 	 * GET /notes/
 	 */
 	public function testGetAllAnnotations(){
-		$this->assertDefaultAJAXAnnotations('getAll');
+		$this->assertDefaultAJAXAnnotations('index');
 	}
 
 
@@ -66,7 +66,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			->method('getAll')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->getAll();
+		$response = $this->container['NotesController']->index();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);

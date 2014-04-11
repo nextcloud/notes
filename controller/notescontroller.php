@@ -20,11 +20,13 @@ use \OCA\Notes\Service\NoteDoesNotExistException;
 class NotesController extends Controller {
 
 	private $notesService;
+	private $api;
 
 	public function __construct(API $api, IRequest $request,
 		                        NotesService $notesService){
 		parent::__construct($api, $request);
 		$this->notesService = $notesService;
+		$this->api = $api;
 	}
 
 

@@ -7,8 +7,6 @@
 
 namespace OCA\Notes\Db;
 
-use \OCA\AppFramework\Db\Entity;
-
 
 class Note extends Entity {
 

@@ -5,7 +5,7 @@
  * See the COPYING file.
  */
 
-namespace OCA\Notes\API;
+namespace OCA\Notes\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\AppFramework\Http\JSONResponse;
@@ -21,11 +21,13 @@ use \OCA\Notes\Service\NoteDoesNotExistException;
 class NotesApiController extends Controller {
 
 	private $notesService;
+	private $api;
 
 	public function __construct(API $api, IRequest $request,
 		                        NotesService $notesService){
 		parent::__construct($api->getAppName(), $request);
 		$this->notesService = $notesService;
+		$this->api = $api;
 	}
 
 
