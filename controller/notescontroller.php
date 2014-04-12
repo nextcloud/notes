@@ -70,6 +70,11 @@ class NotesController extends Controller {
 	public function update() {
 		$id = (int) $this->params('id');
 		$content = $this->params('content');
+
+		var_dump($this->request);
+
+		echo $content;
+		die();
 		try {
 			return new JSONResponse($this->notesService->update($id, $content));
 		} catch(NoteDoesNotExistException $ex) {

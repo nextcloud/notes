@@ -21,7 +21,11 @@
 		"grunt-wrap": "*",
 		"phantomjs": "*",
 		"grunt-phpunit": "*",
-		"bower": "*"
+		"bower": "*",
+		"karma-jasmine": "*",
+		"karma-phantomjs-launcher": "*",
+		"karma-chrome-launcher": "*",
+		"karma-firefox-launcher": "*"
 	},
 	"engine": "node >= 0.8"
 }
