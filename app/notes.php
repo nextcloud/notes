@@ -88,7 +88,6 @@ class Notes extends App {
 			return new API($c->query('AppName'));
 		});
 
-
 		/** 
 		 * Middleware
 		 */
