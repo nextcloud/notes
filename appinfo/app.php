@@ -1,12 +1,13 @@
 <?php
 /**
- * Copyright (c) 2013, Bernhard Posselt <dev@bernhard-posselt.com>
- * This file is licensed under the Affero General Public License version 3 or later.
- * See the COPYING file.
+ * ownCloud - Notes
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Bernhard Posselt <dev@bernhard-posselt.com>
+ * @copyright Bernhard Posselt 2012, 2014
  */
-
-namespace OCA\Notes;
-
 
 \OCP\App::addNavigationEntry(array(
 
@@ -27,5 +28,4 @@ namespace OCA\Notes;
 	// the title of your application. This will be used in the
 	// navigation or on the settings page of your app
 	'name' => \OC_L10N::get('notes')->t('Notes')
-
 ));
