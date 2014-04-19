@@ -11,7 +11,7 @@ use \OC\Files\View;
 
 use \OCP\AppFramework\App;
 
-use \OCA\Notes\Core\API;
+use \OCA\Notes\Core\Settings;
 
 use \OCA\Notes\Controller\PageController;
 use \OCA\Notes\Controller\NotesController;
@@ -39,18 +39,30 @@ class Notes extends App {
 		 * Controllers
 		 */
 		$container->registerService('PageController', function($c){
-			return new PageController($c->query('API'), $c->query('Request'),
-				$c->query('NotesService'));
+			return new PageController(
+				$c->query('AppName'), 
+				$c->query('Request'),
+				$c->query('NotesService'),
+				$c->query('Settings')
+			);
 		});
 
 		$container->registerService('NotesController', function($c){
-			return new NotesController($c->query('API'), $c->query('Request'),
-				$c->query('NotesService'));
+			return new NotesController(
+				$c->query('AppName'), 
+				$c->query('Request'),
+				$c->query('NotesService'),
+				$c->query('Settings')
+			);
 		});
 
 		$container->registerService('NotesApiController', function($c){
-			return new NotesApiController($c->query('API'), $c->query('Request'),
-				$c->query('NotesService'));
+			return new NotesApiController(
+				$c->query('AppName'), 
+				$c->query('Request'),
+				$c->query('NotesService'),
+				$c->query('Settings')
+			);
 		});
 
 
@@ -58,9 +70,27 @@ class Notes extends App {
 		 * Services
 		 */
 		$container->registerService('NotesService', function($c){
-			return new NotesService($c->query('FileSystem'),
+			return new NotesService(
+				$c->query('FileSystem'),
 				$c->query('FileSystemUtility'),
-				$c->query('API'));
+				$c->query('L10N')
+			);
+		});
+
+
+		/**
+		 * Core
+		 */
+		$container->registerService('UserId', function($c) {
+			return \OCP\User::getUser();
+		});
+
+		$container->registerService('L10N', function($c) {
+			return \OC_L10N::get($c['AppName']);
+		});
+
+		$container->registerService('Settings', function($c) {
+			return new Settings($c['AppName'], $c['UserId']);
 		});
 
 
@@ -68,7 +98,7 @@ class Notes extends App {
 		 * Utilities
 		 */
 		$container->registerService('FileSystem', function($c){
-			$userName = $c->query('API')->getUserId();
+			$userName = $c->query('UserId');
 
 			// restrict fileaccess to /user/files/Notes directory and work
 			// relative to that path
@@ -82,10 +112,6 @@ class Notes extends App {
 
 		$container->registerService('FileSystemUtility', function($c){
 			return new FileSystemUtility($c->query('FileSystem'));
-		});
-
-		$container->registerService('API', function($c){
-			return new API($c->query('AppName'));
 		});
 
 		/** 

@@ -29,8 +29,9 @@ class NotesControllerTest extends ControllerTestUtility {
 		// replace needed components with mocks
 		$notes = new Notes();
 		$this->container = $notes->getContainer();
-		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\Notes\Core\API')
+		$this->container['UserId'] = 'john';
+		$this->container['Settings'] = $this->getMockBuilder(
+			'\OCA\Notes\Core\Settings')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['Request'] = $this->getRequest();
@@ -90,7 +91,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('setUserValue')
 			->with($this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
@@ -117,7 +118,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('setUserValue')
 			->with($this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
@@ -147,7 +148,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'markdown' => false
 		);
 
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('getUserValue')
 			->with($this->equalTo('notesMarkdown'))
 			->will($this->returnValue('0'));
@@ -171,7 +172,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'post' => array('markdown' => true)
 		));
 
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('setUserValue')
 			->with($this->equalTo('notesMarkdown'), $this->equalTo(true));
 

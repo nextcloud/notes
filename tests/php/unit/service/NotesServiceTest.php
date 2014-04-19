@@ -22,8 +22,8 @@ class NotesServiceTest extends ControllerTestUtility {
 		// replace needed components with mocks
 		$notes = new Notes();
 		$this->container = $notes->getContainer();
-		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\Notes\Core\API')
+		$this->container['L10N'] = $this->getMockBuilder(
+			'\OCP\IL10N')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['FileSystemUtility'] = $this->getMockBuilder(
@@ -177,14 +177,10 @@ class NotesServiceTest extends ControllerTestUtility {
 
 	public function testCreate() {
 		$this->notes[0]->setTitle('Na nute');
-		$transMock = $this->getMock('trans', array('t'));
-		$transMock->expects($this->once())
+		$this->container['L10N']->expects($this->once())
 			->method('t')
 			->with('New note')
 			->will($this->returnValue('Na nute'));
-		$this->container['API']->expects($this->once())
-			->method('getTrans')
-			->will($this->returnValue($transMock));
 		$this->container['FileSystemUtility']->expects($this->once())
 			->method('generateFileName')
 			->with($this->equalTo('Na nute'), $this->equalTo(-1))
@@ -237,14 +233,10 @@ class NotesServiceTest extends ControllerTestUtility {
 		$id = 3;
 		$content = "\nman";
 		$title = 'Na nute';
-		$transMock = $this->getMock('trans', array('t'));
-		$transMock->expects($this->once())
+		$this->container['L10N']->expects($this->once())
 			->method('t')
 			->with('New note')
 			->will($this->returnValue($title));
-		$this->container['API']->expects($this->once())
-			->method('getTrans')
-			->will($this->returnValue($transMock));
 
 		$this->container['FileSystem']->expects($this->once())
 			->method('getPath')

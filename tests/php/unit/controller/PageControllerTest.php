@@ -27,8 +27,9 @@ class PageControllerTest extends ControllerTestUtility {
 		// replace needed components with mocks
 		$notes = new Notes();
 		$this->container = $notes->getContainer();
-		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\Notes\Core\API')
+		$this->container['UserId'] = 'john';
+		$this->container['Settings'] = $this->getMockBuilder(
+			'\OCA\Notes\Core\Settings')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['NotesService'] = $this->getMockBuilder(
@@ -52,7 +53,7 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexShouldSendTheCorrectTemplate(){
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('getUserValue')
 			->with($this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue('3'));
@@ -64,7 +65,7 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexShouldSendZeroWhenNoLastViewedNote(){
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('getUserValue')
 			->with($this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue(''));
@@ -75,7 +76,7 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexShouldSetZeroWhenLastViewedNotDoesNotExist(){
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('getUserValue')
 			->with($this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue('3'));

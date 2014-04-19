@@ -13,7 +13,7 @@ use \OCP\AppFramework\Http\Response;
 use \OCP\AppFramework\Http;
 use \OCP\IRequest;
 
-use \OCA\Notes\Core\API;
+use \OCA\Notes\Core\Settings;
 use \OCA\Notes\Service\NotesService;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
@@ -21,13 +21,15 @@ use \OCA\Notes\Service\NoteDoesNotExistException;
 class NotesApiController extends Controller {
 
 	private $notesService;
-	private $api;
+	private $settings;
 
-	public function __construct(API $api, IRequest $request,
-		                        NotesService $notesService){
-		parent::__construct($api->getAppName(), $request);
+	public function __construct($appName, 
+	                            IRequest $request,
+		                        NotesService $notesService,
+		                        Settings $settings){
+		parent::__construct($appName, $request);
 		$this->notesService = $notesService;
-		$this->api = $api;
+		$this->settings = $settings;
 	}
 
 
@@ -65,7 +67,7 @@ class NotesApiController extends Controller {
 		$hide = explode(',', $this->params('exclude', ''));
 
 		// save the last viewed note
-		$this->api->setUserValue('notesLastViewedNote', $id);
+		$this->settings->setUserValue('notesLastViewedNote', $id);
 		try {
 			$note = $this->notesService->get($id);
 

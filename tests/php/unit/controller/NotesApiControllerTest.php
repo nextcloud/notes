@@ -30,8 +30,9 @@ class NotesApiControllerTest extends ControllerTestUtility {
 		// replace needed components with mocks
 		$notes = new Notes();
 		$this->container = $notes->getContainer();
-		$this->container['API'] = $this->getMockBuilder(
-			'\OCA\Notes\Core\API')
+		$this->container['UserId'] = 'john';
+		$this->container['Settings'] = $this->getMockBuilder(
+			'\OCA\Notes\Core\Settings')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['Request'] = $this->getRequest();
@@ -133,7 +134,7 @@ class NotesApiControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('setUserValue')
 			->with($this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
@@ -186,7 +187,7 @@ class NotesApiControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['API']->expects($this->once())
+		$this->container['Settings']->expects($this->once())
 			->method('setUserValue')
 			->with($this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));

@@ -7,7 +7,7 @@
 
 namespace OCA\Notes\Service;
 
-use \OCA\Notes\Core\API;
+use \OCP\IL10N;
 
 use \OCA\Notes\Db\Note;
 use \OCA\Notes\Utility\FileSystemUtility;
@@ -17,21 +17,21 @@ class NotesService {
 
 	private $fileSystem;
 	private $fileSystemUtility;
-	private $api;
+	private $l10n;
 
 	/**
 	 * @param \OC\Files\View $fileSystem a filesystem which points to the users
 	 * notes directory
 	 * @param \OCA\Notes\Utility\FileSystemUtility $fileSystemUtility utility
 	 * for handling conflicting resolution for files with the same title
-	 * @param \OCA\Notes\API $api api instance
+	 * @param \OCP\IL10N $l10n
 	 */
 	public function __construct($fileSystem,
 	                            FileSystemUtility $fileSystemUtility,
-	                            API $api) {
+	                            IL10N $l10n) {
 		$this->fileSystem = $fileSystem;
 		$this->fileSystemUtility = $fileSystemUtility;
-		$this->api = $api;
+		$this->l10n = $l10n;
 	}
 
 
@@ -90,7 +90,7 @@ class NotesService {
 	 * @return \OCA\Notes\Db\Note the newly created note
 	 */
 	public function create() {
-		$title = $this->api->getTrans()->t('New note');
+		$title = $this->l10n->t('New note');
 
 		// check new note exists already and we need to number it
 		// pass -1 because no file has id -1 and that will ensure
@@ -130,7 +130,7 @@ class NotesService {
 		$title = $splitContent[0];
 
 		if(!$title) {
-			$title = $this->api->getTrans()->t('New note');
+			$title = $this->l10n->t('New note');
 		}
 
 		// prevent directory traversal

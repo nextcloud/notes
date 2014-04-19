@@ -12,7 +12,7 @@ use \OCP\IRequest;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http;
 
-use \OCA\Notes\Core\API;
+use \OCA\Notes\Core\Settings;
 use \OCA\Notes\Service\NotesService;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
@@ -20,13 +20,15 @@ use \OCA\Notes\Service\NoteDoesNotExistException;
 class NotesController extends Controller {
 
 	private $notesService;
-	private $api;
+	private $settings;
 
-	public function __construct(API $api, IRequest $request,
-		                        NotesService $notesService){
-		parent::__construct($api->getAppName(), $request);
+	public function __construct($appName, 
+	                            IRequest $request,
+		                        NotesService $notesService,
+		                        Settings $settings){
+		parent::__construct($appName, $request);
 		$this->notesService = $notesService;
-		$this->api = $api;
+		$this->settings = $settings;
 	}
 
 
@@ -45,8 +47,10 @@ class NotesController extends Controller {
 	public function get() {
 		$id = (int) $this->params('id');
 
+		//var_dump($this->request);
+
 		// save the last viewed note
-		$this->api->setUserValue('notesLastViewedNote', $id);
+		$this->settings->setUserValue('notesLastViewedNote', $id);
 		try {
 			return new JSONResponse($this->notesService->get($id));
 		} catch(NoteDoesNotExistException $ex) {
@@ -97,7 +101,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function getConfig() {
-		$markdown = $this->api->getUserValue('notesMarkdown') === '1';
+		$markdown = $this->settings->getUserValue('notesMarkdown') === '1';
 		$config = array(
 			'markdown' => $markdown
 		);
@@ -110,7 +114,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function setConfig() {
-		$markdown = $this->api->setUserValue('notesMarkdown', 
+		$markdown = $this->settings->setUserValue('notesMarkdown', 
 			$this->params('markdown'));
 		
 		return new JSONResponse();
