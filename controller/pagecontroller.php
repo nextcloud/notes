@@ -13,8 +13,8 @@ namespace OCA\Notes\Controller;
 
 use \OCP\AppFramework\Controller;
 use \OCP\IRequest;
+use \OCP\IConfig;
 
-use \OCA\Notes\Core\Settings;
 use \OCA\Notes\Service\NotesService;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
@@ -23,14 +23,17 @@ class PageController extends Controller {
 
 	private $notesService;
 	private $settings;
+	private $userId;
 
 	public function __construct($appName,
 	                            IRequest $request,
 	                            NotesService $notesService,
-	                            Settings $settings){
+	                            IConfig $settings,
+	                            $userId){
 		parent::__construct($appName, $request);
 		$this->notesService = $notesService;
 		$this->settings = $settings;
+		$this->userId = $userId;
 	}
 
 
@@ -44,7 +47,8 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
-		$lastViewedNote = (int) $this->settings->getUserValue('notesLastViewedNote');
+		$lastViewedNote = (int) $this->settings->getUserValue($this->userId,
+			$this->appName, 'notesLastViewedNote');
 		// check if note exists
 		try {
 			$this->notesService->get($lastViewedNote);

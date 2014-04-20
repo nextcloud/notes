@@ -33,8 +33,8 @@ class NotesControllerTest extends ControllerTestUtility {
 		$notes = new Notes();
 		$this->container = $notes->getContainer();
 		$this->container['UserId'] = 'john';
-		$this->container['Settings'] = $this->getMockBuilder(
-			'\OCA\Notes\Core\Settings')
+		$this->container['CoreConfig'] = $this->getMockBuilder(
+			'\OCP\IConfig')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['Request'] = $this->getRequest();
@@ -94,9 +94,11 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('setUserValue')
-			->with($this->equalTo('notesLastViewedNote'),
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
 
 		$this->container['NotesService']
@@ -121,9 +123,11 @@ class NotesControllerTest extends ControllerTestUtility {
 		$this->container['Request'] = $this->getRequest(array(
 			'urlParams' => array('id' => $id)
 		));
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('setUserValue')
-			->with($this->equalTo('notesLastViewedNote'),
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
 
 		$this->container['NotesService']
@@ -151,9 +155,11 @@ class NotesControllerTest extends ControllerTestUtility {
 			'markdown' => false
 		);
 
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo('notesMarkdown'))
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesMarkdown'))
 			->will($this->returnValue('0'));
 
 		$response = $this->container['NotesController']->getConfig();
@@ -175,9 +181,11 @@ class NotesControllerTest extends ControllerTestUtility {
 			'post' => array('markdown' => true)
 		));
 
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('setUserValue')
-			->with($this->equalTo('notesMarkdown'), $this->equalTo(true));
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesMarkdown'), $this->equalTo(true));
 
 		$response = $this->container['NotesController']->setConfig();
 

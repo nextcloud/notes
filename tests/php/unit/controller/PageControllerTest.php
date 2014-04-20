@@ -31,8 +31,8 @@ class PageControllerTest extends ControllerTestUtility {
 		$notes = new Notes();
 		$this->container = $notes->getContainer();
 		$this->container['UserId'] = 'john';
-		$this->container['Settings'] = $this->getMockBuilder(
-			'\OCA\Notes\Core\Settings')
+		$this->container['CoreConfig'] = $this->getMockBuilder(
+			'\OCP\IConfig')
 			->disableOriginalConstructor()
 			->getMock();
 		$this->container['NotesService'] = $this->getMockBuilder(
@@ -56,9 +56,11 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexShouldSendTheCorrectTemplate(){
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo('notesLastViewedNote'))
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue('3'));
 		$result = $this->container['PageController']->index();
 
@@ -68,9 +70,11 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexShouldSendZeroWhenNoLastViewedNote(){
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo('notesLastViewedNote'))
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue(''));
 		$result = $this->container['PageController']->index();
 
@@ -79,9 +83,11 @@ class PageControllerTest extends ControllerTestUtility {
 
 
 	public function testIndexShouldSetZeroWhenLastViewedNotDoesNotExist(){
-		$this->container['Settings']->expects($this->once())
+		$this->container['CoreConfig']->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo('notesLastViewedNote'))
+			->with($this->equalTo($this->container['UserId']),
+				$this->equalTo($this->container['AppName']),
+				$this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue('3'));
 		$this->container['NotesService']->expects($this->once())
 			->method('get')

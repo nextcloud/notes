@@ -15,8 +15,6 @@ use \OC\Files\View;
 
 use \OCP\AppFramework\App;
 
-use \OCA\Notes\Core\Settings;
-
 use \OCA\Notes\Controller\PageController;
 use \OCA\Notes\Controller\NotesController;
 use \OCA\Notes\Controller\NotesApiController;
@@ -47,7 +45,8 @@ class Notes extends App {
 				$c->query('AppName'), 
 				$c->query('Request'),
 				$c->query('NotesService'),
-				$c->query('Settings')
+				$c->query('CoreConfig'),
+				$c->query('UserId')
 			);
 		});
 
@@ -56,7 +55,8 @@ class Notes extends App {
 				$c->query('AppName'), 
 				$c->query('Request'),
 				$c->query('NotesService'),
-				$c->query('Settings')
+				$c->query('CoreConfig'),
+				$c->query('UserId')
 			);
 		});
 
@@ -64,8 +64,7 @@ class Notes extends App {
 			return new NotesApiController(
 				$c->query('AppName'), 
 				$c->query('Request'),
-				$c->query('NotesService'),
-				$c->query('Settings')
+				$c->query('NotesService')
 			);
 		});
 
@@ -93,8 +92,8 @@ class Notes extends App {
 			return \OC_L10N::get($c['AppName']);
 		});
 
-		$container->registerService('Settings', function($c) {
-			return new Settings($c['AppName'], $c['UserId']);
+		$container->registerService('CoreConfig', function($c) {
+			return $c->query('ServerContainer')->getConfig();
 		});
 
 
