@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# ronnietse <tseronnie@ymail.com>, 2013
+# ronnietse <tseronnie@ymail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
-"Report-Msgid-Bugs-To: http://bugs.owncloud.org/\n"
-"POT-Creation-Date: 2013-09-11 07:21-0400\n"
-"PO-Revision-Date: 2013-09-11 11:21+0000\n"
-"Last-Translator: I Robot <owncloud-bot@tmit.eu>\n"
+"Report-Msgid-Bugs-To: translations@owncloud.org\n"
+"POT-Creation-Date: 2014-04-26 01:21-0400\n"
+"PO-Revision-Date: 2014-04-25 17:40+0000\n"
+"Last-Translator: ronnietse <tseronnie@ymail.com>\n"
 "Language-Team: Chinese (Hong Kong) (http://www.transifex.com/projects/p/owncloud/language/zh_HK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Language: zh_HK\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appinfo/app.php:35
+#: appinfo/app.php:30
 msgid "Notes"
 msgstr "筆記"
 
-#: service/notesservice.php:89 service/notesservice.php:129
-#: templates/main.php:35 templates/translations.php:1
+#: service/notesservice.php:96 service/notesservice.php:136
+#: templates/main.php:37 templates/translations.php:1
 msgid "New note"
-msgstr ""
+msgstr "新筆記"
 
-#: templates/main.php:45
+#: templates/main.php:47
 msgid "Delete note"
-msgstr ""
+msgstr "刪除筆記"
