@@ -1,3 +1,6 @@
+owncloud-notes (0.8)
+* Security: Don't send CORS Allow-Credentials header to prevent CSRF
+
 owncloud-notes (0.7)
 * Port to ownCloud internal app framework. Additional installation of the appframework app is not needed anymore
 * Require ownCloud 6.0.3
