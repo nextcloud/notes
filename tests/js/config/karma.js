@@ -30,7 +30,7 @@ module.exports = function(config) {
 		// list of files / patterns to load in the browser
 		files: [
 			'js/polyfills/**/*.js',
-			'js/vendor/jquery/jquery.js',
+			'js/vendor/jquery/dist/jquery.js',
 			'js/vendor/markdown/lib/markdown.js',
 			'js/vendor/angular/angular.js',
 			'js/vendor/underscore/underscore.js',
