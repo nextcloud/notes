@@ -1,4 +1,4 @@
-owncloud-notes (0.8)
+owncloud-notes (0.9)
 * Security: Remove markdown support because of [XSS in markdown-js library](https://github.com/evilstreak/markdown-js/pull/52)
 
 owncloud-notes (0.7)
