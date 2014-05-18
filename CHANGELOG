@@ -1,3 +1,6 @@
+owncloud-notes (0.8)
+* Security: Remove markdown support because of [XSS in markdown-js library](https://github.com/evilstreak/markdown-js/pull/52)
+
 owncloud-notes (0.7)
 * Port to ownCloud internal app framework. Additional installation of the appframework app is not needed anymore
 * Require ownCloud 6.0.3

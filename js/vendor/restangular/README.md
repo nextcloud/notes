@@ -1,6 +1,8 @@
 #Restangular
 
 [![Build Status](https://travis-ci.org/mgonto/restangular.png)](https://travis-ci.org/mgonto/restangular)
+[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using Paypal")
+[![Donate on Gittip](http://badgr.co/gittip/mgonto.png)](https://www.gittip.com/mgonto/)
 <a href="https://twitter.com/intent/tweet?hashtags=&original_referer=http%3A%2F%2Fgithub.com%2F&text=Check+out+Restangular%2C+a+service+for+%23AngularJS+that+makes+it+easy+to+use+Rest+APIs&tw_p=tweetbutton&url=https%3A%2F%2Fgithub.com%2Fmgonto%2Frestangular" target="_blank">
   <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></img>
 </a>
@@ -18,49 +20,52 @@ It's a perfect fit for any WebApp that consumes data from a RESTful API.
 - [Dependencies](#dependencies)
 - [Production apps using Restangular](#production-apps-using-restangular)
 - [Starter Guide](#starter-guide)
-	- [Quick configuration for Lazy Readers](#quick-configuration-for-lazy-readers)
-	- [Adding dependency to Restangular module in your app](#adding-dependency-to-restangular-module-in-your-app)
-	- [Using Restangular](#using-restangular)
-		- [Creating Main Restangular object](#creating-main-restangular-object)
-		- [Let's code!](#lets-code)
-	- [Configuring Restangular](#configuring-restangular)
-		- [Properties](#properties)
-			- [setBaseUrl](#setbaseurl)
-			- [setExtraFields](#setextrafields)
-			- [setParentless](#setparentless)
-			- [setDefaultHttpFields](#setdefaulthttpfields)
-			- [addElementTransformer](#addelementtransformer)
-			- [setOnElemRestangularized](#setonelemrestangularized)
-			- [setResponseInterceptor (or setResponseExtractor. It's an Alias)](#setresponseinterceptor-or-setresponseextractor-its-an-alias)
-			- [setRequestInterceptor](#setrequestinterceptor)
-			- [setFullRequestInterceptor](#setfullrequestinterceptor)
-			- [setErrorInterceptor](#seterrorinterceptor)
-			- [setRestangularFields](#setrestangularfields)
-			- [setMethodOverriders](#setmethodoverriders)
-			- [setDefaultRequestParams](#setdefaultrequestparams)
-			- [setFullResponse](#setfullresponse)
-			- [setDefaultHeaders](#setdefaultheaders)
-			- [setRequestSuffix](#setrequestsuffix)
-			- [setUseCannonicalId](#setusecannonicalid)
-		- [How to configure them globally](#how-to-configure-them-globally)
-			- [Configuring in the config](#configuring-in-the-config)
-			- [Configuring in the run](#configuring-in-the-run)
-		- [How to create a Restangular service with a different configuration from the global one](#how-to-create-a-restangular-service-with-a-different-configuration-from-the-global-one)
-	- [Methods description](#methods-description)
-		- [Restangular methods](#restangular-methods)
-		- [Element methods](#element-methods)
-		- [Collection methods](#collection-methods)
-		- [Custom methods](#custom-methods) 
-	- [Copying elements](#copying-elements)
-	- [Enhanced promises](#enhanced-promises)
+  - [Quick configuration for Lazy Readers](#quick-configuration-for-lazy-readers)
+  - [Adding dependency to Restangular module in your app](#adding-dependency-to-restangular-module-in-your-app)
+  - [Using Restangular](#using-restangular)
+    - [Creating Main Restangular object](#creating-main-restangular-object)
+    - [Let's code!](#lets-code)
+  - [Configuring Restangular](#configuring-restangular)
+    - [Properties](#properties)
+      - [setBaseUrl](#setbaseurl)
+      - [setExtraFields](#setextrafields)
+      - [setParentless](#setparentless)
+      - [setDefaultHttpFields](#setdefaulthttpfields)
+      - [addElementTransformer](#addelementtransformer)
+      - [setOnElemRestangularized](#setonelemrestangularized)
+      - [setResponseInterceptor (or setResponseExtractor. It's an Alias)](#setresponseinterceptor-or-setresponseextractor-its-an-alias)
+      - [addResponseInterceptor] (#addrequestinterceptor)
+      - [setRequestInterceptor](#setrequestinterceptor)
+      - [addRequestInterceptor] (#addrequestinterceptor)
+      - [setFullRequestInterceptor](#setfullrequestinterceptor)
+      - [setErrorInterceptor](#seterrorinterceptor)
+      - [setRestangularFields](#setrestangularfields)
+      - [setMethodOverriders](#setmethodoverriders)
+      - [setDefaultRequestParams](#setdefaultrequestparams)
+      - [setFullResponse](#setfullresponse)
+      - [setDefaultHeaders](#setdefaultheaders)
+      - [setRequestSuffix](#setrequestsuffix)
+      - [setUseCannonicalId](#setusecannonicalid)
+    - [How to configure them globally](#how-to-configure-them-globally)
+      - [Configuring in the config](#configuring-in-the-config)
+      - [Configuring in the run](#configuring-in-the-run)
+    - [How to create a Restangular service with a different configuration from the global one](#how-to-create-a-restangular-service-with-a-different-configuration-from-the-global-one)
+    - [Decoupled Restangular Service](#decoupled-restangular-service)
+  - [Methods description](#methods-description)
+    - [Restangular methods](#restangular-methods)
+    - [Element methods](#element-methods)
+    - [Collection methods](#collection-methods)
+    - [Custom methods](#custom-methods) 
+  - [Copying elements](#copying-elements)
+  - [Enhanced promises](#enhanced-promises)
         - [Using values directly in templates](#using-values-directly-in-templates)
-	- [Using Self reference resources](#using-self-reference-resources)
-	- [URL Building](#url-building)
-	- [Creating new Restangular Methods](#creating-new-restangular-methods)
-	- [Adding Custom Methods to Collections](#adding-custom-methods-to-collections)
-		- [Example:](#example)
-	- [Adding Custom Methods to Models](#adding-custom-methods-to-models)
-		- [Example:](#example-1)
+  - [Using Self reference resources](#using-self-reference-resources)
+  - [URL Building](#url-building)
+  - [Creating new Restangular Methods](#creating-new-restangular-methods)
+  - [Adding Custom Methods to Collections](#adding-custom-methods-to-collections)
+    - [Example:](#example)
+  - [Adding Custom Methods to Models](#adding-custom-methods-to-models)
+    - [Example:](#example-1)
 - [FAQ](#faq)
     - [How can I handle errors?](#how-can-i-handle-errors)
     - [I need to send one header in EVERY Restangular request, how do I do this?](#i-need-to-send-one-header-in-every-restangular-request-how-do-i-do-this)
@@ -98,19 +103,19 @@ Restangular has several features that distinguish it from $resource:
 Let's see a quick and short example of these features
 ````javascript
 // Restangular returns promises
-Restangular.one('users').getList()	// GET: /users
+Restangular.one('users').getList()  // GET: /users
 .then(function(users) {
   // returns a list of users
-  $scope.user = users[0];	// first Restangular obj in list: { id: 123 }
+  $scope.user = users[0]; // first Restangular obj in list: { id: 123 }
 })
 
 // Later in the code...
 
 // Restangular objects are self-aware and know how to make their own restful requests
-$scope.user.getList('cars');	// GET: /users/123/cars
+$scope.user.getList('cars');  // GET: /users/123/cars
 
 // You can also use your own custom methods on Restangular objects
-$scope.user.sendMessage();	// POST: /users/123/sendMessage
+$scope.user.sendMessage();  // POST: /users/123/sendMessage
 
 // Chain methods together to easily build complex requests
 $scope.user.one('messages', 123).one('from', 123).getList('unread');
@@ -126,16 +131,12 @@ You can download this by:
 * Using bower and running `bower install restangular`
 * Using npm and running `npm install restangular`
 * Downloading it manually by clicking [here to download development unminified version](https://raw.github.com/mgonto/restangular/master/dist/restangular.js) or [here to download minified production version](https://raw.github.com/mgonto/restangular/master/dist/restangular.min.js)
-* Using [JsDelivr CDN files](https://github.com/jimaek/jsdelivr/tree/master/files/restangular):
+* Using [CdnJS CDN files](http://cdnjs.com/libraries/restangular/):
 
 ````html
-<!-- Use LATEST folder to always get the latest version-->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/latest/restangular.js"></script>
-<script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/latest/restangular.min.js"></script>
-
-<!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/1.1.3/restangular.js"></script>
-<script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/1.1.3/restangular.min.js"></script>
+<!-- Or use TAG number for specific version. New versions are auto deployed -->
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.min.js"></script>
 ````
 
 
@@ -148,7 +149,7 @@ Restangular depends on Angular and Lodash (or Underscore).
 Each time, there're more Production WebApps using `Restangular`. If your webapp uses it and it's not in the list, please create an issue or submit a PR:
 
 * **Life360** is using Restangular to build the WebApp version of their platform
-* **Thomas Reuters** is using Restangular for the new Webapp they've built
+* **Thomson Reuters** is using Restangular for the new Webapp they've built
 
 #Starter Guide
 
@@ -165,7 +166,9 @@ angular.module('your-app').controller('MainCtrl', function($scope, Restangular) 
 });
 ````
 
-The Restangular service may be injected into any Controller or Directive :)
+The Restangular service may be injected into any Controller or Directive :)  
+Note: When adding Restangular as a dependency it is not capitalized 'restangular'  
+      But when injected into your controller it is 'Restangular'
 
 ## Using Restangular
 
@@ -246,6 +249,9 @@ baseAccounts.getList().then(function (accounts) {
   // PUT /accounts/123. The name of this account will be changed from now on
   firstAccount.put();
   editFirstAccount.put();
+
+  // PUT /accounts/123. Save will do POST or PUT accordingly
+  firstAccount.save();
 
   // DELETE /accounts/123 We don't have first account anymore :(
   firstAccount.remove();
@@ -354,7 +360,7 @@ This can be used together with `addRestangularMethod` (Explained later) to add c
 
 
 #### setResponseInterceptor
-**This is depracated. Use addResponseInterceptor since you can add more than one**.
+**This is deprecated. Use addResponseInterceptor since you can add more than one**.
 
 #### addResponseInterceptor
 The responseInterceptor is called after we get each response from the server. It's a function that receives this arguments:
@@ -371,7 +377,7 @@ Some of the use cases of the responseInterceptor are handling wrapped responses 
 The responseInterceptor must return the restangularized data element.
 
 #### setRequestInterceptor
-**This is depracated. Use addRequestInterceptor since you can add more than one**.
+**This is deprecated. Use addRequestInterceptor since you can add more than one**.
 
 #### addRequestInterceptor
 The requestInterceptor is called before sending any data to the server. It's a function that must return the element to be requested. This function receives the following arguments:
@@ -382,7 +388,7 @@ The requestInterceptor is called before sending any data to the server. It's a f
 * **url**: The relative URL being requested. For example: `/api/v1/accounts/123`
 
 #### setFullRequestInterceptor
-**This is depracated. Use addFullRequestInterceptor since you can add more than one**.
+**This is deprecated. Use addFullRequestInterceptor since you can add more than one**.
 
 #### addFullRequestInterceptor
 This adds a new fullRequestInterceptor. The fullRequestInterceptor is similar to the `requestInterceptor` but more powerful. It lets you change the element, the request parameters and the headers as well.
@@ -398,7 +404,7 @@ It can return an object with any (or all) of following properties:
 If a property isn't returned, the one sent is used.
 
 #### setErrorInterceptor
-The errorInterceptor is called whenever there's an error. It's a function that receives the response and the promise as parameters.
+The errorInterceptor is called whenever there's an error. It's a function that receives the response and the deferred (for the promise) as parameters.
 
 The errorInterceptor function, whenever it returns `false`, prevents the promise linked to a Restangular request to be executed.
 All other return values (besides `false`) are ignored and the promise follows the usual path, eventually reaching the success or error hooks.
@@ -428,6 +434,11 @@ You can now Override HTTP Methods. You can set here the array of methods to over
 
 By setting this value to true, both `get` and `getList` will be performed using JSonp instead of the regular GET.
 
+You will need to add the 'JSON_CALLBACK' string to your URLs (see [$http.jsonp](http://docs.angularjs.org/api/ng.$http#methods_jsonp)). You can use `setDefaultRequestParams` to accomplish this:
+```javascript
+RestangularProvider.setDefaultRequestParams('jsonp', {callback: 'JSON_CALLBACK'});
+```
+
 #### setDefaultRequestParams
 
 You can set default Query parameters to be sent with every request and every method.
@@ -451,9 +462,39 @@ Restangular.setDefaultRequestParams({apikey: "secret key"});
 
 You can set fullResponse to true to get the whole response every time you do any request. The full response has the restangularized data in the `data` field, and also has the headers and config sent. By default, it's set to false.
 
+````javascript
+// set params for multiple methods at once
+Restangular.setFullResponse(true);
+````
+
+Or set it per service
+````javascript
+// Restangular service that uses setFullResponse
+app.factory('RestFullResponse', function(Restangular) {
+  return Restangular.withConfig(function(RestangularConfigurer) {
+    RestangularConfigurer.setFullResponse(true);
+  });
+});
+
+// Let's use it in the controller
+app.controller('MainCtrl', function(Restangular, RestFullResponse) {
+
+  // Uses full response configuration
+  RestFullResponse.all('users').getList().then(function(response) {
+    $scope.users = response.users;
+    console.log(response.headers);
+  });
+});
+````
+
 #### setDefaultHeaders
 
-You can set default Headers to be sent with every request.
+You can set default Headers to be sent with every request. Send format: {header_name: header_value}
+
+````javascript
+// set default header "token"
+RestangularProvider.setDefaultHeaders({token: "x-restangular"});
+````
 
 #### setRequestSuffix
 
@@ -567,6 +608,36 @@ app.controller('MainCtrl', function(Restangular, BingRestangular) {
 });
 ````
 
+### Decoupled Restangular Service
+
+There're some times where you want to use Restangular but you don't want to expose Restangular object anywhere. For those cases, you can actually use the `service` feature of Restangular.
+
+Let's see how it works:
+
+````js
+// Declare factory
+module.factory('Users', function() {
+  return Restangular.service('users');
+});
+
+// In your controller you inject Users
+Users.one(2).get() // GET to /users/1
+Users.post({data}) // POST to /users
+
+// GET to /users
+Users.getList().then(function(user) {
+  user.name = "Gonto";
+  // PUT to /users/1
+  user.put();
+})
+````
+
+We can also use Nested restfull resources with this:
+
+var Cars = Restangular.service('cars', Restangular.one('users', 1));
+
+Cars.getList() // GET to /users/1/cars
+
 ## Methods description
 
 There are 3 sets of methods. Collections have some methods and elements have others. There are are also some common methods for all of them
@@ -601,7 +672,9 @@ These are the methods that can be called on the Restangular object.
 * **getRequestedUrl()**: Gets the real URL the current object was requested with (incl. GET parameters). Will equal getRestangularUrl() when no parameters were used, before calling `get()`, or when using on a nested child.
 * **getParentList()**: Gets the parent list to which it belongs (if any)
 * **clone()**: Copies the element
+* **plain()**: Returns the plain element received from the server without any of the enhanced methods from Restangular. It's an alias to calling `Restangular.stripRestangular(elem)`
 * **withHttpConfig(httpConfig)**: It lets you set a configuration for $http only for the next call. Check the Local Config HTTP section for an example.
+* **save**: Calling save will determine wether to do PUT or POST accordingly
 
 ### Collection methods
 * **getList([queryParams, headers]): Gets itself again (Remember this is a collection)**.
@@ -675,7 +748,7 @@ lengthPromise.then(function(length) {
 ````
 ## Using values directly in templates
 
-Since Angular 1.2, Promise unwrapping in templates has been disabled by default and will be depracated soon.
+Since Angular 1.2, Promise unwrapping in templates has been disabled by default and will be deprecated soon.
 
 **This means that the following will cease to work**:
 
@@ -919,7 +992,7 @@ You must add a requestInterceptor for this.
 ````js
 RestangularProvider.setRequestInterceptor(function(elem, operation) {
   if (operation === "remove") {
-     return undefined;
+     return null;
   } 
   return elem;
 })
@@ -959,20 +1032,20 @@ In this case, you'd need to configure Restangular's `responseExtractor` and `lis
 ````javascript
 app.config(function(RestangularProvider) {
     
-    // Now let's configure the response extractor for each request
-    RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
-      // This is a get for a list
-      var newResponse;
+    // add a response intereceptor
+    RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
+      var extractedData;
+      // .. to look for getList operations
       if (operation === "getList") {
-        // Here we're returning an Array which has one special property metadata with our extra information
-        newResponse = response.data.data;
-        newResponse.metadata = response.data.meta;
+      	// .. and handle the data and meta data
+        extractedData = data.data.data;
+        extractedData.meta = data.data.meta;
       } else {
-        // This is an element
-        newResponse = response.data;
+        extractedData = data.data;
       }
-      return newResponse;
+      return extractedData;
     });
+    
 });
 ````
 
@@ -1096,8 +1169,9 @@ Users reported that this server frameworks play real nice with Restangular, as t
 * Restify and Express for NodeJS
 * Tastypie and Django Rest Framework for Django 
 * Slim Framework
+* Microsoft ASP.NET Web API 2
 
-# Releases Notes
+# Releases Notes 
 
 New releases notes are together with releases in GitHub at: https://github.com/mgonto/restangular/releases
 
@@ -1118,4 +1192,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mgonto/restangular/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
