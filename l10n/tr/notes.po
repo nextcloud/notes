@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
-"Report-Msgid-Bugs-To: http://bugs.owncloud.org/\n"
-"POT-Creation-Date: 2013-10-15 23:24-0400\n"
-"PO-Revision-Date: 2013-10-14 19:10+0000\n"
+"Report-Msgid-Bugs-To: translations@owncloud.org\n"
+"POT-Creation-Date: 2014-05-25 01:21-0400\n"
+"PO-Revision-Date: 2014-05-24 14:21+0000\n"
 "Last-Translator: volkangezer <volkangezer@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/owncloud/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: appinfo/app.php:35
+#: appinfo/app.php:30
 msgid "Notes"
 msgstr "Notlar"
 
-#: service/notesservice.php:89 service/notesservice.php:129
-#: templates/main.php:35 templates/translations.php:1
+#: service/notesservice.php:96 service/notesservice.php:136
+#: templates/main.php:37 templates/translations.php:1
 msgid "New note"
 msgstr "Yeni not"
 
-#: templates/main.php:45
+#: templates/main.php:47
 msgid "Delete note"
 msgstr "Notu sil"
