@@ -87,7 +87,9 @@
 }
 
 #app-content textarea.markdown {
-	width: 50%;
+	/* 
+	* width: 50%;
+	*/
 }
 
 /* TODO: move into core app styles */
@@ -99,7 +101,9 @@
 
 #app-content .markdown {
 	height: 100%;
-	width: 50%;
+	/*
+	* width: 50%;
+	*/
 	margin: 0;
 	padding: 30px 20px 100px 30px;
 	font-size: 18px;
