@@ -6,6 +6,9 @@
             ng-change="sync(markdown)"> Markdown
     </label>
 </div>-->
+
+<div id="app-navigation-toggle" class="icon-menu" style="display:none;"></div>
+
 <textarea
 	ng-model="note.content"
     ng-class="{markdown: config.isMarkdown()}"
