@@ -97,6 +97,10 @@
 	background-image: url('../img/loading.gif');
 	background-position: center;
 	background-repeat: no-repeat;
+	/* Overrides the snap.js animation making the loading icon to fly in app-content. */
+	transition:none !important;
+	-webkit-transition: none !important;
+	-moz-webkit-transition: none !important;
 }
 
 #app-content .markdown {
