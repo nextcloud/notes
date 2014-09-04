@@ -8,10 +8,7 @@ For further developer and user documentation please visit [the wiki](https://git
 
 # Maintainers
 
-Maintainers wanted for additional features!
-
-* [Bernhard Posselt](https://github.com/Raydiation)
-* [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
+This app is looking for a maintainer
 
 # Minimum PHP Version
 * PHP >= 5.3.6
