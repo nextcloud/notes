@@ -52,7 +52,7 @@
 		display: none;
 	}
 
-	#app-navigation .active > .utils .delete-icon {
+	#app-navigation .active > .utils .icon-delete {
 		display: block;
 	}
 
