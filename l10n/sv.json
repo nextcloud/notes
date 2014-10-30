@@ -1,0 +1,6 @@
+{ "translations": {
+    "Notes" : "Anteckningar",
+    "New note" : "Ny anteckning",
+    "Delete note" : "Radera anteckning"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

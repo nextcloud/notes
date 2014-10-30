@@ -1,0 +1,6 @@
+{ "translations": {
+    "Notes" : "Märkmed",
+    "New note" : "Uus märge",
+    "Delete note" : "Kustuta märge"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
