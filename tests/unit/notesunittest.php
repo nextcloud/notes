@@ -33,21 +33,6 @@ class NotesUnitTest extends \PHPUnit_Framework_TestCase {
 				->getMock();
 		});
 
-		$this->container->registerService('Filesystem', function ($c) use ($test) {
-			return $test->getMock('Filesystem',
-				array(
-					'getDirectoryContent',
-					'unlink',
-					'file_get_contents',
-					'getFileInfo',
-					'file_exists',
-					'rename',
-					'file_put_contents',
-					'getPath'
-				)
-			);
-		});
-
 		$this->container->registerService('CoreConfig', function ($c) use ($test) {
 			return $test->getMockBuilder(
 				'\OCP\IConfig')
@@ -63,6 +48,21 @@ class NotesUnitTest extends \PHPUnit_Framework_TestCase {
 		});
 
 		$this->container->registerParameter('UserId', $this->user);
+
+		$this->container->registerService('FileSystem', function ($c) use ($test) {
+			return $test->getMock('Filesystem',
+				array(
+					'getDirectoryContent',
+					'unlink',
+					'file_get_contents',
+					'getFileInfo',
+					'file_exists',
+					'rename',
+					'file_put_contents',
+					'getPath'
+				)
+			);
+		});
 	}
 
 

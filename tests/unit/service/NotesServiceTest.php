@@ -68,7 +68,6 @@ class NotesServiceTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 
 
 	public function testGetAll(){
-		var_dump($this->container);
 		$this->container->query('FileSystem')->expects($this->once())
 			->method('getDirectoryContent')
 			->with($this->equalTo('/'))

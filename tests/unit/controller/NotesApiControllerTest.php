@@ -125,9 +125,6 @@ class NotesApiControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'content' => 'yo'
 		));
 
-		$this->setRequest(array(
-			'get' => array('exclude' => )
-		));
 
 		$response = $this->container->query('NotesApiController')->get(3, 'title,content');
 
