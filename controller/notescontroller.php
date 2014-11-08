@@ -27,7 +27,7 @@ class NotesController extends Controller {
 	private $settings;
 	private $userId;
 
-	public function __construct($appName, 
+	public function __construct($appName,
 	                            IRequest $request,
 		                        NotesService $notesService,
 		                        IConfig $settings,
@@ -50,14 +50,12 @@ class NotesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param int $id
 	 */
-	public function get() {
-		$id = (int) $this->params('id');
-
-		//var_dump($this->request);
-
+	public function get($id) {
 		// save the last viewed note
-		$this->settings->setUserValue($this->userId, $this->appName, 
+		$this->settings->setUserValue($this->userId, $this->appName,
 			'notesLastViewedNote', $id);
 		try {
 			return new JSONResponse($this->notesService->get($id));
@@ -78,11 +76,11 @@ class NotesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param int $id
+	 * @param string $content
 	 */
-	public function update() {
-		$id = (int) $this->params('id');
-		$content = $this->params('content');
-
+	public function update($id, $content) {
 		try {
 			return new JSONResponse($this->notesService->update($id, $content));
 		} catch(NoteDoesNotExistException $ex) {
@@ -93,9 +91,10 @@ class NotesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param int $id
 	 */
-	public function destroy() {
-		$id = (int) $this->params('id');
+	public function destroy($id) {
 		try {
 			$this->notesService->delete($id);
 			return new JSONResponse();
@@ -114,19 +113,19 @@ class NotesController extends Controller {
 		$config = array(
 			'markdown' => $markdown
 		);
-		
+
 		return new JSONResponse($config);
 	}
 
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param string $markdown
 	 */
-	public function setConfig() {
+	public function setConfig($markdown) {
 		$markdown = $this->settings->setUserValue($this->userId,
-			$this->appName, 'notesMarkdown', 
-			$this->params('markdown'));
-		
+			$this->appName, 'notesMarkdown', $markdown);
 		return new JSONResponse();
 	}
 

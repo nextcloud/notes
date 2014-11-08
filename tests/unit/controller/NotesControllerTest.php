@@ -26,6 +26,7 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 	 */
 	public function setUp(){
 		parent::setUp();
+		$test = &$this;
 		$this->container->registerService('NotesService', function ($c) use ($test) {
 			return $test->getMockBuilder(
 				'\OCA\Notes\Service\NotesService')
@@ -43,12 +44,12 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'hi'
 		);
 
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('getAll')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->index();
+		$response = $this->container->query('NotesController')->index();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -64,23 +65,20 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'hi'
 		);
 
-		$this->setRequest(array(
-			'urlParams' => array('id' => $id)
-		));
-		$this->container['CoreConfig']->expects($this->once())
+		$this->container->query('CoreConfig')->expects($this->once())
 			->method('setUserValue')
-			->with($this->equalTo($this->container['UserId']),
-				$this->equalTo($this->container['AppName']),
+			->with($this->equalTo($this->container->query('UserId')),
+				$this->equalTo($this->container->query('AppName')),
 				$this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
 
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('get')
 			->with($this->equalTo($id))
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->get();
+		$response = $this->container->query('NotesController')->get($id);
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -93,23 +91,20 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'hi'
 		);
 
-		$this->setRequest(array(
-			'urlParams' => array('id' => $id)
-		));
-		$this->container['CoreConfig']->expects($this->once())
+		$this->container->query('CoreConfig')->expects($this->once())
 			->method('setUserValue')
-			->with($this->equalTo($this->container['UserId']),
-				$this->equalTo($this->container['AppName']),
+			->with($this->equalTo($this->container->query('UserId')),
+				$this->equalTo($this->container->query('AppName')),
 				$this->equalTo('notesLastViewedNote'),
 				$this->equalTo($id));
 
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('get')
 			->with($this->equalTo($id))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->get();
+		$response = $this->container->query('NotesController')->get($id);
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -124,14 +119,14 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'markdown' => false
 		);
 
-		$this->container['CoreConfig']->expects($this->once())
+		$this->container->query('CoreConfig')->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo($this->container['UserId']),
-				$this->equalTo($this->container['AppName']),
+			->with($this->equalTo($this->container->query('UserId')),
+				$this->equalTo($this->container->query('AppName')),
 				$this->equalTo('notesMarkdown'))
 			->will($this->returnValue('0'));
 
-		$response = $this->container['NotesController']->getConfig();
+		$response = $this->container->query('NotesController')->getConfig();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -142,17 +137,13 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 	 * POST /config
 	 */
 	public function testSetConfig(){
-		$this->setRequest(array(
-			'post' => array('markdown' => true)
-		));
-
-		$this->container['CoreConfig']->expects($this->once())
+		$this->container->query('CoreConfig')->expects($this->once())
 			->method('setUserValue')
-			->with($this->equalTo($this->container['UserId']),
-				$this->equalTo($this->container['AppName']),
+			->with($this->equalTo($this->container->query('UserId')),
+				$this->equalTo($this->container->query('AppName')),
 				$this->equalTo('notesMarkdown'), $this->equalTo(true));
 
-		$response = $this->container['NotesController']->setConfig();
+		$response = $this->container->query('NotesController')->setConfig(true);
 
 		$this->assertTrue($response instanceof JSONResponse);
 	}
@@ -166,12 +157,12 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'hi'
 		);
 
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('create')
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->create();
+		$response = $this->container->query('NotesController')->create();
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -188,17 +179,13 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'hi'
 		);
 
-		$this->setRequest(array(
-			'urlParams' => array('id' => $id),
-			'params' => array('content' => $content)
-		));
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('update')
 			->with($this->equalTo($id),	$this->equalTo($content))
 			->will($this->returnValue($expected));
 
-		$response = $this->container['NotesController']->update();
+		$response = $this->container->query('NotesController')->update($id, $content);
 
 		$this->assertEquals($expected, $response->getData());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -209,18 +196,14 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 		$id = 1;
 		$content = 'yo';
 
-		$this->setRequest(array(
-			'urlParams' => array('id' => $id),
-			'params' => array('content' => $content)
-		));
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('update')
 			->with($this->equalTo($id),
 				$this->equalTo($content))
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->update();
+		$response = $this->container->query('NotesController')->update($id, $content);
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);
@@ -233,14 +216,11 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 	public function testDelete(){
 		$id = 1;
 
-		$this->setRequest(array(
-			'urlParams' => array('id' => $id)
-		));
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('delete');
 
-		$response = $this->container['NotesController']->destroy();
+		$response = $this->container->query('NotesController')->destroy($id);
 
 		$this->assertTrue($response instanceof JSONResponse);
 	}
@@ -249,15 +229,12 @@ class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 	public function testDeleteDoesNotExist(){
 		$id = 1;
 
-		$this->setRequest(array(
-			'urlParams' => array('id' => $id)
-		));
-		$this->container['NotesService']
+		$this->container->query('NotesService')
 			->expects($this->once())
 			->method('delete')
 			->will($this->throwException(new NoteDoesNotExistException()));
 
-		$response = $this->container['NotesController']->destroy();
+		$response = $this->container->query('NotesController')->destroy($id);
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $response->getStatus());
 		$this->assertTrue($response instanceof JSONResponse);

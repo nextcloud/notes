@@ -26,6 +26,7 @@ class PageControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 		// use the container to test to check if its wired up correctly and
 		// replace needed components with mocks
 		parent::setUp();
+		$test = &$this;
 		$this->container->registerService('NotesService', function ($c) use ($test) {
 			return $test->getMockBuilder(
 				'\OCA\Notes\Service\NotesService')

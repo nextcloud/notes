@@ -19,8 +19,8 @@
 
 # Makefile for building the project
 app_name=notes
-project_dir=$(CURDIR)/../../$(app_name)
-build_dir=$(CURDIR)/artifacts
+project_dir=$(CURDIR)/../$(app_name)
+build_dir=$(CURDIR)/build/artifacts
 appstore_dir=$(build_dir)/appstore
 package_name=$(app_name)
 
@@ -29,17 +29,17 @@ firefox_bin=/usr/bin/firefox
 chrome_bin=/usr/bin/chromium
 phantomjs_bin=/usr/bin/phantomjs
 
-# common directories
-grunt_dir=$(CURDIR)/node_modules/grunt-cli/bin/grunt
-bower_dir=$(CURDIR)/node_modules/bower/bin/bower
-gruntfile_dir=$(CURDIR)/Gruntfile.js
-
-js_dir=$(CURDIR)/../js
+js_dir=$(CURDIR)/js
 js_public_dir=$(js_dir)/public
 
-php_unit_tests_dir=$(CURDIR)/../tests/php/unit
-php_integration_tests_dir=$(CURDIR)/../tests/php/integration
-php_acceptance_tests_dir=$(CURDIR)/../tests/php/acceptance
+# common directories
+grunt_dir=$(js_dir)/node_modules/grunt-cli/bin/grunt
+bower_dir=$(js_dir)/node_modules/bower/bin/bower
+gruntfile_dir=$(js_dir)/Gruntfile.js
+
+php_unit_tests_dir=$(CURDIR)/tests/unit
+php_integration_tests_dir=$(CURDIR)/tests/integration
+php_acceptance_tests_dir=$(CURDIR)/tests/acceptance
 
 
 
@@ -88,7 +88,9 @@ php-acceptance-tests: deps
 
 # general
 deps:
+	cd js
 	npm install --deps
+	cd ..
 
 clean:
 	rm -rf $(CURDIR)/node_modules

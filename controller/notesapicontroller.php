@@ -36,11 +36,13 @@ class NotesApiController extends ApiController {
 
 	/**
 	 * @NoAdminRequired
-	 * @API
+	 * @CORS
 	 * @NoCSRFRequired
+	 *
+	 * @param string $exclude
 	 */
-	public function index() {
-		$hide = explode(',', $this->params('exclude', ''));
+	public function index($exclude='') {
+		$hide = explode(',', $exclude);
 		$notes = $this->notesService->getAll();
 
 		// if there are hidden values remove them from the result
@@ -60,12 +62,14 @@ class NotesApiController extends ApiController {
 
 	/**
 	 * @NoAdminRequired
-	 * @API
+	 * @CORS
 	 * @NoCSRFRequired
+	 *
+	 * @param int $id
+	 * @param string $exclude
 	 */
-	public function get() {
-		$id = (int) $this->params('id');
-		$hide = explode(',', $this->params('exclude', ''));
+	public function get($id, $exclude) {
+		$hide = explode(',', $exclude);
 
 		try {
 			$note = $this->notesService->get($id);
@@ -88,11 +92,12 @@ class NotesApiController extends ApiController {
 
 	/**
 	 * @NoAdminRequired
-	 * @API
+	 * @CORS
 	 * @NoCSRFRequired
+	 *
+	 * @param string $content
 	 */
-	public function create() {
-		$content = $this->params('content');
+	public function create($content) {
 		$note = $this->notesService->create();
 
 		try {
@@ -106,12 +111,13 @@ class NotesApiController extends ApiController {
 
 	/**
 	 * @NoAdminRequired
-	 * @API
+	 * @CORS
 	 * @NoCSRFRequired
+	 *
+	 * @param int $id
+	 * @param string $content
 	 */
-	public function update() {
-		$id = (int) $this->params('id');
-		$content = $this->params('content');
+	public function update($id, $content) {
 		try {
 			return new JSONResponse($this->notesService->update($id, $content));
 		} catch(NoteDoesNotExistException $ex) {
@@ -122,11 +128,12 @@ class NotesApiController extends ApiController {
 
 	/**
 	 * @NoAdminRequired
-	 * @API
+	 * @CORS
 	 * @NoCSRFRequired
+	 *
+	 * @param int $id
 	 */
-	public function destroy() {
-		$id = (int) $this->params('id');
+	public function destroy($id) {
 		try {
 			$this->notesService->delete($id);
 			return new JSONResponse();
@@ -135,29 +142,5 @@ class NotesApiController extends ApiController {
 		}
 	}
 
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @PublicPage
-	 */
-	public function cors() {
-		// needed for webapps access due to cross origin request policy
-		if(isset($this->request->server['HTTP_ORIGIN'])) {
-			$origin = $this->request->server['HTTP_ORIGIN'];
-		} else {
-			$origin = '*';
-		}
-
-		$response = new Response();
-		$response->addHeader('Access-Control-Allow-Origin', $origin);
-		$response->addHeader('Access-Control-Allow-Methods',
-			'PUT, POST, GET, DELETE');
-		$response->addHeader('Access-Control-Allow-Credentials', 'true');
-		$response->addHeader('Access-Control-Max-Age', '1728000');
-		$response->addHeader('Access-Control-Allow-Headers',
-			'Authorization, Content-Type');
-		return $response;
-	}
 
 }
