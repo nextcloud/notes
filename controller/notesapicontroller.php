@@ -11,7 +11,7 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCP\AppFramework\Controller;
+use \OCP\AppFramework\ApiController;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http\Response;
 use \OCP\AppFramework\Http;
@@ -21,12 +21,12 @@ use \OCA\Notes\Service\NotesService;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 
 
-class NotesApiController extends Controller {
+class NotesApiController extends ApiController {
 
 	private $notesService;
 	private $settings;
 
-	public function __construct($appName, 
+	public function __construct($appName,
 	                            IRequest $request,
 		                        NotesService $notesService){
 		parent::__construct($appName, $request);
@@ -151,11 +151,11 @@ class NotesApiController extends Controller {
 
 		$response = new Response();
 		$response->addHeader('Access-Control-Allow-Origin', $origin);
-		$response->addHeader('Access-Control-Allow-Methods', 
+		$response->addHeader('Access-Control-Allow-Methods',
 			'PUT, POST, GET, DELETE');
 		$response->addHeader('Access-Control-Allow-Credentials', 'true');
 		$response->addHeader('Access-Control-Max-Age', '1728000');
-		$response->addHeader('Access-Control-Allow-Headers', 
+		$response->addHeader('Access-Control-Allow-Headers',
 			'Authorization, Content-Type');
 		return $response;
 	}

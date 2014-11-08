@@ -9,7 +9,7 @@
  * @copyright Bernhard Posselt 2012, 2014
  */
 
-namespace OCA\Notes\App;
+namespace OCA\Notes\AppInfo;
 
 use \OC\Files\View;
 
@@ -23,10 +23,8 @@ use \OCA\Notes\Service\NotesService;
 
 use \OCA\Notes\Utility\FileSystemUtility;
 
-use \OCA\Notes\Middleware\CORSMiddleware;
 
-
-class Notes extends App {
+class Application extends App {
 
 
 	/**
@@ -42,7 +40,7 @@ class Notes extends App {
 		 */
 		$container->registerService('PageController', function($c){
 			return new PageController(
-				$c->query('AppName'), 
+				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('NotesService'),
 				$c->query('CoreConfig'),
@@ -52,7 +50,7 @@ class Notes extends App {
 
 		$container->registerService('NotesController', function($c){
 			return new NotesController(
-				$c->query('AppName'), 
+				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('NotesService'),
 				$c->query('CoreConfig'),
@@ -62,7 +60,7 @@ class Notes extends App {
 
 		$container->registerService('NotesApiController', function($c){
 			return new NotesApiController(
-				$c->query('AppName'), 
+				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('NotesService')
 			);
@@ -117,14 +115,6 @@ class Notes extends App {
 			return new FileSystemUtility($c->query('FileSystem'));
 		});
 
-		/** 
-		 * Middleware
-		 */
-		$container->registerService('CORSMiddleware', function($c){
-			return new CORSMiddleware($c->query('Request'));
-		});	
-
-		$container->registerMiddleWare('CORSMiddleware');
 
 	}
 

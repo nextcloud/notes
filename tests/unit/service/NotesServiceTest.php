@@ -12,41 +12,13 @@
 namespace OCA\Notes\Service;
 
 use \OCA\Notes\Utility\ControllerTestUtility;
-use \OCA\Notes\App\Notes;
 use \OCA\Notes\Db\Note;
 
-class NotesServiceTest extends ControllerTestUtility {
+class NotesServiceTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 
-	private $container;
 
 	public function setUp(){
-		// use the container to test to check if its wired up correctly and
-		// replace needed components with mocks
-		$notes = new Notes();
-		$this->container = $notes->getContainer();
-		$this->container['L10N'] = $this->getMockBuilder(
-			'\OCP\IL10N')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->container['FileSystemUtility'] = $this->getMockBuilder(
-			'\OCA\Notes\Utility\FileSystemUtility')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->container['Request'] = $this->getRequest();
-
-		$this->container['FileSystem'] = $this->getMock('Filesystem',
-			array(
-				'getDirectoryContent',
-				'unlink',
-				'file_get_contents',
-				'getFileInfo',
-				'file_exists',
-				'rename',
-				'file_put_contents',
-				'getPath',
-				'filemtime'
-			));
-
+		parent::setUp();
 
 		// reusable test data
 		$this->filesystemNotes = array(
@@ -96,12 +68,12 @@ class NotesServiceTest extends ControllerTestUtility {
 
 
 	public function testGetAll(){
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getDirectoryContent')
 			->with($this->equalTo('/'))
 			->will($this->returnValue($this->filesystemNotes));
 
-		$result = $this->container['NotesService']->getAll();
+		$result = $this->container->query('NotesService')->getAll();
 
 		$this->assertEquals($this->notes[0], $result[0]);
 		$this->assertEquals($this->notes[1], $result[1]);
@@ -112,89 +84,89 @@ class NotesServiceTest extends ControllerTestUtility {
 	public function testGet(){
 		$expected = Note::fromFile($this->filesystemNotes[0]);
 
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('file_get_contents')
 			->with($this->equalTo($expected->getTitle() . '.txt'))
 			->will($this->returnValue($this->filesystemNotes[0]['content']));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getFileInfo')
 			->with($this->equalTo($expected->getTitle() . '.txt'))
 			->will($this->returnValue($this->filesystemNotes[0]));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo(2))
 			->will($this->returnValue($expected->getTitle() . '.txt'));
 
-		$result = $this->container['NotesService']->get(2);
+		$result = $this->container->query('NotesService')->get(2);
 
 		$this->assertEquals($expected, $result);
 	}
 
 
 	public function testGetDoesNotExist(){
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->will($this->returnValue(null));
 
 		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
-		$result = $this->container['NotesService']->get(2);
+		$result = $this->container->query('NotesService')->get(2);
 
 	}
 
 
 	public function testGetImageDoesNotExist(){
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->will($this->returnValue(null));
 
 		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
-		$result = $this->container['NotesService']->get(5);
+		$result = $this->container->query('NotesService')->get(5);
 
 	}
 
 
 	public function testDelete(){
 		$id = 3;
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo($id))
 			->will($this->returnValue('hi'));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('unlink')
 			->with($this->equalTo('hi'));
-		$this->container['NotesService']->delete($id);
+		$this->container->query('NotesService')->delete($id);
 	}
 
 
 	public function testDeleteDoesNotExist(){
 		$id = 3;
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo($id))
 			->will($this->returnValue(null));
 		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
-		$this->container['NotesService']->delete($id);
+		$this->container->query('NotesService')->delete($id);
 	}
 
 
 	public function testCreate() {
 		$this->notes[0]->setTitle('Na nute');
-		$this->container['L10N']->expects($this->once())
+		$this->container->query('L10N')->expects($this->once())
 			->method('t')
 			->with('New note')
 			->will($this->returnValue('Na nute'));
-		$this->container['FileSystemUtility']->expects($this->once())
+		$this->container->query('FileSystemUtility')->expects($this->once())
 			->method('generateFileName')
 			->with($this->equalTo('Na nute'), $this->equalTo(-1))
 			->will($this->returnValue('Na nute.txt'));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('file_put_contents')
 			->with($this->equalTo('/Na nute.txt'));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getFileInfo')
 			->will($this->returnValue($this->filesystemNotes[0]));
 
-		$note = $this->container['NotesService']->create();
+		$note = $this->container->query('NotesService')->create();
 		$this->assertEquals($this->notes[0], $note);
 	}
 
@@ -203,25 +175,25 @@ class NotesServiceTest extends ControllerTestUtility {
 		$id = 3;
 		$content = "title\nman";
 		$title = 'title';
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo($id))
 			->will($this->returnValue('/title.txt'));
 
-		$this->container['FileSystemUtility']->expects($this->once())
+		$this->container->query('FileSystemUtility')->expects($this->once())
 			->method('generateFileName')
 			->with($this->equalTo($title), $this->equalTo($id))
 			->will($this->returnValue('title.txt'));
 
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('file_put_contents')
 			->with($this->equalTo('/' . $title . '.txt'))
 			->will($this->returnValue(array('fileid' => $id)));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('filemtime')
 			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
-		$note = $this->container['NotesService']->update($id, $content);
+		$note = $this->container->query('NotesService')->update($id, $content);
 		$this->assertEquals(Note::fromFile(array(
 			'fileid' => $id,
 			'content' => $content,
@@ -235,30 +207,30 @@ class NotesServiceTest extends ControllerTestUtility {
 		$id = 3;
 		$content = "\nman";
 		$title = 'Na nute';
-		$this->container['L10N']->expects($this->once())
+		$this->container->query('L10N')->expects($this->once())
 			->method('t')
 			->with('New note')
 			->will($this->returnValue($title));
 
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo($id))
 			->will($this->returnValue('/' . $title . '.txt'));
 
-		$this->container['FileSystemUtility']->expects($this->once())
+		$this->container->query('FileSystemUtility')->expects($this->once())
 			->method('generateFileName')
 			->with($this->equalTo($title), $this->equalTo($id))
 			->will($this->returnValue($title . '.txt'));
 
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('file_put_contents')
 			->with($this->equalTo('/' . $title . '.txt'))
 			->will($this->returnValue(array('fileid' => $id)));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('filemtime')
 			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
-		$note = $this->container['NotesService']->update($id, $content);
+		$note = $this->container->query('NotesService')->update($id, $content);
 		$this->assertEquals(Note::fromFile(array(
 			'fileid' => $id,
 			'content' => $content,
@@ -270,12 +242,12 @@ class NotesServiceTest extends ControllerTestUtility {
 
 	public function testUpdateDoesNotExist(){
 		$id = 3;
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo($id))
 			->will($this->returnValue(null));
 		$this->setExpectedException('\OCA\Notes\Service\NoteDoesNotExistException');
-		$this->container['NotesService']->update($id, '');
+		$this->container->query('NotesService')->update($id, '');
 	}
 
 
@@ -283,29 +255,29 @@ class NotesServiceTest extends ControllerTestUtility {
 		$id = 3;
 		$content = "title\nyo";
 		$title = 'title';
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('getPath')
 			->with($this->equalTo($id))
 			->will($this->returnValue('/title.txt'));
 
-		$this->container['FileSystemUtility']->expects($this->once())
+		$this->container->query('FileSystemUtility')->expects($this->once())
 			->method('generateFileName')
 			->with($this->equalTo($title), $this->equalTo($id))
 			->will($this->returnValue('title (3).txt'));
 
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('rename')
 			->with($this->equalTo('/' . $title . '.txt'),
 				$this->equalTo('/' . $title . ' (3).txt'));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('file_put_contents')
 			->with($this->equalTo('/' . $title . ' (3).txt'))
 			->will($this->returnValue(array('fileid' => $id)));
-		$this->container['FileSystem']->expects($this->once())
+		$this->container->query('FileSystem')->expects($this->once())
 			->method('filemtime')
 			->will($this->returnValue($this->filesystemNotes[0]['mtime']));
 
-		$note = $this->container['NotesService']->update($id, $content);
+		$note = $this->container->query('NotesService')->update($id, $content);
 		$this->assertEquals(Note::fromFile(array(
 			'fileid' => $id,
 			'content' => $content,

@@ -26,20 +26,20 @@
 module.exports = function(config) {
 	config.set({
 		frameworks: ['jasmine'],
-		basePath: '../../../',
+		basePath: '',
 		// list of files / patterns to load in the browser
 		files: [
-			'js/polyfills/**/*.js',
-			'js/vendor/jquery/dist/jquery.js',
-			'js/vendor/markdown/lib/markdown.js',
-			'js/vendor/angular/angular.js',
-			'js/vendor/underscore/underscore.js',
-			'js/vendor/angular-route/angular-route.js',
-			'js/vendor/restangular/dist/restangular.js',
-			'js/vendor/angular-mocks/angular-mocks.js',
-			'tests/js/stubs/**/*.js',
-			'js/app/**/*.js',
-			'tests/js/unit/**/*.js'
+			'polyfills/**/*.js',
+			'vendor/jquery/dist/jquery.js',
+			'vendor/markdown/lib/markdown.js',
+			'vendor/angular/angular.js',
+			'vendor/underscore/underscore.js',
+			'vendor/angular-route/angular-route.js',
+			'vendor/restangular/dist/restangular.js',
+			'vendor/angular-mocks/angular-mocks.js',
+			'tests/stubs/**/*.js',
+			'app/**/*.js',
+			'tests/unit/**/*.js'
 		],
 
 		// list of files to exclude
@@ -73,7 +73,7 @@ module.exports = function(config) {
 		// - Safari (only Mac)
 		// - PhantomJS
 		// - IE (only Windows)
-		browsers: ['Chrome'],
+		browsers: ['Firefox'],
 
 		// If browser does not capture in given timeout [ms], kill it
 		captureTimeout: 5000,

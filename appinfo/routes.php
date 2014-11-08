@@ -9,11 +9,11 @@
  * @copyright Bernhard Posselt 2012, 2014
  */
 
-namespace OCA\Notes;
+namespace OCA\Notes\AppInfo;
 
-use \OCA\Notes\App\Notes;
+use \OCA\Notes\AppInfo\Application;
 
-$application = new Notes();
+$application = new Application();
 $application->registerRoutes($this, array('routes' => array(
 	// page
 	array('name' => 'page#index', 'url' => '/', 'verb' => 'GET'),
@@ -33,6 +33,8 @@ $application->registerRoutes($this, array('routes' => array(
 	array('name' => 'notes_api#get', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'GET'),
 	array('name' => 'notes_api#create', 'url' => '/api/v0.2/notes', 'verb' => 'POST'),
 	array('name' => 'notes_api#update', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'PUT'),
-	array('name' => 'notes_api#destroy', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'DELETE'),	
-	array('name' => 'notes_api#cors', 'url' => '/api/v0.2/{path}', 'verb' => 'OPTIONS', 'requirements' => array('path' => '.+')),
+	array('name' => 'notes_api#destroy', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'DELETE'),
+	array('name' => 'notes_api#preflighted_cors',
+	      'url' => '/api/v0.2/{path}', 'verb' => 'OPTIONS',
+	      'requirements' => array('path' => '.+')),
 )));

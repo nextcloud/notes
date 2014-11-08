@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 		meta: {
 			pkg: grunt.file.readJSON('package.json'),
 			version: '<%= meta.pkg.version %>',
-			production: '../js/public/'
+			production: 'public/'
 		},
 
 		concat: {
@@ -48,9 +48,9 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'../js/polyfills/**/*.js',
-					'../js/config/app.js',
-					'../js/app/**/*.js'
+					'polyfills/**/*.js',
+					'config/app.js',
+					'app/**/*.js'
 				],
 				dest: '<%= meta.production %>app.js'
 			}
@@ -70,9 +70,9 @@ module.exports = function(grunt) {
 		jshint: {
 			files: [
 				'Gruntfile.js',
-				'../js/app/**/*.js',
-				'../js/config/*.js',
-				'../tests/js/unit/**/*.js'
+				'app/**/*.js',
+				'config/*.js',
+				'tests/js/unit/**/*.js'
 			],
 			options: {
 				// options here to override JSHint defaults
@@ -87,11 +87,11 @@ module.exports = function(grunt) {
 			// and wrap tasks if something changed
 			concat: {
 				files: [
-					'../js/polyfills/**/*.js',
-					'../js/app/**/*.js',
-					'../js/config/*.js',
-					'../css/**/*.css',
-					'../templates/**/*.php'
+					'polyfills/**/*.js',
+					'app/**/*.js',
+					'config/*.js',
+					'css/**/*.css',
+					'templates/**/*.php'
 				],
 				options: {
 					livereload: true
@@ -115,10 +115,10 @@ module.exports = function(grunt) {
 
 		karma: {
 			unit: {
-				configFile: '../tests/js/config/karma.js'
+				configFile: 'karma.conf.js'
 			},
 			continuous: {
-				configFile: '../tests/js/config/karma.js',
+				configFile: 'karma.conf.js',
 				singleRun: true,
 				browsers: ['PhantomJS'],
 				reporters: ['progress']

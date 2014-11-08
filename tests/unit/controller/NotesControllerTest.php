@@ -15,51 +15,29 @@ use \OCP\IRequest;
 use \OCP\AppFramework\Http\JSONResponse;
 use \OCP\AppFramework\Http;
 
-use \OCA\Notes\App\Notes;
 use \OCA\Notes\Service\NoteDoesNotExistException;
 use \OCA\Notes\Utility\ControllerTestUtility;
 
-class NotesControllerTest extends ControllerTestUtility {
-
-	private $container;
+class NotesControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 
 
 	/**
 	 * Gets run before each test
 	 */
 	public function setUp(){
-		// use the container to test to check if its wired up correctly and
-		// replace needed components with mocks
-		$notes = new Notes();
-		$this->container = $notes->getContainer();
-		$this->container['UserId'] = 'john';
-		$this->container['CoreConfig'] = $this->getMockBuilder(
-			'\OCP\IConfig')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->container['Request'] = $this->getRequest();
-		$this->container['NotesService'] = $this->getMockBuilder(
-			'\OCA\Notes\Service\NotesService')
-			->disableOriginalConstructor()
-			->getMock();
-	}
-
-
-	private function assertDefaultAJAXAnnotations ($method) {
-		$annotations = array('NoAdminRequired');
-		$this->assertAnnotations($this->container['NotesController'],
-			$method, $annotations);
+		parent::setUp();
+		$this->container->registerService('NotesService', function ($c) use ($test) {
+			return $test->getMockBuilder(
+				'\OCA\Notes\Service\NotesService')
+				->disableOriginalConstructor()
+				->getMock();
+		});
 	}
 
 
 	/**
 	 * GET /notes/
 	 */
-	public function testGetAllAnnotations(){
-		$this->assertDefaultAJAXAnnotations('index');
-	}
-
-
 	public function testGetAll(){
 		$expected = array(
 			'hi'
@@ -80,18 +58,13 @@ class NotesControllerTest extends ControllerTestUtility {
 	/**
 	 * GET /notes/1
 	 */
-	public function testGetAnnotations(){
-		$this->assertDefaultAJAXAnnotations('get');
-	}
-
-
 	public function testGet(){
 		$id = 1;
 		$expected = array(
 			'hi'
 		);
 
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['CoreConfig']->expects($this->once())
@@ -120,7 +93,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['CoreConfig']->expects($this->once())
@@ -146,10 +119,6 @@ class NotesControllerTest extends ControllerTestUtility {
 	/**
 	 * GET /config
 	 */
-	public function testGetConfigAnnotations(){
-		$this->assertDefaultAJAXAnnotations('getConfig');
-	}
-
 	public function testGetConfig(){
 		$expected = array(
 			'markdown' => false
@@ -172,12 +141,8 @@ class NotesControllerTest extends ControllerTestUtility {
 	/**
 	 * POST /config
 	 */
-	public function testSetConfigAnnotations(){
-		$this->assertDefaultAJAXAnnotations('setConfig');
-	}
-
 	public function testSetConfig(){
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'post' => array('markdown' => true)
 		));
 
@@ -196,11 +161,6 @@ class NotesControllerTest extends ControllerTestUtility {
 	/**
 	 * POST /notes
 	 */
-	public function testCreateAnnotations(){
-		$this->assertDefaultAJAXAnnotations('create');
-	}
-
-
 	public function testCreate(){
 		$expected = array(
 			'hi'
@@ -221,11 +181,6 @@ class NotesControllerTest extends ControllerTestUtility {
 	/**
 	 * PUT /notes/
 	 */
-	public function testUpdateAnnotations(){
-		$this->assertDefaultAJAXAnnotations('update');
-	}
-
-
 	public function testUpdate(){
 		$id = 1;
 		$content = 'yo';
@@ -233,7 +188,7 @@ class NotesControllerTest extends ControllerTestUtility {
 			'hi'
 		);
 
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -254,7 +209,7 @@ class NotesControllerTest extends ControllerTestUtility {
 		$id = 1;
 		$content = 'yo';
 
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'urlParams' => array('id' => $id),
 			'params' => array('content' => $content)
 		));
@@ -275,15 +230,10 @@ class NotesControllerTest extends ControllerTestUtility {
 	/**
 	 * DELETE /notes/
 	 */
-	public function testDeleteAnnotations(){
-		$this->assertDefaultAJAXAnnotations('destroy');
-	}
-
-
 	public function testDelete(){
 		$id = 1;
 
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
@@ -299,7 +249,7 @@ class NotesControllerTest extends ControllerTestUtility {
 	public function testDeleteDoesNotExist(){
 		$id = 1;
 
-		$this->container['Request'] = $this->getRequest(array(
+		$this->setRequest(array(
 			'urlParams' => array('id' => $id)
 		));
 		$this->container['NotesService']
