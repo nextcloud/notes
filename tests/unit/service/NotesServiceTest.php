@@ -19,6 +19,14 @@ class NotesServiceTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 
 	public function setUp(){
 		parent::setUp();
+		$test = &$this;
+
+		$this->container->registerService('FileSystemUtility', function ($c) use ($test) {
+			return $test->getMockBuilder(
+				'\OCA\Notes\Utility\FileSystemUtility')
+				->disableOriginalConstructor()
+				->getMock();
+		});
 
 		// reusable test data
 		$this->filesystemNotes = array(

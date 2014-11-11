@@ -68,7 +68,7 @@ class NotesApiController extends ApiController {
 	 * @param int $id
 	 * @param string $exclude
 	 */
-	public function get($id, $exclude) {
+	public function get($id, $exclude='') {
 		$hide = explode(',', $exclude);
 
 		try {

@@ -59,7 +59,8 @@ class NotesUnitTest extends \PHPUnit_Framework_TestCase {
 					'file_exists',
 					'rename',
 					'file_put_contents',
-					'getPath'
+					'getPath',
+					'filemtime'
 				)
 			);
 		});

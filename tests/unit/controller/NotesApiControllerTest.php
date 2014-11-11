@@ -125,6 +125,11 @@ class NotesApiControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
 			'content' => 'yo'
 		));
 
+		$this->container->query('NotesService')
+			->expects($this->once())
+			->method('get')
+			->with($this->equalTo(3))
+			->will($this->returnValue($note));
 
 		$response = $this->container->query('NotesApiController')->get(3, 'title,content');
 
