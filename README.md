@@ -14,7 +14,7 @@ This app is looking for a maintainer
 * PHP >= 5.3.6
 
 # Minimum ownCloud Version
-* >= 6.0.3
+* >= 7.0.3
 
 # Supported Webservers
 * Apache
