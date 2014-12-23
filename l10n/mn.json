@@ -1,0 +1,6 @@
+{ "translations": {
+    "Notes" : "Тэмдэглэгээ",
+    "New note" : "Шинэ тэмдэглэгээ",
+    "Delete note" : "Тэмдэглэгээ устгах"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
