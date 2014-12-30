@@ -54,5 +54,7 @@
 		</ul>
 	</div>
 
-	<div id="app-content" ng-view ng-class="{loading: is.loading}"></div>
+	<div id="app-content" ng-class="{loading: is.loading}">
+		<div id="app-content-container" ng-view></div>
+	</div>
 </div>
