@@ -43,7 +43,7 @@
 					{{ note.title }}
 				</a>
 				<span class="utils">
-					<button class="svg action delete-icon"
+					<button class="svg action icon-delete"
 						title="<?php p($l->t('Delete note')); ?>"
 						notes-tooltip
 						data-placement="bottom"
