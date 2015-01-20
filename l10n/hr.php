@@ -1,11 +1,7 @@
-<?php $TRANSLATIONS = array(
-"Help" => "Pomoć",
-"Delete" => "Obriši",
-"Save" => "Snimi",
-"Add" => "Dodaj",
-"Note" => "Bilješka",
-"General" => "Općenito",
-"Edit" => "Uredi",
-"Category" => "Kategorija",
-"Title" => "Naslov"
+<?php
+$TRANSLATIONS = array(
+"Notes" => "Bilješke",
+"New note" => "Nova bilješka",
+"Delete note" => "Obriši bilješku"
 );
+$PLURAL_FORMS = "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;";
