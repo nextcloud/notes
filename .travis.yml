@@ -9,14 +9,14 @@ env:
   - DB=sqlite BRANCH=master
   - DB=postgresql BRANCH=master
   - DB=mysql BRANCH=master
-  
+
 matrix:
   allow_failures:
     - php: hhvm
 
 install:
   # install ocdev
-  - sudo apt-get -y install python3-jinja2 python3-setuptools 
+  - sudo apt-get -y install python3-jinja2 python3-setuptools
   - sudo easy_install3 pip
   - sudo pip3 install ocdev
   # set up postgresql
@@ -30,14 +30,13 @@ install:
   - ocdev setup core --dir owncloud --branch $BRANCH
   - cd owncloud
   - ocdev ci $DB
-  # enable ownnotes
-  - mv ../app-tutorial apps/ownnotes
-  - php -f console.php app:enable ownnotes
+  # enable notes
+  - mv ../notes apps/
+  - php -f console.php app:enable notes
 
 before_script:
-  - cd apps/ownnotes
+  - cd apps/notes
 
 script:
   - phpunit -c phpunit.xml
-  - phpunit -c phpunit.integration.xml
-  
+

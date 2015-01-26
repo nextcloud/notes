@@ -111,7 +111,7 @@ class NotesService {
 
 		// generate filename if there were collisions
 		$currentFilePath = $file->getPath();
-		$basePath = '/' . $userId . '/files/notes/';
+		$basePath = '/' . $userId . '/files/Notes/';
 		$newFilePath = $basePath . $this->generateFileName($folder, $title, $id);
 
 		// if the current path is not the new path, the file has to be renamed
@@ -162,7 +162,7 @@ class NotesService {
 	 * @return Folder
 	 */
 	private function getFolderForUser ($userId) {
-		$path = '/' . $userId . '/files/notes';
+		$path = '/' . $userId . '/files/Notes';
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
 		} else {
