@@ -51,7 +51,7 @@ class PageController extends Controller {
 			$this->appName, 'notesLastViewedNote');
 		// check if note exists
 		try {
-			$this->notesService->get($lastViewedNote);
+			$this->notesService->get($lastViewedNote, $this->userId);
 		} catch(NoteDoesNotExistException $ex) {
 			$lastViewedNote = 0;
 		}

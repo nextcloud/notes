@@ -186,13 +186,10 @@ class NotesService {
 	private function generateFileName (Folder $folder, $title, $id) {
 		$path = $title . '.txt';
 
-		// if file does not exist, that name has not been taken
-		if (!$folder->nodeExists($path)) {
-			return $title . '.txt';
-		}
-
-		if ($folder->getId() === $id) {
-			return $title . '.txt';
+		// if file does not exist, that name has not been taken. Similar we don't
+		// need to handle file collisions if it is the filename did not change
+		if (!$folder->nodeExists($path) || $folder->get($path)->getId() === $id) {
+			return $path;
 		} else {
 			// increments name (2) to name (3)
 			$match = preg_match('/\((?P<id>\d+)\)$/', $title, $matches);

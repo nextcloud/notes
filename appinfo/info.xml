@@ -6,8 +6,8 @@
 	<author>Bernhard Posselt, Jan-Christoph Borchardt</author>
 	<require>8</require>
 	<version>1.0.0</version>
-    <namespace>Notes</namespace>
-    <category>multimedia</category>
+	<namespace>Notes</namespace>
+	<category>multimedia</category>
 	<description>Distraction-free notes and writing</description>
 </info>
 

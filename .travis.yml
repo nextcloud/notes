@@ -1,25 +1,43 @@
 language: php
 php:
-  - 5.3
   - 5.4
   - 5.5
+  - 5.6
+  - hhvm
 
-before_install:
+env:
+  - DB=sqlite BRANCH=master
+  - DB=postgresql BRANCH=master
+  - DB=mysql BRANCH=master
+  
+matrix:
+  allow_failures:
+    - php: hhvm
+
+install:
+  # install ocdev
+  - sudo apt-get -y install python3-jinja2 python3-setuptools 
+  - sudo easy_install3 pip
+  - sudo pip3 install ocdev
+  # set up postgresql
+  - createuser -U travis -s oc_autotest
+  # set up mysql
+  - mysql -e 'create database oc_autotest;'
+  - mysql -u root -e "CREATE USER 'oc_autotest'@'localhost';"
+  - mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost';"
+  # install owncloud
   - cd ..
-  - git clone https://github.com/owncloud/core.git
-  - mv notes core/apps/
-  - cd core
-  - git submodule init
-  - git submodule update
-  - cd 3rdparty
-  - git checkout stable6
-  - cd ../apps/notes
+  - ocdev setup core --dir owncloud --branch $BRANCH
+  - cd owncloud
+  - ocdev ci $DB
+  # enable ownnotes
+  - mv ../app-tutorial apps/ownnotes
+  - php -f console.php app:enable ownnotes
+
+before_script:
+  - cd apps/ownnotes
 
 script:
-  - sudo add-apt-repository -y ppa:chris-lea/node.js
-  - sudo apt-get update
-  - sudo apt-get -y install nodejs
-  - wget https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2
-  - tar xjf phantomjs-1.9.0-linux-x86_64.tar.bz2
-  - sudo ln -s $(pwd)/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-  - make unit-tests
+  - phpunit -c phpunit.xml
+  - phpunit -c phpunit.integration.xml
+  
