@@ -11,26 +11,28 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCP\AppFramework\ApiController;
-use \OCP\AppFramework\Http\JSONResponse;
-use \OCP\AppFramework\Http\Response;
-use \OCP\AppFramework\Http;
-use \OCP\IRequest;
+use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
-use \OCA\Notes\Service\NotesService;
-use \OCA\Notes\Service\NoteDoesNotExistException;
+use OCA\Notes\Service\NotesService;
 
 
 class NotesApiController extends ApiController {
 
-	private $notesService;
-	private $settings;
+	use Errors;
 
-	public function __construct($appName,
+	private $service;
+	private $settings;
+	private $UserId;
+
+	public function __construct($AppName,
 	                            IRequest $request,
-		                        NotesService $notesService){
-		parent::__construct($appName, $request);
-		$this->notesService = $notesService;
+		                        NotesService $service,
+		                        $UserId){
+		parent::__construct($AppName, $request);
+		$this->service = $service;
+		$this->userId = $UserId;
 	}
 
 
@@ -43,7 +45,7 @@ class NotesApiController extends ApiController {
 	 */
 	public function index($exclude='') {
 		$hide = explode(',', $exclude);
-		$notes = $this->notesService->getAll();
+		$notes = $this->service->getAll($this->userId);
 
 		// if there are hidden values remove them from the result
 		if(count($hide) > 0) {
@@ -56,7 +58,7 @@ class NotesApiController extends ApiController {
 			}
 		}
 
-		return new JSONResponse($notes);
+		return new DataResponse($notes);
 	}
 
 
@@ -71,8 +73,8 @@ class NotesApiController extends ApiController {
 	public function get($id, $exclude='') {
 		$hide = explode(',', $exclude);
 
-		try {
-			$note = $this->notesService->get($id);
+		return $this->respond(function () use ($id, $hide) {
+			$note = $this->service->get($id, $this->userId);
 
 			// if there are hidden values remove them from the result
 			if(count($hide) > 0) {
@@ -82,11 +84,8 @@ class NotesApiController extends ApiController {
 					}
 				}
 			}
-			return new JSONResponse($note);
-
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+			return $note;
+		});
 	}
 
 
@@ -98,14 +97,10 @@ class NotesApiController extends ApiController {
 	 * @param string $content
 	 */
 	public function create($content) {
-		$note = $this->notesService->create();
-
-		try {
-			$note = $this->notesService->update($note->getId(), $content);
-			return new JSONResponse($note);
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+		return $this->respond(function () use ($content) {
+			$note = $this->service->create();
+			return $this->service->update($note->getId(), $content, $this->userId);
+		});
 	}
 
 
@@ -118,11 +113,9 @@ class NotesApiController extends ApiController {
 	 * @param string $content
 	 */
 	public function update($id, $content) {
-		try {
-			return new JSONResponse($this->notesService->update($id, $content));
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+		return $this->respond(function () use ($id, $content) {
+			return $this->service->update($id, $content, $this->userId);
+		});
 	}
 
 
@@ -134,12 +127,10 @@ class NotesApiController extends ApiController {
 	 * @param int $id
 	 */
 	public function destroy($id) {
-		try {
-			$this->notesService->delete($id);
-			return new JSONResponse();
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+		return $this->respond(function () use ($id) {
+			$this->service->delete($id, $this->userId);
+			return [];
+		});
 	}
 
 

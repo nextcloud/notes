@@ -11,14 +11,6 @@
 
 namespace OCA\Notes\Service;
 
-class NoteDoesNotExistException extends \Exception {
+use Exception;
 
-	/**
-	 * Constructor
-	 * @param string $msg the error message
-	 */
-	public function __construct($msg=''){
-		parent::__construct($msg);
-	}
-
-}
+class NoteDoesNotExistException extends Exception {}

@@ -11,18 +11,25 @@
 
 namespace OCA\Notes\Db;
 
+use OCP\Files\File;
+
 class Note extends Entity {
 
 	public $modified;
 	public $title;
 	public $content;
 
-	public static function fromFile($file){
+	public function __construct() {
+		$this->addType('modified', 'integer');
+	}
+
+	public static function fromFile(File $file){
 		$note = new static();
-		$note->setId((int) $file['fileid']);
-		$note->setModified((int) $file['mtime']);
-		$note->setTitle(substr($file['name'], 0, -4)); // remove trailing .txt
-		$note->setContent($file['content']);
+		$note->setId($file->getId());
+		$note->setContent($file->getContent());
+		$note->setModified($file->getMTime());
+		$note->setTitle(substr($file->getName(), 0, -4)); // remove trailing .txt
+		$note->resetUpdatedFields();
 		return $note;
 	}
 

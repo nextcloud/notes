@@ -9,32 +9,26 @@
  * @copyright Bernhard Posselt 2012, 2014
  */
 
-namespace OCA\Notes\AppInfo;
-
-use \OCA\Notes\AppInfo\Application;
-
-$application = new Application();
-$application->registerRoutes($this, array('routes' => array(
+return ['routes' => [
 	// page
-	array('name' => 'page#index', 'url' => '/', 'verb' => 'GET'),
+	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 
 	// notes
-	array('name' => 'notes#get_config', 'url' => '/config', 'verb' => 'GET'),
-	array('name' => 'notes#set_config', 'url' => '/config', 'verb' => 'POST'),
+	['name' => 'notes#get_config', 'url' => '/config', 'verb' => 'GET'],
+	['name' => 'notes#set_config', 'url' => '/config', 'verb' => 'POST'],
 
-	array('name' => 'notes#index', 'url' => '/notes', 'verb' => 'GET'),
-	array('name' => 'notes#get', 'url' => '/notes/{id}', 'verb' => 'GET'),
-	array('name' => 'notes#create', 'url' => '/notes', 'verb' => 'POST'),
-	array('name' => 'notes#update', 'url' => '/notes/{id}', 'verb' => 'PUT'),
-	array('name' => 'notes#destroy', 'url' => '/notes/{id}', 'verb' => 'DELETE'),
+	['name' => 'notes#index', 'url' => '/notes', 'verb' => 'GET'],
+	['name' => 'notes#get', 'url' => '/notes/{id}', 'verb' => 'GET'],
+	['name' => 'notes#create', 'url' => '/notes', 'verb' => 'POST'],
+	['name' => 'notes#update', 'url' => '/notes/{id}', 'verb' => 'PUT'],
+	['name' => 'notes#destroy', 'url' => '/notes/{id}', 'verb' => 'DELETE'],
 
 	// api
-	array('name' => 'notes_api#index', 'url' => '/api/v0.2/notes', 'verb' => 'GET'),
-	array('name' => 'notes_api#get', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'GET'),
-	array('name' => 'notes_api#create', 'url' => '/api/v0.2/notes', 'verb' => 'POST'),
-	array('name' => 'notes_api#update', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'PUT'),
-	array('name' => 'notes_api#destroy', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'DELETE'),
-	array('name' => 'notes_api#preflighted_cors',
-	      'url' => '/api/v0.2/{path}', 'verb' => 'OPTIONS',
-	      'requirements' => array('path' => '.+')),
-)));
+	['name' => 'notes_api#index', 'url' => '/api/v0.2/notes', 'verb' => 'GET'],
+	['name' => 'notes_api#get', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'GET'],
+	['name' => 'notes_api#create', 'url' => '/api/v0.2/notes', 'verb' => 'POST'],
+	['name' => 'notes_api#update', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'PUT'],
+	['name' => 'notes_api#destroy', 'url' => '/api/v0.2/notes/{id}', 'verb' => 'DELETE'],
+	['name' => 'notes_api#preflighted_cors', 'url' => '/api/v0.2/{path}',
+	 'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+]];

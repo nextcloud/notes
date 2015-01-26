@@ -7,16 +7,20 @@
  */
 
 
-\OCP\Util::addScript('notes', 'vendor/markdown/lib/markdown');
-\OCP\Util::addScript('notes', 'vendor/bootstrap/tooltip');
-\OCP\Util::addScript('notes', 'vendor/angular/angular');
-\OCP\Util::addScript('notes', 'vendor/angular-route/angular-route');
-\OCP\Util::addScript('notes', 'vendor/restangular/dist/restangular');
-\OCP\Util::addScript('notes', 'vendor/underscore/underscore');
-\OCP\Util::addScript('notes', 'public/app');
+script('notes', [
+	'vendor/markdown/lib/markdown',
+	'vendor/bootstrap/tooltip',
+	'vendor/angular/angular',
+	'vendor/angular-route/angular-route',
+	'vendor/restangular/dist/restangular',
+	'vendor/underscore/underscore',
+	'public/app'
+]);
 
-\OCP\Util::addStyle('notes', 'vendor/bootstrap/tooltip');
-\OCP\Util::addStyle('notes', 'notes');
+style('notes', [
+	'vendor/bootstrap/tooltip',
+	'notes'
+]);
 
 ?>
 
@@ -47,7 +51,7 @@
 						title="<?php p($l->t('Delete note')); ?>"
 						notes-tooltip
 						data-placement="bottom"
-						ng-click="delete(note.id)"></button>	
+						ng-click="delete(note.id)"></button>
 				</span>
 			</li>
 
