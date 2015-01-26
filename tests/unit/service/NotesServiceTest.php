@@ -310,4 +310,29 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testUpdateWithContent() {
+		$nodes = [];
+		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+
+		$this->expectUserFolder();
+		$this->userFolder->expects($this->at(0))
+			->method('getById')
+			->with($this->equalTo(3))
+			->will($this->returnValue($nodes));
+
+		$this->l10n->expects($this->never())
+			->method('t');
+		$this->expectUserFolder();
+
+		$this->expectGenerateFileName(1, 'some', 0, 2);
+
+		$path = '/' . $this->userId . '/files/Notes/some (3).txt';
+		$nodes[0]->expects($this->once())
+			->method('move')
+			->with($this->equalTo($path));
+
+		$note = $this->service->update(3, "some\nnice", $this->userId);
+
+		$this->assertEquals('file1', $note->getTitle());
+	}
 }
