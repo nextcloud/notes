@@ -7,8 +7,7 @@ The Notes app is a distraction free notes taking app. It offers a [RESTful API](
 For further developer and user documentation please visit [the wiki](https://github.com/owncloud/notes/wiki)
 
 # Maintainers
-
-This app is looking for a maintainer
+- [Lukas Reschke](https://github.com/LukasReschke)
 
 # Minimum PHP Version
 * PHP >= 5.3.6
@@ -28,7 +27,6 @@ Before reporting bugs:
 * We do not support Internet Explorer and Safari (Patches accepted though, except for IE < 10)
 * get the newest version of the Notes app
 * [check if they have already been reported](https://github.com/owncloud/notes/issues?state=open)
-
 
 
 # App Store
