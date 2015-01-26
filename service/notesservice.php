@@ -13,9 +13,9 @@ namespace OCA\Notes\Service;
 
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
+use OCP\Files\Folder;
 
 use OCA\Notes\Db\Note;
-use OCA\Notes\FileSystem\NotesFolder;
 
 class NotesService {
 
@@ -200,7 +200,6 @@ class NotesService {
 			} else {
 				$newTitle = $title . ' (2)';
 			}
-
 			return $this->generateFileName($folder, $newTitle, $id);
 		}
 	}
