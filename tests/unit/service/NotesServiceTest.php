@@ -35,7 +35,7 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
 		$this->service = new NotesService($this->root, $this->l10n);
 	}
 
-	private function createNode($name, $type, $mime, $mtime=0, $content='', $id=0) {
+	private function createNode($name, $type, $mime, $mtime=0, $content='', $id=0, $path='/') {
 		if ($type === 'folder') {
 			$iface = 'OCP\Files\Folder';
 		} else {
@@ -58,6 +58,9 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
 		$node->expects($this->any())
 			->method('getId')
 			->will($this->returnValue($id));
+		$node->expects($this->any())
+			->method('getPath')
+			->will($this->returnValue($path));
 		if ($type === 'file') {
 			$node->expects($this->any())
 				->method('getContent')
@@ -279,12 +282,31 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
 
 
 	public function testUpdate() {
+		$nodes = [];
+		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
 
-	}
+		$this->expectUserFolder();
+		$this->userFolder->expects($this->at(0))
+			->method('getById')
+			->with($this->equalTo(3))
+			->will($this->returnValue($nodes));
 
+		$this->l10n->expects($this->once())
+			->method('t')
+			->with($this->equalTo('New note'))
+			->will($this->returnValue('New note'));
+		$this->expectUserFolder();
 
-	public function testUpdateExists() {
+		$this->expectGenerateFileName(1, 'New note', 0, 2);
 
+		$path = '/' . $this->userId . '/files/Notes/New note (3).txt';
+		$nodes[0]->expects($this->once())
+			->method('move')
+			->with($this->equalTo($path));
+
+		$note = $this->service->update(3, '', $this->userId);
+
+		$this->assertEquals('file1', $note->getTitle());
 	}
 
 
