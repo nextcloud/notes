@@ -69,6 +69,10 @@
 	background-image: -ms-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
 }
 
+#app-content-container {
+	height: 100%;
+}
+
 /* special styling to make textarea subtle and fit the window */
 #app-content textarea {
 	display: block;
