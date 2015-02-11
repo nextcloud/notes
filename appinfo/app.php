@@ -9,23 +9,18 @@
  * @copyright Bernhard Posselt 2012, 2014
  */
 
-\OCP\App::addNavigationEntry(array(
+namespace OCA\Notes\AppInfo;
 
-	// the string under which your app will be referenced in owncloud
-	'id' => 'notes',
+use \OCP\AppFramework\App;
 
-	// sorting weight for the navigation. The higher the number, the higher
-	// will it be listed in the navigation
-	'order' => 10,
+$app = new App('notes');
+$serverContainer = $app->getContainer()->getServer();
 
-	// the route that will be shown on startup
-	'href' => \OCP\Util::linkToRoute('notes.page.index'),
-
-	// the icon that will be shown in the navigation
-	// this file needs to exist in img/example.png
-	'icon' => \OCP\Util::imagePath('notes', 'notes.svg'),
-
-	// the title of your application. This will be used in the
-	// navigation or on the settings page of your app
-	'name' => \OC_L10N::get('notes')->t('Notes')
-));
+$app->getContainer()->getServer()->getNavigationManager()->add([
+		'id' => $app->getContainer()->getAppName(),
+		'order' => 10,
+		'href' => $serverContainer->getURLGenerator()->linkToRoute('notes.page.index'),
+		'icon' => $serverContainer->getURLGenerator()->imagePath('notes', 'notes.svg'),
+		'name' => $serverContainer->getL10N('Notes')->t('Notes'),
+	]
+);

@@ -12,24 +12,39 @@
 namespace OCA\Notes\Controller;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\NoteDoesNotExistException;
 
-
+/**
+ * Class PageController
+ *
+ * @package OCA\Notes\Controller
+ */
 class PageController extends Controller {
 
+	/** @var NotesService */
 	private $notesService;
+	/** @var IConfig */
 	private $settings;
+	/** @var string */
 	private $userId;
 
+	/**
+	 * @param string $AppName
+	 * @param IRequest $request
+	 * @param NotesService $notesService
+	 * @param IConfig $settings
+	 * @param string $UserId
+	 */
 	public function __construct($AppName,
-	                            IRequest $request,
-	                            NotesService $notesService,
-	                            IConfig $settings,
-	                            $UserId){
+								IRequest $request,
+								NotesService $notesService,
+								IConfig $settings,
+								$UserId){
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
 		$this->settings = $settings;
@@ -38,13 +53,10 @@ class PageController extends Controller {
 
 
 	/**
-	 * ATTENTION!!!
-	 * The following comments turn off security checks
-	 * Please look up their meaning in the documentation:
-	 * http://doc.owncloud.org/server/master/developer_manual/app/appframework/controllers.html
-	 *
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 *
+	 * @return TemplateResponse
 	 */
 	public function index() {
 		$lastViewedNote = (int) $this->settings->getUserValue($this->userId,
@@ -56,9 +68,13 @@ class PageController extends Controller {
 			$lastViewedNote = 0;
 		}
 
-		return $this->render('main', [
-			'lastViewedNote' => $lastViewedNote
-		]);
+		return new TemplateResponse(
+			$this->appName,
+			'main',
+			[
+				'lastViewedNote' => $lastViewedNote
+			]
+		);
 	}
 
 

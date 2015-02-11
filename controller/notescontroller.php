@@ -18,21 +18,34 @@ use OCP\AppFramework\Http\DataResponse;
 
 use OCA\Notes\Service\NotesService;
 
-
-
+/**
+ * Class NotesController
+ *
+ * @package OCA\Notes\Controller
+ */
 class NotesController extends Controller {
 
 	use Errors;
 
+	/** @var NotesService */
 	private $notesService;
+	/** @var IConfig */
 	private $settings;
+	/** @var string */
 	private $userId;
 
+	/**
+	 * @param string $AppName
+	 * @param IRequest $request
+	 * @param NotesService $notesService
+	 * @param IConfig $settings
+	 * @param string $UserId
+	 */
 	public function __construct($AppName,
-	                            IRequest $request,
-		                        NotesService $notesService,
-		                        IConfig $settings,
-		                        $UserId){
+								IRequest $request,
+								NotesService $notesService,
+								IConfig $settings,
+								$UserId){
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
 		$this->settings = $settings;
@@ -52,6 +65,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 *
 	 * @param int $id
+	 * @return DataResponse
 	 */
 	public function get($id) {
 		// save the last viewed note
@@ -78,6 +92,7 @@ class NotesController extends Controller {
 	 *
 	 * @param int $id
 	 * @param string $content
+	 * @return DataResponse
 	 */
 	public function update($id, $content) {
 		return $this->respond(function () use ($id, $content) {
@@ -90,6 +105,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 *
 	 * @param int $id
+	 * @return DataResponse
 	 */
 	public function destroy($id) {
 		return $this->respond(function () use ($id) {
@@ -115,6 +131,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 *
 	 * @param string $markdown
+	 * @return DataResponse
 	 */
 	public function setConfig($markdown) {
 		$markdown = $this->settings->setUserValue(

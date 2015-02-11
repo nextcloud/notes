@@ -17,19 +17,30 @@ use OCP\IRequest;
 
 use OCA\Notes\Service\NotesService;
 
-
+/**
+ * Class NotesApiController
+ *
+ * @package OCA\Notes\Controller
+ */
 class NotesApiController extends ApiController {
 
 	use Errors;
 
+	/** @var NotesService */
 	private $service;
-	private $settings;
-	private $UserId;
+	/** @var string */
+	private $userId;
 
+	/**
+	 * @param string $AppName
+	 * @param IRequest $request
+	 * @param NotesService $service
+	 * @param string $UserId
+	 */
 	public function __construct($AppName,
-	                            IRequest $request,
-		                        NotesService $service,
-		                        $UserId){
+								IRequest $request,
+								NotesService $service,
+								$UserId){
 		parent::__construct($AppName, $request);
 		$this->service = $service;
 		$this->userId = $UserId;
@@ -42,6 +53,7 @@ class NotesApiController extends ApiController {
 	 * @NoCSRFRequired
 	 *
 	 * @param string $exclude
+	 * @return DataResponse
 	 */
 	public function index($exclude='') {
 		$hide = explode(',', $exclude);
@@ -69,6 +81,7 @@ class NotesApiController extends ApiController {
 	 *
 	 * @param int $id
 	 * @param string $exclude
+	 * @return DataResponse
 	 */
 	public function get($id, $exclude='') {
 		$hide = explode(',', $exclude);
@@ -95,6 +108,7 @@ class NotesApiController extends ApiController {
 	 * @NoCSRFRequired
 	 *
 	 * @param string $content
+	 * @return DataResponse
 	 */
 	public function create($content) {
 		return $this->respond(function () use ($content) {
@@ -111,6 +125,7 @@ class NotesApiController extends ApiController {
 	 *
 	 * @param int $id
 	 * @param string $content
+	 * @return DataResponse
 	 */
 	public function update($id, $content) {
 		return $this->respond(function () use ($id, $content) {
@@ -125,6 +140,7 @@ class NotesApiController extends ApiController {
 	 * @NoCSRFRequired
 	 *
 	 * @param int $id
+	 * @return DataResponse
 	 */
 	public function destroy($id) {
 		return $this->respond(function () use ($id) {

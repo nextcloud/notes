@@ -11,13 +11,18 @@
 
 namespace OCA\Notes\Db;
 
+/**
+ * Class Entity
+ *
+ * @package OCA\Notes\Db
+ */
 abstract class Entity {
-
+	/** @var int */
 	public $id;
-
-	private $_updatedFields = array();
-	private $_fieldTypes = array('id' => 'integer');
-
+	/** @var array */
+	private $_updatedFields = [];
+	/** @var array */
+	private $_fieldTypes = ['id' => 'integer'];
 
 	/**
 	 * Simple alternative constructor for building entities from a request
@@ -36,10 +41,10 @@ abstract class Entity {
 		return $instance;
 	}
 
-
 	/**
 	 * Maps the keys of the row array to the attributes
 	 * @param array $row the row to map onto the entity
+	 * @return static
 	 */
 	public static function fromRow(array $row){
 		$instance = new static();
@@ -55,15 +60,13 @@ abstract class Entity {
 		return $instance;
 	}
 
-
 	/**
-	 * @return an array with attribute and type
+	 * @return array array with attribute and type
 	 */
 	public function getFieldTypes() {
 		return $this->_fieldTypes;
 	}
 
-	
 	/**
 	 * Marks the entity as clean needed for setting the id after the insertion
 	 */
@@ -71,7 +74,10 @@ abstract class Entity {
 		$this->_updatedFields = array();
 	}
 
-
+	/**
+	 * @param $name
+	 * @param $args
+	 */
 	protected function setter($name, $args) {
 		// setters should only work for existing attributes
 		if(property_exists($this, $name)){
@@ -89,7 +95,10 @@ abstract class Entity {
 		}
 	}
 
-
+	/**
+	 * @param string $name
+	 * @return mixed
+	 */
 	protected function getter($name) {
 		// getters should only work for existing attributes
 		if(property_exists($this, $name)){
@@ -99,7 +108,6 @@ abstract class Entity {
 				' is not a valid attribute');
 		}
 	}
-
 
 	/**
 	 * Each time a setter is called, push the part after set
@@ -118,9 +126,7 @@ abstract class Entity {
 			throw new \BadFunctionCallException($methodName . 
 					' does not exist');
 		}
-
 	}
-
 
 	/**
 	 * Mark am attribute as updated
@@ -129,7 +135,6 @@ abstract class Entity {
 	protected function markFieldUpdated($attribute){
 		$this->_updatedFields[$attribute] = true;
 	}
-
 
 	/**
 	 * Transform a database columnname to a property 
@@ -151,7 +156,6 @@ abstract class Entity {
 		return $property;
 	}
 
-
 	/**
 	 * Transform a property to a database column name
 	 * @param string $property the name of the property
@@ -172,14 +176,12 @@ abstract class Entity {
 		return $column;
 	}
 
-
 	/**
 	 * @return array array of updated fields for update query
 	 */
 	public function getUpdatedFields(){
 		return $this->_updatedFields;
 	}
-
 
 	/**
 	 * Adds type information for a field so that its automatically casted to
@@ -190,7 +192,6 @@ abstract class Entity {
 	protected function addType($fieldName, $type){
 		$this->_fieldTypes[$fieldName] = $type;
 	}
-
 
 	/**
 	 * Slugify the value of a given attribute
@@ -212,5 +213,4 @@ abstract class Entity {
 				' is not a valid attribute');
 		}
 	}
-
 }
