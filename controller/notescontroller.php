@@ -11,31 +11,32 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCP\AppFramework\Controller;
-use \OCP\IRequest;
-use \OCP\IConfig;
-use \OCP\AppFramework\Http\JSONResponse;
-use \OCP\AppFramework\Http;
+use OCP\AppFramework\Controller;
+use OCP\IRequest;
+use OCP\IConfig;
+use OCP\AppFramework\Http\DataResponse;
 
-use \OCA\Notes\Service\NotesService;
-use \OCA\Notes\Service\NoteDoesNotExistException;
+use OCA\Notes\Service\NotesService;
+
 
 
 class NotesController extends Controller {
+
+	use Errors;
 
 	private $notesService;
 	private $settings;
 	private $userId;
 
-	public function __construct($appName,
+	public function __construct($AppName,
 	                            IRequest $request,
 		                        NotesService $notesService,
 		                        IConfig $settings,
-		                        $userId){
-		parent::__construct($appName, $request);
+		                        $UserId){
+		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
 		$this->settings = $settings;
-		$this->userId = $userId;
+		$this->userId = $UserId;
 	}
 
 
@@ -43,8 +44,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function index() {
-		$notes = $this->notesService->getAll();
-		return new JSONResponse($notes);
+		return new DataResponse($this->notesService->getAll($this->userId));
 	}
 
 
@@ -55,13 +55,13 @@ class NotesController extends Controller {
 	 */
 	public function get($id) {
 		// save the last viewed note
-		$this->settings->setUserValue($this->userId, $this->appName,
-			'notesLastViewedNote', $id);
-		try {
-			return new JSONResponse($this->notesService->get($id));
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+		$this->settings->setUserValue(
+			$this->userId, $this->appName, 'notesLastViewedNote', $id
+		);
+
+		return $this->respond(function ()  use ($id) {
+			return $this->notesService->get($id, $this->userId);
+		});
 	}
 
 
@@ -69,8 +69,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create() {
-		$note = $this->notesService->create();
-		return new JSONResponse($note);
+		return new DataResponse($this->notesService->create($this->userId));
 	}
 
 
@@ -81,11 +80,9 @@ class NotesController extends Controller {
 	 * @param string $content
 	 */
 	public function update($id, $content) {
-		try {
-			return new JSONResponse($this->notesService->update($id, $content));
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+		return $this->respond(function () use ($id, $content) {
+			return $this->notesService->update($id, $content, $this->userId);
+		});
 	}
 
 
@@ -95,12 +92,10 @@ class NotesController extends Controller {
 	 * @param int $id
 	 */
 	public function destroy($id) {
-		try {
-			$this->notesService->delete($id);
-			return new JSONResponse();
-		} catch(NoteDoesNotExistException $ex) {
-			return new JSONResponse(array(), Http::STATUS_NOT_FOUND);
-		}
+		return $this->respond(function () use ($id) {
+			$this->notesService->delete($id, $this->userId);
+			return [];
+		});
 	}
 
 
@@ -108,13 +103,11 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function getConfig() {
-		$markdown = $this->settings->getUserValue($this->userId,
-			$this->appName, 'notesMarkdown') === '1';
-		$config = array(
-			'markdown' => $markdown
-		);
+		$markdown = $this->settings->getUserValue(
+			$this->userId, $this->appName, 'notesMarkdown'
+		) === '1';
 
-		return new JSONResponse($config);
+		return new DataResponse(['markdown' => $markdown]);
 	}
 
 
@@ -124,9 +117,11 @@ class NotesController extends Controller {
 	 * @param string $markdown
 	 */
 	public function setConfig($markdown) {
-		$markdown = $this->settings->setUserValue($this->userId,
-			$this->appName, 'notesMarkdown', $markdown);
-		return new JSONResponse();
+		$markdown = $this->settings->setUserValue(
+			$this->userId, $this->appName, 'notesMarkdown', $markdown
+		);
+
+		return new DataResponse();
 	}
 
 

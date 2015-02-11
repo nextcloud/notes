@@ -11,78 +11,91 @@
 
 namespace OCA\Notes\Controller;
 
-use \OCP\IRequest;
-use \OCP\AppFramework\Http\TemplateResponse;
+use PHPUnit_Framework_TestCase;
 
-use \OCA\Notes\Service\NoteDoesNotExistException;
+use OCP\IRequest;
+use OCP\AppFramework\Http\TemplateResponse;
 
-class PageControllerTest extends \OCA\Notes\Tests\Unit\NotesUnitTest {
+use OCA\Notes\Service\NoteDoesNotExistException;
 
 
-	/**
-	 * Gets run before each test
-	 */
-	public function setUp(){
-		// use the container to test to check if its wired up correctly and
-		// replace needed components with mocks
-		parent::setUp();
-		$test = &$this;
-		$this->container->registerService('NotesService', function ($c) use ($test) {
-			return $test->getMockBuilder(
-				'\OCA\Notes\Service\NotesService')
-				->disableOriginalConstructor()
-				->getMock();
-		});
+class PageControllerTest extends PHPUnit_Framework_TestCase {
+
+
+	private $request;
+	private $service;
+	private $userId;
+	private $appName;
+	private $controller;
+	private $config;
+
+	public function setUp (){
+		$this->request = $this->getMockBuilder('OCP\IRequest')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->service = $this->getMockBuilder('OCA\Notes\Service\NotesService')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->config = $this->getMockBuilder('OCP\IConfig')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->userId = 'john';
+		$this->appName = 'notes';
+		$this->controller = new PageController(
+			$this->appName, $this->request, $this->service, $this->config,
+			$this->userId
+		);
 	}
 
 
 	public function testIndexReturnsTemplate(){
-		$result = $this->container->query('PageController')->index();
+		$result = $this->controller->index();
 		$this->assertTrue($result instanceof TemplateResponse);
 	}
 
 
 	public function testIndexShouldSendTheCorrectTemplate(){
-		$this->container->query('CoreConfig')->expects($this->once())
+		$this->config->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo($this->container->query('UserId')),
-				$this->equalTo($this->container->query('AppName')),
+			->with($this->equalTo($this->userId),
+				$this->equalTo($this->appName),
 				$this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue('3'));
-		$result = $this->container->query('PageController')->index();
+		$result = $this->controller->index();
 
 		$this->assertEquals('main', $result->getTemplateName());
-		$this->assertEquals(array('lastViewedNote' => 3), $result->getParams());
+		$this->assertEquals(['lastViewedNote' => 3], $result->getParams());
 	}
 
 
 	public function testIndexShouldSendZeroWhenNoLastViewedNote(){
-		$this->container->query('CoreConfig')->expects($this->once())
+		$this->config->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo($this->container->query('UserId')),
-				$this->equalTo($this->container->query('AppName')),
+			->with($this->equalTo($this->userId),
+				$this->equalTo($this->appName),
 				$this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue(''));
-		$result = $this->container->query('PageController')->index();
+		$result = $this->controller->index();
 
-		$this->assertEquals(array('lastViewedNote' => 0), $result->getParams());
+		$this->assertEquals(['lastViewedNote' => 0], $result->getParams());
 	}
 
 
 	public function testIndexShouldSetZeroWhenLastViewedNotDoesNotExist(){
-		$this->container->query('CoreConfig')->expects($this->once())
+		$this->config->expects($this->once())
 			->method('getUserValue')
-			->with($this->equalTo($this->container->query('UserId')),
-				$this->equalTo($this->container->query('AppName')),
+			->with($this->equalTo($this->userId),
+				$this->equalTo($this->appName),
 				$this->equalTo('notesLastViewedNote'))
 			->will($this->returnValue('3'));
-		$this->container->query('NotesService')->expects($this->once())
+		$this->service->expects($this->once())
 			->method('get')
-			->with($this->equalTo(3))
-			->will($this->throwException(new NoteDoesNotExistException('hi')));
-		$result = $this->container->query('PageController')->index();
+			->with($this->equalTo(3),
+				   $this->equalTo($this->userId))
+			->will($this->throwException(new NoteDoesNotExistException()));
+		$result = $this->controller->index();
 
-		$this->assertEquals(array('lastViewedNote' => 0), $result->getParams());
+		$this->assertEquals(['lastViewedNote' => 0], $result->getParams());
 	}
 
 

@@ -11,24 +11,33 @@
 
 namespace OCA\Notes\Db;
 
-class NoteTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit_Framework_TestCase;
+
+
+class NoteTest extends PHPUnit_Framework_TestCase {
 
 
 	public function testFromFile(){
-		$file = array(
-			'fileid' => 1,
-			'type' => 'file',
-			'mtime' => 50,
-			'name' => 'hi.txt',
-			'content' => 'hehe'
-		);
+		$file = $this->getMockBuilder('OCP\Files\File')->getMock();
+		$file->expects($this->any())
+			->method('getId')
+			->will($this->returnValue(3));
+		$file->expects($this->any())
+			->method('getContent')
+			->will($this->returnValue('content'));
+		$file->expects($this->any())
+			->method('getMTime')
+			->will($this->returnValue(323));
+		$file->expects($this->any())
+			->method('getName')
+			->will($this->returnValue('file.txt'));
 
 		$note = Note::fromFile($file);
 
-		$this->assertEquals($file['fileid'], $note->getId());
-		$this->assertEquals($file['mtime'], $note->getModified());
-		$this->assertEquals('hi', $note->getTitle());
-		$this->assertEquals($file['content'], $note->getContent());
+		$this->assertEquals(3, $note->getId());
+		$this->assertEquals(323, $note->getModified());
+		$this->assertEquals('file', $note->getTitle());
+		$this->assertEquals('content', $note->getContent());
 	}
 
 

@@ -1,25 +1,47 @@
 language: php
 php:
-  - 5.3
   - 5.4
   - 5.5
+  - 5.6
+  - hhvm
+
+env:
+  global:
+    - CORE_BRANCH=master
+    - APP_NAME=notes
+  matrix:
+    - DB=sqlite
+
+branches:
+  only:
+    - master
+    - /^stable\d*$/
 
 before_install:
-  - cd ..
-  - git clone https://github.com/owncloud/core.git
-  - mv notes core/apps/
-  - cd core
-  - git submodule init
-  - git submodule update
-  - cd 3rdparty
-  - git checkout stable6
-  - cd ../apps/notes
+  - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
+  - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
 
 script:
-  - sudo add-apt-repository -y ppa:chris-lea/node.js
-  - sudo apt-get update
-  - sudo apt-get -y install nodejs
-  - wget https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2
-  - tar xjf phantomjs-1.9.0-linux-x86_64.tar.bz2
-  - sudo ln -s $(pwd)/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-  - make unit-tests
+  # Test lint
+  - cd ../core/apps/$APP_NAME
+  - find . -name \*.php -exec php -l "{}" \;
+
+  # Run phpunit tests
+  - cd tests/unit/
+  - phpunit --configuration phpunit.xml
+
+  # Create coverage report
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover clover.xml; fi"
+
+matrix:
+  include:
+    - php: 5.4
+      env: DB=mysql
+    - php: 5.4
+      env: DB=pgsql
+    - php: 5.4
+      env: DB=oracle
+  allow_failures:
+    - php: hhvm
+  fast_finish: true

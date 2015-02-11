@@ -11,47 +11,43 @@
 
 namespace OCA\Notes\Service;
 
-use \OCP\IL10N;
+use OCP\IL10N;
+use OCP\Files\IRootFolder;
+use OCP\Files\Folder;
 
-use \OCA\Notes\Db\Note;
-use \OCA\Notes\Utility\FileSystemUtility;
+use OCA\Notes\Db\Note;
 
+/**
+ * Class NotesService
+ *
+ * @package OCA\Notes\Service
+ */
 class NotesService {
 
-	private $fileSystem;
-	private $fileSystemUtility;
 	private $l10n;
 
 	/**
-	 * @param \OC\Files\View $fileSystem a filesystem which points to the users
-	 * notes directory
-	 * @param \OCA\Notes\Utility\FileSystemUtility $fileSystemUtility utility
-	 * for handling conflicting resolution for files with the same title
-	 * @param \OCP\IL10N $l10n
+	 * @param IRootFolder $root
+	 * @param IL10N $l10n
 	 */
-	public function __construct($fileSystem,
-	                            FileSystemUtility $fileSystemUtility,
-	                            IL10N $l10n) {
-		$this->fileSystem = $fileSystem;
-		$this->fileSystemUtility = $fileSystemUtility;
+	public function __construct (IRootFolder $root, IL10N $l10n) {
+		$this->root = $root;
 		$this->l10n = $l10n;
 	}
 
 
 	/**
+	 * @param string $userId
 	 * @return array with all notes in the current directory
 	 */
-	public function getAll(){
-		$files = $this->fileSystem->getDirectoryContent('/');
-		$notes = array();
+	public function getAll ($userId){
+		$folder = $this->getFolderForUser($userId);
+		$files = $folder->getDirectoryListing();
+		$notes = [];
 
 		foreach($files as $file) {
-			if($file['type'] === 'file' && $file['mimetype'] === 'text/plain') {
-				$path = $this->fileSystem->getPath($file['fileid']);
-				$content = $this->fileSystem->file_get_contents($path);
-				$file['content'] = $content;
-				$note = Note::fromFile($file);
-				array_push($notes, $note);
+			if($file->getType() === 'file' && $file->getMimeType() === 'text/plain') {
+				$notes[] = Note::fromFile($file);
 			}
 		}
 
@@ -62,53 +58,33 @@ class NotesService {
 	/**
 	 * Used to get a single note by id
 	 * @param int $id the id of the note to get
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
-	 * exist
-	 * @return \OCA\Notes\Db\Note
+	 * @param string $userId
+	 * @throws NoteDoesNotExistException if note does not exist
+	 * @return Note
 	 */
-	public function get($id) {
-		$path = $this->fileSystem->getPath($id);
-		if($path === null) {
-			throw new NoteDoesNotExistException();
-		}
-
-		$fileInfo = $this->fileSystem->getFileInfo($path);
-
-		if($fileInfo['mimetype'] !== 'text/plain') {
-			throw new NoteDoesNotExistException();
-		}
-
-		return Note::fromFile(array(
-			'fileid' => $fileInfo['fileid'],
-			'name' => basename($path),
-			'content' => $this->fileSystem->file_get_contents($path),
-			'mtime' => $fileInfo['mtime']
-		));
+	public function get ($id, $userId) {
+		$folder = $this->getFolderForUser($userId);
+		return Note::fromFile($this->getFileById($folder, $id, $userId));
 	}
 
 
 	/**
 	 * Creates a note and returns the empty note
+	 * @param string $userId
 	 * @see update for setting note content
-	 * @return \OCA\Notes\Db\Note the newly created note
+	 * @return Note the newly created note
 	 */
-	public function create() {
+	public function create ($userId) {
 		$title = $this->l10n->t('New note');
+		$folder = $this->getFolderForUser($userId);
 
 		// check new note exists already and we need to number it
 		// pass -1 because no file has id -1 and that will ensure
 		// to only return filenames that dont yet exist
-		$filePath = $this->fileSystemUtility
-			->generateFileName($title, -1);
-		$this->fileSystem->file_put_contents('/' . $filePath, '');
-		$fileInfo = $this->fileSystem->getFileInfo($filePath);
+		$path = $this->generateFileName($folder, $title, -1);
+		$file = $folder->newFile($path);
 
-		return Note::fromFile(array(
-			'fileid' => $fileInfo['fileid'],
-			'name' => basename($filePath),
-			'content' => '',
-			'mtime' => $fileInfo['mtime']
-		));
+		return Note::fromFile($file);
 	}
 
 
@@ -118,15 +94,12 @@ class NotesService {
 	 * @param int $id the id of the note used to update
 	 * @param string $content the content which will be written into the note
 	 * the title is generated from the first line of the content
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
-	 * exist
+	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return \OCA\Notes\Db\Note the updated note
 	 */
-	public function update($id, $content){
-		$currentFilePath = $this->fileSystem->getPath($id);
-		if($currentFilePath === null) {
-			throw new NoteDoesNotExistException();
-		}
+	public function update ($id, $content, $userId){
+		$folder = $this->getFolderForUser($userId);
+		$file = $this->getFileById($folder, $id, $userId);
 
 		// generate content from the first line of the title
 		$splitContent = explode("\n", $content);
@@ -140,38 +113,98 @@ class NotesService {
 		$title = str_replace(array('/', '\\'), '',  $title);
 
 		// generate filename if there were collisions
-		$newFilePath = '/' . $this->fileSystemUtility
-			->generateFileName($title, $id);
+		$currentFilePath = $file->getPath();
+		$basePath = '/' . $userId . '/files/Notes/';
+		$newFilePath = $basePath . $this->generateFileName($folder, $title, $id);
 
 		// if the current path is not the new path, the file has to be renamed
 		if($currentFilePath !== $newFilePath) {
-			$this->fileSystem->rename($currentFilePath, $newFilePath);
+			$file->move($newFilePath);
 		}
 
-		$this->fileSystem->file_put_contents($newFilePath, $content);
-		$mtime = $this->fileSystem->filemtime($newFilePath);
+		$file->putContent($content);
 
-		return Note::fromFile(array(
-			'fileid' => $id,
-			'name' => basename($newFilePath),
-			'content' => $content,
-			'mtime' => $mtime
-		));
+		return Note::fromFile($file);
 	}
 
 
 	/**
 	 * Deletes a note
 	 * @param int $id the id of the note which should be deleted
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
+	 * @param string $userId
+	 * @throws NoteDoesNotExistException if note does not
 	 * exist
 	 */
-	public function delete($id) {
-		$path = $this->fileSystem->getPath($id);
-		if($path === null) {
+	public function delete ($id, $userId) {
+		$folder = $this->getFolderForUser($userId);
+		$file = $this->getFileById($folder, $id, $userId);
+		$file->delete();
+	}
+
+
+	/**
+	 * @param Folder $folder
+	 * @param int $id
+	 * @param string $userId
+	 * @throws NoteDoesNotExistException
+	 * @return \OCP\Files\Node[]
+	 */
+	private function getFileById ($folder, $id, $userId) {
+		$file = $folder->getById($id);
+
+		if(count($file) <= 0 || $file[0]->getMimeType() !== 'text/plain') {
 			throw new NoteDoesNotExistException();
 		}
-		$this->fileSystem->unlink($path);
+
+		return $file[0];
+	}
+
+
+	/**
+	 * @param string $userId the user id
+	 * @return Folder
+	 */
+	private function getFolderForUser ($userId) {
+		$path = '/' . $userId . '/files/Notes';
+		if ($this->root->nodeExists($path)) {
+			$folder = $this->root->get($path);
+		} else {
+			$folder = $this->root->newFolder($path);
+		}
+		return $folder;
+	}
+
+
+	/**
+	 * get path of file and the title.txt and check if they are the same
+	 * file. If not the title needs to be renamed
+	 * @param Folder $folder a folder to the notes directory
+	 * @param string $title the filename which should be used, .txt is appended
+	 * @param int $id the id of the note for which the title should be generated
+	 * used to see if the file itself has the title and not a different file for
+	 * checking for filename collisions
+	 * @return string the resolved filename to prevent overwriting different
+	 * files with the same title
+	 */
+	private function generateFileName (Folder $folder, $title, $id) {
+		$path = $title . '.txt';
+
+		// if file does not exist, that name has not been taken. Similar we don't
+		// need to handle file collisions if it is the filename did not change
+		if (!$folder->nodeExists($path) || $folder->get($path)->getId() === $id) {
+			return $path;
+		} else {
+			// increments name (2) to name (3)
+			$match = preg_match('/\((?P<id>\d+)\)$/', $title, $matches);
+			if($match) {
+				$newId = ((int) $matches['id']) + 1;
+				$newTitle = preg_replace('/(.*)\s\((\d+)\)$/',
+					'$1 (' . $newId . ')', $title);
+			} else {
+				$newTitle = $title . ' (2)';
+			}
+			return $this->generateFileName($folder, $newTitle, $id);
+		}
 	}
 
 
