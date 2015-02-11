@@ -17,13 +17,17 @@ use OCP\Files\Folder;
 
 use OCA\Notes\Db\Note;
 
+/**
+ * Class NotesService
+ *
+ * @package OCA\Notes\Service
+ */
 class NotesService {
 
-	private $folder;
 	private $l10n;
 
 	/**
-	 * @param NotesFolder $folder
+	 * @param IRootFolder $root
 	 * @param IL10N $l10n
 	 */
 	public function __construct (IRootFolder $root, IL10N $l10n) {
@@ -55,7 +59,7 @@ class NotesService {
 	 * Used to get a single note by id
 	 * @param int $id the id of the note to get
 	 * @param string $userId
-	 * @throws NoteDoesNotExistExcpetion if note does not exist
+	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return Note
 	 */
 	public function get ($id, $userId) {
@@ -90,8 +94,7 @@ class NotesService {
 	 * @param int $id the id of the note used to update
 	 * @param string $content the content which will be written into the note
 	 * the title is generated from the first line of the content
-	 * @throws \OCA\Notes\Service\NoteDoesNotExistExcpetion if note does not
-	 * exist
+	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return \OCA\Notes\Db\Note the updated note
 	 */
 	public function update ($id, $content, $userId){
@@ -129,7 +132,7 @@ class NotesService {
 	 * Deletes a note
 	 * @param int $id the id of the note which should be deleted
 	 * @param string $userId
-	 * @throws NoteDoesNotExistExcpetion if note does not
+	 * @throws NoteDoesNotExistException if note does not
 	 * exist
 	 */
 	public function delete ($id, $userId) {
@@ -144,7 +147,7 @@ class NotesService {
 	 * @param int $id
 	 * @param string $userId
 	 * @throws NoteDoesNotExistException
-	 * @return File
+	 * @return \OCP\Files\Node[]
 	 */
 	private function getFileById ($folder, $id, $userId) {
 		$file = $folder->getById($id);
@@ -175,7 +178,7 @@ class NotesService {
 	/**
 	 * get path of file and the title.txt and check if they are the same
 	 * file. If not the title needs to be renamed
-	 * @param Folder a folder to the notes directory
+	 * @param Folder $folder a folder to the notes directory
 	 * @param string $title the filename which should be used, .txt is appended
 	 * @param int $id the id of the note for which the title should be generated
 	 * used to see if the file itself has the title and not a different file for
