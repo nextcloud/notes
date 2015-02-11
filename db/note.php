@@ -13,6 +13,11 @@ namespace OCA\Notes\Db;
 
 use OCP\Files\File;
 
+/**
+ * Class Note
+ *
+ * @package OCA\Notes\Db
+ */
 class Note extends Entity {
 
 	public $modified;
@@ -23,6 +28,10 @@ class Note extends Entity {
 		$this->addType('modified', 'integer');
 	}
 
+	/**
+	 * @param File $file
+	 * @return static
+	 */
 	public static function fromFile(File $file){
 		$note = new static();
 		$note->setId($file->getId());
