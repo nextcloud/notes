@@ -27,7 +27,7 @@ script:
   - find . -name \*.php -exec php -l "{}" \;
 
   # Run phpunit tests
-  - cd tests
+  - cd tests/unit/
   - phpunit --configuration phpunit.xml
 
   # Create coverage report
