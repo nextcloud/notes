@@ -14,6 +14,7 @@
     ng-class="{markdown: config.isMarkdown()}"
 	ng-change="updateTitle()"
 	notes-timeout-change="save()"
-	autofocus tabindex="-1"></textarea>
+    notes-autofocus
+	tabindex="-1"></textarea>
 <!--<div markdown="note.content" class="markdown" ng-show="config.isMarkdown()">
 </div>-->
