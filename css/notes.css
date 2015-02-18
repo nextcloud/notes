@@ -109,8 +109,8 @@
 
 #app-content .saving {
 	background-image: url('../img/loading.gif') !important;
-	background-position: right 15px top 15px;
-	background-size: 24px;
+	background-position: right 15px top 15px !important;
+	background-size: 24px !important;
 	background-repeat: no-repeat  !important;
 	/* Overrides the snap.js animation making the loading icon to fly in app-content. */
 	transition:none !important;
