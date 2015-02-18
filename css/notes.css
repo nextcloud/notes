@@ -108,7 +108,7 @@
 }
 
 #app-content .saving {
-	background-image: url('../img/loading.gif');
+	background-image: url('../img/loading.gif') !important;
 	background-position: right 15px top 15px;
 	background-size: 24px;
 	background-repeat: no-repeat;
