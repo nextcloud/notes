@@ -34,7 +34,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
-	$provide.value('Config', {
+	$provide.value('Constants', {
 		saveInterval: 5*1000  // miliseconds
 	});
 
@@ -171,6 +171,19 @@ app.controller('NotesController', ['$routeParams', '$scope', '$location',
 
 }]);
 
+/**
+ * Like ng-change only that it does not fire when you type faster than
+ * 300 ms
+ */
+app.directive('notesAutofocus', [function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attributes) {
+            element.focus();
+        }
+    };
+}]);
+
 app.directive('markdown', function () {
 	return {
 		restrict: 'AE',
@@ -210,10 +223,6 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 	};
 }]);
 
-/**
- * Like ng-change only that it does not fire when you type faster than
- * 300 ms
- */
 app.directive('notesTooltip', [function () {
 	return {
 		restrict: 'A',

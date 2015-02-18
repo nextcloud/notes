@@ -14,7 +14,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
-	$provide.value('Config', {
+	$provide.value('Constants', {
 		saveInterval: 5*1000  // miliseconds
 	});
 

@@ -129,5 +129,6 @@ module.exports = function(grunt) {
 
 	// make tasks available under simpler commands
 	grunt.registerTask('build', ['jshint', 'concat', 'wrap:app']);
+	grunt.registerTask('default', ['build']);
 
 };

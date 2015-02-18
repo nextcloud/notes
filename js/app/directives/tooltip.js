@@ -4,10 +4,6 @@
  * See the COPYING file.
  */
 
-/**
- * Like ng-change only that it does not fire when you type faster than
- * 300 ms
- */
 app.directive('notesTooltip', [function () {
 	return {
 		restrict: 'A',
