@@ -28,18 +28,6 @@ Before reporting bugs:
 * [check if they have already been reported](https://github.com/owncloud/notes/issues?state=open)
 
 
-# App Store
-
-## Installation
-
-- Go to the ownCloud apps page
-- Activate the **Notes** app in the apps menu
-
-## Keep up to date
-
-The **Notes** App can be updated through the ownCloud apps page.
-
-
 # Git (development version)
 
 ## Installation
