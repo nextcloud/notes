@@ -47,6 +47,9 @@ app.factory('SaveQueue', ['$q', function($q) {
 		_noteUpdateRequest: function (note, response) {
 			note.title = response.title;
 			note.modified = response.modified;
+		},
+		isSaving: function () {
+			return this._flushLock;
 		}
 	};
 

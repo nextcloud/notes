@@ -32,6 +32,8 @@ script:
 
   # execute js tests
   - cd ../../js
+  - npm install
+  - npm install -g grunt-cli
   - grunt karma:continuous
 
   # Create coverage report

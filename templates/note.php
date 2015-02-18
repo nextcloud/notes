@@ -11,7 +11,7 @@
 
 <textarea
 	ng-model="note.content"
-    ng-class="{markdown: config.isMarkdown()}"
+    ng-class="{markdown: config.isMarkdown(), saving: isSaving()}"
 	ng-change="updateTitle()"
 	notes-timeout-change="save()"
     notes-autofocus

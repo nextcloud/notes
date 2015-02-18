@@ -42,6 +42,28 @@ describe('SaveQueue', function() {
 	}));
 
 
+	it ('should show if it is saving a note', inject(function(SaveQueue) {
+		var request = q.defer();
+		var note = {
+			id: 3,
+			put: function () {
+				return request.promise;
+			}
+		};
+		SaveQueue.add(note);
+		expect(SaveQueue.isSaving()).toBe(true);
+
+		request.resolve({
+			title: 'yo',
+			modified: 4
+		});
+
+		// $q needs a digest on $rootScope
+		rootScope.$apply();
+
+		expect(SaveQueue.isSaving()).toBe(false);
+	}));
+
 	it ('should sync more notes', inject(function(SaveQueue) {
 		// note 1
 		var requestNote1 = q.defer();

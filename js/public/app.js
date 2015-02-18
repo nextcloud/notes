@@ -123,6 +123,10 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	$scope.config = Config;
 	$scope.markdown = Config.isMarkdown();
 
+	$scope.isSaving = function () {
+		return SaveQueue.isSaving();
+	};
+
 	$scope.updateTitle = function () {
 		$scope.note.title = $scope.note.content.split('\n')[0] ||
 			$scope.translations['New note'];
@@ -371,6 +375,9 @@ app.factory('SaveQueue', ['$q', function($q) {
 		_noteUpdateRequest: function (note, response) {
 			note.title = response.title;
 			note.modified = response.modified;
+		},
+		isSaving: function () {
+			return this._flushLock;
 		}
 	};
 

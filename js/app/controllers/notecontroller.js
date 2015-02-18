@@ -14,6 +14,10 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 	$scope.config = Config;
 	$scope.markdown = Config.isMarkdown();
 
+	$scope.isSaving = function () {
+		return SaveQueue.isSaving();
+	};
+
 	$scope.updateTitle = function () {
 		$scope.note.title = $scope.note.content.split('\n')[0] ||
 			$scope.translations['New note'];

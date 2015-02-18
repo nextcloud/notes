@@ -91,7 +91,7 @@
 }
 
 #app-content textarea.markdown {
-	/* 
+	/*
 	* width: 50%;
 	*/
 }
@@ -100,6 +100,17 @@
 #app-content.loading {
 	background-image: url('../img/loading.gif');
 	background-position: center;
+	background-repeat: no-repeat;
+	/* Overrides the snap.js animation making the loading icon to fly in app-content. */
+	transition:none !important;
+	-webkit-transition: none !important;
+	-moz-webkit-transition: none !important;
+}
+
+#app-content .saving {
+	background-image: url('../img/loading.gif');
+	background-position: right 15px top 15px;
+	background-size: 24px;
 	background-repeat: no-repeat;
 	/* Overrides the snap.js animation making the loading icon to fly in app-content. */
 	transition:none !important;
