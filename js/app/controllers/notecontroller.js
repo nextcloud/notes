@@ -4,9 +4,8 @@
  * See the COPYING file.
  */
 
-app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
-	'SaveQueue', 'note', 'Config',
-	function($routeParams, $scope, NotesModel, SaveQueue, note, Config) {
+app.controller('NoteController', function($routeParams, $scope, NotesModel,
+                                          SaveQueue, note, Config) {
 
 	NotesModel.updateIfExists(note);
 
@@ -33,4 +32,4 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 		Config.sync();
 	};
 
-}]);
+});

@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <dev@bernhard-posselt.com>
  * This file is licensed under the Affero General Public License version 3 or later.
- * See the COPYING file. 
+ * See the COPYING file.
  */
 
-app.factory('Config', ['Restangular', function (Restangular) {
+app.factory('Config', function (Restangular) {
     var Config = function (Restangular) {
         this._markdown = false;
         this._Restangular = Restangular;
@@ -32,4 +32,4 @@ app.factory('Config', ['Restangular', function (Restangular) {
     };
 
     return new Config(Restangular);
-}]);
+});

@@ -25,10 +25,8 @@ if (!Function.prototype.bind) {
 	};
 }
 var app = angular.module('Notes', ['restangular', 'ngRoute']).
-config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
-		'$windowProvider',
-	function($provide, $routeProvider, RestangularProvider, $httpProvider,
-			$windowProvider) {
+config(["$provide", "$routeProvider", "RestangularProvider", "$httpProvider", "$windowProvider", function($provide, $routeProvider, RestangularProvider, $httpProvider,
+                $windowProvider) {
 	// Always send the CSRF token by default
 	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
@@ -46,8 +44,8 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 			// $routeParams does not work inside resolve so use $route
 			// note is the name of the argument that will be injected into the
 			// controller
-			note: ['$route', '$q', 'is', 'Restangular',
-			function ($route, $q, is, Restangular) {
+			/* @ngInject */
+			note: ["$route", "$q", "is", "Restangular", function ($route, $q, is, Restangular) {
 
 				var deferred = $q.defer();
 				var noteId = $route.current.params.noteId;
@@ -77,8 +75,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 
 
-}]).run(['$rootScope', '$location', 'NotesModel', 'Config',
-	function ($rootScope, $location, NotesModel, Config) {
+}]).run(["$rootScope", "$location", "NotesModel", "Config", function ($rootScope, $location, NotesModel, Config) {
 
 	// get config
 	Config.load();
@@ -103,8 +100,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 	});
 }]);
 
-app.controller('AppController', ['$scope', '$location', 'is',
-	function ($scope, $location, is) {
+app.controller('AppController', ["$scope", "$location", "is", function ($scope, $location, is) {
 	$scope.is = is;
 
 	$scope.init = function (lastViewedNote) {
@@ -113,9 +109,8 @@ app.controller('AppController', ['$scope', '$location', 'is',
 		}
 	};
 }]);
-app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
-	'SaveQueue', 'note', 'Config',
-	function($routeParams, $scope, NotesModel, SaveQueue, note, Config) {
+app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQueue", "note", "Config", function($routeParams, $scope, NotesModel,
+                                          SaveQueue, note, Config) {
 
 	NotesModel.updateIfExists(note);
 
@@ -144,9 +139,8 @@ app.controller('NoteController', ['$routeParams', '$scope', 'NotesModel',
 
 }]);
 // This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController', ['$routeParams', '$scope', '$location',
-	'Restangular', 'NotesModel',
-	function($routeParams, $scope, $location, Restangular, NotesModel) {
+app.controller('NotesController', ["$routeParams", "$scope", "$location", "Restangular", "NotesModel", function($routeParams, $scope, $location,
+                                           Restangular, NotesModel) {
 
 	$scope.route = $routeParams;
 	$scope.notes = NotesModel.getAll();
@@ -170,20 +164,35 @@ app.controller('NotesController', ['$routeParams', '$scope', '$location',
 		note.remove().then(function () {
 			NotesModel.remove(noteId);
 			$scope.$emit('$routeChangeError');
-		});	
+		});
 	};
 
 }]);
 
-/**
- * Like ng-change only that it does not fire when you type faster than
- * 300 ms
- */
-app.directive('notesAutofocus', [function () {
+app.directive('notesAutofocus', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attributes) {
             element.focus();
+        }
+    };
+});
+
+app.directive('notesIsSaving', ["$window", function ($window) {
+    return {
+        restrict: 'A',
+        scope: {
+            'notesIsSaving': '='
+        },
+        link: function (scope, element, attributes) {
+            $window.onbeforeunload = function () {
+                if (scope.notesIsSaving) {
+                    return t('notes', 'Note is currently saving. Leaving ' +
+                                      'the page will delete all changes!');
+                } else {
+                    return null;
+                }
+            };
         }
     };
 }]);
@@ -209,7 +218,7 @@ app.directive('markdown', function () {
  * Like ng-change only that it does not fire when you type faster than
  * 300 ms
  */
-app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
+app.directive('notesTimeoutChange', ["$timeout", function ($timeout) {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attributes) {
@@ -227,14 +236,14 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 	};
 }]);
 
-app.directive('notesTooltip', [function () {
+app.directive('notesTooltip', function () {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attributes) {
 			element.tooltip();
 		}
 	};
-}]);
+});
 
 /**
  * Binds translated values to scope and hides the element
@@ -251,7 +260,7 @@ app.directive('notesTranslate', function () {
 	};
 });
 
-app.factory('Config', ['Restangular', function (Restangular) {
+app.factory('Config', ["Restangular", function (Restangular) {
     var Config = function (Restangular) {
         this._markdown = false;
         this._Restangular = Restangular;
@@ -332,7 +341,7 @@ app.factory('NotesModel', function () {
 
 	return new NotesModel();
 });
-app.factory('SaveQueue', ['$q', function($q) {
+app.factory('SaveQueue', ["$q", function($q) {
 	var SaveQueue = function () {
 		this._queue = {};
 		this._flushLock = false;

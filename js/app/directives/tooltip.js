@@ -4,11 +4,11 @@
  * See the COPYING file.
  */
 
-app.directive('notesTooltip', [function () {
+app.directive('notesTooltip', function () {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attributes) {
 			element.tooltip();
 		}
 	};
-}]);
+});

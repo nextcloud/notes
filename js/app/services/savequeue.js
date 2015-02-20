@@ -4,7 +4,7 @@
  * See the COPYING file.
  */
 
-app.factory('SaveQueue', ['$q', function($q) {
+app.factory('SaveQueue', function($q) {
 	var SaveQueue = function () {
 		this._queue = {};
 		this._flushLock = false;
@@ -54,4 +54,4 @@ app.factory('SaveQueue', ['$q', function($q) {
 	};
 
 	return new SaveQueue();
-}]);
+});

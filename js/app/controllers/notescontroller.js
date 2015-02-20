@@ -5,9 +5,8 @@
  */
 
 // This is available by using ng-controller="NotesController" in your HTML
-app.controller('NotesController', ['$routeParams', '$scope', '$location',
-	'Restangular', 'NotesModel',
-	function($routeParams, $scope, $location, Restangular, NotesModel) {
+app.controller('NotesController', function($routeParams, $scope, $location,
+                                           Restangular, NotesModel) {
 
 	$scope.route = $routeParams;
 	$scope.notes = NotesModel.getAll();
@@ -31,7 +30,7 @@ app.controller('NotesController', ['$routeParams', '$scope', '$location',
 		note.remove().then(function () {
 			NotesModel.remove(noteId);
 			$scope.$emit('$routeChangeError');
-		});	
+		});
 	};
 
-}]);
+});

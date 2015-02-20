@@ -8,7 +8,7 @@
  * Like ng-change only that it does not fire when you type faster than
  * 300 ms
  */
-app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
+app.directive('notesTimeoutChange', function ($timeout) {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attributes) {
@@ -24,4 +24,4 @@ app.directive('notesTimeoutChange', ['$timeout', function ($timeout) {
 			});
 		}
 	};
-}]);
+});

@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-wrap');
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-phpunit');
-
+	grunt.loadNpmTasks('grunt-ng-annotate');
 
 	grunt.initConfig({
 
@@ -123,12 +123,19 @@ module.exports = function(grunt) {
 				browsers: ['PhantomJS'],
 				reporters: ['progress']
 			}
-		}
+		},
+
+		ngAnnotate: {
+            app: {
+                src: ['<%= meta.production %>app.js'],
+                dest: '<%= meta.production %>app.js'
+            }
+        },
 
 	});
 
 	// make tasks available under simpler commands
-	grunt.registerTask('build', ['jshint', 'concat', 'wrap:app']);
+	grunt.registerTask('build', ['jshint', 'concat', 'wrap:app', 'ngAnnotate']);
 	grunt.registerTask('default', ['build']);
 
 };

@@ -4,8 +4,7 @@
  * See the COPYING file.
  */
 
-app.controller('AppController', ['$scope', '$location', 'is',
-	function ($scope, $location, is) {
+app.controller('AppController', function ($scope, $location, is) {
 	$scope.is = is;
 
 	$scope.init = function (lastViewedNote) {
@@ -13,4 +12,4 @@ app.controller('AppController', ['$scope', '$location', 'is',
 			$location.path('/notes/' + lastViewedNote);
 		}
 	};
-}]);
+});

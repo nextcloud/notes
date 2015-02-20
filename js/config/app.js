@@ -5,10 +5,8 @@
  */
 
 var app = angular.module('Notes', ['restangular', 'ngRoute']).
-config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
-		'$windowProvider',
-	function($provide, $routeProvider, RestangularProvider, $httpProvider,
-			$windowProvider) {
+config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
+                $windowProvider) {
 	// Always send the CSRF token by default
 	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
 
@@ -26,8 +24,8 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 			// $routeParams does not work inside resolve so use $route
 			// note is the name of the argument that will be injected into the
 			// controller
-			note: ['$route', '$q', 'is', 'Restangular',
-			function ($route, $q, is, Restangular) {
+			/* @ngInject */
+			note: function ($route, $q, is, Restangular) {
 
 				var deferred = $q.defer();
 				var noteId = $route.current.params.noteId;
@@ -42,7 +40,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 				});
 
 				return deferred.promise;
-			}]
+			}
 		}
 	}).otherwise({
 		redirectTo: '/'
@@ -57,8 +55,7 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 
 
 
-}]).run(['$rootScope', '$location', 'NotesModel', 'Config',
-	function ($rootScope, $location, NotesModel, Config) {
+}).run(function ($rootScope, $location, NotesModel, Config) {
 
 	// get config
 	Config.load();
@@ -81,4 +78,4 @@ config(['$provide', '$routeProvider', 'RestangularProvider', '$httpProvider',
 			$location.path('/');
 		}
 	});
-}]);
+});

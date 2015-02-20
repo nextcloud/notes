@@ -4,15 +4,11 @@
  * See the COPYING file.
  */
 
-/**
- * Like ng-change only that it does not fire when you type faster than
- * 300 ms
- */
-app.directive('notesAutofocus', [function () {
+app.directive('notesAutofocus', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attributes) {
             element.focus();
         }
     };
-}]);
+});
