@@ -10,9 +10,9 @@
   },
   "bugs": "https://github.com/owncloud/notes/issues",
   "dependencies": {
-    "grunt-ng-annotate": "^0.10.0"
   },
   "devDependencies": {
+    "grunt-ng-annotate": "^0.10.0",
     "grunt": "*",
     "grunt-cli": "*",
     "grunt-contrib-concat": "*",
