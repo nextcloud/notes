@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Белешке",
+    "Note is currently saving. Leaving " : "Белешка се тренутно снима. Излазим",
     "New note" : "Нова белешка",
     "Delete note" : "Обриши белешку"
 },
