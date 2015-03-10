@@ -111,6 +111,8 @@ class NotesService {
 
 		// prevent directory traversal
 		$title = str_replace(array('/', '\\'), '',  $title);
+		// using a maximum of 100 chars should be enough
+		$title = substr($title, 0, 100);
 
 		// generate filename if there were collisions
 		$currentFilePath = $file->getPath();
