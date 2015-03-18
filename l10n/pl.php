@@ -1,6 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Notes" => "Notatki",
+"Note is currently saving. Leaving " => "Notatka jest zapisywana. Zamykanie",
 "New note" => "Nowa notatka",
 "Delete note" => "Usuń notatkę"
 );
