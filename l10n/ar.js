@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "الملاحظات",
+    "Note is currently saving. Leaving " : "يتم الآن حفظ الملاحظة. جاري الخروج",
     "New note" : "ملاحظة جديدة ",
     "Delete note" : "حذف الملاحظة "
 },
