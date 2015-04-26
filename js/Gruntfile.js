@@ -77,7 +77,9 @@ module.exports = function(grunt) {
 			options: {
 				// options here to override JSHint defaults
 				globals: {
-					console: true
+					console: true,
+					marked: true,
+					hljs: true
 				}
 			}
 		},
@@ -106,9 +108,10 @@ module.exports = function(grunt) {
 
 		phpunit: {
 			classes: {
-				dir: '../tests/php/unit'
+				dir: '../tests/unit/'
 			},
 			options: {
+				configuration: '../tests/unit/phpunit.xml',
 				colors: true
 			}
 		},

@@ -198,16 +198,26 @@ app.directive('notesIsSaving', ["$window", function ($window) {
 }]);
 
 app.directive('markdown', function () {
+	marked.setOptions({
+		sanitize: true,
+		gfm: true,
+		tables: true,
+		breaks: true,
+		smartLists: true,
+		highlight: function (code) {
+			return hljs.highlightAuto(code).value;
+		}
+	});
 	return {
 		restrict: 'AE',
 		link: function (scope, element, attrs) {
 			if (attrs.markdown) {
 				scope.$watch(attrs.markdown, function (newVal) {
-					var html = markdown.toHTML(newVal);
+					var html = marked(newVal);
 					element.html(html);
 				});
 			} else {
-				var html = markdown.toHTML(element.text());
+				var html = marked(element.text());
 				element.html(html);
 			}
 		}

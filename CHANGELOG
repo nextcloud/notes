@@ -1,3 +1,7 @@
+owncloud-notes (1.1.0)
+* **New Dependency**: Require ownCloud 8.1
+* **Enhancement**: Add back markdown support because a secure enough library was available. The supported markdown dialect is GitHub flavored markdown and includes syntax highlightning
+
 owncloud-notes (1.0.0)
 * **Bugfix**: Remove flying loading icon
 * **Enhancement**: Make app ready for ownCloud 8

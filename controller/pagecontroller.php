@@ -13,6 +13,7 @@ namespace OCA\Notes\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IRequest;
 use OCP\IConfig;
 
@@ -68,13 +69,19 @@ class PageController extends Controller {
 			$lastViewedNote = 0;
 		}
 
-		return new TemplateResponse(
+		$response = new TemplateResponse(
 			$this->appName,
 			'main',
 			[
 				'lastViewedNote' => $lastViewedNote
 			]
 		);
+
+		$csp = new ContentSecurityPolicy();
+		$csp->addAllowedImageDomain('*');
+		$response->setContentSecurityPolicy($csp);
+
+		return $response;
 	}
 
 

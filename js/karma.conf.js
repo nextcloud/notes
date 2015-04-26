@@ -31,7 +31,9 @@ module.exports = function(config) {
 		files: [
 			'polyfills/**/*.js',
 			'vendor/jquery/dist/jquery.js',
-			'vendor/markdown/lib/markdown.js',
+			'vendor/highlightjs/highlight.pack.js',
+			'vendor/marked/marked.min.js',
+			'vendor/marked/marked.min.js',
 			'vendor/angular/angular.js',
 			'vendor/underscore/underscore.js',
 			'vendor/angular-route/angular-route.js',

@@ -8,7 +8,8 @@
 
 
 script('notes', [
-	'vendor/markdown/lib/markdown',
+	'vendor/highlightjs/highlight.pack',
+	'vendor/marked/marked.min',
 	'vendor/bootstrap/tooltip',
 	'vendor/angular/angular',
 	'vendor/angular-route/angular-route',
@@ -18,6 +19,7 @@ script('notes', [
 ]);
 
 style('notes', [
+	'../js/vendor/highlightjs/styles/github',
 	'vendor/bootstrap/tooltip',
 	'notes'
 ]);

@@ -91,9 +91,7 @@
 }
 
 #app-content textarea.markdown {
-	/*
-	* width: 50%;
-	*/
+	width: 50%;
 }
 
 /* TODO: move into core app styles */
@@ -120,9 +118,7 @@
 
 #app-content .markdown {
 	height: 100%;
-	/*
-	* width: 50%;
-	*/
+	width: 50%;
 	margin: 0;
 	padding: 30px 20px 100px 30px;
 	font-size: 18px;
@@ -135,6 +131,10 @@
 	float: left;
 	border-left: 1px solid #ccc;
 	overflow: auto;
+}
+
+#app-content .markdown img {
+	max-width: 100%;
 }
 
 #app-content .utils {
@@ -158,6 +158,42 @@
 .markdown h1 {
 	font-size: 26px;
 }
+
+.markdown table {
+	border: 1px solid #ddd;
+	max-width: 100%;
+	table-layout: fixed;
+	word-break: break-word;
+    white-space: normal;
+}
+
+
+.markdown th {
+	font-weight: bold;
+}
+
+.markdown td,
+.markdown th {
+	padding: 6px 13px;
+}
+
+.markdown tr td,
+.markdown tr th {
+	border-bottom: 1px solid #ddd;
+}
+
+.markdown tr:last-child td {
+	border: 0;
+}
+
+.markdown tr:hover {
+	background-color: #eee !important;
+}
+
+.markdown tr:nth-child(even) {
+	background-color: #fafafa;
+}
+
 
 .markdown pre {
 	padding: 7px 7px 7px 14px;
