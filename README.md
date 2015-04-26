@@ -10,10 +10,10 @@ For further developer and user documentation please visit [the wiki](https://git
 - [Lukas Reschke](https://github.com/LukasReschke)
 
 # Minimum PHP Version
-* PHP >= 5.4.0
+* PHP >= 5.4
 
 # Minimum ownCloud Version
-* >= 8.0.0 (for newer releases)
+* >= 8.1
 
 # Supported Webservers
 * Apache
