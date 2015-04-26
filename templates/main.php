@@ -15,7 +15,7 @@ script('notes', [
 	'vendor/angular-route/angular-route',
 	'vendor/restangular/dist/restangular',
 	'vendor/underscore/underscore',
-	'public/app'
+	'public/app.min'
 ]);
 
 style('notes', [
