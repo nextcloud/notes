@@ -74,6 +74,7 @@ module.exports = function(grunt) {
         jshint: {
             files: [
                 'Gruntfile.js',
+                'karma.conf.js',
                 'app/**/*.js',
                 'config/*.js',
                 'tests/js/unit/**/*.js'
