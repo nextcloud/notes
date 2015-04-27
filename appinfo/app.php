@@ -11,7 +11,7 @@
 
 namespace OCA\Notes\AppInfo;
 
-use \OCP\AppFramework\App;
+use OCP\AppFramework\App;
 
 $app = new App('notes');
 $container = $app->getContainer();
