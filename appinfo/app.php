@@ -21,6 +21,6 @@ $app->getContainer()->getServer()->getNavigationManager()->add([
         'order' => 10,
         'href' => $serverContainer->getURLGenerator()->linkToRoute('notes.page.index'),
         'icon' => $serverContainer->getURLGenerator()->imagePath('notes', 'notes.svg'),
-        'name' => $serverContainer->getL10N('Notes')->t('Notes'),
+        'name' => $serverContainer->getL10N('notes')->t('Notes'),
     ]
 );
