@@ -16,6 +16,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
 use OCA\Notes\Service\NotesService;
+use OCA\Notes\Db\Note;
 
 /**
  * Class NotesApiController
@@ -48,6 +49,24 @@ class NotesApiController extends ApiController {
 
 
     /**
+     * @param Note $note
+     * @param string[] $exclude the fields that should be removed from the
+     * notes
+     * @return Note
+     */
+    private function excludeFields(Note $note, array $exclude) {
+        if(count($exclude) > 0) {
+            foreach ($exclude as $field) {
+                if(property_exists($note, $field)) {
+                    unset($note->$field);
+                }
+            }
+        }
+        return $note;
+    }
+
+
+    /**
      * @NoAdminRequired
      * @CORS
      * @NoCSRFRequired
@@ -56,20 +75,11 @@ class NotesApiController extends ApiController {
      * @return DataResponse
      */
     public function index($exclude='') {
-        $hide = explode(',', $exclude);
+        $exclude = explode(',', $exclude);
         $notes = $this->service->getAll($this->userId);
-
-        // if there are hidden values remove them from the result
-        if(count($hide) > 0) {
-            foreach ($notes as $note) {
-                foreach ($hide as $field) {
-                    if(property_exists($note, $field)) {
-                        unset($note->$field);
-                    }
-                }
-            }
+        foreach ($notes as $note) {
+            $note = $this->excludeFields($note, $exclude);
         }
-
         return new DataResponse($notes);
     }
 
@@ -84,19 +94,11 @@ class NotesApiController extends ApiController {
      * @return DataResponse
      */
     public function get($id, $exclude='') {
-        $hide = explode(',', $exclude);
+        $exclude = explode(',', $exclude);
 
-        return $this->respond(function () use ($id, $hide) {
+        return $this->respond(function () use ($id, $exclude) {
             $note = $this->service->get($id, $this->userId);
-
-            // if there are hidden values remove them from the result
-            if(count($hide) > 0) {
-                foreach ($hide as $field) {
-                    if(property_exists($note, $field)) {
-                        unset($note->$field);
-                    }
-                }
-            }
+            $note = $this->excludeFields($note, $exclude);
             return $note;
         });
     }

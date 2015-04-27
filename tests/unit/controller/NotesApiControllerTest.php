@@ -47,7 +47,7 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
      * GET /notes/
      */
     public function testGetAll(){
-        $expected = ['hi'];
+        $expected = [new Note, new Note];
 
         $this->service->expects($this->once())
             ->method('getAll')
@@ -104,7 +104,7 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
      */
     public function testGet(){
         $id = 1;
-        $expected = ['hi'];
+        $expected = new Note;
 
         $this->service->expects($this->once())
             ->method('get')
