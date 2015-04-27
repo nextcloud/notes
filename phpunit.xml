@@ -1,7 +1,22 @@
-<phpunit bootstrap="tests/unit/bootstrap.php">
+<phpunit bootstrap="../../lib/base.php"
+    strict="true"
+    verbose="true"
+    timeoutForSmallTests="900"
+    timeoutForMediumTests="900"
+    timeoutForLargeTests="900">
 <testsuites>
     <testsuite name="unit">
         <directory>./tests/unit</directory>
+            <filter>
+            <whitelist>
+                <directory suffix=".php">../../../notes</directory>
+                <exclude>
+                    <directory suffix=".php">../../../notes/l10n</directory>
+                    <directory suffix=".php">../../../notes/templates</directory>
+                    <directory suffix=".php">../../../notes/tests</directory>
+                </exclude>
+            </whitelist>
+        </filter>
     </testsuite>
 </testsuites>
 </phpunit>

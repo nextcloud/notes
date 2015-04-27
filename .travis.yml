@@ -30,10 +30,7 @@ script:
   # Test lint
   - cd ../core/apps/$APP_NAME
   - find . -name \*.php -exec php -l "{}" \;
-
-  # Run phpunit tests
-  - cd tests/unit/
-  - phpunit --configuration phpunit.xml
+  - phpunit --coverage-clover clover.xml
 
   # execute js tests
   - cd ../../js
