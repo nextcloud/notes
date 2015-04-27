@@ -9,4 +9,5 @@ imports:
     - php
 
 tools:
-    external_code_coverage: true
+    # external coverage is broken
+    #external_code_coverage: true
