@@ -114,7 +114,7 @@ app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQ
 
     $scope.updateTitle = function () {
         $scope.note.title = $scope.note.content.split('\n')[0] ||
-            $scope.translations['New note'];
+            t('notes', 'New note');
     };
 
     $scope.save = function() {
@@ -250,23 +250,6 @@ app.directive('notesTooltip', function () {
         restrict: 'A',
         link: function (scope, element) {
             element.tooltip();
-        }
-    };
-});
-
-/**
- * Binds translated values to scope and hides the element
- */
-app.directive('notesTranslate', function () {
-    'use strict';
-
-    return {
-        restrict: 'E',
-        link: function (scope, element, attributes) {
-            var $element = $(element);
-            $element.hide();
-            scope.translations = scope.translations || {};
-            scope.translations[attributes.key] = $element.text();
         }
     };
 });

@@ -21,7 +21,7 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
 
     $scope.updateTitle = function () {
         $scope.note.title = $scope.note.content.split('\n')[0] ||
-            $scope.translations['New note'];
+            t('notes', 'New note');
     };
 
     $scope.save = function() {

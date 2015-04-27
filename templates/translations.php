@@ -1,1 +1,0 @@
-<notes-translate key="New note"><?php p($l->t('New note')); ?></notes-translate>
