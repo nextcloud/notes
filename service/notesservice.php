@@ -149,7 +149,7 @@ class NotesService {
 	 * @param int $id
 	 * @param string $userId
 	 * @throws NoteDoesNotExistException
-	 * @return \OCP\Files\Node[]
+	 * @return \OCP\Files\File
 	 */
 	private function getFileById ($folder, $id, $userId) {
 		$file = $folder->getById($id);

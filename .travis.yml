@@ -21,6 +21,7 @@ before_install:
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
   - sh -e /etc/init.d/xvfb start
+  - sudo apt-get update
   - sudo apt-get install firefox chromium-browser
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
   - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB

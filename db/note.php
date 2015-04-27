@@ -12,10 +12,16 @@
 namespace OCA\Notes\Db;
 
 use OCP\Files\File;
+use OCP\AppFramework\Db\Entity;
 
 /**
  * Class Note
- *
+ * @method integer getId()
+ * @method void setId(integer $value)
+ * @method integer getModified()
+ * @method void setModified(integer $value)
+ * @method integer getContent()
+ * @method void setContent(integer $value)
  * @package OCA\Notes\Db
  */
 class Note extends Entity {
