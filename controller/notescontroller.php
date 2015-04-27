@@ -42,10 +42,10 @@ class NotesController extends Controller {
      * @param string $UserId
      */
     public function __construct($AppName, IRequest $request,
-                                NotesService $notesService, IConfig $settings,
+                                NotesService $service, IConfig $settings,
                                 $UserId){
         parent::__construct($AppName, $request);
-        $this->notesService = $notesService;
+        $this->notesService = $service;
         $this->settings = $settings;
         $this->userId = $UserId;
     }
