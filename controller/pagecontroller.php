@@ -41,15 +41,12 @@ class PageController extends Controller {
      * @param IConfig $settings
      * @param string $UserId
      */
-    public function __construct($AppName,
-                                IRequest $request,
-                                NotesService $notesService,
-                                IConfig $settings,
-                                $UserId){
+    public function __construct($AppName, IRequest $request, $UserId,
+                                NotesService $notesService, IConfig $settings){
         parent::__construct($AppName, $request);
         $this->notesService = $notesService;
-        $this->settings = $settings;
         $this->userId = $UserId;
+        $this->settings = $settings;
     }
 
 

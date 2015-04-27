@@ -42,8 +42,8 @@ class PageControllerTest extends PHPUnit_Framework_TestCase {
         $this->userId = 'john';
         $this->appName = 'notes';
         $this->controller = new PageController(
-            $this->appName, $this->request, $this->service, $this->config,
-            $this->userId
+            $this->appName, $this->request, $this->userId,
+            $this->service, $this->config
         );
     }
 
