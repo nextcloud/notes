@@ -7,16 +7,6 @@
 <testsuites>
     <testsuite name="unit">
         <directory>./tests/unit</directory>
-            <filter>
-            <whitelist>
-                <directory suffix=".php">../../../notes</directory>
-                <exclude>
-                    <directory suffix=".php">../../../notes/l10n</directory>
-                    <directory suffix=".php">../../../notes/templates</directory>
-                    <directory suffix=".php">../../../notes/tests</directory>
-                </exclude>
-            </whitelist>
-        </filter>
     </testsuite>
 </testsuites>
 </phpunit>
