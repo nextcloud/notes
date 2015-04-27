@@ -37,7 +37,7 @@ class NotesController extends Controller {
     /**
      * @param string $AppName
      * @param IRequest $request
-     * @param NotesService $notesService
+     * @param NotesService $service
      * @param IConfig $settings
      * @param string $UserId
      */
