@@ -23,6 +23,7 @@
 
 
 module.exports = function(grunt) {
+	'use strict';
 
 	// load needed modules
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -49,7 +50,6 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'polyfills/**/*.js',
 					'config/app.js',
 					'app/**/*.js'
 				],
@@ -63,7 +63,8 @@ module.exports = function(grunt) {
 				dest: '<%= meta.production %>app.js',
 				options: {
 					wrapper: [
-						'(function(angular, $, oc_requesttoken, marked, hljs, undefined){\n\n\'use strict\';\n\n',
+						'(function(angular, $, requestToken, marked, hljs, ' +
+						'undefined){\n\n\'use strict\';\n\n',
 						'\n})(angular, jQuery, oc_requesttoken, marked, hljs);'
 					]
 				}
@@ -78,12 +79,7 @@ module.exports = function(grunt) {
 				'tests/js/unit/**/*.js'
 			],
 			options: {
-				// options here to override JSHint defaults
-				globals: {
-					console: true,
-					marked: true,
-					hljs: true
-				}
+				jshintrc: true
 			}
 		},
 
@@ -92,7 +88,6 @@ module.exports = function(grunt) {
 			// and wrap tasks if something changed
 			concat: {
 				files: [
-					'polyfills/**/*.js',
 					'app/**/*.js',
 					'config/*.js',
 					'css/**/*.css',
@@ -153,7 +148,8 @@ module.exports = function(grunt) {
 	});
 
 	// make tasks available under simpler commands
-	grunt.registerTask('build', ['jshint', 'concat', 'wrap', 'ngAnnotate', 'uglify']);
+	grunt.registerTask('build', ['jshint', 'concat', 'wrap', 'ngAnnotate',
+		               'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };

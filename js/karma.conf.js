@@ -29,7 +29,6 @@ module.exports = function(config) {
 		basePath: '',
 		// list of files / patterns to load in the browser
 		files: [
-			'polyfills/**/*.js',
 			'vendor/jquery/dist/jquery.js',
 			'vendor/highlightjs/highlight.pack.js',
 			'vendor/marked/marked.min.js',

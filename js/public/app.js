@@ -1,39 +1,16 @@
-(function(angular, $, oc_requesttoken, marked, hljs, undefined){
+(function(angular, $, requestToken, marked, hljs, undefined){
 
 'use strict';
 
 
-// taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind?redirectlocale=en-US&redirectslug=JavaScript%2FReference%2FGlobal_Objects%2FFunction%2Fbind#Compatibility
-
-if (!Function.prototype.bind) {
-	Function.prototype.bind = function (oThis) {
-		if (typeof this !== "function") {
-			// closest thing possible to the ECMAScript 5 internal IsCallable function
-			throw new TypeError("Function.prototype.bind - what is " + 
-				"trying to be bound is not callable");
-		}
-
-		var aArgs = Array.prototype.slice.call(arguments, 1), 
-			fToBind = this, 
-			fNOP = function () {},
-			fBound = function () {
-				return fToBind.apply(this instanceof fNOP && oThis
-						 ? this
-						 : oThis,
-					 aArgs.concat(Array.prototype.slice.call(arguments)));
-		};
-
-		fNOP.prototype = this.prototype;
-		fBound.prototype = new fNOP();
-
-		return fBound;
-	};
-}
+/* jshint unused: false */
 var app = angular.module('Notes', ['restangular', 'ngRoute']).
 config(["$provide", "$routeProvider", "RestangularProvider", "$httpProvider", "$windowProvider", function($provide, $routeProvider, RestangularProvider, $httpProvider,
                 $windowProvider) {
+	'use strict';
+
 	// Always send the CSRF token by default
-	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
+	$httpProvider.defaults.headers.common.requesttoken = requestToken;
 
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
@@ -81,6 +58,7 @@ config(["$provide", "$routeProvider", "RestangularProvider", "$httpProvider", "$
 
 
 }]).run(["$rootScope", "$location", "NotesModel", "Config", function ($rootScope, $location, NotesModel, Config) {
+	'use strict';
 
 	// get config
 	Config.load();
@@ -92,12 +70,16 @@ config(["$provide", "$routeProvider", "RestangularProvider", "$httpProvider", "$
 		// route change error should redirect to the latest note if possible
 		if (notes.length > 0) {
 			var sorted = notes.sort(function (a, b) {
-				if(a.modified > b.modified) return 1;
-				if(a.modified < b.modified) return -1;
-				return 0;
+				if(a.modified > b.modified) {
+					return 1;
+				} else if(a.modified < b.modified) {
+					return -1;
+				} else {
+					return 0;
+				}
 			});
 
-			var note = notes[notes.length-1];
+			var note = notes[sorted.length-1];
 			$location.path('/notes/' + note.id);
 		} else {
 			$location.path('/');
@@ -106,6 +88,8 @@ config(["$provide", "$routeProvider", "RestangularProvider", "$httpProvider", "$
 }]);
 
 app.controller('AppController', ["$scope", "$location", "is", function ($scope, $location, is) {
+    'use strict';
+
 	$scope.is = is;
 
 	$scope.init = function (lastViewedNote) {
@@ -116,6 +100,7 @@ app.controller('AppController', ["$scope", "$location", "is", function ($scope, 
 }]);
 app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQueue", "note", "Config", function($routeParams, $scope, NotesModel,
                                           SaveQueue, note, Config) {
+	'use strict';
 
 	NotesModel.updateIfExists(note);
 
@@ -146,6 +131,7 @@ app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQ
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController', ["$routeParams", "$scope", "$location", "Restangular", "NotesModel", function($routeParams, $scope, $location,
                                            Restangular, NotesModel) {
+	'use strict';
 
 	$scope.route = $routeParams;
 	$scope.notes = NotesModel.getAll();
@@ -175,21 +161,23 @@ app.controller('NotesController', ["$routeParams", "$scope", "$location", "Resta
 }]);
 
 app.directive('notesAutofocus', function () {
+    'use strict';
     return {
         restrict: 'A',
-        link: function (scope, element, attributes) {
+        link: function (scope, element) {
             element.focus();
         }
     };
 });
 
 app.directive('notesIsSaving', ["$window", function ($window) {
+    'use strict';
     return {
         restrict: 'A',
         scope: {
             'notesIsSaving': '='
         },
-        link: function (scope, element, attributes) {
+        link: function (scope) {
             $window.onbeforeunload = function () {
                 if (scope.notesIsSaving) {
                     return t('notes', 'Note is currently saving. Leaving ' +
@@ -203,6 +191,8 @@ app.directive('notesIsSaving', ["$window", function ($window) {
 }]);
 
 app.directive('markdown', function () {
+	'use strict';
+
 	marked.setOptions({
 		sanitize: true,
 		gfm: true,
@@ -234,6 +224,8 @@ app.directive('markdown', function () {
  * 300 ms
  */
 app.directive('notesTimeoutChange', ["$timeout", function ($timeout) {
+	'use strict';
+
 	return {
 		restrict: 'A',
 		link: function (scope, element, attributes) {
@@ -252,9 +244,11 @@ app.directive('notesTimeoutChange', ["$timeout", function ($timeout) {
 }]);
 
 app.directive('notesTooltip', function () {
+    'use strict';
+
 	return {
 		restrict: 'A',
-		link: function (scope, element, attributes) {
+		link: function (scope, element) {
 			element.tooltip();
 		}
 	};
@@ -264,6 +258,8 @@ app.directive('notesTooltip', function () {
  * Binds translated values to scope and hides the element
  */
 app.directive('notesTranslate', function () {
+    'use strict';
+
 	return {
 		restrict: 'E',
 		link: function (scope, element, attributes) {
@@ -276,6 +272,8 @@ app.directive('notesTranslate', function () {
 });
 
 app.factory('Config', ["Restangular", function (Restangular) {
+    'use strict';
+
     var Config = function (Restangular) {
         this._markdown = false;
         this._Restangular = Restangular;
@@ -305,12 +303,16 @@ app.factory('Config', ["Restangular", function (Restangular) {
     return new Config(Restangular);
 }]);
 app.factory('is', function () {
+    'use strict';
+
 	return {
 		loading: false
 	};
 });
 // take care of fileconflicts by appending a number
 app.factory('NotesModel', function () {
+	'use strict';
+
 	var NotesModel = function () {
 		this.notes = [];
 		this.notesIds = {};
@@ -318,7 +320,7 @@ app.factory('NotesModel', function () {
 
 	NotesModel.prototype = {
 		addAll: function (notes) {
-			for(var i=0; i<notes.length; i++) {
+			for(var i=0; i<notes.length; i+=1) {
 				this.add(notes[i]);
 			}
 		},
@@ -343,7 +345,7 @@ app.factory('NotesModel', function () {
 			}
 		},
 		remove: function (id) {
-			for(var i=0; i<this.notes.length; i++) {
+			for(var i=0; i<this.notes.length; i+=1) {
 				var note = this.notes[i];
 				if(note.id === id) {
 					this.notes.splice(i, 1);
@@ -357,6 +359,8 @@ app.factory('NotesModel', function () {
 	return new NotesModel();
 });
 app.factory('SaveQueue', ["$q", function($q) {
+	'use strict';
+
 	var SaveQueue = function () {
 		this._queue = {};
 		this._flushLock = false;
@@ -381,11 +385,13 @@ app.factory('SaveQueue', ["$q", function($q) {
 
 			// iterate over updated objects and run an update request for
 			// each one of them
-			for(var i=0; i<keys.length; i++) {
+			for(var i=0; i<keys.length; i+=1) {
 				var note = this._queue[keys[i]];
 				// if the update finished, update the modified and title
 				// attributes on the note
-				requests.push(note.put().then(this._noteUpdateRequest.bind(null, note)));
+				requests.push(note.put().then(
+					this._noteUpdateRequest.bind(null, note))
+				);
 			}
 			this._queue = {};
 

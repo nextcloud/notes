@@ -1,11 +1,14 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <dev@bernhard-posselt.com>
- * This file is licensed under the Affero General Public License version 3 or later.
+ * This file is licensed under the Affero General Public License version 3 or
+ * later.
  * See the COPYING file.
  */
 
 // take care of fileconflicts by appending a number
 app.factory('NotesModel', function () {
+	'use strict';
+
 	var NotesModel = function () {
 		this.notes = [];
 		this.notesIds = {};
@@ -13,7 +16,7 @@ app.factory('NotesModel', function () {
 
 	NotesModel.prototype = {
 		addAll: function (notes) {
-			for(var i=0; i<notes.length; i++) {
+			for(var i=0; i<notes.length; i+=1) {
 				this.add(notes[i]);
 			}
 		},
@@ -38,7 +41,7 @@ app.factory('NotesModel', function () {
 			}
 		},
 		remove: function (id) {
-			for(var i=0; i<this.notes.length; i++) {
+			for(var i=0; i<this.notes.length; i+=1) {
 				var note = this.notes[i];
 				if(note.id === id) {
 					this.notes.splice(i, 1);

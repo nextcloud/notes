@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <dev@bernhard-posselt.com>
- * This file is licensed under the Affero General Public License version 3 or later.
+ * This file is licensed under the Affero General Public License version 3 or
+ * later.
  * See the COPYING file.
  */
 
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController', function($routeParams, $scope, $location,
                                            Restangular, NotesModel) {
+	'use strict';
 
 	$scope.route = $routeParams;
 	$scope.notes = NotesModel.getAll();

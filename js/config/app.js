@@ -1,14 +1,18 @@
 /**
  * Copyright (c) 2013, Bernhard Posselt <dev@bernhard-posselt.com>
- * This file is licensed under the Affero General Public License version 3 or later.
+ * This file is licensed under the Affero General Public License version 3 or
+ * later.
  * See the COPYING file.
  */
 
+/* jshint unused: false */
 var app = angular.module('Notes', ['restangular', 'ngRoute']).
 config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
                 $windowProvider) {
+	'use strict';
+
 	// Always send the CSRF token by default
-	$httpProvider.defaults.headers.common.requesttoken = oc_requesttoken;
+	$httpProvider.defaults.headers.common.requesttoken = requestToken;
 
 	// you have to use $provide inside the config method to provide a globally
 	// shared and injectable object
@@ -56,6 +60,7 @@ config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
 
 
 }).run(function ($rootScope, $location, NotesModel, Config) {
+	'use strict';
 
 	// get config
 	Config.load();
@@ -67,12 +72,16 @@ config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
 		// route change error should redirect to the latest note if possible
 		if (notes.length > 0) {
 			var sorted = notes.sort(function (a, b) {
-				if(a.modified > b.modified) return 1;
-				if(a.modified < b.modified) return -1;
-				return 0;
+				if(a.modified > b.modified) {
+					return 1;
+				} else if(a.modified < b.modified) {
+					return -1;
+				} else {
+					return 0;
+				}
 			});
 
-			var note = notes[notes.length-1];
+			var note = notes[sorted.length-1];
 			$location.path('/notes/' + note.id);
 		} else {
 			$location.path('/');
