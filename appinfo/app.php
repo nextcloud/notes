@@ -14,13 +14,17 @@ namespace OCA\Notes\AppInfo;
 use \OCP\AppFramework\App;
 
 $app = new App('notes');
-$serverContainer = $app->getContainer()->getServer();
+$container = $app->getContainer();
 
-$app->getContainer()->getServer()->getNavigationManager()->add([
-        'id' => $app->getContainer()->getAppName(),
+$container->query('OCP\INavigationManager')->add(function () use ($container) {
+    $urlGenerator = $container->query('OCP\IURLGenerator');
+    $l10n = $container->query('OCP\IL10N');
+    return [
+        'id' => 'notes',
         'order' => 10,
-        'href' => $serverContainer->getURLGenerator()->linkToRoute('notes.page.index'),
-        'icon' => $serverContainer->getURLGenerator()->imagePath('notes', 'notes.svg'),
-        'name' => $serverContainer->getL10N('notes')->t('Notes'),
-    ]
-);
+        'href' => $urlGenerator->linkToRoute('notes.page.index'),
+        'icon' => $urlGenerator->imagePath('notes', 'notes.svg'),
+        'name' => $l10n->t('Notes')
+    ];
+});
+
