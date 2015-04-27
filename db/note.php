@@ -26,27 +26,27 @@ use OCP\AppFramework\Db\Entity;
  */
 class Note extends Entity {
 
-	public $modified;
-	public $title;
-	public $content;
+    public $modified;
+    public $title;
+    public $content;
 
-	public function __construct() {
-		$this->addType('modified', 'integer');
-	}
+    public function __construct() {
+        $this->addType('modified', 'integer');
+    }
 
-	/**
-	 * @param File $file
-	 * @return static
-	 */
-	public static function fromFile(File $file){
-		$note = new static();
-		$note->setId($file->getId());
-		$note->setContent($file->getContent());
-		$note->setModified($file->getMTime());
-		$note->setTitle(substr($file->getName(), 0, -4)); // remove trailing .txt
-		$note->resetUpdatedFields();
-		return $note;
-	}
+    /**
+     * @param File $file
+     * @return static
+     */
+    public static function fromFile(File $file){
+        $note = new static();
+        $note->setId($file->getId());
+        $note->setContent($file->getContent());
+        $note->setModified($file->getMTime());
+        $note->setTitle(substr($file->getName(), 0, -4)); // remove trailing .txt
+        $note->resetUpdatedFields();
+        return $note;
+    }
 
 
 }

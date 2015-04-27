@@ -22,15 +22,15 @@ use OCA\Notes\Service\NoteDoesNotExistException;
  * @package OCA\Notes\Controller
  */
 trait Errors {
-	/**
-	 * @param $callback
-	 * @return DataResponse
-	 */
-	protected function respond ($callback) {
-		try {
-			return new DataResponse($callback());
-		} catch(NoteDoesNotExistException $ex) {
-			return new DataResponse([], Http::STATUS_NOT_FOUND);
-		}
-	}
+    /**
+     * @param $callback
+     * @return DataResponse
+     */
+    protected function respond ($callback) {
+        try {
+            return new DataResponse($callback());
+        } catch(NoteDoesNotExistException $ex) {
+            return new DataResponse([], Http::STATUS_NOT_FOUND);
+        }
+    }
 }

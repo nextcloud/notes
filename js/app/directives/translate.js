@@ -11,13 +11,13 @@
 app.directive('notesTranslate', function () {
     'use strict';
 
-	return {
-		restrict: 'E',
-		link: function (scope, element, attributes) {
-			var $element = $(element);
-			$element.hide();
-			scope.translations = scope.translations || {};
-			scope.translations[attributes.key] = $element.text();
-		}
-	};
+    return {
+        restrict: 'E',
+        link: function (scope, element, attributes) {
+            var $element = $(element);
+            $element.hide();
+            scope.translations = scope.translations || {};
+            scope.translations[attributes.key] = $element.text();
+        }
+    };
 });

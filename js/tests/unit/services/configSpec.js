@@ -7,41 +7,41 @@
 
 describe('Config', function() {
 
-	beforeEach(module('Notes'));
+    beforeEach(module('Notes'));
 
-	var http,
-		config;
+    var http,
+        config;
 
-	beforeEach(inject(function (Config, $httpBackend) {
-		config = Config;
-		http = $httpBackend;
-	}));
+    beforeEach(inject(function (Config, $httpBackend) {
+        config = Config;
+        http = $httpBackend;
+    }));
 
-	it ('should be set proper initialize values', inject(function() {
-		expect(config.isMarkdown()).toBe(false);
-	}));
-
-
-	it('should load the initial config', inject(function () {
-		http.expectGET('/config').respond(200, {
-			markdown: true
-		});
-
-		config.load();
-		http.flush();
-
-		expect(config.isMarkdown()).toBe(true);
-	}));
+    it ('should be set proper initialize values', inject(function() {
+        expect(config.isMarkdown()).toBe(false);
+    }));
 
 
-	it('should sync values back to server', inject(function () {
-		http.expectPOST('/config', {
-			markdown: true
-		}).respond(200);
+    it('should load the initial config', inject(function () {
+        http.expectGET('/config').respond(200, {
+            markdown: true
+        });
 
-		config.setIsMarkdown(true);
-	
-		config.sync();
-	}));
+        config.load();
+        http.flush();
+
+        expect(config.isMarkdown()).toBe(true);
+    }));
+
+
+    it('should sync values back to server', inject(function () {
+        http.expectPOST('/config', {
+            markdown: true
+        }).respond(200);
+
+        config.setIsMarkdown(true);
+
+        config.sync();
+    }));
 
 });

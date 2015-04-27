@@ -7,12 +7,12 @@
 
 describe('is', function() {
 
-	beforeEach(module('Notes'));
+    beforeEach(module('Notes'));
 
 
-	it ('should be set loading to false', inject(function(is) {
-		expect(is.loading).toBe(false);
-	}));
+    it ('should be set loading to false', inject(function(is) {
+        expect(is.loading).toBe(false);
+    }));
 
 
 });

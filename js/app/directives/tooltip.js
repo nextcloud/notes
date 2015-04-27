@@ -8,10 +8,10 @@
 app.directive('notesTooltip', function () {
     'use strict';
 
-	return {
-		restrict: 'A',
-		link: function (scope, element) {
-			element.tooltip();
-		}
-	};
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            element.tooltip();
+        }
+    };
 });

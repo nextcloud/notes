@@ -2,6 +2,7 @@ filter:
     excluded_paths:
         - 'js/vendor/*'
         - 'js/build/*'
+        - 'js/tests/stubs/*'
         - 'l10n/*'
         - 'tests/*'
 

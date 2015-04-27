@@ -7,106 +7,106 @@
 
 describe('NotesController', function() {
 
-	var controller,
-		scope,
-		model,
-		routeParams,
-		location,
-		http;
+    var controller,
+        scope,
+        model,
+        routeParams,
+        location,
+        http;
 
-	// use the Notes container
-	beforeEach(module('Notes'));
+    // use the Notes container
+    beforeEach(module('Notes'));
 
-	beforeEach(inject(function ($controller, $rootScope, $httpBackend,
-		NotesModel) {
-		http = $httpBackend;
-		scope = $rootScope.$new();
-		routeParams = {
-			noteId: 3
-		};
-		model = NotesModel;
-		location = {
-			path: jasmine.createSpy('path')
-		};
-		controller = $controller;
-	}));
-
-
-	it ('should load notes and attach them to scope', function() {
-		var notes = [
-			{id: 3, title: 'hey'}
-		];
-		http.expectGET('/notes').respond(200, notes);
-
-		controller = controller('NotesController', {
-			$routeParams: routeParams,
-			$scope: scope,
-			$location: location,
-			NotesModel: model
-		});
-
-		http.flush(1);
-
-		expect(scope.notes[0].title).toBe('hey');
-		expect(scope.route).toBe(routeParams);
-	});
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend,
+        NotesModel) {
+        http = $httpBackend;
+        scope = $rootScope.$new();
+        routeParams = {
+            noteId: 3
+        };
+        model = NotesModel;
+        location = {
+            path: jasmine.createSpy('path')
+        };
+        controller = $controller;
+    }));
 
 
-	it ('should do a create request', function() {
-		http.expectGET('/notes').respond(200, [{}]);
+    it ('should load notes and attach them to scope', function() {
+        var notes = [
+            {id: 3, title: 'hey'}
+        ];
+        http.expectGET('/notes').respond(200, notes);
 
-		controller = controller('NotesController', {
-			$routeParams: routeParams,
-			$scope: scope,
-			$location: location,
-			NotesModel: model
-		});
+        controller = controller('NotesController', {
+            $routeParams: routeParams,
+            $scope: scope,
+            $location: location,
+            NotesModel: model
+        });
 
-		http.flush(1);
+        http.flush(1);
 
-		var note = {
-			id: 3,
-			title: 'yo'
-		};
-		http.expectPOST('/notes').respond(note);
-		scope.create();
-		http.flush(1);
-
-		expect(model.get(3).title).toBe('yo');
-		expect(location.path).toHaveBeenCalledWith('/notes/3');
-	});
+        expect(scope.notes[0].title).toBe('hey');
+        expect(scope.route).toBe(routeParams);
+    });
 
 
-	it ('should delete a note', function () {
-		var notes = [
-			{id: 3, title: 'hey'}
-		];
+    it ('should do a create request', function() {
+        http.expectGET('/notes').respond(200, [{}]);
 
-		http.expectGET('/notes').respond(200, notes);
+        controller = controller('NotesController', {
+            $routeParams: routeParams,
+            $scope: scope,
+            $location: location,
+            NotesModel: model
+        });
 
-		controller = controller('NotesController', {
-			$routeParams: routeParams,
-			$scope: scope,
-			$location: location,
-			NotesModel: model
-		});
+        http.flush(1);
 
-		http.flush(1);
+        var note = {
+            id: 3,
+            title: 'yo'
+        };
+        http.expectPOST('/notes').respond(note);
+        scope.create();
+        http.flush(1);
 
-		http.expectDELETE('/notes/3').respond(200, {});
-		scope.$emit = jasmine.createSpy('$emit');
-		scope.delete(3);
-		http.flush(1);
-
-		expect(model.get(3)).not.toBeDefined();
-		expect(scope.$emit).toHaveBeenCalledWith('$routeChangeError');
-	});
+        expect(model.get(3).title).toBe('yo');
+        expect(location.path).toHaveBeenCalledWith('/notes/3');
+    });
 
 
-	afterEach(function() {
-		http.verifyNoOutstandingExpectation();
-		http.verifyNoOutstandingRequest();
-	});
+    it ('should delete a note', function () {
+        var notes = [
+            {id: 3, title: 'hey'}
+        ];
+
+        http.expectGET('/notes').respond(200, notes);
+
+        controller = controller('NotesController', {
+            $routeParams: routeParams,
+            $scope: scope,
+            $location: location,
+            NotesModel: model
+        });
+
+        http.flush(1);
+
+        http.expectDELETE('/notes/3').respond(200, {});
+        scope.$emit = jasmine.createSpy('$emit');
+        scope.delete(3);
+        http.flush(1);
+
+        expect(model.get(3)).not.toBeDefined();
+        expect(scope.$emit).toHaveBeenCalledWith('$routeChangeError');
+    });
+
+
+    afterEach(function() {
+        http.verifyNoOutstandingExpectation();
+        http.verifyNoOutstandingRequest();
+    });
 
 
 });

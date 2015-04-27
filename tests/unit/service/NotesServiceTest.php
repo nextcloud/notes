@@ -18,321 +18,321 @@ use OCA\Notes\Db\Note;
 
 class NotesServiceTest extends PHPUnit_Framework_TestCase {
 
-	private $root;
-	private $service;
-	private $userId;
-	private $l10n;
-	private $userFolder;
+    private $root;
+    private $service;
+    private $userId;
+    private $l10n;
+    private $userFolder;
 
-	public function setUp(){
-		$this->root = $this->getMockBuilder('OCP\Files\IRootFolder')
-			->getMock();
-		$this->userFolder = $this->getMockBuilder('OCP\Files\Folder')
-			->getMock();
-		$this->l10n = $this->getMockBuilder('OCP\IL10N')
-			->getMock();
-		$this->userId = 'john';
-		$this->service = new NotesService($this->root, $this->l10n);
-	}
+    public function setUp(){
+        $this->root = $this->getMockBuilder('OCP\Files\IRootFolder')
+            ->getMock();
+        $this->userFolder = $this->getMockBuilder('OCP\Files\Folder')
+            ->getMock();
+        $this->l10n = $this->getMockBuilder('OCP\IL10N')
+            ->getMock();
+        $this->userId = 'john';
+        $this->service = new NotesService($this->root, $this->l10n);
+    }
 
-	private function createNode($name, $type, $mime, $mtime=0, $content='', $id=0, $path='/') {
-		if ($type === 'folder') {
-			$iface = 'OCP\Files\Folder';
-		} else {
-			$iface = 'OCP\Files\File';
-		}
-		$node = $this->getMockBuilder($iface)
-			->getMock();
-		$node->expects($this->any())
-			->method('getType')
-			->will($this->returnValue($type));
-		$node->expects($this->any())
-			->method('getMimeType')
-			->will($this->returnValue($mime));
-		$node->expects($this->any())
-			->method('getName')
-			->will($this->returnValue($name));
-		$node->expects($this->any())
-			->method('getMTime')
-			->will($this->returnValue($mtime));
-		$node->expects($this->any())
-			->method('getId')
-			->will($this->returnValue($id));
-		$node->expects($this->any())
-			->method('getPath')
-			->will($this->returnValue($path));
-		if ($type === 'file') {
-			$node->expects($this->any())
-				->method('getContent')
-				->will($this->returnValue($content));
-		}
-		return $node;
-	}
+    private function createNode($name, $type, $mime, $mtime=0, $content='', $id=0, $path='/') {
+        if ($type === 'folder') {
+            $iface = 'OCP\Files\Folder';
+        } else {
+            $iface = 'OCP\Files\File';
+        }
+        $node = $this->getMockBuilder($iface)
+            ->getMock();
+        $node->expects($this->any())
+            ->method('getType')
+            ->will($this->returnValue($type));
+        $node->expects($this->any())
+            ->method('getMimeType')
+            ->will($this->returnValue($mime));
+        $node->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue($name));
+        $node->expects($this->any())
+            ->method('getMTime')
+            ->will($this->returnValue($mtime));
+        $node->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue($id));
+        $node->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue($path));
+        if ($type === 'file') {
+            $node->expects($this->any())
+                ->method('getContent')
+                ->will($this->returnValue($content));
+        }
+        return $node;
+    }
 
-	private function expectUserFolder($at=0) {
-		$path = '/' . $this->userId . '/files/Notes';
-		$this->root->expects($this->at($at))
-			->method('nodeExists')
-			->with($this->equalTo($path))
-			->will($this->returnValue(true));
-		$this->root->expects($this->any($at + 1))
-			->method('get')
-			->with($this->equalTo($path))
-			->will($this->returnValue($this->userFolder));
-	}
+    private function expectUserFolder($at=0) {
+        $path = '/' . $this->userId . '/files/Notes';
+        $this->root->expects($this->at($at))
+            ->method('nodeExists')
+            ->with($this->equalTo($path))
+            ->will($this->returnValue(true));
+        $this->root->expects($this->any($at + 1))
+            ->method('get')
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($this->userFolder));
+    }
 
-	public function testGetAll(){
-		$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
-		$nodes[] = $this->createNode('file2.txt', 'file', 'text/xml');
-		$nodes[] = $this->createNode('file3.txt', 'folder', 'text/plain');
+    public function testGetAll(){
+        $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+        $nodes[] = $this->createNode('file2.txt', 'file', 'text/xml');
+        $nodes[] = $this->createNode('file3.txt', 'folder', 'text/plain');
 
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getDirectoryListing')
-			->will($this->returnValue($nodes));
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getDirectoryListing')
+            ->will($this->returnValue($nodes));
 
-		$result = $this->service->getAll($this->userId);
+        $result = $this->service->getAll($this->userId);
 
-		$this->assertEquals('file1', $result[0]->getTitle());
-		$this->assertCount(1, $result);
-	}
-
-
-	public function testGet(){
-		$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
-
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getById')
-			->with($this->equalTo(2))
-			->will($this->returnValue($nodes));
-		$result = $this->service->get(2, $this->userId);
-
-		$this->assertEquals('file1', $result->getTitle());
-	}
+        $this->assertEquals('file1', $result[0]->getTitle());
+        $this->assertCount(1, $result);
+    }
 
 
+    public function testGet(){
+        $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
 
-	/**
-	 * @expectedException OCA\Notes\Service\NoteDoesNotExistException
-	 */
-	public function testGetDoesNotExist(){
-		$nodes = [];
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getById')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue($nodes));
+        $result = $this->service->get(2, $this->userId);
 
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getById')
-			->with($this->equalTo(2))
-			->will($this->returnValue($nodes));
-		$this->service->get(2, $this->userId);
-	}
-
-
-	/**
-	 * @expectedException OCA\Notes\Service\NoteDoesNotExistException
-	 */
-	public function testGetDoesNotExistWrongMime(){
-			$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/xml');
-
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getById')
-			->with($this->equalTo(2))
-			->will($this->returnValue($nodes));
-
-		$this->service->get(2, $this->userId);
-	}
+        $this->assertEquals('file1', $result->getTitle());
+    }
 
 
 
-	public function testDelete(){
-		$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+    /**
+     * @expectedException OCA\Notes\Service\NoteDoesNotExistException
+     */
+    public function testGetDoesNotExist(){
+        $nodes = [];
 
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getById')
-			->with($this->equalTo(2))
-			->will($this->returnValue($nodes));
-		$nodes[0]->expects($this->once())
-			->method('delete');
-
-		$this->service->delete(2, $this->userId);
-	}
-
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getById')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue($nodes));
+        $this->service->get(2, $this->userId);
+    }
 
 
-	/**
-	 * @expectedException OCA\Notes\Service\NoteDoesNotExistException
-	 */
-	public function testDeleteDoesNotExist(){
-		$nodes = [];
+    /**
+     * @expectedException OCA\Notes\Service\NoteDoesNotExistException
+     */
+    public function testGetDoesNotExistWrongMime(){
+            $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/xml');
 
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getById')
-			->with($this->equalTo(2))
-			->will($this->returnValue($nodes));
-		$this->service->delete(2, $this->userId);
-	}
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getById')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue($nodes));
 
-
-	/**
-	 * @expectedException OCA\Notes\Service\NoteDoesNotExistException
-	 */
-	public function testDeleteDoesNotExistWrongMime(){
-		$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/xml');
-
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->once())
-			->method('getById')
-			->with($this->equalTo(2))
-			->will($this->returnValue($nodes));
-
-		$this->service->delete(2, $this->userId);
-	}
+        $this->service->get(2, $this->userId);
+    }
 
 
-	private function expectGenerateFileName($at=0, $title, $id=0, $branch=0) {
-		if ($branch === 0) {
-			$this->userFolder->expects($this->at($at))
-				->method('nodeExists')
-				->with($this->equalTo($title . '.txt'))
-				->will($this->returnValue(false));
-		} else if ($branch === 1) {
-			$this->userFolder->expects($this->at($at))
-				->method('nodeExists')
-				->with($this->equalTo($title . '.txt'))
-				->will($this->returnValue(true));
-			$file = $this->createNode('file1.txt', 'file', 'text/plain', 0, '', 0);
-			$this->userFolder->expects($this->at($at+1))
-				->method('get')
-				->with($this->equalTo($title . '.txt'))
-				->will($this->returnValue($file));
-		} else if ($branch === 2) {
-			$this->userFolder->expects($this->at($at))
-				->method('nodeExists')
-				->with($this->equalTo($title . '.txt'))
-				->will($this->returnValue(true));
-			$file = $this->createNode('file1.txt', 'file', 'text/plain', 0, '', 0);
-			$this->userFolder->expects($this->at($at+1))
-				->method('get')
-				->with($this->equalTo($title . '.txt'))
-				->will($this->returnValue($file));
-			$this->userFolder->expects($this->at($at+2))
-				->method('nodeExists')
-				->with($this->equalTo($title . ' (2).txt'))
-				->will($this->returnValue(true));
-			$this->userFolder->expects($this->at($at+3))
-				->method('get')
-				->with($this->equalTo($title . ' (2).txt'))
-				->will($this->returnValue($file));
-			$this->userFolder->expects($this->at($at+4))
-				->method('nodeExists')
-				->with($this->equalTo($title . ' (3).txt'))
-				->will($this->returnValue(false));
-		}
-	}
+
+    public function testDelete(){
+        $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getById')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue($nodes));
+        $nodes[0]->expects($this->once())
+            ->method('delete');
+
+        $this->service->delete(2, $this->userId);
+    }
 
 
-	public function testCreate() {
-		$this->l10n->expects($this->once())
-			->method('t')
-			->with($this->equalTo('New note'))
-			->will($this->returnValue('New note'));
-		$this->expectUserFolder();
 
-		$this->expectGenerateFileName(0, 'New note');
+    /**
+     * @expectedException OCA\Notes\Service\NoteDoesNotExistException
+     */
+    public function testDeleteDoesNotExist(){
+        $nodes = [];
 
-		$file = $this->createNode('file1.txt', 'file', 'text/plain');
-		$this->userFolder->expects($this->once())
-			->method('newFile')
-			->with($this->equalTo('New note.txt'))
-			->will($this->returnValue($file));
-
-		$note = $this->service->create($this->userId);
-
-		$this->assertEquals('file1', $note->getTitle());
-	}
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getById')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue($nodes));
+        $this->service->delete(2, $this->userId);
+    }
 
 
-	public function testCreateExists() {
-		$this->l10n->expects($this->once())
-			->method('t')
-			->with($this->equalTo('New note'))
-			->will($this->returnValue('New note'));
-		$this->expectUserFolder();
+    /**
+     * @expectedException OCA\Notes\Service\NoteDoesNotExistException
+     */
+    public function testDeleteDoesNotExistWrongMime(){
+        $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/xml');
 
-		$this->expectGenerateFileName(0, 'New note', 0, 2);
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->once())
+            ->method('getById')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue($nodes));
 
-		$file = $this->createNode('file1.txt', 'file', 'text/plain');
-		$this->userFolder->expects($this->once())
-			->method('newFile')
-			->with($this->equalTo('New note (3).txt'))
-			->will($this->returnValue($file));
-
-		$note = $this->service->create($this->userId);
-
-		$this->assertEquals('file1', $note->getTitle());
-	}
+        $this->service->delete(2, $this->userId);
+    }
 
 
-	public function testUpdate() {
-		$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+    private function expectGenerateFileName($at=0, $title, $id=0, $branch=0) {
+        if ($branch === 0) {
+            $this->userFolder->expects($this->at($at))
+                ->method('nodeExists')
+                ->with($this->equalTo($title . '.txt'))
+                ->will($this->returnValue(false));
+        } else if ($branch === 1) {
+            $this->userFolder->expects($this->at($at))
+                ->method('nodeExists')
+                ->with($this->equalTo($title . '.txt'))
+                ->will($this->returnValue(true));
+            $file = $this->createNode('file1.txt', 'file', 'text/plain', 0, '', 0);
+            $this->userFolder->expects($this->at($at+1))
+                ->method('get')
+                ->with($this->equalTo($title . '.txt'))
+                ->will($this->returnValue($file));
+        } else if ($branch === 2) {
+            $this->userFolder->expects($this->at($at))
+                ->method('nodeExists')
+                ->with($this->equalTo($title . '.txt'))
+                ->will($this->returnValue(true));
+            $file = $this->createNode('file1.txt', 'file', 'text/plain', 0, '', 0);
+            $this->userFolder->expects($this->at($at+1))
+                ->method('get')
+                ->with($this->equalTo($title . '.txt'))
+                ->will($this->returnValue($file));
+            $this->userFolder->expects($this->at($at+2))
+                ->method('nodeExists')
+                ->with($this->equalTo($title . ' (2).txt'))
+                ->will($this->returnValue(true));
+            $this->userFolder->expects($this->at($at+3))
+                ->method('get')
+                ->with($this->equalTo($title . ' (2).txt'))
+                ->will($this->returnValue($file));
+            $this->userFolder->expects($this->at($at+4))
+                ->method('nodeExists')
+                ->with($this->equalTo($title . ' (3).txt'))
+                ->will($this->returnValue(false));
+        }
+    }
 
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->at(0))
-			->method('getById')
-			->with($this->equalTo(3))
-			->will($this->returnValue($nodes));
 
-		$this->l10n->expects($this->once())
-			->method('t')
-			->with($this->equalTo('New note'))
-			->will($this->returnValue('New note'));
-		$this->expectUserFolder();
+    public function testCreate() {
+        $this->l10n->expects($this->once())
+            ->method('t')
+            ->with($this->equalTo('New note'))
+            ->will($this->returnValue('New note'));
+        $this->expectUserFolder();
 
-		$this->expectGenerateFileName(1, 'New note', 0, 2);
+        $this->expectGenerateFileName(0, 'New note');
 
-		$path = '/' . $this->userId . '/files/Notes/New note (3).txt';
-		$nodes[0]->expects($this->once())
-			->method('move')
-			->with($this->equalTo($path));
+        $file = $this->createNode('file1.txt', 'file', 'text/plain');
+        $this->userFolder->expects($this->once())
+            ->method('newFile')
+            ->with($this->equalTo('New note.txt'))
+            ->will($this->returnValue($file));
 
-		$note = $this->service->update(3, '', $this->userId);
+        $note = $this->service->create($this->userId);
 
-		$this->assertEquals('file1', $note->getTitle());
-	}
+        $this->assertEquals('file1', $note->getTitle());
+    }
 
 
-	public function testUpdateWithContent() {
-		$nodes = [];
-		$nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+    public function testCreateExists() {
+        $this->l10n->expects($this->once())
+            ->method('t')
+            ->with($this->equalTo('New note'))
+            ->will($this->returnValue('New note'));
+        $this->expectUserFolder();
 
-		$this->expectUserFolder();
-		$this->userFolder->expects($this->at(0))
-			->method('getById')
-			->with($this->equalTo(3))
-			->will($this->returnValue($nodes));
+        $this->expectGenerateFileName(0, 'New note', 0, 2);
 
-		$this->l10n->expects($this->never())
-			->method('t');
-		$this->expectUserFolder();
+        $file = $this->createNode('file1.txt', 'file', 'text/plain');
+        $this->userFolder->expects($this->once())
+            ->method('newFile')
+            ->with($this->equalTo('New note (3).txt'))
+            ->will($this->returnValue($file));
 
-		$this->expectGenerateFileName(1, 'some', 0, 2);
+        $note = $this->service->create($this->userId);
 
-		$path = '/' . $this->userId . '/files/Notes/some (3).txt';
-		$nodes[0]->expects($this->once())
-			->method('move')
-			->with($this->equalTo($path));
+        $this->assertEquals('file1', $note->getTitle());
+    }
 
-		$note = $this->service->update(3, "some\nnice", $this->userId);
 
-		$this->assertEquals('file1', $note->getTitle());
-	}
+    public function testUpdate() {
+        $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->at(0))
+            ->method('getById')
+            ->with($this->equalTo(3))
+            ->will($this->returnValue($nodes));
+
+        $this->l10n->expects($this->once())
+            ->method('t')
+            ->with($this->equalTo('New note'))
+            ->will($this->returnValue('New note'));
+        $this->expectUserFolder();
+
+        $this->expectGenerateFileName(1, 'New note', 0, 2);
+
+        $path = '/' . $this->userId . '/files/Notes/New note (3).txt';
+        $nodes[0]->expects($this->once())
+            ->method('move')
+            ->with($this->equalTo($path));
+
+        $note = $this->service->update(3, '', $this->userId);
+
+        $this->assertEquals('file1', $note->getTitle());
+    }
+
+
+    public function testUpdateWithContent() {
+        $nodes = [];
+        $nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
+
+        $this->expectUserFolder();
+        $this->userFolder->expects($this->at(0))
+            ->method('getById')
+            ->with($this->equalTo(3))
+            ->will($this->returnValue($nodes));
+
+        $this->l10n->expects($this->never())
+            ->method('t');
+        $this->expectUserFolder();
+
+        $this->expectGenerateFileName(1, 'some', 0, 2);
+
+        $path = '/' . $this->userId . '/files/Notes/some (3).txt';
+        $nodes[0]->expects($this->once())
+            ->method('move')
+            ->with($this->equalTo($path));
+
+        $note = $this->service->update(3, "some\nnice", $this->userId);
+
+        $this->assertEquals('file1', $note->getTitle());
+    }
 }

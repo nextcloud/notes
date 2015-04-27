@@ -5,263 +5,263 @@
  */
 
 #app-navigation {
-	padding-bottom: 0; /* no settings bar, so no padding needed */
+    padding-bottom: 0; /* no settings bar, so no padding needed */
 }
 
 #app-navigation li.active {
-	font-weight: bold; /* bold currently active note */
+    font-weight: bold; /* bold currently active note */
 }
 
 /* fancy handling of 'New Note' text */
 #app-navigation .utils {
-	position: absolute;
-	right: 0;
-	top: 0;
-	bottom: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 #app-navigation .utils > * {
-	float: right;
+    float: right;
 }
 
 
 #app-navigation #note-add span {
-	display: none;
-	font-weight: bold;
-	padding-left: 2px;
+    display: none;
+    font-weight: bold;
+    padding-left: 2px;
 }
-	#app-navigation #note-add:hover span,
-	#app-navigation #note-add:focus span {
-		display: inline;
-	}
+    #app-navigation #note-add:hover span,
+    #app-navigation #note-add:focus span {
+        display: inline;
+    }
 
 #app-navigation .utils button {
-	margin: 0;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-color: transparent;
-	border: 0;
-	box-shadow: none;
-	display: none;
-	height: 32px;
-	width: 32px;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    display: none;
+    height: 32px;
+    width: 32px;
 }
 
-	/* only display the delete button when the feed is active */
-	#app-navigation .utils .delete-button {
-		display: none;
-	}
+    /* only display the delete button when the feed is active */
+    #app-navigation .utils .delete-button {
+        display: none;
+    }
 
-	#app-navigation .active > .utils .icon-delete {
-		display: block;
-	}
+    #app-navigation .active > .utils .icon-delete {
+        display: block;
+    }
 
 .tooltip {
-	text-shadow: none;
-	text-transform: none;
+    text-shadow: none;
+    text-transform: none;
 }
 
 #app-content {
-	background-image: linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
-	background-image: -o-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
-	background-image: -moz-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
-	background-image: -webkit-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
-	background-image: -ms-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
+    background-image: linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
+    background-image: -o-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
+    background-image: -moz-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
+    background-image: -webkit-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
+    background-image: -ms-linear-gradient(top, rgb(248,248,248) 0, rgb(255,255,255) 84px);
 }
 
 #app-content-container {
-	height: 100%;
+    height: 100%;
 }
 
 /* special styling to make textarea subtle and fit the window */
 #app-content textarea {
-	display: block;
-	height: 100%;
-	width: 100%;
-	margin: 0;
-	padding: 30px 20px 100px 30px;
-	font-size: 18px;
-	line-height: 150%;
-	border: 0;
-	background: none;
-	box-shadow: none;
-	resize: none;
-	-moz-box-sizing: border-box; box-sizing: border-box;
-	float: left;
+    display: block;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 30px 20px 100px 30px;
+    font-size: 18px;
+    line-height: 150%;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    resize: none;
+    -moz-box-sizing: border-box; box-sizing: border-box;
+    float: left;
 }
 
 #app-content textarea.markdown {
-	width: 50%;
+    width: 50%;
 }
 
 /* TODO: move into core app styles */
 #app-content.loading {
-	background-image: url('../img/loading.gif');
-	background-position: center;
-	background-repeat: no-repeat;
-	/* Overrides the snap.js animation making the loading icon to fly in app-content. */
-	transition:none !important;
-	-webkit-transition: none !important;
-	-moz-webkit-transition: none !important;
+    background-image: url('../img/loading.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Overrides the snap.js animation making the loading icon to fly in app-content. */
+    transition:none !important;
+    -webkit-transition: none !important;
+    -moz-webkit-transition: none !important;
 }
 
 #app-content .saving {
-	background-image: url('../img/loading.gif') !important;
-	background-position: right 15px top 15px !important;
-	background-size: 24px !important;
-	background-repeat: no-repeat  !important;
-	/* Overrides the snap.js animation making the loading icon to fly in app-content. */
-	transition:none !important;
-	-webkit-transition: none !important;
-	-moz-webkit-transition: none !important;
+    background-image: url('../img/loading.gif') !important;
+    background-position: right 15px top 15px !important;
+    background-size: 24px !important;
+    background-repeat: no-repeat  !important;
+    /* Overrides the snap.js animation making the loading icon to fly in app-content. */
+    transition:none !important;
+    -webkit-transition: none !important;
+    -moz-webkit-transition: none !important;
 }
 
 #app-content .markdown {
-	height: 100%;
-	width: 50%;
-	margin: 0;
-	padding: 30px 20px 100px 30px;
-	font-size: 18px;
-	line-height: 1.5;
-	border: 0;
-	background: none;
-	box-shadow: none;
-	resize: none;
-	-moz-box-sizing: border-box; box-sizing: border-box;
-	float: left;
-	border-left: 1px solid #ccc;
-	overflow: auto;
+    height: 100%;
+    width: 50%;
+    margin: 0;
+    padding: 30px 20px 100px 30px;
+    font-size: 18px;
+    line-height: 1.5;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    resize: none;
+    -moz-box-sizing: border-box; box-sizing: border-box;
+    float: left;
+    border-left: 1px solid #ccc;
+    overflow: auto;
 }
 
 #app-content .markdown img {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 #app-content .utils {
-	padding: 0 20px 0 20px;
-	line-height: 30px;
-	position: fixed;
-	top: 45px;
-	right: 20px;
+    padding: 0 20px 0 20px;
+    line-height: 30px;
+    position: fixed;
+    top: 45px;
+    right: 20px;
 }
 
-	#app-content .utils > * {
+    #app-content .utils > * {
 
-	}
+    }
 
 .markdown h1, h2, h3 {
-	font-weight: bold;
-	text-decoration: underline;
-	margin-top: 10px;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 10px;
 }
 
 .markdown h1 {
-	font-size: 26px;
+    font-size: 26px;
 }
 
 .markdown table {
-	border: 1px solid #ddd;
-	max-width: 100%;
-	table-layout: fixed;
-	word-break: break-word;
+    border: 1px solid #ddd;
+    max-width: 100%;
+    table-layout: fixed;
+    word-break: break-word;
     white-space: normal;
 }
 
 
 .markdown th {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .markdown td,
 .markdown th {
-	padding: 6px 13px;
+    padding: 6px 13px;
 }
 
 .markdown tr td,
 .markdown tr th {
-	border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .markdown tr:last-child td {
-	border: 0;
+    border: 0;
 }
 
 .markdown tr:hover {
-	background-color: #eee !important;
+    background-color: #eee !important;
 }
 
 .markdown tr:nth-child(even) {
-	background-color: #fafafa;
+    background-color: #fafafa;
 }
 
 
 .markdown pre {
-	padding: 7px 7px 7px 14px;
-	background-color: #dadada;
-	border: 1px solid #ccc;
-	margin: 7px 0 14px 0;
-	overflow-y: auto;
+    padding: 7px 7px 7px 14px;
+    background-color: #dadada;
+    border: 1px solid #ccc;
+    margin: 7px 0 14px 0;
+    overflow-y: auto;
 }
-	.markdown pre::-webkit-scrollbar {
-		height: 10px;
-	}
+    .markdown pre::-webkit-scrollbar {
+        height: 10px;
+    }
 
-	.markdown pre::-webkit-scrollbar-thumb {
-		background: #333;
-	}
+    .markdown pre::-webkit-scrollbar-thumb {
+        background: #333;
+    }
 
-	.markdown pre::-webkit-scrollbar-track-piece {
-		background: #ddd;
-	}
+    .markdown pre::-webkit-scrollbar-track-piece {
+        background: #ddd;
+    }
 
-	.markdown code,
-	.markdown pre {
-		font-family: monospace;
-		font-size: 16px;
-	}
+    .markdown code,
+    .markdown pre {
+        font-family: monospace;
+        font-size: 16px;
+    }
 
 .markdown blockquote {
-	border-left: 1px solid #aaa;
-	margin: 25px 0;
-	padding: 0 0 0 15px;
-	font-style: italic;
+    border-left: 1px solid #aaa;
+    margin: 25px 0;
+    padding: 0 0 0 15px;
+    font-style: italic;
 }
 
 
 
 .markdown h2 {
-	font-size: 24px;
+    font-size: 24px;
 }
 
 .markdown h3 {
-	font-size: 22px;
+    font-size: 22px;
 }
 
 .markdown ul, ol {
-	margin: 0 0 10px 25px;
+    margin: 0 0 10px 25px;
 }
 
 .markdown li {
-	cursor: auto;
+    cursor: auto;
 }
 
 .markdown p {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .markdown ul {
-	list-style-type: disc;
+    list-style-type: disc;
 }
 
 .markdown ul ul,
 .markdown ol ul {
-	list-style-type: disc;
+    list-style-type: disc;
 }
 
 .markdown a {
-	color: #4183C4;
+    color: #4183C4;
 }
 
-	.markdown a:hover {
-		text-decoration: underline;
-	}
+    .markdown a:hover {
+        text-decoration: underline;
+    }

@@ -23,132 +23,133 @@
 
 
 module.exports = function(grunt) {
-	'use strict';
+    'use strict';
 
-	// load needed modules
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-wrap');
-	grunt.loadNpmTasks('grunt-karma');
-	grunt.loadNpmTasks('grunt-phpunit');
-	grunt.loadNpmTasks('grunt-ng-annotate');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
+    // load needed modules
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-wrap');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-phpunit');
+    grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-	grunt.initConfig({
+    grunt.initConfig({
 
-		meta: {
-			pkg: grunt.file.readJSON('package.json'),
-			version: '<%= meta.pkg.version %>',
-			production: 'public/'
-		},
+        meta: {
+            pkg: grunt.file.readJSON('package.json'),
+            version: '<%= meta.pkg.version %>',
+            production: 'public/'
+        },
 
-		concat: {
-			options: {
-				// remove license headers
-				stripBanners: true
-			},
-			dist: {
-				src: [
-					'config/app.js',
-					'app/**/*.js'
-				],
-				dest: '<%= meta.production %>app.js'
-			}
-		},
+        concat: {
+            options: {
+                // remove license headers
+                stripBanners: true
+            },
+            dist: {
+                src: [
+                    'config/app.js',
+                    'app/**/*.js'
+                ],
+                dest: '<%= meta.production %>app.js'
+            }
+        },
 
-		wrap: {
-			app: {
-				src: ['<%= meta.production %>app.js'],
-				dest: '<%= meta.production %>app.js',
-				options: {
-					wrapper: [
-						'(function(angular, $, requestToken, marked, hljs, ' +
-						'undefined){\n\n\'use strict\';\n\n',
-						'\n})(angular, jQuery, oc_requesttoken, marked, hljs);'
-					]
-				}
-			}
-		},
+        wrap: {
+            app: {
+                src: ['<%= meta.production %>app.js'],
+                dest: '<%= meta.production %>app.js',
+                options: {
+                    wrapper: [
+                        '(function(angular, $, requestToken, marked, hljs, ' +
+                        'undefined){\n\n\'use strict\';\n\n',
+                        '\n})(angular, jQuery, oc_requesttoken, marked, hljs);'
+                    ]
+                }
+            }
+        },
 
-		jshint: {
-			files: [
-				'Gruntfile.js',
-				'app/**/*.js',
-				'config/*.js',
-				'tests/js/unit/**/*.js'
-			],
-			options: {
-				jshintrc: true
-			}
-		},
+        jshint: {
+            files: [
+                'Gruntfile.js',
+                'app/**/*.js',
+                'config/*.js',
+                'tests/js/unit/**/*.js'
+            ],
+            options: {
+                jshintrc: true
+            }
+        },
 
-		watch: {
-			// this watches for changes in the app directory and runs the concat
-			// and wrap tasks if something changed
-			concat: {
-				files: [
-					'app/**/*.js',
-					'config/*.js',
-					'css/**/*.css',
-					'templates/**/*.php'
-				],
-				options: {
-					livereload: true
-				},
-				tasks: ['build']
-			},
-			phpunit: {
-				files: '../**/*.php',
-				tasks: ['phpunit']
-			}
-		},
+        watch: {
+            // this watches for changes in the app directory and runs the concat
+            // and wrap tasks if something changed
+            concat: {
+                files: [
+                    'app/**/*.js',
+                    'config/*.js',
+                    'css/**/*.css',
+                    'templates/**/*.php'
+                ],
+                options: {
+                    livereload: true
+                },
+                tasks: ['build']
+            },
+            phpunit: {
+                files: '../**/*.php',
+                tasks: ['phpunit']
+            }
+        },
 
-		phpunit: {
-			classes: {
-				dir: '../tests/unit/'
-			},
-			options: {
-				configuration: '../tests/unit/phpunit.xml',
-				colors: true
-			}
-		},
+        phpunit: {
+            classes: {
+                dir: '../tests/unit/'
+            },
+            options: {
+                configuration: '../tests/unit/phpunit.xml',
+                colors: true
+            }
+        },
 
-		karma: {
-			unit: {
-				configFile: 'karma.conf.js'
-			},
-			continuous: {
-				configFile: 'karma.conf.js',
-				singleRun: true,
-				reporters: ['progress']
-			}
-		},
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            },
+            continuous: {
+                configFile: 'karma.conf.js',
+                singleRun: true,
+                browsers: ['Firefox', 'Chrome'],
+                reporters: ['progress']
+            }
+        },
 
-		ngAnnotate: {
-			app: {
-				src: ['<%= meta.production %>app.js'],
-				dest: '<%= meta.production %>app.js'
-			}
-		},
+        ngAnnotate: {
+            app: {
+                src: ['<%= meta.production %>app.js'],
+                dest: '<%= meta.production %>app.js'
+            }
+        },
 
-		uglify: {
-			app: {
-				files: {
-					'<%= meta.production %>app.min.js':
-						['<%= meta.production %>app.js']
-				}
-			},
-			options: {
-				sourceMap: true
-			}
-		}
+        uglify: {
+            app: {
+                files: {
+                    '<%= meta.production %>app.min.js':
+                        ['<%= meta.production %>app.js']
+                }
+            },
+            options: {
+                sourceMap: true
+            }
+        }
 
-	});
+    });
 
-	// make tasks available under simpler commands
-	grunt.registerTask('build', ['jshint', 'concat', 'wrap', 'ngAnnotate',
-		               'uglify']);
-	grunt.registerTask('default', ['build']);
+    // make tasks available under simpler commands
+    grunt.registerTask('build', ['jshint', 'concat', 'wrap', 'ngAnnotate',
+                       'uglify']);
+    grunt.registerTask('default', ['build']);
 
 };

@@ -7,31 +7,31 @@
 
 app.controller('NoteController', function($routeParams, $scope, NotesModel,
                                           SaveQueue, note, Config) {
-	'use strict';
+    'use strict';
 
-	NotesModel.updateIfExists(note);
+    NotesModel.updateIfExists(note);
 
-	$scope.note = NotesModel.get($routeParams.noteId);
-	$scope.config = Config;
-	$scope.markdown = Config.isMarkdown();
+    $scope.note = NotesModel.get($routeParams.noteId);
+    $scope.config = Config;
+    $scope.markdown = Config.isMarkdown();
 
-	$scope.isSaving = function () {
-		return SaveQueue.isSaving();
-	};
+    $scope.isSaving = function () {
+        return SaveQueue.isSaving();
+    };
 
-	$scope.updateTitle = function () {
-		$scope.note.title = $scope.note.content.split('\n')[0] ||
-			$scope.translations['New note'];
-	};
+    $scope.updateTitle = function () {
+        $scope.note.title = $scope.note.content.split('\n')[0] ||
+            $scope.translations['New note'];
+    };
 
-	$scope.save = function() {
-		var note = $scope.note;
-		SaveQueue.add(note);
-	};
+    $scope.save = function() {
+        var note = $scope.note;
+        SaveQueue.add(note);
+    };
 
-	$scope.sync = function (markdown) {
-		Config.setIsMarkdown(markdown);
-		Config.sync();
-	};
+    $scope.sync = function (markdown) {
+        Config.setIsMarkdown(markdown);
+        Config.sync();
+    };
 
 });

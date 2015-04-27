@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <info>
-	<id>notes</id>
-	<name>Notes</name>
-	<licence>AGPL</licence>
-	<author>Bernhard Posselt, Jan-Christoph Borchardt</author>
-	<require>8.1</require>
-	<version>1.1.0</version>
-	<namespace>Notes</namespace>
-	<category>multimedia</category>
-	<description>Distraction-free notes and writing</description>
+    <id>notes</id>
+    <name>Notes</name>
+    <licence>AGPL</licence>
+    <author>Bernhard Posselt, Jan-Christoph Borchardt</author>
+    <require>8.1</require>
+    <version>1.1.0</version>
+    <namespace>Notes</namespace>
+    <category>multimedia</category>
+    <description>Distraction-free notes and writing</description>
     <dependencies>
         <owncloud min-version="8.1" max-version="8.1" />
     </dependencies>

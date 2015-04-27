@@ -10,21 +10,21 @@
  * 300 ms
  */
 app.directive('notesTimeoutChange', function ($timeout) {
-	'use strict';
+    'use strict';
 
-	return {
-		restrict: 'A',
-		link: function (scope, element, attributes) {
-			var interval = 300;  // 300 miliseconds timeout after typing
-			var timeout;
+    return {
+        restrict: 'A',
+        link: function (scope, element, attributes) {
+            var interval = 300;  // 300 miliseconds timeout after typing
+            var timeout;
 
-			$(element).bind('input propertychange', function () {
-				$timeout.cancel(timeout);
+            $(element).bind('input propertychange', function () {
+                $timeout.cancel(timeout);
 
-				timeout = $timeout(function () {
-					scope.$apply(attributes.notesTimeoutChange);
-				}, interval);
-			});
-		}
-	};
+                timeout = $timeout(function () {
+                    scope.$apply(attributes.notesTimeoutChange);
+                }, interval);
+            });
+        }
+    };
 });

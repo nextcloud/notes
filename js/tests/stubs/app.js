@@ -6,5 +6,5 @@
 
 var app = angular.module('Notes', ['ngMock', 'restangular', 'ngRoute']).
 config(['RestangularProvider', function (RestangularProvider) {
-	RestangularProvider.setBaseUrl('/');
+    RestangularProvider.setBaseUrl('/');
 }]);
