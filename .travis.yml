@@ -22,7 +22,7 @@ before_install:
   - export CHROME_BIN=chromium-browser
   - sh -e /etc/init.d/xvfb start
   - sudo apt-get update
-  - sudo apt-get install firefox chromium-browser
+  - sudo apt-get install firefox
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
   - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
 
@@ -30,10 +30,10 @@ script:
   # Test lint
   - cd ../core/apps/$APP_NAME
   - find . -name \*.php -exec php -l "{}" \;
-  - phpunit --coverage-clover clover.xml
+  - phpunit --coverage-clover clover.xml -c phpunit.xml
 
   # execute js tests
-  - cd ../../js
+  - cd js
   - npm install
   - npm install -g grunt-cli
   - grunt karma:continuous
