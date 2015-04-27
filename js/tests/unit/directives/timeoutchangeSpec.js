@@ -25,7 +25,8 @@ describe('notesTimeoutChange', function() {
     }));
 
 
-    it ('should fire a change event on changed content after timeout', function () {
+    it ('should fire a change event on changed content after timeout',
+    function () {
         var element = angular.element(
             '<input type="text" notes-timeout-change="changed=true"/>'
         );

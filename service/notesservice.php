@@ -25,6 +25,7 @@ use OCA\Notes\Db\Note;
 class NotesService {
 
     private $l10n;
+    private $root;
 
     /**
      * @param IRootFolder $root
