@@ -6,6 +6,7 @@
  */
 
 describe('NotesModel', function() {
+    'use strict';
 
     beforeEach(module('Notes'));
 

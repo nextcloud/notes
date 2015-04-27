@@ -6,6 +6,7 @@
  */
 
 describe('SaveQueue', function() {
+    'use strict';
 
     var http,
         q,

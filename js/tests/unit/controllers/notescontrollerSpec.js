@@ -6,6 +6,7 @@
  */
 
 describe('NotesController', function() {
+    'use strict';
 
     var controller,
         scope,

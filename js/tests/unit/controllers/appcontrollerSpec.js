@@ -6,6 +6,7 @@
  */
 
 describe('AppController', function() {
+    'use strict';
 
     var controller,
         scope,

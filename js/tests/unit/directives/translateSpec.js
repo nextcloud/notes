@@ -6,6 +6,7 @@
  */
 
 describe('notesTranslate', function() {
+    'use strict';
 
     var host,
         rootScope,

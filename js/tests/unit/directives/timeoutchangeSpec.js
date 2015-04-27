@@ -6,6 +6,7 @@
  */
 
 describe('notesTimeoutChange', function() {
+    'use strict';
 
     var host,
         rootScope,

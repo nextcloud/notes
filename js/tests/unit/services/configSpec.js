@@ -6,6 +6,7 @@
  */
 
 describe('Config', function() {
+    'use strict';
 
     beforeEach(module('Notes'));
 

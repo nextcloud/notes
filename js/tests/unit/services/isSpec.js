@@ -6,6 +6,7 @@
  */
 
 describe('is', function() {
+    'use strict';
 
     beforeEach(module('Notes'));
 
