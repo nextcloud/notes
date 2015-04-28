@@ -1,8 +1,8 @@
 <?php
 $TRANSLATIONS = array(
 "Notes" => "Notes",
-"Note is currently saving. Leaving " => "Note is currently saving. Leaving ",
 "New note" => "New note",
+"Note is currently saving. Leaving " => "Note is currently saving. Leaving ",
 "Delete note" => "Delete note"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

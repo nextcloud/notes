@@ -1,7 +1,7 @@
 { "translations": {
     "Notes" : "Notater",
-    "Note is currently saving. Leaving " : "Notatet lagres. Avslutter",
     "New note" : "Nytt notat",
+    "Note is currently saving. Leaving " : "Notatet lagres. Avslutter",
     "Delete note" : "Slett notat"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
