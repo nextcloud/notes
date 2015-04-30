@@ -3,6 +3,7 @@ node_modules/
 build/artifacts
 .rvm
 report
+clover.xml
 
 # just sane ignores
 .*.sw[po]
