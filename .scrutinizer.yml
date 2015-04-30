@@ -11,5 +11,5 @@ imports:
     - php
 
 tools:
-    # external coverage is broken
-    #external_code_coverage: true
+    external_code_coverage:
+        timeout: 300
