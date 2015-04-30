@@ -3,6 +3,7 @@ filter:
         - 'js/vendor/*'
         - 'js/public/*'
         - 'js/tests/stubs/*'
+        - 'templates/*'
         - 'l10n/*'
         - 'tests/*'
 
