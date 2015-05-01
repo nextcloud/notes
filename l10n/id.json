@@ -1,6 +1,7 @@
 { "translations": {
     "Notes" : "Catatan",
     "New note" : "Catatan baru",
+    "Note is currently saving. Leaving " : "Catatan sudah disimpan. Meninggalkan",
     "Delete note" : "Hapus catatan"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
