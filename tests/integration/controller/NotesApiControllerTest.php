@@ -21,6 +21,7 @@ class NotesApiControllerTest extends TestCase {
     private $controller;
     private $mapper;
     private $userId = 'test';
+    private $fs;
 
     public function setUp() {
         parent::setUp();
@@ -32,6 +33,10 @@ class NotesApiControllerTest extends TestCase {
         });
         $this->controller = $container->query(
             'OCA\Notes\Controller\NotesApiController'
+        );
+
+        $this->fs = $this->controller = $container->query(
+            'OCP\Files\IRootFolder'
         );
     }
 
@@ -48,6 +53,10 @@ class NotesApiControllerTest extends TestCase {
 
         $this->assertCount(1, $notes);
         $this->assertEquals('test2', $notes[0]->getContent());
+
+        $file = $this->fs->get('/' . $userId . '/notes/test2.txt');
+
+        $this->assertTrue($file instanceof OCP\Files\File);
     }
 
 
