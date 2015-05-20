@@ -13,8 +13,8 @@ namespace OCA\Notes\Controller;
 
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
+use OCP\Files\File;
 use Test\TestCase;
-
 
 class NotesApiControllerTest extends TestCase {
 
@@ -56,7 +56,7 @@ class NotesApiControllerTest extends TestCase {
 
         $file = $this->fs->get('/' . $userId . '/notes/test2.txt');
 
-        $this->assertTrue($file instanceof OCP\Files\File);
+        $this->assertTrue($file instanceof File);
     }
 
 
