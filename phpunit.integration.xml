@@ -1,6 +1,6 @@
 <phpunit bootstrap="../../lib/base.php">
     <testsuites>
-        <testsuite name="unit">
+        <testsuite name="integration">
             <directory>./tests/integration</directory>
         </testsuite>
     </testsuites>

@@ -11,21 +11,22 @@
 
 namespace OCA\Notes\Controller;
 
+use PHPUnit_Framework_TestCase;
+
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
 use OCP\Files\File;
-use Test\TestCase;
 
-class NotesApiControllerTest extends TestCase {
+
+class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
 
     private $controller;
     private $mapper;
     private $userId = 'test';
+    private $notesFolder = '/test/notes';
     private $fs;
 
     public function setUp() {
-        parent::setUp();
-
         $app = new App('notes');
         $container = $app->getContainer();
         $container->registerService('UserId', function($c) {
@@ -38,6 +39,7 @@ class NotesApiControllerTest extends TestCase {
         $this->fs = $this->controller = $container->query(
             'OCP\Files\IRootFolder'
         );
+        $this->fs->newFolder();
     }
 
 
@@ -54,9 +56,14 @@ class NotesApiControllerTest extends TestCase {
         $this->assertCount(1, $notes);
         $this->assertEquals('test2', $notes[0]->getContent());
 
-        $file = $this->fs->get('/' . $userId . '/notes/test2.txt');
+        $file = $this->fs->get($this->notesFolder . '/test2.txt');
 
         $this->assertTrue($file instanceof File);
+    }
+
+
+    public function tearDown() {
+        $this->fs->get($this->notesFolder)->delete();
     }
 
 

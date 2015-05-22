@@ -18,6 +18,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http;
 
 use OCA\Notes\Service\NoteDoesNotExistException;
+use OCA\Notes\Db\Note;
 
 
 class NotesControllerTest extends PHPUnit_Framework_TestCase {
@@ -157,14 +158,21 @@ class NotesControllerTest extends PHPUnit_Framework_TestCase {
      * POST /notes
      */
     public function testCreate(){
-        $expected = ['hi'];
+        $created = new Note();
+        $created->setId(3);
+
+        $expected = new Note();
 
         $this->service->expects($this->once())
             ->method('create')
             ->with($this->equalTo($this->userId))
+            ->will($this->returnValue($created));
+        $this->service->expects($this->once())
+            ->method('update')
+            ->with(3, 'hi', $this->userId)
             ->will($this->returnValue($expected));
 
-        $response = $this->controller->create();
+        $response = $this->controller->create('hi');
 
         $this->assertEquals($expected, $response->getData());
         $this->assertTrue($response instanceof DataResponse);

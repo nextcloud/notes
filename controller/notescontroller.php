@@ -79,9 +79,15 @@ class NotesController extends Controller {
 
     /**
      * @NoAdminRequired
+     *
+     * @param string $content
      */
-    public function create() {
-        return new DataResponse($this->notesService->create($this->userId));
+    public function create($content) {
+        $note = $this->notesService->create($this->userId);
+        $note = $this->notesService->update(
+            $note->getId(), $content, $this->userId
+        );
+        return new DataResponse($note);
     }
 
 
