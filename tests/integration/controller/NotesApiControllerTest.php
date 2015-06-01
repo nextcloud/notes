@@ -28,7 +28,8 @@ class NotesApiControllerTest extends TestCase {
 
     public function setUp() {
         parent::setUp();
-        $this->loginAsUser('test');
+        $this->loginAsUser($this->userId);
+
         $app = new App('notes');
         $container = $app->getContainer();
         $container->registerService('UserId', function($c) {
@@ -65,6 +66,7 @@ class NotesApiControllerTest extends TestCase {
 
 
     public function tearDown() {
+        parent::tearDown();
         $this->fs->get($this->notesFolder)->delete();
     }
 
