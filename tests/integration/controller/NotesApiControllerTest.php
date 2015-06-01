@@ -11,14 +11,14 @@
 
 namespace OCA\Notes\Controller;
 
-use PHPUnit_Framework_TestCase;
+use Test\TestCase;
 
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
 use OCP\Files\File;
 
 
-class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
+class NotesApiControllerTest extends TestCase {
 
     private $controller;
     private $mapper;
@@ -27,6 +27,8 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
     private $fs;
 
     public function setUp() {
+        parent::setUp();
+        $this->loginAsUser('test');
         $app = new App('notes');
         $container = $app->getContainer();
         $container->registerService('UserId', function($c) {
