@@ -36,7 +36,7 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
             'OCA\Notes\Controller\NotesApiController'
         );
 
-        $this->fs = $this->controller = $container->query(
+        $this->fs = $container->query(
             'OCP\Files\IRootFolder'
         );
         $this->fs->newFolder($this->notesFolder);
