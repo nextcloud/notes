@@ -15,12 +15,16 @@ script('notes', [
     'vendor/angular-route/angular-route',
     'vendor/restangular/dist/restangular',
     'vendor/underscore/underscore',
+    'vendor/prism-all',
+    'vendor/mdedit',
     'public/app.min'
 ]);
 
 style('notes', [
     '../js/vendor/highlightjs/styles/github',
     'vendor/bootstrap/tooltip',
+    'vendor/prism',
+    'vendor/mdedit',
     'notes'
 ]);
 

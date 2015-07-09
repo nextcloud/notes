@@ -9,6 +9,8 @@
 
 <div id="app-navigation-toggle" class="icon-menu" style="display:none;"></div>
 
+<pre editor>{{note.content}}</pre>
+
 <textarea
     ng-model="note.content"
     ng-class="{markdown: config.isMarkdown(), saving: isSaving()}"
