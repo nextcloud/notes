@@ -170,6 +170,24 @@ app.directive('notesAutofocus', function () {
     };
 });
 
+app.directive('editor', ['$timeout', function ($timeout) {
+	'use strict';
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			var editor = mdEdit(element[0], {change: function(value) {
+				$timeout(function(){
+					scope.$apply(function() {
+						scope.note.content = value;
+						scope.updateTitle();
+					});
+				});
+			}});
+			editor.setValue(scope.note.content);
+		}
+	};
+}]);
+
 app.directive('notesIsSaving', ["$window", function ($window) {
     'use strict';
     return {
@@ -218,23 +236,6 @@ app.directive('markdown', function () {
         }
     };
 });
-
-app.directive('editor', ['$timeout', function ($timeout) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			var editor = mdEdit(element[0], {change: function(value) {
-				$timeout(function(){
-					scope.$apply(function() {
-						scope.note.content = value;
-						scope.updateTitle();
-					});
-				});
-			}});
-			editor.setValue(scope.note.content);
-		}
-	}
-}]);
 
 /**
  * Like ng-change only that it does not fire when you type faster than
