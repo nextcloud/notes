@@ -138,12 +138,19 @@
 }
 
 #app-content .utils {
-    padding: 0 20px 0 20px;
-    line-height: 30px;
     position: fixed;
-    top: 45px;
-    right: 20px;
+    top: 58px;
+    right: 10px;
+    opacity: .5;
 }
+
+    #app-content .utils label {
+        padding: 13px;
+    }
+
+    #app-content .utils input[type='checkbox'] {
+        vertical-align: middle;
+    }
 
     #app-content .utils > * {
 
@@ -151,7 +158,6 @@
 
 .markdown h1, h2, h3 {
     font-weight: bold;
-    text-decoration: underline;
     margin-top: 10px;
 }
 
@@ -263,5 +269,5 @@
 }
 
     .markdown a:hover {
-        text-decoration: underline;
+        border-bottom: 1px dotted;
     }
