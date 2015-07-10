@@ -48,7 +48,7 @@ style('notes', [
             <li ng-repeat="note in notes|orderBy:'modified':'reverse'"
                 ng-class="{ active: note.id == route.noteId }">
                 <a href="#/notes/{{ note.id }}">
-                    {{ note.title }}
+                    {{ note.title | noteTitle }}
                 </a>
                 <span class="utils">
                     <button class="svg action icon-delete"

@@ -272,6 +272,14 @@ app.directive('notesTooltip', function () {
     };
 });
 
+app.filter('noteTitle', function () {
+	'use strict';
+	return function (value) {
+        	value = value.split('\n')[0] || 'newNote';
+		return value.trim().replace(/^#+/g, '');
+	};
+});
+
 app.factory('Config', ["Restangular", function (Restangular) {
     'use strict';
 
@@ -359,7 +367,7 @@ app.factory('NotesModel', function () {
 
     return new NotesModel();
 });
-app.factory('SaveQueue', ["$q", function($q) {
+app.factory('SaveQueue', ["$q", "$filter", function($q, $filter) {
     'use strict';
 
     var SaveQueue = function () {
@@ -404,7 +412,7 @@ app.factory('SaveQueue', ["$q", function($q) {
             });
         },
         _noteUpdateRequest: function (note, response) {
-            note.title = response.title;
+            note.title = $filter('noteTitle')(response.title);
             note.modified = response.modified;
         },
         isSaving: function () {
@@ -414,5 +422,6 @@ app.factory('SaveQueue', ["$q", function($q) {
 
     return new SaveQueue();
 }]);
+
 
 })(angular, jQuery, oc_requesttoken, marked, hljs);
