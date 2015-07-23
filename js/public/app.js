@@ -170,6 +170,24 @@ app.directive('notesAutofocus', function () {
     };
 });
 
+app.directive('editor', ['$timeout', function ($timeout) {
+	'use strict';
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			var editor = mdEdit(element[0], {change: function(value) {
+				$timeout(function(){
+					scope.$apply(function() {
+						scope.note.content = value;
+						scope.updateTitle();
+					});
+				});
+			}});
+			editor.setValue(scope.note.content);
+		}
+	};
+}]);
+
 app.directive('notesIsSaving', ["$window", function ($window) {
     'use strict';
     return {
@@ -252,6 +270,14 @@ app.directive('notesTooltip', function () {
             element.tooltip();
         }
     };
+});
+
+app.filter('noteTitle', function () {
+	'use strict';
+	return function (value) {
+        	value = value.split('\n')[0] || 'newNote';
+		return value.trim().replace(/^#+/g, '');
+	};
 });
 
 app.factory('Config', ["Restangular", function (Restangular) {
@@ -341,7 +367,7 @@ app.factory('NotesModel', function () {
 
     return new NotesModel();
 });
-app.factory('SaveQueue', ["$q", function($q) {
+app.factory('SaveQueue', ["$q", "$filter", function($q, $filter) {
     'use strict';
 
     var SaveQueue = function () {
@@ -386,7 +412,7 @@ app.factory('SaveQueue', ["$q", function($q) {
             });
         },
         _noteUpdateRequest: function (note, response) {
-            note.title = response.title;
+            note.title = $filter('noteTitle')(response.title);
             note.modified = response.modified;
         },
         isSaving: function () {
@@ -396,5 +422,6 @@ app.factory('SaveQueue', ["$q", function($q) {
 
     return new SaveQueue();
 }]);
+
 
 })(angular, jQuery, oc_requesttoken, marked, hljs);

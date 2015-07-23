@@ -15,12 +15,16 @@ script('notes', [
     'vendor/angular-route/angular-route',
     'vendor/restangular/dist/restangular',
     'vendor/underscore/underscore',
+    'vendor/prism-all',
+    'vendor/mdedit',
     'public/app.min'
 ]);
 
 style('notes', [
     '../js/vendor/highlightjs/styles/github',
     'vendor/bootstrap/tooltip',
+    'vendor/prism',
+    'vendor/mdedit',
     'notes'
 ]);
 
@@ -44,7 +48,7 @@ style('notes', [
             <li ng-repeat="note in notes|orderBy:'modified':'reverse'"
                 ng-class="{ active: note.id == route.noteId }">
                 <a href="#/notes/{{ note.id }}">
-                    {{ note.title }}
+                    {{ note.title | noteTitle }}
                 </a>
                 <span class="utils">
                     <button class="svg action icon-delete"
