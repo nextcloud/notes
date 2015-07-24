@@ -23,7 +23,7 @@ class NotesApiControllerTest extends TestCase {
     private $controller;
     private $mapper;
     private $userId = 'test';
-    private $notesFolder = '/test/notes';
+    private $notesFolder = '/test/files/Notes';
     private $fs;
 
     public function setUp() {
