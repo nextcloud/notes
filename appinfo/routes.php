@@ -14,9 +14,6 @@ return ['routes' => [
     ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 
     // notes
-    ['name' => 'notes#get_config', 'url' => '/config', 'verb' => 'GET'],
-    ['name' => 'notes#set_config', 'url' => '/config', 'verb' => 'POST'],
-
     ['name' => 'notes#index', 'url' => '/notes', 'verb' => 'GET'],
     ['name' => 'notes#get', 'url' => '/notes/{id}', 'verb' => 'GET'],
     ['name' => 'notes#create', 'url' => '/notes', 'verb' => 'POST'],

@@ -57,12 +57,8 @@ config(["$provide", "$routeProvider", "RestangularProvider", "$httpProvider", "$
 
 
 
-}]).run(["$rootScope", "$location", "NotesModel", "Config", function ($rootScope, $location, NotesModel, Config) {
+}]).run(["$rootScope", "$location", "NotesModel", function ($rootScope, $location, NotesModel) {
     'use strict';
-
-    // get config
-    Config.load();
-
     // handle route errors
     $rootScope.$on('$routeChangeError', function () {
         var notes = NotesModel.getAll();
@@ -98,15 +94,13 @@ app.controller('AppController', ["$scope", "$location", "is", function ($scope, 
         }
     };
 }]);
-app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQueue", "note", "Config", function($routeParams, $scope, NotesModel,
-                                          SaveQueue, note, Config) {
+app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQueue", "note", function($routeParams, $scope, NotesModel,
+                                          SaveQueue, note) {
     'use strict';
 
     NotesModel.updateIfExists(note);
 
     $scope.note = NotesModel.get($routeParams.noteId);
-    $scope.config = Config;
-    $scope.markdown = Config.isMarkdown();
 
     $scope.isSaving = function () {
         return SaveQueue.isSaving();
@@ -120,11 +114,6 @@ app.controller('NoteController', ["$routeParams", "$scope", "NotesModel", "SaveQ
     $scope.save = function() {
         var note = $scope.note;
         SaveQueue.add(note);
-    };
-
-    $scope.sync = function (markdown) {
-        Config.setIsMarkdown(markdown);
-        Config.sync();
     };
 
 }]);
@@ -280,37 +269,6 @@ app.filter('noteTitle', function () {
 	};
 });
 
-app.factory('Config', ["Restangular", function (Restangular) {
-    'use strict';
-
-    var Config = function (Restangular) {
-        this._markdown = false;
-        this._Restangular = Restangular;
-    };
-
-    Config.prototype.load = function () {
-        var self = this;
-        this._Restangular.one('config').get().then(function (config) {
-            self._markdown = config.markdown;
-        });
-    };
-
-    Config.prototype.isMarkdown = function () {
-        return this._markdown;
-    };
-
-    Config.prototype.setIsMarkdown = function (isMarkdown) {
-        this._markdown = isMarkdown;
-    };
-
-    Config.prototype.sync = function () {
-        return this._Restangular.one('config').customPOST({
-            markdown: this._markdown
-        });
-    };
-
-    return new Config(Restangular);
-}]);
 app.factory('is', function () {
     'use strict';
 
@@ -367,7 +325,7 @@ app.factory('NotesModel', function () {
 
     return new NotesModel();
 });
-app.factory('SaveQueue', ["$q", "$filter", function($q, $filter) {
+app.factory('SaveQueue', ["$q", function($q) {
     'use strict';
 
     var SaveQueue = function () {
@@ -412,7 +370,7 @@ app.factory('SaveQueue', ["$q", "$filter", function($q, $filter) {
             });
         },
         _noteUpdateRequest: function (note, response) {
-            note.title = $filter('noteTitle')(response.title);
+            note.title = response.title;
             note.modified = response.modified;
         },
         isSaving: function () {
@@ -422,6 +380,5 @@ app.factory('SaveQueue', ["$q", "$filter", function($q, $filter) {
 
     return new SaveQueue();
 }]);
-
 
 })(angular, jQuery, oc_requesttoken, marked, hljs);

@@ -118,32 +118,4 @@ class NotesController extends Controller {
         });
     }
 
-
-    /**
-     * @NoAdminRequired
-     */
-    public function getConfig() {
-        $markdown = $this->settings->getUserValue(
-            $this->userId, $this->appName, 'notesMarkdown'
-        ) === '1';
-
-        return new DataResponse(['markdown' => $markdown]);
-    }
-
-
-    /**
-     * @NoAdminRequired
-     *
-     * @param string $markdown
-     * @return DataResponse
-     */
-    public function setConfig($markdown) {
-        $this->settings->setUserValue(
-            $this->userId, $this->appName, 'notesMarkdown', $markdown
-        );
-
-        return new DataResponse();
-    }
-
-
 }

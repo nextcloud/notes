@@ -60,13 +60,6 @@ class NotesControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($file instanceof File);
     }
 
-	public function testConfig() {
-		$this->controller->setConfig(false);
-		$this->assertEquals($this->controller->getConfig(), new DataResponse(['markdown' => false]));
-		$this->controller->setConfig(true);
-		$this->assertEquals($this->controller->getConfig(), new DataResponse(['markdown' => true]));
-	}
-
 	public function tearDown() {
          $this->fs->get($this->notesFolder)->delete();
     }

@@ -25,9 +25,10 @@
     "karma": "*",
     "karma-chrome-launcher": "*",
     "karma-firefox-launcher": "*",
-    "karma-jasmine": "*",
-    "karma-phantomjs-launcher": "*",
-    "phantomjs": "*"
+    "karma-jasmine": "*"
   },
-  "engine": "node >= 0.8"
+  "engine": "node >= 0.8",
+  "scripts": {
+    "test": "grunt test"
+  }
 }
