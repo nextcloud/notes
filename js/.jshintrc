@@ -41,7 +41,8 @@
         "expect": true,
         "exports": true,
         "t": true,
-        "marked": true,
-        "hljs": true
+        "mdEdit": true,
+        "require": true,
+        "__dirname": true
     }
 }

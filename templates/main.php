@@ -15,7 +15,7 @@ script('notes', [
     'vendor/angular-route/angular-route',
     'vendor/restangular/dist/restangular',
     'vendor/underscore/underscore',
-    'vendor/prism-all',
+    'vendor/prism/prism',
     'vendor/mdedit',
     'public/app.min'
 ]);

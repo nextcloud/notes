@@ -38,8 +38,8 @@ script:
   # execute js tests
   - cd js
   - npm install
-  - npm install -g grunt-cli
-  - grunt karma:continuous
+  - npm install -g gulp
+  - gulp test
 
   # Create coverage report
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
