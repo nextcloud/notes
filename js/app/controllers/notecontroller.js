@@ -6,14 +6,12 @@
  */
 
 app.controller('NoteController', function($routeParams, $scope, NotesModel,
-                                          SaveQueue, note, Config) {
+                                          SaveQueue, note) {
     'use strict';
 
     NotesModel.updateIfExists(note);
 
     $scope.note = NotesModel.get($routeParams.noteId);
-    $scope.config = Config;
-    $scope.markdown = Config.isMarkdown();
 
     $scope.isSaving = function () {
         return SaveQueue.isSaving();
@@ -27,11 +25,6 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
     $scope.save = function() {
         var note = $scope.note;
         SaveQueue.add(note);
-    };
-
-    $scope.sync = function (markdown) {
-        Config.setIsMarkdown(markdown);
-        Config.sync();
     };
 
 });

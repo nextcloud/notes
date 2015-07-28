@@ -59,12 +59,8 @@ config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
 
 
 
-}).run(function ($rootScope, $location, NotesModel, Config) {
+}).run(function ($rootScope, $location, NotesModel) {
     'use strict';
-
-    // get config
-    Config.load();
-
     // handle route errors
     $rootScope.$on('$routeChangeError', function () {
         var notes = NotesModel.getAll();

@@ -152,5 +152,5 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['jshint', 'concat', 'wrap', 'ngAnnotate',
                        'uglify']);
     grunt.registerTask('default', ['build']);
-
+    grunt.registerTask('test', ['build', 'karma:continuous']);
 };
