@@ -1,13 +1,4 @@
-var gulp = require('gulp'),
-    ngAnnotate = require('gulp-ng-annotate'),
-    jshint = require('gulp-jshint'),
-    wrap = require('gulp-wrap'),
-    uglify = require('gulp-uglify'),
-    phpunit = require('gulp-phpunit'),
-    karma = require('karma'),
-    sourcemaps = require('gulp-sourcemaps'),
-    concat = require('gulp-concat'),
-    del = require('del');
+var gulp = require('gulp');
 
 /**
  * Configuration
@@ -50,6 +41,8 @@ gulp.task('default', ['lint', 'build']);
 
 gulp.task('lint', function () {
     'use strict';
+    var jshint = require('gulp-jshint');
+
     return gulp.src(lintSources)
         .pipe(jshint(jsHintRc))
         .pipe(jshint.reporter('jshint-stylish'));
@@ -57,6 +50,12 @@ gulp.task('lint', function () {
 
 gulp.task('build', function () {
     'use strict';
+    var ngAnnotate = require('gulp-ng-annotate'),
+        wrap = require('gulp-wrap'),
+        uglify = require('gulp-uglify'),
+        sourcemaps = require('gulp-sourcemaps'),
+        concat = require('gulp-concat');
+
     return gulp.src(buildSources)
         .pipe(sourcemaps.init())
             .pipe(concat(buildTarget))
@@ -69,6 +68,7 @@ gulp.task('build', function () {
 
 gulp.task('clean', function () {
     'use strict';
+    var del = require('del');
     del(buildFolder);
 });
 
@@ -77,6 +77,8 @@ gulp.task('test-all', ['test', 'test-php', 'test-php-integration']);
 
 gulp.task('test', function (done) {
     'use strict';
+    var karma = require('karma');
+
     new karma.Server({
         configFile: karmaConfig,
         singleRun: true
@@ -85,12 +87,16 @@ gulp.task('test', function (done) {
 
 gulp.task('test-php', function () {
     'use strict';
+    var phpunit = require('gulp-phpunit');
+
     gulp.src(phpunitConfig)
         .pipe(phpunit(phpunitBinary, {silent: true}));
 });
 
 gulp.task('test-php-integration', function () {
     'use strict';
+    var phpunit = require('gulp-phpunit');
+
     gulp.src(phpunitIntegrationConfig)
         .pipe(phpunit(phpunitBinary, {silent: true}));
 });
@@ -104,6 +110,8 @@ gulp.task('watch', ['default'], function () {
 
 gulp.task('watch-test', function (done) {
     'use strict';
+    var karma = require('karma');
+
     new karma.Server({
         configFile: karmaConfig
     }, done).start();

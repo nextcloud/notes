@@ -33,7 +33,7 @@ module.exports = function(config) {
         files: [
             'vendor/jquery/dist/jquery.js',
             'vendor/prism/prism.js',
-            'vendor/mdedit.js',
+            'vendor/mdEdit/mdedit.js',
             'vendor/angular/angular.js',
             'vendor/underscore/underscore.js',
             'vendor/angular-route/angular-route.js',
