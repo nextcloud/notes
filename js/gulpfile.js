@@ -19,16 +19,6 @@ var sources = {
     config: ['karma.conf.js', 'gulpfile.js']
 };
 
-var buildSources = sources.js;
-var watchSources = sources.js
-    .concat(sources.tests)
-    .concat(sources.css)
-    .concat(sources.config);
-var lintSources = sources.js
-    .concat(sources.tests)
-    .concat(sources.config);
-var phpSources = sources.php;
-
 var wrappers = '(function(angular, $, requestToken, mdEdit, undefined){'+
     '\'use strict\';<%= contents %>' +
     '})(angular, jQuery, oc_requesttoken, mdEdit);';
@@ -43,7 +33,9 @@ gulp.task('lint', function () {
     'use strict';
     var jshint = require('gulp-jshint');
 
-    return gulp.src(lintSources)
+    return gulp.src(sources.js
+            .concat(sources.tests)
+            .concat(sources.config))
         .pipe(jshint(jsHintRc))
         .pipe(jshint.reporter('jshint-stylish'));
 });
@@ -56,7 +48,7 @@ gulp.task('build', function () {
         sourcemaps = require('gulp-sourcemaps'),
         concat = require('gulp-concat');
 
-    return gulp.src(buildSources)
+    return gulp.src(sources.js)
         .pipe(sourcemaps.init())
             .pipe(concat(buildTarget))
             .pipe(ngAnnotate())
@@ -105,7 +97,10 @@ gulp.task('test-php-integration', function () {
 // watch tasks
 gulp.task('watch', ['default'], function () {
     'use strict';
-    gulp.watch(watchSources, ['default']);
+    gulp.watch(sources.js
+        .concat(sources.tests)
+        .concat(sources.css)
+        .concat(sources.config), ['default']);
 });
 
 gulp.task('watch-test', function (done) {
@@ -119,5 +114,5 @@ gulp.task('watch-test', function (done) {
 
 gulp.task('watch-test-php', function () {
     'use strict';
-    gulp.watch(phpSources, ['test-php']);
+    gulp.watch(sources.php, ['test-php']);
 });
