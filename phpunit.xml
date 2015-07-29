@@ -1,5 +1,4 @@
 <phpunit bootstrap="../../lib/base.php"
-    strict="true"
     verbose="true"
     timeoutForSmallTests="900"
     timeoutForMediumTests="900"
