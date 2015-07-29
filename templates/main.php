@@ -16,15 +16,15 @@ script('notes', [
     'vendor/restangular/dist/restangular',
     'vendor/underscore/underscore',
     'vendor/prism/prism',
-    'vendor/mdedit',
+    'vendor/mdEdit/mdedit.min',
     'public/app.min'
 ]);
 
 style('notes', [
     '../js/vendor/highlightjs/styles/github',
     'vendor/bootstrap/tooltip',
-    'vendor/prism',
-    'vendor/mdedit',
+    '../js/vendor/mdEdit/mdedit',
+    '../js/vendor/mdEdit/prism',
     'notes'
 ]);
 
