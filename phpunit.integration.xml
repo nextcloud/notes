@@ -1,4 +1,5 @@
-<phpunit bootstrap="../../lib/base.php">
+<phpunit bootstrap="../../lib/base.php"
+         colors="true">
     <testsuites>
         <testsuite name="integration">
             <directory>./tests/integration</directory>

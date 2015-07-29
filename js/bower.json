@@ -7,9 +7,6 @@
     "jquery": "2.1.*",
     "underscore": "1.7.*",
     "angular-mocks": "1.4.*",
-    "angular-route": "1.4.*",
-    "marked": "~0.3.*",
-    "highlight": "~7.0.1",
-    "highlightjs": "~8.5.*"
+    "angular-route": "1.4.*"
   }
 }

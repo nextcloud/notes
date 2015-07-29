@@ -1,0 +1,25 @@
+{
+  "name": "MdEditor",
+  "version": "1.0.1",
+  "main": ["editormd.min.js", "css/editormd.min.css"],
+  "homepage": "https://github.com/mfkddcwy/mdeditor",
+  "authors": [
+    "Ochou <mfkddcwy@gmail.com>"
+  ],
+  "description": "Open source online markdown editor, fork editor.md.",
+  "keywords": [
+    "mdeditor",
+    "markdown",
+    "editor"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "research",
+    "docs",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

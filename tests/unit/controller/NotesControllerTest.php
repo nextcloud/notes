@@ -119,42 +119,6 @@ class NotesControllerTest extends PHPUnit_Framework_TestCase {
 
 
     /**
-     * GET /config
-     */
-    public function testGetConfig(){
-        $expected = ['markdown' => false];
-
-        $this->config->expects($this->once())
-            ->method('getUserValue')
-            ->with($this->equalTo($this->userId),
-                $this->equalTo($this->appName),
-                $this->equalTo('notesMarkdown'))
-            ->will($this->returnValue('0'));
-
-        $response = $this->controller->getConfig();
-
-        $this->assertEquals($expected, $response->getData());
-        $this->assertTrue($response instanceof DataResponse);
-    }
-
-
-    /**
-     * POST /config
-     */
-    public function testSetConfig(){
-        $this->config->expects($this->once())
-            ->method('setUserValue')
-            ->with($this->equalTo($this->userId),
-                $this->equalTo($this->appName),
-                $this->equalTo('notesMarkdown'), $this->equalTo(true));
-
-        $response = $this->controller->setConfig(true);
-
-        $this->assertTrue($response instanceof DataResponse);
-    }
-
-
-    /**
      * POST /notes
      */
     public function testCreate(){

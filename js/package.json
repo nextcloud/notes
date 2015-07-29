@@ -11,24 +11,22 @@
   "bugs": "https://github.com/owncloud/notes/issues",
   "dependencies": {},
   "devDependencies": {
-    "bower": "*",
-    "grunt": "*",
-    "grunt-cli": "*",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-jshint": "*",
-    "grunt-contrib-uglify": "^0.9.1",
-    "grunt-contrib-watch": "*",
-    "grunt-karma": "*",
-    "grunt-ng-annotate": "^0.10.0",
-    "grunt-phpunit": "*",
-    "grunt-wrap": "*",
-    "karma": "*",
-    "karma-chrome-launcher": "*",
-    "karma-firefox-launcher": "*",
-    "karma-jasmine": "*"
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-phpunit": "^0.8.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-wrap": "^0.11.0",
+    "jshint-stylish": "^2.0.1",
+    "karma": "^0.13.3",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-jasmine": "^0.3.6"
   },
   "engine": "node >= 0.8",
   "scripts": {
-    "test": "grunt test"
+    "test": "gulp test-all"
   }
 }
