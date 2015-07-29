@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     karma = require('karma'),
     sourcemaps = require('gulp-sourcemaps'),
     concat = require('gulp-concat'),
-    clean = require('gulp-clean');
+    del = require('del');
 
 /**
  * Configuration
@@ -69,8 +69,7 @@ gulp.task('build', function () {
 
 gulp.task('clean', function () {
     'use strict';
-    return gulp.src(buildFolder, {read: false})
-        .pipe(clean());
+    del(buildFolder);
 });
 
 

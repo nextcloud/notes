@@ -11,8 +11,8 @@
   "bugs": "https://github.com/owncloud/notes/issues",
   "dependencies": {},
   "devDependencies": {
+    "del": "^1.2.0",
     "gulp": "^3.9.0",
-    "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^1.11.2",
     "gulp-ng-annotate": "^1.1.0",
