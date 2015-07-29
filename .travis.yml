@@ -11,7 +11,7 @@ env:
     - CORE_BRANCH=master
     - APP_NAME=notes
   matrix:
-    - DB=sqlite
+    - DB=mysql
 
 branches:
   only:
@@ -49,7 +49,7 @@ script:
 matrix:
   include:
     - php: 5.4
-      env: DB=mysql
+      env: DB=sqlite
     - php: 5.4
       env: DB=pgsql
   allow_failures:
