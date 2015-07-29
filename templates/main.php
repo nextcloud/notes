@@ -21,10 +21,9 @@ script('notes', [
 ]);
 
 style('notes', [
-    '../js/vendor/highlightjs/styles/github',
-    'vendor/bootstrap/tooltip',
     '../js/vendor/mdEdit/mdedit',
     '../js/vendor/mdEdit/prism',
+    'vendor/bootstrap/tooltip',
     'notes'
 ]);
 
