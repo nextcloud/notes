@@ -90,7 +90,7 @@ gulp.task('test-php-integration', function () {
     var phpunit = require('gulp-phpunit');
 
     gulp.src(phpunitIntegrationConfig)
-        .pipe(phpunit(phpunitBinary, {silent: true}));
+        .pipe(phpunit(phpunitBinary));
 });
 
 
