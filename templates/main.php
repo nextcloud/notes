@@ -8,8 +8,6 @@
 
 
 script('notes', [
-    'vendor/highlightjs/highlight.pack',
-    'vendor/marked/marked.min',
     'vendor/bootstrap/tooltip',
     'vendor/angular/angular',
     'vendor/angular-route/angular-route',
