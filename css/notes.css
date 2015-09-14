@@ -8,32 +8,16 @@
     padding-bottom: 0; /* no settings bar, so no padding needed */
 }
 
-#app-navigation li.active {
-    font-weight: bold; /* bold currently active note */
-}
-
-/* fancy handling of 'New Note' text */
-#app-navigation .utils {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-#app-navigation .utils > * {
-    float: right;
-}
-
-
 #app-navigation #note-add span {
     display: none;
     font-weight: bold;
     padding-left: 2px;
 }
-    #app-navigation #note-add:hover span,
-    #app-navigation #note-add:focus span {
-        display: inline;
-    }
+
+#app-navigation #note-add:hover span,
+#app-navigation #note-add:focus span {
+    display: inline;
+}
 
 #app-navigation .utils button {
     margin: 0;
@@ -47,14 +31,14 @@
     width: 32px;
 }
 
-    /* only display the delete button when the feed is active */
-    #app-navigation .utils .delete-button {
-        display: none;
-    }
+/* only display the delete button when the feed is active */
+#app-navigation .utils .delete-button {
+    display: none;
+}
 
-    #app-navigation .active > .utils .icon-delete {
-        display: block;
-    }
+#app-navigation .active > .utils .icon-delete {
+    display: block;
+}
 
 .tooltip {
     text-shadow: none;
@@ -65,7 +49,7 @@
     height: 100%;
 }
 
-/* special styling to make textarea subtle and fit the window */
+/* special styling to make editor subtle and fit the window */
 #app-content pre {
     display: block;
     min-height: 100%;
@@ -89,184 +73,18 @@
     -webkit-user-select: none;
 }
 
-#app-content textarea.markdown {
-    width: 50%;
-}
-
 /* TODO: move into core app styles */
 #app-content.loading {
-    background-image: url('../img/loading.gif');
-    background-position: center;
-    background-repeat: no-repeat;
+    background: url('../img/loading.gif') no-repeat center;
     /* Overrides the snap.js animation making the loading icon to fly in app-content. */
-    transition:none !important;
+    transition: none !important;
     -webkit-transition: none !important;
-    -moz-webkit-transition: none !important;
 }
 
 #app-content .saving {
-    background-image: url('../img/loading.gif') !important;
-    background-position: right 15px top 15px !important;
-    background-size: 24px !important;
-    background-repeat: no-repeat  !important;
+    background: url('../img/loading.gif') no-repeat right 15px top 15px / 24px !important;
     /* Overrides the snap.js animation making the loading icon to fly in app-content. */
-    transition:none !important;
+    transition: none !important;
     -webkit-transition: none !important;
-    -moz-webkit-transition: none !important;
 }
 
-#app-content .markdown {
-    height: 100%;
-    width: 50%;
-    margin: 0;
-    padding: 30px 20px 100px 30px;
-    font-size: 18px;
-    line-height: 1.5;
-    border: 0;
-    background: none;
-    box-shadow: none;
-    resize: none;
-    -moz-box-sizing: border-box; box-sizing: border-box;
-    float: left;
-    border-left: 1px solid #ccc;
-    overflow: auto;
-}
-
-#app-content .markdown img {
-    max-width: 100%;
-}
-
-#app-content .utils {
-    position: fixed;
-    top: 58px;
-    right: 10px;
-    opacity: .5;
-}
-
-    #app-content .utils label {
-        padding: 13px;
-    }
-
-    #app-content .utils input[type='checkbox'] {
-        vertical-align: middle;
-    }
-
-    #app-content .utils > * {
-
-    }
-
-.markdown h1, h2, h3 {
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.markdown h1 {
-    font-size: 26px;
-}
-
-.markdown table {
-    border: 1px solid #ddd;
-    max-width: 100%;
-    table-layout: fixed;
-    word-break: break-word;
-    white-space: normal;
-}
-
-
-.markdown th {
-    font-weight: bold;
-}
-
-.markdown td,
-.markdown th {
-    padding: 6px 13px;
-}
-
-.markdown tr td,
-.markdown tr th {
-    border-bottom: 1px solid #ddd;
-}
-
-.markdown tr:last-child td {
-    border: 0;
-}
-
-.markdown tr:hover {
-    background-color: #eee !important;
-}
-
-.markdown tr:nth-child(even) {
-    background-color: #fafafa;
-}
-
-
-.markdown pre {
-    padding: 7px 7px 7px 14px;
-    background-color: #dadada;
-    border: 1px solid #ccc;
-    margin: 7px 0 14px 0;
-    overflow-y: auto;
-}
-    .markdown pre::-webkit-scrollbar {
-        height: 10px;
-    }
-
-    .markdown pre::-webkit-scrollbar-thumb {
-        background: #333;
-    }
-
-    .markdown pre::-webkit-scrollbar-track-piece {
-        background: #ddd;
-    }
-
-    .markdown code,
-    .markdown pre {
-        font-family: monospace;
-        font-size: 16px;
-    }
-
-.markdown blockquote {
-    border-left: 1px solid #aaa;
-    margin: 25px 0;
-    padding: 0 0 0 15px;
-    font-style: italic;
-}
-
-
-
-.markdown h2 {
-    font-size: 24px;
-}
-
-.markdown h3 {
-    font-size: 22px;
-}
-
-.markdown ul, ol {
-    margin: 0 0 10px 25px;
-}
-
-.markdown li {
-    cursor: auto;
-}
-
-.markdown p {
-    margin-bottom: 20px;
-}
-
-.markdown ul {
-    list-style-type: disc;
-}
-
-.markdown ul ul,
-.markdown ol ul {
-    list-style-type: disc;
-}
-
-.markdown a {
-    color: #4183C4;
-}
-
-    .markdown a:hover {
-        border-bottom: 1px dotted;
-    }
