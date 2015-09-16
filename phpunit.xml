@@ -1,4 +1,4 @@
-<phpunit bootstrap="../../lib/base.php"
+<phpunit bootstrap="../../tests/bootstrap.php"
     verbose="true"
     timeoutForSmallTests="900"
     timeoutForMediumTests="900"

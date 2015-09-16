@@ -26,10 +26,12 @@ before_install:
   - sudo apt-get install firefox
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
   - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+  - cd ../core
+  - php occ app:enable notes
 
 script:
   # Test lint
-  - cd ../core/apps/$APP_NAME
+  - cd apps/$APP_NAME
   - find . -name \*.php -exec php -l "{}" \;
   - phpunit --coverage-clover clover.xml -c phpunit.xml
   - phpunit -c phpunit.integration.xml
