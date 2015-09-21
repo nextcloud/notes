@@ -14,6 +14,7 @@ build: \
 
 mdedit.js: \
 	src/_start.js \
+	src/yaml.js \
 	src/md.js \
 	src/util.js \
 	src/actions.js \
