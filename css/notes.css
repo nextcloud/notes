@@ -21,7 +21,10 @@
 
 #app-navigation .utils button {
     margin: 0;
-    background: transparent no-repeat center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
     border: 0;
     box-shadow: none;
     display: none;
