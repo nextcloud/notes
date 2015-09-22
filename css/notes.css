@@ -102,3 +102,19 @@
     z-index: -1;
     border-top: 1px solid rgba(120, 120, 120, 0.5);
 }
+
+@media only screen and (min-width: 769px) { /* desktop */
+    #app-content .mdedit {
+        padding-left: 100px;
+        display: inline-block;
+    }
+    .mdedit > .token > .heading-hash,
+    .mdedit > .token > .li > .list-item,
+    .mdedit > .token > .quote-marker {
+        width: 100px;
+        margin-left: -100px;
+        display: inline-block;
+        text-align: right;
+        white-space: pre;
+    }
+}
