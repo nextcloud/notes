@@ -21,9 +21,7 @@
 
 #app-navigation .utils button {
     margin: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
+    background: transparent no-repeat center;
     border: 0;
     box-shadow: none;
     display: none;
@@ -54,8 +52,7 @@
     display: block;
     min-height: 100%;
     width: 100%;
-    margin: 0;
-    margin-bottom: -50px;
+    margin: 0 0 -50px;
     padding: 30px 20px 100px 30px;
     font-size: 18px;
     line-height: 150%;
@@ -71,14 +68,6 @@
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
-}
-
-/* TODO: move into core app styles */
-#app-content.loading {
-    background: url('../img/loading.gif') no-repeat center;
-    /* Overrides the snap.js animation making the loading icon to fly in app-content. */
-    transition: none !important;
-    -webkit-transition: none !important;
 }
 
 #app-content .saving {
