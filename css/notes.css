@@ -77,3 +77,25 @@
     -webkit-transition: none !important;
 }
 
+/* markdown styling */
+
+.mdedit .hr {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin: .5em 0;
+}
+.mdedit .hr-marker {
+    background-color: white;
+}
+.mdedit .hr-marker:last-child {
+    padding-right: 10px;
+}
+.mdedit .hr:before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    width: 100%;
+    z-index: -1;
+    border-top: 1px solid rgba(120, 120, 120, 0.5);
+}
