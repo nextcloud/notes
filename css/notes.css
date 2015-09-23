@@ -56,9 +56,9 @@
     min-height: 100%;
     width: 100%;
     margin: 0 0 -50px;
-    padding: 30px 20px 100px 30px;
+    padding: 30px 20px 90px 30px;
     font-size: 18px;
-    line-height: 150%;
+    line-height: 30px;
     background: none;
     resize: none;
     -moz-box-sizing: border-box; box-sizing: border-box;
@@ -66,7 +66,7 @@
 }
 
 #app-content .note-meta {
-    padding: 0 30px 30px;
+    padding: 0 90px 30px;
     opacity: .2;
     -ms-user-select: none;
     -moz-user-select: none;
@@ -101,4 +101,20 @@
     width: 100%;
     z-index: -1;
     border-top: 1px solid rgba(120, 120, 120, 0.5);
+}
+
+@media only screen and (min-width: 769px) { /* desktop */
+    #app-content .mdedit {
+        padding-left: 90px;
+        display: inline-block;
+    }
+    .mdedit > .token > .heading-hash,
+    .mdedit > .token > .li > .list-item,
+    .mdedit > .token > .quote-marker {
+        width: 90px;
+        margin-left: -90px;
+        display: inline-block;
+        text-align: right;
+        white-space: pre;
+    }
 }
