@@ -88,7 +88,12 @@ Editor.prototype.changed = function(evt){
 
   this.saveScrollPos();
 
-  this.el.innerHTML = Prism['highlight'](code, md);
+  if(code === this._prevCode){
+    if(this.el.innerHTML !== this._prevHTML) this.el.innerHTML = this._prevHTML;
+  }else{
+    this._prevHTML = this.el.innerHTML = Prism['highlight'](code, md);
+  }
+  this._prevCode = code;
   // Prism.highlightElement(this); // bit messy + unnecessary + strips leading newlines :(
 
   if(!/\n$/.test(code)) {
@@ -130,6 +135,16 @@ Editor.prototype.keypress = function(evt){
   var end = this.selMgr.getEnd();
 
   var chr = String.fromCharCode(code);
+
+  if(/[\[\{\(<"'~\*_]/.test(chr) && start !== end){
+    this.action('wrap', {
+      bracket: chr
+    });
+    evt.preventDefault();
+    return;
+  }
+
+
   this.undoMgr.action({
     add: chr,
     del: start === end ? '' : this.el.textContent.slice(start, end),

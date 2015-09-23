@@ -32,6 +32,7 @@ var actions = {
       del = afterLf + del;
       state.before = state.before.slice(0, lf);
       state.start -= afterLf.length;
+      s -= afterLf.length;
       add = '\n';
     }
 
@@ -72,6 +73,27 @@ var actions = {
       start: state.start,
       end: state.end,
       inverse: options.inverse
+    };
+  },
+
+  'wrap': function(state, options){
+    var match = {
+      '(': ')',
+      '[': ']',
+      '{': '}',
+      '<': '>'
+    }[options.bracket] || options.bracket;
+
+    state.before += options.bracket;
+    state.after = match + state.after;
+    state.start += 1;
+    state.end += 1;
+
+    return {
+      add: options.bracket + state.sel + match,
+      del: state.sel,
+      start: state.start - 1,
+      end: state.end - 1
     };
   }
 };

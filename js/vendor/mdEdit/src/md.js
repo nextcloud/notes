@@ -3,6 +3,17 @@ var md = (function(){
     'comment': Prism['languages']['markup']['comment']
   };
 
+
+  md['front-matter'] = {
+    'pattern': /^---\n[\s\S]*?\n---(?=\n|$)/,
+    'inside': {
+      'marker front-matter-marker start': /^---/,
+      'marker front-matter-marker end': /---$/,
+      'rest': yaml
+    }
+  };
+
+
   var inlines = {};
   var blocks = {};
 
@@ -95,7 +106,7 @@ var md = (function(){
   };
   for(var i = 1; i <= 6; i += 1){
     block('heading heading-'+i, {
-      'pattern': new RegExp('^ {0,3}#{'+i+'}(?!#).*$', 'gm'),
+      'pattern': new RegExp('^ {0,3}#{'+i+'}(?![#\\S]).*$', 'gm'),
       'inside': headingInside
     });
   }
@@ -205,7 +216,9 @@ var md = (function(){
       'marker quote-marker': /^[\t ]*>[\t ]?/gm,
       'blockquote-content': {
         'pattern': /[^>]+/,
-        'rest': blocks
+        'inside': {
+          'rest': blocks
+        }
       }
     }
   });
