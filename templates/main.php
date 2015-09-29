@@ -21,7 +21,6 @@ script('notes', [
 style('notes', [
     '../js/vendor/mdEdit/mdedit',
     '../js/vendor/mdEdit/prism',
-    'vendor/bootstrap/tooltip',
     'notes'
 ]);
 
