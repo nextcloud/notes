@@ -13,6 +13,12 @@ app.directive('editor', ['$timeout', function ($timeout) {
 				});
 			}});
 			editor.setValue(scope.note.content);
+			element.on('click', '.link', function(event) {
+				if(event.ctrlKey) {
+					var url = $(this).find('.link-params-inner').text();
+					window.open(url, '_blank');
+				}
+			})
 		}
 	};
 }]);
