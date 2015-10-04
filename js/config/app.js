@@ -61,6 +61,9 @@ config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
 
 }).run(function ($rootScope, $location, NotesModel) {
     'use strict';
+
+    $('link[rel="shortcut icon"]').attr('href', OC.filePath('notes', 'img', 'favicon.png'));
+
     // handle route errors
     $rootScope.$on('$routeChangeError', function () {
         var notes = NotesModel.getAll();
