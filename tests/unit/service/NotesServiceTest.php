@@ -84,7 +84,7 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetAll(){
         $nodes = [];
         $nodes[] = $this->createNode('file1.txt', 'file', 'text/plain');
-        $nodes[] = $this->createNode('file2.txt', 'file', 'text/xml');
+        $nodes[] = $this->createNode('file1.jpg', 'file', 'image/jpeg');
         $nodes[] = $this->createNode('file3.txt', 'folder', 'text/plain');
 
         $this->expectUserFolder();
@@ -133,9 +133,9 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException OCA\Notes\Service\NoteDoesNotExistException
      */
-    public function testGetDoesNotExistWrongMime(){
+    public function testGetDoesNotExistWrongExtension(){
             $nodes = [];
-        $nodes[] = $this->createNode('file1.txt', 'file', 'text/xml');
+        $nodes[] = $this->createNode('file1.jpg', 'file', 'image/jpeg');
 
         $this->expectUserFolder();
         $this->userFolder->expects($this->once())
@@ -183,9 +183,9 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException OCA\Notes\Service\NoteDoesNotExistException
      */
-    public function testDeleteDoesNotExistWrongMime(){
+    public function testDeleteDoesNotExistWrongExtension(){
         $nodes = [];
-        $nodes[] = $this->createNode('file1.txt', 'file', 'text/xml');
+        $nodes[] = $this->createNode('file1.jpg', 'file', 'image/jpeg');
 
         $this->expectUserFolder();
         $this->userFolder->expects($this->once())
