@@ -7,6 +7,7 @@ The Notes app is a distraction free notes taking app. It offers a [RESTful API](
 For further developer and user documentation please visit [the wiki](https://github.com/owncloud/notes/wiki)
 
 # Maintainers
+- [Hendrik Leppelsack](https://github.com/Henni)
 - [Lukas Reschke](https://github.com/LukasReschke)
 
 # Minimum PHP Version
