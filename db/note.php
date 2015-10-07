@@ -20,8 +20,10 @@ use OCP\AppFramework\Db\Entity;
  * @method void setId(integer $value)
  * @method integer getModified()
  * @method void setModified(integer $value)
- * @method integer getContent()
- * @method void setContent(integer $value)
+ * @method string getTitle()
+ * @method void setTitle(string $value)
+ * @method string getContent()
+ * @method void setContent(string $value)
  * @package OCA\Notes\Db
  */
 class Note extends Entity {
@@ -43,7 +45,7 @@ class Note extends Entity {
         $note->setId($file->getId());
         $note->setContent($file->getContent());
         $note->setModified($file->getMTime());
-        $note->setTitle(substr($file->getName(), 0, -4)); // remove trailing .txt
+        $note->setTitle(pathinfo($file->getName(),PATHINFO_FILENAME)); // remove extension
         $note->resetUpdatedFields();
         return $note;
     }

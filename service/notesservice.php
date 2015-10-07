@@ -47,7 +47,7 @@ class NotesService {
         $notes = [];
 
         foreach($files as $file) {
-            if($file->getType() === 'file' && $file->getMimeType() === 'text/plain') {
+            if($this->isNote($file)) {
                 $notes[] = Note::fromFile($file);
             }
         }
@@ -82,7 +82,7 @@ class NotesService {
         // check new note exists already and we need to number it
         // pass -1 because no file has id -1 and that will ensure
         // to only return filenames that dont yet exist
-        $path = $this->generateFileName($folder, $title, -1);
+        $path = $this->generateFileName($folder, $title, "txt", -1);
         $file = $folder->newFile($path);
 
         return Note::fromFile($file);
@@ -118,7 +118,8 @@ class NotesService {
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
         $basePath = '/' . $userId . '/files/Notes/';
-        $newFilePath = $basePath . $this->generateFileName($folder, $title, $id);
+        $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
+        $newFilePath = $basePath . $this->generateFileName($folder, $title, $fileExtension, $id);
 
         // if the current path is not the new path, the file has to be renamed
         if($currentFilePath !== $newFilePath) {
@@ -126,6 +127,8 @@ class NotesService {
         }
 
         $file->putContent($content);
+
+        \OCP\Util::writeLog('notes', print_r(Note::fromFile($file), true), \OCP\Util::ERROR);
 
         return Note::fromFile($file);
     }
@@ -154,7 +157,7 @@ class NotesService {
     private function getFileById ($folder, $id) {
         $file = $folder->getById($id);
 
-        if(count($file) <= 0 || $file[0]->getMimeType() !== 'text/plain') {
+        if(count($file) <= 0 || !$this->isNote($file[0])) {
             throw new NoteDoesNotExistException();
         }
 
@@ -180,16 +183,18 @@ class NotesService {
     /**
      * get path of file and the title.txt and check if they are the same
      * file. If not the title needs to be renamed
+     *
      * @param Folder $folder a folder to the notes directory
-     * @param string $title the filename which should be used, .txt is appended
+     * @param string $title the filename which should be used
+     * @param string $extension the extension which should be used
      * @param int $id the id of the note for which the title should be generated
      * used to see if the file itself has the title and not a different file for
      * checking for filename collisions
      * @return string the resolved filename to prevent overwriting different
      * files with the same title
      */
-    private function generateFileName (Folder $folder, $title, $id) {
-        $path = $title . '.txt';
+    private function generateFileName (Folder $folder, $title, $extension, $id) {
+        $path = $title . '.' . $extension;
 
         // if file does not exist, that name has not been taken. Similar we don't
         // need to handle file collisions if it is the filename did not change
@@ -205,9 +210,26 @@ class NotesService {
             } else {
                 $newTitle = $title . ' (2)';
             }
-            return $this->generateFileName($folder, $newTitle, $id);
+            return $this->generateFileName($folder, $newTitle, $extension, $id);
         }
     }
 
+    /**
+     * test if file is a note
+     *
+     * @param \OCP\Files\File $file
+     * @return bool
+     */
+    private function isNote($file) {
+        $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
+
+        if($file->getType() !== 'file') return false;
+        if(!in_array(
+            pathinfo($file->getName(), PATHINFO_EXTENSION),
+            $allowedExtensions
+        )) return false;
+
+        return true;
+    }
 
 }
