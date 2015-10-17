@@ -10,6 +10,6 @@
     <category>multimedia</category>
     <description>Distraction-free notes and writing</description>
     <dependencies>
-        <owncloud min-version="8.1" max-version="8.2" />
+        <owncloud min-version="8.1" max-version="9.0" />
     </dependencies>
 </info>
