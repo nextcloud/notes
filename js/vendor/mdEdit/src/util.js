@@ -1,4 +1,3 @@
-
 var evt = {
   bind: function(el, evt, fn){
     el.addEventListener(evt, fn, false);

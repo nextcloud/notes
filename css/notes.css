@@ -113,9 +113,9 @@
         padding-left: 90px;
         display: inline-block;
     }
-    .mdedit > .token > .heading-hash,
-    .mdedit > .token > .li > .list-item,
-    .mdedit > .token > .quote-marker {
+    .mdedit > div > .token > .heading-hash,
+    .mdedit > div > .token > .li > .list-item,
+    .mdedit > div > .token > .quote-marker {
         width: 90px;
         margin-left: -90px;
         display: inline-block;
