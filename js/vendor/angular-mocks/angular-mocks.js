@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.4.0-rc.1
+ * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -94,7 +94,7 @@ angular.mock.$Browser = function() {
       if (fn.id === deferId) fnIndex = index;
     });
 
-    if (fnIndex !== undefined) {
+    if (angular.isDefined(fnIndex)) {
       self.deferredFns.splice(fnIndex, 1);
       return true;
     }
@@ -469,7 +469,7 @@ angular.mock.$IntervalProvider = function() {
             if (fn.id === promise.$$intervalId) fnIndex = index;
           });
 
-          if (fnIndex !== undefined) {
+          if (angular.isDefined(fnIndex)) {
             repeatFns.splice(fnIndex, 1);
           }
         }
@@ -511,7 +511,7 @@ angular.mock.$IntervalProvider = function() {
         if (fn.id === promise.$$intervalId) fnIndex = index;
       });
 
-      if (fnIndex !== undefined) {
+      if (angular.isDefined(fnIndex)) {
         repeatFns[fnIndex].deferred.reject('canceled');
         repeatFns.splice(fnIndex, 1);
         return true;
@@ -762,37 +762,70 @@ angular.mock.animate = angular.module('ngAnimateMock', ['ng'])
 
   .config(['$provide', function($provide) {
 
-    var reflowQueue = [];
-    $provide.value('$$animateReflow', function(fn) {
-      var index = reflowQueue.length;
-      reflowQueue.push(fn);
-      return function cancel() {
-        reflowQueue.splice(index, 1);
-      };
+    $provide.factory('$$forceReflow', function() {
+      function reflowFn() {
+        reflowFn.totalReflows++;
+      }
+      reflowFn.totalReflows = 0;
+      return reflowFn;
     });
 
-    $provide.decorator('$animate', ['$delegate', '$$asyncCallback', '$timeout', '$browser', '$$rAF',
-                            function($delegate,   $$asyncCallback,   $timeout,   $browser,   $$rAF) {
+    $provide.factory('$$animateAsyncRun', function() {
+      var queue = [];
+      var queueFn = function() {
+        return function(fn) {
+          queue.push(fn);
+        };
+      };
+      queueFn.flush = function() {
+        if (queue.length === 0) return false;
+
+        for (var i = 0; i < queue.length; i++) {
+          queue[i]();
+        }
+        queue = [];
+
+        return true;
+      };
+      return queueFn;
+    });
+
+    $provide.decorator('$animate', ['$delegate', '$timeout', '$browser', '$$rAF',
+                                    '$$forceReflow', '$$animateAsyncRun', '$rootScope',
+                            function($delegate,   $timeout,   $browser,   $$rAF,
+                                     $$forceReflow,   $$animateAsyncRun,  $rootScope) {
       var animate = {
         queue: [],
         cancel: $delegate.cancel,
+        on: $delegate.on,
+        off: $delegate.off,
+        pin: $delegate.pin,
+        get reflows() {
+          return $$forceReflow.totalReflows;
+        },
         enabled: $delegate.enabled,
-        triggerCallbackEvents: function() {
-          $$rAF.flush();
-          $$asyncCallback.flush();
-        },
-        triggerCallbackPromise: function() {
-          $timeout.flush(0);
-        },
-        triggerCallbacks: function() {
-          this.triggerCallbackEvents();
-          this.triggerCallbackPromise();
-        },
-        triggerReflow: function() {
-          angular.forEach(reflowQueue, function(fn) {
-            fn();
-          });
-          reflowQueue = [];
+        flush: function() {
+          $rootScope.$digest();
+
+          var doNextRun, somethingFlushed = false;
+          do {
+            doNextRun = false;
+
+            if ($$rAF.queue.length) {
+              $$rAF.flush();
+              doNextRun = somethingFlushed = true;
+            }
+
+            if ($$animateAsyncRun.flush()) {
+              doNextRun = somethingFlushed = true;
+            }
+          } while (doNextRun);
+
+          if (!somethingFlushed) {
+            throw new Error('No pending animations ready to be closed or flushed');
+          }
+
+          $rootScope.$digest();
         }
       };
 
@@ -1009,7 +1042,7 @@ angular.mock.dump = function(object) {
       $http.post('/add-msg.py', message, { headers: headers } ).success(function(response) {
         $scope.status = '';
       }).error(function() {
-        $scope.status = 'ERROR!';
+        $scope.status = 'Failed...';
       });
     };
   }
@@ -1090,7 +1123,7 @@ angular.mock.dump = function(object) {
          $httpBackend.flush();
 
          $httpBackend.expectPOST('/add-msg.py', undefined, function(headers) {
-           // check if the header was send, if it wasn't the expectation won't
+           // check if the header was sent, if it wasn't the expectation won't
            // match the request and the test will fail
            return headers['Authorization'] == 'xxx';
          }).respond(201, '');
@@ -1744,45 +1777,31 @@ angular.mock.$TimeoutDecorator = ['$delegate', '$browser', function($delegate, $
 }];
 
 angular.mock.$RAFDecorator = ['$delegate', function($delegate) {
-  var queue = [];
   var rafFn = function(fn) {
-    var index = queue.length;
-    queue.push(fn);
+    var index = rafFn.queue.length;
+    rafFn.queue.push(fn);
     return function() {
-      queue.splice(index, 1);
+      rafFn.queue.splice(index, 1);
     };
   };
 
+  rafFn.queue = [];
   rafFn.supported = $delegate.supported;
 
   rafFn.flush = function() {
-    if (queue.length === 0) {
+    if (rafFn.queue.length === 0) {
       throw new Error('No rAF callbacks present');
     }
 
-    var length = queue.length;
+    var length = rafFn.queue.length;
     for (var i = 0; i < length; i++) {
-      queue[i]();
+      rafFn.queue[i]();
     }
 
-    queue = queue.slice(i);
+    rafFn.queue = rafFn.queue.slice(i);
   };
 
   return rafFn;
-}];
-
-angular.mock.$AsyncCallbackDecorator = ['$delegate', function($delegate) {
-  var callbacks = [];
-  var addFn = function(fn) {
-    callbacks.push(fn);
-  };
-  addFn.flush = function() {
-    angular.forEach(callbacks, function(fn) {
-      fn();
-    });
-    callbacks = [];
-  };
-  return addFn;
 }];
 
 /**
@@ -1827,7 +1846,7 @@ angular.mock.$RootElementProvider = function() {
  *
  * describe('myDirectiveController', function() {
  *   it('should write the bound name to the log', inject(function($controller, $log) {
- *     var ctrl = $controller('MyDirective', { /* no locals &#42;/ }, { name: 'Clark Kent' });
+ *     var ctrl = $controller('MyDirectiveController', { /* no locals &#42;/ }, { name: 'Clark Kent' });
  *     expect(ctrl.name).toEqual('Clark Kent');
  *     expect($log.info.logs).toEqual(['Clark Kent']);
  *   });
@@ -1891,7 +1910,6 @@ angular.module('ngMock', ['ng']).provider({
 }).config(['$provide', function($provide) {
   $provide.decorator('$timeout', angular.mock.$TimeoutDecorator);
   $provide.decorator('$$rAF', angular.mock.$RAFDecorator);
-  $provide.decorator('$$asyncCallback', angular.mock.$AsyncCallbackDecorator);
   $provide.decorator('$rootScope', angular.mock.$RootScopeDecorator);
   $provide.decorator('$controller', angular.mock.$ControllerDecorator);
 }]);
