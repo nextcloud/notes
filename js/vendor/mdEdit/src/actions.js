@@ -1,4 +1,3 @@
-
 var actions = {
   'newline': function(state, options){
     var s = state.start;

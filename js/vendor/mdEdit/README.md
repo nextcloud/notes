@@ -6,12 +6,14 @@ As seen in my [online markdown editor](//jbt.github.io/markdown-editor) (the lef
 
 Requires [Prism](//prismjs.com) - Prism core is required plus any languages you want to be syntax-highlighted inside fenced code blocks. The bundled `prism-all.js` includes _all_ available languages.
 
+
 ## Usage
 
  * Include `prism.css` and `mdedit.css`
  * Include `prism-all.js` and `mdedit.js`
  * Include a `<pre>` element where you want an editor
  * Then `var editor = mdEdit(thatPreElement, {options})`;
+
 
 ## API
 
@@ -21,3 +23,8 @@ Requires [Prism](//prismjs.com) - Prism core is required plus any languages you 
 
  * `editor.getValue()` - returns the current value of the editor view
  * `editor.setValue(val)` - sets the current value to `val` and updates the view
+
+
+## Browser support
+
+Anything that supports ES5 well enough. That means (hopefully) IE9+, and all recent versions of all the other browsers.
