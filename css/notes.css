@@ -73,6 +73,7 @@
 
 #app-content .note-meta {
     padding: 0 90px 30px;
+    margin: -10px 0 0;
     opacity: .2;
     -ms-user-select: none;
     -moz-user-select: none;
