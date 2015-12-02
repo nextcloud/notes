@@ -72,7 +72,7 @@
 }
 
 #app-content .note-meta {
-    padding: 0 90px 30px;
+    padding: 0 45px 30px 45px;
     margin: -10px 0 0;
     opacity: .2;
     -ms-user-select: none;
@@ -116,7 +116,6 @@
     font-weight: 600;
 }
 
-
 .mdedit .hr {
     position: relative;
     display: inline-block;
@@ -138,18 +137,28 @@
     border-top: 1px solid rgba(120, 120, 120, 0.5);
 }
 
-@media only screen and (min-width: 769px) { /* desktop */
-    #app-content .mdedit {
+
+/* hanging punctuation */
+#app-content .mdedit {
+    padding-left: 45px;
+    display: inline-block;
+}
+.mdedit > div > .token > .heading-hash,
+.mdedit > div > .token > .li > .list-item,
+.mdedit > div > .token > .quote-marker {
+    width: 90px;
+    margin-left: -90px;
+    display: inline-block;
+    text-align: right;
+    white-space: pre;
+}
+
+
+/* larger screen sizes */
+@media only screen and (min-width: 769px) {
+    /* use slightly more space on the left so all # signs of h3–h6 show */
+    #app-content .mdedit,
+    #app-content .note-meta {
         padding-left: 90px;
-        display: inline-block;
-    }
-    .mdedit > div > .token > .heading-hash,
-    .mdedit > div > .token > .li > .list-item,
-    .mdedit > div > .token > .quote-marker {
-        width: 90px;
-        margin-left: -90px;
-        display: inline-block;
-        text-align: right;
-        white-space: pre;
     }
 }
