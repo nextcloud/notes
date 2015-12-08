@@ -63,8 +63,8 @@
     width: 100%;
     margin: 0 0 -50px;
     padding: 30px 20px 90px 30px;
-    font-size: 18px;
-    line-height: 30px;
+    font-size: 16px;
+    line-height: 170%;
     background: none;
     resize: none;
     -moz-box-sizing: border-box; box-sizing: border-box;
@@ -87,7 +87,35 @@
     -webkit-transition: none !important;
 }
 
+
 /* markdown styling */
+
+.mdedit .heading {
+    /* break from core in using semibold, otherwise not emphasized in texts */
+	font-weight: 600;
+}
+.mdedit .heading.heading-1 {
+    font-size: 40px;
+    margin: 50px 0 20px;
+    line-height: 120%;
+}
+.mdedit .heading.heading-2 {
+	font-size: 20px;
+    margin-top: 12px;
+    line-height: 150%;
+}
+.mdedit .heading.heading-3,
+.mdedit .heading.heading-4,
+.mdedit .heading.heading-5,
+.mdedit .heading.heading-6 {
+	font-size: 16px;
+    margin: 0;
+    font-weight: 300;
+}
+.mdedit .heading.heading-3 {
+    font-weight: 600;
+}
+
 
 .mdedit .hr {
     position: relative;
