@@ -5,10 +5,13 @@
     <licence>AGPL</licence>
     <author>Bernhard Posselt, Jan-Christoph Borchardt</author>
     <require>8.1</require>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
     <namespace>Notes</namespace>
-    <category>multimedia</category>
+    <category>tools</category>
     <description>Distraction-free notes and writing</description>
+    <bugs>https://github.com/owncloud/notes/issues</bugs>
+    <repository type="git">https://github.com/owncloud/notes.git</repository>
+    <ocsid>174554</ocsid>
     <dependencies>
         <owncloud min-version="8.1" max-version="9.0" />
     </dependencies>
