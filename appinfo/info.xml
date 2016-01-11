@@ -4,7 +4,7 @@
     <name>Notes</name>
     <licence>AGPL</licence>
     <author>Bernhard Posselt, Jan-Christoph Borchardt</author>
-    <require>8.1</require>
+    <requiremin>8.1</requiremin>
     <version>2.0.0</version>
     <namespace>Notes</namespace>
     <category>tools</category>
