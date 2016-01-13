@@ -18,7 +18,7 @@ app.directive('editor', ['$timeout', function ($timeout) {
 					var url = $(this).find('.link-params-inner').text();
 					window.open(url, '_blank');
 				}
-			})
+			});
 		}
 	};
 }]);
