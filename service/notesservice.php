@@ -112,6 +112,9 @@ class NotesService {
 
         // prevent directory traversal
         $title = str_replace(array('/', '\\'), '',  $title);
+        // remove hash and space characters from the beginning of the filename
+        // in case of markdown
+        $title = ltrim($title, ' #');
         // using a maximum of 100 chars should be enough
         $title = substr($title, 0, 100);
 
