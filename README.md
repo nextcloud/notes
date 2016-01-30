@@ -6,41 +6,45 @@ The Notes app is a distraction free notes taking app. It offers a [RESTful API](
 
 For further developer and user documentation please visit [the wiki](https://github.com/owncloud/notes/wiki)
 
-# Maintainers
+## Maintainers
 - [Hendrik Leppelsack](https://github.com/Henni)
 - [Lukas Reschke](https://github.com/LukasReschke)
 
-# Minimum PHP Version
+##Requirements
+##### Minimum PHP Version
 * PHP >= 5.4
 
-# Minimum ownCloud Version
+##### Minimum ownCloud Version
 * >= 8.1
 
-# Supported Webservers
+##### Supported Webservers
 * Apache
 
+##### Supported Browsers
+* latest 3 versions of Chrome, Firefox and Edge 
+* we *do not* officially support Internet Explorer and Safari (Patches accepted though)
 
-Bugs
-----
+
+## Bugs
 Before reporting bugs:
 
-* We do not support Internet Explorer and Safari (Patches accepted though, except for IE < 10)
+* check the requirements above
 * get the newest version of the Notes app
 * [check if they have already been reported](https://github.com/owncloud/notes/issues?state=open)
 
 
-# Git (development version)
+## Git (development version)
 
-## Installation
+#### Installation
 
 * Clone the **Notes** app into the **/var/www/owncloud/apps/** directory
 
-    git clone https://github.com/owncloud/notes.git
+    ```git clone https://github.com/owncloud/notes.git```
 
 * Activate the **Notes** app in the apps menu
 
 
-## Keep up to date
+#### Keep up to date
 
 To update the Notes app use::
 
