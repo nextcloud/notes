@@ -3,8 +3,7 @@
     <id>notes</id>
     <name>Notes</name>
     <licence>AGPL</licence>
-    <author>Bernhard Posselt, Jan-Christoph Borchardt</author>
-    <requiremin>8.1</requiremin>
+    <author>Bernhard Posselt, Jan-Christoph Borchardt, Hendrik Leppelsack</author>
     <version>2.0.0</version>
     <namespace>Notes</namespace>
     <category>tools</category>
@@ -13,6 +12,6 @@
     <repository type="git">https://github.com/owncloud/notes.git</repository>
     <ocsid>174554</ocsid>
     <dependencies>
-        <owncloud min-version="8.1" max-version="9.0" />
+        <owncloud min-version="8.1" max-version="9.1" />
     </dependencies>
 </info>
