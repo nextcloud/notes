@@ -50,7 +50,7 @@ config(function($provide, $routeProvider, RestangularProvider, $httpProvider,
         redirectTo: '/'
     });
 
-    var baseUrl = OC.linkTo('notes', '/');
+    var baseUrl = OC.generateUrl('/apps/notes');
     RestangularProvider.setBaseUrl(baseUrl);
 
 
