@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Заметки",
     "New note" : "Новая заметка",
-    "Note is currently saving. Leaving " : "Заметка сейчас сохраняется. Уходим.",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слов","%n слов"],
     "Delete note" : "Удалить заметку"
 },

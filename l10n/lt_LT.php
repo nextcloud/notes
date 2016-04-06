@@ -2,7 +2,6 @@
 $TRANSLATIONS = array(
 "Notes" => "Pastabos",
 "New note" => "Nauja pastaba",
-"Note is currently saving. Leaving " => "Užrašas išsaugomas. Uždaroma",
 "_%n word_::_%n words_" => array("%n žodis","%n žodžių","%n žodžių"),
 "Delete note" => "Ištrinti pastabą"
 );

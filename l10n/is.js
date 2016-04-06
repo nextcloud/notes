@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Minnispunktar",
     "New note" : "Nýr minnispunktur",
-    "Note is currently saving. Leaving " : "Minnispunktur er nú að vistast. Loka",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
     "Delete note" : "Eyða minnispunkti"
 },

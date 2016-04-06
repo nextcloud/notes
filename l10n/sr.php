@@ -2,7 +2,6 @@
 $TRANSLATIONS = array(
 "Notes" => "Белешке",
 "New note" => "Нова белешка",
-"Note is currently saving. Leaving " => "Белешка се тренутно снима. Излазим",
 "_%n word_::_%n words_" => array("%n реч","%n речи","%n речи"),
 "Delete note" => "Обриши белешку"
 );
