@@ -116,7 +116,7 @@ class NotesService {
         // in case of markdown
         $title = ltrim($title, ' #');
         // using a maximum of 100 chars should be enough
-        $title = substr($title, 0, 100);
+        $title = mb_substr($title, 0, 100, "UTF-8");
 
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
