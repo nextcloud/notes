@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Sporočilca",
     "New note" : "Novo sporočilce",
+    "Note is currently saving. Leaving the page will delete all changes!" : "Sporočilce se še shranjuje. Če zapustite stran, bodo spremembe izgubljene!",
     "_%n word_::_%n words_" : ["%n beseda","%n besedi","%n besede","%n besed"],
     "Delete note" : "Izbriši sporočilce"
 },
