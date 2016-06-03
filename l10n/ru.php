@@ -2,7 +2,7 @@
 $TRANSLATIONS = array(
 "Notes" => "Заметки",
 "New note" => "Новая заметка",
-"Note is currently saving. Leaving the page will delete all changes!" => "Заметка сейчас сохраняется. Покинув страницу, будут удалены все изменения!",
+"Note is currently saving. Leaving the page will delete all changes!" => "Заметка сейчас сохраняется. Если покинуть страницу, будут удалены все изменения!",
 "_%n word_::_%n words_" => array("%n слово","%n слова","%n слов","%n слов"),
 "Delete note" => "Удалить заметку"
 );
