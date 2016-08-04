@@ -131,8 +131,6 @@ class NotesService {
 
         $file->putContent($content);
 
-        \OCP\Util::writeLog('notes', print_r(Note::fromFile($file), true), \OCP\Util::ERROR);
-
         return Note::fromFile($file);
     }
 
