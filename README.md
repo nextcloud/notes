@@ -4,6 +4,8 @@
 
 The Notes app is a distraction free notes taking app. It offers a [RESTful API](https://github.com/owncloud/notes/wiki/API-0.2) for app developers. The source code is [available on GitHub](https://github.com/owncloud/notes)
 
+![Screenshot of ownCloud Notes](https://cloud.githubusercontent.com/assets/4741199/17731273/e557b5fe-646c-11e6-9975-d6b242454482.png)
+
 For further developer and user documentation please visit [the wiki](https://github.com/owncloud/notes/wiki)
 
 ## Maintainers
