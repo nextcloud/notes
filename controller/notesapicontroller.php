@@ -125,11 +125,19 @@ class NotesApiController extends ApiController {
      *
      * @param int $id
      * @param string $content
+     * @param boolean $favorite
      * @return DataResponse
      */
-    public function update($id, $content) {
+    public function update($id, $content=null, $favorite=null) {
+        if($favorite!==null) {
+            $this->service->favorite($id, $favorite, $this->userId);
+        }
         return $this->respond(function () use ($id, $content) {
-            return $this->service->update($id, $content, $this->userId);
+            if($content===null) {
+                return $this->service->get($id, $this->userId);
+            } else {
+                return $this->service->update($id, $content, $this->userId);
+            }
         });
     }
 

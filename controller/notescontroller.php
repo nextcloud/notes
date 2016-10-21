@@ -109,6 +109,20 @@ class NotesController extends Controller {
      * @NoAdminRequired
      *
      * @param int $id
+     * @param boolean $favorite
+     * @return DataResponse
+     */
+    public function favorite($id, $favorite) {
+        return $this->respond(function () use ($id, $favorite) {
+            return $this->notesService->favorite($id, $favorite, $this->userId);
+        });
+    }
+
+
+    /**
+     * @NoAdminRequired
+     *
+     * @param int $id
      * @return DataResponse
      */
     public function destroy($id) {

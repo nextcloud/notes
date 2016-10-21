@@ -35,4 +35,12 @@ app.controller('NotesController', function($routeParams, $scope, $location,
         });
     };
 
+    $scope.toggleFavorite = function (noteId) {
+        var note = NotesModel.get(noteId);
+        note.customPUT({favorite: !note.favorite},
+            'favorite', {}, {}).then(function (favorite) {
+            note.favorite = favorite ? true : false;
+        });
+    };
+
 });

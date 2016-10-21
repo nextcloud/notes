@@ -44,12 +44,22 @@ class NotesService {
     public function getAll ($userId){
         $folder = $this->getFolderForUser($userId);
         $files = $folder->getDirectoryListing();
-        $notes = [];
-
+        $filesById = [];
         foreach($files as $file) {
             if($this->isNote($file)) {
-                $notes[] = Note::fromFile($file);
+                $filesById[$file->getId()] = $file;
             }
+        }
+        $tagger = \OC::$server->getTagManager()->load('files');
+        if($tagger==null) {
+            $tags = [];
+        } else {
+            $tags = $tagger->getTagsForObjects(array_keys($filesById));
+        }
+
+        $notes = [];
+        foreach($filesById as $id=>$file) {
+            $notes[] = Note::fromFile($file, array_key_exists($id, $tags) ? $tags[$id] : []);
         }
 
         return $notes;
@@ -65,9 +75,18 @@ class NotesService {
      */
     public function get ($id, $userId) {
         $folder = $this->getFolderForUser($userId);
-        return Note::fromFile($this->getFileById($folder, $id));
+        return Note::fromFile($this->getFileById($folder, $id), $this->getTags($id));
     }
 
+    private function getTags ($id) {
+        $tagger = \OC::$server->getTagManager()->load('files');
+        if($tagger==null) {
+            $tags = [];
+        } else {
+            $tags = $tagger->getTagsForObjects([$id]);
+        }
+        return array_key_exists($id, $tags) ? $tags[$id] : [];
+    }
 
     /**
      * Creates a note and returns the empty note
@@ -131,7 +150,31 @@ class NotesService {
 
         $file->putContent($content);
 
-        return Note::fromFile($file);
+        return Note::fromFile($file, $this->getTags($id));
+    }
+
+
+    /**
+     * Set or unset a note as favorite.
+     * @param int $id the id of the note used to update
+     * @param boolean $favorite whether the note should be a favorite or not
+     * @throws NoteDoesNotExistException if note does not exist
+     * @return boolean the new favorite state of the note
+     */
+    public function favorite ($id, $favorite, $userId){
+        $folder = $this->getFolderForUser($userId);
+        $file = $this->getFileById($folder, $id);
+        if(!$this->isNote($file)) {
+            throw new NoteDoesNotExistException();
+        }
+        $tagger = \OC::$server->getTagManager()->load('files');
+        if($favorite)
+            $tagger->addToFavorites($id);
+        else
+            $tagger->removeFromFavorites($id);
+
+        $tags = $tagger->getTagsForObjects([$id]);
+        return in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
     }
 
 
@@ -161,7 +204,6 @@ class NotesService {
         if(count($file) <= 0 || !$this->isNote($file[0])) {
             throw new NoteDoesNotExistException();
         }
-
         return $file[0];
     }
 

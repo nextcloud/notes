@@ -42,7 +42,7 @@ style('notes', [
                 <a href='#'>+ <span><?php p($l->t('New note')); ?></span></a>
             </li>
             <!-- notes list -->
-            <li ng-repeat="note in notes|orderBy:'modified':'reverse'"
+            <li ng-repeat="note in notes|orderBy:['-favorite','-modified']"
                 ng-class="{ active: note.id == route.noteId }">
                 <a href="#/notes/{{ note.id }}">
                     {{ note.title | noteTitle }}
@@ -53,6 +53,12 @@ style('notes', [
                         notes-tooltip
                         data-placement="bottom"
                         ng-click="delete(note.id)"></button>
+                    <button class="svg action icon-star"
+                        title="<?php p($l->t('Favorite')); ?>"
+                        notes-tooltip
+                        data-placement="bottom"
+                        ng-click="toggleFavorite(note.id)"
+                        ng-class="{'icon-starred': note.favorite}"></button>
                 </span>
             </li>
 
