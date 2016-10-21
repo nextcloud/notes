@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 lang_map = ja_JP: ja
 
-[owncloud.notes]
+[nextcloud.notes]
 file_filter = <lang>/notes.po
 source_file = templates/notes.pot
 source_lang = en
