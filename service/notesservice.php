@@ -11,6 +11,7 @@
 
 namespace OCA\Notes\Service;
 
+use OCP\Files\FileInfo;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
@@ -42,13 +43,10 @@ class NotesService {
      * @return array with all notes in the current directory
      */
     public function getAll ($userId){
-        $folder = $this->getFolderForUser($userId);
-        $files = $folder->getDirectoryListing();
+        $notes = $this->gatherNoteFiles($this->getFolderForUser($userId));
         $filesById = [];
-        foreach($files as $file) {
-            if($this->isNote($file)) {
-                $filesById[$file->getId()] = $file;
-            }
+        foreach($notes as $note) {
+            $filesById[$note->getId()] = $note;
         }
         $tagger = \OC::$server->getTagManager()->load('files');
         if($tagger==null) {
@@ -118,8 +116,9 @@ class NotesService {
      * @return \OCA\Notes\Db\Note the updated note
      */
     public function update ($id, $content, $userId){
-        $folder = $this->getFolderForUser($userId);
-        $file = $this->getFileById($folder, $id);
+        $notesFolder = $this->getFolderForUser($userId);
+        $file = $this->getFileById($notesFolder, $id);
+        $folder = $file->getParent();
 
         // generate content from the first line of the title
         $splitContent = explode("\n", $content);
@@ -139,9 +138,10 @@ class NotesService {
 
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
-        $basePath = '/' . $userId . '/files/Notes/';
+        $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
+        \OCP\Util::writeLog('notes', $basePath, \OCP\Util::ERROR);
         $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
-        $newFilePath = $basePath . $this->generateFileName($folder, $title, $fileExtension, $id);
+        $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
 
         // if the current path is not the new path, the file has to be renamed
         if($currentFilePath !== $newFilePath) {
@@ -256,6 +256,29 @@ class NotesService {
             return $this->generateFileName($folder, $newTitle, $extension, $id);
         }
     }
+
+
+	/**
+	 * gather note files in given directory and all subdirectories
+	 * @param Folder $folder
+	 * @return array
+	 */
+	private function gatherNoteFiles ($folder) {
+		$notes = [];
+		$nodes = $folder->getDirectoryListing();
+		foreach($nodes as $node) {
+			\OCP\Util::writeLog('notes', $node->getType(), \OCP\Util::ERROR);
+			if($node->getType() === FileInfo::TYPE_FOLDER) {
+				$notes = array_merge($notes, $this->gatherNoteFiles($node));
+				continue;
+			}
+			if($this->isNote($node)) {
+				$notes[] = $node;
+			}
+		}
+		return $notes;
+	}
+
 
     /**
      * test if file is a note
