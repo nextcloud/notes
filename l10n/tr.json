@@ -1,8 +1,9 @@
 { "translations": {
     "Notes" : "Notlar",
-    "New note" : "Yeni not",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Not halen kaydediliyor. Sayfadan ayrılmanız tüm değişiklikleri silecektir!",
-    "_%n word_::_%n words_" : ["%n kelime","%n kelime"],
-    "Delete note" : "Notu sil"
+    "New note" : "Not ekle",
+    "Note is currently saving. Leaving the page will delete all changes!" : "Not şu anda kaydediliyor. Sayfadan ayrılırsanız yapılan değişiklikler silinir!",
+    "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
+    "Delete note" : "Notu sil",
+    "Favorite" : "Sık kullanılan"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
