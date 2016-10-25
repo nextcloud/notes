@@ -27,4 +27,9 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
         SaveQueue.add(note);
     }, 300);
 
+    $scope.toggleDistractionFree = function() {
+        var body = angular.element(document).find('body')[0];
+        body.classList.toggle('distraction-free');
+    };
+
 });

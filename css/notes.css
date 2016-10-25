@@ -134,6 +134,10 @@
     z-index: 5;
 }
 
+#app-content .note-meta-right {
+	float: right;
+}
+
 #app-content .saving {
     background: url('../img/loading.gif') no-repeat right 15px top 15px / 24px !important;
     /* Overrides the snap.js animation making the loading icon to fly in app-content. */
@@ -202,6 +206,24 @@
     text-align: right;
     white-space: pre;
     color: rgba(120, 120, 120, 0.5);
+}
+
+
+/* distraction free styles */
+.distraction-free #header,
+.distraction-free #navigation,
+.distraction-free #app-navigation,
+.distraction-free #app-navigation-toggle {
+	display: none;
+}
+
+.distraction-free #content-wrapper {
+	padding-top: 0;
+}
+
+.distraction-free #app-content-container {
+	max-width: 1000px;
+	margin: 0 auto;
 }
 
 
