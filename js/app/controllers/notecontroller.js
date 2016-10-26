@@ -6,7 +6,7 @@
  */
 
 app.controller('NoteController', function($routeParams, $scope, NotesModel,
-                                          SaveQueue, note) {
+                                          SaveQueue, note, debounce) {
     'use strict';
 
     NotesModel.updateIfExists(note);
@@ -22,9 +22,9 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
             t('notes', 'New note');
     };
 
-    $scope.save = function() {
+    $scope.save = debounce(function() {
         var note = $scope.note;
         SaveQueue.add(note);
-    };
+    }, 300);
 
 });

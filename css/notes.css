@@ -103,28 +103,24 @@
 }
 
 /* special styling to make editor subtle and fit the window */
-#app-content pre {
-    display: block;
+.CodeMirror {
+    position: relative;
     min-height: 100%;
-    width: 100%;
-    max-width: 47em;
-    margin: 0 0 -50px;
-    padding: 30px 20px 90px 30px;
     font-size: 16px;
-    line-height: 170%;
-    background: none;
-    resize: none;
-    box-sizing: border-box;
-    font-family: inherit;
+    margin: 0 0 -50px;
+    padding: 30px 0 90px;
+    border: none;
 }
 
 #app-content .note-meta {
+    position: relative;
     padding: 0 45px 30px 45px;
     margin: -10px 0 0;
     opacity: .2;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    z-index: 5;
 }
 
 #app-content .saving {
@@ -137,65 +133,61 @@
 
 /* markdown styling */
 
-.mdedit .heading {
+.CodeMirror .CodeMirror-code .cm-header {
     /* break from core in using semibold, otherwise not emphasized in texts */
 	font-weight: 600;
 }
-.mdedit .heading.heading-1 {
+.CodeMirror .CodeMirror-code .cm-header-1 {
     font-size: 40px;
     margin: 50px 0 20px;
     line-height: 120%;
 }
-.mdedit .heading.heading-2 {
+.CodeMirror .CodeMirror-code .cm-header-2 {
 	font-size: 20px;
     margin-top: 12px;
     line-height: 150%;
 }
-.mdedit .heading.heading-3,
-.mdedit .heading.heading-4,
-.mdedit .heading.heading-5,
-.mdedit .heading.heading-6 {
+.CodeMirror .CodeMirror-code .cm-header-3,
+.CodeMirror .CodeMirror-code .cm-header-4,
+.CodeMirror .CodeMirror-code .cm-header-5,
+.CodeMirror .CodeMirror-code .cm-header-6 {
 	font-size: 16px;
     margin: 0;
     font-weight: 300;
 }
-.mdedit .heading.heading-3 {
+.CodeMirror .CodeMirror-code .cm-header-3 {
     font-weight: 600;
 }
 
-.mdedit .hr {
+.CodeMirror .CodeMirror-code .cm-hr {
     position: relative;
     display: inline-block;
     width: 100%;
-    margin: .5em 0;
 }
-.mdedit .hr-marker {
-    background-color: white;
-}
-.mdedit .hr-marker:last-child {
-    padding-right: 10px;
-}
-.mdedit .hr:before {
+
+.CodeMirror .CodeMirror-code .cm-hr:before {
     position: absolute;
     content: "";
     top: 50%;
     width: 100%;
     z-index: -1;
-    border-top: 1px solid rgba(120, 120, 120, 0.5);
+    border-top: 5px solid rgba(120, 120, 120, 0.2);
 }
 
 
 /* hanging punctuation */
-#app-content .mdedit {
+.CodeMirror .CodeMirror-code .CodeMirror-line {
     padding-left: 45px;
-    display: inline-block;
 }
-.mdedit > div > .token > .heading-hash,
-.mdedit > div > .token > .li > .list-item,
-.mdedit > div > .token > .quote-marker {
-    width: 90px;
-    margin-left: -90px;
+
+.CodeMirror .CodeMirror-code .cm-formatting-header:not(:only-child),
+.CodeMirror .CodeMirror-code .cm-formatting-list,
+.CodeMirror .CodeMirror-code .cm-formatting-quote {
+    position: absolute;
     display: inline-block;
+    width: 90px;
+    margin-top: 0;
+    margin-left: -90px;
     text-align: right;
     white-space: pre;
 }
@@ -204,7 +196,7 @@
 /* larger screen sizes */
 @media only screen and (min-width: 769px) {
     /* use slightly more space on the left so all # signs of h3–h6 show */
-    #app-content .mdedit,
+    .CodeMirror .CodeMirror-code .CodeMirror-line,
     #app-content .note-meta {
         padding-left: 90px;
     }

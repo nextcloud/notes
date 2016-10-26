@@ -9,6 +9,6 @@
     "angular-mocks": "1.4.*",
     "angular-route": "1.4.*",
     "prism": "~1.0.1",
-    "mdEdit": "https://github.com/jbt/mdEdit.git#master"
+    "simplemde": "^1.11.2"
   }
 }

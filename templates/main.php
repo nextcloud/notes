@@ -13,14 +13,12 @@ script('notes', [
     'vendor/angular-route/angular-route',
     'vendor/restangular/dist/restangular',
     'vendor/underscore/underscore',
-    'vendor/prism/prism',
-    'vendor/mdEdit/mdedit.min',
+    'vendor/simplemde/dist/simplemde.min',
     'public/app.min'
 ]);
 
 style('notes', [
-    '../js/vendor/mdEdit/mdedit',
-    '../js/vendor/mdEdit/prism',
+    '../js/vendor/simplemde/dist/simplemde.min',
     'vendor/bootstrap/tooltip',
     'notes'
 ]);
