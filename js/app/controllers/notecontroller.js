@@ -28,8 +28,35 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
     }, 300);
 
     $scope.toggleDistractionFree = function() {
-        var body = angular.element(document).find('body')[0];
-        body.classList.toggle('distraction-free');
+        function launchIntoFullscreen(element) {
+            if(element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if(element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if(element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if(element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
+
+        function exitFullscreen() {
+            if(document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if(document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if(document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+
+        if(document.fullscreenElement ||
+           document.mozFullScreenElement ||
+           document.webkitFullscreenElement) {
+            exitFullscreen();
+        } else {
+            launchIntoFullscreen(document.getElementById('app-content'));
+        }
     };
 
 });

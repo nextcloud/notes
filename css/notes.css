@@ -135,7 +135,7 @@
 }
 
 #app-content .note-meta-right {
-	float: right;
+    float: right;
 }
 
 #app-content .saving {
@@ -210,19 +210,29 @@
 
 
 /* distraction free styles */
-.distraction-free #header,
-.distraction-free #navigation,
-.distraction-free #app-navigation,
-.distraction-free #app-navigation-toggle {
-	display: none;
+:-webkit-full-screen {
+	width: 100%;
+}
+:-moz-full-screen {
+	width: 100%;
+}
+:-ms-fullscreen {
+	width: 100%;
+}
+:fullscreen {
+	width: 100%;
 }
 
-.distraction-free #content-wrapper {
-	padding-top: 0;
+:-webkit-full-screen #app-content-container {
+	margin: 0 auto;
 }
-
-.distraction-free #app-content-container {
-	max-width: 1000px;
+:-moz-full-screen #app-content-container {
+	margin: 0 auto;
+}
+:-ms-fullscreen #app-content-container {
+	margin: 0 auto;
+}
+:fullscreen #app-content-container {
 	margin: 0 auto;
 }
 
