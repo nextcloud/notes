@@ -47,16 +47,24 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
         $note = $this->controller->create('test')->getData();
         $this->assertEquals('test', $note->getContent());
 
+	$t = 100000;
+
         $note2 = $this->controller->update($note->getId(), 'test2')->getData();
         $this->assertEquals('test2', $note2->getContent());
         $this->assertEquals($note->getId(), $note2->getId());
+        $this->assertNotEquals($t, $note2->getModified());
+
+        $note3 = $this->controller->update($note->getId(), 'test3', $t)->getData();
+        $this->assertEquals('test3', $note3->getContent());
+        $this->assertEquals($note->getId(), $note3->getId());
+        $this->assertEquals($t, $note3->getModified());
 
         $notes = $this->controller->index()->getData();
 
         $this->assertCount(1, $notes);
-        $this->assertEquals('test2', $notes[0]->getContent());
+        $this->assertEquals('test3', $notes[0]->getContent());
 
-        $file = $this->fs->get($this->notesFolder . '/test2.txt');
+        $file = $this->fs->get($this->notesFolder . '/test3.txt');
 
         $this->assertTrue($file instanceof File);
     }

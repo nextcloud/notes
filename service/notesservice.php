@@ -114,10 +114,11 @@ class NotesService {
      * @param int $id the id of the note used to update
      * @param string $content the content which will be written into the note
      * the title is generated from the first line of the content
+     * @param int $mtime time of the note modification (optional)
      * @throws NoteDoesNotExistException if note does not exist
      * @return \OCA\Notes\Db\Note the updated note
      */
-    public function update ($id, $content, $userId){
+    public function update ($id, $content, $userId, $mtime=0) {
         $folder = $this->getFolderForUser($userId);
         $file = $this->getFileById($folder, $id);
 
@@ -149,6 +150,10 @@ class NotesService {
         }
 
         $file->putContent($content);
+
+        if($mtime) {
+            $file->touch($mtime);
+        }
 
         return Note::fromFile($file, $this->getTags($id));
     }
