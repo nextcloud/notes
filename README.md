@@ -16,8 +16,9 @@ For further developer and user documentation please visit [the wiki](https://git
 ##### Minimum PHP Version
 * PHP >= 5.4
 
-##### Minimum Nextcloud Version
-* >= 9.0
+##### Minimum ownCloud / Nextcloud Version
+* ownCloud >= 8.1
+* Nextcloud >= 9.0
 
 ##### Supported Webservers
 * Apache
