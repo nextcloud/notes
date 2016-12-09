@@ -106,10 +106,16 @@
 .CodeMirror {
     position: relative;
     min-height: 100%;
-    font-size: 16px;
+    max-width: 47em;
     margin: 0 0 -50px;
     padding: 30px 0 90px;
     border: none;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+.CodeMirror-scroll {
+    overflow-x: auto !important;
 }
 
 #app-content .note-meta {
