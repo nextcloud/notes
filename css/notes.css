@@ -118,6 +118,11 @@
     overflow-x: auto !important;
 }
 
+/* enable clickthrough for links */
+.CodeMirror-cursor {
+    pointer-events: none;
+}
+
 #app-content .note-meta {
     position: relative;
     padding: 0 45px 30px 45px;

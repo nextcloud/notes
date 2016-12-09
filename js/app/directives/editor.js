@@ -1,5 +1,7 @@
 /*global SimpleMDE*/
-app.directive('editor', ['$timeout', function ($timeout) {
+app.directive('editor', ['$timeout',
+                         'urlFinder',
+                         function ($timeout, urlFinder) {
 	'use strict';
 	return {
 		restrict: 'A',
@@ -25,6 +27,15 @@ app.directive('editor', ['$timeout', function ($timeout) {
 						scope.updateTitle();
 					});
 				});
+			});
+
+			editorElement.on('click', '.cm-link, .cm-url', function(event) {
+				if(event.ctrlKey) {
+					var url = urlFinder(this);
+					if(angular.isDefined(url)) {
+						window.open(url, '_blank');
+					}
+				}
 			});
 		}
 	};
