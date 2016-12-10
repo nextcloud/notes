@@ -15,4 +15,6 @@ app.controller('AppController', function ($scope, $location, is) {
             $location.path('/notes/' + lastViewedNote);
         }
     };
+
+    $scope.search = '';
 });

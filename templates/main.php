@@ -36,13 +36,18 @@ style('notes', [
 
     <div id="app-navigation" ng-controller="NotesController">
         <ul>
+            <li class="note-search">
+                <a href="#" class="icon-search">
+                    <input type="text" ng-model="search" />
+                </a>
+            </li>
             <!-- new note button -->
             <li id="note-add" ng-click="create()"
                 oc-click-focus="{ selector: '#app-content textarea' }">
                 <a href='#'>+ <span><?php p($l->t('New note')); ?></span></a>
             </li>
             <!-- notes list -->
-            <li ng-repeat="note in notes|orderBy:['-favorite','-modified']"
+            <li ng-repeat="note in filteredNotes = (notes| filter:search | orderBy:['-favorite','-modified'])"
                 ng-class="{ active: note.id == route.noteId }">
                 <a href="#/notes/{{ note.id }}">
                     {{ note.title | noteTitle }}
@@ -60,6 +65,11 @@ style('notes', [
                         ng-click="toggleFavorite(note.id)"
                         ng-class="{'icon-starred': note.favorite}"></button>
                 </span>
+            </li>
+            <li ng-hide="filteredNotes.length">
+                <a href="#/notes/{{ note.id }}">
+                    <?php p($l->t('No notes found')); ?>
+                </a>
             </li>
 
         </ul>

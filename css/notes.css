@@ -52,6 +52,25 @@
     opacity: 1 !important;
 }
 
+.note-search a {
+    background-position-x: 0;
+    background-origin: content-box;
+}
+
+.note-search input {
+    width: 100%;
+    padding-left: 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.note-search input:active,
+.note-search input:focus,
+.note-search input:hover {
+    border-bottom: 1px solid grey;
+}
+
 .tooltip {
     text-shadow: none;
     text-transform: none;
