@@ -37,9 +37,9 @@ style('notes', [
     <div id="app-navigation" ng-controller="NotesController">
         <ul>
             <li class="note-search">
-                <a href="#" class="icon-search">
+                <span class="nav-entry icon-search">
                     <input type="text" ng-model="search" />
-                </a>
+                </span>
             </li>
             <!-- new note button -->
             <li id="note-add" ng-click="create()"
@@ -67,9 +67,9 @@ style('notes', [
                 </span>
             </li>
             <li ng-hide="filteredNotes.length">
-                <a href="#/notes/{{ note.id }}">
+                <span class="nav-entry">
                     <?php p($l->t('No notes found')); ?>
-                </a>
+                </span>
             </li>
 
         </ul>

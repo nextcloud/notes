@@ -14,6 +14,25 @@
     padding-left: 2px;
 }
 
+#app-navigation li .nav-entry {
+	display: block;
+	width: 100%;
+	line-height: 44px;
+	min-height: 44px;
+	padding: 0 12px;
+	overflow: hidden;
+	box-sizing: border-box;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #000;
+	opacity: .57;
+}
+
+#app-navigation li:hover .nav-entry,
+#app-navigation li:focus .nav-entry {
+	opacity: 1;
+}
+
 #app-navigation #note-add:hover span,
 #app-navigation #note-add:focus span {
     display: inline;
@@ -52,8 +71,8 @@
     opacity: 1 !important;
 }
 
-.note-search a {
-    background-position-x: 0;
+.note-search span {
+    background-position: 0 center;
     background-origin: content-box;
 }
 
