@@ -47,7 +47,7 @@ style('notes', [
                 <a href='#'>+ <span><?php p($l->t('New note')); ?></span></a>
             </li>
             <!-- notes list -->
-            <li ng-repeat="note in filteredNotes = (notes| filter:search | orderBy:['-favorite','-modified'])"
+            <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
                 ng-class="{ active: note.id == route.noteId }">
                 <a href="#/notes/{{ note.id }}">
                     {{ note.title | noteTitle }}
