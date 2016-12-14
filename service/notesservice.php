@@ -51,7 +51,7 @@ class NotesService {
             }
         }
         $tagger = \OC::$server->getTagManager()->load('files');
-        if($tagger==null) {
+        if($tagger===null) {
             $tags = [];
         } else {
             $tags = $tagger->getTagsForObjects(array_keys($filesById));
@@ -80,7 +80,7 @@ class NotesService {
 
     private function getTags ($id) {
         $tagger = \OC::$server->getTagManager()->load('files');
-        if($tagger==null) {
+        if($tagger===null) {
             $tags = [];
         } else {
             $tags = $tagger->getTagsForObjects([$id]);
