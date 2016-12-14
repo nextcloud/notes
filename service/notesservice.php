@@ -123,7 +123,7 @@ class NotesService {
         $file = $this->getFileById($folder, $id);
 
         // generate content from the first line of the title
-        $splitContent = explode("\n", $content);
+        $splitContent = preg_split("/\R/", $content, 2);
         $title = $splitContent[0];
 
         if(!$title) {
