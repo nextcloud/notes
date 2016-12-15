@@ -1,0 +1,148 @@
+pipeline:
+  php5.6-unit:
+    image: nextcloudci/php5.6:php5.6-7
+    environment:
+      - APP_NAME=notes
+      - CORE_BRANCH=master
+      - DB=sqlite
+    commands:
+      - apt update && apt-get -y install php5-xdebug
+
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/
+      - php occ app:enable notes
+      - cd apps/$APP_NAME
+
+      # Run phpunit tests
+      - phpunit --coverage-clover clover.xml -c phpunit.xml
+
+      # Create coverage report
+      - wget https://scrutinizer-ci.com/ocular.phar
+      - php ocular.phar code-coverage:upload --format=php-clover clover.xml
+    when:
+      matrix:
+        TESTS: php5.6-unit
+  php5.6-integration:
+    image: nextcloudci/php5.6:php5.6-7
+    environment:
+      - APP_NAME=notes
+      - CORE_BRANCH=master
+      - DB=sqlite
+    commands:
+      - apt update && apt-get -y install php5-xdebug
+
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/
+      - php occ app:enable notes
+      - cd apps/$APP_NAME
+
+      # Run phpunit tests
+      - phpunit -c phpunit.integration.xml
+    when:
+      matrix:
+        TESTS: php5.6-integration
+  php7.0-unit:
+    image: nextcloudci/php7.0:php7.0-2
+    environment:
+      - APP_NAME=notes
+      - CORE_BRANCH=master
+      - DB=sqlite
+    commands:
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/
+      - php occ app:enable notes
+      - cd apps/$APP_NAME
+
+      # Run phpunit tests
+      - phpunit --coverage-clover clover.xml -c phpunit.xml
+    when:
+      matrix:
+        TESTS: php7.0-unit
+  php7.0-integration:
+    image: nextcloudci/php7.0:php7.0-2
+    environment:
+      - APP_NAME=notes
+      - CORE_BRANCH=master
+      - DB=sqlite
+    commands:
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/
+      - php occ app:enable notes
+      - cd apps/$APP_NAME
+
+      # Run phpunit tests
+      - phpunit --coverage-clover clover.xml -c phpunit.xml
+    when:
+      matrix:
+        TESTS: php7.0-integration
+  php7.1-unit:
+    image: nextcloudci/php7.1:php7.1-11
+    environment:
+      - APP_NAME=notes
+      - CORE_BRANCH=master
+      - DB=sqlite
+    commands:
+      # FIXME: Move into Docker image
+      - yum -y install wget
+
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/
+      - php occ app:enable notes
+      - cd apps/$APP_NAME
+
+      # Run phpunit tests
+      - phpunit --coverage-clover clover.xml -c phpunit.xml
+    when:
+      matrix:
+        TESTS: php7.1-unit
+  php7.1-integration:
+    image: nextcloudci/php7.1:php7.1-11
+    environment:
+      - APP_NAME=notes
+      - CORE_BRANCH=master
+      - DB=sqlite
+    commands:
+      # FIXME: Move into Docker image
+      - yum -y install wget
+
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/
+      - php occ app:enable notes
+      - cd apps/$APP_NAME
+
+      # Run phpunit tests
+      - phpunit --coverage-clover clover.xml -c phpunit.xml
+    when:
+      matrix:
+        TESTS: php7.1-integration
+  # jsunit:
+  #   image: nextcloudci/jsunit:jsunit-5
+  #   commands:
+  #     - unset PHANTOMJS_BIN
+  #     - npm install
+  #     - node_modules/karma/bin/karma start --single-run
+  #   when:
+  #     matrix:
+  #       TESTS: jsunit
+
+matrix:
+  include:
+    - TESTS: php5.6-unit
+    - TESTS: php5.6-integration
+    - TESTS: php7.0-unit
+    - TESTS: php7.0-integration
+    - TESTS: php7.1-unit
+    - TESTS: php7.1-integration
+    # - TESTS: js-test
