@@ -6,6 +6,7 @@ OC.L10N.register(
     "Note is currently saving. Leaving the page will delete all changes!" : "Jegyzet mentés alatt. Az oldal elhagyásával minden változtatás el fog veszni!",
     "_%n word_::_%n words_" : ["%n szó","%n szó"],
     "Delete note" : "Jegyzet törlése",
-    "Favorite" : "Kedvenc"
+    "Favorite" : "Kedvenc",
+    "No notes found" : "Nincsenek jegyzetek"
 },
 "nplurals=2; plural=(n != 1);");
