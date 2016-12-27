@@ -5,6 +5,8 @@ OC.L10N.register(
     "New note" : "Shënim i ri",
     "Note is currently saving. Leaving the page will delete all changes!" : "Shënimi po ruhet. Braktisja e faqes do të fshijë krejt ndryshimet!",
     "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"],
-    "Delete note" : "Fshije shënimin"
+    "Delete note" : "Fshije shënimin",
+    "Favorite" : "E preferuar",
+    "No notes found" : "Asnjë shënim nuk u gjet"
 },
 "nplurals=2; plural=(n != 1);");
