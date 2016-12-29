@@ -1,18 +1,25 @@
 <?xml version="1.0"?>
-<info>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>notes</id>
     <name>Notes</name>
-    <licence>AGPL</licence>
-    <author>Bernhard Posselt, Jan-Christoph Borchardt, Hendrik Leppelsack</author>
-    <version>2.1.0</version>
-    <namespace>Notes</namespace>
-    <category>tools</category>
+    <name lang="de">Notizen</name>
+    <summary>Distraction-free notes and writing</summary>
     <description>Distraction-free notes and writing</description>
+    <version>2.1.1</version>
+    <licence>agpl</licence>
+    <author>Bernhard Posselt, Jan-Christoph Borchardt, Hendrik Leppelsack</author>
+    <namespace>Notes</namespace>
+    <category>office</category>
+    <category>organization</category>
+    <category>tools</category>
+    <website>https://github.com/nextcloud/notes</website>
     <bugs>https://github.com/nextcloud/notes/issues</bugs>
     <repository type="git">https://github.com/nextcloud/notes.git</repository>
-    <ocsid>174554</ocsid>
+    <screenshot>https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png</screenshot>
     <dependencies>
         <owncloud min-version="8.1" max-version="9.2" />
         <nextcloud min-version="9" max-version="12" />
     </dependencies>
+    <ocsid>174554</ocsid>
 </info>
