@@ -17,13 +17,13 @@ If you have questions about how to install or use nextcloud, please direct these
 
 Help us to maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
 
-[template]: https://raw.github.com/nextcloud/core/master/issue_template.md
+[template]: https://raw.github.com/nextcloud/server/master/issue_template.md
 [mailinglist]: https://mailman.owncloud.org/mailman/listinfo/owncloud
 [forum]: https://help.nextcloud.com/
 [irc]: https://webchat.freenode.net/?channels=nextcloud&uio=d4
 [irc-dev]: https://webchat.freenode.net/?channels=nextcloud-dev&uio=d4
 
 ### Contribute Code and translations
-Please check [core's contribution guidelines](https://github.com/nextcloud/core/blob/master/CONTRIBUTING.md) for further information about contributing code and translations.
+Please check [core's contribution guidelines](https://github.com/nextcloud/server/blob/master/CONTRIBUTING.md) for further information about contributing code and translations.
 
 For further development questions / discussions you can also join the [#nextcloud-dev][irc-dev] IRC channel.
