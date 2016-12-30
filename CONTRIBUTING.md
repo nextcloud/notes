@@ -1,6 +1,6 @@
 ## Submitting issues
 
-If you have questions about how to install or use nextcloud, please direct these to the [mailing list][mailinglist] or our [forum][forum]. We are also available on [IRC][irc].
+If you have questions about how to install or use Nextcloud, please direct these to the [mailing list][mailinglist] or our [forum][forum]. We are also available on [IRC][irc].
 
 ### Short version
 
@@ -11,7 +11,7 @@ If you have questions about how to install or use nextcloud, please direct these
   - Go to one of the repositories, click "issues" and type any word in the top search/command bar.
   - You can also filter by appending e. g. "state:open" to the search string.
   - More info on [search syntax within github](https://help.github.com/articles/searching-issues)
-* This repository ([notes](https://github.com/nextcloud/notes/issues)) is *only* for issues within the nextcloud notes code.
+* This repository ([notes](https://github.com/nextcloud/notes/issues)) is *only* for issues within the Nextcloud notes code.
 * __SECURITY__: Report any potential security bug to security@nextcloud.com following our [security policy](https://nextcloud.com/security/) instead of filing an issue in our bug tracker
 * Report the issue using our [template][template], it includes all the information we need to track down the issue.
 
