@@ -1,5 +1,5 @@
 #
-# ownCloud scaffolder tool
+# Nextcloud scaffolder tool
 #
 # Copyright (C) 2013 Bernhard Posselt, <nukewhale@gmail.com>
 #

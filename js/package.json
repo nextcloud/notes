@@ -3,12 +3,12 @@
   "description": "Notes app",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://github.com/owncloud/notes",
+  "homepage": "https://github.com/nextcloud/notes",
   "repository": {
     "type": "git",
-    "url": "git@github.com:owncloud/notes.git"
+    "url": "git@github.com:nextcloud/notes.git"
   },
-  "bugs": "https://github.com/owncloud/notes/issues",
+  "bugs": "https://github.com/nextcloud/notes/issues",
   "dependencies": {},
   "devDependencies": {
     "del": "^1.2.0",

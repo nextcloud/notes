@@ -9,7 +9,6 @@
 }
 
 #app-navigation #note-add span {
-    display: none;
     font-weight: bold;
     padding-left: 2px;
 }
