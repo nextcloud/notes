@@ -53,3 +53,6 @@ To update the Notes app use::
 
     cd /var/www/nextcloud/apps/notes
     git pull --rebase origin master
+    
+## Mobile clients
+For iOS you can use [Notes app](https://github.com/owncloud/notes-iOS-App)
