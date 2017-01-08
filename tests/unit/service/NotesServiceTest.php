@@ -35,7 +35,7 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
         $this->service = new NotesService($this->root, $this->l10n);
     }
 
-    private function createNode($name, $type, $mime, $mtime=0, $content='', $id=0, $path='/') {
+    private function createNode($name, $type, $mime, $mtime=0, $content='', $id=0, $subdir='') {
         if ($type === 'folder') {
             $iface = 'OCP\Files\Folder';
         } else {
@@ -60,7 +60,10 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
             ->will($this->returnValue($id));
         $node->expects($this->any())
             ->method('getPath')
-            ->will($this->returnValue($path));
+            ->will($this->returnValue('/' . $this->userId . '/files/Notes/'.$subdir.($subdir ? '/' : '').$name));
+        $node->expects($this->any())
+            ->method('getParent')
+            ->will($this->returnValue($this->userFolder));
         if ($type === 'file') {
             $node->expects($this->any())
                 ->method('getContent')
