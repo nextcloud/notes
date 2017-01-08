@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Notes" : "Бележки",
     "New note" : "Нова бележка",
-    "Note is currently saving. Leaving " : "Бележката се записва. Излизане ",
-    "Delete note" : "Изтрий бележка"
+    "Note is currently saving. Leaving the page will delete all changes!" : "В момента промените се записват. Ако излезете от страницата направените промени ще бъдат загубени.",
+    "_%n word_::_%n words_" : ["%n дума","%n думи"],
+    "Delete note" : "Изтрий бележка",
+    "Favorite" : "Любими"
 },
 "nplurals=2; plural=(n != 1);");

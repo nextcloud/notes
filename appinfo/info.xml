@@ -1,17 +1,29 @@
 <?xml version="1.0"?>
-<info>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>notes</id>
     <name>Notes</name>
-    <licence>AGPL</licence>
+    <name lang="de">Notizen</name>
+    <summary>Distraction-free notes and writing</summary>
+    <description><![CDATA[The Notes app is a distraction free notes taking app. It supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps such as the [Android client](https://github.com/stefan-niedermann/nextcloud-notes). Further features include marking notes as favorites and future versions will provide categories for better organization.]]></description>
+    <version>2.1.1</version>
+    <licence>agpl</licence>
     <author>Bernhard Posselt, Jan-Christoph Borchardt, Hendrik Leppelsack</author>
-    <version>2.0.2</version>
     <namespace>Notes</namespace>
+    <documentation>
+        <user>https://github.com/nextcloud/notes/wiki</user>
+        <developer>https://github.com/nextcloud/notes/wiki</developer>
+    </documentation>
+    <category>office</category>
+    <category>organization</category>
     <category>tools</category>
-    <description>Distraction-free notes and writing</description>
-    <bugs>https://github.com/owncloud/notes/issues</bugs>
-    <repository type="git">https://github.com/owncloud/notes.git</repository>
-    <ocsid>174554</ocsid>
+    <website>https://github.com/nextcloud/notes</website>
+    <bugs>https://github.com/nextcloud/notes/issues</bugs>
+    <repository type="git">https://github.com/nextcloud/notes.git</repository>
+    <screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes-thumbnail.jpg">https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png</screenshot>
     <dependencies>
         <owncloud min-version="8.1" max-version="9.2" />
+        <nextcloud min-version="9" max-version="12" />
     </dependencies>
+    <ocsid>174554</ocsid>
 </info>

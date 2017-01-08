@@ -6,6 +6,7 @@ OC.L10N.register(
     "Note is currently saving. Leaving the page will delete all changes!" : "Note en cours de sauvegarde. Quitter la page supprimera tous les changements !",
     "_%n word_::_%n words_" : ["%n mot","%n mots"],
     "Delete note" : "Supprimer la note",
-    "Favorite" : "Favoris"
+    "Favorite" : "Favoris",
+    "No notes found" : "Aucune note trouvée"
 },
 "nplurals=2; plural=(n > 1);");

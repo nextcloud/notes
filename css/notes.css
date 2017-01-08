@@ -9,9 +9,31 @@
 }
 
 #app-navigation #note-add span {
-    display: none;
     font-weight: bold;
     padding-left: 2px;
+}
+
+#app-navigation .active a {
+	padding-right: 70px;
+}
+
+#app-navigation li .nav-entry {
+	display: block;
+	width: 100%;
+	line-height: 44px;
+	min-height: 44px;
+	padding: 0 12px;
+	overflow: hidden;
+	box-sizing: border-box;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #000;
+	opacity: .57;
+}
+
+#app-navigation li:hover .nav-entry,
+#app-navigation li:focus .nav-entry {
+	opacity: 1;
 }
 
 #app-navigation #note-add:hover span,
@@ -52,6 +74,25 @@
     opacity: 1 !important;
 }
 
+.note-search span {
+    background-position: 0 center;
+    background-origin: content-box;
+}
+
+.note-search input {
+    width: 100%;
+    padding-left: 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.note-search input:active,
+.note-search input:focus,
+.note-search input:hover {
+    border-bottom: 1px solid grey;
+}
+
 .tooltip {
     text-shadow: none;
     text-transform: none;
@@ -66,13 +107,14 @@
     display: block;
     min-height: 100%;
     width: 100%;
+    max-width: 47em;
     margin: 0 0 -50px;
     padding: 30px 20px 90px 30px;
     font-size: 16px;
     line-height: 170%;
     background: none;
     resize: none;
-    -moz-box-sizing: border-box; box-sizing: border-box;
+    box-sizing: border-box;
     font-family: inherit;
 }
 

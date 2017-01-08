@@ -1,6 +1,6 @@
 
 /**
- * ownCloud - Notes app
+ * Nextcloud - Notes app
  *
  * @author Bernhard Posselt
  *

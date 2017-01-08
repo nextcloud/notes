@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Notes
+ * Nextcloud - Notes
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -50,7 +50,7 @@ class NotesService {
             $filesById[$note->getId()] = $note;
         }
         $tagger = \OC::$server->getTagManager()->load('files');
-        if($tagger==null) {
+        if($tagger===null) {
             $tags = [];
         } else {
             $tags = $tagger->getTagsForObjects(array_keys($filesById));
@@ -79,7 +79,7 @@ class NotesService {
 
     private function getTags ($id) {
         $tagger = \OC::$server->getTagManager()->load('files');
-        if($tagger==null) {
+        if($tagger===null) {
             $tags = [];
         } else {
             $tags = $tagger->getTagsForObjects([$id]);
@@ -113,16 +113,17 @@ class NotesService {
      * @param int $id the id of the note used to update
      * @param string $content the content which will be written into the note
      * the title is generated from the first line of the content
+     * @param int $mtime time of the note modification (optional)
      * @throws NoteDoesNotExistException if note does not exist
      * @return \OCA\Notes\Db\Note the updated note
      */
-    public function update ($id, $content, $userId){
+    public function update ($id, $content, $userId, $mtime=0) {
         $notesFolder = $this->getFolderForUser($userId);
         $file = $this->getFileById($notesFolder, $id);
         $folder = $file->getParent();
 
         // generate content from the first line of the title
-        $splitContent = explode("\n", $content);
+        $splitContent = preg_split("/\R/", $content, 2);
         $title = $splitContent[0];
 
         if(!$title) {
@@ -150,6 +151,10 @@ class NotesService {
         }
 
         $file->putContent($content);
+
+        if($mtime) {
+            $file->touch($mtime);
+        }
 
         return Note::fromFile($file, $notesFolder, $this->getTags($id));
     }

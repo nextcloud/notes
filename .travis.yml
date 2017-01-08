@@ -29,9 +29,18 @@ before_install:
 script:
   # Test lint
   - cd apps/$APP_NAME
+  # Check info.xml schema validity
+  - wget https://apps.nextcloud.com/schema/apps/info.xsd
+  - xmllint appinfo/info.xml --schema info.xsd --noout
+  - rm info.xsd
+  # Check PHP syntax errors
   - find . -name \*.php -exec php -l "{}" \;
+  # Check app validity
+  - php ../../occ app:check-code notes
+  # Run PHP unit tests
   - phpunit --coverage-clover clover.xml -c phpunit.xml
   - phpunit -c phpunit.integration.xml
+  # Generate Code Coverage
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover clover.xml
 

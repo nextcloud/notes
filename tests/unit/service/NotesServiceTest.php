@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Notes
+ * Nextcloud - Notes
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -260,6 +260,30 @@ class NotesServiceTest extends PHPUnit_Framework_TestCase {
         $note = $this->service->create($this->userId);
 
         $this->assertEquals('file1', $note->getTitle());
+    }
+
+
+    public function testCreateModified() {
+        $t = 2000000;
+
+        $this->l10n->expects($this->once())
+            ->method('t')
+            ->with($this->equalTo('New note'))
+            ->will($this->returnValue('New note'));
+        $this->expectUserFolder();
+
+        $this->expectGenerateFileName(0, 'New note');
+
+        $file = $this->createNode('file1.txt', 'file', 'text/plain', $t);
+        $this->userFolder->expects($this->once())
+            ->method('newFile')
+            ->with($this->equalTo('New note.txt'))
+            ->will($this->returnValue($file));
+
+        $note = $this->service->create($this->userId, $t);
+
+        $this->assertEquals('file1', $note->getTitle());
+        $this->assertEquals($t, $note->getModified());
     }
 
 
