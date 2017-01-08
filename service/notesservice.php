@@ -43,7 +43,8 @@ class NotesService {
      * @return array with all notes in the current directory
      */
     public function getAll ($userId){
-        $notes = $this->gatherNoteFiles($this->getFolderForUser($userId));
+        $notesFolder = $this->getFolderForUser($userId);
+        $notes = $this->gatherNoteFiles($notesFolder);
         $filesById = [];
         foreach($notes as $note) {
             $filesById[$note->getId()] = $note;
@@ -57,7 +58,7 @@ class NotesService {
 
         $notes = [];
         foreach($filesById as $id=>$file) {
-            $notes[] = Note::fromFile($file, array_key_exists($id, $tags) ? $tags[$id] : []);
+            $notes[] = Note::fromFile($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         }
 
         return $notes;
@@ -73,7 +74,7 @@ class NotesService {
      */
     public function get ($id, $userId) {
         $folder = $this->getFolderForUser($userId);
-        return Note::fromFile($this->getFileById($folder, $id), $this->getTags($id));
+        return Note::fromFile($this->getFileById($folder, $id), $folder, $this->getTags($id));
     }
 
     private function getTags ($id) {
@@ -102,7 +103,7 @@ class NotesService {
         $path = $this->generateFileName($folder, $title, "txt", -1);
         $file = $folder->newFile($path);
 
-        return Note::fromFile($file);
+        return Note::fromFile($file, $folder);
     }
 
 
@@ -150,7 +151,7 @@ class NotesService {
 
         $file->putContent($content);
 
-        return Note::fromFile($file, $this->getTags($id));
+        return Note::fromFile($file, $notesFolder, $this->getTags($id));
     }
 
 

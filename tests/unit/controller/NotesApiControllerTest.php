@@ -88,11 +88,13 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(json_encode([
             [
                 'modified' => 123,
+                'category' => null,
                 'favorite' => false,
                 'id' => 3,
             ],
             [
                 'modified' => 111,
+                'category' => null,
                 'favorite' => false,
                 'id' => 4,
             ]
@@ -138,6 +140,7 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(json_encode([
             'modified' => 123,
+            'category' => null,
             'favorite' => false,
             'id' => 3,
         ]), json_encode($response->getData()));

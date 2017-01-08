@@ -31,11 +31,21 @@ class NoteTest extends PHPUnit_Framework_TestCase {
         $file->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('file.txt'));
+        $file->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/john/files/Notes/mycategory/file.txt'));
 
-        $note = Note::fromFile($file);
+        $notesFolder = $this->getMockBuilder('OCP\Files\Folder')->getMock();
+        $notesFolder->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/john/files/Notes'));
+
+
+        $note = Note::fromFile($file, $notesFolder);
 
         $this->assertEquals(3, $note->getId());
         $this->assertEquals(323, $note->getModified());
+        $this->assertEquals('mycategory', $note->getCategory());
         $this->assertEquals('file', $note->getTitle());
         $this->assertEquals('content', $note->getContent());
     }

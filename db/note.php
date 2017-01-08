@@ -12,6 +12,7 @@
 namespace OCA\Notes\Db;
 
 use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\AppFramework\Db\Entity;
 
 /**
@@ -22,6 +23,8 @@ use OCP\AppFramework\Db\Entity;
  * @method void setModified(integer $value)
  * @method string getTitle()
  * @method void setTitle(string $value)
+ * @method string getCategory()
+ * @method void setCategory(string $value)
  * @method string getContent()
  * @method void setContent(string $value)
  * @method boolean getFavorite()
@@ -32,6 +35,7 @@ class Note extends Entity {
 
     public $modified;
     public $title;
+    public $category;
     public $content;
     public $favorite = false;
 
@@ -44,12 +48,14 @@ class Note extends Entity {
      * @param File $file
      * @return static
      */
-    public static function fromFile(File $file, $tags=[]){
+    public static function fromFile(File $file, Folder $notesFolder, $tags=[]){
         $note = new static();
         $note->setId($file->getId());
         $note->setContent($file->getContent());
         $note->setModified($file->getMTime());
         $note->setTitle(pathinfo($file->getName(),PATHINFO_FILENAME)); // remove extension
+        $subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
+        $note->setCategory($subdir ? $subdir : null);
         if(is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {
             $note->setFavorite(true);
             //unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
