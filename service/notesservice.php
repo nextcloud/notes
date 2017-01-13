@@ -141,7 +141,6 @@ class NotesService {
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
         $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
-        \OCP\Util::writeLog('notes', $basePath, \OCP\Util::ERROR);
         $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
         $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
 
@@ -273,7 +272,6 @@ class NotesService {
 		$notes = [];
 		$nodes = $folder->getDirectoryListing();
 		foreach($nodes as $node) {
-			\OCP\Util::writeLog('notes', $node->getType(), \OCP\Util::ERROR);
 			if($node->getType() === FileInfo::TYPE_FOLDER) {
 				$notes = array_merge($notes, $this->gatherNoteFiles($node));
 				continue;
