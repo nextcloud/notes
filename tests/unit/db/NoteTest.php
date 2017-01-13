@@ -31,11 +31,55 @@ class NoteTest extends PHPUnit_Framework_TestCase {
         $file->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('file.txt'));
+        $file->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/john/files/Notes/file.txt'));
 
-        $note = Note::fromFile($file);
+        $notesFolder = $this->getMockBuilder('OCP\Files\Folder')->getMock();
+        $notesFolder->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/john/files/Notes'));
+
+
+        $note = Note::fromFile($file, $notesFolder);
 
         $this->assertEquals(3, $note->getId());
         $this->assertEquals(323, $note->getModified());
+        $this->assertEquals(null, $note->getCategory());
+        $this->assertEquals('file', $note->getTitle());
+        $this->assertEquals('content', $note->getContent());
+    }
+
+
+    public function testFromFileInSubdir(){
+        $file = $this->getMockBuilder('OCP\Files\File')->getMock();
+        $file->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue(3));
+        $file->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue('content'));
+        $file->expects($this->any())
+            ->method('getMTime')
+            ->will($this->returnValue(323));
+        $file->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('file.txt'));
+        $file->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/john/files/Notes/mycategory/file.txt'));
+
+        $notesFolder = $this->getMockBuilder('OCP\Files\Folder')->getMock();
+        $notesFolder->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/john/files/Notes'));
+
+
+        $note = Note::fromFile($file, $notesFolder);
+
+        $this->assertEquals(3, $note->getId());
+        $this->assertEquals(323, $note->getModified());
+        $this->assertEquals('mycategory', $note->getCategory());
         $this->assertEquals('file', $note->getTitle());
         $this->assertEquals('content', $note->getContent());
     }

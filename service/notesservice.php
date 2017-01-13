@@ -11,6 +11,7 @@
 
 namespace OCA\Notes\Service;
 
+use OCP\Files\FileInfo;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
@@ -42,13 +43,11 @@ class NotesService {
      * @return array with all notes in the current directory
      */
     public function getAll ($userId){
-        $folder = $this->getFolderForUser($userId);
-        $files = $folder->getDirectoryListing();
+        $notesFolder = $this->getFolderForUser($userId);
+        $notes = $this->gatherNoteFiles($notesFolder);
         $filesById = [];
-        foreach($files as $file) {
-            if($this->isNote($file)) {
-                $filesById[$file->getId()] = $file;
-            }
+        foreach($notes as $note) {
+            $filesById[$note->getId()] = $note;
         }
         $tagger = \OC::$server->getTagManager()->load('files');
         if($tagger===null) {
@@ -59,7 +58,7 @@ class NotesService {
 
         $notes = [];
         foreach($filesById as $id=>$file) {
-            $notes[] = Note::fromFile($file, array_key_exists($id, $tags) ? $tags[$id] : []);
+            $notes[] = Note::fromFile($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         }
 
         return $notes;
@@ -75,7 +74,7 @@ class NotesService {
      */
     public function get ($id, $userId) {
         $folder = $this->getFolderForUser($userId);
-        return Note::fromFile($this->getFileById($folder, $id), $this->getTags($id));
+        return Note::fromFile($this->getFileById($folder, $id), $folder, $this->getTags($id));
     }
 
     private function getTags ($id) {
@@ -104,7 +103,7 @@ class NotesService {
         $path = $this->generateFileName($folder, $title, "txt", -1);
         $file = $folder->newFile($path);
 
-        return Note::fromFile($file);
+        return Note::fromFile($file, $folder);
     }
 
 
@@ -119,8 +118,9 @@ class NotesService {
      * @return \OCA\Notes\Db\Note the updated note
      */
     public function update ($id, $content, $userId, $mtime=0) {
-        $folder = $this->getFolderForUser($userId);
-        $file = $this->getFileById($folder, $id);
+        $notesFolder = $this->getFolderForUser($userId);
+        $file = $this->getFileById($notesFolder, $id);
+        $folder = $file->getParent();
 
         // generate content from the first line of the title
         $splitContent = preg_split("/\R/", $content, 2);
@@ -140,9 +140,9 @@ class NotesService {
 
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
-        $basePath = '/' . $userId . '/files/Notes/';
+        $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
         $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
-        $newFilePath = $basePath . $this->generateFileName($folder, $title, $fileExtension, $id);
+        $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
 
         // if the current path is not the new path, the file has to be renamed
         if($currentFilePath !== $newFilePath) {
@@ -155,7 +155,7 @@ class NotesService {
             $file->touch($mtime);
         }
 
-        return Note::fromFile($file, $this->getTags($id));
+        return Note::fromFile($file, $notesFolder, $this->getTags($id));
     }
 
 
@@ -261,6 +261,28 @@ class NotesService {
             return $this->generateFileName($folder, $newTitle, $extension, $id);
         }
     }
+
+
+	/**
+	 * gather note files in given directory and all subdirectories
+	 * @param Folder $folder
+	 * @return array
+	 */
+	private function gatherNoteFiles ($folder) {
+		$notes = [];
+		$nodes = $folder->getDirectoryListing();
+		foreach($nodes as $node) {
+			if($node->getType() === FileInfo::TYPE_FOLDER) {
+				$notes = array_merge($notes, $this->gatherNoteFiles($node));
+				continue;
+			}
+			if($this->isNote($node)) {
+				$notes[] = $node;
+			}
+		}
+		return $notes;
+	}
+
 
     /**
      * test if file is a note
