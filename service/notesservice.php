@@ -206,9 +206,24 @@ class NotesService {
     private function getFileById ($folder, $id) {
         $file = $folder->getById($id);
 
-        if(count($file) <= 0 || !$this->isNote($file[0])) {
-            throw new NoteDoesNotExistException();
+        echo PHP_EOL;
+        echo 'This is NotesService->getFileById() for folder '.$folder->getInternalPath().' with requested File ID '.$id.PHP_EOL;
+        $files = $folder->getDirectoryListing();
+        if(is_array($files)) {
+            echo count($files).' result(s) from Folder->getDirectoryListing():'.PHP_EOL;
+            foreach($files as $f) {
+                echo $f->getPath().' (ID '.$f->getId().')'.PHP_EOL;
+            }
         }
+        echo count($file).' result(s) from Folder->getById('.$id.'):'.PHP_EOL;
+        foreach($file as $f) {
+             echo $f->getPath().' (ID '.$f->getId().')'.PHP_EOL;
+        }
+
+        if(count($file) <= 0 || !$this->isNote($file[0])) {
+            echo '=> NoteDoesNotExistException'.PHP_EOL;
+            throw new NoteDoesNotExistException('ID='.$id . (count($file) ? $file[0]->getPath().' is no note' : ' not found'));
+        } else echo '=> OK'.PHP_EOL;
         return $file[0];
     }
 
