@@ -65,7 +65,7 @@ class NotesApiController extends ApiController {
 
 
     private function excludeIfNotModified(Note $note, array $etags) {
-        $etag = $note->getId().'-'.$note->getEtag();
+        $etag = $note->getEtag();
         if(in_array($etag, $etags)) {
             $vars = get_object_vars($note);
             unset($vars['id']);
@@ -86,7 +86,7 @@ class NotesApiController extends ApiController {
     public function index($exclude='') {
         $exclude = explode(',', $exclude);
         $etags = array_key_exists('HTTP_X_NOTES_ETAGS', $_SERVER) ? $_SERVER['HTTP_X_NOTES_ETAGS'] : '';
-        $etags = explode(',', $etags);
+        $etags = str_split($etags, 20);
         $notes = $this->service->getAll($this->userId);
         foreach ($notes as $note) {
             $note = $this->excludeFields($note, $exclude);
