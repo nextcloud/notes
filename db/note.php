@@ -73,7 +73,7 @@ class Note extends Entity {
         // collect all relevant attributes
         $data = '';
         foreach(get_object_vars($this) as $key => $val) {
-            if($key!='etag') {
+            if($key!=='etag') {
                 $data .= $val;
             }
         }

@@ -66,7 +66,7 @@ class NotesApiController extends ApiController {
 
     private function excludeIfNotModified(Note $note, array $etags) {
         $etag = $note->getEtag();
-        if(in_array($etag, $etags)) {
+        if($etag!==null && in_array($etag, $etags)) {
             $vars = get_object_vars($note);
             unset($vars['id']);
             $this->excludeFields($note, array_keys($vars));
