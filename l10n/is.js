@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Minnispunktar",
     "New note" : "Nýr minnispunktur",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Minnispunktur er nú að vistast. Ef farið er af síðunni munu allar breytingar eyðast!",
+    "Note is currently saving. Leaving the page will delete all changes!" : "Minnispunktur er nú að vistast. Ef farið er af síðunni munu allar breytingar tapast!",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
     "Delete note" : "Eyða minnispunkti",
     "Favorite" : "Eftirlæti",
