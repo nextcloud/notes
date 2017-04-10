@@ -212,15 +212,19 @@
 /* distraction free styles */
 :-webkit-full-screen {
 	width: 100%;
+	background-color: white;
 }
 :-moz-full-screen {
 	width: 100%;
+	background-color: white;
 }
 :-ms-fullscreen {
 	width: 100%;
+	background-color: white;
 }
 :fullscreen {
 	width: 100%;
+	background-color: white;
 }
 
 :-webkit-full-screen #app-content-container {
