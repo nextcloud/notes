@@ -51,7 +51,7 @@ class Note extends Entity {
     public static function fromFile(File $file, Folder $notesFolder, $tags=[]){
         $note = new static();
         $note->setId($file->getId());
-        $note->setContent($file->getContent());
+        $note->setContent(self::convertEncoding($file->getContent()));
         $note->setModified($file->getMTime());
         $note->setTitle(pathinfo($file->getName(),PATHINFO_FILENAME)); // remove extension
         $subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
@@ -64,4 +64,10 @@ class Note extends Entity {
         return $note;
     }
 
+    private static function convertEncoding($str) {
+        if(!mb_check_encoding($str, 'UTF-8')) {
+            $str = mb_convert_encoding($str, 'UTF-8');
+        }
+        return $str;
+    }
 }
