@@ -3,7 +3,7 @@
 [![build state](https://travis-ci.org/nextcloud/notes.png)](https://travis-ci.org/nextcloud/notes) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/notes/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/notes/?branch=master)
 
 <!-- The following paragraph should be kept synchronized with the description in appinfo/info.xml -->
-The Notes app is a distraction free notes taking app. It supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps such as the [Android client](https://github.com/stefan-niedermann/nextcloud-notes). Further features include marking notes as favorites and future versions will provide categories for better organization.
+The Notes app is a distraction free notes taking app. It supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes) and [iOS](https://github.com/owncloud/notes-iOS-App) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites and future versions will provide categories for better organization.
 
 ![Screenshot of Nextcloud Notes](https://cloud.githubusercontent.com/assets/4741199/21027342/b70a6be2-bd90-11e6-9f12-eca46d6c505a.png)
 
@@ -54,5 +54,4 @@ To update the Notes app use::
     cd /var/www/nextcloud/apps/notes
     git pull --rebase origin master
     
-## Mobile clients
-For iOS you can use [Notes app](https://github.com/owncloud/notes-iOS-App)
+
