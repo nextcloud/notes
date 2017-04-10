@@ -54,7 +54,7 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($note->getId(), $note2->getId());
         $this->assertNotEquals($t, $note2->getModified());
 
-        $note3 = $this->controller->update($note->getId(), 'test3', $t)->getData();
+        $note3 = $this->controller->update($note->getId(), 'test3', null, $t)->getData();
         $this->assertEquals('test3', $note3->getContent());
         $this->assertEquals($note->getId(), $note3->getId());
         $this->assertEquals($t, $note3->getModified());

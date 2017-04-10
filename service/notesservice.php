@@ -117,7 +117,7 @@ class NotesService {
      * @throws NoteDoesNotExistException if note does not exist
      * @return \OCA\Notes\Db\Note the updated note
      */
-    public function update ($id, $content, $userId, $mtime=0) {
+    public function update ($id, $content, $userId, $category=null, $mtime=0) {
         $notesFolder = $this->getFolderForUser($userId);
         $file = $this->getFileById($notesFolder, $id);
         $folder = $file->getParent();
@@ -140,7 +140,15 @@ class NotesService {
 
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
-        $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
+        if($category===null) {
+            $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
+        } else {
+            $basePath = $notesFolder->getPath();
+            $categoryPath = $this->getCategoryPath($category);
+            if(!empty($categoryPath))
+                $basePath .= '/'.$categoryPath;
+            $this->getOrCreateFolder($basePath);
+        }
         $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
         $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
 
@@ -179,7 +187,7 @@ class NotesService {
             $tagger->removeFromFavorites($id);
 
         $tags = $tagger->getTagsForObjects([$id]);
-        return in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
+        return array_key_exists($id, $tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
     }
 
 
@@ -219,6 +227,16 @@ class NotesService {
      */
     private function getFolderForUser ($userId) {
         $path = '/' . $userId . '/files/Notes';
+        return $this->getOrCreateFolder($path);
+    }
+
+
+    /**
+     * Finds a folder and creates it if non-existent
+     * @param string $path path to the folder
+     * @return Folder
+     */
+    private function getOrCreateFolder($path) {
         if ($this->root->nodeExists($path)) {
             $folder = $this->root->get($path);
         } else {
@@ -262,6 +280,19 @@ class NotesService {
         }
     }
 
+    private function getCategoryPath($category) {
+        $category = str_replace('\\', '/', $category);
+        $folders = explode('/', $category);
+        $cleanedFolders = [];
+        foreach($folders as $folder) {
+            $folder = trim($folder);
+            $folder = preg_replace('/^\.+\s*/', '', $folder);
+            if(!empty($folder)) {
+                $cleanedFolders[] = $folder;
+            }
+        }
+        return implode('/', $cleanedFolders);
+    }
 
 	/**
 	 * gather note files in given directory and all subdirectories
