@@ -32,8 +32,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'vendor/jquery/dist/jquery.js',
-            'vendor/prism/prism.js',
-            'vendor/mdEdit/mdedit.js',
+            'vendor/simplemde/dist/simplemde.min.js',
             'vendor/angular/angular.js',
             'vendor/underscore/underscore.js',
             'vendor/angular-route/angular-route.js',

@@ -1,2 +1,2 @@
-	<pre editor notes-timeout-change="save()" notes-autofocus class="editor" ng-class="{saving: isSaving()}">{{note.content}}</pre>
+	<textarea editor notes-timeout-change="save()" name="editor"></textarea>
 	<div class="note-meta">{{note.content | wordCount}}</div>

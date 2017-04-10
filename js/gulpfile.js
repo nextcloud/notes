@@ -19,9 +19,9 @@ var sources = {
     config: ['karma.conf.js', 'gulpfile.js']
 };
 
-var wrappers = '(function(angular, $, requestToken, mdEdit, undefined){'+
+var wrappers = '(function(angular, $, requestToken, SimpleMDE, undefined){'+
     '\'use strict\';<%= contents %>' +
-    '})(angular, jQuery, oc_requesttoken, mdEdit);';
+    '})(angular, jQuery, oc_requesttoken, SimpleMDE);';
 
 
 /**
