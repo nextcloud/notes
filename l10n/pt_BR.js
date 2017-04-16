@@ -1,12 +1,12 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Notas",
-    "New note" : "Nova nota",
-    "Note is currently saving. Leaving the page will delete all changes!" : "A nota está sendo salva. Sair da página irá apagar todas as mudanças!",
+    "Notes" : "Anotaçoes",
+    "New note" : "Nova anotação",
+    "Note is currently saving. Leaving the page will delete all changes!" : "A anotação está sendo salva. Sair da página irá apagar todas as mudanças!",
     "_%n word_::_%n words_" : ["%n palavra","%n palavras"],
-    "Delete note" : "Excluir nota",
+    "Delete note" : "Excluir anotação",
     "Favorite" : "Favorito",
-    "No notes found" : "Nenhuma nota encontrada"
+    "No notes found" : "Nenhuma anotação encontrada"
 },
 "nplurals=2; plural=(n > 1);");
