@@ -127,11 +127,15 @@
     position: relative;
     padding: 0 45px 30px 45px;
     margin: -10px 0 0;
-    opacity: .2;
+    opacity: .4;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     z-index: 5;
+}
+
+#app-content .note-meta-right {
+    float: right;
 }
 
 #app-content .saving {
@@ -202,6 +206,38 @@
     text-align: right;
     white-space: pre;
     color: rgba(120, 120, 120, 0.5);
+}
+
+
+/* distraction free styles */
+:-webkit-full-screen {
+	width: 100%;
+	background-color: white;
+}
+:-moz-full-screen {
+	width: 100%;
+	background-color: white;
+}
+:-ms-fullscreen {
+	width: 100%;
+	background-color: white;
+}
+:fullscreen {
+	width: 100%;
+	background-color: white;
+}
+
+:-webkit-full-screen #app-content-container {
+	margin: 0 auto;
+}
+:-moz-full-screen #app-content-container {
+	margin: 0 auto;
+}
+:-ms-fullscreen #app-content-container {
+	margin: 0 auto;
+}
+:fullscreen #app-content-container {
+	margin: 0 auto;
 }
 
 
