@@ -179,7 +179,7 @@ class NotesService {
             $tagger->removeFromFavorites($id);
 
         $tags = $tagger->getTagsForObjects([$id]);
-        return in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
+        return array_key_exists($id, $tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
     }
 
 
