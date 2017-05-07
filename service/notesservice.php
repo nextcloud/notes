@@ -187,13 +187,11 @@ class NotesService {
         $content = preg_replace("/^#+\s+(.*?)\s*#*$/m", "$1", $content); // headline
         $content = preg_replace("/^(?:=*|-*)$/m", "", $content); // separate line for headline
         $content = preg_replace("/(\*+|_+)(.*?)\\1/m", "$2", $content); // emphasis
-        $content = preg_replace("/^\s+/m", "", $content); // whitespace at beginning
-        $content = preg_replace("/\s+$/m", "", $content); // whitespace at end
         $content = trim($content);
 
         // generate content from the first line of the title
         $splitContent = preg_split("/\R/", $content, 2);
-        $title = $splitContent[0];
+        $title = trim($splitContent[0]);
 
         // ensure that title is not empty
         if(empty($title)) {
