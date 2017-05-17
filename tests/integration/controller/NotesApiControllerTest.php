@@ -20,6 +20,7 @@ use OCP\Files\File;
 
 class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
 
+	/** @var NotesApiController */
     private $controller;
     private $mapper;
     private $userId = 'test';

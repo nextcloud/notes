@@ -115,6 +115,7 @@ class NotesApiController extends ApiController {
     public function create($content, $modified=0, $favorite=null) {
         return $this->respond(function () use ($content, $modified, $favorite) {
             $note = $this->service->create($this->userId);
+			var_dump($note);
             return $this->updateData($note->getId(), $content, $modified, $favorite);
         });
     }
