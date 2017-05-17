@@ -45,6 +45,8 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdate() {
         $note = $this->controller->create('test')->getData();
+		var_dump('getContent: ');
+		var_dump($note);
         $this->assertEquals('test', $note->getContent());
 
 	$t = 100000;
