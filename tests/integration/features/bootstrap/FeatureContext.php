@@ -28,7 +28,7 @@ class FeatureContext implements Context {
 	 * @param string $user
 	 */
 	public function theUserExists($user) {
-		$this->mappedUserId = $user . '' . md5(random_bytes(32));
+		$this->mappedUserId = $user . '' . md5(rand());
 		shell_exec('OC_PASS=test ' . __DIR__ . '/../../../../../../occ user:add ' . $this->mappedUserId . ' --password-from-env');
 	}
 
