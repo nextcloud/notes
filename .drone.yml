@@ -130,15 +130,16 @@ pipeline:
     when:
       matrix:
         TESTS: php7.1-integration
-  # jsunit:
-  #   image: nextcloudci/jsunit:jsunit-5
-  #   commands:
-  #     - unset PHANTOMJS_BIN
-  #     - npm install
-  #     - node_modules/karma/bin/karma start --single-run
-  #   when:
-  #     matrix:
-  #       TESTS: jsunit
+  js-test:
+    image: mhart/alpine-node:6.8.0
+    commands:
+      - cd js
+      - npm install
+      - npm install -g gulp
+      - gulp test
+    when:
+      matrix:
+        TESTS: js-test
 
 matrix:
   include:
@@ -148,4 +149,4 @@ matrix:
     - TESTS: php7.0-integration
     - TESTS: php7.1-unit
     - TESTS: php7.1-integration
-    # - TESTS: js-test
+    - TESTS: js-test
