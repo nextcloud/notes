@@ -40,8 +40,9 @@ pipeline:
       - php occ app:enable notes
       - cd apps/$APP_NAME
 
-      # Run phpunit tests
-      - phpunit -c phpunit.integration.xml
+      # Run behat tests
+      - cd tests/integration
+      - ./run.sh
     when:
       matrix:
         TESTS: php5.6-integration
@@ -78,8 +79,9 @@ pipeline:
       - php occ app:enable notes
       - cd apps/$APP_NAME
 
-      # Run phpunit tests
-      - phpunit --coverage-clover clover.xml -c phpunit.xml
+      # Run behat tests
+      - cd tests/integration
+      - ./run.sh
     when:
       matrix:
         TESTS: php7.0-integration
@@ -122,8 +124,9 @@ pipeline:
       - php occ app:enable notes
       - cd apps/$APP_NAME
 
-      # Run phpunit tests
-      - phpunit --coverage-clover clover.xml -c phpunit.xml
+      # Run behat tests
+      - cd tests/integration
+      - ./run.sh
     when:
       matrix:
         TESTS: php7.1-integration

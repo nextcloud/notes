@@ -13,9 +13,8 @@ namespace OCA\Notes\Controller;
 
 use PHPUnit_Framework_TestCase;
 
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\App;
-use OCP\Files\File;
+use \OCP\AppFramework\App;
+use \OCP\Files\File;
 
 
 class NotesControllerTest extends PHPUnit_Framework_TestCase {

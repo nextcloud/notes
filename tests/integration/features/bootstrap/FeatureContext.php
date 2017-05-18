@@ -2,12 +2,26 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
+use Assert\Assertion;
+//use OCA\Notes\Controller\OCP\AppFramework\App;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 class FeatureContext implements Context {
-	/** @var \GuzzleHttp\Message\ResponseInterface */
+	/** @var GuzzleHttp\Message\ResponseInterface */
 	private $response;
 	/** @var string */
 	private $mappedUserId;
+	/** @var  string */
+	private $baseUrl;
+	/** @var  OCP\Files\IRootFolder */
+	private $fs;
+	/** @var string */
+	private $notesFolder = '/test/files/Notes';
+
+	public function __construct($baseUrl, $admin) {
+		$this->baseUrl = $baseUrl;
+	}
 
 	/**
 	 * @Given the user :user exists
@@ -26,7 +40,7 @@ class FeatureContext implements Context {
 		$client = new GuzzleHttp\Client();
 
 		$this->response = $client->get(
-			'http://localhost:8080/index.php/apps/notes/api/v0.2/notes',
+			$this->baseUrl . 'index.php/apps/notes/api/v0.2/notes',
 			[
 				'auth' => [
 					$this->mappedUserId,
@@ -43,7 +57,7 @@ class FeatureContext implements Context {
 	public function createsANewNoteWithContent($user, $content) {
 		$client = new GuzzleHttp\Client();
 		$client->get(
-			'http://localhost:8080/stable9/index.php/apps/notes',
+			$this->baseUrl . 'index.php/apps/notes',
 			[
 				'auth' => [
 					$this->mappedUserId,
@@ -51,6 +65,7 @@ class FeatureContext implements Context {
 				],
 			]
 		);
+
 		$this->response = $client->post(
 			'http://localhost:8080/index.php/apps/notes/api/v0.2/notes',
 			[
@@ -113,14 +128,57 @@ class FeatureContext implements Context {
 	 */
 	public function theResponseShouldBeAJsonArrayWithALengthOf($length) {
 		$realResponseArray = json_decode($this->response->getBody()->getContents(), true);
-		if((int)count($realResponseArray) !== (int)$length) {
-			throw new InvalidArgumentException(
-				sprintf(
-					'Expected %d as length got %d',
-					$length,
-					count($realResponseArray)
-				)
-			);
+		Assertion::same(count($realResponseArray), (int)$length);
+	}
+
+	/**
+	 * @When :user updates the modified-date of the note to :date
+	 */
+	public function updatesTheModifiedDateOfTheNoteTo($user, $date)
+	{
+		$client = new GuzzleHttp\Client();
+
+		$latestNote = json_decode($this->response->getBody());
+		$latestNote->modified = $date;
+
+		$this->response = $client->put(
+			$this->baseUrl . 'index.php/apps/notes/api/v0.2/notes/' . $latestNote->id,
+			[
+				'auth' => [
+					$this->mappedUserId,
+					'test',
+				],
+				'json' => $latestNote
+			]
+
+		);
+
+		$newNote = json_decode($this->response->getBody());
+
+		Assertion::eq($newNote->modified, 5);
+	}
+
+	/**
+	 * @Then the response should be a JSON object with the following mandatory values
+	 */
+	public function theResponseShouldBeAJsonObjectWithTheFollowingMandatoryValues(TableNode $table)
+	{
+		$expectedValues = $table->getColumnsHash();
+		$realResponse = json_decode($this->response->getBody(), true);
+
+		foreach ($expectedValues as $value) {
+			if ((string)$realResponse[$value['key']] !== (string)$value['value']) {
+				throw new InvalidArgumentException(
+					sprintf(
+						'Expected %s for key %s got %s',
+						(string)$value['value'],
+						$value['key'],
+						(string)$realResponse[$value['key']]
+					)
+				);
+			}
 		}
 	}
+
+
 }
