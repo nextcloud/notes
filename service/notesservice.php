@@ -138,23 +138,31 @@ class NotesService {
         // using a maximum of 100 chars should be enough
         $title = mb_substr($title, 0, 100, "UTF-8");
 
-        // generate filename if there were collisions
-        $currentFilePath = $file->getPath();
-        if($category===null) {
-            $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
-        } else {
-            $basePath = $notesFolder->getPath();
-            $categoryPath = $this->getCategoryPath($category);
-            if(!empty($categoryPath))
-                $basePath .= '/'.$categoryPath;
-            $this->getOrCreateFolder($basePath);
-        }
-        $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
-        $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
 
-        // if the current path is not the new path, the file has to be renamed
-        if($currentFilePath !== $newFilePath) {
-            $file->move($newFilePath);
+        // rename/move file with respect to title/category
+        // this can fail if access rights are not sufficient or category name is illegal
+        try {
+            $currentFilePath = $file->getPath();
+            $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
+
+            // detect (new) folder path based on category name
+            if($category===null) {
+                $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
+            } else {
+                $basePath = $notesFolder->getPath();
+                if(!empty($category))
+                    $basePath .= '/'.$category;
+                $this->getOrCreateFolder($basePath);
+            }
+
+            // assemble new file path
+            $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
+
+            // if the current path is not the new path, the file has to be renamed
+            if($currentFilePath !== $newFilePath) {
+                $file->move($newFilePath);
+            }
+        } catch(\Exception $e) {
         }
 
         $file->putContent($content);
@@ -278,20 +286,6 @@ class NotesService {
             }
             return $this->generateFileName($folder, $newTitle, $extension, $id);
         }
-    }
-
-    private function getCategoryPath($category) {
-        $category = str_replace('\\', '/', $category);
-        $folders = explode('/', $category);
-        $cleanedFolders = [];
-        foreach($folders as $folder) {
-            $folder = trim($folder);
-            $folder = preg_replace('/^\.+\s*/', '', $folder);
-            if(!empty($folder)) {
-                $cleanedFolders[] = $folder;
-            }
-        }
-        return implode('/', $cleanedFolders);
     }
 
 	/**
