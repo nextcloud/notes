@@ -12,6 +12,8 @@
 namespace OCA\Notes\Service;
 
 use OCP\Files\FileInfo;
+use OCP\Files\Node;
+use OCP\Files\NotFoundException;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
@@ -230,16 +232,16 @@ class NotesService {
 
     /**
      * @param string $userId the user id
-     * @return Folder
+     * @return Folder|Node
      */
     private function getFolderForUser ($userId) {
-        $path = '/' . $userId . '/files/Notes';
-        if ($this->root->nodeExists($path)) {
-            $folder = $this->root->get($path);
-        } else {
-            $folder = $this->root->newFolder($path);
+        $userFolder = $this->root->getUserFolder($userId);
+        $path = 'Notes';
+        try {
+            return $userFolder->get($path);
+        } catch (NotFoundException $e) {
+            return $userFolder->newFolder($path);
         }
-        return $folder;
     }
 
 
