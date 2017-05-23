@@ -1,6 +1,8 @@
 language: php
 php:
   - 5.6
+  - 7.0
+  - 7.1
 
 env:
   global:
@@ -16,7 +18,7 @@ branches:
 
 before_install:
   - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
-  - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+  - . ./before_install.sh $APP_NAME $CORE_BRANCH $DB
   - cd ../server/
   - php occ app:enable notes
   - cd apps/$APP_NAME
