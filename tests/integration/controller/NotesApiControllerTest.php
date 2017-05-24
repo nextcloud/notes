@@ -11,6 +11,9 @@
 
 namespace OCA\Notes\Controller;
 
+use OC\Files\Filesystem;
+use OCP\IUser;
+use OCP\IUserManager;
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Http\DataResponse;
@@ -18,7 +21,13 @@ use OCP\AppFramework\App;
 use OCP\Files\File;
 
 
-class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
+/**
+ * Class NotesApiControllerTest
+ *
+ * @package OCA\Notes\Controller
+ * @group DB
+ */
+class NotesApiControllerTest extends \Test\TestCase {
 
     private $controller;
     private $mapper;
@@ -27,11 +36,26 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
     private $fs;
 
     public function setUp() {
+    	parent::setUp();
         $app = new App('notes');
         $container = $app->getContainer();
         $container->registerService('UserId', function($c) {
             return $this->userId;
         });
+
+		/** @var IUserManager $userManager */
+		$userManager = $container->query(IUserManager::class);
+		$userManager->createUser($this->userId, 'test');
+
+		\OC_Util::tearDownFS();
+		\OC\Files\Cache\Storage::getGlobalCache()->clearCache();
+		\OC::$server->getUserSession()->setUser(null);
+		\OC\Files\Filesystem::tearDown();
+		\OC::$server->getUserSession()->login($this->userId, 'test');
+		\OC::$server->getUserFolder($this->userId);
+
+		\OC_Util::setupFS($this->userId);
+
         $this->controller = $container->query(
             'OCA\Notes\Controller\NotesApiController'
         );
@@ -42,9 +66,10 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
         $this->fs->newFolder($this->notesFolder);
     }
 
-
     public function testUpdate() {
-        $note = $this->controller->create('test')->getData();
+    	$r = $this->controller->create('test');
+        $note = $r->getData();
+		var_dump($note);
         $this->assertEquals('test', $note->getContent());
 
 	$t = 100000;
