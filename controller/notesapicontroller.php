@@ -12,10 +12,12 @@
 namespace OCA\Notes\Controller;
 
 use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
 use OCA\Notes\Service\NotesService;
+use OCA\Notes\Service\MetaService;
 use OCA\Notes\Db\Note;
 
 /**
@@ -29,6 +31,8 @@ class NotesApiController extends ApiController {
 
     /** @var NotesService */
     private $service;
+    /** @var MetaService */
+    private $metaService;
     /** @var string */
     private $userId;
 
@@ -38,10 +42,10 @@ class NotesApiController extends ApiController {
      * @param NotesService $service
      * @param string $UserId
      */
-    public function __construct($AppName, IRequest $request,
-                                NotesService $service, $UserId){
+    public function __construct($AppName, IRequest $request, NotesService $service, MetaService $metaService, $UserId) {
         parent::__construct($AppName, $request);
         $this->service = $service;
+        $this->metaService = $metaService;
         $this->userId = $UserId;
     }
 
@@ -52,7 +56,7 @@ class NotesApiController extends ApiController {
      * notes
      * @return Note
      */
-    private function excludeFields(Note $note, array $exclude) {
+    private function excludeFields(Note &$note, array $exclude) {
         if(count($exclude) > 0) {
             foreach ($exclude as $field) {
                 if(property_exists($note, $field)) {
@@ -72,13 +76,28 @@ class NotesApiController extends ApiController {
      * @param string $exclude
      * @return DataResponse
      */
-    public function index($exclude='') {
+    public function index($exclude='', $pruneBefore=0) {
         $exclude = explode(',', $exclude);
+        $now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
         $notes = $this->service->getAll($this->userId);
+        $metas = $this->metaService->updateAll($this->userId, $notes);
         foreach ($notes as $note) {
-            $note = $this->excludeFields($note, $exclude);
+            $lastUpdate = $metas[$note->getId()]->getLastUpdate();
+            if($pruneBefore && $lastUpdate<$pruneBefore) {
+                $vars = get_object_vars($note);
+                unset($vars['id']);
+                $this->excludeFields($note, array_keys($vars));
+            } else {
+                $this->excludeFields($note, $exclude);
+            }
         }
-        return new DataResponse($notes);
+        $etag = md5(json_encode($notes));
+        if ($this->request->getHeader('If-None-Match') === '"'.$etag.'"') {
+            return new DataResponse([], Http::STATUS_NOT_MODIFIED);
+        }
+        return (new DataResponse($notes))
+            ->setLastModified($now)
+            ->setETag($etag);
     }
 
 
