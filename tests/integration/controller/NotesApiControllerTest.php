@@ -20,6 +20,7 @@ use OCP\Files\File;
 
 class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
 
+	/** @var NotesApiController */
     private $controller;
     private $mapper;
     private $userId = 'test';
@@ -44,7 +45,13 @@ class NotesApiControllerTest extends PHPUnit_Framework_TestCase {
 
 
     public function testUpdate() {
-        $note = $this->controller->create('test')->getData();
+        $note = $this->controller->create('test');
+		var_dump($note->getStatus());
+		$noteData = $note->getData();
+		var_dump('getContent: ');
+		var_dump($note);
+		var_dump($noteData);
+		$note = $noteData;
         $this->assertEquals('test', $note->getContent());
 
 	$t = 100000;
