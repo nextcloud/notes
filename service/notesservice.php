@@ -121,22 +121,7 @@ class NotesService {
         $notesFolder = $this->getFolderForUser($userId);
         $file = $this->getFileById($notesFolder, $id);
         $folder = $file->getParent();
-
-        // generate content from the first line of the title
-        $splitContent = preg_split("/\R/", $content, 2);
-        $title = $splitContent[0];
-
-        if(!$title) {
-            $title = $this->l10n->t('New note');
-        }
-
-        // prevent directory traversal
-        $title = str_replace(array('/', '\\'), '',  $title);
-        // remove hash and space characters from the beginning of the filename
-        // in case of markdown
-        $title = ltrim($title, ' #');
-        // using a maximum of 100 chars should be enough
-        $title = mb_substr($title, 0, 100, "UTF-8");
+        $title = $this->getSafeTitleFromContent($content);
 
         // generate filename if there were collisions
         $currentFilePath = $file->getPath();
@@ -196,6 +181,31 @@ class NotesService {
         $file->delete();
     }
 
+    private function getSafeTitleFromContent($content) {
+        // prepare content: remove markdown characters and empty spaces
+        $content = preg_replace("/^\s*[*+-]\s+/m", "", $content); // list item
+        $content = preg_replace("/^#+\s+(.*?)\s*#*$/m", "$1", $content); // headline
+        $content = preg_replace("/^(=+|-+)$/m", "", $content); // separate line for headline
+        $content = preg_replace("/(\*+|_+)(.*?)\\1/m", "$2", $content); // emphasis
+        $content = trim($content);
+
+        // generate content from the first line of the title
+        $splitContent = preg_split("/\R/", $content, 2);
+        $title = trim($splitContent[0]);
+
+        // ensure that title is not empty
+        if(empty($title)) {
+            $title = $this->l10n->t('New note');
+        }
+
+        // prevent directory traversal
+        $title = str_replace(array('/', '\\'), '',  $title);
+
+        // using a maximum of 100 chars should be enough
+        $title = mb_substr($title, 0, 100, "UTF-8");
+
+        return $title;
+    }
 
     /**
      * @param Folder $folder
