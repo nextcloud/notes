@@ -185,7 +185,7 @@ class NotesService {
         // prepare content: remove markdown characters and empty spaces
         $content = preg_replace("/^\s*[*+-]\s+/m", "", $content); // list item
         $content = preg_replace("/^#+\s+(.*?)\s*#*$/m", "$1", $content); // headline
-        $content = preg_replace("/^(?:=*|-*)$/m", "", $content); // separate line for headline
+        $content = preg_replace("/^(=+|-+)$/m", "", $content); // separate line for headline
         $content = preg_replace("/(\*+|_+)(.*?)\\1/m", "$2", $content); // emphasis
         $content = trim($content);
 
