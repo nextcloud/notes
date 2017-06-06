@@ -15,6 +15,7 @@ use OCP\Files\FileInfo;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
+use OCP\ILogger;
 
 use OCA\Notes\Db\Note;
 
@@ -27,14 +28,20 @@ class NotesService {
 
     private $l10n;
     private $root;
+    private $logger;
+    private $appName;
 
     /**
      * @param IRootFolder $root
      * @param IL10N $l10n
+     * @param ILogger $logger
+     * @param String $appName
      */
-    public function __construct (IRootFolder $root, IL10N $l10n) {
+    public function __construct (IRootFolder $root, IL10N $l10n, ILogger $logger, $appName) {
         $this->root = $root;
         $this->l10n = $l10n;
+        $this->logger = $logger;
+        $this->appName = $appName;
     }
 
 
@@ -117,21 +124,38 @@ class NotesService {
      * @throws NoteDoesNotExistException if note does not exist
      * @return \OCA\Notes\Db\Note the updated note
      */
-    public function update ($id, $content, $userId, $mtime=0) {
+    public function update ($id, $content, $userId, $category=null, $mtime=0) {
         $notesFolder = $this->getFolderForUser($userId);
         $file = $this->getFileById($notesFolder, $id);
         $folder = $file->getParent();
         $title = $this->getSafeTitleFromContent($content);
 
-        // generate filename if there were collisions
-        $currentFilePath = $file->getPath();
-        $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
-        $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
-        $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
 
-        // if the current path is not the new path, the file has to be renamed
-        if($currentFilePath !== $newFilePath) {
-            $file->move($newFilePath);
+        // rename/move file with respect to title/category
+        // this can fail if access rights are not sufficient or category name is illegal
+        try {
+            $currentFilePath = $file->getPath();
+            $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
+
+            // detect (new) folder path based on category name
+            if($category===null) {
+                $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
+            } else {
+                $basePath = $notesFolder->getPath();
+                if(!empty($category))
+                    $basePath .= '/'.$category;
+                $this->getOrCreateFolder($basePath);
+            }
+
+            // assemble new file path
+            $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
+
+            // if the current path is not the new path, the file has to be renamed
+            if($currentFilePath !== $newFilePath) {
+                $file->move($newFilePath);
+            }
+        } catch(\OCP\Files\NotPermittedException $e) {
+            $this->logger->error('Moving this note to the desired target is not allowed. Please check the note\'s target category.', array('app' => $this->appName));
         }
 
         $file->putContent($content);
@@ -229,6 +253,16 @@ class NotesService {
      */
     private function getFolderForUser ($userId) {
         $path = '/' . $userId . '/files/Notes';
+        return $this->getOrCreateFolder($path);
+    }
+
+
+    /**
+     * Finds a folder and creates it if non-existent
+     * @param string $path path to the folder
+     * @return Folder
+     */
+    private function getOrCreateFolder($path) {
         if ($this->root->nodeExists($path)) {
             $folder = $this->root->get($path);
         } else {
@@ -271,7 +305,6 @@ class NotesService {
             return $this->generateFileName($folder, $newTitle, $extension, $id);
         }
     }
-
 
 	/**
 	 * gather note files in given directory and all subdirectories

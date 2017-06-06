@@ -108,14 +108,15 @@ class NotesApiController extends ApiController {
      * @NoCSRFRequired
      *
      * @param string $content
+     * @param string $category
      * @param int $modified
      * @param boolean $favorite
      * @return DataResponse
      */
-    public function create($content, $modified=0, $favorite=null) {
-        return $this->respond(function () use ($content, $modified, $favorite) {
+    public function create($content, $category=null, $modified=0, $favorite=null) {
+        return $this->respond(function () use ($content, $category, $modified, $favorite) {
             $note = $this->service->create($this->userId);
-            return $this->updateData($note->getId(), $content, $modified, $favorite);
+            return $this->updateData($note->getId(), $content, $category, $modified, $favorite);
         });
     }
 
@@ -127,13 +128,14 @@ class NotesApiController extends ApiController {
      *
      * @param int $id
      * @param string $content
+     * @param string $category
      * @param int $modified
      * @param boolean $favorite
      * @return DataResponse
      */
-    public function update($id, $content=null, $modified=0, $favorite=null) {
-        return $this->respond(function () use ($id, $content, $modified, $favorite) {
-            return $this->updateData($id, $content, $modified, $favorite);
+    public function update($id, $content=null, $category=null, $modified=0, $favorite=null) {
+        return $this->respond(function () use ($id, $content, $category, $modified, $favorite) {
+            return $this->updateData($id, $content, $category, $modified, $favorite);
         });
     }
 
@@ -145,14 +147,14 @@ class NotesApiController extends ApiController {
      * @param boolean $favorite
      * @return Note
      */
-    private function updateData($id, $content, $modified, $favorite) {
+    private function updateData($id, $content, $category, $modified, $favorite) {
         if($favorite!==null) {
             $this->service->favorite($id, $favorite, $this->userId);
         }
         if($content===null) {
             return $this->service->get($id, $this->userId);
         } else {
-            return $this->service->update($id, $content, $this->userId, $modified);
+            return $this->service->update($id, $content, $this->userId, $category, $modified);
         }
     }
 
