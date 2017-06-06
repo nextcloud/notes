@@ -15,6 +15,7 @@ use OCP\Files\FileInfo;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
+use OCP\ILogger;
 
 use OCA\Notes\Db\Note;
 
@@ -27,14 +28,20 @@ class NotesService {
 
     private $l10n;
     private $root;
+    private $logger;
+    private $appName;
 
     /**
      * @param IRootFolder $root
      * @param IL10N $l10n
+     * @param ILogger $logger
+     * @param String $appName
      */
-    public function __construct (IRootFolder $root, IL10N $l10n) {
+    public function __construct (IRootFolder $root, IL10N $l10n, ILogger $logger, $appName) {
         $this->root = $root;
         $this->l10n = $l10n;
+        $this->logger = $logger;
+        $this->appName = $appName;
     }
 
 
@@ -162,7 +169,8 @@ class NotesService {
             if($currentFilePath !== $newFilePath) {
                 $file->move($newFilePath);
             }
-        } catch(\Exception $e) {
+        } catch(\OCP\Files\NotPermittedException $e) {
+            $this->logger->error('Moving this note to the desired target is not allowed. Please check the note\'s target category.', array('app' => $this->appName));
         }
 
         $file->putContent($content);
