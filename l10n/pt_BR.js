@@ -1,7 +1,7 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Anotaçoes",
+    "Notes" : "Notas",
     "New note" : "Nova anotação",
     "Note is currently saving. Leaving the page will delete all changes!" : "A anotação está sendo salva. Sair da página irá apagar todas as mudanças!",
     "_%n word_::_%n words_" : ["%n palavra","%n palavras"],
