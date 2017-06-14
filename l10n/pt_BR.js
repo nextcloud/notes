@@ -7,6 +7,6 @@ OC.L10N.register(
     "_%n word_::_%n words_" : ["%n palavra","%n palavras"],
     "Delete note" : "Excluir anotação",
     "Favorite" : "Favorito",
-    "No notes found" : "Nenhuma anotação encontrada"
+    "No notes found" : "Nenhuma nota encontrada"
 },
 "nplurals=2; plural=(n > 1);");
