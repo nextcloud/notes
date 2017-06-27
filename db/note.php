@@ -19,6 +19,8 @@ use OCP\AppFramework\Db\Entity;
  * Class Note
  * @method integer getId()
  * @method void setId(integer $value)
+ * @method string getEtag()
+ * @method void setEtag(string $value)
  * @method integer getModified()
  * @method void setModified(integer $value)
  * @method string getTitle()
@@ -33,6 +35,7 @@ use OCP\AppFramework\Db\Entity;
  */
 class Note extends Entity {
 
+    public $etag;
     public $modified;
     public $title;
     public $category;
@@ -60,6 +63,7 @@ class Note extends Entity {
             $note->setFavorite(true);
             //unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
         }
+        $note->updateETag();
         $note->resetUpdatedFields();
         return $note;
     }
@@ -69,5 +73,17 @@ class Note extends Entity {
             $str = mb_convert_encoding($str, 'UTF-8');
         }
         return $str;
+    }
+
+    private function updateETag() {
+        // collect all relevant attributes
+        $data = '';
+        foreach(get_object_vars($this) as $key => $val) {
+            if($key!=='etag') {
+                $data .= $val;
+            }
+        }
+        $etag = md5($data);
+        $this->setEtag($etag);
     }
 }
