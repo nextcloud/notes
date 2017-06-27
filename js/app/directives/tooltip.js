@@ -12,6 +12,10 @@ app.directive('notesTooltip', function () {
         restrict: 'A',
         link: function (scope, element) {
             element.tooltip({'container': 'body'});
+
+            element.on('$destroy', function() {
+                element.tooltip('hide');
+            });
         }
     };
 });
