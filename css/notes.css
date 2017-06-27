@@ -144,6 +144,9 @@
     transition: none !important;
     -webkit-transition: none !important;
 }
+.btn-fullscreen {
+    padding: 15px;
+}
 
 
 /* markdown styling */
