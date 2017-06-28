@@ -59,6 +59,12 @@ class MetaService {
 		return $result;
 	}
 
+	private function create($userId, $note) {
+		$meta = Meta::fromNote($note, $userId);
+		$this->metaMapper->insert($meta);
+		return $meta;
+	}
+
 	private function updateIfNeeded(&$meta, $note) {
 		if($note->getEtag()!==$meta->getEtag()) {
 			$meta->setEtag($note->getEtag());
