@@ -8,11 +8,6 @@
 	padding-bottom: 0; /* no settings bar, so no padding needed */
 }
 
-#app-navigation #note-add span {
-	font-weight: bold;
-	padding: 10px;
-}
-
 #app-navigation #note-add #new-note-button {
 	margin: 14px auto;
 	width: calc(100% - 20px) !important;
