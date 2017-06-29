@@ -40,10 +40,12 @@ style('notes', [
                 </span>
             </li>
             <!-- new note button -->
-            <li id="note-add" ng-click="create()"
+            <div id="note-add">            
+                <button class="icon-add app-content-list-button ng-binding" id="new-note-button" type="button" name="button" ng-click="create()"
                 oc-click-focus="{ selector: '#app-content textarea' }">
-                <a href='#'>+ <span><?php p($l->t('New note')); ?></span></a>
-            </li>
+                    <?php p($l->t('New note')); ?> 
+                </button>
+            </div>
             <!-- notes list -->
             <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
                 ng-class="{ active: note.id == route.noteId }">
