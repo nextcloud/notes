@@ -5,16 +5,25 @@
  */
 
 #app-navigation {
-    padding-bottom: 0; /* no settings bar, so no padding needed */
+	padding-bottom: 0; /* no settings bar, so no padding needed */
 }
 
-#app-navigation #note-add span {
-    font-weight: bold;
-    padding-left: 2px;
+#app-navigation #note-add #new-note-button {
+	margin: 14px auto;
+	width: calc(100% - 20px) !important;
+	text-align: left;
+	padding-left: 34px;
+	background-position: 10px center;
 }
 
 #app-navigation .active a {
 	padding-right: 70px;
+}
+
+.app-content-list-button {
+	display: block;
+	margin: 10px auto;
+	padding: 10px;
 }
 
 #app-navigation li .nav-entry {
