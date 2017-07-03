@@ -20,8 +20,8 @@
 			<field>
 				<name>user_id</name>
 				<type>text</type>
-				<notnull>true</notnull>
 				<length>64</length>
+				<notnull>true</notnull>
 			</field>
 			<field>
 				<name>last_update</name>
@@ -31,8 +31,8 @@
 			<field>
 				<name>etag</name>
 				<type>text</type>
-				<notnull>true</notnull>
 				<length>32</length>
+				<notnull>true</notnull>
 			</field>
 			<index>
 				<name>notes_meta_file_id_index</name>
@@ -51,6 +51,8 @@
 				<unique>true</unique>
 				<field>
 					<name>file_id</name>
+				</field>
+				<field>
 					<name>user_id</name>
 				</field>
 			</index>
