@@ -207,14 +207,14 @@ class NotesService {
 
     private function getSafeTitleFromContent($content) {
         // prepare content: remove markdown characters and empty spaces
-        $content = preg_replace("/^\s*[*+-]\s+/m", "", $content); // list item
-        $content = preg_replace("/^#+\s+(.*?)\s*#*$/m", "$1", $content); // headline
-        $content = preg_replace("/^(=+|-+)$/m", "", $content); // separate line for headline
-        $content = preg_replace("/(\*+|_+)(.*?)\\1/m", "$2", $content); // emphasis
+        $content = preg_replace("/^\s*[*+-]\s+/mu", "", $content); // list item
+        $content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
+        $content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
+        $content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
         $content = trim($content);
 
         // generate content from the first line of the title
-        $splitContent = preg_split("/\R/", $content, 2);
+        $splitContent = preg_split("/\R/u", $content, 2);
         $title = trim($splitContent[0]);
 
         // ensure that title is not empty
@@ -294,10 +294,10 @@ class NotesService {
             return $path;
         } else {
             // increments name (2) to name (3)
-            $match = preg_match('/\((?P<id>\d+)\)$/', $title, $matches);
+            $match = preg_match('/\((?P<id>\d+)\)$/u', $title, $matches);
             if($match) {
                 $newId = ((int) $matches['id']) + 1;
-                $newTitle = preg_replace('/(.*)\s\((\d+)\)$/',
+                $newTitle = preg_replace('/(.*)\s\((\d+)\)$/u',
                     '$1 (' . $newId . ')', $title);
             } else {
                 $newTitle = $title . ' (2)';
