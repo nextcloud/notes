@@ -134,12 +134,12 @@ class NotesService {
         // rename/move file with respect to title/category
         // this can fail if access rights are not sufficient or category name is illegal
         try {
-            $currentFilePath = $file->getPath();
+            $currentFilePath = $this->root->getFullPath($file->getPath());
             $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
 
             // detect (new) folder path based on category name
             if($category===null) {
-                $basePath = pathinfo($file->getPath(), PATHINFO_DIRNAME);
+                $basePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
             } else {
                 $basePath = $notesFolder->getPath();
                 if(!empty($category))
