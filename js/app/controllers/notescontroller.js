@@ -7,7 +7,7 @@
 
 // This is available by using ng-controller="NotesController" in your HTML
 app.controller('NotesController', function($routeParams, $scope, $location,
-                                           Restangular, NotesModel) {
+                                           Restangular, NotesModel, $window) {
     'use strict';
 
     $scope.route = $routeParams;
@@ -43,4 +43,15 @@ app.controller('NotesController', function($routeParams, $scope, $location,
         });
     };
 
+
+    $window.onbeforeunload = function() {
+        var notes = NotesModel.getAll();
+        for(var i=0; i<notes.length; i++) {
+            if(notes[i].unsaved) {
+                return t('notes', 'There are unsaved notes. Leaving ' +
+                                  'the page will discard all changes!');
+            }
+        }
+        return null;
+    };
 });

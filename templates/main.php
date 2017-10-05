@@ -51,6 +51,7 @@ style('notes', [
                 ng-class="{ active: note.id == route.noteId }">
                 <a href="#/notes/{{ note.id }}">
                     {{ note.title | noteTitle }}
+                    <span ng-if="note.unsaved">*</span>
                 </a>
                 <span class="utils">
                     <button class="svg action icon-delete"
