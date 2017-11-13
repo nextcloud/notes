@@ -136,22 +136,35 @@
     position: relative;
     padding: 0 45px 30px 45px;
     margin: -10px 0 0;
-    opacity: .4;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     z-index: 5;
 }
+#app-content .note-meta > * {
+    opacity: .4;
+}
 
+#app-content .note-meta > .note-error {
+    opacity: 1;
+    background-color: #e00;
+    color: #fff;
+    border-radius: 0.5ex;
+    padding: 0.5ex 1ex;
+}
 #app-content .note-meta-right {
     float: right;
 }
 
-#app-content .saving {
-    background: url('../img/loading.gif') no-repeat right 15px top 15px / 24px !important;
-    /* Overrides the snap.js animation making the loading icon to fly in app-content. */
-    transition: none !important;
-    -webkit-transition: none !important;
+#app-content .note-meta > .saving {
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.5ex;
+    height: 2.5ex;
+    background: url('../img/loading.gif') no-repeat;
+    background-size: contain;
+    opacity: 1;
+    margin: 0 1ex;
 }
 .btn-fullscreen {
     padding: 15px;

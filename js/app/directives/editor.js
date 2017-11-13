@@ -23,7 +23,7 @@ app.directive('editor', ['$timeout',
 				$timeout(function() {
 					scope.$apply(function () {
 						scope.note.content = simplemde.value();
-						scope.save();
+						scope.onEdit();
 						scope.updateTitle();
 					});
 				});

@@ -11,12 +11,17 @@ app.factory('SaveQueue', function($q) {
     var SaveQueue = function () {
         this._queue = {};
         this._flushLock = false;
+        this._manualSaveActive = false;
     };
 
     SaveQueue.prototype = {
         add: function (note) {
             this._queue[note.id] = note;
             this._flush();
+        },
+        addManual: function (note) {
+            this._manualSaveActive = true;
+            this.add(note);
         },
         _flush: function () {
             // if there are no changes dont execute the requests
@@ -38,6 +43,7 @@ app.factory('SaveQueue', function($q) {
                 // attributes on the note
                 requests.push(note.put().then(
                     this._noteUpdateRequest.bind(null, note))
+                    .catch(this._saveFailed.bind(null, note))
                 );
             }
             this._queue = {};
@@ -47,15 +53,26 @@ app.factory('SaveQueue', function($q) {
             $q.all(requests).then(function () {
                 self._flushLock = false;
                 self._flush();
+                self._manualSaveActive = false;
             });
         },
         _noteUpdateRequest: function (note, response) {
+            note.error = false;
             note.title = response.title;
             note.modified = response.modified;
+            if(response.content === note.content) {
+                note.unsaved = false;
+            }
+        },
+        _saveFailed: function (note) {
+            note.error = true;
         },
         isSaving: function () {
             return this._flushLock;
-        }
+        },
+        isManualSaving: function () {
+            return this._manualSaveActive;
+        },
     };
 
     return new SaveQueue();

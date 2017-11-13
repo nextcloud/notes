@@ -6,7 +6,8 @@
  */
 
 app.controller('NoteController', function($routeParams, $scope, NotesModel,
-                                          SaveQueue, note, debounce) {
+                                          SaveQueue, note, debounce,
+                                          $document) {
     'use strict';
 
     NotesModel.updateIfExists(note);
@@ -16,16 +17,42 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
     $scope.isSaving = function () {
         return SaveQueue.isSaving();
     };
+    $scope.isManualSaving = function () {
+        return SaveQueue.isManualSaving();
+    };
 
     $scope.updateTitle = function () {
         $scope.note.title = $scope.note.content.split('\n')[0] ||
             t('notes', 'New note');
     };
 
-    $scope.save = debounce(function() {
+    $scope.onEdit = function() {
         var note = $scope.note;
+        note.unsaved = true;
+        $scope.autoSave(note);
+    };
+
+    $scope.autoSave = debounce(function(note) {
         SaveQueue.add(note);
-    }, 300);
+    }, 1000);
+
+    $scope.manualSave = function() {
+        var note = $scope.note;
+        note.error = false;
+        SaveQueue.addManual(note);
+    };
+
+    $document.unbind('keypress.notes.save');
+    $document.bind('keypress.notes.save', function(event) {
+        if(event.ctrlKey || event.metaKey) {
+            switch(String.fromCharCode(event.which).toLowerCase()) {
+                case 's':
+                    event.preventDefault();
+                    $scope.manualSave();
+                    break;
+            }
+        }
+    });
 
     $scope.toggleDistractionFree = function() {
         function launchIntoFullscreen(element) {
