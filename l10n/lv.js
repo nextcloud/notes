@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Piezīmes",
     "New note" : "Jauna piezīme",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Piezīme pašlaik tiek saglabāta. Atstājot šo lapu, tiks izdzēstas visas izmaiņas!",
     "_%n word_::_%n words_" : ["%n words","%n vārdi","%n vārdi"],
     "Delete note" : "Dzēst piezīmi",
     "Favorite" : "Izlase",

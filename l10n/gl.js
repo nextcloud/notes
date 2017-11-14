@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Notas",
     "New note" : "Nova nota",
-    "Note is currently saving. Leaving the page will delete all changes!" : "A nota estase a gardar. Sair da páxina eliminará os cambios!",
     "_%n word_::_%n words_" : ["%n palabra","%n palabras"],
     "Delete note" : "Eliminar nota",
     "Favorite" : "Favorito",

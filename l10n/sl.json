@@ -1,7 +1,6 @@
 { "translations": {
     "Notes" : "Opombe",
     "New note" : "Nove opombe",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Opombe se še shranjujejo. Če zapustite stran, bodo spremembe izgubljene!",
     "_%n word_::_%n words_" : ["%n beseda","%n besedi","%n besede","%n besed"],
     "Delete note" : "Pobriši opombe",
     "Favorite" : "Priljubljene",

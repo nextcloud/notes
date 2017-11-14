@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Нотатки",
     "New note" : "Нова нотатка",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Нотатка зберігається. Якщо покинути сторінку, то нотатку не буде збережено!",
     "_%n word_::_%n words_" : ["%n слово","%n слів","%n слів"],
     "Delete note" : "Вилучити нотатку",
     "Favorite" : "Улюблені",

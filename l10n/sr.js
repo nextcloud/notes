@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Белешке",
     "New note" : "Нова белешка",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Белешка се тренутно уписује. Напуштање стране, поништиће све измене!",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
     "Delete note" : "Обриши белешку",
     "Favorite" : "Омиљено",

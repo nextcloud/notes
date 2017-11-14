@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Užrašai",
     "New note" : "Sukurti",
-    "Note is currently saving. Leaving the page will delete all changes!" : "Duomenys įrašomi. Neišjunkite puslapio ar naršyklės.",
     "_%n word_::_%n words_" : ["%n žodis","%n žodžiai","%n žodžių"],
     "Delete note" : "Ištrinti",
     "Favorite" : "Pažymėti",

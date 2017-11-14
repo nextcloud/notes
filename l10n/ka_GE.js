@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "ჩანაწერები",
     "New note" : "ახალი ჩანაწერი",
-    "Note is currently saving. Leaving the page will delete all changes!" : "ჩანაწერი ამჟამად შენახვის პროცესშია. ამ გვერდის დატოვება ყველა ცვლილებას გააუქმებს!",
     "_%n word_::_%n words_" : ["%n სიტყვა"],
     "Delete note" : "ჩანაწერის გაუქმება",
     "Favorite" : "რჩეული",
