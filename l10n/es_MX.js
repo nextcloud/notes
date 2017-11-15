@@ -6,6 +6,8 @@ OC.L10N.register(
     "_%n word_::_%n words_" : ["%n palabra","%n palabras"],
     "Delete note" : "Borrar nota",
     "Favorite" : "Favorito",
-    "No notes found" : "No se encontraron notas"
+    "No notes found" : "No se encontraron notas",
+    "The note has unsaved changes." : "La nota contiene cambios sin guardar",
+    "*" : "*"
 },
 "nplurals=2; plural=(n != 1);");
