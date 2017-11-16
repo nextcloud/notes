@@ -214,8 +214,13 @@ class NotesService {
 
     // removes characters that are illegal in a file or folder name on some operating systems
     private function sanitisePath($str) {
-        $str = str_replace(['*', '|', '/', '\\', ':', '"', '<', '>', '?'], '', $str); // problematic characters
+        // remove characters which are illegal on Windows (includes illegal characters on Unix/Linux)
+        // prevents also directory traversal by eliminiating slashes
+        // see also \OC\Files\Storage\Common::verifyPosixPath(...)
+        $str = str_replace(['*', '|', '/', '\\', ':', '"', '<', '>', '?'], '', $str);
+
         // if mysql doesn't support 4byte UTF-8, then remove those characters
+        // see \OC\Files\Storage\Common::verifyPath(...)
         if (!\OC::$server->getDatabaseConnection()->supports4ByteText()) {
             $str = preg_replace('%(?:
                 \xF0[\x90-\xBF][\x80-\xBF]{2}      # planes 1-3
@@ -223,7 +228,9 @@ class NotesService {
               | \xF4[\x80-\x8F][\x80-\xBF]{2}      # plane 16
               )%xs', '', $str);
         }
-        $str = preg_replace("/^[\. ]+/mu", "", $str); // hidden files
+
+        // prevent file to be hidden
+        $str = preg_replace("/^[\. ]+/mu", "", $str);
         return trim($str);
     }
 
@@ -234,7 +241,7 @@ class NotesService {
         $content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
         $content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
 
-        // prevent directory traversal, illegal characters and unintended file names
+        // sanitize: prevent directory traversal, illegal characters and unintended file names
         $content = $this->sanitisePath($content);
 
         // generate title from the first line of the content
