@@ -10,6 +10,8 @@ OC.L10N.register(
     "No notes found" : "Herhangi bir not bulunamadı",
     "The note has unsaved changes." : "Not üzerinde kaydedilmemiş değişiklikler var.",
     "*" : "*",
-    "Click here to try again" : "Yeniden denemek için buraya tıklayın"
+    "Click here to try again" : "Yeniden denemek için buraya tıklayın",
+    "Saving failed!" : "Kaydedilemedi!",
+    "Note saved" : "Not kaydedildi"
 },
 "nplurals=2; plural=(n > 1);");

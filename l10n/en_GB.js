@@ -10,6 +10,8 @@ OC.L10N.register(
     "No notes found" : "No notes found",
     "The note has unsaved changes." : "The note has unsaved changes.",
     "*" : "*",
-    "Click here to try again" : "Click here to try again"
+    "Click here to try again" : "Click here to try again",
+    "Saving failed!" : "Saving failed!",
+    "Note saved" : "Note saved"
 },
 "nplurals=2; plural=(n != 1);");

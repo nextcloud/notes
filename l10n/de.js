@@ -10,6 +10,8 @@ OC.L10N.register(
     "No notes found" : "Keine Notizen gefunden",
     "The note has unsaved changes." : "Diese Notiz enthält nicht gespeicherte Änderungen.",
     "*" : "*",
-    "Click here to try again" : "Für einen neuen Versuch hier klicken"
+    "Click here to try again" : "Für einen neuen Versuch hier klicken",
+    "Saving failed!" : "Speichern fehlgeschlagen!",
+    "Note saved" : "Notiz gespeichert"
 },
 "nplurals=2; plural=(n != 1);");
