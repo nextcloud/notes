@@ -6,6 +6,11 @@ OC.L10N.register(
     "_%n word_::_%n words_" : ["%n woord","%n woorden"],
     "Delete note" : "Verwijder notitie",
     "Favorite" : "Favoriet",
-    "No notes found" : "Geen notities gevonden..."
+    "No notes found" : "Geen notities gevonden...",
+    "The note has unsaved changes." : "De notitie heeft niet bewaarde wijzigingen.",
+    "*" : "*",
+    "Click here to try again" : "Klik hier om het opnieuw te proberen",
+    "Saving failed!" : "Opslaan mislukt!",
+    "Note saved" : "Notitie opgeslagen"
 },
 "nplurals=2; plural=(n != 1);");
