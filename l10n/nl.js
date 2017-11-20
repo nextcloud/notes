@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Notities",
     "New note" : "Nieuwe notitie",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Er zijn niet-opgeslagen notities. Als je de pagina verlaat gaan je wijzigingen verloren!",
     "_%n word_::_%n words_" : ["%n woord","%n woorden"],
     "Delete note" : "Verwijder notitie",
     "Favorite" : "Favoriet",
