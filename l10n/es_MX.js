@@ -8,6 +8,8 @@ OC.L10N.register(
     "Favorite" : "Favorito",
     "No notes found" : "No se encontraron notas",
     "The note has unsaved changes." : "La nota contiene cambios sin guardar",
-    "*" : "*"
+    "*" : "*",
+    "Click here to try again" : "Haz click aquí para intentarlo de nuevo",
+    "Note saved" : "Nota guardada"
 },
 "nplurals=2; plural=(n != 1);");
