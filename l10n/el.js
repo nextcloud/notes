@@ -7,6 +7,7 @@ OC.L10N.register(
     "_%n word_::_%n words_" : ["%n λέξη","%n λέξεις"],
     "Delete note" : "Διαγραφή σημείωσης",
     "Favorite" : "Αγαπημένο",
-    "No notes found" : "Δεν βρέθηκαν σημειώσεις"
+    "No notes found" : "Δεν βρέθηκαν σημειώσεις",
+    "The note has unsaved changes." : "Η σημείωση έχει αλλαγές που δεν έχουν σωθεί"
 },
 "nplurals=2; plural=(n != 1);");
