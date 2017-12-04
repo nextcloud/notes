@@ -142,8 +142,13 @@ class NotesService {
                 $basePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
             } else {
                 $basePath = $notesFolder->getPath();
-                if(!empty($category))
-                    $basePath .= '/'.$category;
+                if(!empty($category)) {
+                    // sanitise path
+                    $cats = explode('/', $category);
+                    $cats = array_map([$this, 'sanitisePath'], $cats);
+                    $cats = array_filter($cats, function($str) { return !empty($str); });
+                    $basePath .= '/'.implode('/', $cats);
+                }
                 $this->getOrCreateFolder($basePath);
             }
 
@@ -155,7 +160,9 @@ class NotesService {
                 $file->move($newFilePath);
             }
         } catch(\OCP\Files\NotPermittedException $e) {
-            $this->logger->error('Moving this note to the desired target is not allowed. Please check the note\'s target category.', array('app' => $this->appName));
+            $this->logger->error('Moving note '.$id.' ('.$title.') to the desired target is not allowed. Please check the note\'s target category ('.$category.').', ['app' => $this->appName]);
+        } catch(\Exception $e) {
+            $this->logger->error('Moving note '.$id.' ('.$title.') to the desired target has failed with a '.get_class($e).': '.$e->getMessage(), ['app' => $this->appName]);
         }
 
         $file->putContent($content);
@@ -205,15 +212,39 @@ class NotesService {
         $file->delete();
     }
 
+    // removes characters that are illegal in a file or folder name on some operating systems
+    private function sanitisePath($str) {
+        // remove characters which are illegal on Windows (includes illegal characters on Unix/Linux)
+        // prevents also directory traversal by eliminiating slashes
+        // see also \OC\Files\Storage\Common::verifyPosixPath(...)
+        $str = str_replace(['*', '|', '/', '\\', ':', '"', '<', '>', '?'], '', $str);
+
+        // if mysql doesn't support 4byte UTF-8, then remove those characters
+        // see \OC\Files\Storage\Common::verifyPath(...)
+        if (!\OC::$server->getDatabaseConnection()->supports4ByteText()) {
+            $str = preg_replace('%(?:
+                \xF0[\x90-\xBF][\x80-\xBF]{2}      # planes 1-3
+              | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+              | \xF4[\x80-\x8F][\x80-\xBF]{2}      # plane 16
+              )%xs', '', $str);
+        }
+
+        // prevent file to be hidden
+        $str = preg_replace("/^[\. ]+/mu", "", $str);
+        return trim($str);
+    }
+
     private function getSafeTitleFromContent($content) {
         // prepare content: remove markdown characters and empty spaces
         $content = preg_replace("/^\s*[*+-]\s+/mu", "", $content); // list item
         $content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
         $content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
         $content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
-        $content = trim($content);
 
-        // generate content from the first line of the title
+        // sanitize: prevent directory traversal, illegal characters and unintended file names
+        $content = $this->sanitisePath($content);
+
+        // generate title from the first line of the content
         $splitContent = preg_split("/\R/u", $content, 2);
         $title = trim($splitContent[0]);
 
@@ -221,9 +252,6 @@ class NotesService {
         if(empty($title)) {
             $title = $this->l10n->t('New note');
         }
-
-        // prevent directory traversal
-        $title = str_replace(array('/', '\\'), '',  $title);
 
         // using a maximum of 100 chars should be enough
         $title = mb_substr($title, 0, 100, "UTF-8");
