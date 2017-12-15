@@ -1,9 +1,15 @@
 { "translations": {
     "Notes" : "笔记",
     "New note" : "新建笔记",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "有未保存的记录，离开页面将丢弃所有更改！",
     "_%n word_::_%n words_" : ["%n 个字"],
     "Delete note" : "删除笔记",
     "Favorite" : "收藏",
-    "No notes found" : "没有便签"
+    "No notes found" : "没有便签",
+    "The note has unsaved changes." : "该笔记有未保存的更改。",
+    "*" : "*",
+    "Click here to try again" : "请点击这里重试",
+    "Saving failed!" : "保存失败！",
+    "Note saved" : "记录已保存"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
