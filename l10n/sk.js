@@ -9,6 +9,7 @@ OC.L10N.register(
     "Favorite" : "Obľúbené",
     "No notes found" : "Poznámky sa nenašli",
     "The note has unsaved changes." : "Poznámka má neuložené zmeny.",
+    "*" : "*",
     "Saving failed!" : "Ukladanie zlyhalo!",
     "Note saved" : "Poznámka uložená"
 },
