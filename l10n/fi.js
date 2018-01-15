@@ -1,11 +1,17 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Muistiot",
-    "New note" : "Uusi muistio",
+    "Notes" : "Muistiinpanot",
+    "New note" : "Uusi muistiinpano",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Havaittiin tallentamattomia muistiinpanoja. Sivulta poistuminen hylkää kaikki muutokset!",
     "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
-    "Delete note" : "Poista muistio",
+    "Delete note" : "Poista muistiinpano",
     "Favorite" : "Suosikki",
-    "No notes found" : "Muistioita ei löytynyt"
+    "No notes found" : "Muistiinpanoja ei löytynyt",
+    "The note has unsaved changes." : "Tässä muistiinpanossa on tallentamattomia muutoksia.",
+    "*" : "*",
+    "Click here to try again" : "Napsauta tästä yrittääksesi uudelleen",
+    "Saving failed!" : "Tallentaminen epäonnistui!",
+    "Note saved" : "Muistiinpano tallennettu"
 },
 "nplurals=2; plural=(n != 1);");
