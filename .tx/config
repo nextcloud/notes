@@ -4,7 +4,7 @@ lang_map = bg_BG: bg, cs_CZ: cs, fi_FI: fi, hu_HU: hu, nb_NO: nb, sk_SK: sk, th_
 
 [nextcloud.notes]
 file_filter = <lang>/notes.po
-source_file = templates/notes.pot
+source_file = translationfiles/templates/notes.pot
 source_lang = en
 type = PO
 
