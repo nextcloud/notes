@@ -10,6 +10,7 @@ OC.L10N.register(
     "No notes found" : "Poznámky sa nenašli",
     "The note has unsaved changes." : "Poznámka má neuložené zmeny.",
     "*" : "*",
+    "Click here to try again" : "Pre nový pokus kliknite sem",
     "Saving failed!" : "Ukladanie zlyhalo!",
     "Note saved" : "Poznámka uložená"
 },

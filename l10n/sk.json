@@ -8,6 +8,7 @@
     "No notes found" : "Poznámky sa nenašli",
     "The note has unsaved changes." : "Poznámka má neuložené zmeny.",
     "*" : "*",
+    "Click here to try again" : "Pre nový pokus kliknite sem",
     "Saving failed!" : "Ukladanie zlyhalo!",
     "Note saved" : "Poznámka uložená"
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
