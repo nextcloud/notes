@@ -9,6 +9,7 @@ OC.L10N.register(
     "Favorite" : "Αγαπημένο",
     "No notes found" : "Δεν βρέθηκαν σημειώσεις",
     "The note has unsaved changes." : "Η σημείωση έχει αλλαγές που δεν έχουν σωθεί",
+    "*" : "*",
     "Click here to try again" : "Κάντε κλίκ εδώ, για να δοκιμάσετε ξανά.",
     "Saving failed!" : "Απέτυχε η αποθήκευση!",
     "Note saved" : "Η σημείωση αποθηκεύτηκε."
