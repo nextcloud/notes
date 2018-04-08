@@ -1,9 +1,15 @@
 { "translations": {
     "Notes" : "Notas",
     "New note" : "Nuwe nota",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Daar is ongestoorde veranderinge. Indien die bladsy gesluit word sal alle veranderinge geskrap word!",
     "_%n word_::_%n words_" : ["%n woord","%n woorde"],
     "Delete note" : "Skrap nota",
     "Favorite" : "Gunsteling",
-    "No notes found" : "Geen notas gevind"
+    "No notes found" : "Geen notas gevind",
+    "The note has unsaved changes." : "Die nota het ongestoorde veranderinge.",
+    "*" : "*",
+    "Click here to try again" : "Klik hier om weer te probeer",
+    "Saving failed!" : "Stoor het misluk!",
+    "Note saved" : "Nota gestoor"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
