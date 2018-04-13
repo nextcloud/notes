@@ -173,6 +173,9 @@
 
 /* markdown styling */
 
+.CodeMirror .CodeMirror-code {
+	width: 100%;
+}
 .CodeMirror .CodeMirror-code .cm-header {
     /* break from core in using semibold, otherwise not emphasized in texts */
 	font-weight: 600;
