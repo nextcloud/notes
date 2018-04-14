@@ -27,6 +27,10 @@ app.factory('NotesModel', function () {
             return this.notes;
         },
         get: function (id) {
+            if(this.notesIds[id].error) {
+                OCdialogs.alert(this.notesIds[id].errorMessage,'Error!');
+                return false;
+            }
             return this.notesIds[id];
         },
         updateIfExists: function(updated) {

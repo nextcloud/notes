@@ -14,6 +14,7 @@ namespace OCA\Notes\Controller;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OC\Encryption\Exceptions\DecryptionFailedException;
 use OCP\IRequest;
 use OCP\IConfig;
 
@@ -62,15 +63,21 @@ class PageController extends Controller {
         // check if note exists
         try {
             $this->notesService->get($lastViewedNote, $this->userId);
+            $errorMessage=null;
         } catch(NoteDoesNotExistException $ex) {
             $lastViewedNote = 0;
+            $errorMessage="The last viewed note cannot be accessed. ".$ex->getMessage();
+        } catch(DecryptionFailedException $ex){
+            $lastViewedNote = 0;
+            $errorMessage=$ex->getMessage();
         }
 
         $response = new TemplateResponse(
             $this->appName,
             'main',
             [
-                'lastViewedNote' => $lastViewedNote
+                 'lastViewedNote'=>$lastViewedNote,
+                 'errorMessage'=>$errorMessage
             ]
         );
 

@@ -65,7 +65,7 @@ class NotesService {
 
         $notes = [];
         foreach($filesById as $id=>$file) {
-            $notes[] = Note::fromFile($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+            $notes[] = Note::fromFileMaybe($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         }
 
         return $notes;
@@ -81,7 +81,7 @@ class NotesService {
      */
     public function get ($id, $userId) {
         $folder = $this->getFolderForUser($userId);
-        return Note::fromFile($this->getFileById($folder, $id), $folder, $this->getTags($id));
+        return Note::fromFileMaybe($this->getFileById($folder, $id), $folder, $this->getTags($id));
     }
 
     private function getTags ($id) {
@@ -110,7 +110,7 @@ class NotesService {
         $path = $this->generateFileName($folder, $title, "txt", -1);
         $file = $folder->newFile($path);
 
-        return Note::fromFile($file, $folder);
+        return Note::fromFileMaybe($file, $folder);
     }
 
 
@@ -171,7 +171,7 @@ class NotesService {
             $file->touch($mtime);
         }
 
-        return Note::fromFile($file, $notesFolder, $this->getTags($id));
+        return Note::fromFileMaybe($file, $notesFolder, $this->getTags($id));
     }
 
 

@@ -10,9 +10,14 @@ app.controller('AppController', function ($scope, $location, is) {
 
     $scope.is = is;
 
-    $scope.init = function (lastViewedNote) {
+    $scope.init = function (lastViewedNote,errorMessage) {
+
+
         if(lastViewedNote !== 0) {
             $location.path('/notes/' + lastViewedNote);
+        }
+        if(errorMessage !==0){
+            OC.Notification.showTemporary(errorMessage);
         }
     };
 

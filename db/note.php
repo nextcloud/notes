@@ -14,7 +14,8 @@ namespace OCA\Notes\Db;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\AppFramework\Db\Entity;
-
+use OC\Encryption\Exceptions\DecryptionFailedException;
+use League\Flysystem\FileNotFoundException;
 /**
  * Class Note
  * @method integer getId()
@@ -31,20 +32,42 @@ use OCP\AppFramework\Db\Entity;
  * @method void setContent(string $value)
  * @method boolean getFavorite()
  * @method void setFavorite(boolean $value)
+ * @method boolean getError()
+ * @method void setError(boolean $value)
+ * @method string getErrorMessage()
+ * @method void setErrorMessage(string $value)
  * @package OCA\Notes\Db
  */
 class Note extends Entity {
-
     public $etag;
     public $modified;
     public $title;
     public $category;
     public $content;
     public $favorite = false;
+    public $error = false;
+    public $errorMessage='';
 
     public function __construct() {
         $this->addType('modified', 'integer');
         $this->addType('favorite', 'boolean');
+    }
+    /**
+     * @param File $file
+     * @return static
+     */
+    public static function fromFileMaybe(File $file, Folder $notesFolder, $tags=[]){
+
+        $id=$file->getId();
+
+        try{
+            $note=self::fromFile($file, $notesFolder, $tags=[]);
+        }catch(FileNotFoundException $e){
+            $note = self::fromException('File error: ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+        }catch(DecryptionFailedException $e){
+            $note = self::fromException('Encryption Error: ('.$file->getName().')'.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+        }
+        return $note;
     }
 
     /**
@@ -54,9 +77,35 @@ class Note extends Entity {
     public static function fromFile(File $file, Folder $notesFolder, $tags=[]){
         $note = new static();
         $note->setId($file->getId());
-        $note->setContent(self::convertEncoding($file->getContent()));
+        $fileContent=$file->getContent();
+        if($fileContent===false){
+            throw new FileNotFoundException("File not found");
+        }
+        $note->setContent(self::convertEncoding($fileContent));
         $note->setModified($file->getMTime());
         $note->setTitle(pathinfo($file->getName(),PATHINFO_FILENAME)); // remove extension
+        $subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
+        $note->setCategory($subdir ? $subdir : null);
+        if(is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {
+            $note->setFavorite(true);
+            //unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
+        }
+        $note->updateETag();
+        $note->resetUpdatedFields();
+        return $note;
+    }
+    /**
+     * @param File $file
+     * @return static
+     */
+    public static function fromException($message,File $file,Folder $notesFolder,$tags=[]){
+        $note = new static();
+        $note->setId($file->getId());
+        $note->setErrorMessage($message);
+        $note->setError(true);
+        $note->setContent($message);
+        $note->setModified(null);
+        $note->setTitle($message); // remove extension
         $subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
         $note->setCategory($subdir ? $subdir : null);
         if(is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {

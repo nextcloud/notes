@@ -26,7 +26,7 @@ style('notes', [
 ?>
 
 <div id="app" ng-app="Notes" ng-controller="AppController"
-    ng-init="init(<?php p($_['lastViewedNote']); ?>)" ng-cloak>
+    ng-init="init('<?= $_['lastViewedNote'] ?>','<?= $_['errorMessage'] ?>')" ng-cloak>
 
     <script type="text/ng-template" id="note.html">
         <?php print_unescaped($this->inc('note')); ?>
@@ -48,12 +48,12 @@ style('notes', [
             </div>
             <!-- notes list -->
             <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
-                ng-class="{ active: note.id == route.noteId }">
+                ng-class="{ active: note.id == route.noteId,'has-error': note.error }">
                 <a href="#/notes/{{ note.id }}">
                     {{ note.title | noteTitle }}
                     <span ng-if="note.unsaved">*</span>
                 </a>
-                <span class="utils">
+                <span class="utils" ng-class="{'hidden': note.error }">
                     <button class="svg action icon-delete"
                         title="<?php p($l->t('Delete note')); ?>"
                         notes-tooltip
