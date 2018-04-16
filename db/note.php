@@ -14,7 +14,6 @@ namespace OCA\Notes\Db;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\AppFramework\Db\Entity;
-use OC\Encryption\Exceptions\DecryptionFailedException;
 use League\Flysystem\FileNotFoundException;
 /**
  * Class Note
@@ -52,23 +51,6 @@ class Note extends Entity {
         $this->addType('modified', 'integer');
         $this->addType('favorite', 'boolean');
     }
-    /**
-     * @param File $file
-     * @return static
-     */
-    public static function fromFileMaybe(File $file, Folder $notesFolder, $tags=[]){
-
-        $id=$file->getId();
-
-        try{
-            $note=self::fromFile($file, $notesFolder, $tags=[]);
-        }catch(FileNotFoundException $e){
-            $note = self::fromException('File error: ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-        }catch(DecryptionFailedException $e){
-            $note = self::fromException('Encryption Error: ('.$file->getName().')'.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-        }
-        return $note;
-    }
 
     /**
      * @param File $file
@@ -105,7 +87,7 @@ class Note extends Entity {
         $note->setError(true);
         $note->setContent($message);
         $note->setModified(null);
-        $note->setTitle($message); // remove extension
+        $note->setTitle(pathinfo($file->getName(),PATHINFO_FILENAME)); // remove extension
         $subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
         $note->setCategory($subdir ? $subdir : null);
         if(is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {

@@ -17,7 +17,7 @@ use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OC\Encryption\Exceptions\DecryptionFailedException;
 use OCP\IRequest;
 use OCP\IConfig;
-
+use OCP\IL10N;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\NoteDoesNotExistException;
 
@@ -34,20 +34,23 @@ class PageController extends Controller {
     private $settings;
     /** @var string */
     private $userId;
-
+    /** @var string */
+    private $l10n;
     /**
      * @param string $AppName
      * @param IRequest $request
      * @param NotesService $notesService
      * @param IConfig $settings
      * @param string $UserId
+     * @param IL10N $l10n
      */
     public function __construct($AppName, IRequest $request, $UserId,
-                                NotesService $notesService, IConfig $settings){
+                                NotesService $notesService, IConfig $settings,  IL10N $l10n){
         parent::__construct($AppName, $request);
         $this->notesService = $notesService;
         $this->userId = $UserId;
         $this->settings = $settings;
+        $this->l10n = $l10n;
     }
 
 
@@ -64,12 +67,9 @@ class PageController extends Controller {
         try {
             $this->notesService->get($lastViewedNote, $this->userId);
             $errorMessage=null;
-        } catch(NoteDoesNotExistException $ex) {
+        } catch(\Exception $ex) {
             $lastViewedNote = 0;
-            $errorMessage="The last viewed note cannot be accessed. ".$ex->getMessage();
-        } catch(DecryptionFailedException $ex){
-            $lastViewedNote = 0;
-            $errorMessage=$ex->getMessage();
+            $errorMessage=$this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
         }
 
         $response = new TemplateResponse(
