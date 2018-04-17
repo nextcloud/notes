@@ -28,7 +28,10 @@ app.factory('NotesModel', function () {
         },
         get: function (id) {
             if(this.notesIds[id].error) {
-                OC.dialogs.alert(this.notesIds[id].errorMessage,'An error occurred!');
+                OC.dialogs.alert(
+                    this.notesIds[id].errorMessage,
+                    t('notes','An error occurred!')
+                );
                 return false;
             }
             return this.notesIds[id];
