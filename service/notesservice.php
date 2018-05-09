@@ -16,7 +16,8 @@ use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
 use OCP\ILogger;
-
+use OC\Encryption\Exceptions\DecryptionFailedException;
+use League\Flysystem\FileNotFoundException;
 use OCA\Notes\Db\Note;
 
 /**
@@ -65,7 +66,7 @@ class NotesService {
 
         $notes = [];
         foreach($filesById as $id=>$file) {
-            $notes[] = Note::fromFile($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+            $notes[] = $this->getNote($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         }
 
         return $notes;
@@ -81,7 +82,7 @@ class NotesService {
      */
     public function get ($id, $userId) {
         $folder = $this->getFolderForUser($userId);
-        return Note::fromFile($this->getFileById($folder, $id), $folder, $this->getTags($id));
+        return $this->getNote($this->getFileById($folder, $id), $folder, $this->getTags($id));
     }
 
     private function getTags ($id) {
@@ -93,7 +94,21 @@ class NotesService {
         }
         return array_key_exists($id, $tags) ? $tags[$id] : [];
     }
+    private function getNote($file,$notesFolder,$tags=[]){
 
+        $id=$file->getId();
+
+        try{
+            $note=Note::fromFile($file, $notesFolder, $tags);
+        }catch(FileNotFoundException $e){
+            $note = Note::fromException($this->l10n->t('File error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+        }catch(DecryptionFailedException $e){
+            $note = Note::fromException($this->l10n->t('Encryption Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+        }catch(\Exception $e){
+            $note = Note::fromException($this->l10n->t('Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+        }
+        return $note;
+    }
     /**
      * Creates a note and returns the empty note
      * @param string $userId
@@ -110,7 +125,7 @@ class NotesService {
         $path = $this->generateFileName($folder, $title, "txt", -1);
         $file = $folder->newFile($path);
 
-        return Note::fromFile($file, $folder);
+        return $this->getNote($file, $folder);
     }
 
 
@@ -171,7 +186,7 @@ class NotesService {
             $file->touch($mtime);
         }
 
-        return Note::fromFile($file, $notesFolder, $this->getTags($id));
+        return $this->getNote($file, $notesFolder, $this->getTags($id));
     }
 
 

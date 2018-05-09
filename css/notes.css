@@ -20,6 +20,9 @@
 	padding-right: 70px;
 }
 
+#app-navigation > ul > li.has-error a{
+    color:#f00;
+}
 .app-content-list-button {
 	display: block;
 	margin: 10px auto;

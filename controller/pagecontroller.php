@@ -14,9 +14,10 @@ namespace OCA\Notes\Controller;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OC\Encryption\Exceptions\DecryptionFailedException;
 use OCP\IRequest;
 use OCP\IConfig;
-
+use OCP\IL10N;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\NoteDoesNotExistException;
 
@@ -33,20 +34,23 @@ class PageController extends Controller {
     private $settings;
     /** @var string */
     private $userId;
-
+    /** @var string */
+    private $l10n;
     /**
      * @param string $AppName
      * @param IRequest $request
      * @param NotesService $notesService
      * @param IConfig $settings
      * @param string $UserId
+     * @param IL10N $l10n
      */
     public function __construct($AppName, IRequest $request, $UserId,
-                                NotesService $notesService, IConfig $settings){
+                                NotesService $notesService, IConfig $settings,  IL10N $l10n){
         parent::__construct($AppName, $request);
         $this->notesService = $notesService;
         $this->userId = $UserId;
         $this->settings = $settings;
+        $this->l10n = $l10n;
     }
 
 
@@ -62,15 +66,18 @@ class PageController extends Controller {
         // check if note exists
         try {
             $this->notesService->get($lastViewedNote, $this->userId);
-        } catch(NoteDoesNotExistException $ex) {
+            $errorMessage=null;
+        } catch(\Exception $ex) {
             $lastViewedNote = 0;
+            $errorMessage=$this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
         }
 
         $response = new TemplateResponse(
             $this->appName,
             'main',
             [
-                'lastViewedNote' => $lastViewedNote
+                 'lastViewedNote'=>$lastViewedNote,
+                 'errorMessage'=>$errorMessage
             ]
         );
 
