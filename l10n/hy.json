@@ -1,7 +1,0 @@
-{ "translations": {
-    "Notes" : "Նոթեր",
-    "New note" : "Նոր նոթ",
-    "_%n word_::_%n words_" : ["%n բառ","%n բառ"],
-    "Delete note" : "Ջնջել նոթը"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
-}
