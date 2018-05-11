@@ -1,8 +1,13 @@
 { "translations": {
     "Notes" : "Notas",
+    "The last viewed note cannot be accessed. " : "A última nota visualizada não pode ser acessada.",
     "New note" : "Nova nota",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Existem anotações não salvas. Saindo da página elas serão perdidas!",
     "_%n word_::_%n words_" : ["%n palavra","%n palavras"],
+    "An error occurred!" : "Ocorreu um erro!",
+    "File error" : "Erro de arquivo",
+    "Encryption Error" : "Erro de criptografia",
+    "Error" : "Erro",
     "Delete note" : "Excluir anotação",
     "Favorite" : "Favorito",
     "No notes found" : "Nenhuma nota encontrada",
