@@ -1,8 +1,13 @@
 { "translations": {
     "Notes" : "Заметки",
+    "The last viewed note cannot be accessed. " : "Не удалось перейти к последней просмотренной заметке",
     "New note" : "Новая заметка",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Заметка не сохранены. Если покинуть страницу, все изменения будут удалены!",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слов","%n слов"],
+    "An error occurred!" : "Произошла ошибка!",
+    "File error" : "Ошибка файла",
+    "Encryption Error" : "Ошибка шифрования",
+    "Error" : "Ошибка",
     "Delete note" : "Удалить заметку",
     "Favorite" : "Избранное",
     "No notes found" : "Записей не найдено",
