@@ -4,7 +4,7 @@ OC.L10N.register(
     "Notes" : "ჩანაწერები",
     "New note" : "ახალი ჩანაწერი",
     "There are unsaved notes. Leaving the page will discard all changes!" : "არსებობს შეუნახავი ჩანაწერები. გვერდის დატოვება ყველა ცვლილებას უარყოფს!",
-    "_%n word_::_%n words_" : ["%n სიტყვა"],
+    "_%n word_::_%n words_" : ["%n სიტყვა","%n სიტყვა"],
     "Delete note" : "ჩანაწერის გაუქმება",
     "Favorite" : "რჩეული",
     "No notes found" : "ჩანაწერები ვერ იქნა ნაპოვნი",
@@ -14,4 +14,4 @@ OC.L10N.register(
     "Saving failed!" : "შენახვა ვერ მოხერხდა!",
     "Note saved" : "ჩანაწერი შენახულია"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=(n==1);");

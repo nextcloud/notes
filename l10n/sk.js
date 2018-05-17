@@ -4,7 +4,7 @@ OC.L10N.register(
     "Notes" : "Poznámky",
     "New note" : "Nová poznámka",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opustením stránky stratíte všetky zmeny!",
-    "_%n word_::_%n words_" : ["%n slovo","%n slov","%n slov"],
+    "_%n word_::_%n words_" : ["%n slovo","%n slov","%n slov","%n slov"],
     "Delete note" : "Zmazať poznámku",
     "Favorite" : "Obľúbené",
     "No notes found" : "Poznámky sa nenašli",
@@ -14,4 +14,4 @@ OC.L10N.register(
     "Saving failed!" : "Ukladanie zlyhalo!",
     "Note saved" : "Poznámka uložená"
 },
-"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
+"nplurals=4; plural=(n % 1 == 0 ? 4: n==1 ? 1: n % 1 == 0 && n>=2 && n<=4 ? 3);");
