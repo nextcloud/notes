@@ -11,5 +11,5 @@
     "Click here to try again" : "ახლიდან საცდელად დააწკაპუნეთ აქ",
     "Saving failed!" : "შენახვა ვერ მოხერხდა!",
     "Note saved" : "ჩანაწერი შენახულია"
-},"pluralForm" :"nplurals=2; plural=(n==1);"
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
 }
