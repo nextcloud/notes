@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "הערות",
     "New note" : "הערה חדשה",
     "There are unsaved notes. Leaving the page will discard all changes!" : "ישנן הערות שלא נשמרו. יציאה מהעמוד תעלים את השינויים שערכת!",
+    "_%n word_::_%n words_" : ["%n מילה","%n מילים","%n מילים","%n מילים"],
     "Delete note" : "מחיקת הערה",
     "Favorite" : "מועדף",
     "No notes found" : "לא נמצאו הערות",
