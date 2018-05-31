@@ -10,6 +10,7 @@ OC.L10N.register(
     "File error" : "Errore di file",
     "Encryption Error" : "Errore di cifratura",
     "Error" : "Errore",
+    "Distraction-free notes and writing" : "Note senza distrazioni e scrittura",
     "Delete note" : "Elimina nota",
     "Favorite" : "Preferito",
     "No notes found" : "Nessuna nota trovata",
