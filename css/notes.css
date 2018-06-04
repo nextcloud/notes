@@ -136,9 +136,8 @@
 }
 
 #app-content .note-meta {
-    position: relative;
     padding: 0 45px 30px 45px;
-    margin: -10px 0 0;
+    margin: 10px 0 0;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -153,10 +152,17 @@
     background-color: #e00;
     color: #fff;
     border-radius: 0.5ex;
-    padding: 0.5ex 1ex;
+    padding: 0.5ex 2ex;
+    margin-right: 10px;
 }
 #app-content .note-meta-right {
     float: right;
+}
+#app-content .note-meta-footer {
+    padding: 0 0 10px 0;
+    z-index: 10;
+    position: fixed;
+    bottom: 10;
 }
 
 #app-content .note-meta > .saving {
