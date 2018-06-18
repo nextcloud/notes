@@ -239,6 +239,10 @@
     color: rgba(120, 120, 120, 0.5);
 }
 
+.CodeMirror .CodeMirror-code .cm-formatting-header:not(:first-child) {
+    width: auto;
+    margin-left: 0px; 
+}
 
 /* distraction free styles */
 :-webkit-full-screen {
