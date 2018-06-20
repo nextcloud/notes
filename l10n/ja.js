@@ -12,6 +12,6 @@ OC.L10N.register(
     "*" : "*",
     "Click here to try again" : "ここをクリックして再試行",
     "Saving failed!" : "保存に失敗しました",
-    "Note saved" : "ノートが保存されました"
+    "Note saved" : "ノートを保存しました"
 },
 "nplurals=1; plural=0;");
