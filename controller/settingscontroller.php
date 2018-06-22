@@ -33,7 +33,7 @@ class SettingsController extends Controller
     public function setNotesPath($notesPath) {
 	    $uid = $this->userSession->getUser()->getUID();
 
-	    $path = '/' . $uid . '/files' . $notesPath;
+	    $path = '/' . $uid . '/files/' . $notesPath;
 	    if($this->root->isCreatable($path)) {
 		    $this->config->setUserValue($uid, 'notes', 'notesPath', $notesPath);
 		    return ['status' => 'success', 'notesPath' => $notesPath];
