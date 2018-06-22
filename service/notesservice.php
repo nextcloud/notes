@@ -308,7 +308,7 @@ class NotesService {
      * @return Folder
      */
     private function getFolderForUser ($userId) {
-        $notesPath = $this->config->getUserValue($userId, 'notes', 'notesPath');
+        $notesPath = $this->config->getUserValue($userId, 'notes', 'notesPath', 'Notes');
         $path = '/' . $userId . '/files/' . $notesPath;
         try {
             $folder = $this->getOrCreateFolder($path);
