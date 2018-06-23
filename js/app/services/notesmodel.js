@@ -39,8 +39,8 @@ app.factory('NotesModel', function () {
         updateIfExists: function(updated) {
             var note = this.notesIds[updated.id];
             if(angular.isDefined(note)) {
-                // only update if it hat full data
-                if(updated.content !== null) {
+                // don't update meta-data over full data
+                if(updated.content !== null || note.content === null) {
                     note.title = updated.title;
                     note.modified = updated.modified;
                     note.content = updated.content;
@@ -64,46 +64,50 @@ app.factory('NotesModel', function () {
                 }
             }
         },
-    nthIndexOf: function(str, pattern, n) {
-        var i = -1;
-        while (n-- && i++ < str.length) {
-            i = str.indexOf(pattern, i);
-            if (i < 0) {
-                break;
-            }
-        }
-        return i;
-    },
 
-    getCategories: _.memoize(function (notes, maxLevel, details) {
-        var categories = {};
-        for(var i=0; i<notes.length; i+=1) {
-            var cat = notes[i].category;
-            if(maxLevel>0) {
-                var index = this.nthIndexOf(cat, '/', maxLevel);
-                if(index>0) {
-                    cat = cat.substring(0, index);
+        nthIndexOf: function(str, pattern, n) {
+            var i = -1;
+            while (n-- && i++ < str.length) {
+                i = str.indexOf(pattern, i);
+                if (i < 0) {
+                    break;
                 }
-            }
-            if(categories[cat]===undefined) {
-                categories[cat] = 1;
-            } else {
-                categories[cat] += 1;
-            }
-        }
-        var result = [];
-        for(var category in categories) {
-            if(details) {
-                result.push({ name: category, count: categories[category]});
-            } else if(category) {
-                result.push(category);
-            }
-        }
-        if(!details) {
-            result.sort();
-        }
-        return result;
-    }),
+             }
+             return i;
+         },
+
+         getCategories: function (notes, maxLevel, details) {
+             var categories = {};
+             for(var i=0; i<notes.length; i+=1) {
+                 var cat = notes[i].category;
+                 if(maxLevel>0) {
+                     var index = this.nthIndexOf(cat, '/', maxLevel);
+                     if(index>0) {
+                         cat = cat.substring(0, index);
+                     }
+                 }
+                 if(categories[cat]===undefined) {
+                     categories[cat] = 1;
+                 } else {
+                     categories[cat] += 1;
+                 }
+             }
+             var result = [];
+             for(var category in categories) {
+                 if(details) {
+                     result.push({
+                         name: category,
+                         count: categories[category],
+                     });
+                 } else if(category) {
+                     result.push(category);
+                 }
+             }
+             if(!details) {
+                 result.sort();
+             }
+             return result;
+         },
 
     };
 
