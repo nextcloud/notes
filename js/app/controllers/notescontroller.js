@@ -14,6 +14,13 @@ app.controller('NotesController', function($routeParams, $scope, $location,
     $scope.notesLoaded = false;
     $scope.notes = NotesModel.getAll();
 
+    $scope.folderSelectorOpen = false;
+    $scope.filterCategory = null;
+
+    $scope.orderRecent = ['-favorite','-modified'];
+    $scope.orderAlpha = ['category','-favorite','title'];
+    $scope.filterOrder = $scope.orderRecent;
+
     var notesResource = Restangular.all('notes');
 
     // initial request for getting all notes
@@ -23,7 +30,8 @@ app.controller('NotesController', function($routeParams, $scope, $location,
     });
 
     $scope.create = function () {
-        notesResource.post().then(function (note) {
+        notesResource.post({category: $scope.filterCategory})
+                     .then(function (note) {
             NotesModel.add(note);
             $location.path('/notes/' + note.id);
         });
@@ -46,6 +54,35 @@ app.controller('NotesController', function($routeParams, $scope, $location,
         event.target.blur();
     };
 
+    $scope.getCategories = _.memoize(function (notes) {
+        return NotesModel.getCategories(notes, 1, true);
+    });
+
+    $scope.toggleFolderSelector = function () {
+        $scope.folderSelectorOpen = !$scope.folderSelectorOpen;
+    };
+
+    $scope.setFilter = function (category) {
+        if(category===null) {
+            $scope.filterOrder = $scope.orderRecent;
+        } else {
+            $scope.filterOrder = $scope.orderAlpha;
+        }
+        $scope.filterCategory = category;
+        $scope.folderSelectorOpen = false;
+        $('#app-navigation > ul').animate({scrollTop: 0}, 'fast');
+    };
+
+    $scope.categoryFilter = function (note) {
+        if($scope.filterCategory!==null) {
+            if(note.category===$scope.filterCategory) {
+                return true;
+            } else if(note.category!==null) {
+                return note.category.startsWith($scope.filterCategory+'/');
+            }
+        }
+        return true;
+    };
 
     $window.onbeforeunload = function() {
         var notes = NotesModel.getAll();

@@ -220,6 +220,7 @@ form.category .icon-confirm {
 }
 .ui-autocomplete.category-autocomplete {
     z-index: 5000 !important;
+    position: fixed;
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -347,4 +348,32 @@ form.category .icon-confirm {
     #app-content .note-meta {
         padding-left: 90px;
     }
+}
+
+
+/* icons for sidebar */
+.nav-icon-emptyfolder {
+        background-image: url('../img/folder-empty.svg?v=1');
+}
+.nav-icon-files {
+        background-image: url('../img/folder.svg?v=1');
+}
+.nav-icon-recent {
+        background-image: url('../img/recent.svg?v=1');
+}
+.nav-icon-favorites {
+        background-image: url('../img/star.svg?v=1');
+}
+
+
+
+.separator-below {
+	border-bottom: 1px solid var(--color-border);
+}
+.separator-above {
+	border-top: 1px solid var(--color-border);
+}
+.current-category-item > a,
+a.current-category-item {
+	font-weight: bold;
 }

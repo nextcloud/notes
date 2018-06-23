@@ -37,7 +37,7 @@ style('notes', [
             </button>
         </div>
 
-        <ul>
+        <ul class="with-icon">
 <?php if(!$_['useSearchAPI']) { ?>
             <li class="note-search">
                 <span class="nav-entry icon-search">
@@ -45,14 +45,62 @@ style('notes', [
                 </span>
             </li>
 <?php } ?>
+
+            <li class="collapsible app-navigation-noclose separator-below" ng-class="{ open: folderSelectorOpen, 'current-category-item': !folderSelectorOpen && filterCategory!=null }" ng-show="notes.length>1">
+                <a class="nav-icon-files svg" ng-click="toggleFolderSelector()">{{!folderSelectorOpen && filterCategory!=null ? filterCategory || '<?php p($l->t('Uncategorized')); ?>' : '<?php p($l->t('Categories')); ?>' | categoryTitle}}</a>
+
+                <ul>
+                <li data-id="recent" class="nav-recent" ng-class="{ active: filterCategory==null && filterFavorite==false }" ng-show="notes.length>1">
+                        <a
+                            ng-click="setFilter(null)"
+                            class="nav-icon-recent svg"
+                        ><?php p($l->t('All notes')); ?></a>
+                       <div class="app-navigation-entry-utils">
+                           <ul>
+                               <li class="app-navigation-entry-utils-counter">{{notes.length}}</li>
+                           </ul>
+                      </div>
+                </li>
+
+                <!-- category list -->
+                <li
+                  ng-repeat="category in (getCategories(notes) | orderBy:['name'])"
+                  class="nav-files"
+                  ng-class="{ active: filterCategory==category.name && filterFavorite==false }"
+                  title="{{ category.name || '<?php p($l->t('Uncategorized')); ?>' }}"
+                  >
+                       <a
+                           ng-click="setFilter(category.name)"
+                           class="svg"
+                           ng-class="{ 'nav-icon-emptyfolder': !category.name, 'nav-icon-files': category.name }"
+                       >{{ category.name || '<?php p($l->t('Uncategorized')); ?>' }}</a>
+                       <div class="app-navigation-entry-utils">
+                           <ul>
+                               <li class="app-navigation-entry-utils-counter">{{category.count}}</li>
+                           </ul>
+                      </div>
+                </li>
+                </ul>
+            </li>
+
             <!-- notes list -->
-            <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
-                ng-class="{ active: note.id == route.noteId,'has-error': note.error }">
-                <a href="#/notes/{{ note.id }}" title="{{ note.title }}">
+            <li ng-repeat="note in filteredNotes = (notes | filter:categoryFilter | and:search | orderBy:filterOrder | groupNotes:filterCategory)"
+                ng-class="{ active: note.id == route.noteId, 'has-error': note.error, 'app-navigation-noclose': note.isCategory }"
+                class="note-item">
+
+		<a class="nav-icon-files svg separator-above"
+		   ng-if="note.isCategory"
+                   ng-click="setFilter(filterCategory + '/' + note.title)"
+                   >&hellip; / {{ note.title | categoryTitle }}</a>
+
+                <a href="#/notes/{{ note.id }}"
+		   title="{{ note.title }}"
+                   ng-if="!note.isCategory"
+                   >
                     {{ note.title }}
                     <span ng-if="note.unsaved">*</span>
                 </a>
-                <div class="app-navigation-entry-utils" ng-class="{'hidden': note.error }">
+                <div class="app-navigation-entry-utils" ng-class="{'hidden': note.error }" ng-if="!note.isCategory">
                     <ul>
                         <li class="app-navigation-entry-utils-menu-button button-delete">
                             <button class="svg action icon-delete"
@@ -85,7 +133,6 @@ style('notes', [
                 </span>
                 <span class="nav-entry" ng-show="!search"><?php p($l->t('No notes found')); ?></span>
             </li>
-
         </ul>
 
         <div id="app-settings" ng-controller="NotesSettingsController">
