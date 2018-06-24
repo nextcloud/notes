@@ -31,5 +31,6 @@ return ['routes' => [
      'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
 	// settings
-	array('name' => 'settings#setNotesPath', 'url' => '/settings/notesPath', 'verb' => 'POST'),
+	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
+	['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
 ]];

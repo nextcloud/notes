@@ -74,6 +74,17 @@ style('notes', [
             </li>
 
         </ul>
+
+        <div id="app-settings" ng-controller="NotesSettingsController">
+            <div id="app-settings-header">
+                <button class="settings-button" data-apps-slide-toggle="#app-settings-content"><?php p($l->t('Settings'));?></button>
+            </div>
+            <div id="app-settings-content">
+                <p class="settings-hint"><?php p($l->t('Set the default path to store your notes')) ?>.</p>
+                <input type="text" name="notesPath" ng-model="settings.notesPath" placeholder="Notes" id="notesPath" style="width:100%"/>
+            </div>
+        </div>
+
     </div>
 
     <div id="app-content" ng-class="{loading: is.loading}">

@@ -7,42 +7,35 @@ use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Files\IRootFolder;
+use OCP\AppFramework\Http\JSONResponse;
+use OCA\Notes\Service\SettingsService;
 
 class SettingsController extends Controller
 {
-	private $config;
-	private $userSession;
-	private $root;
+	private $service;
+
 	public function __construct(
 		$appName,
 		IRequest $request,
-		IConfig $config,
-		IUserManager $userManager,
-		IUserSession $userSession,
-		IRootFolder $rootFolder
+		SettingsService $service
 	) {
 		parent::__construct($appName, $request);
-		$this->config = $config;
-		$this->userSession = $userSession;
-		$this->root = $rootFolder;
+		$this->service = $service;
 	}
 
-    /**
-     * @NoAdminRequired
-     */
-    public function setNotesPath($notesPath) {
-	    $uid = $this->userSession->getUser()->getUID();
+	/**
+	 * @NoAdminRequired
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	public function set() {
+		$this->service->set($this->request->getParams());
+		return $this->get();
+	}
 
-	    $path = '/' . $uid . '/files/' . $notesPath;
-	    if($this->root->isCreatable($path)) {
-		    $this->config->setUserValue($uid, 'notes', 'notesPath', $notesPath);
-		    return ['status' => 'success', 'notesPath' => $notesPath];
-	    }
-
-        return [
-            'status' => 'error',
-	        'reason' => 'invalidPath',
-	        'notesPath' => '',
-	    ];
-    }
+	/**
+	 * @NoAdminRequired
+	 */
+	public function get() {
+		return new JSONResponse($this->service->get());
+	}
 }
