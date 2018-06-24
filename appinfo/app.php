@@ -13,10 +13,7 @@ namespace OCA\Notes\AppInfo;
 
 use OCP\AppFramework\App;
 
-$appName = 'notes';
-\OCP\App::registerPersonal($appName, 'settings/personal');
-
-$app = new App($appName);
+$app = new App('notes');
 $container = $app->getContainer();
 
 $container->query('OCP\INavigationManager')->add(function () use ($container) {
