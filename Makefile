@@ -19,7 +19,7 @@
 
 # Makefile for building the project
 app_name=notes
-project_dir=$(CURDIR)
+project_dir=$(CURDIR)/../$(app_name)
 build_dir=$(CURDIR)/build/artifacts
 sign_dir=$(build_dir)/sign
 appstore_dir=$(build_dir)/appstore
@@ -35,6 +35,7 @@ js_dir=$(CURDIR)/js
 js_public_dir=$(js_dir)/public
 
 # common directories
+grunt_dir=$(js_dir)/node_modules/grunt-cli/bin/grunt
 bower_dir=$(js_dir)/node_modules/bower/bin/bower
 gruntfile_dir=$(js_dir)/Gruntfile.js
 
@@ -48,14 +49,11 @@ php_acceptance_tests_dir=$(CURDIR)/tests/acceptance
 all: build
 
 build: deps
-	npm --global install gulp
 	mkdir -p $(js_public_dir)
-	cd $(js_dir)
-	gulp
+	$(grunt_dir) --config $(gruntfile_dir) build
 
 watch: build
-	cd $(js_dir)
-	gulp watch
+	$(grunt_dir) --config $(gruntfile_dir) watch:concat
 
 update: deps
 	$(bower_dir) update
@@ -102,8 +100,9 @@ clean:
 
 dist: appstore
 
-push: 
-	rsync -av \
+appstore: clean
+	mkdir -p $(sign_dir)
+	rsync -a \
 	--exclude=.git \
 	--exclude=build \
 	--exclude=.gitignore \
@@ -127,4 +126,12 @@ push:
 	--exclude=js/gulpfile.js \
 	--exclude=js/bower.json \
 	--exclude=js/package.json \
-	$(project_dir)/* root@ginger.local.awesome-it.de:/srv/kube/nfs/awesome/nextcloud/html/custom_apps/notes/
+	$(project_dir) $(sign_dir)
+	@echo "Signing…"
+	php ../../occ integrity:sign-app \
+		--privateKey=$(cert_dir)/$(app_name).key\
+		--certificate=$(cert_dir)/$(app_name).crt\
+		--path=$(sign_dir)/$(app_name)
+	tar -czf $(build_dir)/$(app_name).tar.gz \
+		-C $(sign_dir) $(app_name)
+	openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(build_dir)/$(app_name).tar.gz | openssl base64
