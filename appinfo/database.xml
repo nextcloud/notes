@@ -47,7 +47,7 @@
 				</field>
 			</index>
 			<index>
-				<name>notes_meta_file_id_user_id_index</name>
+				<name>notes_meta_file_user_index</name>
 				<unique>true</unique>
 				<field>
 					<name>file_id</name>
