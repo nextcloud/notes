@@ -26,5 +26,4 @@ The Notes app is a distraction free notes taking app. It supports formatting usi
         <owncloud min-version="8.1" max-version="10" />
         <nextcloud min-version="9" max-version="14" />
     </dependencies>
-    <ocsid>174554</ocsid>
 </info>
