@@ -65,12 +65,6 @@
     width: 32px;
 }
 
-/* override snap.js animation causing loading icon to fly into app-content */
-#app-content.loading {
-    transition: none !important;
-    -webkit-transition: none !important;
-}
-
 /* only display the delete button when the feed is active */
 #app-navigation .utils .delete-button {
     display: none;
