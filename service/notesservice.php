@@ -289,6 +289,14 @@ class NotesService {
         return $file[0];
     }
 
+    /**
+     * @param string $userId the user id
+     * @return boolean true if folder is accessible, or Exception otherwise
+     */
+    public function checkNotesFolder($userId) {
+        $folder = $this->getFolderForUser($userId);
+        return true;
+    }
 
     /**
      * @param string $userId the user id
@@ -296,7 +304,12 @@ class NotesService {
      */
     private function getFolderForUser ($userId) {
         $path = '/' . $userId . '/files/Notes';
-        return $this->getOrCreateFolder($path);
+        try {
+            $folder = $this->getOrCreateFolder($path);
+        } catch(\Exception $e) {
+            throw new NotesFolderException($path);
+        }
+        return $folder;
     }
 
 

@@ -61,15 +61,21 @@ class PageController extends Controller {
      * @return TemplateResponse
      */
     public function index() {
+        $errorMessage = null;
         $lastViewedNote = (int) $this->settings->getUserValue($this->userId,
             $this->appName, 'notesLastViewedNote');
-        // check if note exists
+        // check if notes folder is accessible
         try {
-            $this->notesService->get($lastViewedNote, $this->userId);
-            $errorMessage=null;
-        } catch(\Exception $ex) {
-            $lastViewedNote = 0;
-            $errorMessage=$this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
+            $this->notesService->checkNotesFolder($this->userId);
+            // check if note exists
+            try {
+               $this->notesService->get($lastViewedNote, $this->userId);
+            } catch(\Exception $ex) {
+               $lastViewedNote = 0;
+               $errorMessage = $this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
+            }
+        } catch(\Exception $e) {
+            $errorMessage = $this->l10n->t('The notes folder is not accessible: %s', $e->getMessage());
         }
 
         $response = new TemplateResponse(
