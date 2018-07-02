@@ -8,18 +8,15 @@
 
 
 script('notes', [
-    'vendor/bootstrap/tooltip',
     'vendor/angular/angular',
     'vendor/angular-route/angular-route',
     'vendor/restangular/dist/restangular',
-    'vendor/underscore/underscore',
     'vendor/simplemde/dist/simplemde.min',
     'public/app.min'
 ]);
 
 style('notes', [
     '../js/vendor/simplemde/dist/simplemde.min',
-    'vendor/bootstrap/tooltip',
     'notes'
 ]);
 

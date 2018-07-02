@@ -29,8 +29,7 @@
     "tag": "1.11.2",
     "commit": "6abda7ab68cc20f4aca870eb243747951b90ab04"
   },
-  "_source": "https://github.com/NextStepWebs/simplemde-markdown-editor.git",
+  "_source": "https://github.com/sparksuite/simplemde-markdown-editor.git",
   "_target": "^1.11.2",
-  "_originalSource": "simplemde",
-  "_direct": true
+  "_originalSource": "simplemde"
 }

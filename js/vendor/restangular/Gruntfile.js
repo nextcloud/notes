@@ -1,6 +1,5 @@
-'use strict';
-
 module.exports = function(grunt) {
+  'use strict';
 
   // Project configuration.
   grunt.initConfig({
@@ -29,7 +28,10 @@ module.exports = function(grunt) {
       }
     },
     zip: {
-      '<%= dirs.dest %>/restangular.zip': ['<%= dirs.dest %>/<%= pkg.name %>.js', '<%= dirs.dest %>/<%= pkg.name %>.min.js']
+      '<%= dirs.dest %>/restangular.zip': [
+        '<%= dirs.dest %>/<%= pkg.name %>.js',
+        '<%= dirs.dest %>/<%= pkg.name %>.min.js'
+      ]
     },
     bowerInstall: {
         install: {
@@ -47,24 +49,7 @@ module.exports = function(grunt) {
     jshint: {
       files: ['Gruntfile.js', 'src/*.js'],
       options: {
-        curly: false,
-        browser: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        expr: true,
-        node: true,
-        globals: {
-          exports: true,
-          angular: false,
-          $: false
-        }
+        jshintrc: true
       }
     },
     karma: {
@@ -100,9 +85,45 @@ module.exports = function(grunt) {
         autoWatch: true
       }
     },
-    changelog: {
+    coveralls: {
+      // Options relevant to all targets
       options: {
-        dest: 'CHANGELOG.md'
+        // When true, grunt-coveralls will only print a warning rather than
+        // an error, to prevent CI builds from failing unnecessarily (e.g. if
+        // coveralls.io is down). Optional, defaults to false.
+        force: false
+      },
+
+      restangular: {
+        // LCOV coverage file (can be string, glob or array)
+        src: 'coverage/**/lcov.info',
+        options: {
+          // Any options for just this target
+        }
+      },
+    },
+    conventionalChangelog: {
+      options: {
+        changelogOpts: {
+          // conventional-changelog options go here
+          outputUnreleased: true,
+          // preset: 'angular'
+        },
+        context: {
+          // context goes here
+        },
+        gitRawCommitsOpts: {
+          // git-raw-commits options go here
+        },
+        parserOpts: {
+          // conventional-commits-parser options go here
+        },
+        writerOpts: {
+          // conventional-changelog-writer options go here
+        }
+      },
+      release: {
+        src: 'CHANGELOG.md'
       }
     }
   });
@@ -118,13 +139,15 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-bower-task');
 
-  grunt.renameTask("bower", "bowerInstall");
+  grunt.renameTask('bower', 'bowerInstall');
 
   grunt.loadNpmTasks('grunt-karma');
 
   grunt.loadNpmTasks('grunt-conventional-changelog');
 
   grunt.loadNpmTasks('grunt-zip');
+
+  grunt.loadNpmTasks('grunt-coveralls');
 
 
   // Default task.
@@ -136,8 +159,10 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['karma:build', 'karma:buildUnderscore']);
 
   grunt.registerTask('test-debug', ['karma:debug']);
-  
-  grunt.registerTask('travis', ['karma:travis', 'karma:travisUnderscore']);
+
+  grunt.registerTask('travis', ['karma:travis', 'karma:travisUnderscore', 'coveralls']);
+
+  grunt.registerTask('changelog', ['conventionalChangelog']);
 
   // Provides the "bump" task.
   grunt.registerTask('bump', 'Increment version number', function() {
@@ -157,7 +182,6 @@ module.exports = function(grunt) {
       grunt.file.write(file, JSON.stringify(json, null, '  '));
     }
     updateFile('package.json');
-    updateFile('bower.json');
     grunt.log.ok('Version bumped to ' + version);
   });
 
