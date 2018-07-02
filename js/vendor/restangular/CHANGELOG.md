@@ -1,160 +1,77 @@
-# New release information
-New releases are in Releases section of Github
-https://github.com/mgonto/restangular/releases
+<a name="1.6.1"></a>
+## 1.6.1 (2017-01-06)
 
-#1.0.11
-* Documentation Typo fixes
-* errorInterceptor can now stop Restangular from rejecting the promise
-* Bugfix fot method override on DELETE. Now it works
+### Bug fixes
 
-#1.0.9
-* **BREAKING CHANGE**: Restangular methods created with `addRestangularMethod` will change its signature depending on the opreation. If the operation is safe (GET, OPTIONS, etc.), the signature is methodName(params, headers, elemForBody). If it's not safe (POST, PUT, etc.), the signature is methodName(elemForBody, params, headers). This is to facilitate using them as when it's not safe, you're usually going to set a body
-* Now you can configure default request parameters per method and for everything as well
-* Added the ability to use Cannonical IDs. They're used if you need to change Primary Key (ID) of the element (Really weird case).
-* If response is null or undefined, the element sent in the request ISN'T used anymore. This is to have clarity of what's returned by the server and also to fix one bug.
-* Added tests
-* Fixed bug with ID when it was an empty string
-* Added missing ';'.
+* fix(copy) Collections are now copied/cloned properly ([c92b138](https://github.com/mgonto/restangular/commit/c92b138))
+* fix(copy) Copying collections now correctly sets route, fromServer and parent on the copy ([7fd668b](https://github.com/mgonto/restangular/commit/7fd668b))
+* fix(elementTransformer) matchTransformer now doesn't throw if route is undefined ([fb242ae](https://github.com/mgonto/restangular/commit/fb242ae))
 
+### Docs
 
-#1.0.7
-* `baseUrl` can now be set either with or without ending `/` and it'll work
+* chore(docs): update contribution guidelines ([c49ca45](https://github.com/mgonto/restangular/commit/c49ca45))
+* fix(docs): add link to david-dm.org from badge ([2bfb745](https://github.com/mgonto/restangular/commit/2bfb745))
+* chore(docs) Add new example production site ([2596035](https://github.com/mgonto/restangular/commit/2596035))
+* chore(docs) Add note about pull requests and github preview tab ([6883075](https://github.com/mgonto/restangular/commit/6883075))
+* chore(docs) Apply automatic formatting to code and spec ([bc16122](https://github.com/mgonto/restangular/commit/bc16122))
+* chore(docs) Reformat changelog, add unreleased section ([8bfa685](https://github.com/mgonto/restangular/commit/8bfa685))
+* chore(docs) Update issue guidelines to include StackOverflow as source for solutions to problems ([34b0e9a](https://github.com/mgonto/restangular/commit/34b0e9a))
+* chore(docs) Update link to demo Plunker, rephrase ([7c30615](https://github.com/mgonto/restangular/commit/7c30615))
+* chore(test) fix jshint errors in spec file ([1a988cb](https://github.com/mgonto/restangular/commit/1a988cb))
+* feat(docs) Add FAQ about cancelling request ([8552c51](https://github.com/mgonto/restangular/commit/8552c51)), closes [#926](https://github.com/mgonto/restangular/issues/926) [#1145](https://github.com/mgonto/restangular/issues/1145) [#1377](https://github.com/mgonto/restangular/issues/1377) [#1391](https://github.com/mgonto/restangular/issues/1391)
 
-#1.0.5
-* Several bug fixes
-* Added `parentless` configuration to ignore nested restful URLs
+### Other
 
-#1.0.2
-* First final release
-* Added `one` and `all` to all collection methods
-* Added `fullResponse` for getting the full `$http` response in every call
-* Improved documentation on `addElemTransformer`
-* Configuration can be set globally on either `RestangularProvider` or `Restangular`
+* chore(changelog): upgrade package and config ([58caacd](https://github.com/mgonto/restangular/commit/58caacd))
+* chore(dependencies): Update lodash version to ~4.17.0 as in unit tests ([e0b68a0](https://github.com/mgonto/restangular/commit/e0b68a0))
+* chore(deps): upgrade dev dependencies, fix tests (#1450) ([b583197](https://github.com/mgonto/restangular/commit/b583197)), closes [#1450](https://github.com/mgonto/restangular/issues/1450)
+* chore(travis): change travis script and include coveralls ([ca9856a](https://github.com/mgonto/restangular/commit/ca9856a))
+* test(coverage): add coverage and coveralls.io integration ([fdd5de6](https://github.com/mgonto/restangular/commit/fdd5de6))
+* Update dist files ([7c245a2](https://github.com/mgonto/restangular/commit/7c245a2))
 
-#0.8.9
-* Fix call to `isOverridenMethod` in `setMethodOverriders`.
+<a name="1.6.0"></a>
+## 1.6.0 (2016-12-25)
 
-#0.8.8
-* Removed extra trailling slash for elements without ID. Thanks @cboden
+* Url now supports unescaped suffix (0350bcd)
+* Added Restangular Plunkr example (c4ef002)
+* Now id can be a nested property (a94228b)
+* Add withHttpConfig to objects created with .service (e8f7295)
+* Add support for angularjs dependency injection using commonjs require syntax (f02db83)
+* Fix missing 'get' in decoupled service (8096ce1)
+* Avoid restangularizing an undefined element in restangularizeCollecti onAndElements. (0f8b562)
+* Fixes #1167: Extend condition to treat '0, which as a falsy value currently fails, as a valid ID (95ea231)
+* Add customPatch method (01297fe)
+* Added UMD snippet (caab5e6)
+* Support BaseUrl with athority without schema (5f3eacb)
+* Add ability to restangularize a collection with fromServer set (51066ec)
+* Add configuration option to use plain() by default (94ffaf0)
+* Fix fromServer param while copying (b53f4b6)
+* Rename CONTRIBUTE.md to CONTRIBUTING.md in accordance with GitHub's spec (c17df47)
+* Remove moot `version` property from bower.json (1a585f3)
+* Add more realistic POST response for accounts, with id (#943) (11fb475)
+* Added context/explanation of when to use JSONP. (fec9b27)
+* Add regexp matching for route to element transformers (#1430) (de8f561)
 
-#0.8.7
-* Bugfix for Refactor
+<a name="1.5.2"></a>
+## 1.5.2 (2016-02-15)
 
-#0.8.6
-* Ditched the buggy `$resource` and using `$http` inside :D
+* Change \_.contains to \_.includes for compatability with lodash >= 4.0
 
-#0.8.4
-* Fixed bug with defaultHttpFields for scoped configuration
-* Added `defaultHeaders`
+<a name="1.5.1"></a>
+## 1.5.1 (2015-04-03)
 
-#0.8.3
-* Fixed bug with URLHandler. Now it uses local configuration as well
-* Added error interceptor
-* Fixed minor bugs
+* Release 1.5.0
+* Updated zip
+* Merge branch 'master' of github.com:mgonto/restangular
+* Merge pull request #1081 from rajeshwarpatlolla/develop
+* Merge pull request #1079 from wching/master
+* change in README file
+* url modified for 'Chain methods together to easily build complex requests'
+* Update README.md
+* Update README.md
 
+<a name="1.5.0"></a>
+## 1.5.0 (2015-04-03)
 
-#0.8.0
-* Big refactor to use scoped configurations
-
-#0.7.3
-* All configuration can be done via either `Restangular` or `RestangularProvider`
-* url field now is called getRestangularUrl
-* `id` configuration from `restangularFields` now accepts nested (dotted) properties
-
-#0.7.1
-* Added `defaultRequestParams` to set default request query parameters
-
-#0.7.0
-* RequestInterceptor wasn't being called in getList
-* Removed extra `/` when no restangularWhat is provided. This is fixed by Angular's team since version 1.1.5 but this fixes it for all versions including 1.0.X
-* Added documentation for supported AngularJS versions
-* Added url method to elements which returns the URL of the current object
-
-# 0.6.9
-* Wrapping everything in an anonymous self executed function to not expose anything
-
-# 0.6.7
-* Bug fix for a regresion error using _.omit
-* Added element transformers to transform any Restangularized element.
-* Added putElement method to collection to put a certain element at an index and return a promise of the updated array.
-
-# 0.6.5
-* Added `Restangular.copy` for copying objects
-
-# 0.6.4
-* added methodOverriders to override any HTTP Method
-* Added requestInterceptor
-
-# 0.6.3
-* Added `defaultHttpFields` configuration property
-
-# 0.6.2
-* URL suffix is unescaped now
-
-# 0.6.1
-* Elements are striped from Restangular fields before being sent to the server
-
-# 0.6.0
-* Fixed bug when adding metadata to response in ResopnseExtractor. It wasn't being added
-* Added enhanced promises. [Check the section in README](https://github.com/mgonto/restangular/blob/master/README.md#enhanced-promises).
-
-# 0.5.5
-* Changed by default from Underscore to Lodash. They both can be used anyway. (thanks @pauldijou)
-* Added tests for both Underscore and Lodash to check it's working. (thanks @pauldijou)
-
-# 0.5.4
-* Added onElemRestangularized hook
-* Added posibility to add your own Restangular methods
-
-# 0.5.3
-* Added the posibility to do URL Building and RequestLess tree navigations
-* Added alias to `do[method]`. For example, Now you can do `customPOST` as well as `doPOST`
-
-# 0.5.2
-* responseExtractor renamed to responseInterceptor. Added alias from responseExtractor to responseInterceptor to mantain backwards compatibility
-* responseExtractor now receives 4 parameters. Response, operation, what (path of current element) and URL
-* Error function for any Restangular action now receives a response to get StatusCode and other interesting stuff
-
-# 0.5.1
-* Added listTypeIsArray property to set getList as not an array.
-
-# 0.5.0
-* Added `requestSuffix`configuration for requests ending en .json
-* `what` field is now configurable and not hardcoded anymore
-* All instance variables from `RestangularProvider` are now local variables to reduce visibility
-* Fully functional version with all desired features
-
-# 0.4.6
-* Added Custom methods to all Restangular objects. Check it out in the README
-
-# 0.4.5
-* Fixed but that didn't let ID to be 0.
-* Added different Collection methods and Element methods
-* Added posibility po do a post in a collection to post an element to itself
-* Added Travis CI for build
-* Fixed bug with parentResource after a post of a new element
-* When doing a post, if no element is returned, we enhance the object received as a parameter
-
-# 0.3.4
-* Added new HTTP methods to use: Patch, Head, Trace and Options (thanks @pauldijou)
-* Added tests with Karma for all functionality.
-
-# 0.3.3
-* Restangular fields can now be configured. You can set the id, route and parentResource fields. They're not hardcoded anymore
-
-# 0.3.2
-* Added ResponseExtractor for when the real data is wrapped in an envelope in the WebServer response.
-
-# 0.3.1
-
-* Now all methods accept Headers. You can query `account.getList('buildings', {query: 'param'}, {'header': 'mine'})`
-
-# 0.2.1
-
-* Added query params to all methods. getList, post, put, get and delete accept query params now.
-
-# 0.2.0
-* Added post method to all elements. Now you can also create new elements by calling `account.post('buildings', {name: "gonto"})`. 
-
-# 0.1.1
-* Changed `elem.delete()` to `elem.remove()` due to errors with Closure Compiler in Play 2 
+* Tons of bug fixes
+* Upgraded Lodash to 1.3.0
