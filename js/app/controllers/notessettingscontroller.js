@@ -1,13 +1,20 @@
-app.controller('NotesSettingsController', function($scope, Restangular, $document) {
+app.controller('NotesSettingsController',
+               function($scope, Restangular, $document) {
     'use strict';
 
     Restangular.one('settings').get().then(function(settings) {
-        if(angular.isObject(settings))
+        if(angular.isObject(settings)) {
             $scope.settings = settings;
-        else $scope.settings = Restangular.one('settings');
+        } else {
+            $scope.settings = Restangular.one('settings');
+        }
     });
 
-    $document.on('change', '#notesPath', function(event) {
-        $scope.settings.put();
+    $document.on('change', '#notesPath', function() {
+        var msg = t('notes', 'Please wait while new settings are applied ...');
+        OC.Notification.showTemporary(msg);
+        $scope.settings.put().then(function() {
+            window.location.reload(true);
+        });
     });
 });

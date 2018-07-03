@@ -80,8 +80,8 @@ style('notes', [
                 <button class="settings-button" data-apps-slide-toggle="#app-settings-content"><?php p($l->t('Settings'));?></button>
             </div>
             <div id="app-settings-content">
-                <p class="settings-hint"><?php p($l->t('Set the default path to store your notes')) ?>.</p>
-                <input type="text" name="notesPath" ng-model="settings.notesPath" placeholder="Notes" id="notesPath" style="width:100%"/>
+                <p class="settings-hint"><label for="notesPath"><?php p($l->t('Folder to store your notes:')) ?></label></p>
+		<input type="text" name="notesPath" ng-model="settings.notesPath" placeholder="<?php p($l->t('path to notes')); ?>" id="notesPath" style="width:100%"/>
             </div>
         </div>
 

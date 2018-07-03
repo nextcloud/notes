@@ -27,3 +27,4 @@ $container->query('OCP\INavigationManager')->add(function () use ($container) {
         'name' => $l10n->t('Notes')
     ];
 });
+
