@@ -19,6 +19,10 @@ use OCP\ILogger;
 use OC\Encryption\Exceptions\DecryptionFailedException;
 use League\Flysystem\FileNotFoundException;
 use OCA\Notes\Db\Note;
+use OCA\Notes\Service\SettingsService;
+use OCP\IConfig;
+use OCP\IUserSession;
+
 
 /**
  * Class NotesService
@@ -30,18 +34,24 @@ class NotesService {
     private $l10n;
     private $root;
     private $logger;
+    private $config;
+    private $settings;
     private $appName;
 
-    /**
-     * @param IRootFolder $root
-     * @param IL10N $l10n
-     * @param ILogger $logger
-     * @param String $appName
-     */
-    public function __construct (IRootFolder $root, IL10N $l10n, ILogger $logger, $appName) {
+	/**
+	 * @param IRootFolder $root
+	 * @param IL10N $l10n
+	 * @param ILogger $logger
+	 * @param IConfig $config
+	 * @param \OCA\Notes\Service\SettingsService $settings
+	 * @param String $appName
+	 */
+    public function __construct (IRootFolder $root, IL10N $l10n, ILogger $logger, IConfig $config, SettingsService $settings, $appName) {
         $this->root = $root;
         $this->l10n = $l10n;
         $this->logger = $logger;
+        $this->config = $config;
+        $this->settings = $settings;
         $this->appName = $appName;
     }
 
@@ -303,7 +313,7 @@ class NotesService {
      * @return Folder
      */
     private function getFolderForUser ($userId) {
-        $path = '/' . $userId . '/files/Notes';
+        $path = '/' . $userId . '/files/' . $this->settings->get('notesPath');
         try {
             $folder = $this->getOrCreateFolder($path);
         } catch(\Exception $e) {

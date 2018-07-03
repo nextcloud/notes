@@ -1,0 +1,41 @@
+<?php
+namespace OCA\Notes\Controller;
+use OCP\AppFramework\Controller;
+
+use OCP\IConfig;
+use OCP\IRequest;
+use OCP\IUserManager;
+use OCP\IUserSession;
+use OCP\Files\IRootFolder;
+use OCP\AppFramework\Http\JSONResponse;
+use OCA\Notes\Service\SettingsService;
+
+class SettingsController extends Controller
+{
+	private $service;
+
+	public function __construct(
+		$appName,
+		IRequest $request,
+		SettingsService $service
+	) {
+		parent::__construct($appName, $request);
+		$this->service = $service;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	public function set() {
+		$this->service->set($this->request->getParams());
+		return $this->get();
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function get() {
+		return new JSONResponse($this->service->get());
+	}
+}
