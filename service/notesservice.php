@@ -132,7 +132,7 @@ class NotesService {
         // check new note exists already and we need to number it
         // pass -1 because no file has id -1 and that will ensure
         // to only return filenames that dont yet exist
-        $path = $this->generateFileName($folder, $title, "txt", -1);
+        $path = $this->generateFileName($folder, $title, $this->settings->get('fileSuffix'), -1);
         $file = $folder->newFile($path);
 
         return $this->getNote($file, $folder);
@@ -160,7 +160,7 @@ class NotesService {
         // this can fail if access rights are not sufficient or category name is illegal
         try {
             $currentFilePath = $this->root->getFullPath($file->getPath());
-            $fileExtension = pathinfo($file->getName(), PATHINFO_EXTENSION);
+            $fileSuffix = '.' . pathinfo($file->getName(), PATHINFO_EXTENSION);
 
             // detect (new) folder path based on category name
             if($category===null) {
@@ -178,7 +178,7 @@ class NotesService {
             }
 
             // assemble new file path
-            $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileExtension, $id);
+            $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileSuffix, $id);
 
             // if the current path is not the new path, the file has to be renamed
             if($currentFilePath !== $newFilePath) {
@@ -344,15 +344,15 @@ class NotesService {
      *
      * @param Folder $folder a folder to the notes directory
      * @param string $title the filename which should be used
-     * @param string $extension the extension which should be used
+     * @param string $suffix the suffix (incl. dot) which should be used
      * @param int $id the id of the note for which the title should be generated
      * used to see if the file itself has the title and not a different file for
      * checking for filename collisions
      * @return string the resolved filename to prevent overwriting different
      * files with the same title
      */
-    private function generateFileName (Folder $folder, $title, $extension, $id) {
-        $path = $title . '.' . $extension;
+    private function generateFileName (Folder $folder, $title, $suffix, $id) {
+        $path = $title . $suffix;
 
         // if file does not exist, that name has not been taken. Similar we don't
         // need to handle file collisions if it is the filename did not change
@@ -368,7 +368,7 @@ class NotesService {
             } else {
                 $newTitle = $title . ' (2)';
             }
-            return $this->generateFileName($folder, $newTitle, $extension, $id);
+            return $this->generateFileName($folder, $newTitle, $suffix, $id);
         }
     }
 
