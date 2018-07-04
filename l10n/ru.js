@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Заметки",
     "The last viewed note cannot be accessed. " : "Не удалось перейти к последней просмотренной заметке",
+    "The notes folder is not accessible: %s" : "Папка заметок недоступна: %s",
     "New note" : "Новая заметка",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Заметка не сохранены. Если покинуть страницу, все изменения будут удалены!",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слов","%n слов"],

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Notizen",
     "The last viewed note cannot be accessed. " : "Auf die zuletzt betrachtete Notiz kann nicht zugegriffen werden.",
+    "The notes folder is not accessible: %s" : "Auf den Notiz-Ordner kann nicht zugegriffen werden: %s",
     "New note" : "Neue Notiz",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Es existieren nicht gespeicherte Notizen. Beim Verlassen der Seite gehen alle Änderungen verloren!",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],

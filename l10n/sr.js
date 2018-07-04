@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Белешке",
     "The last viewed note cannot be accessed. " : "Не може се приступити последње прегледаној белешци.",
+    "The notes folder is not accessible: %s" : "Фасцикла са белешкама није доступна: %s",
     "New note" : "Нова белешка",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Има несачуваних белешки. Напуштањем стране ћете поништити све измене!",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],

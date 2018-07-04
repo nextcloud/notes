@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "הערות",
     "The last viewed note cannot be accessed. " : "אין גישה לפתק האחרון שנצפה.",
+    "The notes folder is not accessible: %s" : "תיקיית הפתקים אינה נגישה: %s",
     "New note" : "הערה חדשה",
     "There are unsaved notes. Leaving the page will discard all changes!" : "ישנן הערות שלא נשמרו. יציאה מהעמוד תעלים את השינויים שערכת!",
     "_%n word_::_%n words_" : ["%n מילה","%n מילים","%n מילים","%n מילים"],
