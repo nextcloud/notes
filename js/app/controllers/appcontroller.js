@@ -10,18 +10,38 @@ app.controller('AppController', function ($scope, $location, is) {
 
     $scope.is = is;
 
-    $scope.init = function (lastViewedNote,errorMessage) {
+    $scope.init = function (lastViewedNote, errorMessage, useSearchAPI) {
         $scope.defaultTitle = document.title;
 
         if(lastViewedNote !== 0) {
             $location.path('/notes/' + lastViewedNote);
         }
-        if(errorMessage !==0){
+        if(errorMessage !== 0) {
             OC.Notification.showTemporary(errorMessage);
+        }
+        if(useSearchAPI) {
+            $scope.initSearch();
         }
     };
 
     $scope.search = '';
     $scope.defaultTitle = null;
+
+    $scope.initSearch = function() {
+        new OCA.Search(
+            function (query) {
+                $scope.search = query;
+                $scope.$apply();
+                if($('#app-navigation-toggle').css('display')!=='none' &&
+                        !$('body').hasClass('snapjs-left')) {
+                    $('#app-navigation-toggle').click();
+                }
+            },
+            function () {
+                $scope.search = '';
+                $scope.$apply();
+            }
+        );
+    };
 
 });

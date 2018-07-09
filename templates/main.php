@@ -26,7 +26,7 @@ style('notes', [
 ?>
 
 <div id="app" ng-app="Notes" ng-controller="AppController"
-    ng-init="init('<?= $_['lastViewedNote'] ?>','<?= $_['errorMessage'] ?>')" ng-cloak>
+    ng-init="init('<?= $_['lastViewedNote'] ?>','<?= $_['errorMessage'] ?>', <?= $_['useSearchAPI'] ?>)" ng-cloak>
 
     <script type="text/ng-template" id="note.html">
         <?php print_unescaped($this->inc('note')); ?>
@@ -34,11 +34,13 @@ style('notes', [
 
     <div id="app-navigation" ng-controller="NotesController">
         <ul>
+<?php if(!$_['useSearchAPI']) { ?>
             <li class="note-search">
                 <span class="nav-entry icon-search">
                     <input type="text" ng-model="search" />
                 </span>
             </li>
+<?php } ?>
             <!-- new note button -->
             <div id="note-add">            
                 <button class="icon-add app-content-list-button ng-binding" id="new-note-button" type="button" name="button" ng-click="create()"
