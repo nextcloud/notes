@@ -19,6 +19,7 @@ OC.L10N.register(
     "No notes found" : "Aucune note trouvée",
     "Settings" : "Paramètres",
     "Folder to store your notes:" : "Dossier pour stocker vos notes :",
+    "path to notes" : "chemin d'accès aux notes",
     "The note has unsaved changes." : "La note a des modifications non sauvegardées.",
     "*" : "*",
     "Click here to try again" : "Cliquez ici pour réessayer",
