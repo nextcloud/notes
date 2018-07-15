@@ -96,11 +96,12 @@ class NotesController extends Controller {
      *
      * @param int $id
      * @param string $content
+     * @param string $category
      * @return DataResponse
      */
-    public function update($id, $content) {
-        return $this->respond(function () use ($id, $content) {
-            return $this->notesService->update($id, $content, $this->userId);
+    public function update($id, $content, $category) {
+        return $this->respond(function () use ($id, $content, $category) {
+            return $this->notesService->update($id, $content, $this->userId, $category);
         });
     }
 
