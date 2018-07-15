@@ -139,16 +139,23 @@
 }
 
 #app-content .note-meta {
-    position: relative;
-    padding: 0 45px 30px 45px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0 45px 0px 45px;
     margin: -10px 0 0;
+    background-color: white; /* TODO Theming! */
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     z-index: 5;
 }
 #app-content .note-meta > * {
-    opacity: .4;
+    opacity: .5;
+}
+
+#app-content .note-meta > .note-category {
+    padding-right: 1ex;
 }
 
 #app-content .note-meta > .note-error {
@@ -159,7 +166,9 @@
     padding: 0.5ex 1ex;
 }
 #app-content .note-meta-right {
-    float: right;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
 }
 
 #app-content .note-meta > .saving {
@@ -172,8 +181,56 @@
     opacity: 1;
     margin: 0 1ex;
 }
+
+#app-content .note-meta form {
+    display: inline;
+}
+
+#app-content .note-meta .edit {
+    background-color: transparent;
+    border: none;
+}
+
+#app-content .note-meta .note-category {
+    cursor: pointer;
+}
+
+#app-content .note-meta .edit {
+    opacity: 0.5;
+}
+#app-content .note-meta:hover .note-category,
+#app-content .note-meta:hover .edit {
+    opacity: 1;
+}
+
+
 .btn-fullscreen {
     padding: 15px;
+}
+
+
+/* category and auto-complete */
+
+form.category #category {
+    width: 15em;
+}
+
+form.category .icon-confirm {
+    margin-right: 0;
+}
+.ui-autocomplete.category-autocomplete {
+    z-index: 5000 !important;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.category-autocomplete .ui-menu-item a {
+    font-weight: inherit;
+    white-space: nowrap;
 }
 
 

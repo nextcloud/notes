@@ -7,7 +7,7 @@
 
 app.controller('NoteController', function($routeParams, $scope, NotesModel,
                                           SaveQueue, note, debounce,
-                                          $document) {
+                                          $document, $timeout) {
     'use strict';
 
     NotesModel.updateIfExists(note);
@@ -54,6 +54,39 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
         var note = $scope.note;
         note.error = false;
         SaveQueue.addManual(note);
+    };
+
+    $scope.editCategory = false;
+    $scope.showEditCategory = function() {
+        $('#category').val($scope.note.category);
+        $scope.editCategory = true;
+        $('#category').autocomplete({
+            source: NotesModel.getCategories(NotesModel.getAll(), 0, false),
+            minLength: 0,
+            position: { my: 'left bottom', at: 'left top', of: '#category' },
+            open: function() {
+                 $timeout(function() {
+                     var width = $('form.category').innerWidth() - 2;
+                     $('.ui-autocomplete.ui-menu').width(width);
+                 });
+            },
+        }).autocomplete('widget').addClass('category-autocomplete');
+        // fix space between input and confirm-button
+        $('form.category .icon-confirm').insertAfter('#category');
+
+        $timeout(function() {
+            $('#category').focus();
+                $('#category').autocomplete('search', '');
+        });
+    };
+    $scope.closeCategory = function() {
+        $scope.editCategory = false;
+        var category = $('#category').val();
+        if($scope.note.category !== category) {
+            $scope.note.category = category;
+            $scope.note.unsaved = true;
+            $scope.autoSave($scope.note);
+        }
     };
 
     $document.unbind('keypress.notes.save');

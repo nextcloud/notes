@@ -49,7 +49,7 @@ app.controller('NotesController', function($routeParams, $scope, $location,
 
     $window.onbeforeunload = function() {
         var notes = NotesModel.getAll();
-        for(var i=0; i<notes.length; i++) {
+        for(var i=0; i<notes.length; i+=1) {
             if(notes[i].unsaved) {
                 return t('notes', 'There are unsaved notes. Leaving ' +
                                   'the page will discard all changes!');
