@@ -86,6 +86,10 @@
     opacity: 1 !important;
 }
 
+#app-settings-content > div + div {
+    padding-top: 2ex;
+}
+
 .note-search span {
     background-position: 0 center;
     background-origin: content-box;
