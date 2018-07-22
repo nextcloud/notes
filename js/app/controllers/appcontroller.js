@@ -11,7 +11,7 @@ app.controller('AppController', function ($scope, $location, is) {
     $scope.is = is;
 
     $scope.init = function (lastViewedNote,errorMessage) {
-
+        $scope.defaultTitle = document.title;
 
         if(lastViewedNote !== 0) {
             $location.path('/notes/' + lastViewedNote);
@@ -22,4 +22,6 @@ app.controller('AppController', function ($scope, $location, is) {
     };
 
     $scope.search = '';
+    $scope.defaultTitle = null;
+
 });

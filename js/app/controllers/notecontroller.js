@@ -86,4 +86,14 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
         }
     };
 
+    $scope.$watch(function() {
+        return $scope.note.title;
+    }, function(newValue) {
+        if(newValue) {
+            document.title = newValue + ' - ' + $scope.defaultTitle;
+        } else {
+            document.title = $scope.defaultTitle;
+        }
+    });
+
 });
