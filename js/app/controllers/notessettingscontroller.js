@@ -2,6 +2,8 @@ app.controller('NotesSettingsController',
                function($scope, Restangular, $document) {
     'use strict';
 
+    $scope.extensions = ['.txt', '.md'];
+
     Restangular.one('settings').get().then(function(settings) {
         if(angular.isObject(settings)) {
             $scope.settings = settings;
@@ -16,5 +18,9 @@ app.controller('NotesSettingsController',
         $scope.settings.put().then(function() {
             window.location.reload(true);
         });
+    });
+
+    $document.on('change', '#fileSuffix', function() {
+        $scope.settings.put();
     });
 });

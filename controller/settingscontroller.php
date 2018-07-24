@@ -36,6 +36,6 @@ class SettingsController extends Controller
 	 * @NoAdminRequired
 	 */
 	public function get() {
-		return new JSONResponse($this->service->get());
+		return new JSONResponse($this->service->getAll());
 	}
 }
