@@ -16,7 +16,6 @@ OC.L10N.register(
     "Favorite" : "Oblíbené",
     "No notes found" : "Nebyly nalezeny žádné poznámky",
     "Settings" : "Nastavení",
-    "Folder to store your notes:" : "Složka pro ukládání vašich poznámek:",
     "path to notes" : "popis umístění poznámek",
     "The note has unsaved changes." : "Poznámka má neuložené změny.",
     "*" : "*",

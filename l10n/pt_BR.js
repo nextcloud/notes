@@ -18,7 +18,6 @@ OC.L10N.register(
     "Favorite" : "Favorito",
     "No notes found" : "Nenhuma nota encontrada",
     "Settings" : "Configurações",
-    "Folder to store your notes:" : "Pasta para armazenar suas anotações:",
     "path to notes" : "caminho para notas",
     "The note has unsaved changes." : "A anotação tem mudanças não salvas.",
     "*" : "*",

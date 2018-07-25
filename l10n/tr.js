@@ -18,7 +18,6 @@ OC.L10N.register(
     "Favorite" : "Sık kullanılan",
     "No notes found" : "Herhangi bir not bulunamadı",
     "Settings" : "Ayarlar",
-    "Folder to store your notes:" : "Notlarınızın kaydedileceği klasör:",
     "path to notes" : "notların yolu",
     "The note has unsaved changes." : "Not üzerinde kaydedilmemiş değişiklikler var.",
     "*" : "*",

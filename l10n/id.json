@@ -1,9 +1,0 @@
-{ "translations": {
-    "Notes" : "Catatan",
-    "New note" : "Catatan baru",
-    "_%n word_::_%n words_" : ["%n kata"],
-    "Delete note" : "Hapus catatan",
-    "Favorite" : "Favorit",
-    "No notes found" : "Catatan tidak ditemukan"
-},"pluralForm" :"nplurals=1; plural=0;"
-}

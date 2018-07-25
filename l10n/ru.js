@@ -18,7 +18,6 @@ OC.L10N.register(
     "Favorite" : "Избранное",
     "No notes found" : "Записей не найдено",
     "Settings" : "Настройки",
-    "Folder to store your notes:" : "Папка для хранения Ваших заметок:",
     "path to notes" : "путь к заметкам",
     "The note has unsaved changes." : "Изменения в заметке еще не сохранены.",
     "*" : "*",

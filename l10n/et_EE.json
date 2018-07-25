@@ -1,9 +1,0 @@
-{ "translations": {
-    "Notes" : "Märkmed",
-    "New note" : "Uus märge",
-    "_%n word_::_%n words_" : ["%n sõna","%n sõna"],
-    "Delete note" : "Kustuta märge",
-    "Favorite" : "Lemmik",
-    "No notes found" : "Märkmeid ei leitud"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
-}

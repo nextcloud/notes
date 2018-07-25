@@ -18,7 +18,6 @@ OC.L10N.register(
     "Favorite" : "Favorit",
     "No notes found" : "Keine Notizen gefunden",
     "Settings" : "Einstellungen",
-    "Folder to store your notes:" : "Ordner zum Speichern der Notizen:",
     "path to notes" : "Pfad zu Notizen",
     "The note has unsaved changes." : "Diese Notiz enthält nicht gespeicherte Änderungen.",
     "*" : "*",

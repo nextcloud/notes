@@ -18,7 +18,6 @@ OC.L10N.register(
     "Favorite" : "Омиљено",
     "No notes found" : "Белешке нису нађене",
     "Settings" : "Поставке",
-    "Folder to store your notes:" : "Фасцикла за складиштење белешки:",
     "path to notes" : "путања до белешки",
     "The note has unsaved changes." : "Белешка има несачуваних измена.",
     "*" : "*",
