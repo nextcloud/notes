@@ -11,6 +11,7 @@ app.controller('NotesController', function($routeParams, $scope, $location,
     'use strict';
 
     $scope.route = $routeParams;
+    $scope.notesLoaded = false;
     $scope.notes = NotesModel.getAll();
 
     var notesResource = Restangular.all('notes');
@@ -18,6 +19,7 @@ app.controller('NotesController', function($routeParams, $scope, $location,
     // initial request for getting all notes
     notesResource.getList().then(function (notes) {
         NotesModel.addAll(notes);
+        $scope.notesLoaded = true;
     });
 
     $scope.create = function () {

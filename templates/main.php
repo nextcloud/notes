@@ -32,7 +32,7 @@ style('notes', [
         <?php print_unescaped($this->inc('note')); ?>
     </script>
 
-    <div id="app-navigation" ng-controller="NotesController">
+    <div id="app-navigation" ng-controller="NotesController" ng-class="{'loading': !notesLoaded}">
         <ul>
 <?php if(!$_['useSearchAPI']) { ?>
             <li class="note-search">
@@ -69,10 +69,14 @@ style('notes', [
                         ng-class="{'icon-starred': note.favorite}"></button>
                 </span>
             </li>
-            <li ng-hide="filteredNotes.length">
-                <span class="nav-entry">
-                    <?php p($l->t('No notes found')); ?>
+            <li ng-show="notesLoaded && !filteredNotes.length">
+                <span class="nav-entry" ng-show="search">
+                    <div id="emptycontent" class="emptycontent-search">
+                        <div class="icon-search"></div>
+                        <h2 class="ng-binding"><?php p($l->t('No search result for {{search}}')); ?></h2>
+                    </div>
                 </span>
+                <span class="nav-entry" ng-show="!search"><?php p($l->t('No notes found')); ?></span>
             </li>
 
         </ul>

@@ -16,7 +16,7 @@ app.controller('AppController', function ($scope, $location, is) {
         if(lastViewedNote !== 0) {
             $location.path('/notes/' + lastViewedNote);
         }
-        if(errorMessage !== 0) {
+        if(errorMessage) {
             OC.Notification.showTemporary(errorMessage);
         }
         if(useSearchAPI) {
