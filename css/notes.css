@@ -43,6 +43,15 @@
 	opacity: .57;
 }
 
+#app-navigation li .nav-entry .emptycontent-search {
+	white-space: normal;
+}
+@media (max-height: 600px) {
+	#app-navigation li .nav-entry .emptycontent-search {
+		margin-top: inherit;
+	}
+}
+
 #app-navigation li:hover .nav-entry,
 #app-navigation li:focus .nav-entry {
 	opacity: 1;
