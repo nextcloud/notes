@@ -22,7 +22,21 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
     };
 
     $scope.updateTitle = function () {
-        $scope.note.title = $scope.note.content.split('\n')[0] ||
+        var content = $scope.note.content;
+
+        // prepare content: remove markdown characters and empty spaces
+        content = content.replace(/^\s*[*+-]\s+/mg, ''); // list item
+        content = content.replace(/^#+\s+(.*?)\s*#*$/mg, '$1'); // headline
+        content = content.replace(/^(=+|-+)$/mg, ''); // separate headline
+        content = content.replace(/(\*+|_+)(.*?)\1/mg, '$2'); // emphasis
+
+        // prevent directory traversal, illegal characters
+        content = content.replace(/[\*\|\/\\\:\"<>\?]/g, '');
+        // prevent unintended file names
+        content = content.replace(/^[\. ]+/mg, '');
+
+        // generate title from the first line of the content
+        $scope.note.title = content.trim().split(/\r?\n/, 2)[0] ||
             t('notes', 'New note');
     };
 
