@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Poznámky",
+    "The last viewed note cannot be accessed. " : "Naposledy prohlížená poznámka nemůže být zpřístupněna. ",
     "The notes folder is not accessible: %s" : "Složka s poznámkami není přístupná: %s",
     "New note" : "Nová poznámka",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opuštění stránky zahodí všechny změny!",
@@ -16,7 +17,9 @@ OC.L10N.register(
     "Favorite" : "Oblíbené",
     "No notes found" : "Nebyly nalezeny žádné poznámky",
     "Settings" : "Nastavení",
+    "Folder to store your notes" : "Složka pro ukládání vašich poznámek",
     "path to notes" : "popis umístění poznámek",
+    "File extension for new notes" : "Přípona souboru pro nové poznámky",
     "The note has unsaved changes." : "Poznámka má neuložené změny.",
     "*" : "*",
     "Click here to try again" : "Pro nový pokus klikněte sem",
