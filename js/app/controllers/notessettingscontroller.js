@@ -13,7 +13,7 @@ app.controller('NotesSettingsController',
     });
 
     $document.on('change', '#notesPath', function() {
-        var msg = t('notes', 'Please wait while new settings are applied ...');
+        var msg = t('notes', 'Please wait while new settings are applied…');
         OC.Notification.showTemporary(msg);
         $scope.settings.put().then(function() {
             window.location.reload(true);
