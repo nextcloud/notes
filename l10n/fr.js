@@ -6,7 +6,6 @@ OC.L10N.register(
     "The notes folder is not accessible: %s" : "Le dossier des notes n'est pas accessible : %s",
     "New note" : "Nouvelle note",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Il y a des notes non sauvegardées. Quitter la page perdra toutes les modifications !",
-    "Please wait while new settings are applied ..." : "Veuillez patienter pendant que de nouveaux paramètres sont appliqués ...",
     "_%n word_::_%n words_" : ["%n mot","%n mots"],
     "An error occurred!" : "Une erreur est survenue !",
     "File error" : "Erreur de fichier",

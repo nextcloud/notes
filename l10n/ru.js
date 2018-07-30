@@ -6,7 +6,6 @@ OC.L10N.register(
     "The notes folder is not accessible: %s" : "Папка заметок недоступна: %s",
     "New note" : "Новая заметка",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Заметка не сохранены. Если покинуть страницу, все изменения будут удалены!",
-    "Please wait while new settings are applied ..." : "Подождите, пока будут применены новые настройки ...",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слов","%n слов"],
     "An error occurred!" : "Произошла ошибка!",
     "File error" : "Ошибка файла",

@@ -6,7 +6,6 @@ OC.L10N.register(
     "The notes folder is not accessible: %s" : "Složka s poznámkami není přístupná: %s",
     "New note" : "Nová poznámka",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opuštění stránky zahodí všechny změny!",
-    "Please wait while new settings are applied ..." : "Vyčkejte chvíli než se nová nastavení uplatní…",
     "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slov"],
     "An error occurred!" : "Došlo k chybě!",
     "File error" : "Chyba souboru",
