@@ -56,14 +56,16 @@ class Note extends Entity {
      * @param File $file
      * @return static
      */
-    public static function fromFile(File $file, Folder $notesFolder, $tags=[]){
+    public static function fromFile(File $file, Folder $notesFolder, $tags=[], $onlyMeta=false) {
         $note = new static();
         $note->setId($file->getId());
-        $fileContent=$file->getContent();
-        if($fileContent===false){
-            throw new FileNotFoundException("File not found");
+        if(!$onlyMeta) {
+            $fileContent=$file->getContent();
+            if($fileContent===false){
+                throw new FileNotFoundException("File not found");
+            }
+            $note->setContent(self::convertEncoding($fileContent));
         }
-        $note->setContent(self::convertEncoding($fileContent));
         $note->setModified($file->getMTime());
         $note->setTitle(pathinfo($file->getName(),PATHINFO_FILENAME)); // remove extension
         $subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
@@ -72,7 +74,9 @@ class Note extends Entity {
             $note->setFavorite(true);
             //unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
         }
-        $note->updateETag();
+        if(!$onlyMeta) {
+            $note->updateETag();
+        }
         $note->resetUpdatedFields();
         return $note;
     }

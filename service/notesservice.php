@@ -60,7 +60,7 @@ class NotesService {
      * @param string $userId
      * @return array with all notes in the current directory
      */
-    public function getAll ($userId){
+    public function getAll ($userId, $onlyMeta=false) {
         $notesFolder = $this->getFolderForUser($userId);
         $notes = $this->gatherNoteFiles($notesFolder);
         $filesById = [];
@@ -76,7 +76,7 @@ class NotesService {
 
         $notes = [];
         foreach($filesById as $id=>$file) {
-            $notes[] = $this->getNote($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
+            $notes[] = $this->getNote($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : [], $onlyMeta);
         }
 
         return $notes;
@@ -104,21 +104,22 @@ class NotesService {
         }
         return array_key_exists($id, $tags) ? $tags[$id] : [];
     }
-    private function getNote($file,$notesFolder,$tags=[]){
 
+    private function getNote($file, $notesFolder, $tags=[], $onlyMeta=false) {
         $id=$file->getId();
-
-        try{
-            $note=Note::fromFile($file, $notesFolder, $tags);
-        }catch(FileNotFoundException $e){
+        try {
+            $note=Note::fromFile($file, $notesFolder, $tags, $onlyMeta);
+        } catch(FileNotFoundException $e){
             $note = Note::fromException($this->l10n->t('File error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-        }catch(DecryptionFailedException $e){
+        } catch(DecryptionFailedException $e) {
             $note = Note::fromException($this->l10n->t('Encryption Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-        }catch(\Exception $e){
+        } catch(\Exception $e) {
             $note = Note::fromException($this->l10n->t('Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         }
         return $note;
     }
+
+
     /**
      * Creates a note and returns the empty note
      * @param string $userId
