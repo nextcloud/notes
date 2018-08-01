@@ -51,23 +51,31 @@ style('notes', [
             <!-- notes list -->
             <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
                 ng-class="{ active: note.id == route.noteId,'has-error': note.error }">
-                <a href="#/notes/{{ note.id }}">
+                <a href="#/notes/{{ note.id }}" title="{{ note.title | noteTitle }}">
                     {{ note.title | noteTitle }}
                     <span ng-if="note.unsaved">*</span>
                 </a>
-                <span class="utils" ng-class="{'hidden': note.error }">
-                    <button class="svg action icon-delete"
-                        title="<?php p($l->t('Delete note')); ?>"
-                        notes-tooltip
-                        data-placement="bottom"
-                        ng-click="delete(note.id)"></button>
-                    <button class="svg action icon-star"
-                        title="<?php p($l->t('Favorite')); ?>"
-                        notes-tooltip
-                        data-placement="bottom"
-                        ng-click="toggleFavorite(note.id)"
-                        ng-class="{'icon-starred': note.favorite}"></button>
-                </span>
+                <div class="app-navigation-entry-utils" ng-class="{'hidden': note.error }">
+                    <ul>
+                        <li class="app-navigation-entry-utils-menu-button button-delete">
+                            <button class="svg action icon-delete"
+                                title="<?php p($l->t('Delete note')); ?>"
+                                notes-tooltip
+                                data-placement="bottom"
+                                ng-click="delete(note.id)"></button>
+                        </li>
+			<li class="app-navigation-entry-utils-menu-button button-star"
+                            ng-class="{starred: note.favorite}"
+                            >
+                            <button class="svg action icon-star"
+                                title="<?php p($l->t('Favorite')); ?>"
+                                notes-tooltip
+                                data-placement="bottom"
+                                ng-click="toggleFavorite(note.id)"
+                                ng-class="{'icon-starred': note.favorite}"></button>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li ng-show="notesLoaded && !filteredNotes.length">
                 <span class="nav-entry" ng-show="search">

@@ -4,8 +4,11 @@
  * See the COPYING file.
  */
 
-#app-navigation {
-	padding-bottom: 0; /* no settings bar, so no padding needed */
+#app {
+	width: 100%;
+}
+#app-content {
+	height: 100%;
 }
 
 #app-navigation #note-add #new-note-button {
@@ -14,10 +17,6 @@
 	text-align: left;
 	padding-left: 34px;
 	background-position: 10px center;
-}
-
-#app-navigation .active a {
-	padding-right: 70px;
 }
 
 #app-navigation > ul > li.has-error a{
@@ -62,29 +61,22 @@
     display: inline;
 }
 
-#app-navigation .utils button {
-    margin: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    border: 0;
-    box-shadow: none;
-    display: none;
-    height: 32px;
-    width: 32px;
-}
-
-/* only display the delete button when the feed is active */
-#app-navigation .utils .delete-button {
+/* only display the delete button when the note is active */
+#app-navigation .app-navigation-entry-utils-menu-button {
     display: none;
 }
 
-#app-navigation .active > .utils .icon-delete,
-#app-navigation .active > .utils .icon-star {
+#app-navigation .app-navigation-entry-utils-menu-button.button-star.starred,
+#app-navigation .active .app-navigation-entry-utils-menu-button.button-delete,
+#app-navigation .active .app-navigation-entry-utils-menu-button.button-star,
+#app-navigation li:hover .app-navigation-entry-utils-menu-button.button-delete,
+#app-navigation li:hover .app-navigation-entry-utils-menu-button.button-star {
     display: inline-block;
+}
+#app-navigation .app-navigation-entry-utils .app-navigation-entry-utils-menu-button .icon-delete {
     opacity: .3;
 }
-#app-navigation .utils .icon-starred {
+#app-navigation .app-navigation-entry-utils-menu-button .icon-starred {
     display: inline-block;
     opacity: 1 !important;
 }
