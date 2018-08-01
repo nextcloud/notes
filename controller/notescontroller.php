@@ -55,7 +55,7 @@ class NotesController extends Controller {
      * @NoAdminRequired
      */
     public function index() {
-        return new DataResponse($this->notesService->getAll($this->userId));
+        return new DataResponse($this->notesService->getAll($this->userId, true));
     }
 
 
