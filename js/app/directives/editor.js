@@ -18,6 +18,7 @@ app.directive('editor', ['$timeout',
 			var editorElement = $(simplemde.codemirror.getWrapperElement());
 
 			simplemde.value(scope.note.content);
+			simplemde.codemirror.focus();
 
 			simplemde.codemirror.on('change', function() {
 				$timeout(function() {
