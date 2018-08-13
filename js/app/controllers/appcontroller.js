@@ -13,7 +13,7 @@ app.controller('AppController', function ($scope, $location, is) {
     $scope.init = function (lastViewedNote, errorMessage, useSearchAPI) {
         $scope.defaultTitle = document.title;
 
-        if(lastViewedNote !== 0) {
+        if(lastViewedNote !== 0 && $location.path()==='') {
             $location.path('/notes/' + lastViewedNote);
         }
         if(errorMessage) {
