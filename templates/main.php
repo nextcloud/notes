@@ -100,7 +100,7 @@ style('notes', [
             </div>
             <div class="settings-fileSuffix">
                 <p class="settings-hint"><label for="fileSuffix"><?php p($l->t('File extension for new notes')) ?></label></p>
-                <select id="fileSuffix" ng-model="settings.fileSuffix" ng-options="o as o for o in extensions"></select><input type="submit" class="icon-confirm" value="">
+                <select id="fileSuffix" ng-model="settings.fileSuffix" ng-options="o as o for o in extensions"></select>
             </div>
             </div>
         </div>
