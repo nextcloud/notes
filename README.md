@@ -5,7 +5,9 @@
 -->
 
 <!-- The following paragraph should be kept synchronized with the description in appinfo/info.xml -->
-The Notes app is a distraction free notes taking app. It supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes) and [iOS](https://github.com/owncloud/notes-iOS-App) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites and future versions will provide categories for better organization.
+The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes) and [iOS](https://github.com/owncloud/notes-iOS-App) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites and future versions will provide categories for better organization.
+
+Notes is available in the [Nextcloud App Store](https://apps.nextcloud.com/apps/notes) and can be installed directly from your Nextcloud installation (category *office*).
 
 ![Screenshot of Nextcloud Notes](https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png)
 
@@ -23,9 +25,6 @@ For further developer and user documentation please visit [the wiki](https://git
 **Minimum Nextcloud / ownCloud Version**
 * Nextcloud >= 12.0
 * ownCloud >= 9.1
-
-**Supported Webservers**
-* Apache
 
 **Supported Browsers**
 * latest 3 versions of Chrome, Firefox and Edge 
