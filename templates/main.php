@@ -52,8 +52,8 @@ style('notes', [
             <!-- notes list -->
             <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
                 ng-class="{ active: note.id == route.noteId,'has-error': note.error }">
-                <a href="#/notes/{{ note.id }}" title="{{ note.title | noteTitle }}">
-                    {{ note.title | noteTitle }}
+                <a href="#/notes/{{ note.id }}" title="{{ note.title }}">
+                    {{ note.title }}
                     <span ng-if="note.unsaved">*</span>
                 </a>
                 <div class="app-navigation-entry-utils" ng-class="{'hidden': note.error }">
