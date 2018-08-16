@@ -33,6 +33,14 @@ style('notes', [
     </script>
 
     <div id="app-navigation" ng-controller="NotesController" ng-class="{'loading': !notesLoaded}">
+        <!-- new note button -->
+        <div id="note-add">            
+            <button class="icon-add app-content-list-button ng-binding" id="new-note-button" type="button" name="button" ng-click="create()"
+            oc-click-focus="{ selector: '#app-content textarea' }">
+                <?php p($l->t('New note')); ?> 
+            </button>
+        </div>
+
         <ul>
 <?php if(!$_['useSearchAPI']) { ?>
             <li class="note-search">
@@ -41,13 +49,6 @@ style('notes', [
                 </span>
             </li>
 <?php } ?>
-            <!-- new note button -->
-            <div id="note-add">            
-                <button class="icon-add app-content-list-button ng-binding" id="new-note-button" type="button" name="button" ng-click="create()"
-                oc-click-focus="{ selector: '#app-content textarea' }">
-                    <?php p($l->t('New note')); ?> 
-                </button>
-            </div>
             <!-- notes list -->
             <li ng-repeat="note in filteredNotes = (notes| and:search | orderBy:['-favorite','-modified'])"
                 ng-class="{ active: note.id == route.noteId,'has-error': note.error }">
