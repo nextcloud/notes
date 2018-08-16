@@ -34,9 +34,8 @@ style('notes', [
 
     <div id="app-navigation" ng-controller="NotesController" ng-class="{'loading': !notesLoaded}">
         <!-- new note button -->
-        <div id="note-add">            
-            <button class="icon-add app-content-list-button ng-binding" id="new-note-button" type="button" name="button" ng-click="create()"
-            oc-click-focus="{ selector: '#app-content textarea' }">
+        <div class="app-navigation-new">
+            <button class="icon-add" id="new-note-button" type="button" ng-click="create()">
                 <?php p($l->t('New note')); ?> 
             </button>
         </div>

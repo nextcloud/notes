@@ -11,14 +11,6 @@
 	height: 100%;
 }
 
-#app-navigation #note-add #new-note-button {
-	margin: 14px auto;
-	width: calc(100% - 20px) !important;
-	text-align: left;
-	padding-left: 34px;
-	background-position: 10px center;
-}
-
 #app-navigation > ul > li.has-error a{
     color:#f00;
 }
@@ -56,10 +48,22 @@
 	opacity: 1;
 }
 
-#app-navigation #note-add:hover span,
-#app-navigation #note-add:focus span {
-    display: inline;
+
+/* new button from Nextcloud 14 -- can be removed if min-version is at least 14 */
+#app-navigation .app-navigation-new {
+	display: block;
+	padding: 10px;
 }
+#app-navigation .app-navigation-new button {
+	display: inline-block;
+	width: 100%;
+	padding: 10px;
+	padding-left: 34px;
+	background-position: 10px center;
+	text-align: left;
+	margin: 0;
+}
+
 
 /* only display the delete button when the note is active */
 #app-navigation .app-navigation-entry-utils-menu-button {
