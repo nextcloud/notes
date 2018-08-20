@@ -1,4 +1,6 @@
 {
-	"directory": "vendor"
-
+	"directory": "vendor",
+	"ignoredDependencies": [
+		"lodash"
+	]
 }
