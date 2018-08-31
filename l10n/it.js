@@ -24,7 +24,7 @@ OC.L10N.register(
     "File extension for new notes" : "Estensione dei file per le nuove note",
     "The note has unsaved changes." : "La nota ha modifiche non salvate.",
     "*" : "*",
-    "Click here to try again" : "Fai clic qui per procare ancora",
+    "Click here to try again" : "Fai clic qui per provare ancora",
     "Saving failed!" : "Salvataggio non riuscito!",
     "Note saved" : "Nota salvata"
 },
