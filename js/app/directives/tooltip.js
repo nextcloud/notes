@@ -16,6 +16,10 @@ app.directive('notesTooltip', function () {
             element.on('$destroy', function() {
                 element.tooltip('hide');
             });
+
+            element.on('click', function() {
+                element.tooltip('hide');
+            });
         }
     };
 });

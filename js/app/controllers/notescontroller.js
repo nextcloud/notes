@@ -37,12 +37,13 @@ app.controller('NotesController', function($routeParams, $scope, $location,
         });
     };
 
-    $scope.toggleFavorite = function (noteId) {
+    $scope.toggleFavorite = function (noteId, event) {
         var note = NotesModel.get(noteId);
         note.customPUT({favorite: !note.favorite},
             'favorite', {}, {}).then(function (favorite) {
             note.favorite = favorite ? true : false;
         });
+        event.target.blur();
     };
 
 

@@ -59,6 +59,7 @@ style('notes', [
                                 title="<?php p($l->t('Delete note')); ?>"
                                 notes-tooltip
                                 data-placement="bottom"
+                                data-trigger="hover"
                                 ng-click="delete(note.id)"></button>
                         </li>
 			<li class="app-navigation-entry-utils-menu-button button-star"
@@ -68,7 +69,8 @@ style('notes', [
                                 title="<?php p($l->t('Favorite')); ?>"
                                 notes-tooltip
                                 data-placement="bottom"
-                                ng-click="toggleFavorite(note.id)"
+                                data-trigger="hover"
+                                ng-click="toggleFavorite(note.id, $event)"
                                 ng-class="{'icon-starred': note.favorite}"></button>
                         </li>
                     </ul>
