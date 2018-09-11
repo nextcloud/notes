@@ -27,6 +27,6 @@ The Notes app is a distraction free notes taking app. It supports formatting usi
     <screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes-thumbnail.jpg">https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png</screenshot>
     <dependencies>
         <owncloud min-version="9.1" max-version="10" />
-        <nextcloud min-version="12" max-version="14" />
+        <nextcloud min-version="12" max-version="15" />
     </dependencies>
 </info>
