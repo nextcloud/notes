@@ -18,6 +18,7 @@ OC.L10N.register(
     "No search result for {{search}}" : "Geen zoekresultaten voor {{search}}",
     "No notes found" : "Geen notities gevonden...",
     "Settings" : "Instellingen",
+    "Folder to store your notes" : "Map om je notities op te slaan",
     "path to notes" : "pad naar notities",
     "File extension for new notes" : "Bestandsextensies voor nieuwe notities",
     "The note has unsaved changes." : "De notitie heeft niet bewaarde wijzigingen.",
