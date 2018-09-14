@@ -15,6 +15,7 @@ OC.L10N.register(
     "Distraction-free notes and writing" : "Pozornost nerozptylující poznámky a texty",
     "Delete note" : "Smazat poznámku",
     "Favorite" : "Oblíbené",
+    "No search result for {{search}}" : "Žádné výsledky hledání pro {{search}}",
     "No notes found" : "Nebyly nalezeny žádné poznámky",
     "Settings" : "Nastavení",
     "Folder to store your notes" : "Složka pro ukládání vašich poznámek",
