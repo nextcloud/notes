@@ -16,7 +16,7 @@ use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
 use OCP\ILogger;
-use OC\Encryption\Exceptions\DecryptionFailedException;
+use OCP\Encryption\Exceptions\GenericEncryptionException;
 use League\Flysystem\FileNotFoundException;
 use OCA\Notes\Db\Note;
 use OCA\Notes\Service\SettingsService;
@@ -106,12 +106,12 @@ class NotesService {
     }
 
     private function getNote($file, $notesFolder, $tags=[], $onlyMeta=false) {
-        $id=$file->getId();
+        $id = $file->getId();
         try {
-            $note=Note::fromFile($file, $notesFolder, $tags, $onlyMeta);
+            $note = Note::fromFile($file, $notesFolder, $tags, $onlyMeta);
         } catch(FileNotFoundException $e){
             $note = Note::fromException($this->l10n->t('File error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-        } catch(DecryptionFailedException $e) {
+        } catch(GenericEncryptionException $e) {
             $note = Note::fromException($this->l10n->t('Encryption Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         } catch(\Exception $e) {
             $note = Note::fromException($this->l10n->t('Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);

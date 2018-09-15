@@ -14,7 +14,7 @@ app.controller('NotesSettingsController',
 
     $document.on('change', '#notesPath', function() {
         var msg = t('notes', 'Please wait while new settings are applied…');
-        OC.Notification.showTemporary(msg);
+        OC.Notification.show(msg);
         $scope.settings.put().then(function() {
             window.location.reload(true);
         });
