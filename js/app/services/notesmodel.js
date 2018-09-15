@@ -28,9 +28,9 @@ app.factory('NotesModel', function () {
         },
         get: function (id) {
             if(this.notesIds[id].error) {
-                OC.dialogs.alert(
+                OC.Notification.show(
                     this.notesIds[id].errorMessage,
-                    t('notes','An error occurred!')
+                    { type: 'error' }
                 );
                 return false;
             }
@@ -43,6 +43,8 @@ app.factory('NotesModel', function () {
                 note.modified = updated.modified;
                 note.content = updated.content;
                 note.favorite = updated.favorite;
+                note.error = updated.error;
+                note.errorMessage = updated.errorMessage;
             } else {
                 this.notes.push(updated);
                 this.notesIds[updated.id] = updated;
