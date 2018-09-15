@@ -136,6 +136,11 @@ class NotesService {
         $path = $this->generateFileName($folder, $title, $this->settings->get('fileSuffix'), -1);
         $file = $folder->newFile($path);
 
+        // If server-side encryption is activated, the server creates an empty file without signature
+        // which leads to an GenericEncryptionException('Missing Signature') afterwards.
+        // Saving a space-char (and removing it later) is a working work-around.
+        $file->putContent(' ');
+
         return $this->getNote($file, $folder);
     }
 
