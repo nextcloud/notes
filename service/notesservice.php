@@ -133,7 +133,7 @@ class NotesService {
         // check new note exists already and we need to number it
         // pass -1 because no file has id -1 and that will ensure
         // to only return filenames that dont yet exist
-        $path = $this->generateFileName($folder, $title, $this->settings->get('fileSuffix'), -1);
+        $path = $this->generateFileName($folder, $title, $this->settings->get($userId, 'fileSuffix'), -1);
         $file = $folder->newFile($path);
 
         // If server-side encryption is activated, the server creates an empty file without signature
@@ -319,7 +319,7 @@ class NotesService {
      * @return Folder
      */
     private function getFolderForUser ($userId) {
-        $path = '/' . $userId . '/files/' . $this->settings->get('notesPath');
+        $path = '/' . $userId . '/files/' . $this->settings->get($userId, 'notesPath');
         try {
             $folder = $this->getOrCreateFolder($path);
         } catch(\Exception $e) {

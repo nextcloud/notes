@@ -15,6 +15,7 @@ use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
+use OCP\IUserSession;
 
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
@@ -33,22 +34,25 @@ class NotesApiController extends ApiController {
     private $service;
     /** @var MetaService */
     private $metaService;
-    /** @var string */
-    private $userId;
+    /** @var IUserSession */
+    private $userSession;
 
     /**
      * @param string $AppName
      * @param IRequest $request
      * @param NotesService $service
-     * @param string $UserId
+     * @param IUserSession $userSession
      */
-    public function __construct($AppName, IRequest $request, NotesService $service, MetaService $metaService, $UserId) {
+    public function __construct($AppName, IRequest $request, NotesService $service, MetaService $metaService, IUserSession $userSession) {
         parent::__construct($AppName, $request);
         $this->service = $service;
         $this->metaService = $metaService;
-        $this->userId = $UserId;
+        $this->userSession = $userSession;
     }
 
+    private function getUID() {
+        return $this->userSession->getUser()->getUID();
+    }
 
     /**
      * @param Note $note
@@ -79,8 +83,8 @@ class NotesApiController extends ApiController {
     public function index($exclude='', $pruneBefore=0) {
         $exclude = explode(',', $exclude);
         $now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-        $notes = $this->service->getAll($this->userId);
-        $metas = $this->metaService->updateAll($this->userId, $notes);
+        $notes = $this->service->getAll($this->getUID());
+        $metas = $this->metaService->updateAll($this->getUID(), $notes);
         foreach ($notes as $note) {
             $lastUpdate = $metas[$note->getId()]->getLastUpdate();
             if($pruneBefore && $lastUpdate<$pruneBefore) {
@@ -114,7 +118,7 @@ class NotesApiController extends ApiController {
         $exclude = explode(',', $exclude);
 
         return $this->respond(function () use ($id, $exclude) {
-            $note = $this->service->get($id, $this->userId);
+            $note = $this->service->get($id, $this->getUID());
             $note = $this->excludeFields($note, $exclude);
             return $note;
         });
@@ -134,7 +138,7 @@ class NotesApiController extends ApiController {
      */
     public function create($content, $category=null, $modified=0, $favorite=null) {
         return $this->respond(function () use ($content, $category, $modified, $favorite) {
-            $note = $this->service->create($this->userId);
+            $note = $this->service->create($this->getUID());
             return $this->updateData($note->getId(), $content, $category, $modified, $favorite);
         });
     }
@@ -168,12 +172,12 @@ class NotesApiController extends ApiController {
      */
     private function updateData($id, $content, $category, $modified, $favorite) {
         if($favorite!==null) {
-            $this->service->favorite($id, $favorite, $this->userId);
+            $this->service->favorite($id, $favorite, $this->getUID());
         }
         if($content===null) {
-            return $this->service->get($id, $this->userId);
+            return $this->service->get($id, $this->getUID());
         } else {
-            return $this->service->update($id, $content, $this->userId, $category, $modified);
+            return $this->service->update($id, $content, $this->getUID(), $category, $modified);
         }
     }
 
@@ -187,7 +191,7 @@ class NotesApiController extends ApiController {
      */
     public function destroy($id) {
         return $this->respond(function () use ($id) {
-            $this->service->delete($id, $this->userId);
+            $this->service->delete($id, $this->getUID());
             return [];
         });
     }
