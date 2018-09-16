@@ -8,7 +8,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Það eru óvistaðir minnispunktar. Ef farið er af síðunni munu allar breytingar tapast!",
     "Please wait while new settings are applied…" : "Bíddu á meðan nýju stillingarnar eru virkjaðar…",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
-    "An error occurred!" : "Villa kom upp!",
     "File error" : "Villa í skrá",
     "Encryption Error" : "Villa í dulritun",
     "Error" : "Villa",

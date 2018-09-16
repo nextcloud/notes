@@ -8,7 +8,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Има несачуваних белешки. Напуштањем стране ћете поништити све измене!",
     "Please wait while new settings are applied…" : "Сачекајте док се примене нове поставке…",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
-    "An error occurred!" : "Дошло је до грешке!",
     "File error" : "Грешка са фајлом",
     "Encryption Error" : "Грешка са шифровањем",
     "Error" : "Грешка",

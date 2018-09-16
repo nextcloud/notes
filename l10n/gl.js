@@ -6,7 +6,6 @@ OC.L10N.register(
     "New note" : "Nova nota",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hai notas sen gardar. Deixar a páxina descartará todos os cambios!",
     "_%n word_::_%n words_" : ["%n palabra","%n palabras"],
-    "An error occurred!" : "Houbo un erro!",
     "File error" : "Erro de ficheiro",
     "Encryption Error" : "Erro de cifrado",
     "Error" : "Erro",

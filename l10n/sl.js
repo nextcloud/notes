@@ -8,7 +8,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Beležke še niso shranjene. Če zapustite stran, bodo spremembe izgubljene!",
     "Please wait while new settings are applied…" : "Počakajte, da se nastavitve uveljavijo ...",
     "_%n word_::_%n words_" : ["%n beseda","%n besedi","%n besede","%n besed"],
-    "An error occurred!" : "Prišlo je do napake!",
     "File error" : "Napaka v datoteki",
     "Encryption Error" : "Napaka šifriranja",
     "Error" : "Napaka",

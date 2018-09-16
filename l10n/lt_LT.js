@@ -5,7 +5,6 @@ OC.L10N.register(
     "New note" : "Sukurti",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Yra neįrašytų užrašų. Išėjus iš šio puslapio, visi pakeitimai bus atmesti!",
     "_%n word_::_%n words_" : ["%n žodis","%n žodžiai","%n žodžių","%n žodžių"],
-    "An error occurred!" : "Įvyko klaida!",
     "File error" : "Failo klaida",
     "Encryption Error" : "Šifravimo klaida",
     "Error" : "Klaida",

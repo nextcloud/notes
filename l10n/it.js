@@ -8,7 +8,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Ci sono note non salvate. Uscita. Se lasci la pagina perderai tutte le modifiche!",
     "Please wait while new settings are applied…" : "Attendi l'applicazione delle nuove impostazioni…",
     "_%n word_::_%n words_" : ["%n parola","%n parole"],
-    "An error occurred!" : "Si è verificato un errore!",
     "File error" : "Errore di file",
     "Encryption Error" : "Errore di cifratura",
     "Error" : "Errore",

@@ -8,7 +8,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opuštění stránky zahodí všechny změny!",
     "Please wait while new settings are applied…" : "Vyčkejte než se nová nastavení uplatní…",
     "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slov"],
-    "An error occurred!" : "Došlo k chybě!",
     "File error" : "Chyba souboru",
     "Encryption Error" : "Chyba šifrování",
     "Error" : "Chyba",
