@@ -13,14 +13,21 @@ use OCA\Notes\Service\SettingsService;
 class SettingsController extends Controller
 {
 	private $service;
+	private $userSession;
 
 	public function __construct(
 		$appName,
 		IRequest $request,
-		SettingsService $service
+		SettingsService $service,
+		IUserSession $userSession
 	) {
 		parent::__construct($appName, $request);
 		$this->service = $service;
+		$this->userSession = $userSession;
+	}
+
+	private function getUID() {
+		return $this->userSession->getUser()->getUID();
 	}
 
 	/**
@@ -28,7 +35,10 @@ class SettingsController extends Controller
 	 * @throws \OCP\PreConditionNotMetException
 	 */
 	public function set() {
-		$this->service->set($this->request->getParams());
+		$this->service->set(
+			$this->getUID(),
+			$this->request->getParams()
+		);
 		return $this->get();
 	}
 
@@ -36,6 +46,6 @@ class SettingsController extends Controller
 	 * @NoAdminRequired
 	 */
 	public function get() {
-		return new JSONResponse($this->service->getAll());
+		return new JSONResponse($this->service->getAll($this->getUID()));
 	}
 }
