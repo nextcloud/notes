@@ -6,6 +6,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Υπάρχουν επισημάνσεις που δεν έχουν αποθηκευτεί. Αφήνοντας τη σελίδα θα διαγραφούν όλες οι αλλαγές!",
     "_%n word_::_%n words_" : ["%n λέξη","%n λέξεις"],
     "File error" : "Σφάλμα αρχείου",
+    "Encryption Error" : "Σφάλμα κρυπτογράφησης",
     "Error" : "Σφάλμα",
     "Delete note" : "Διαγραφή σημείωσης",
     "Favorite" : "Αγαπημένο",
