@@ -248,7 +248,7 @@
 }
 
 .CodeMirror .CodeMirror-code .cm-comment {
-  font-family: MONOSPACE;
+    font-family: MONOSPACE;
 }
 
 /* distraction free styles */
