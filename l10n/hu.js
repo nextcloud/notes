@@ -8,6 +8,7 @@ OC.L10N.register(
     "Delete note" : "Jegyzet törlése",
     "Favorite" : "Kedvenc",
     "No notes found" : "Nincsenek jegyzetek",
+    "Settings" : "Beállítások",
     "The note has unsaved changes." : "A jegyzet mentetlen módosításokat tartalmaz.",
     "*" : "*",
     "Click here to try again" : "Kattints ide az ismételt kísérlethez",
