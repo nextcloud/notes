@@ -409,11 +409,12 @@ class NotesService {
         $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
 
         if($file->getType() !== 'file') return false;
-        if(!in_array(
-            pathinfo($file->getName(), PATHINFO_EXTENSION),
-            $allowedExtensions
-        )) return false;
 
+        $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
+        $iext = strtolower($ext);
+        if(!in_array($iext, $allowedExtensions)) {
+            return false;
+        }
         return true;
     }
 
