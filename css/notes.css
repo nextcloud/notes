@@ -43,6 +43,12 @@
 	}
 }
 
+#app-navigation li.search-result-header > a,
+#app-navigation li.search-result-header > a * {
+	font-style: italic;
+	cursor: default;
+}
+
 #app-navigation li:hover .nav-entry,
 #app-navigation li:focus .nav-entry {
 	opacity: 1;
@@ -360,6 +366,9 @@ form.category .icon-confirm {
 }
 .nav-icon-recent {
         background-image: url('../img/recent.svg?v=1');
+}
+.nav-icon-search {
+        background-image: url('../img/search.svg?v=1');
 }
 .nav-icon-favorites {
         background-image: url('../img/star.svg?v=1');

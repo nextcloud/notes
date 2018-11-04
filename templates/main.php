@@ -30,6 +30,9 @@ style('notes', [
     </script>
 
     <div id="app-navigation" ng-controller="NotesController" ng-class="{'loading': !notesLoaded}">
+
+{{ SelectedCategory = (filterCategory==null ? null : filterCategory || '<?php p($l->t('Uncategorized')); ?>'); ''}}
+
         <!-- new note button -->
         <div class="app-navigation-new">
             <button class="icon-add" id="new-note-button" type="button" ng-click="create()">
@@ -38,6 +41,8 @@ style('notes', [
         </div>
 
         <ul class="with-icon">
+
+	    <!-- old style search (before NC 14) -->
 <?php if(!$_['useSearchAPI']) { ?>
             <li class="note-search">
                 <span class="nav-entry icon-search">
@@ -46,8 +51,9 @@ style('notes', [
             </li>
 <?php } ?>
 
+            <!-- category selector -->
             <li class="collapsible app-navigation-noclose separator-below" ng-class="{ open: folderSelectorOpen, 'current-category-item': !folderSelectorOpen && filterCategory!=null }" ng-show="notes.length>1">
-                <a class="nav-icon-files svg" ng-click="toggleFolderSelector()">{{!folderSelectorOpen && filterCategory!=null ? filterCategory || '<?php p($l->t('Uncategorized')); ?>' : '<?php p($l->t('Categories')); ?>' | categoryTitle}}</a>
+                <a class="nav-icon-files svg" ng-click="toggleFolderSelector()">{{!folderSelectorOpen && SelectedCategory ? SelectedCategory : '<?php p($l->t('Categories')); ?>' | categoryTitle}}</a>
 
                 <ul>
                 <li data-id="recent" class="nav-recent" ng-class="{ active: filterCategory==null && filterFavorite==false }" ng-show="notes.length>1">
@@ -81,6 +87,26 @@ style('notes', [
                       </div>
                 </li>
                 </ul>
+            </li>
+
+            <!-- search result header -->
+            <li ng-show="search && filteredNotes.length" class="search-result-header">
+		<a class="nav-icon-search active">
+                    <span ng-show="SelectedCategory"><?php p($l->t('Search result for "{{search}}" in {{SelectedCategory}}')); ?></span>
+                    <span ng-show="!SelectedCategory"><?php p($l->t('Search result for "{{search}}"')); ?></span>
+                </a>
+	    </li>
+
+	    <!-- nothing found -->
+            <li ng-show="notesLoaded && !filteredNotes.length">
+                <span class="nav-entry" ng-show="search">
+                    <div id="emptycontent" class="emptycontent-search">
+                        <div class="icon-search"></div>
+                        <h2 ng-show="SelectedCategory"><?php p($l->t('No search result for {{search}} in {{SelectedCategory}}')); ?></h2>
+                        <h2 ng-show="!SelectedCategory"><?php p($l->t('No search result for {{search}}')); ?></h2>
+                    </div>
+                </span>
+                <span class="nav-entry" ng-show="!search"><?php p($l->t('No notes found')); ?></span>
             </li>
 
             <!-- notes list -->
@@ -123,15 +149,6 @@ style('notes', [
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li ng-show="notesLoaded && !filteredNotes.length">
-                <span class="nav-entry" ng-show="search">
-                    <div id="emptycontent" class="emptycontent-search">
-                        <div class="icon-search"></div>
-                        <h2 class="ng-binding"><?php p($l->t('No search result for {{search}}')); ?></h2>
-                    </div>
-                </span>
-                <span class="nav-entry" ng-show="!search"><?php p($l->t('No notes found')); ?></span>
             </li>
         </ul>
 
