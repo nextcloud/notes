@@ -60,6 +60,13 @@ app.factory('SaveQueue', function($q) {
             note.error = false;
             note.title = response.title;
             note.modified = response.modified;
+            if(note.category !== response.category) {
+                OC.Notification.showTemporary(
+                    t('notes', 'Updating the note\'s category has failed. ' +
+                               'Is the target directory writable?')
+                );
+                note.category = response.category;
+            }
             if(response.content === note.content) {
                 note.unsaved = false;
             }
