@@ -7,9 +7,9 @@ OC.L10N.register(
     "File error" : "Eraro pri dosiero",
     "Encryption Error" : "Eraro pri ĉifrado",
     "Error" : "Eraro",
+    "No notes found" : "Neniu noto troviĝis ",
     "Delete note" : "Forigi noton",
     "Favorite" : "Favorato",
-    "No notes found" : "Neniu noto troviĝis ",
     "*" : "*",
     "Note saved" : "Noto konservinta"
 },

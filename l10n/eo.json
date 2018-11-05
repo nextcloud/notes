@@ -5,9 +5,9 @@
     "File error" : "Eraro pri dosiero",
     "Encryption Error" : "Eraro pri ĉifrado",
     "Error" : "Eraro",
+    "No notes found" : "Neniu noto troviĝis ",
     "Delete note" : "Forigi noton",
     "Favorite" : "Favorato",
-    "No notes found" : "Neniu noto troviĝis ",
     "*" : "*",
     "Note saved" : "Noto konservinta"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
