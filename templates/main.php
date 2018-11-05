@@ -70,7 +70,7 @@ style('notes', [
 
                 <!-- category list -->
                 <li
-                  ng-repeat="category in (getCategories(notes) | orderBy:['name'])"
+                  ng-repeat="category in (categories | orderBy:['name'])"
                   class="nav-files"
                   ng-class="{ active: filterCategory==category.name && filterFavorite==false }"
                   title="{{ category.name || '<?php p($l->t('Uncategorized')); ?>' }}"
