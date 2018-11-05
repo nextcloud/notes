@@ -54,9 +54,10 @@ app.controller('NotesController', function($routeParams, $scope, $location,
         event.target.blur();
     };
 
-    $scope.getCategories = _.memoize(function (notes) {
-        return NotesModel.getCategories(notes, 1, true);
-    });
+    $scope.categories = [];
+    $scope.$watch('notes', function(notes) {
+        $scope.categories = NotesModel.getCategories(notes, 1, true);
+    }, true);
 
     $scope.toggleFolderSelector = function () {
         $scope.folderSelectorOpen = !$scope.folderSelectorOpen;
