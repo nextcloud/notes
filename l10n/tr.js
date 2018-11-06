@@ -16,6 +16,9 @@ OC.L10N.register(
     "Uncategorized" : "Kategorisiz",
     "Categories" : "Kategoriler",
     "All notes" : "Tüm notlar",
+    "Search result for \"{{search}}\" in {{SelectedCategory}}" : "\"{{search}}\" için {{SelectedCategory}} içinde bulunan sonuçlar",
+    "Search result for \"{{search}}\"" : "\"{{search}}\" için bulunan sonuçlar",
+    "No search result for {{search}} in {{SelectedCategory}}" : "\"{{search}}\" için {{SelectedCategory}} içinde herhangi bir sonuç bulunamadı",
     "No search result for {{search}}" : "{{search}} aramasından bir sonuç alınamadı",
     "No notes found" : "Herhangi bir not bulunamadı",
     "Delete note" : "Notu sil",
@@ -27,7 +30,6 @@ OC.L10N.register(
     "Category" : "Kategori",
     "Edit category" : "Kategoriyi düzenle",
     "The note has unsaved changes." : "Not üzerinde kaydedilmemiş değişiklikler var.",
-    "*" : "*",
     "Click here to try again" : "Yeniden denemek için buraya tıklayın",
     "Saving failed!" : "Kaydedilemedi!",
     "Note saved" : "Not kaydedildi"

@@ -22,7 +22,6 @@ OC.L10N.register(
     "path to notes" : "путь к заметкам",
     "File extension for new notes" : "Расширения файла для новых заметок",
     "The note has unsaved changes." : "Изменения в заметке еще не сохранены.",
-    "*" : "*",
     "Click here to try again" : "Нажмите здесь для повтора.",
     "Saving failed!" : "Ошибка при сохранении!",
     "Note saved" : "Заметка сохранена"

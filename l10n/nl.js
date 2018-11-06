@@ -26,7 +26,6 @@ OC.L10N.register(
     "Category" : "Categorie",
     "Edit category" : "Bewerken categorie",
     "The note has unsaved changes." : "De notitie heeft niet bewaarde wijzigingen.",
-    "*" : "*",
     "Click here to try again" : "Klik hier om het opnieuw te proberen",
     "Saving failed!" : "Opslaan mislukt!",
     "Note saved" : "Notitie opgeslagen"

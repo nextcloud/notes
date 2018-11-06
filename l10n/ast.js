@@ -7,7 +7,6 @@ OC.L10N.register(
     "No notes found" : "Nun s'alcontraron notes",
     "Delete note" : "Desaniciar nota",
     "Favorite" : "Marcar como favoritu",
-    "*" : "*",
     "Click here to try again" : "Primi equí pa tentalo de nueves",
     "Note saved" : "Nota guardada"
 },

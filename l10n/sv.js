@@ -21,7 +21,6 @@ OC.L10N.register(
     "path to notes" : "sökväg till anteckningar",
     "File extension for new notes" : "Filtillägg för nya anteckningar",
     "The note has unsaved changes." : "Anteckningen har osparade ändringar.",
-    "*" : "*",
     "Click here to try again" : "Klicka här för att försöka igen",
     "Saving failed!" : "Misslyckades att spara!",
     "Note saved" : "Anteckning sparad"

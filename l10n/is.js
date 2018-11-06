@@ -20,7 +20,6 @@ OC.L10N.register(
     "path to notes" : "slóð að minnispunktum",
     "File extension for new notes" : "Skráarending fyrir nýja minnispunkta",
     "The note has unsaved changes." : "Minnispunkturinn er með óvistaðar breytingar.",
-    "*" : "*",
     "Click here to try again" : "Smelltu hér til að reyna aftur",
     "Saving failed!" : "Vistun mistókst!",
     "Note saved" : "Vistaði minnispunkt"

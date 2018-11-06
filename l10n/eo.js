@@ -10,7 +10,6 @@ OC.L10N.register(
     "No notes found" : "Neniu noto troviĝis ",
     "Delete note" : "Forigi noton",
     "Favorite" : "Favorato",
-    "*" : "*",
     "Note saved" : "Noto konservinta"
 },
 "nplurals=2; plural=(n != 1);");

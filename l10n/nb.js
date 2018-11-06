@@ -9,7 +9,6 @@ OC.L10N.register(
     "Delete note" : "Slett notat",
     "Favorite" : "Gjør til favoritt",
     "The note has unsaved changes." : "Notatet har ulagrede endringer.",
-    "*" : "*",
     "Click here to try again" : "Klikk her for å prøve igjen",
     "Saving failed!" : "Lagring mislyktes!",
     "Note saved" : "Notat lagret"

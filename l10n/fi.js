@@ -18,7 +18,6 @@ OC.L10N.register(
     "path to notes" : "polku muistiinpanoihin",
     "File extension for new notes" : "Tiedostopääte uusille muistiinpanoille",
     "The note has unsaved changes." : "Tässä muistiinpanossa on tallentamattomia muutoksia.",
-    "*" : "*",
     "Click here to try again" : "Napsauta tästä yrittääksesi uudelleen",
     "Saving failed!" : "Tallentaminen epäonnistui!",
     "Note saved" : "Muistiinpano tallennettu"

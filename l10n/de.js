@@ -16,6 +16,9 @@ OC.L10N.register(
     "Uncategorized" : "Ohne Kategorie",
     "Categories" : "Kategorien",
     "All notes" : "Alle Notizen",
+    "Search result for \"{{search}}\" in {{SelectedCategory}}" : "Suchergebnisse für \"{{search}}\" in {{SelectedCategory}}",
+    "Search result for \"{{search}}\"" : "Suchergebnisse für \"{{search}}\"",
+    "No search result for {{search}} in {{SelectedCategory}}" : "Keine Suchergebnisse für {{search}} in {{SelectedCategory}}",
     "No search result for {{search}}" : "Keine Suchergebnisse zu {{search}}",
     "No notes found" : "Keine Notizen gefunden",
     "Delete note" : "Notiz löschen",
@@ -27,7 +30,6 @@ OC.L10N.register(
     "Category" : "Kategorie",
     "Edit category" : "Kategorie bearbeiten",
     "The note has unsaved changes." : "Diese Notiz enthält nicht gespeicherte Änderungen.",
-    "*" : "*",
     "Click here to try again" : "Für einen neuen Versuch hier klicken",
     "Saving failed!" : "Speichern fehlgeschlagen!",
     "Note saved" : "Notiz gespeichert"

@@ -9,7 +9,6 @@ OC.L10N.register(
     "Delete note" : "Skrap nota",
     "Favorite" : "Gunsteling",
     "The note has unsaved changes." : "Die nota het ongestoorde veranderinge.",
-    "*" : "*",
     "Click here to try again" : "Klik hier om weer te probeer",
     "Saving failed!" : "Stoor het misluk!",
     "Note saved" : "Nota gestoor"

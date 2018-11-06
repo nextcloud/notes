@@ -13,7 +13,6 @@ OC.L10N.register(
     "Delete note" : "Slet note",
     "Favorite" : "Foretrukken",
     "The note has unsaved changes." : "Noten har ikke gemte ændringer.",
-    "*" : "*",
     "Click here to try again" : "Klik her for at prøve igen",
     "Saving failed!" : "Kunne ikke gemme!",
     "Note saved" : "Note gemt"

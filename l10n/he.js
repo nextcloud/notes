@@ -21,7 +21,6 @@ OC.L10N.register(
     "path to notes" : "נתיב לפתקיות",
     "File extension for new notes" : "סיומת קובץ לפתקיות חדשות",
     "The note has unsaved changes." : "יש שינויים בהערה שלא נשמרו",
-    "*" : "*",
     "Click here to try again" : "יש ללחוץ כאן כדי לנסות שוב",
     "Saving failed!" : "השמירה נכשלה!",
     "Note saved" : "ההערה נשמרה"

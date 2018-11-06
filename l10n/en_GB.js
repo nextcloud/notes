@@ -15,7 +15,6 @@ OC.L10N.register(
     "Delete note" : "Delete note",
     "Favorite" : "Favourite",
     "The note has unsaved changes." : "The note has unsaved changes.",
-    "*" : "*",
     "Click here to try again" : "Click here to try again",
     "Saving failed!" : "Saving failed!",
     "Note saved" : "Note saved"

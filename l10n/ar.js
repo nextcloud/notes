@@ -7,7 +7,6 @@ OC.L10N.register(
     "No notes found" : "لم يتم العثور على ملاحظات",
     "Delete note" : "حذف الملاحظة ",
     "Favorite" : "المفضلة ",
-    "*" : "*",
     "Click here to try again" : "أنقر هنا لإعادة المحاولة",
     "Saving failed!" : "فشلت عملية الحفظ !",
     "Note saved" : "تم حفظ الملاحظة"

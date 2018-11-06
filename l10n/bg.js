@@ -16,7 +16,6 @@ OC.L10N.register(
     "path to notes" : "път до бележките",
     "File extension for new notes" : "Разширение за файловете",
     "The note has unsaved changes." : "Има незаписани промени към бележката.",
-    "*" : "*",
     "Click here to try again" : "Кликнете тук за нов опит",
     "Saving failed!" : "Записа е неуспешен!",
     "Note saved" : "Бележката е записана"

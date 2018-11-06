@@ -11,8 +11,8 @@ OC.L10N.register(
     "No notes found" : "Nėra užrašų",
     "Delete note" : "Ištrinti",
     "Favorite" : "Pažymėti",
+    "Settings" : "Nustatymai",
     "The note has unsaved changes." : "Užrašuose yra neįrašytų pakeitimų.",
-    "*" : "*",
     "Click here to try again" : "Spustelėkite čia, norėdami bandyti dar kartą",
     "Saving failed!" : "Įrašymas nepavyko!",
     "Note saved" : "Užrašai įrašyti"

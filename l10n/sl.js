@@ -21,7 +21,6 @@ OC.L10N.register(
     "path to notes" : "pot do mape",
     "File extension for new notes" : "Privzeta pripona datotek za nove beležke",
     "The note has unsaved changes." : "V beležki so neshranjene spremembe.",
-    "*" : "*",
     "Click here to try again" : "Kliknite za ponovni poskus",
     "Saving failed!" : "Shranjevanje je spodletelo!",
     "Note saved" : "Beležka je shranjena"

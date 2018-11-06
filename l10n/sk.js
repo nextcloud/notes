@@ -21,7 +21,6 @@ OC.L10N.register(
     "path to notes" : "cesta k poznámkam",
     "File extension for new notes" : "Prípona súboru pre nové poznámky",
     "The note has unsaved changes." : "Poznámka má neuložené zmeny.",
-    "*" : "*",
     "Click here to try again" : "Pre nový pokus kliknite sem",
     "Saving failed!" : "Ukladanie zlyhalo!",
     "Note saved" : "Poznámka uložená"

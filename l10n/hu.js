@@ -16,7 +16,6 @@ OC.L10N.register(
     "Folder to store your notes" : "A jegyzetek tárolási mappája",
     "File extension for new notes" : "Fájlkiterjesztés új jegyzetekhez",
     "The note has unsaved changes." : "A jegyzet mentetlen módosításokat tartalmaz.",
-    "*" : "*",
     "Click here to try again" : "Kattints ide az ismételt kísérlethez",
     "Saving failed!" : "Mentés sikertelen!",
     "Note saved" : "Jegyzet mentve"

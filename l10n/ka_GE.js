@@ -9,7 +9,6 @@ OC.L10N.register(
     "Delete note" : "ჩანაწერის გაუქმება",
     "Favorite" : "რჩეული",
     "The note has unsaved changes." : "ჩანაწერს გააჩნია არ-შენახული ცვლილებები.",
-    "*" : "*",
     "Click here to try again" : "ახლიდან საცდელად დააწკაპუნეთ აქ",
     "Saving failed!" : "შენახვა ვერ მოხერხდა!",
     "Note saved" : "ჩანაწერი შენახულია"

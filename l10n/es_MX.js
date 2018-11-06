@@ -15,7 +15,6 @@ OC.L10N.register(
     "Delete note" : "Borrar nota",
     "Favorite" : "Favorito",
     "The note has unsaved changes." : "La nota contiene cambios sin guardar",
-    "*" : "*",
     "Click here to try again" : "Haz click aquí para intentarlo de nuevo",
     "Saving failed!" : "¡Falla al guardar!",
     "Note saved" : "Nota guardada"

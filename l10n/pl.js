@@ -21,7 +21,6 @@ OC.L10N.register(
     "path to notes" : "ścieżka do notatek",
     "File extension for new notes" : "Rozszerzenie pliku dla nowych notatek",
     "The note has unsaved changes." : "Notatka posiada niezapisane zmiany.",
-    "*" : "*",
     "Click here to try again" : "Kliknij tutaj aby spróbować ponownie",
     "Saving failed!" : "Błąd zapisu!",
     "Note saved" : "Notatka zapisana"

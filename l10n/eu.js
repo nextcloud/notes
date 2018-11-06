@@ -9,7 +9,6 @@ OC.L10N.register(
     "Delete note" : "Ezabatu oharra",
     "Favorite" : "Gogokoa",
     "The note has unsaved changes." : "Oharrak gorde gabeko aldaketak ditu.",
-    "*" : "*",
     "Click here to try again" : "Klik egin berriz saiatzeko",
     "Saving failed!" : "Gordetzean errorea!",
     "Note saved" : "Oharra gordeta"

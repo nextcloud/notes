@@ -25,7 +25,6 @@ OC.L10N.register(
     "Category" : "Categorías",
     "Edit category" : "Editar categoría",
     "The note has unsaved changes." : "La nota tiene cambios sin guardar",
-    "*" : "*",
     "Click here to try again" : "Haz clic aquí para volver a intentarlo",
     "Saving failed!" : "¡Fallo al guardar!",
     "Note saved" : "Nota guardada"

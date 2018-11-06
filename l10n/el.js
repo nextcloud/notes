@@ -15,7 +15,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Φάκελος αποθήκευσης των σημειώσεών σας",
     "path to notes" : "διαδρομή στις σημειώσεις",
     "The note has unsaved changes." : "Η σημείωση έχει αλλαγές που δεν έχουν σωθεί",
-    "*" : "*",
     "Click here to try again" : "Κάντε κλίκ εδώ, για να δοκιμάσετε ξανά.",
     "Saving failed!" : "Απέτυχε η αποθήκευση!",
     "Note saved" : "Η σημείωση αποθηκεύτηκε."

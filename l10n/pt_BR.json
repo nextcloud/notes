@@ -14,6 +14,9 @@
     "Uncategorized" : "Sem categoria",
     "Categories" : "Categorias",
     "All notes" : "Todas as notas",
+    "Search result for \"{{search}}\" in {{SelectedCategory}}" : "Pesquisa para \"{{search}}\" em {{SelectedCategory}}",
+    "Search result for \"{{search}}\"" : "Pesquisar resultado para \"{{search}}\"",
+    "No search result for {{search}} in {{SelectedCategory}}" : "Sem resultados para {{search}} em {{SelectedCategory}}",
     "No search result for {{search}}" : "Nenhum resultado de pesquisa para {{search}}",
     "No notes found" : "Nenhuma nota encontrada",
     "Delete note" : "Excluir anotação",
@@ -25,7 +28,6 @@
     "Category" : "Categoria",
     "Edit category" : "Editar categoria",
     "The note has unsaved changes." : "A anotação tem mudanças não salvas.",
-    "*" : "*",
     "Click here to try again" : "Clique aqui para tentar novamente",
     "Saving failed!" : "Gravação falhou!",
     "Note saved" : "Anotação salva"

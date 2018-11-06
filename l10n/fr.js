@@ -22,7 +22,6 @@ OC.L10N.register(
     "path to notes" : "chemin d'accès aux notes",
     "File extension for new notes" : "Extension des fichiers pour les nouvelles notes",
     "The note has unsaved changes." : "La note a des modifications non sauvegardées.",
-    "*" : "*",
     "Click here to try again" : "Cliquez ici pour réessayer",
     "Saving failed!" : "L'enregistrement a échoué !",
     "Note saved" : "Note sauvegardée"
