@@ -158,7 +158,6 @@ class NotesService {
     public function update ($id, $content, $userId, $category=null, $mtime=0) {
         $notesFolder = $this->getFolderForUser($userId);
         $file = $this->getFileById($notesFolder, $id);
-        $folder = $file->getParent();
         $title = $this->getSafeTitleFromContent($content);
 
 
@@ -180,8 +179,8 @@ class NotesService {
                     $cats = array_filter($cats, function($str) { return !empty($str); });
                     $basePath .= '/'.implode('/', $cats);
                 }
-                $this->getOrCreateFolder($basePath);
             }
+            $folder = $this->getOrCreateFolder($basePath);
 
             // assemble new file path
             $newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileSuffix, $id);
