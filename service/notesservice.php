@@ -165,11 +165,12 @@ class NotesService {
         // this can fail if access rights are not sufficient or category name is illegal
         try {
             $currentFilePath = $this->root->getFullPath($file->getPath());
+            $currentBasePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
             $fileSuffix = '.' . pathinfo($file->getName(), PATHINFO_EXTENSION);
 
             // detect (new) folder path based on category name
             if($category===null) {
-                $basePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
+                $basePath = $currentBasePath;
             } else {
                 $basePath = $notesFolder->getPath();
                 if(!empty($category)) {
@@ -189,6 +190,9 @@ class NotesService {
             if($currentFilePath !== $newFilePath) {
                 $file->move($newFilePath);
             }
+            if($currentBasePath !== $basePath) {
+                $this->deleteEmptyFolder($notesFolder, $this->root->get($currentBasePath));
+            }
         } catch(\OCP\Files\NotPermittedException $e) {
             $this->logger->error('Moving note '.$id.' ('.$title.') to the desired target is not allowed. Please check the note\'s target category ('.$category.').', ['app' => $this->appName]);
         } catch(\Exception $e) {
@@ -203,7 +207,6 @@ class NotesService {
 
         return $this->getNote($file, $notesFolder, $this->getTags($id));
     }
-
 
     /**
      * Set or unset a note as favorite.
@@ -237,9 +240,11 @@ class NotesService {
      * exist
      */
     public function delete ($id, $userId) {
-        $folder = $this->getFolderForUser($userId);
-        $file = $this->getFileById($folder, $id);
+        $notesFolder = $this->getFolderForUser($userId);
+        $file = $this->getFileById($notesFolder, $id);
+        $parent = $file->getParent();
         $file->delete();
+        $this->deleteEmptyFolder($notesFolder, $parent);
     }
 
     // removes characters that are illegal in a file or folder name on some operating systems
@@ -342,6 +347,22 @@ class NotesService {
         return $folder;
     }
 
+    /*
+     * Delete a folder and it's parent(s) if it's/they're empty
+     * @param Folder root folder for notes
+     * @param Folder folder to delete
+     */
+    private function deleteEmptyFolder(Folder $notesFolder, Folder $folder) {
+        $content = $folder->getDirectoryListing();
+        $isEmpty = !count($content);
+        $isNotesFolder = $folder->getPath()===$notesFolder->getPath();
+        if($isEmpty && !$isNotesFolder) {
+            $this->logger->info('Deleting empty category folder '.$folder->getPath(), ['app' => $this->appName]);
+            $parent = $folder->getParent();
+            $folder->delete();
+            $this->deleteEmptyFolder($notesFolder, $parent);
+        }
+    }
 
     /**
      * get path of file and the title.txt and check if they are the same
