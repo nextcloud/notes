@@ -85,6 +85,10 @@ app.controller('NotesController', function($routeParams, $scope, $location,
         return true;
     };
 
+    $scope.isCategory = function (item) {
+        return typeof item === 'string';
+    };
+
     $window.onbeforeunload = function() {
         var notes = NotesModel.getAll();
         for(var i=0; i<notes.length; i+=1) {
