@@ -111,22 +111,22 @@ style('notes', [
 
             <!-- notes list -->
             <li ng-repeat="note in filteredNotes = (notes | filter:categoryFilter | and:search | orderBy:filterOrder | groupNotes:filterCategory)"
-                ng-class="{ active: note.id == route.noteId, 'has-error': note.error, 'app-navigation-noclose': note.isCategory }"
+                ng-class="{ active: note.id == route.noteId, 'has-error': note.error, 'app-navigation-noclose': isCategory(note) }"
                 class="note-item">
 
 		<a class="nav-icon-files svg separator-above"
-		   ng-if="note.isCategory"
-                   ng-click="setFilter(filterCategory + '/' + note.title)"
-                   >&hellip; / {{ note.title | categoryTitle }}</a>
+		   ng-if="isCategory(note)"
+                   ng-click="setFilter(filterCategory + '/' + note)"
+                   >&hellip; / {{ note | categoryTitle }}</a>
 
                 <a href="#/notes/{{ note.id }}"
 		   title="{{ note.title }}"
-                   ng-if="!note.isCategory"
+                   ng-if="!isCategory(note)"
                    >
                     {{ note.title }}
                     <span ng-if="note.unsaved">*</span>
                 </a>
-                <div class="app-navigation-entry-utils" ng-class="{'hidden': note.error }" ng-if="!note.isCategory">
+                <div class="app-navigation-entry-utils" ng-class="{'hidden': note.error }" ng-if="!isCategory(note)">
                     <ul>
                         <li class="app-navigation-entry-utils-menu-button button-delete">
                             <button class="svg action icon-delete"
