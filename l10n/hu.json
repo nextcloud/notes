@@ -1,9 +1,9 @@
 { "translations": {
     "Notes" : "Jegyzetek",
-    "The last viewed note cannot be accessed. " : "Az utoljára megtekintett jegyzet nem elérhető.",
     "New note" : "Új jegyzet",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Mentetlen jegyzetek vannak. Az oldal elhagyásával a változások elvesznek!",
     "_%n word_::_%n words_" : ["%n szó","%n szó"],
+    "The last viewed note cannot be accessed. " : "Az utoljára megtekintett jegyzet nem elérhető.",
     "File error" : "Fájlhiba",
     "Encryption Error" : "Titkosítási hiba",
     "Error" : "Hiba",

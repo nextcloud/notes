@@ -2,10 +2,10 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notas",
-    "The last viewed note cannot be accessed. " : "Non pode acceder á última nota visualizada. ",
     "New note" : "Nova nota",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hai notas sen gardar. Deixar a páxina descartará todos os cambios!",
     "_%n word_::_%n words_" : ["%n palabra","%n palabras"],
+    "The last viewed note cannot be accessed. " : "Non pode acceder á última nota visualizada. ",
     "File error" : "Erro de ficheiro",
     "Encryption Error" : "Erro de cifrado",
     "Error" : "Erro",
