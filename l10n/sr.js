@@ -6,6 +6,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Има несачуваних белешки. Напуштањем стране ћете поништити све измене!",
     "Please wait while new settings are applied…" : "Сачекајте док се примене нове поставке…",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
+    "Updating the note's category has failed. Is the target directory writable?" : "Неуспешно ажурирање категорије белешке. Да ли у одредишни директоријум може да се пише?",
     "The last viewed note cannot be accessed. " : "Не може се приступити последње прегледаној белешци.",
     "The notes folder is not accessible: %s" : "Фасцикла са белешкама није доступна: %s",
     "File error" : "Грешка са фајлом",
