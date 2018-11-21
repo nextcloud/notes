@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2013, Jan-Christoph Borchardt http://jancborchardt.net
+ *                     and others
  * This file is licensed under the Affero General Public License version 3 or later.
  * See the COPYING file.
  */
@@ -12,7 +13,7 @@
 }
 
 #app-navigation > ul > li.has-error a{
-    color:#f00;
+    color: var(--color-error);
 }
 .app-content-list-button {
 	display: block;
@@ -30,7 +31,7 @@
 	box-sizing: border-box;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	color: #000;
+	color: var(--color-main-text);
 	opacity: .57;
 }
 
@@ -95,6 +96,7 @@
     padding-top: 2ex;
 }
 
+/* old style search (before NC14) */
 .note-search span {
     background-position: 0 center;
     background-origin: content-box;
@@ -142,6 +144,7 @@
 /* enable clickthrough for links */
 .CodeMirror-cursor {
     pointer-events: none;
+    border-color: var(--color-main-text);
 }
 
 #app-content .note-meta {
@@ -150,7 +153,7 @@
     width: 100%;
     padding: 0 45px 0px 45px;
     margin: -10px 0 0;
-    background-color: white; /* TODO Theming! */
+    background-color: var(--color-main-background);
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -166,8 +169,8 @@
 
 #app-content .note-meta > .note-error {
     opacity: 1;
-    background-color: #e00;
-    color: #fff;
+    background-color: var(--color-error);
+    color: var(--color-primary-text);
     border-radius: 0.5ex;
     padding: 0.5ex 1ex;
 }
@@ -242,6 +245,10 @@ form.category .icon-confirm {
 
 
 /* markdown styling */
+.CodeMirror {
+	background: transparent;
+	color: inherit;
+}
 
 .CodeMirror .CodeMirror-code {
 	width: 100%;
@@ -316,36 +323,17 @@ form.category .icon-confirm {
 }
 
 /* distraction free styles */
-:-webkit-full-screen {
-	width: 100%;
-	background-color: white;
-}
-:-moz-full-screen {
-	width: 100%;
-	background-color: white;
-}
-:-ms-fullscreen {
-	width: 100%;
-	background-color: white;
-}
+:-webkit-full-screen,
+:-moz-full-screen,
+:-ms-fullscreen,
 :fullscreen {
 	width: 100%;
-	background-color: white;
-}
+	background-color: var(--color-main-background);
 
-:-webkit-full-screen #app-content-container {
-	margin: 0 auto;
+	#app-content-container {
+		margin: 0 auto;
+	}
 }
-:-moz-full-screen #app-content-container {
-	margin: 0 auto;
-}
-:-ms-fullscreen #app-content-container {
-	margin: 0 auto;
-}
-:fullscreen #app-content-container {
-	margin: 0 auto;
-}
-
 
 /* larger screen sizes */
 @media only screen and (min-width: 769px) {
@@ -358,20 +346,17 @@ form.category .icon-confirm {
 
 
 /* icons for sidebar */
-.nav-icon-emptyfolder {
-        background-image: url('../img/folder-empty.svg?v=1');
-}
 .nav-icon-files {
-        background-image: url('../img/folder.svg?v=1');
+	@include icon-color('folder', 'notes', $color-black);
+}
+.nav-icon-emptyfolder {
+	@include icon-color('folder-empty', 'notes', $color-black);
 }
 .nav-icon-recent {
-        background-image: url('../img/recent.svg?v=1');
+	@include icon-color('recent', 'notes', $color-black);
 }
 .nav-icon-search {
-        background-image: url('../img/search.svg?v=1');
-}
-.nav-icon-favorites {
-        background-image: url('../img/star.svg?v=1');
+	@include icon-color('search', 'notes', $color-black);
 }
 
 
