@@ -8,9 +8,9 @@
 
 
 script('notes', [
-    'vendor/angular/angular',
-    'vendor/angular-route/angular-route',
-    'vendor/restangular/dist/restangular',
+    'vendor/angular/angular.min',
+    'vendor/angular-route/angular-route.min',
+    'vendor/restangular/dist/restangular.min',
     'vendor/simplemde/dist/simplemde.min',
     'public/app.min'
 ]);
