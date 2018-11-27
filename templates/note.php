@@ -1,7 +1,7 @@
 	<textarea editor notes-timeout-change="onEdit()" name="editor" ng-if="note!==false"></textarea>
 	<div class="note-meta" ng-if="note!==false">
 		<span class="note-category" ng-class="{ uncategorized: !note.category }" title="<?php p($l->t('Category')); ?>" ng-show="!editCategory" ng-click="showEditCategory()">{{ note.category || '<?php p($l->t('Uncategorized')) ?>' | categoryTitle}} <input type="button" class="edit icon icon-rename" title="<?php p($l->t('Edit category')); ?>"></span>
-		<span class="note-category" title="<?php p($l->t('Edit category')); ?>" ng-show="editCategory"><form class="category" ng-submit="closeCategory()"><input type="text" id="category" name="category" ng-blur="closeCategory()" placeholder="<?php p($l->t('Uncategorized')); ?>"><input type="submit" class="icon-confirm" value=""></form></span>
+		<span class="note-category" title="<?php p($l->t('Edit category')); ?>" ng-show="editCategory"><form class="category" ng-submit="saveCategory()"><input type="text" id="category" name="category" ng-disabled="isCategorySaving" ng-blur="saveCategory()" placeholder="<?php p($l->t('Uncategorized')); ?>" ng-class="{ 'icon-loading': isCategorySaving }"><input type="submit" class="icon-confirm" value="" ng-show="!isCategorySaving"><span class="icon icon-loading-small" ng-show="isCategorySaving"></span></form></span>
 		<span class="note-word-count" ng-show="note.content.length > 0">{{note.content | wordCount}}</span>
 		<span class="note-unsaved" ng-show="note.unsaved" title="<?php p($l->t('The note has unsaved changes.')); ?>">*</span>
 		<span class="note-error" ng-show="note.error" ng-click="manualSave()" title="<?php p($l->t('Click here to try again')); ?>"><?php p($l->t('Saving failed!')); ?></span>

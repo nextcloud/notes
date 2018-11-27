@@ -204,8 +204,15 @@
     cursor: pointer;
 }
 
+#app-content .note-meta .note-category .icon-loading-small {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 5px;
+}
+
 #app-content .note-meta .edit {
     opacity: 0.5;
+    vertical-align: middle;
 }
 #app-content .note-meta:hover .note-category,
 #app-content .note-meta:hover .edit {

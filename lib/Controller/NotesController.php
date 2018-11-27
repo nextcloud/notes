@@ -106,6 +106,21 @@ class NotesController extends Controller {
     }
 
 
+
+    /**
+     * @NoAdminRequired
+     *
+     * @param int $id
+     * @param string $category
+     * @return DataResponse
+     */
+    public function category($id, $category) {
+        return $this->respond(function () use ($id, $category) {
+            return $this->notesService->update($id, null, $this->userId, $category);
+        });
+    }
+
+
     /**
      * @NoAdminRequired
      *
