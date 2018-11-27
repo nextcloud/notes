@@ -79,15 +79,38 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
                 $('#category').autocomplete('search', '');
         });
     };
-    $scope.closeCategory = function() {
-        $scope.editCategory = false;
+    $scope.saveCategory = function () {
         var category = $('#category').val();
-        if($scope.note.category !== category) {
-            $scope.note.category = category;
-            $scope.note.unsaved = true;
-            $scope.autoSave($scope.note);
+        if($scope.note.category === category) {
+            $scope.editCategory = false;
+            return;
         }
+        $scope.isCategorySaving = true;
+        $scope.note.customPUT({category: category}, 'category', {}, {})
+        .then(
+            function (updatedNote) {
+                $scope.note.category = updatedNote.category;
+                if(category !== updatedNote.category) {
+                    OC.Notification.showTemporary(
+                        t('notes', 'Updating the note\'s category has failed.'+
+                                   ' Is the target directory writable?')
+                    );
+                }
+            },
+            function () {
+                OC.Notification.showTemporary(
+                    t('notes', 'Updating the note\'s category has failed.')
+                );
+            }
+        )
+        .finally(
+            function () {
+                $scope.isCategorySaving = false;
+                $scope.editCategory = false;
+            }
+        );
     };
+
 
     $document.unbind('keypress.notes.save');
     $document.bind('keypress.notes.save', function(event) {

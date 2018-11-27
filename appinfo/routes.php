@@ -18,6 +18,7 @@ return ['routes' => [
     ['name' => 'notes#get', 'url' => '/notes/{id}', 'verb' => 'GET'],
     ['name' => 'notes#create', 'url' => '/notes', 'verb' => 'POST'],
     ['name' => 'notes#update', 'url' => '/notes/{id}', 'verb' => 'PUT'],
+    ['name' => 'notes#category', 'url' => '/notes/{id}/category', 'verb' => 'PUT'],
     ['name' => 'notes#favorite', 'url' => '/notes/{id}/favorite', 'verb' => 'PUT'],
     ['name' => 'notes#destroy', 'url' => '/notes/{id}', 'verb' => 'DELETE'],
 

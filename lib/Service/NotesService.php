@@ -158,7 +158,7 @@ class NotesService {
     public function update ($id, $content, $userId, $category=null, $mtime=0) {
         $notesFolder = $this->getFolderForUser($userId);
         $file = $this->getFileById($notesFolder, $id);
-        $title = $this->getSafeTitleFromContent($content);
+        $title = $this->getSafeTitleFromContent( $content===null ? $file->getContent() : $content );
 
 
         // rename/move file with respect to title/category
@@ -199,7 +199,9 @@ class NotesService {
             $this->logger->error('Moving note '.$id.' ('.$title.') to the desired target has failed with a '.get_class($e).': '.$e->getMessage(), ['app' => $this->appName]);
         }
 
-        $file->putContent($content);
+        if($content !== null) {
+            $file->putContent($content);
+        }
 
         if($mtime) {
             $file->touch($mtime);
