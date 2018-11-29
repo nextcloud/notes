@@ -96,6 +96,11 @@
     padding-top: 2ex;
 }
 
+#app-settings-content form,
+#app-content .note-meta > .note-category > form {
+    display: inline-flex;
+}
+
 /* old style search (before NC14) */
 .note-search span {
     background-position: 0 center;
@@ -195,11 +200,6 @@
     display: inline;
 }
 
-#app-content .note-meta .edit {
-    background-color: transparent;
-    border: none;
-}
-
 #app-content .note-meta .note-category {
     cursor: pointer;
 }
@@ -211,6 +211,8 @@
 }
 
 #app-content .note-meta .edit {
+    background-color: transparent;
+    border: none;
     opacity: 0.5;
     vertical-align: middle;
 }

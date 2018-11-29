@@ -159,7 +159,7 @@ style('notes', [
             <div id="app-settings-content">
             <div class="settings-notesPath">
                 <p class="settings-hint"><label for="notesPath"><?php p($l->t('Folder to store your notes')) ?></label></p>
-                <input type="text" name="notesPath" ng-model="settings.notesPath" placeholder="<?php p($l->t('path to notes')); ?>" id="notesPath" style="width:80%"/><input type="submit" class="icon-confirm" value="">
+                <form><input type="text" name="notesPath" ng-model="settings.notesPath" placeholder="<?php p($l->t('path to notes')); ?>" id="notesPath"/><input type="submit" class="icon-confirm" value=""></form>
             </div>
             <div class="settings-fileSuffix">
                 <p class="settings-hint"><label for="fileSuffix"><?php p($l->t('File extension for new notes')) ?></label></p>
