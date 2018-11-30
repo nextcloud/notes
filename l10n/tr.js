@@ -3,10 +3,10 @@ OC.L10N.register(
     {
     "Notes" : "Notlar",
     "New note" : "Not ekle",
+    "Updating the note's category has failed. Is the target directory writable?" : "Not kategorisi güncellenemedi. Hedef klasör yazılabilir durumda mı?",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Kaydedilmemiş notlar var. Sayfadan ayrılırsanız tüm değişiklikler silinecek!",
     "Please wait while new settings are applied…" : "Lütfen yeni ayarlar uygulanırken bekleyin…",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
-    "Updating the note's category has failed. Is the target directory writable?" : "Not kategorisi güncellenemedi. Hedef klasör yazılabilir durumda mı?",
     "The last viewed note cannot be accessed. " : "Son görüntülenen nota erişilemedi.",
     "The notes folder is not accessible: %s" : "Notlar klasörüne erişilemiyor: %s",
     "File error" : "Dosya hatası",

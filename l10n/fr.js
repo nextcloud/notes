@@ -3,10 +3,10 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "New note" : "Nouvelle note",
+    "Updating the note's category has failed. Is the target directory writable?" : "Impossible de mettre à jour la catégorie de la note. Vérifiez que vous avez le droit d'écriture dans ce dossier.",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Il y a des notes non sauvegardées. Quitter la page perdra toutes les modifications !",
     "Please wait while new settings are applied…" : "Veuillez patienter que les nouveaux paramètres soient appliqués…",
     "_%n word_::_%n words_" : ["%n mot","%n mots"],
-    "Updating the note's category has failed. Is the target directory writable?" : "Impossible de mettre à jour la catégorie de la note. Vérifiez que vous avez le droit d'écriture dans ce dossier.",
     "The last viewed note cannot be accessed. " : "La dernière note affichée n'est pas accessible.",
     "The notes folder is not accessible: %s" : "Le dossier des notes n'est pas accessible : %s",
     "File error" : "Erreur de fichier",

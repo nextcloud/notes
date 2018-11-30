@@ -1,10 +1,10 @@
 { "translations": {
     "Notes" : "Notizen",
     "New note" : "Neue Notiz",
+    "Updating the note's category has failed. Is the target directory writable?" : "Aktualisierung der Notizen-Kategorie ist gescheitert. Bestehen Schreibrechte für das Zielverzeichnis?",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Es existieren nicht gespeicherte Notizen. Beim Verlassen der Seite gehen alle Änderungen verloren!",
     "Please wait while new settings are applied…" : "Bitte warten, die neuen Einstellungen werden angewendet…",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
-    "Updating the note's category has failed. Is the target directory writable?" : "Aktualisierung der Notizen-Kategorie ist gescheitert. Bestehen Schreibrechte für das Zielverzeichnis?",
     "The last viewed note cannot be accessed. " : "Auf die zuletzt betrachtete Notiz kann nicht zugegriffen werden.",
     "The notes folder is not accessible: %s" : "Auf den Notiz-Ordner kann nicht zugegriffen werden: %s",
     "File error" : "Dateifehler",
