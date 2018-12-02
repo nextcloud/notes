@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Note",
     "New note" : "Nuova nota",
     "Updating the note's category has failed. Is the target directory writable?" : "L'aggiornamento della categoria delle note non è riuscito. La cartella di destinazione è scrivibile?",
+    "Updating the note's category has failed." : "L'aggiornamento della categoria della nota non è riuscito.",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Ci sono note non salvate. Uscita. Se lasci la pagina perderai tutte le modifiche!",
     "Please wait while new settings are applied…" : "Attendi l'applicazione delle nuove impostazioni…",
     "_%n word_::_%n words_" : ["%n parola","%n parole"],

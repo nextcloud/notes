@@ -2,6 +2,7 @@
     "Notes" : "Notas",
     "New note" : "Nueva nota",
     "Updating the note's category has failed. Is the target directory writable?" : "Fallo al actualizar la categoría de la nota. ¿El directorio destino es escribible?",
+    "Updating the note's category has failed." : "Fallo al actualizar la categoría de la nota.",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin guardar. ¡Abandonar la página descartará los cambios!",
     "Please wait while new settings are applied…" : "Por favor, espera mientras se aplica la nueva configuración…",
     "_%n word_::_%n words_" : ["%n palabra","%n palabras"],
