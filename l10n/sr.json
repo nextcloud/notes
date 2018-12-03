@@ -2,6 +2,7 @@
     "Notes" : "Белешке",
     "New note" : "Нова белешка",
     "Updating the note's category has failed. Is the target directory writable?" : "Неуспешно ажурирање категорије белешке. Да ли у одредишни директоријум може да се пише?",
+    "Updating the note's category has failed." : "Ажурирање категорије белешке није успело.",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Има несачуваних белешки. Напуштањем стране ћете поништити све измене!",
     "Please wait while new settings are applied…" : "Сачекајте док се примене нове поставке…",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
