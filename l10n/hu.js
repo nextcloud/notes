@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Jegyzetek",
     "New note" : "Új jegyzet",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Mentetlen jegyzetek vannak. Az oldal elhagyásával a változások elvesznek!",
+    "Please wait while new settings are applied…" : "Kérlek várj, míg az új beállítások érvénybe lépnek...",
     "_%n word_::_%n words_" : ["%n szó","%n szó"],
     "The last viewed note cannot be accessed. " : "Az utoljára megtekintett jegyzet nem elérhető.",
     "File error" : "Fájlhiba",
