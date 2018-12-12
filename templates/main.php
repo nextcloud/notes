@@ -23,7 +23,7 @@ style('notes', [
 ?>
 
 <div id="app" ng-app="Notes" ng-controller="AppController"
-    ng-init="init('<?= $_['lastViewedNote'] ?>','<?= $_['errorMessage'] ?>', <?= $_['useSearchAPI'] ?>)" ng-cloak>
+    ng-init="init('<?= $_['lastViewedNote'] ?>','<?= $_['errorMessage'] ?>')" ng-cloak>
 
     <script type="text/ng-template" id="note.html">
         <?php print_unescaped($this->inc('note')); ?>
@@ -41,15 +41,6 @@ style('notes', [
         </div>
 
         <ul class="with-icon">
-
-	    <!-- old style search (before NC 14) -->
-<?php if(!$_['useSearchAPI']) { ?>
-            <li class="note-search">
-                <span class="nav-entry icon-search">
-                    <input type="text" ng-model="search" />
-                </span>
-            </li>
-<?php } ?>
 
             <!-- category selector -->
             <li class="collapsible app-navigation-noclose separator-below" ng-class="{ open: folderSelectorOpen, 'current-category-item': !folderSelectorOpen && filterCategory!=null }" ng-show="notes.length>1">
