@@ -80,15 +80,12 @@ class PageController extends Controller {
             $errorMessage = $this->l10n->t('The notes folder is not accessible: %s', $e->getMessage());
         }
 
-        $useSearchAPI = \OCP\Util::getVersion()[0] >= 14;
-
         $response = new TemplateResponse(
             $this->appName,
             'main',
             [
                  'lastViewedNote' => $lastViewedNote,
                  'errorMessage' => $errorMessage,
-                 'useSearchAPI' => $useSearchAPI ? 1 : 0
             ]
         );
 

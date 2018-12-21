@@ -15,11 +15,6 @@
 #app-navigation > ul > li.has-error a{
     color: var(--color-error);
 }
-.app-content-list-button {
-	display: block;
-	margin: 10px auto;
-	padding: 10px;
-}
 
 #app-navigation li .nav-entry {
 	display: block;
@@ -56,22 +51,6 @@
 }
 
 
-/* new button from Nextcloud 14 -- can be removed if min-version is at least 14 */
-#app-navigation .app-navigation-new {
-	display: block;
-	padding: 10px;
-}
-#app-navigation .app-navigation-new button {
-	display: inline-block;
-	width: 100%;
-	padding: 10px;
-	padding-left: 34px;
-	background-position: 10px center;
-	text-align: left;
-	margin: 0;
-}
-
-
 /* only display the delete button when the note is active */
 #app-navigation .app-navigation-entry-utils-menu-button {
     display: none;
@@ -99,26 +78,6 @@
 #app-settings-content form,
 #app-content .note-meta > .note-category > form {
     display: inline-flex;
-}
-
-/* old style search (before NC14) */
-.note-search span {
-    background-position: 0 center;
-    background-origin: content-box;
-}
-
-.note-search input {
-    width: 100%;
-    padding-left: 20px;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-}
-
-.note-search input:active,
-.note-search input:focus,
-.note-search input:hover {
-    border-bottom: 1px solid grey;
 }
 
 .tooltip {

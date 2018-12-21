@@ -10,7 +10,7 @@ app.controller('AppController', function ($scope, $location, is) {
 
     $scope.is = is;
 
-    $scope.init = function (lastViewedNote, errorMessage, useSearchAPI) {
+    $scope.init = function (lastViewedNote, errorMessage) {
         $scope.defaultTitle = document.title;
 
         if(lastViewedNote !== 0 && $location.path()==='') {
@@ -19,9 +19,7 @@ app.controller('AppController', function ($scope, $location, is) {
         if(errorMessage) {
             OC.Notification.showTemporary(errorMessage);
         }
-        if(useSearchAPI) {
-            $scope.initSearch();
-        }
+        $scope.initSearch();
     };
 
     $scope.search = '';
