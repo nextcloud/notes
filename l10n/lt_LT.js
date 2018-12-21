@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "There are unsaved notes. Leaving the page will discard all changes!" : "Yra neįrašytų užrašų. Išėjus iš šio puslapio, visi pakeitimai bus atmesti!",
+    "Please wait while new settings are applied…" : "Palaukite, kol yra taikomi nauji nustatymai…",
     "File error" : "Failo klaida",
     "Encryption Error" : "Šifravimo klaida",
     "Error" : "Klaida",
