@@ -8,6 +8,8 @@ OC.L10N.register(
     "No notes found" : "Ez da oharrik aurkitu",
     "Delete note" : "Ezabatu oharra",
     "Favorite" : "Gogokoa",
+    "Settings" : "Ezarpenak",
+    "path to notes" : "oharretara bidea",
     "The note has unsaved changes." : "Oharrak gorde gabeko aldaketak ditu.",
     "Click here to try again" : "Klik egin berriz saiatzeko",
     "Saving failed!" : "Gordetzean errorea!",
