@@ -13,6 +13,7 @@ OC.L10N.register(
     "Uncategorized" : "Kategorizálatlan",
     "Categories" : "Kategóriák",
     "All notes" : "Összes jegyzet",
+    "No search result for {{search}} in {{SelectedCategory}}" : "Nincs keresési eredménye a {{search}} itt: {{SelectedCategory}}",
     "No notes found" : "Nincsenek jegyzetek",
     "Delete note" : "Jegyzet törlése",
     "Favorite" : "Kedvenc",

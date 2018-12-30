@@ -20,7 +20,7 @@ OC.L10N.register(
     "Search result for \"{{search}}\"" : "Резултати от търсенето за \"{{search}}\"",
     "No search result for {{search}} in {{SelectedCategory}}" : "Няма резултати от търсенето за {{search}}, в {{SelectedCategory}}",
     "No search result for {{search}}" : "Няма резултати от търсенето за {{search}}",
-    "No notes found" : "Няма открити бележки",
+    "No notes found" : "Не са открити бележки",
     "Delete note" : "Изтрий бележката",
     "Favorite" : "Любимa",
     "Settings" : "Настройки",
