@@ -1,4 +1,0 @@
-node_modules/
-*.log
-test-results.xml
-vendor/**/test

@@ -7,6 +7,10 @@ addons:
     packages:
     - libxml2-utils
 
+cache:
+  directories:
+    - node_modules
+
 env:
   global:
     - CORE_BRANCH=master
@@ -44,24 +48,7 @@ script:
   # - phpunit --coverage-clover clover.xml -c phpunit.xml
   # - phpunit -c phpunit.integration.xml
 
-  # execute js tests
-  - cd js
-  - npm install
-  - npm install -g gulp
-  #- gulp test
-  - gulp
-
-  # Create coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover clover.xml; fi"
-
-#matrix:
-#  include:
-#    - php: 7.1
-#      env: DB=mysql
-#    - php: 7.0
-#      env: "DB=mysql CORE_BRANCH=stable9.1"
-#    - php: 5.6
-#      env: "DB=sqlite CORE_BRANCH=stable9"
-#  fast_finish: true
+  # build js
+  - npm run lint
+  - npm run build
 
