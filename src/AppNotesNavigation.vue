@@ -27,9 +27,16 @@ export default {
 		menu() {
 			var items = [];
 
+			var notes = this.notes;
 			var categories = store.getters.getCategories(1, true);
-			// TODO sort categories
 			var categoryItems = [];
+			categoryItems.push({
+				text: t('notes', 'All notes'),
+				icon: 'nav-icon-recent',
+				utils: {
+					counter: notes.length,
+				},
+			});
 			for(var i=0; i<categories.length; i++) {
 				var category = categories[i];
 				var item = {
@@ -51,7 +58,6 @@ export default {
 			};
 			items.push(categoryItem);
 
-			var notes = this.notes;
 			for(var i=0; i<notes.length; i++) {
 				var item = { text: notes[i].title };
 				items.push(item);

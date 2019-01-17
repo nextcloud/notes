@@ -55,7 +55,11 @@ export default new Vuex.Store({
 					result.push(category);
 				}
 			}
-			if(!details) {
+			if(details) {
+				result.sort(function (a, b) {
+					return (a.name).localeCompare(b.name);
+				})
+			} else {
 				result.sort();
 			}
 			return result;
