@@ -1,6 +1,6 @@
 <template>
 	<div id="content" class="app-notes">
-		<app-notes-navigation></app-notes-navigation>
+		<app-notes-navigation />
 		<div id="app-content">
 			Hier kommt der Inhalt hin ...
 		</div>
@@ -22,10 +22,8 @@ export default {
 	},
 	computed: {
 	},
-	filters: {
-	},
 	created() {
-		NotesService.fetchNotes();
+		NotesService.fetchNotes()
 	},
 	methods: {
 

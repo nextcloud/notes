@@ -3,18 +3,16 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 function nthIndexOf(str, pattern, n) {
-	var i = -1;
+	var i = -1
 	while (n-- && i++ < str.length) {
-		i = str.indexOf(pattern, i);
+		i = str.indexOf(pattern, i)
 		if (i < 0) {
-			break;
+			break
 		}
 	}
-	return i;
+	return i
 }
-
 
 export default new Vuex.Store({
 	state: {
@@ -28,42 +26,41 @@ export default new Vuex.Store({
 	},
 	getters: {
 		getCategories: (state) => (maxLevel, details) => {
-			var categories = {};
-			var notes = state.notes;
-			for(var i=0; i<notes.length; i+=1) {
-				var cat = notes[i].category;
-				if(maxLevel>0) {
-					var index = nthIndexOf(cat, '/', maxLevel);
-					if(index>0) {
-						cat = cat.substring(0, index);
+			var categories = {}
+			var notes = state.notes
+			for (var i = 0; i < notes.length; i += 1) {
+				var cat = notes[i].category
+				if (maxLevel > 0) {
+					var index = nthIndexOf(cat, '/', maxLevel)
+					if (index > 0) {
+						cat = cat.substring(0, index)
 					}
 				}
-				if(categories[cat]===undefined) {
-					categories[cat] = 1;
+				if (categories[cat] === undefined) {
+					categories[cat] = 1
 				} else {
-					categories[cat] += 1;
+					categories[cat] += 1
 				}
 			}
-			var result = [];
-			for(var category in categories) {
-				if(details) {
+			var result = []
+			for (var category in categories) {
+				if (details) {
 					result.push({
 						name: category,
 						count: categories[category],
-					});
-				} else if(category) {
-					result.push(category);
+					})
+				} else if (category) {
+					result.push(category)
 				}
 			}
-			if(details) {
-				result.sort(function (a, b) {
-					return (a.name).localeCompare(b.name);
+			if (details) {
+				result.sort(function(a, b) {
+					return (a.name).localeCompare(b.name)
 				})
 			} else {
-				result.sort();
+				result.sort()
 			}
-			return result;
+			return result
 		},
 	},
 })
-

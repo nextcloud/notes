@@ -1,14 +1,15 @@
 <template>
 	<div id="app-navigation">
 		<app-navigation :menu="menu">
-			<template slot="settings-content">Example settings</template>
+			<template slot="settings-content">
+				Example settings
+			</template>
 		</app-navigation>
 	</div>
 </template>
 
 <script>
 import { AppNavigation } from 'nextcloud-vue'
-import NotesService from './NotesService'
 import store from './store'
 
 export default {
@@ -24,43 +25,48 @@ export default {
 		notes() {
 			return store.state.notes
 		},
-		menu() {
-			var items = [];
-
-			var notes = this.notes;
-			var categories = store.getters.getCategories(1, true);
-			var categoryItems = [];
+		categories() {
+			return store.getters.getCategories(1, true)
+		},
+		categoryItems() {
+			var categories = this.categories
+			var categoryItems = []
 			categoryItems.push({
 				text: t('notes', 'All notes'),
 				icon: 'nav-icon-recent',
 				utils: {
-					counter: notes.length,
+					counter: this.notes.length,
 				},
-			});
-			for(var i=0; i<categories.length; i++) {
-				var category = categories[i];
+			})
+			for (var i = 0; i < categories.length; i++) {
+				var category = categories[i]
 				var item = {
-					text: category.name=='' ? t('notes', 'Uncategorized') : category.name,
-					icon: category.name=='' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
+					text: category.name === '' ? t('notes', 'Uncategorized') : category.name,
+					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
 					utils: {
 						counter: category.count,
 					},
 				}
-				categoryItems.push(item);
+				categoryItems.push(item)
 			}
+			return categoryItems
+		},
+		menu() {
+			var items = []
 
+			var notes = this.notes
 			var categoryItem = {
 				text: t('notes', 'Categories'), // TODO set to category, if chosen
 				icon: 'nav-icon-files',
 				collapsible: true,
 				classes: 'app-navigation-noclose separator-below',
-				children: categoryItems,
-			};
-			items.push(categoryItem);
+				children: this.categoryItems,
+			}
+			items.push(categoryItem)
 
-			for(var i=0; i<notes.length; i++) {
-				var item = { text: notes[i].title };
-				items.push(item);
+			for (var i = 0; i < notes.length; i++) {
+				var item = { text: notes[i].title }
+				items.push(item)
 			}
 
 			return {
@@ -74,8 +80,6 @@ export default {
 				loading: false
 			}
 		},
-	},
-	filters: {
 	},
 	methods: {
 		newNote() {

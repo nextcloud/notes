@@ -9,11 +9,9 @@ Vue.prototype.n = n
 Vue.prototype.OC = OC
 Vue.prototype.OCA = OCA
 
-
 // TODO Disable on production
 Vue.config.devTools = true
 Vue.config.performance = true
-
 
 /* eslint-disable-next-line no-new */
 new Vue({

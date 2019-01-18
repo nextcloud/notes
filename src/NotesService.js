@@ -11,13 +11,13 @@ export default {
 			.get(this.url('/notes'))
 			.then(response => {
 				var notes = response.data
-				console.log(notes); // TODO remove log
-				store.commit('updateNotes', notes);
+				console.debug(notes) // TODO remove log
+				store.commit('updateNotes', notes)
 			})
 			.catch(err => {
-				console.log(err);
+				console.error(err)
 				// TODO error handling
-			});
+			})
 	},
 
 }
