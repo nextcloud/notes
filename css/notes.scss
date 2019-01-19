@@ -12,6 +12,10 @@
 	height: 100%;
 }
 
+#app-navigation li.collapsible.category-header:not(.open) a {
+	font-weight: bold;
+}
+
 #app-navigation > ul > li.has-error a{
     color: var(--color-error);
 }

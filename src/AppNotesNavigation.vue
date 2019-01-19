@@ -1,11 +1,9 @@
 <template>
-	<div id="app-navigation">
-		<app-navigation :menu="menu">
-			<template slot="settings-content">
-				Example settings
-			</template>
-		</app-navigation>
-	</div>
+	<app-navigation :menu="menu">
+		<template slot="settings-content">
+			Example settings
+		</template>
+	</app-navigation>
 </template>
 
 <script>
@@ -19,6 +17,9 @@ export default {
 	},
 	data: function() {
 		return {
+			filter: {
+				category: null,
+			},
 		}
 	},
 	computed: {
@@ -34,6 +35,7 @@ export default {
 			categoryItems.push({
 				text: t('notes', 'All notes'),
 				icon: 'nav-icon-recent',
+				action: this.selectCategory.bind(this, null),
 				utils: {
 					counter: this.notes.length,
 				},
@@ -41,8 +43,9 @@ export default {
 			for (var i = 0; i < categories.length; i++) {
 				var category = categories[i]
 				var item = {
-					text: category.name === '' ? t('notes', 'Uncategorized') : category.name,
+					text: this.categoryLabel(category.name),
 					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
+					action: this.selectCategory.bind(this, category.name),
 					utils: {
 						counter: category.count,
 					},
@@ -51,23 +54,27 @@ export default {
 			}
 			return categoryItems
 		},
+		noteItems() {
+			var items = []
+			for (var i = 0; i < this.notes.length; i++) {
+				var item = { text: this.notes[i].title }
+				items.push(item)
+			}
+			return items
+		},
 		menu() {
 			var items = []
 
-			var notes = this.notes
 			var categoryItem = {
-				text: t('notes', 'Categories'), // TODO set to category, if chosen
+				text: this.filter.category === null ? t('notes', 'Categories') : this.categoryLabel(this.filter.category),
 				icon: 'nav-icon-files',
 				collapsible: true,
-				classes: 'app-navigation-noclose separator-below',
+				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
 				children: this.categoryItems,
 			}
 			items.push(categoryItem)
 
-			for (var i = 0; i < notes.length; i++) {
-				var item = { text: notes[i].title }
-				items.push(item)
-			}
+			items.push.apply(items, this.noteItems)
 
 			return {
 				new: {
@@ -85,6 +92,12 @@ export default {
 		newNote() {
 			// TODO create new note
 		},
+		selectCategory(category) {
+			this.filter.category = category
+		},
+		categoryLabel(category) {
+			return category === '' ? t('notes', 'Uncategorized') : category
+		}
 	},
 }
 </script>
