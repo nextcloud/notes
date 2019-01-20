@@ -7,7 +7,10 @@
 				@click="onNewNote"
 			/>
 			<ul>
-				<AppNavigationItem v-for="item in menu"
+				<AppNavigationItem
+					:item="categoryItem"
+				/>
+				<AppNavigationItem v-for="item in noteItems"
 					:key="item.key"
 					:item="item"
 				/>
@@ -79,6 +82,15 @@ export default {
 			}
 			return categoryItems
 		},
+		categoryItem() {
+			return {
+				text: this.filter.category === null ? t('notes', 'Categories') : this.categoryLabel(this.filter.category),
+				icon: 'nav-icon-files',
+				collapsible: true,
+				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
+				children: this.categoryItems,
+			}
+		},
 		noteItems() {
 			var items = []
 			for (var i = 0; i < this.notes.length; i++) {
@@ -86,22 +98,6 @@ export default {
 				items.push(item)
 			}
 			return items
-		},
-		menu() {
-			var items = []
-
-			var categoryItem = {
-				text: this.filter.category === null ? t('notes', 'Categories') : this.categoryLabel(this.filter.category),
-				icon: 'nav-icon-files',
-				collapsible: true,
-				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
-				children: this.categoryItems,
-			}
-			items.push(categoryItem)
-
-			items.push.apply(items, this.noteItems)
-
-			return items 
 		},
 	},
 	created() {
