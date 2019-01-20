@@ -2,8 +2,8 @@
 	<AppContent app-name="notes">
 		<template slot="navigation">
 			<AppNavigationNew :text="t('notes', 'New note')"
-				buttonId="notes_new_note"
-				buttonClass="icon-add"
+				button-id="notes_new_note"
+				button-class="icon-add"
 				@click="onNewNote"
 			/>
 			<ul>
@@ -94,7 +94,11 @@ export default {
 		noteItems() {
 			var items = []
 			for (var i = 0; i < this.notes.length; i++) {
-				var item = { text: this.notes[i].title }
+				let note = this.notes[i]
+				if (this.filter.category !== null && this.filter.category !== note.category) {
+					continue
+				}
+				let item = { text: note.title }
 				items.push(item)
 			}
 			return items
