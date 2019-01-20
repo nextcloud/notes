@@ -10,7 +10,7 @@ export default {
 		axios
 			.get(this.url('/notes'))
 			.then(response => {
-				var notes = response.data
+				let notes = response.data
 				console.debug(notes) // TODO remove log
 				store.commit('updateNotes', notes)
 			})

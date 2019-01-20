@@ -58,8 +58,8 @@ export default {
 			return store.getters.getCategories(1, true)
 		},
 		categoryItems() {
-			var categories = this.categories
-			var categoryItems = []
+			let categories = this.categories
+			let categoryItems = []
 			categoryItems.push({
 				text: t('notes', 'All notes'),
 				icon: 'nav-icon-recent',
@@ -68,9 +68,9 @@ export default {
 					counter: this.notes.length,
 				},
 			})
-			for (var i = 0; i < categories.length; i++) {
-				var category = categories[i]
-				var item = {
+			for (let i = 0; i < categories.length; i++) {
+				let category = categories[i]
+				let item = {
 					text: this.categoryLabel(category.name),
 					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
 					action: this.selectCategory.bind(this, category.name),
@@ -92,8 +92,8 @@ export default {
 			}
 		},
 		noteItems() {
-			var items = []
-			for (var i = 0; i < this.notes.length; i++) {
+			let items = []
+			for (let i = 0; i < this.notes.length; i++) {
 				let note = this.notes[i]
 				if (this.filter.category !== null && this.filter.category !== note.category) {
 					continue

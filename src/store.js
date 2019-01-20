@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 function nthIndexOf(str, pattern, n) {
-	var i = -1
+	let i = -1
 	while (n-- && i++ < str.length) {
 		i = str.indexOf(pattern, i)
 		if (i < 0) {
@@ -26,12 +26,12 @@ export default new Vuex.Store({
 	},
 	getters: {
 		getCategories: (state) => (maxLevel, details) => {
-			var categories = {}
-			var notes = state.notes
-			for (var i = 0; i < notes.length; i += 1) {
-				var cat = notes[i].category
+			let categories = {}
+			let notes = state.notes
+			for (let i = 0; i < notes.length; i += 1) {
+				let cat = notes[i].category
 				if (maxLevel > 0) {
-					var index = nthIndexOf(cat, '/', maxLevel)
+					let index = nthIndexOf(cat, '/', maxLevel)
 					if (index > 0) {
 						cat = cat.substring(0, index)
 					}
@@ -42,8 +42,8 @@ export default new Vuex.Store({
 					categories[cat] += 1
 				}
 			}
-			var result = []
-			for (var category in categories) {
+			let result = []
+			for (let category in categories) {
 				if (details) {
 					result.push({
 						name: category,
