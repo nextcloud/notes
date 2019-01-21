@@ -56,6 +56,9 @@ dev-setup: clean clean-dev npm-init
 npm-init:
 	npm install
 
+npm-upgrade:
+	npm-upgrade
+
 npm-update:
 	npm update
 
