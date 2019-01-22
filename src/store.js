@@ -16,12 +16,14 @@ function nthIndexOf(str, pattern, n) {
 
 export default new Vuex.Store({
 	state: {
-		notes: []
+		notes: [],
+		loaded: false,
 	},
 	mutations: {
 		updateNotes(state, notes) {
 			state.notes.length = 0
 			state.notes.push.apply(state.notes, notes)
+			state.loaded = true
 		},
 	},
 	getters: {
