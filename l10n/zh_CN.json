@@ -1,6 +1,8 @@
 { "translations": {
     "Notes" : "笔记",
     "New note" : "新建笔记",
+    "Updating the note's category has failed. Is the target directory writable?" : "无法更新存储笔记的文件夹。请检查目标文件夹是否可写。",
+    "Updating the note's category has failed." : "无法更新存储笔记的文件夹。",
     "There are unsaved notes. Leaving the page will discard all changes!" : "有未保存的记录，离开页面将丢弃所有更改！",
     "_%n word_::_%n words_" : ["%n 个字"],
     "File error" : "文件错误",
