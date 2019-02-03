@@ -1,13 +1,16 @@
 <template>
 	<AppContent app-name="notes">
 		<template slot="navigation">
-			<AppNavigationNew :text="t('notes', 'New note')"
+			<AppNavigationNew
+				v-if="!loading"
+				:text="t('notes', 'New note')"
 				button-id="notes_new_note"
 				button-class="icon-add"
 				@click="onNewNote"
 			/>
-			<ul>
+			<ul v-if="!loading">
 				<AppNavigationItem
+					v-if="notes.length"
 					:item="categoryItem"
 				/>
 
@@ -24,7 +27,7 @@
 				</li>
 
 				<!-- nothing found -->
-				<li v-if="notesLoaded && !noteItems.length">
+				<li v-if="!noteItems.length">
 					<span v-if="filter.search" class="nav-entry">
 						<div id="emptycontent" class="emptycontent-search">
 							<div class="icon-search" />
@@ -36,9 +39,6 @@
 							</h2>
 						</div>
 					</span>
-					<span v-if="!filter.search" class="nav-entry">
-						{{ t('notes', 'No notes found') }}
-					</span>
 				</li>
 
 				<AppNavigationItem v-for="item in noteItems"
@@ -46,12 +46,12 @@
 					:item="item"
 				/>
 			</ul>
-			<AppNavigationSettings :title="t('notes', 'Settings')">
+			<AppNavigationSettings v-if="!loading" :title="t('notes', 'Settings')">
 				TODO: settings
 			</AppNavigationSettings>
 		</template>
 		<template slot="content">
-			TODO: content
+			<RouterView />
 		</template>
 	</AppContent>
 </template>
@@ -89,8 +89,8 @@ export default {
 		notes() {
 			return store.state.notes
 		},
-		notesLoaded() {
-			return store.state.loaded
+		loading() {
+			return store.state.loading
 		},
 		categories() {
 			return store.getters.getCategories(1, true)
@@ -151,7 +151,15 @@ export default {
 						continue
 					}
 				}
-				let item = { text: note.title }
+				let item = {
+					text: note.title,
+					router: {
+						name: 'note',
+						params: {
+							noteId: note.id,
+						}
+					},
+				}
 				items.push(item)
 			}
 			return items

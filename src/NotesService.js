@@ -19,5 +19,8 @@ export default {
 				// TODO error handling
 			})
 	},
+	fetchNote(noteId) {
+		return axios.get(this.url('/notes/' + noteId))
+	},
 
 }

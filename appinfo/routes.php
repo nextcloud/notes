@@ -12,6 +12,8 @@
 return ['routes' => [
     // page
     ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+    ['name' => 'page#index', 'url' => '/welcome', 'verb' => 'GET', 'postfix' => 'welcome'],
+    ['name' => 'page#index', 'url' => '/note/{id}', 'verb' => 'GET', 'postfix' => 'note'],
 
     // notes
     ['name' => 'notes#index', 'url' => '/notes', 'verb' => 'GET'],
