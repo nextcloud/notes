@@ -12,6 +12,7 @@ OC.L10N.register(
     "No notes found" : "Ingen noter fundet",
     "Delete note" : "Slet note",
     "Favorite" : "Foretrukken",
+    "Settings" : "Indstillinger",
     "The note has unsaved changes." : "Noten har ikke gemte ændringer.",
     "Click here to try again" : "Klik her for at prøve igen",
     "Saving failed!" : "Kunne ikke gemme!",
