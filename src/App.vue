@@ -1,7 +1,7 @@
 <template>
-	<AppContent app-name="notes">
+	<app-content app-name="notes">
 		<template slot="navigation">
-			<AppNavigationNew
+			<app-navigation-new
 				v-if="!loading"
 				:text="t('notes', 'New note')"
 				button-id="notes_new_note"
@@ -9,7 +9,7 @@
 				@click="onNewNote"
 			/>
 			<ul v-if="!loading">
-				<AppNavigationItem
+				<app-navigation-item
 					v-if="notes.length"
 					:item="categoryItem"
 				/>
@@ -41,19 +41,19 @@
 					</span>
 				</li>
 
-				<AppNavigationItem v-for="item in noteItems"
+				<app-navigation-item v-for="item in noteItems"
 					:key="item.key"
 					:item="item"
 				/>
 			</ul>
-			<AppNavigationSettings v-if="!loading" :title="t('notes', 'Settings')">
+			<app-navigation-settings v-if="!loading" :title="t('notes', 'Settings')">
 				TODO: settings
-			</AppNavigationSettings>
+			</app-navigation-settings>
 		</template>
 		<template slot="content">
-			<RouterView />
+			<router-view />
 		</template>
-	</AppContent>
+	</app-content>
 </template>
 
 <script>
@@ -157,7 +157,7 @@ export default {
 						name: 'note',
 						params: {
 							noteId: note.id,
-						}
+						},
 					},
 				}
 				items.push(item)
@@ -200,6 +200,7 @@ export default {
 .separator-below {
 	border-bottom: 1px solid var(--color-border);
 }
+
 .search-result-header > a,
 .search-result-header > a * {
 	font-style: italic;
@@ -209,6 +210,7 @@ export default {
 li .nav-entry .emptycontent-search {
 	white-space: normal;
 }
+
 @media (max-height: 600px) {
 	li .nav-entry .emptycontent-search {
 		margin-top: inherit;

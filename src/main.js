@@ -14,9 +14,9 @@ Vue.prototype.OCA = OCA
 Vue.config.devTools = true
 Vue.config.performance = true
 
-/* eslint-disable-next-line no-new */
-new Vue({
+export default new Vue({
+	el: '#content',
 	store,
 	router,
 	render: h => h(App),
-}).$mount('#content')
+})

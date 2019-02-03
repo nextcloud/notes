@@ -6,12 +6,15 @@
 .nav-icon-files {
 	@include icon-color('folder', 'notes', $color-black);
 }
+
 .nav-icon-emptyfolder {
 	@include icon-color('folder-empty', 'notes', $color-black);
 }
+
 .nav-icon-recent {
 	@include icon-color('recent', 'notes', $color-black);
 }
+
 .nav-icon-search {
 	@include icon-color('search', 'notes', $color-black);
 }

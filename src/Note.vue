@@ -4,6 +4,7 @@
 			Loading
 		</div>
 		<div v-if="note">
+			<h1>{{ note.title }}</h1>
 			<pre>{{ note.content }}</pre>
 		</div>
 	</div>
@@ -35,7 +36,7 @@ export default {
 
 	watch: {
 		// call again the method if the route changes
-		'$route': 'fetchData'
+		'$route': 'fetchData',
 	},
 
 	created() {
@@ -60,5 +61,3 @@ export default {
 	},
 }
 </script>
-<style scoped>
-</style>

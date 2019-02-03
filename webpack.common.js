@@ -1,12 +1,15 @@
-const path = require('path');
-const { VueLoaderPlugin } = require('vue-loader');
+const path = require('path')
+const webpack = require('webpack')
+const { VueLoaderPlugin } = require('vue-loader')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
 	entry: path.join(__dirname, 'src', 'main.js'),
 	output: {
 		path: path.resolve(__dirname, './js'),
 		publicPath: '/js/',
-		filename: 'notes.js'
+		filename: 'notes.js',
+		chunkFilename: 'chunks/[name].js'
 	},
 	module: {
 		rules: [
@@ -17,6 +20,11 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use: ['vue-style-loader', 'css-loader', 'sass-loader']
+			},
+			{
+				test: /\.(js|vue)$/,
+				use: 'eslint-loader',
+				enforce: 'pre'
 			},
 			{
 				test: /\.vue$/,
@@ -36,7 +44,11 @@ module.exports = {
 			}
 		]
 	},
-	plugins: [new VueLoaderPlugin()],
+	plugins: [
+		new VueLoaderPlugin(),
+		new StyleLintPlugin(),
+		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+	],
 	resolve: {
 		extensions: ['*', '.js', '.vue', '.json']
 	}
