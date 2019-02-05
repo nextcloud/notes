@@ -51,5 +51,6 @@ script:
   # build js
   - make npm-init
   - make lint
+  - make stylelint
   - make build-js-production
 

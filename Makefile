@@ -58,6 +58,7 @@ npm-init:
 
 npm-upgrade:
 	npm-upgrade
+	npm install
 
 npm-update:
 	npm update
