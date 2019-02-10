@@ -2,6 +2,11 @@
 	font-weight: bold;
 }
 
+#app-navigation > ul > li.app-navigation-caption {
+	padding: 0;
+	pointer-events: inherit;
+}
+
 /* icons for sidebar */
 .nav-icon-files {
 	@include icon-color('folder', 'notes', $color-black);
@@ -19,3 +24,37 @@
 	@include icon-color('search', 'notes', $color-black);
 }
 
+.icon-notes-starred {
+	background-image: var(--icon-star-dark-FC0);
+}
+
+li.active .icon-notes-star,
+li:hover .icon-notes-star,
+li:focus .icon-notes-star {
+	background-image: var(--icon-star-000);
+	opacity: 0.3 !important;
+}
+
+li .icon-notes-star,
+.icon-notes-starred {
+	&:hover,
+	&:focus {
+		background-image: var(--icon-star-dark-FC0);
+		opacity: 0.9 !important;
+	}
+}
+
+.only-active-hover {
+	visibility: hidden;
+}
+
+.active .only-active-hover,
+li:hover .only-active-hover,
+li:focus .only-active-hover {
+	visibility: visible;
+}
+
+
+img.nav-icon {
+	display: inline-block;
+}

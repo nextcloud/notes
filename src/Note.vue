@@ -4,7 +4,7 @@
 			Loading
 		</div>
 		<div v-if="note">
-			<h1>{{ note.title }}</h1>
+			<b>{{ note.title }}</b>
 			<pre>{{ note.content }}</pre>
 		</div>
 	</div>

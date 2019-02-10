@@ -1,16 +1,17 @@
 <template>
-	<app-content app-name="notes">
+	<app-content app-name="notes" :navigation-class="{loading: loading}" :content-class="{loading: loading}">
 		<template slot="navigation">
 			<app-navigation-new
-				v-if="!loading"
+				v-show="!loading"
 				:text="t('notes', 'New note')"
 				button-id="notes_new_note"
 				button-class="icon-add"
 				@click="onNewNote"
 			/>
-			<ul v-if="!loading">
+			<ul v-show="!loading">
 				<app-navigation-item
 					v-if="notes.length"
+					ref="categories"
 					:item="categoryItem"
 				/>
 
@@ -46,7 +47,7 @@
 					:item="item"
 				/>
 			</ul>
-			<app-navigation-settings v-if="!loading" :title="t('notes', 'Settings')">
+			<app-navigation-settings v-show="!loading" :title="t('notes', 'Settings')">
 				TODO: settings
 			</app-navigation-settings>
 		</template>
@@ -62,7 +63,7 @@ import {
 	AppNavigationNew,
 	AppNavigationItem,
 	AppNavigationSettings,
-} from 'nextcloud-vue'
+} from '../../nextcloud/nextcloud-vue'
 import NotesService from './NotesService'
 import store from './store'
 
@@ -82,6 +83,7 @@ export default {
 				category: null,
 				search: '',
 			},
+			loading: false,
 		}
 	},
 
@@ -89,12 +91,11 @@ export default {
 		notes() {
 			return store.state.notes
 		},
-		loading() {
-			return store.state.loading
-		},
+
 		categories() {
 			return store.getters.getCategories(1, true)
 		},
+
 		categoryItems() {
 			let categories = this.categories
 			let categoryItems = []
@@ -120,6 +121,7 @@ export default {
 			}
 			return categoryItems
 		},
+
 		categoryItem() {
 			return {
 				text: this.filter.category === null ? t('notes', 'Categories') : this.categoryLabel(this.filter.category),
@@ -129,14 +131,16 @@ export default {
 				children: this.categoryItems,
 			}
 		},
-		noteItems() {
-			let items = []
+
+		filteredNotes() {
 			let search = this.filter.search.toLowerCase()
-			const searchFields = [ 'title', 'category' ]
-			for (let i = 0; i < this.notes.length; i++) {
-				let note = this.notes[i]
-				if (this.filter.category !== null && this.filter.category !== note.category) {
-					continue
+
+			let notes = this.notes.filter(note => {
+				const searchFields = [ 'title', 'category' ]
+				if (this.filter.category !== null
+					&& this.filter.category !== note.category
+					&& !note.category.startsWith(this.filter.category + '/')) {
+					return false
 				}
 				if (search !== '') {
 					let found = false
@@ -148,26 +152,80 @@ export default {
 						}
 					}
 					if (!found) {
-						continue
+						return false
 					}
 				}
-				let item = {
+				return true
+			})
+
+			function cmpRecent(a, b) {
+				if (a.favorite && !b.favorite) return -1
+				if (!a.favorite && b.favorite) return 1
+				if (a.modified > b.modified) return -1
+				if (a.modified < b.modified) return 1
+				return 0
+			}
+
+			function cmpCategory(a, b) {
+				if (a.category < b.category) return -1
+				if (a.category > b.category) return 1
+				if (a.favorite && !b.favorite) return -1
+				if (!a.favorite && b.favorite) return 1
+				if (a.title < b.title) return -1
+				if (a.title > b.title) return 1
+				return 0
+			}
+
+			notes.sort(this.filter.category === null ? cmpRecent : cmpCategory)
+
+			return notes
+		},
+
+		noteItems() {
+			let items = []
+			let prevCat = null
+			for (let i = 0; i < this.filteredNotes.length; i++) {
+				let note = this.filteredNotes[i]
+				if (this.filter.category !== null && prevCat !== null && prevCat !== note.category) {
+					let category = '…/' + note.category.substring(this.filter.category.length + 1)
+					items.push({
+						text: this.categoryLabel(category),
+						classes: 'app-navigation-caption app-navigation-noclose',
+						icon: 'nav-icon-files',
+						action: this.onSelectCategory.bind(this, note.category),
+					})
+				}
+				items.push({
 					text: note.title,
+					iconClass: 'nav-icon ' + (note.favorite ? 'icon-notes-starred' : 'icon-notes-star'),
+					iconAction: this.onFavorite.bind(null, note.id, !note.favorite),
+					iconTitle: t('notes', 'Favorite'),
 					router: {
 						name: 'note',
 						params: {
 							noteId: note.id,
 						},
 					},
-				}
-				items.push(item)
+					utils: {
+						actions: [
+							{
+								text: t('notes', 'Delete note'),
+								icon: 'icon-delete only-active-hover',
+								action: this.onDeleteNote.bind(null, note.id),
+							},
+						],
+					},
+				})
+				prevCat = note.category
 			}
 			return items
 		},
 	},
 
 	created() {
+		this.loading = true
 		NotesService.fetchNotes()
+			.then(() => { this.loading = false })
 		this.search = new OCA.Search(this.onSearch, this.onResetSearch)
 	},
 
@@ -187,11 +245,22 @@ export default {
 		onNewNote() {
 			// TODO create new note
 		},
+		onFavorite(noteId, favorite) {
+			NotesService.setFavorite(noteId, favorite)
+			// TODO set favorite for note, and update
+		},
+		onDeleteNote(noteId) {
+			// TODO delete note (with undo)
+		},
 		onSelectCategory(category) {
+			this.$refs.categories.toggleCollapse()
 			this.filter.category = category
 		},
 		categoryLabel(category) {
-			return category === '' ? t('notes', 'Uncategorized') : category
+			return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
+		},
+		testMethod() {
+			console.debug('Test Method')
 		},
 	},
 }
