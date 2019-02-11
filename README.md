@@ -1,9 +1,5 @@
 # Notes
 
-<!--
-[![build state](https://travis-ci.org/nextcloud/notes.png)](https://travis-ci.org/nextcloud/notes) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/notes/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/notes/?branch=master)
--->
-
 <!-- The following paragraph should be kept synchronized with the description in appinfo/info.xml -->
 The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes) and [iOS](https://github.com/owncloud/notes-iOS-App) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites.
 
@@ -28,28 +24,16 @@ Before reporting bugs:
 - [Lukas Reschke](https://github.com/LukasReschke)
 
 
-## :warning: Git (development version)
+## :warning: Developer Info
 
-**Installation**
+[![build state](https://travis-ci.org/nextcloud/notes.png)](https://travis-ci.org/nextcloud/notes)
 
-* Clone the **Notes** app into the `/var/www/nextcloud/apps/` directory
+**Building the app**
 
-    `git clone https://github.com/nextcloud/notes.git`
-
-* Activate the **Notes** app in the apps menu
-
-
-**Keep up to date**
-
-To update the Notes app use::
-
-    cd /var/www/nextcloud/apps/notes
-    git pull --rebase origin master
-
-
-**Building JavaScript**
-
-If you want to change some JavaScript code, you have to consolidate the files in a build. Please follow the instructions in the [JavaScript directory](js/README.md).
+1. Clone this into your `apps` folder of your Nextcloud
+2. In a terminal, run the command `make dev-setup` to install the dependencies
+3. Then to build the Javascript and whenever you make changes, run `make build-js`
+4. Enable the app through the app management of your Nextcloud
 
 
 **Third-party apps**
