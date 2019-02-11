@@ -1,6 +1,7 @@
 <template>
 	<app-content app-name="notes" :navigation-class="{loading: loading}" :content-class="{loading: loading}">
-		<template slot="navigation">
+		<template #navigation>
+
 			<app-navigation-new
 				v-show="!loading"
 				:text="t('notes', 'New note')"
@@ -8,7 +9,10 @@
 				button-class="icon-add"
 				@click="onNewNote"
 			/>
+
 			<ul v-show="!loading">
+
+				<!-- collapsible categories -->
 				<app-navigation-item
 					v-if="notes.length"
 					ref="categories"
@@ -42,18 +46,22 @@
 					</span>
 				</li>
 
+				<!-- list of notes -->
 				<app-navigation-item v-for="item in noteItems"
 					:key="item.key"
 					:item="item"
 				/>
+
 			</ul>
-			<app-navigation-settings v-show="!loading" :title="t('notes', 'Settings')">
-				TODO: settings
-			</app-navigation-settings>
+
+			<app-settings v-show="!loading" />
+
 		</template>
-		<template slot="content">
+
+		<template #content>
 			<router-view />
 		</template>
+
 	</app-content>
 </template>
 
@@ -62,8 +70,8 @@ import {
 	AppContent,
 	AppNavigationNew,
 	AppNavigationItem,
-	AppNavigationSettings,
-} from '../../nextcloud/nextcloud-vue'
+} from 'nextcloud-vue'
+import AppSettings from './AppSettings'
 import NotesService from './NotesService'
 import store from './store'
 
@@ -74,7 +82,7 @@ export default {
 		AppContent,
 		AppNavigationNew,
 		AppNavigationItem,
-		AppNavigationSettings,
+		AppSettings,
 	},
 
 	data: function() {
