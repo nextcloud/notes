@@ -1,0 +1,113 @@
+.note-wrapper {
+	height: calc(100vh - 50px);
+	padding-bottom: 44px;
+}
+
+.note-editor {
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.note-status-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+
+#app-content .note-meta {
+	width: 100%;
+	padding: 0 75px 0px 20px;
+	overflow-x: auto;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	z-index: 5;
+}
+
+#app-navigation:not(.hidden) + #app-content .note-meta {
+	padding-left: 320px;
+}
+
+#app-content .note-meta > * {
+	opacity: .5;
+}
+
+#app-content .note-meta > .note-category {
+	padding-right: 1ex;
+}
+
+#app-content .note-meta > .note-error {
+	opacity: 1;
+	background-color: var(--color-error);
+	color: var(--color-primary-text);
+	border-radius: 0.5ex;
+	padding: 0.5ex 1ex;
+}
+
+#app-content .note-meta > .saving {
+	display: inline-block;
+	vertical-align: middle;
+	width: 2.5ex;
+	height: 2.5ex;
+	background: url('../img/loading.gif') no-repeat;
+	background-size: contain;
+	opacity: 1;
+	margin: 0 1ex;
+}
+
+#app-content .note-meta form {
+	display: inline;
+}
+
+#app-content .note-meta .note-category {
+	cursor: pointer;
+}
+
+#app-content .note-meta .note-category .icon-loading-small {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0px 5px;
+}
+
+#app-content .note-meta .edit {
+	background-color: transparent;
+	border: none;
+	opacity: 0.5;
+	vertical-align: middle;
+}
+
+#app-content .note-meta:hover .note-category,
+#app-content .note-meta:hover .edit {
+	opacity: 1;
+}
+
+
+
+/* category and auto-complete */
+
+form.category #category {
+	width: 15em;
+}
+
+form.category .icon-confirm {
+	margin-right: 0;
+}
+
+.ui-autocomplete.category-autocomplete {
+	z-index: 5000 !important;
+	position: fixed;
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-top: 1px solid var(--color-border);
+	border-radius: 0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.category-autocomplete .ui-menu-item a {
+	font-weight: inherit;
+	white-space: nowrap;
+}
+

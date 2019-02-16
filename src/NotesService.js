@@ -37,4 +37,8 @@ export default {
 				// TODO error handling
 			})
 	},
+
+	categoryLabel(category) {
+		return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
+	},
 }

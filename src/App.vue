@@ -1,7 +1,6 @@
 <template>
 	<app-content app-name="notes" :navigation-class="{loading: loading}" :content-class="{loading: loading}">
 		<template #navigation>
-
 			<app-navigation-new
 				v-show="!loading"
 				:text="t('notes', 'New note')"
@@ -11,7 +10,6 @@
 			/>
 
 			<ul v-show="!loading">
-
 				<!-- collapsible categories -->
 				<app-navigation-item
 					v-if="notes.length"
@@ -51,17 +49,14 @@
 					:key="item.key"
 					:item="item"
 				/>
-
 			</ul>
 
 			<app-settings v-show="!loading" />
-
 		</template>
 
 		<template #content>
 			<router-view />
 		</template>
-
 	</app-content>
 </template>
 
@@ -118,7 +113,7 @@ export default {
 			for (let i = 0; i < categories.length; i++) {
 				let category = categories[i]
 				let item = {
-					text: this.categoryLabel(category.name),
+					text: NotesService.categoryLabel(category.name),
 					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
 					action: this.onSelectCategory.bind(this, category.name),
 					utils: {
@@ -132,7 +127,7 @@ export default {
 
 		categoryItem() {
 			return {
-				text: this.filter.category === null ? t('notes', 'Categories') : this.categoryLabel(this.filter.category),
+				text: this.filter.category === null ? t('notes', 'Categories') : NotesService.categoryLabel(this.filter.category),
 				icon: 'nav-icon-files',
 				collapsible: true,
 				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
@@ -197,7 +192,7 @@ export default {
 				if (this.filter.category !== null && prevCat !== null && prevCat !== note.category) {
 					let category = '…/' + note.category.substring(this.filter.category.length + 1)
 					items.push({
-						text: this.categoryLabel(category),
+						text: NotesService.categoryLabel(category),
 						classes: 'app-navigation-caption app-navigation-noclose',
 						icon: 'nav-icon-files',
 						action: this.onSelectCategory.bind(this, note.category),
@@ -211,7 +206,7 @@ export default {
 					router: {
 						name: 'note',
 						params: {
-							noteId: note.id,
+							noteId: note.id.toString(),
 						},
 					},
 					utils: {
@@ -263,12 +258,6 @@ export default {
 		onSelectCategory(category) {
 			this.$refs.categories.toggleCollapse()
 			this.filter.category = category
-		},
-		categoryLabel(category) {
-			return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
-		},
-		testMethod() {
-			console.debug('Test Method')
 		},
 	},
 }
