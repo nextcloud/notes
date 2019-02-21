@@ -24,6 +24,23 @@ export default {
 		return axios.get(this.url('/notes/' + noteId))
 	},
 
+	createNote(category) {
+		return axios
+			.post(this.url('/notes'), { category: category })
+			.then(response => {
+				store.commit('add', response.data)
+				return response.data
+			})
+	},
+
+	deleteNote(noteId) {
+		return axios
+			.delete(this.url('/notes/' + noteId))
+			.then(() => {
+				store.commit('remove', noteId)
+			})
+	},
+
 	setFavorite(noteId, favorite) {
 		return axios
 			.put(this.url('/notes/' + noteId + '/favorite'), { favorite: favorite })
@@ -36,6 +53,10 @@ export default {
 				console.error(err)
 				// TODO error handling
 			})
+	},
+
+	getCategories(maxLevel, details) {
+		return store.getters.getCategories(maxLevel, details)
 	},
 
 	categoryLabel(category) {

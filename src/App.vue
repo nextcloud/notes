@@ -19,7 +19,7 @@
 
 				<!-- search result header -->
 				<li v-if="filter.search && noteItems.length" class="search-result-header">
-					<a class="nav-icon-search active">
+					<a class="icon-search active">
 						<span v-if="filter.category">
 							{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
 						</span>
@@ -96,7 +96,7 @@ export default {
 		},
 
 		categories() {
-			return store.getters.getCategories(1, true)
+			return NotesService.getCategories(1, true)
 		},
 
 		categoryItems() {
@@ -200,9 +200,7 @@ export default {
 				}
 				items.push({
 					text: note.title,
-					iconClass: 'nav-icon ' + (note.favorite ? 'icon-notes-starred' : 'icon-notes-star'),
-					iconAction: this.onFavorite.bind(null, note.id, !note.favorite),
-					iconTitle: t('notes', 'Favorite'),
+					icon: note.favorite ? 'nav-icon-starred' : '',
 					router: {
 						name: 'note',
 						params: {
@@ -212,8 +210,18 @@ export default {
 					utils: {
 						actions: [
 							{
+								text: '',
+								icon: '',
+								action: null,
+							},
+							{
+								text: t('notes', 'Favorite'),
+								icon: 'icon-starred',
+								action: this.onFavorite.bind(null, note.id, !note.favorite),
+							},
+							{
 								text: t('notes', 'Delete note'),
-								icon: 'icon-delete only-active-hover',
+								icon: 'icon-delete',
 								action: this.onDeleteNote.bind(null, note.id),
 							},
 						],
@@ -246,14 +254,22 @@ export default {
 			this.filter.search = ''
 		},
 		onNewNote() {
-			// TODO create new note
+			NotesService.createNote(this.filter.category)
+				.then(note => {
+					this.$router.push({
+						name: 'note',
+						params: { noteId: note.id.toString() },
+					})
+				})
 		},
 		onFavorite(noteId, favorite) {
 			NotesService.setFavorite(noteId, favorite)
-			// TODO set favorite for note, and update
 		},
 		onDeleteNote(noteId) {
-			// TODO delete note (with undo)
+			// TODO disable edit
+			NotesService.deleteNote(noteId)
+			// TODO implement undo
+			// TODO check if note is open and open next note
 		},
 		onSelectCategory(category) {
 			this.$refs.categories.toggleCollapse()

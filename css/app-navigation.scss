@@ -20,41 +20,17 @@
 	@include icon-color('recent', 'notes', $color-black);
 }
 
-.nav-icon-search {
-	@include icon-color('search', 'notes', $color-black);
-}
-
-.icon-notes-starred {
+.nav-icon-starred {
 	background-image: var(--icon-star-dark-FC0);
 }
 
-li.active .icon-notes-star,
-li:hover .icon-notes-star,
-li:focus .icon-notes-star {
-	background-image: var(--icon-star-000);
-	opacity: 0.3 !important;
-}
-
-li .icon-notes-star,
-.icon-notes-starred {
-	&:hover,
-	&:focus {
-		background-image: var(--icon-star-dark-FC0);
-		opacity: 0.9 !important;
-	}
-}
-
-.only-active-hover {
+.app-navigation-entry-utils-menu-button {
 	visibility: hidden;
 }
 
-.active .only-active-hover,
-li:hover .only-active-hover,
-li:focus .only-active-hover {
+.active  .app-navigation-entry-utils-menu-button,
+li:hover .app-navigation-entry-utils-menu-button,
+li:focus .app-navigation-entry-utils-menu-button {
 	visibility: visible;
 }
 
-
-img.nav-icon {
-	display: inline-block;
-}
