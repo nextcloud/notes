@@ -20,10 +20,6 @@
 	@include icon-color('recent', 'notes', $color-black);
 }
 
-.nav-icon-starred {
-	background-image: var(--icon-star-dark-FC0);
-}
-
 .app-navigation-entry-utils-menu-button {
 	visibility: hidden;
 }

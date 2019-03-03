@@ -10,10 +10,6 @@ Vue.prototype.n = n
 Vue.prototype.OC = OC
 Vue.prototype.OCA = OCA
 
-// TODO Disable on production
-Vue.config.devTools = true
-Vue.config.performance = true
-
 export default new Vue({
 	el: '#content',
 	store,

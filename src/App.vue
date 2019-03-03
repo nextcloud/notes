@@ -200,7 +200,7 @@ export default {
 				}
 				items.push({
 					text: note.title,
-					icon: note.favorite ? 'nav-icon-starred' : '',
+					icon: note.favorite ? 'nav-icon icon-starred' : '',
 					router: {
 						name: 'note',
 						params: {
