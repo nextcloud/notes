@@ -12,7 +12,11 @@ export default {
 		return axios
 			.get(this.url('/notes'))
 			.then(response => {
-				store.dispatch('addAll', response.data)
+				store.dispatch('addAll', response.data.notes)
+				if (response.data.errorMessage) {
+					OC.Notification.showTemporary(response.data.errorMessage)
+				}
+				return response.data
 			})
 			.catch(err => {
 				console.error(err)
@@ -22,6 +26,10 @@ export default {
 
 	fetchNote(noteId) {
 		return axios.get(this.url('/notes/' + noteId))
+	},
+
+	noteExists(noteId) {
+		return store.getters.noteExists(noteId)
 	},
 
 	createNote(category) {

@@ -10,6 +10,10 @@ export default new Vuex.Store({
 	},
 
 	getters: {
+		noteExists: (state) => (id) => {
+			return state.notesIds[id] !== undefined
+		},
+
 		getNote: (state) => (id) => {
 			if (state.notesIds[id].error) {
 				OC.Notification.show(

@@ -1,57 +1,59 @@
 <template>
-	<app-content app-name="notes" :navigation-class="{loading: loading}" :content-class="{loading: loading}">
+	<app-content app-name="notes" :content-class="{loading: loading}">
 		<template #navigation>
-			<app-navigation-new
-				v-show="!loading"
-				:text="t('notes', 'New note')"
-				button-id="notes_new_note"
-				button-class="icon-add"
-				@click="onNewNote"
-			/>
-
-			<ul v-show="!loading">
-				<!-- collapsible categories -->
-				<app-navigation-item
-					v-if="notes.length"
-					ref="categories"
-					:item="categoryItem"
+			<app-navigation :class="{loading: loading}">
+				<app-navigation-new
+					v-show="!loading"
+					:text="t('notes', 'New note')"
+					button-id="notes_new_note"
+					button-class="icon-add"
+					@click="onNewNote"
 				/>
 
-				<!-- search result header -->
-				<li v-if="filter.search && noteItems.length" class="search-result-header">
-					<a class="icon-search active">
-						<span v-if="filter.category">
-							{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
+				<ul v-show="!loading">
+					<!-- collapsible categories -->
+					<app-navigation-item
+						v-if="notes.length"
+						ref="categories"
+						:item="categoryItem"
+					/>
+
+					<!-- search result header -->
+					<li v-if="filter.search && noteItems.length" class="search-result-header">
+						<a class="icon-search active">
+							<span v-if="filter.category">
+								{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
+							</span>
+							<span v-else>
+								{{ t('notes', 'Search result for “{search}”', { search: filter.search }) }}
+							</span>
+						</a>
+					</li>
+
+					<!-- nothing found -->
+					<li v-if="!noteItems.length">
+						<span v-if="filter.search" class="nav-entry">
+							<div id="emptycontent" class="emptycontent-search">
+								<div class="icon-search" />
+								<h2 v-if="filter.category">
+									{{ t('notes', 'No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
+								</h2>
+								<h2 v-else>
+									{{ t('notes', 'No search result for “{search}”', { search: filter.search }) }}
+								</h2>
+							</div>
 						</span>
-						<span v-else>
-							{{ t('notes', 'Search result for “{search}”', { search: filter.search }) }}
-						</span>
-					</a>
-				</li>
+					</li>
 
-				<!-- nothing found -->
-				<li v-if="!noteItems.length">
-					<span v-if="filter.search" class="nav-entry">
-						<div id="emptycontent" class="emptycontent-search">
-							<div class="icon-search" />
-							<h2 v-if="filter.category">
-								{{ t('notes', 'No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
-							</h2>
-							<h2 v-else>
-								{{ t('notes', 'No search result for “{search}”', { search: filter.search }) }}
-							</h2>
-						</div>
-					</span>
-				</li>
+					<!-- list of notes -->
+					<app-navigation-item v-for="item in noteItems"
+						:key="item.key"
+						:item="item"
+					/>
+				</ul>
 
-				<!-- list of notes -->
-				<app-navigation-item v-for="item in noteItems"
-					:key="item.key"
-					:item="item"
-				/>
-			</ul>
-
-			<app-settings v-show="!loading" />
+				<app-settings v-show="!loading" />
+			</app-navigation>
 		</template>
 
 		<template #content>
@@ -63,6 +65,7 @@
 <script>
 import {
 	AppContent,
+	AppNavigation,
 	AppNavigationNew,
 	AppNavigationItem,
 } from 'nextcloud-vue'
@@ -75,6 +78,7 @@ export default {
 
 	components: {
 		AppContent,
+		AppNavigation,
 		AppNavigationNew,
 		AppNavigationItem,
 		AppSettings,
@@ -210,11 +214,6 @@ export default {
 					utils: {
 						actions: [
 							{
-								text: '',
-								icon: '',
-								action: null,
-							},
-							{
 								text: t('notes', 'Favorite'),
 								icon: 'icon-starred',
 								action: this.onFavorite.bind(null, note.id, !note.favorite),
@@ -236,7 +235,10 @@ export default {
 	created() {
 		this.loading = true
 		NotesService.fetchNotes()
-			.then(() => { this.loading = false })
+			.then((data) => {
+				this.loading = false
+				this.routeDefault(data.lastViewedNote)
+			})
 		this.search = new OCA.Search(this.onSearch, this.onResetSearch)
 	},
 
@@ -253,13 +255,27 @@ export default {
 		onResetSearch() {
 			this.filter.search = ''
 		},
+		routeDefault(defaultNoteId) {
+			if (this.$route.name !== 'note' || !NotesService.noteExists(this.$route.params.noteId)) {
+				if (defaultNoteId !== 0 && NotesService.noteExists(defaultNoteId)) {
+					this.routeToNote(defaultNoteId)
+				} else if (this.filteredNotes.length > 0) {
+					this.routeToNote(this.filteredNotes[0].id)
+				} else {
+					this.$router.push({ name: 'welcome' })
+				}
+			}
+		},
+		routeToNote(noteId) {
+			this.$router.push({
+				name: 'note',
+				params: { noteId: noteId.toString() },
+			})
+		},
 		onNewNote() {
 			NotesService.createNote(this.filter.category)
 				.then(note => {
-					this.$router.push({
-						name: 'note',
-						params: { noteId: note.id.toString() },
-					})
+					this.routeToNote(note.id)
 				})
 		},
 		onFavorite(noteId, favorite) {
