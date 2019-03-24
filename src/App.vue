@@ -1,16 +1,16 @@
 <template>
-	<app-content app-name="notes" :content-class="{loading: loading}">
+	<app-content app-name="notes" :content-class="{loading: loading.notes}">
 		<template #navigation>
-			<app-navigation :class="{loading: loading}">
+			<app-navigation :class="{loading: loading.notes}">
 				<app-navigation-new
-					v-show="!loading"
+					v-show="!loading.notes"
 					:text="t('notes', 'New note')"
 					button-id="notes_new_note"
-					button-class="icon-add"
+					:button-class="['icon-add', { loading: loading.create }]"
 					@click="onNewNote"
 				/>
 
-				<ul v-show="!loading">
+				<ul v-show="!loading.notes">
 					<!-- collapsible categories -->
 					<app-navigation-item
 						v-if="notes.length"
@@ -19,7 +19,7 @@
 					/>
 
 					<!-- search result header -->
-					<li v-if="filter.search && noteItems.length" class="search-result-header">
+					<li v-if="filter.search && filteredNotes.length" class="search-result-header">
 						<a class="icon-search active">
 							<span v-if="filter.category">
 								{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
@@ -31,7 +31,7 @@
 					</li>
 
 					<!-- nothing found -->
-					<li v-if="!noteItems.length">
+					<li v-if="!filteredNotes.length">
 						<span v-if="filter.search" class="nav-entry">
 							<div id="emptycontent" class="emptycontent-search">
 								<div class="icon-search" />
@@ -46,13 +46,18 @@
 					</li>
 
 					<!-- list of notes -->
-					<app-navigation-item v-for="item in noteItems"
-						:key="item.key"
-						:item="item"
-					/>
+					<template v-for="item in noteItems">
+						<app-navigation-item v-if="filter.category!==null && filter.category!==item.category"
+							:key="item.category" :item="categoryToItem(item.category)"
+						/>
+						<navigation-note-item v-for="note in item.notes"
+							:key="note.id" :note="note"
+							@note-deleted="routeDefault"
+						/>
+					</template>
 				</ul>
 
-				<app-settings v-show="!loading" />
+				<app-settings v-show="!loading.notes" />
 			</app-navigation>
 		</template>
 
@@ -70,6 +75,7 @@ import {
 	AppNavigationItem,
 } from 'nextcloud-vue'
 import AppSettings from './AppSettings'
+import NavigationNoteItem from './NavigationNoteItem'
 import NotesService from './NotesService'
 import store from './store'
 
@@ -82,6 +88,7 @@ export default {
 		AppNavigationNew,
 		AppNavigationItem,
 		AppSettings,
+		NavigationNoteItem,
 	},
 
 	data: function() {
@@ -90,7 +97,10 @@ export default {
 				category: null,
 				search: '',
 			},
-			loading: false,
+			loading: {
+				notes: false,
+				create: false,
+			},
 		}
 	},
 
@@ -188,61 +198,66 @@ export default {
 			return notes
 		},
 
-		noteItems() {
-			let items = []
-			let prevCat = null
-			for (let i = 0; i < this.filteredNotes.length; i++) {
-				let note = this.filteredNotes[i]
-				if (this.filter.category !== null && prevCat !== null && prevCat !== note.category) {
-					let category = '…/' + note.category.substring(this.filter.category.length + 1)
-					items.push({
-						text: NotesService.categoryLabel(category),
-						classes: 'app-navigation-caption app-navigation-noclose',
-						icon: 'nav-icon-files',
-						action: this.onSelectCategory.bind(this, note.category),
-					})
+		groupedNotes() {
+			return this.filteredNotes.reduce(function(g, note) {
+				if (g.length === 0 || g[g.length - 1].category !== note.category) {
+					g.push({ category: note.category, notes: [] })
 				}
-				items.push({
-					text: note.title,
-					icon: note.favorite ? 'nav-icon icon-starred' : '',
-					router: {
-						name: 'note',
-						params: {
-							noteId: note.id.toString(),
-						},
-					},
-					utils: {
-						actions: [
-							{
-								text: t('notes', 'Favorite'),
-								icon: 'icon-starred',
-								action: this.onFavorite.bind(null, note.id, !note.favorite),
-							},
-							{
-								text: t('notes', 'Delete note'),
-								icon: 'icon-delete',
-								action: this.onDeleteNote.bind(null, note.id),
-							},
-						],
-					},
-				})
-				prevCat = note.category
+				g[g.length - 1].notes.push(note)
+				return g
+			}, [])
+		},
+
+		noteItems() {
+			if (this.filter.category == null) {
+				return [ { notes: this.filteredNotes } ]
+			} else {
+				return this.groupedNotes
 			}
-			return items
 		},
 	},
 
 	created() {
-		this.loading = true
+		this.loading.notes = true
 		NotesService.fetchNotes()
 			.then((data) => {
-				this.loading = false
+				this.loading.notes = false
 				this.routeDefault(data.lastViewedNote)
 			})
 		this.search = new OCA.Search(this.onSearch, this.onResetSearch)
 	},
 
 	methods: {
+		categoryToItem(category) {
+			let label = '…/' + category.substring(this.filter.category.length + 1)
+			return {
+				isLabel: true,
+				text: NotesService.categoryLabel(label),
+				classes: 'app-navigation-caption app-navigation-noclose',
+				icon: 'nav-icon-files',
+				action: this.onSelectCategory.bind(this, category),
+			}
+		},
+
+		routeDefault(defaultNoteId) {
+			if (this.$route.name !== 'note' || !NotesService.noteExists(this.$route.params.noteId)) {
+				if (NotesService.noteExists(defaultNoteId)) {
+					this.routeToNote(defaultNoteId)
+				} else if (this.filteredNotes.length > 0) {
+					this.routeToNote(this.filteredNotes[0].id)
+				} else {
+					this.$router.push({ name: 'welcome' })
+				}
+			}
+		},
+
+		routeToNote(noteId) {
+			this.$router.push({
+				name: 'note',
+				params: { noteId: noteId.toString() },
+			})
+		},
+
 		onSearch(query) {
 			this.filter.search = query
 			/* TODO open navigation on small screens
@@ -252,41 +267,20 @@ export default {
 			}
 			*/
 		},
+
 		onResetSearch() {
 			this.filter.search = ''
 		},
-		routeDefault(defaultNoteId) {
-			if (this.$route.name !== 'note' || !NotesService.noteExists(this.$route.params.noteId)) {
-				if (defaultNoteId !== 0 && NotesService.noteExists(defaultNoteId)) {
-					this.routeToNote(defaultNoteId)
-				} else if (this.filteredNotes.length > 0) {
-					this.routeToNote(this.filteredNotes[0].id)
-				} else {
-					this.$router.push({ name: 'welcome' })
-				}
-			}
-		},
-		routeToNote(noteId) {
-			this.$router.push({
-				name: 'note',
-				params: { noteId: noteId.toString() },
-			})
-		},
+
 		onNewNote() {
+			this.loading.create = true
 			NotesService.createNote(this.filter.category)
 				.then(note => {
 					this.routeToNote(note.id)
+					this.loading.create = false
 				})
 		},
-		onFavorite(noteId, favorite) {
-			NotesService.setFavorite(noteId, favorite)
-		},
-		onDeleteNote(noteId) {
-			// TODO disable edit
-			NotesService.deleteNote(noteId)
-			// TODO implement undo
-			// TODO check if note is open and open next note
-		},
+
 		onSelectCategory(category) {
 			this.$refs.categories.toggleCollapse()
 			this.filter.category = category
