@@ -1,5 +1,5 @@
 <template>
-	<app-navigation-item :item="item" />
+	<app-navigation-item :item="item" :menu-open.sync="menuOpen" />
 </template>
 
 <script>
@@ -25,6 +25,7 @@ export default {
 				favorite: false,
 				delete: false,
 			},
+			menuOpen: false,
 		}
 	},
 
@@ -63,7 +64,7 @@ export default {
 			NotesService.setFavorite(this.note.id, !this.note.favorite)
 				.then(() => {
 					this.loading.favorite = false
-					// TODO close action menu
+					this.menuOpen = false
 				})
 		},
 
@@ -73,7 +74,7 @@ export default {
 			NotesService.deleteNote(this.note.id)
 				.then(() => {
 					this.loading.delete = false
-					// TODO close action menu
+					this.menuOpen = false
 					this.$emit('note-deleted')
 				})
 			// TODO implement undo
