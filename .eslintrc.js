@@ -73,8 +73,8 @@ module.exports = {
 		// es6 import/export and require
 		'node/no-unpublished-require': ['off'],
 		'node/no-unsupported-features/es-syntax': ['off'],
-		// kebab case components for vuejs
-		'vue/component-name-in-template-casing': ['error', 'kebab-case'],
+		// check case of component names
+		'vue/component-name-in-template-casing': ['error'],
 		// space before self-closing elements
 		'vue/html-closing-bracket-spacing': 'error',
 		// no ending html tag on a new line

@@ -1,8 +1,8 @@
 <template>
-	<app-content app-name="notes" :content-class="{loading: loading.notes}">
+	<AppContent app-name="notes" :content-class="{loading: loading.notes}">
 		<template #navigation>
-			<app-navigation :class="{loading: loading.notes}">
-				<app-navigation-new
+			<AppNavigation :class="{loading: loading.notes}">
+				<AppNavigationNew
 					v-show="!loading.notes"
 					:text="t('notes', 'New note')"
 					button-id="notes_new_note"
@@ -12,7 +12,7 @@
 
 				<ul v-show="!loading.notes">
 					<!-- collapsible categories -->
-					<app-navigation-item
+					<AppNavigationItem
 						v-if="notes.length"
 						ref="categories"
 						:item="categoryItem"
@@ -47,24 +47,24 @@
 
 					<!-- list of notes -->
 					<template v-for="item in noteItems">
-						<app-navigation-item v-if="filter.category!==null && filter.category!==item.category"
+						<AppNavigationItem v-if="filter.category!==null && filter.category!==item.category"
 							:key="item.category" :item="categoryToItem(item.category)"
 						/>
-						<navigation-note-item v-for="note in item.notes"
+						<NavigationNoteItem v-for="note in item.notes"
 							:key="note.id" :note="note"
 							@note-deleted="routeDefault"
 						/>
 					</template>
 				</ul>
 
-				<app-settings v-show="!loading.notes" />
-			</app-navigation>
+				<AppSettings v-show="!loading.notes" />
+			</AppNavigation>
 		</template>
 
 		<template #content>
 			<router-view />
 		</template>
-	</app-content>
+	</AppContent>
 </template>
 
 <script>

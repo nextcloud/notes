@@ -7,7 +7,7 @@
 				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree()" />
 			</span>
 		</div>
-		<status-bar v-if="note" :note="note" class="note-status-bar" />
+		<StatusBar v-if="note" :note="note" class="note-status-bar" />
 	</div>
 </template>
 <script>
@@ -24,7 +24,10 @@ export default {
 	},
 
 	props: {
-		noteId: { type: String, default: '' },
+		noteId: {
+			type: String,
+			default: '',
+		},
 	},
 
 	data: function() {

@@ -1,5 +1,5 @@
 <template>
-	<app-navigation-item :item="item" :menu-open.sync="menuOpen" />
+	<AppNavigationItem :item="item" :menu-open.sync="menuOpen" />
 </template>
 
 <script>
@@ -16,7 +16,10 @@ export default {
 	},
 
 	props: {
-		note: { type: Object, default: null },
+		note: {
+			type: Object,
+			required: true,
+		},
 	},
 
 	data: function() {
