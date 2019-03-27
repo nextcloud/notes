@@ -6,6 +6,7 @@ OC.L10N.register(
     "File error" : "Failo klaida",
     "Encryption Error" : "Šifravimo klaida",
     "Error" : "Klaida",
+    "Favorite" : "Svarbiausias",
     "Settings" : "Nustatymai",
     "The note has unsaved changes." : "Užrašuose yra neįrašytų pakeitimų.",
     "Click here to try again" : "Spustelėkite čia, norėdami bandyti dar kartą",
