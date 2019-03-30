@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.4.0",
+		"@toast-ui/vue-editor": "^1.1.0",
 		"nextcloud-axios": "^0.1.3",
 		"nextcloud-vue": "^0.9.4",
 		"vue": "^2.6.10",

@@ -1,69 +1,94 @@
 <template>
-	<div class="note-wrapper" :class="{ loading: loading }">
-		<div v-if="note" id="note-editor" class="note-editor">
-			<b>{{ note.title }}</b>
-			<p>{{ note.content }}</p>
+	<div class="note-wrapper" :class="{ loading: loading || isManualSave }"
+		@keyup.ctrl.83.prevent.stop="onManualSave"
+		@keyup.meta.83.prevent.stop="onManualSave"
+	>
+		<div v-if="note && !loading" id="note-editor" class="note-editor">
+			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
-				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree()" />
+				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree" />
 			</span>
 		</div>
-		<StatusBar v-if="note" :note="note" class="note-status-bar" />
+		<StatusBar v-if="note && !loading" :note="note" class="note-status-bar" />
 	</div>
 </template>
 <script>
 
+import TheEditor from './EditorTUI'
 import NotesService from './NotesService'
 import StatusBar from './StatusBar'
-// import store from './store'
+import store from './store'
 
 export default {
 	name: 'Note',
 
 	components: {
+		TheEditor,
 		StatusBar,
 	},
 
 	props: {
 		noteId: {
 			type: String,
-			default: '',
+			required: true,
 		},
 	},
 
 	data: function() {
 		return {
 			loading: false,
-			note: null,
 		}
 	},
 
 	computed: {
+		note() {
+			return store.getters.getNote(parseInt(this.noteId))
+		},
+		title() {
+			return this.note ? this.note.title : ''
+		},
+		isManualSave() {
+			return store.state.isManualSave
+		},
 	},
 
 	watch: {
 		// call again the method if the route changes
 		'$route': 'fetchData',
+		title: 'onUpdateTitle',
 	},
 
 	created() {
 		this.fetchData()
 	},
 
+	destroyed() {
+		this.onUpdateTitle(null)
+	},
+
 	methods: {
 		fetchData() {
+			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.note = null
 			NotesService.fetchNote(this.noteId)
-				.then(response => {
-					this.note = response.data
+				.then(note => {
 					this.loading = false
-					console.debug(this.note) // TODO remove log
 				})
 				.catch(err => {
 					console.error(err)
-					// TODO error handling
+					// TODO error handling: show error and open another note
 				})
 		},
+
+		onUpdateTitle(title) {
+			let defaultTitle = store.state.documentTitle
+			if (title) {
+				document.title = title + ' - ' + defaultTitle
+			} else {
+				document.title = defaultTitle
+			}
+		},
+
 		onToggleDistractionFree() {
 			function launchIntoFullscreen(element) {
 				if (element.requestFullscreen) {
@@ -92,6 +117,27 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-editor'))
 			}
+		},
+
+		onEdit(newContent) {
+			if (this.note.content !== newContent) {
+				let note = {
+					...this.note,
+					content: newContent,
+					unsaved: true,
+				}
+				store.commit('add', note)
+				setTimeout(NotesService.saveNote.bind(NotesService, note.id), 1000)
+			}
+		},
+
+		onManualSave() {
+			let note = {
+				...this.note,
+				error: false,
+			}
+			store.commit('add', note)
+			NotesService.saveNote(note.id, true)
 		},
 	},
 }

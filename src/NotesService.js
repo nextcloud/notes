@@ -25,7 +25,16 @@ export default {
 	},
 
 	fetchNote(noteId) {
-		return axios.get(this.url('/notes/' + noteId))
+		return axios
+			.get(this.url('/notes/' + noteId))
+			.then(response => {
+				store.commit('add', response.data)
+				return response.data
+			})
+			.catch(err => {
+				console.error(err)
+				// TODO error handling
+			})
 	},
 
 	noteExists(noteId) {
@@ -38,6 +47,34 @@ export default {
 			.then(response => {
 				store.commit('add', response.data)
 				return response.data
+			})
+	},
+
+	updateNote(note) {
+		return axios
+			.put(this.url('/notes/' + note.id), note)
+			.then(response => {
+				let updated = response.data
+				note.error = false
+				note.title = updated.title
+				note.modified = updated.modified
+				if (note.category !== updated.category) {
+					OC.Notification.showTemporary(
+						t('notes', 'Updating the note\'s category has failed. '
+							+ 'Is the target directory writable?')
+					)
+					note.category = updated.category
+				}
+				if (updated.content === note.content) {
+					note.unsaved = false
+				}
+				store.commit('add', note)
+				return note
+			})
+			.catch(err => {
+				console.error(err)
+				note.error = true
+				// TODO error handling
 			})
 	},
 
@@ -61,6 +98,33 @@ export default {
 				console.error(err)
 				// TODO error handling
 			})
+	},
+
+	saveNote(noteId, manualSave = false) {
+		store.commit('addUnsaved', noteId)
+		if (manualSave) {
+			store.commit('setManualSave', true)
+		}
+		this._saveNotes()
+	},
+	_saveNotes() {
+		let unsaved = store.state.unsaved
+		let keys = Object.keys(unsaved)
+		if (store.state.isSaving || keys.length === 0) {
+			return
+		}
+		store.commit('setSaving', true)
+		let promises = []
+		for (let i = 0; i < keys.length; i++) {
+			let note = unsaved[keys[i]]
+			promises.push(this.updateNote(note))
+		}
+		store.commit('clearUnsaved')
+		Promise.all(promises).finally(() => {
+			store.commit('setSaving', false)
+			store.commit('setManualSave', false)
+			this._saveNotes()
+		})
 	},
 
 	getCategories(maxLevel, details) {

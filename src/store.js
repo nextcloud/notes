@@ -7,6 +7,10 @@ export default new Vuex.Store({
 	state: {
 		notes: [],
 		notesIds: {},
+		unsaved: {},
+		isSaving: false,
+		isManualSave: false,
+		documentTitle: null,
 	},
 
 	getters: {
@@ -15,6 +19,9 @@ export default new Vuex.Store({
 		},
 
 		getNote: (state) => (id) => {
+			if (state.notesIds[id] === undefined) {
+				return null
+			}
 			if (state.notesIds[id].error) {
 				OC.Notification.show(
 					state.notesIds[id].errorMessage,
@@ -86,12 +93,13 @@ export default new Vuex.Store({
 					note.content = updated.content
 					note.favorite = updated.favorite
 					note.category = updated.category
-					note.error = updated.error
-					note.errorMessage = updated.errorMessage
+					Vue.set(note, 'unsaved', updated.unsaved)
+					Vue.set(note, 'error', updated.error)
+					Vue.set(note, 'errorMessage', updated.errorMessage)
 				}
 			} else {
 				state.notes.push(updated)
-				state.notesIds[updated.id] = updated
+				Vue.set(state.notesIds, updated.id, updated)
 			}
 		},
 
@@ -104,6 +112,26 @@ export default new Vuex.Store({
 					break
 				}
 			}
+		},
+
+		addUnsaved(state, id) {
+			Vue.set(state.unsaved, id, state.notesIds[id])
+		},
+
+		clearUnsaved(state) {
+			state.unsaved = {}
+		},
+
+		setSaving(state, isSaving) {
+			state.isSaving = isSaving
+		},
+
+		setManualSave(state, isManualSave) {
+			state.isManualSave = isManualSave
+		},
+
+		setDocumentTitle(state, title) {
+			state.documentTitle = title
 		},
 	},
 

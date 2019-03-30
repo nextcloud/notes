@@ -62,7 +62,10 @@
 		</template>
 
 		<template #content>
-			<router-view />
+			<!-- the following div is needed for keeping the app-navigation-toggle inserted by the nextcloud/server -->
+			<div>
+				<router-view />
+			</div>
 		</template>
 	</AppContent>
 </template>
@@ -218,6 +221,7 @@ export default {
 	},
 
 	created() {
+		store.commit('setDocumentTitle', document.title)
 		this.loading.notes = true
 		NotesService.fetchNotes()
 			.then((data) => {
@@ -225,6 +229,7 @@ export default {
 				this.routeDefault(data.lastViewedNote)
 			})
 		this.search = new OCA.Search(this.onSearch, this.onResetSearch)
+		window.addEventListener('beforeunload', this.onClose)
 	},
 
 	methods: {
@@ -260,12 +265,11 @@ export default {
 
 		onSearch(query) {
 			this.filter.search = query
-			/* TODO open navigation on small screens
-			if($('#app-navigation-toggle').css('display')!=='none' &&
-			  !$('body').hasClass('snapjs-left')) {
+			// TODO move the following from jQuery to plain JS
+			/* global $ */
+			if ($('#app-navigation-toggle').css('display') !== 'none' && !$('body').hasClass('snapjs-left')) {
 				$('#app-navigation-toggle').click()
 			}
-			*/
 		},
 
 		onResetSearch() {
@@ -284,6 +288,13 @@ export default {
 		onSelectCategory(category) {
 			this.$refs.categories.toggleCollapse()
 			this.filter.category = category
+		},
+
+		onClose(event) {
+			if (!this.notes.every(note => !note.unsaved)) {
+				event.preventDefault()
+				return t('notes', 'There are unsaved notes. Leaving the page will discard all changes!')
+			}
 		},
 	},
 }

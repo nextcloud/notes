@@ -35,7 +35,7 @@ export default {
 	computed: {
 		item() {
 			return {
-				text: this.note.title,
+				text: this.note.title + (this.note.unsaved ? ' *' : ''),
 				icon: this.note.favorite ? 'nav-icon icon-starred' : '',
 				router: {
 					name: 'note',

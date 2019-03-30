@@ -1,6 +1,6 @@
 <template>
 	<AppNavigationSettings :title="t('notes', 'Settings')">
-		TODO: settings
+		<p>TODO: settings</p>
 	</AppNavigationSettings>
 </template>
 
