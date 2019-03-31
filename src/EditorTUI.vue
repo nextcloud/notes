@@ -39,6 +39,7 @@ export default {
 .te-toolbar-section {
 	display: none;
 }
+
 .CodeMirror {
 	font-family: inherit;
 }
