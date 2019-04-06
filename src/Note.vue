@@ -1,9 +1,9 @@
 <template>
-	<div class="note-wrapper" :class="{ loading: loading || isManualSave }"
-		@keyup.ctrl.83.prevent.stop="onManualSave"
-		@keyup.meta.83.prevent.stop="onManualSave"
-	>
-		<div v-if="note && !loading" id="note-editor" class="note-editor">
+	<div class="note-wrapper" :class="{ loading: loading || isManualSave }">
+		<div v-if="note && !loading" id="note-editor" class="note-editor"
+			@keyup.ctrl.83.prevent.stop="onManualSave"
+			@keyup.meta.83.prevent.stop="onManualSave"
+		>
 			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
 				<button class="icon-details btn-sidebar" @click="onToggleSidebar" />
@@ -148,7 +148,7 @@ export default {
 </script>
 <style scoped>
 .note-wrapper {
-	height: calc(100vh - 50px);
+	height: 100%;
 }
 
 .note-editor {

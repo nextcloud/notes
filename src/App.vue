@@ -63,7 +63,7 @@
 
 		<template #content>
 			<!-- the following div is needed for keeping the app-navigation-toggle inserted by the nextcloud/server -->
-			<div>
+			<div class="content-wrapper">
 				<router-view />
 			</div>
 		</template>
@@ -308,6 +308,10 @@ export default {
 }
 </script>
 <style scoped>
+.content-wrapper {
+	height: 100%;
+}
+
 .separator-below {
 	border-bottom: 1px solid var(--color-border);
 }
