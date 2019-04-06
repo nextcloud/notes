@@ -52,19 +52,12 @@ export default {
 
 	updateNote(note) {
 		return axios
-			.put(this.url('/notes/' + note.id), note)
+			.put(this.url('/notes/' + note.id), { content: note.content })
 			.then(response => {
 				let updated = response.data
 				note.error = false
 				note.title = updated.title
 				note.modified = updated.modified
-				if (note.category !== updated.category) {
-					OC.Notification.showTemporary(
-						t('notes', 'Updating the note\'s category has failed. '
-							+ 'Is the target directory writable?')
-					)
-					note.category = updated.category
-				}
 				if (updated.content === note.content) {
 					note.unsaved = false
 				}
@@ -93,6 +86,26 @@ export default {
 				let note = store.getters.getNote(noteId)
 				note.favorite = response.data
 				store.commit('add', note)
+			})
+			.catch(err => {
+				console.error(err)
+				// TODO error handling
+			})
+	},
+
+	setCategory(noteId, category) {
+		return axios
+			.put(this.url('/notes/' + noteId + '/category'), { category: category })
+			.then(response => {
+				let realCategory = response.data
+				if (category !== realCategory) {
+					OC.Notification.showTemporary(
+						t('notes', 'Updating the note\'s category has failed. Is the target directory writable?')
+					)
+				}
+				let note = store.getters.getNote(noteId)
+				note.category = realCategory
+				store.commit('add', note) // TODO Einzel-Attribute aktualisieren in einem commit
 			})
 			.catch(err => {
 				console.error(err)

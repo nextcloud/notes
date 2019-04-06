@@ -67,6 +67,10 @@
 				<router-view />
 			</div>
 		</template>
+
+		<template v-if="sidebarOpen" #sidebar>
+			<router-view name="sidebar" />
+		</template>
 	</AppContent>
 </template>
 
@@ -108,6 +112,10 @@ export default {
 	},
 
 	computed: {
+		sidebarOpen() {
+			return store.state.sidebarOpen
+		},
+
 		notes() {
 			return store.state.notes
 		},

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from './Welcome'
 import Note from './Note'
+import Sidebar from './Sidebar'
 
 Vue.use(Router)
 
@@ -18,8 +19,14 @@ export default new Router({
 		{
 			path: '/note/:noteId',
 			name: 'note',
-			component: Note,
-			props: true,
+			components: {
+				default: Note,
+				sidebar: Sidebar,
+			},
+			props: {
+				default: true,
+				sidebar: true,
+			},
 		},
 	],
 })

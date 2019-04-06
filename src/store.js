@@ -11,6 +11,7 @@ export default new Vuex.Store({
 		isSaving: false,
 		isManualSave: false,
 		documentTitle: null,
+		sidebarOpen: false,
 	},
 
 	getters: {
@@ -132,6 +133,10 @@ export default new Vuex.Store({
 
 		setDocumentTitle(state, title) {
 			state.documentTitle = title
+		},
+
+		setSidebarOpen(state, open) {
+			state.sidebarOpen = open
 		},
 	},
 

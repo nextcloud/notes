@@ -6,17 +6,16 @@
 		<div v-if="note && !loading" id="note-editor" class="note-editor">
 			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
+				<button class="icon-details btn-sidebar" @click="onToggleSidebar" />
 				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree" />
 			</span>
 		</div>
-		<StatusBar v-if="note && !loading" :note="note" class="note-status-bar" />
 	</div>
 </template>
 <script>
 
 import TheEditor from './EditorTUI'
 import NotesService from './NotesService'
-import StatusBar from './StatusBar'
 import store from './store'
 
 export default {
@@ -24,7 +23,6 @@ export default {
 
 	components: {
 		TheEditor,
-		StatusBar,
 	},
 
 	props: {
@@ -63,11 +61,13 @@ export default {
 	},
 
 	destroyed() {
+		store.commit('setSidebarOpen', false)
 		this.onUpdateTitle(null)
 	},
 
 	methods: {
 		fetchData() {
+			store.commit('setSidebarOpen', false)
 			this.onUpdateTitle(this.title)
 			this.loading = true
 			NotesService.fetchNote(this.noteId)
@@ -119,6 +119,10 @@ export default {
 			}
 		},
 
+		onToggleSidebar() {
+			store.commit('setSidebarOpen', !store.state.sidebarOpen)
+		},
+
 		onEdit(newContent) {
 			if (this.note.content !== newContent) {
 				let note = {
@@ -143,7 +147,14 @@ export default {
 }
 </script>
 <style scoped>
+.note-wrapper {
+	height: calc(100vh - 50px);
+}
+
 .note-editor {
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
 	background-color: var(--color-main-background);
 }
 
@@ -154,7 +165,7 @@ export default {
 	z-index: 2000;
 }
 
-.btn-fullscreen {
+.action-buttons button {
 	padding: 15px;
 }
 </style>

@@ -65,7 +65,7 @@ export default {
 		onToggleFavorite() {
 			this.loading.favorite = true
 			NotesService.setFavorite(this.note.id, !this.note.favorite)
-				.then(() => {
+				.finally(() => {
 					this.loading.favorite = false
 					this.menuOpen = false
 				})
@@ -76,9 +76,11 @@ export default {
 			this.loading.delete = true
 			NotesService.deleteNote(this.note.id)
 				.then(() => {
+					this.$emit('note-deleted')
+				})
+				.finally(() => {
 					this.loading.delete = false
 					this.menuOpen = false
-					this.$emit('note-deleted')
 				})
 			// TODO implement undo
 		},

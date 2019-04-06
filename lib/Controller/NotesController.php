@@ -138,12 +138,11 @@ class NotesController extends Controller {
      *
      * @param int $id
      * @param string $content
-     * @param string $category
      * @return DataResponse
      */
-    public function update($id, $content, $category) {
-        return $this->respond(function () use ($id, $content, $category) {
-            return $this->notesService->update($id, $content, $this->userId, $category);
+    public function update($id, $content) {
+        return $this->respond(function () use ($id, $content) {
+            return $this->notesService->update($id, $content, $this->userId);
         });
     }
 
@@ -158,7 +157,8 @@ class NotesController extends Controller {
      */
     public function category($id, $category) {
         return $this->respond(function () use ($id, $category) {
-            return $this->notesService->update($id, null, $this->userId, $category);
+            $note = $this->notesService->update($id, null, $this->userId, $category);
+            return $note->category;
         });
     }
 
