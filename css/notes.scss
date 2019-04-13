@@ -298,14 +298,14 @@ form.category .icon-confirm {
 }
 
 .CodeMirror .CodeMirror-code .cm-formatting-task.cm-meta::before {
-  content: "\2610";
-  font-size: 1.7em;
+	content: "\2610";
+	font-size: 1.7em;
 	background: white;
 	position: absolute;
 }
 
 .CodeMirror .CodeMirror-code .cm-formatting-task.cm-property::before {
-  content: "\2611";
+ 	content: "\2611";
 	font-size: 1.7em;
 	background: white;
 	position: absolute;
