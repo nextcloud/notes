@@ -20,6 +20,15 @@ app.directive('editor', ['$timeout',
 			simplemde.value(scope.note.content);
 			simplemde.codemirror.focus();
 
+			/* Initialize Checkboxes */
+			$('.CodeMirror').on('click.checkbox', '.cm-formatting-task', function (e) {
+				e.stopPropagation();
+				e.preventDefault();
+
+				scope.toggleCheckbox(e.target);
+			});
+
+
 			simplemde.codemirror.on('change', function() {
 				$timeout(function() {
 					scope.$apply(function () {

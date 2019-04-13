@@ -290,6 +290,32 @@ form.category .icon-confirm {
     font-family: MONOSPACE;
 }
 
+/* Checkboxes */
+.CodeMirror .CodeMirror-code .cm-formatting-task {
+	position: relative;
+	display: inline-block;
+	width: 2em;
+}
+
+.CodeMirror .CodeMirror-code .cm-formatting-task.cm-meta::before {
+  content: "\2610";
+  font-size: 1.7em;
+	background: white;
+	position: absolute;
+}
+
+.CodeMirror .CodeMirror-code .cm-formatting-task.cm-property::before {
+  content: "\2611";
+	font-size: 1.7em;
+	background: white;
+	position: absolute;
+}
+
+/* Recommended tab size increase for readability */
+.CodeMirror .CodeMirror-code .cm-tab {
+    width: 2em;
+}
+
 /* distraction free styles */
 :-webkit-full-screen,
 :-moz-full-screen,
