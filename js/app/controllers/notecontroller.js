@@ -54,9 +54,6 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
             {line: index, ch: line.text.indexOf('[')},
             {line: index, ch: line.text.indexOf(']') + 1}
         );
-
-        cm.execCommand('goLineEnd');
-
     };
 
     $scope.onEdit = function() {

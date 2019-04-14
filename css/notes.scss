@@ -311,6 +311,11 @@ form.category .icon-confirm {
     position: absolute;
 }
 
+.CodeMirror .CodeMirror-code .CodeMirror-line.completed-task {
+	color: #999;
+	text-decoration: line-through;
+}
+
 /* Recommended tab size increase for readability */
 .CodeMirror .CodeMirror-code .cm-tab {
     width: 2em;

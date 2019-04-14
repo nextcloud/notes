@@ -21,13 +21,17 @@ app.directive('editor', ['$timeout',
 			simplemde.codemirror.focus();
 
 			/* Initialize Checkboxes */
-			$('.CodeMirror').on('click.checkbox', '.cm-formatting-task', function (e) {
-				e.stopPropagation();
-				e.preventDefault();
-
-				scope.toggleCheckbox(e.target);
+			$('.CodeMirror-code').on('mousedown.checkbox touchstart.checkbox', '.cm-formatting-task', function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                scope.toggleCheckbox(e.target);
 			});
 
+            simplemde.codemirror.on('update', function () {
+                // For strikethrough styling of completed tasks
+                $('.CodeMirror-line').removeClass('completed-task');
+                $('.CodeMirror-line:contains("[x]")').addClass('completed-task');
+            });
 
 			simplemde.codemirror.on('change', function() {
 				$timeout(function() {
