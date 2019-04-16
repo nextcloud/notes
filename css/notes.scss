@@ -294,19 +294,19 @@ form.category .icon-confirm {
 .CodeMirror .CodeMirror-code .cm-formatting-task {
     position: relative;
     display: inline-block;
-    width: 2em;
+    width: 1.8em;
 }
 
 .CodeMirror .CodeMirror-code .cm-formatting-task.cm-meta::before {
     content: "\2610";
-    font-size: 1.7em;
+    font-size: 1.5em;
     background: white;
     position: absolute;
 }
 
 .CodeMirror .CodeMirror-code .cm-formatting-task.cm-property::before {
     content: "\2611";
-    font-size: 1.7em;
+    font-size: 1.5em;
     background: white;
     position: absolute;
 }
