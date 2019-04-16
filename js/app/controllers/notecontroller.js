@@ -40,6 +40,22 @@ app.controller('NoteController', function($routeParams, $scope, NotesModel,
             t('notes', 'New note');
     };
 
+    $scope.toggleCheckbox = function (el) {
+        var $el = $(el);
+        var cm = $('.CodeMirror')[0].CodeMirror;
+        var doc = cm.getDoc();
+        var index = $el.parents('.CodeMirror-line').index();
+        var line = doc.getLineHandle(index);
+
+        var newvalue = ( $el.text() === '[x]' ) ? '[ ]' : '[x]';
+
+        // + 1 for some reason... not sure why
+        doc.replaceRange(newvalue,
+            {line: index, ch: line.text.indexOf('[')},
+            {line: index, ch: line.text.indexOf(']') + 1}
+        );
+    };
+
     $scope.onEdit = function() {
         var note = $scope.note;
         note.unsaved = true;

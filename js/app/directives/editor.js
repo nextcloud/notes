@@ -20,6 +20,19 @@ app.directive('editor', ['$timeout',
 			simplemde.value(scope.note.content);
 			simplemde.codemirror.focus();
 
+			/* Initialize Checkboxes */
+			$('.CodeMirror-code').on('mousedown.checkbox touchstart.checkbox', '.cm-formatting-task', function (e) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				scope.toggleCheckbox(e.target);
+			});
+
+			simplemde.codemirror.on('update', function () {
+				// For strikethrough styling of completed tasks
+				$('.CodeMirror-line').removeClass('completed-task');
+				$('.CodeMirror-line:contains("[x]")').addClass('completed-task');
+			});
+
 			simplemde.codemirror.on('change', function() {
 				$timeout(function() {
 					scope.$apply(function () {
