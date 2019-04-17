@@ -7,6 +7,7 @@ OC.L10N.register(
     "Please wait while new settings are applied…" : "Kérlek várj, míg az új beállítások érvénybe lépnek...",
     "_%n word_::_%n words_" : ["%n szó","%n szó"],
     "The last viewed note cannot be accessed. " : "Az utoljára megtekintett jegyzet nem elérhető.",
+    "The notes folder is not accessible: %s" : "A jegyzetek mappa nem elérhető: %s",
     "File error" : "Fájlhiba",
     "Encryption Error" : "Titkosítási hiba",
     "Error" : "Hiba",
