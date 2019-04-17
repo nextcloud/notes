@@ -13,6 +13,8 @@ The Notes app is a distraction free notes taking app for [Nextcloud](https://www
 ## :rocket: Installation
 In your Nextcloud, simply navigate to »Apps«, choose the category »Office«, find the Notes app and enable it. Then open the Notes app from the app menu.
 
+Nextcloud will notify you about possible updates. Please have a look at [releases](https://github.com/nextcloud/notes/releases) for a changelog.
+
 
 ## :exclamation: Bugs
 Before reporting bugs:
