@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
+		settings: {},
 		notes: [],
 		notesIds: {},
 		unsaved: {},
@@ -115,12 +116,21 @@ export default new Vuex.Store({
 			}
 		},
 
+		removeAll(state) {
+			state.notes = []
+			state.notesIds = {}
+		},
+
 		addUnsaved(state, id) {
 			Vue.set(state.unsaved, id, state.notesIds[id])
 		},
 
 		clearUnsaved(state) {
 			state.unsaved = {}
+		},
+
+		setSettings(state, settings) {
+			state.settings = settings
 		},
 
 		setSaving(state, isSaving) {

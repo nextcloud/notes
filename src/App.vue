@@ -56,7 +56,7 @@
 				</template>
 			</ul>
 
-			<AppSettings v-show="!loading.notes" />
+			<AppSettings v-show="!loading.notes" @reload="reloadNotes" />
 		</AppNavigation>
 
 		<router-view />
@@ -217,17 +217,27 @@ export default {
 
 	created() {
 		store.commit('setDocumentTitle', document.title)
-		this.loading.notes = true
-		NotesService.fetchNotes()
-			.then((data) => {
-				this.loading.notes = false
-				this.routeDefault(data.lastViewedNote)
-			})
 		this.search = new OCA.Search(this.onSearch, this.onResetSearch)
 		window.addEventListener('beforeunload', this.onClose)
+		this.loadNotes()
 	},
 
 	methods: {
+		loadNotes() {
+			this.loading.notes = true
+			NotesService.fetchNotes()
+				.then(data => {
+					this.loading.notes = false
+					this.routeDefault(data.lastViewedNote)
+				})
+		},
+
+		reloadNotes() {
+			this.$router.push('/')
+			store.commit('removeAll')
+			this.loadNotes()
+		},
+
 		categoryToItem(category) {
 			let label = '…/' + category.substring(this.filter.category.length + 1)
 			return {

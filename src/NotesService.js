@@ -8,10 +8,25 @@ export default {
 		return OC.generateUrl(url)
 	},
 
+	setSettings(settings) {
+		return axios
+			.put(this.url('/settings'), settings)
+			.then(response => {
+				let settings = response.data
+				store.commit('setSettings', settings)
+				return settings
+			})
+			.catch(err => {
+				console.error(err)
+				// TODO error handling
+			})
+	},
+
 	fetchNotes() {
 		return axios
 			.get(this.url('/notes'))
 			.then(response => {
+				store.commit('setSettings', response.data.settings)
 				store.dispatch('addAll', response.data.notes)
 				if (response.data.errorMessage) {
 					OC.Notification.showTemporary(response.data.errorMessage)
