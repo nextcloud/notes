@@ -1,5 +1,5 @@
 <template>
-	<div class="note-wrapper" :class="{ loading: loading || isManualSave }">
+	<AppContent :class="{ loading: loading || isManualSave }">
 		<div v-if="note && !loading" id="note-editor" class="note-editor"
 			@keyup.ctrl.83.prevent.stop="onManualSave"
 			@keyup.meta.83.prevent.stop="onManualSave"
@@ -10,10 +10,13 @@
 				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree" />
 			</span>
 		</div>
-	</div>
+	</AppContent>
 </template>
 <script>
 
+import {
+	AppContent,
+} from 'nextcloud-vue'
 import TheEditor from './EditorTUI'
 import NotesService from './NotesService'
 import store from './store'
@@ -22,6 +25,7 @@ export default {
 	name: 'Note',
 
 	components: {
+		AppContent,
 		TheEditor,
 	},
 

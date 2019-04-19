@@ -1,85 +1,76 @@
 <template>
-	<AppContent app-name="notes" :content-class="{loading: loading.notes}">
-		<template #navigation>
-			<AppNavigation :class="{loading: loading.notes}">
-				<AppNavigationNew
-					v-show="!loading.notes"
-					:text="t('notes', 'New note')"
-					button-id="notes_new_note"
-					:button-class="['icon-add', { loading: loading.create }]"
-					@click="onNewNote"
+	<Content app-name="notes" :content-class="{loading: loading.notes}">
+		<AppNavigation :class="{loading: loading.notes}">
+			<AppNavigationNew
+				v-show="!loading.notes"
+				:text="t('notes', 'New note')"
+				button-id="notes_new_note"
+				:button-class="['icon-add', { loading: loading.create }]"
+				@click="onNewNote"
+			/>
+
+			<ul v-show="!loading.notes">
+				<!-- collapsible categories -->
+				<AppNavigationItem
+					v-if="notes.length"
+					ref="categories"
+					:item="categoryItem"
 				/>
 
-				<ul v-show="!loading.notes">
-					<!-- collapsible categories -->
-					<AppNavigationItem
-						v-if="notes.length"
-						ref="categories"
-						:item="categoryItem"
-					/>
-
-					<!-- search result header -->
-					<li v-if="filter.search && filteredNotes.length" class="search-result-header">
-						<a class="icon-search active">
-							<span v-if="filter.category">
-								{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
-							</span>
-							<span v-else>
-								{{ t('notes', 'Search result for “{search}”', { search: filter.search }) }}
-							</span>
-						</a>
-					</li>
-
-					<!-- nothing found -->
-					<li v-if="!filteredNotes.length">
-						<span v-if="filter.search" class="nav-entry">
-							<div id="emptycontent" class="emptycontent-search">
-								<div class="icon-search" />
-								<h2 v-if="filter.category">
-									{{ t('notes', 'No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
-								</h2>
-								<h2 v-else>
-									{{ t('notes', 'No search result for “{search}”', { search: filter.search }) }}
-								</h2>
-							</div>
+				<!-- search result header -->
+				<li v-if="filter.search && filteredNotes.length" class="search-result-header">
+					<a class="icon-search active">
+						<span v-if="filter.category">
+							{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
 						</span>
-					</li>
+						<span v-else>
+							{{ t('notes', 'Search result for “{search}”', { search: filter.search }) }}
+						</span>
+					</a>
+				</li>
 
-					<!-- list of notes -->
-					<template v-for="item in noteItems">
-						<AppNavigationItem v-if="filter.category!==null && filter.category!==item.category"
-							:key="item.category" :item="categoryToItem(item.category)"
-						/>
-						<NavigationNoteItem v-for="note in item.notes"
-							:key="note.id" :note="note"
-							@note-deleted="routeDefault"
-						/>
-					</template>
-				</ul>
+				<!-- nothing found -->
+				<li v-if="!filteredNotes.length">
+					<span v-if="filter.search" class="nav-entry">
+						<div id="emptycontent" class="emptycontent-search">
+							<div class="icon-search" />
+							<h2 v-if="filter.category">
+								{{ t('notes', 'No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
+							</h2>
+							<h2 v-else>
+								{{ t('notes', 'No search result for “{search}”', { search: filter.search }) }}
+							</h2>
+						</div>
+					</span>
+				</li>
 
-				<AppSettings v-show="!loading.notes" />
-			</AppNavigation>
-		</template>
+				<!-- list of notes -->
+				<template v-for="item in noteItems">
+					<AppNavigationItem v-if="filter.category!==null && filter.category!==item.category"
+						:key="item.category" :item="categoryToItem(item.category)"
+					/>
+					<NavigationNoteItem v-for="note in item.notes"
+						:key="note.id" :note="note"
+						@note-deleted="routeDefault"
+					/>
+				</template>
+			</ul>
 
-		<template #content>
-			<!-- the following div is needed for keeping the app-navigation-toggle inserted by the nextcloud/server -->
-			<div class="content-wrapper">
-				<router-view />
-			</div>
-		</template>
+			<AppSettings v-show="!loading.notes" />
+		</AppNavigation>
 
-		<template v-if="sidebarOpen" #sidebar>
-			<router-view name="sidebar" />
-		</template>
-	</AppContent>
+		<router-view />
+
+		<router-view name="sidebar" />
+	</Content>
 </template>
 
 <script>
 import {
-	AppContent,
 	AppNavigation,
 	AppNavigationNew,
 	AppNavigationItem,
+	Content,
 } from 'nextcloud-vue'
 import AppSettings from './AppSettings'
 import NavigationNoteItem from './NavigationNoteItem'
@@ -90,11 +81,11 @@ export default {
 	name: 'App',
 
 	components: {
-		AppContent,
 		AppNavigation,
 		AppNavigationNew,
 		AppNavigationItem,
 		AppSettings,
+		Content,
 		NavigationNoteItem,
 	},
 
@@ -112,10 +103,6 @@ export default {
 	},
 
 	computed: {
-		sidebarOpen() {
-			return store.state.sidebarOpen
-		},
-
 		notes() {
 			return store.state.notes
 		},

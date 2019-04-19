@@ -1,46 +1,52 @@
 <template>
-	<div class="note-meta" style="padding: 20px">
-		<h2>{{ note.title }}</h2>
-		<div>
-			{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
-			<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')" @click="onManualSave"> * </span>
-		</div>
-		<div v-show="note.error" class="note-error" :title="t('notes', 'Click here to try again')"
-			@click="onManualSave"
-		>
-			{{ t('notes', 'Saving failed!') }}
-		</div>
-		<div v-show="note.content && note.content.length > 0" class="note-word-count">
-			{{ note.content | wordCount }}
-		</div>
-		<div class="note-category" :title="t('notes', 'Set category')">
-			<form class="category" @submit.prevent.stop="">
-				<Multiselect id="category" :value="category" :options="categories"
-					:placeholder="t('notes', 'Uncategorized')"
-					:disabled="loading.category"
-					:class="{'icon-loading-small': loading.category}"
-					:show-no-results="false"
-					:taggable="true"
-					:preserve-search="true"
-					@input="onSaveCategory"
-					@close="onFinishEditCategory"
-					@search-change="onEditCategory"
-				/>
-				<input
-					type="text" style="display: none"
-				><input
-					type="submit" value=""
-					class="icon-confirm loading"
-					:disabled="loading.category"
-				>
-			</form>
-		</div>
-		<a class="close icon-close" href="#" @click.prevent.stop="onCloseSidebar"><span class="hidden-visually">{{ t('notes', 'Close') }}</span></a>
-	</div>
+	<AppSidebar v-if="sidebarOpen"
+		:title="note.title" :subtitle="subtitle"
+		@close="onCloseSidebar"
+	>
+		<AppSidebarTab name="test" icon="test">
+			<div>
+				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')" @click="onManualSave"> * </span>
+			</div>
+			<div v-show="note.error" class="note-error" :title="t('notes', 'Click here to try again')"
+				@click="onManualSave"
+			>
+				{{ t('notes', 'Saving failed!') }}
+			</div>
+			<div v-show="note.content && note.content.length > 0" class="note-word-count">
+				{{ note.content | wordCount }}
+			</div>
+			<div class="note-category" :title="t('notes', 'Set category')">
+				<form class="category" @submit.prevent.stop="">
+					<Multiselect id="category" :value="category" :options="categories"
+						:placeholder="t('notes', 'Uncategorized')"
+						:disabled="loading.category"
+						:class="{'icon-loading-small': loading.category}"
+						:show-no-results="false"
+						:taggable="true"
+						:preserve-search="true"
+						@input="onSaveCategory"
+						@close="onFinishEditCategory"
+						@search-change="onEditCategory"
+					/>
+					<input
+						type="text" style="display: none"
+					><input
+						type="submit" value=""
+						class="icon-confirm loading"
+						:disabled="loading.category"
+					>
+				</form>
+			</div>
+		</AppSidebarTab>
+	</AppSidebar>
 </template>
 <script>
 
-import { Multiselect } from 'nextcloud-vue'
+import {
+	AppSidebar,
+	AppSidebarTab,
+	Multiselect,
+} from 'nextcloud-vue'
 import NotesService from './NotesService'
 import store from './store'
 
@@ -48,6 +54,8 @@ export default {
 	name: 'Sidebar',
 
 	components: {
+		AppSidebar,
+		AppSidebarTab,
 		Multiselect,
 	},
 
@@ -97,8 +105,14 @@ export default {
 		formattedDate() {
 			return OC.Util.formatDate(this.note.modified * 1000)
 		},
+		subtitle() {
+			return t('notes', 'Last modified: {date}', { date: this.formattedDate })
+		},
 		categories() {
 			return NotesService.getCategories(0, false)
+		},
+		sidebarOpen() {
+			return store.state.sidebarOpen
 		},
 	},
 
