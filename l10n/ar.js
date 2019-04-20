@@ -4,9 +4,12 @@ OC.L10N.register(
     "Notes" : "الملاحظات",
     "New note" : "ملاحظة جديدة ",
     "_%n word_::_%n words_" : ["كلمة","كلمة","كلمتان","كلمات","كلمات","كلمات"],
+    "Categories" : "الفئات",
     "No notes found" : "لم يتم العثور على ملاحظات",
     "Delete note" : "حذف الملاحظة ",
     "Favorite" : "المفضلة ",
+    "Settings" : "الإعدادات",
+    "Category" : "الفئة",
     "Click here to try again" : "أنقر هنا لإعادة المحاولة",
     "Saving failed!" : "فشلت عملية الحفظ !",
     "Note saved" : "تم حفظ الملاحظة"
