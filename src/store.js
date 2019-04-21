@@ -105,6 +105,13 @@ export default new Vuex.Store({
 			}
 		},
 
+		setNoteAttribute(state, params) {
+			let note = state.notesIds[params.noteId]
+			if (note) {
+				note[params.attribute] = params.value
+			}
+		},
+
 		remove(state, id) {
 			for (let i = 0; i < state.notes.length; i++) {
 				let note = state.notes[i]

@@ -98,9 +98,7 @@ export default {
 		return axios
 			.put(this.url('/notes/' + noteId + '/favorite'), { favorite: favorite })
 			.then(response => {
-				let note = store.getters.getNote(noteId)
-				note.favorite = response.data
-				store.commit('add', note)
+				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'favorite', value: response.data })
 			})
 			.catch(err => {
 				console.error(err)
@@ -118,9 +116,7 @@ export default {
 						t('notes', 'Updating the note\'s category has failed. Is the target directory writable?')
 					)
 				}
-				let note = store.getters.getNote(noteId)
-				note.category = realCategory
-				store.commit('add', note) // TODO Einzel-Attribute aktualisieren in einem commit
+				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'category', value: realCategory })
 			})
 			.catch(err => {
 				console.error(err)
