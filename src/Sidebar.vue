@@ -1,33 +1,27 @@
 <template>
 	<AppSidebar v-if="sidebarOpen"
 		:title="note.title" :subtitle="subtitle"
+		:starred="note.favorite" @update:starred="onSetFavorite"
 		@close="onCloseSidebar"
 	>
 		<AppSidebarTab name="test" icon="test">
-			<div>
-				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')" @click="onManualSave"> * </span>
-			</div>
-			<div v-show="note.error" class="note-error" :title="t('notes', 'Click here to try again')"
-				@click="onManualSave"
-			>
-				{{ t('notes', 'Saving failed!') }}
-			</div>
-			<div v-show="note.content && note.content.length > 0" class="note-word-count">
-				{{ note.content | wordCount }}
-			</div>
 			<div class="note-category" :title="t('notes', 'Set category')">
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category" :value="category" :options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
 						:disabled="loading.category"
-						:class="{'icon-loading-small': loading.category}"
+						:class="['category-select', {'icon-loading-small': loading.category}]"
 						:show-no-results="false"
 						:taggable="true"
 						:preserve-search="true"
 						@input="onSaveCategory"
 						@close="onFinishEditCategory"
 						@search-change="onEditCategory"
-					/>
+					>
+						<template #option="{ option }">
+							<span :class="{ gray: option==='' }">{{ option | categoryLabel }}</span>
+						</template>
+					</Multiselect>
 					<input
 						type="text" style="display: none"
 					><input
@@ -36,6 +30,15 @@
 						:disabled="loading.category"
 					>
 				</form>
+			</div>
+			<div>
+				{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
+				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')" @click="onManualSave"> * </span>
+			</div>
+			<div v-show="note.error" class="note-error" :title="t('notes', 'Click here to try again')"
+				@click="onManualSave"
+			>
+				{{ t('notes', 'Saving failed!') }}
 			</div>
 		</AppSidebarTab>
 	</AppSidebar>
@@ -62,20 +65,6 @@ export default {
 	filters: {
 		categoryLabel: function(category) {
 			return NotesService.categoryLabel(category)
-		},
-		wordCount: function(value) {
-			if (value && (typeof value === 'string')) {
-				var wordCount = value.split(/\s+/).filter(
-					// only count words containing
-					// at least one alphanumeric character
-					function(value) {
-						return value.search(/[A-Za-z0-9]/) !== -1
-					}
-				).length
-				return n('notes', '%n word', '%n words', wordCount)
-			} else {
-				return 0
-			}
 		},
 	},
 
@@ -105,11 +94,26 @@ export default {
 		formattedDate() {
 			return OC.Util.formatDate(this.note.modified * 1000)
 		},
+		wordCount() {
+			let value = this.note.content
+			if (value && (typeof value === 'string')) {
+				let wordCount = value.split(/\s+/).filter(
+					// only count words containing
+					// at least one alphanumeric character
+					function(value) {
+						return value.search(/[A-Za-z0-9]/) !== -1
+					}
+				).length
+				return n('notes', '%n word', '%n words', wordCount)
+			} else {
+				return null
+			}
+		},
 		subtitle() {
-			return t('notes', 'Last modified: {date}', { date: this.formattedDate })
+			return this.wordCount
 		},
 		categories() {
-			return NotesService.getCategories(0, false)
+			return [ '', ...NotesService.getCategories(0, false) ]
 		},
 		sidebarOpen() {
 			return store.state.sidebarOpen
@@ -131,9 +135,13 @@ export default {
 			}
 		},
 
+		onSetFavorite(favorite) {
+			NotesService.setFavorite(this.note.id, favorite)
+		},
+
 		onSaveCategory(category) {
 			this.categoryInput = null
-			if (this.note.category !== category) {
+			if (category !== null && this.note.category !== category) {
 				this.loading.category = true
 				this.note.category = category
 				NotesService.setCategory(this.note.id, category)
@@ -175,5 +183,18 @@ export default {
 form.category > .multiselect,
 form.category > .icon-confirm {
 	vertical-align: middle;
+}
+
+form.category {
+	display: flex;
+	align-items: center;
+}
+
+.category-select {
+	flex-grow: 1;
+}
+
+.gray {
+	opacity: 0.5;
 }
 </style>
