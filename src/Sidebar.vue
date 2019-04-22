@@ -6,6 +6,7 @@
 	>
 		<AppSidebarTab name="test" icon="test">
 			<div class="note-category" :title="t('notes', 'Set category')">
+				<h4>{{ t('notes', 'Category') }}</h4>
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category" :value="category" :options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
@@ -31,14 +32,15 @@
 					>
 				</form>
 			</div>
-			<div>
-				{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
-				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')" @click="onManualSave"> * </span>
-			</div>
-			<div v-show="note.error" class="note-error" :title="t('notes', 'Click here to try again')"
-				@click="onManualSave"
+			<div class="modified"
+				:title="t('notes', 'Click here to save manually')"
+				 @click="onManualSave"
 			>
-				{{ t('notes', 'Saving failed!') }}
+				<div v-show="note.error" class="note-error">
+					{{ t('notes', 'Saving failed!') }}
+				</div>
+				{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
+				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
 			</div>
 		</AppSidebarTab>
 	</AppSidebar>
@@ -152,7 +154,7 @@ export default {
 		},
 
 		onManualSave() {
-			// TODO
+			NotesService.saveNoteManually(this.note.id)
 		},
 
 	},
@@ -195,6 +197,13 @@ form.category {
 }
 
 .gray {
+	opacity: 0.5;
+}
+
+.modified {
+	position: absolute;
+	bottom: 0;
+	padding: 1ex 0;
 	opacity: 0.5;
 }
 </style>

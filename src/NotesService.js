@@ -151,6 +151,11 @@ export default {
 		})
 	},
 
+	saveNoteManually(noteId) {
+		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'error', value: false })
+		this.saveNote(noteId, true)
+	},
+
 	getCategories(maxLevel, details) {
 		return store.getters.getCategories(maxLevel, details)
 	},

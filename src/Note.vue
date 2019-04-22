@@ -139,13 +139,9 @@ export default {
 			}
 		},
 
+		// TODO register shortcut CTRL+S globally
 		onManualSave() {
-			let note = {
-				...this.note,
-				error: false,
-			}
-			store.commit('add', note)
-			NotesService.saveNote(note.id, true)
+			NotesService.saveNoteManually(this.note.id)
 		},
 	},
 }
