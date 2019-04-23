@@ -34,7 +34,7 @@
 			</div>
 			<div class="modified"
 				:title="t('notes', 'Click here to save manually')"
-				 @click="onManualSave"
+				@click="onManualSave"
 			>
 				<div v-show="note.error" class="note-error">
 					{{ t('notes', 'Saving failed!') }}
