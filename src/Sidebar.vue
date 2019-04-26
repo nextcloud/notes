@@ -1,7 +1,9 @@
 <template>
 	<AppSidebar v-if="sidebarOpen"
 		:title="note.title" :subtitle="subtitle"
-		:starred="note.favorite" @update:starred="onSetFavorite"
+		:star-loading="loading.favorite"
+		:starred="note.favorite"
+		@update:starred="onSetFavorite"
 		@close="onCloseSidebar"
 	>
 		<AppSidebarTab name="test" icon="test">
@@ -81,6 +83,7 @@ export default {
 		return {
 			loading: {
 				category: false,
+				favorite: false,
 			},
 			categoryInput: null,
 		}
@@ -138,7 +141,11 @@ export default {
 		},
 
 		onSetFavorite(favorite) {
+			this.loading.favorite = true
 			NotesService.setFavorite(this.note.id, favorite)
+				.finally(() => {
+					this.loading.favorite = false
+				})
 		},
 
 		onSaveCategory(category) {
