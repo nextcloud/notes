@@ -17,7 +17,7 @@
 import {
 	AppContent,
 } from 'nextcloud-vue'
-import TheEditor from './EditorTUI'
+import TheEditor from './EditorEasyMDE'
 import NotesService from './NotesService'
 import store from './store'
 
@@ -152,9 +152,7 @@ export default {
 }
 
 .note-editor {
-	height: 100%;
-	overflow-y: auto;
-	overflow-x: hidden;
+	min-height: 100%;
 	background-color: var(--color-main-background);
 }
 

@@ -1,5 +1,7 @@
 <template>
-	<p>{{ value }}</p>
+	<p class="editor">
+		{{ value }}
+	</p>
 </template>
 <script>
 
@@ -14,3 +16,10 @@ export default {
 	},
 }
 </script>
+<style scoped>
+.editor {
+	padding: 1em;
+	font-size: 150%;
+	white-space: pre-wrap;
+}
+</style>
