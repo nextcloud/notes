@@ -112,7 +112,7 @@ export default {
 
 /* Markdown markup */
 .CodeMirror .cm-formatting {
-	opacity: 0.5;
+	opacity: 0.3;
 }
 
 .CodeMirror .cm-formatting-task,
@@ -149,6 +149,11 @@ export default {
 .CodeMirror .cm-comment {
 	font-family: MONOSPACE;
 	font-size: 90%;
+}
+
+/* Quotes */
+.cm-s-easymde .cm-quote {
+	color: inherit;
 }
 
 /* Checkboxes */
