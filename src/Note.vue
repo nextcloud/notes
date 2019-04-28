@@ -1,6 +1,7 @@
 <template>
 	<AppContent :class="{ loading: loading || isManualSave }">
-		<div v-if="note && !loading" id="note-editor" class="note-editor"
+		<div v-if="note && !loading" id="note-editor"
+			class="note-editor" :class="{ fullscreen: fullscreen }"
 			@keyup.ctrl.83.prevent.stop="onManualSave"
 			@keyup.meta.83.prevent.stop="onManualSave"
 		>
@@ -39,6 +40,7 @@ export default {
 	data: function() {
 		return {
 			loading: false,
+			fullscreen: false,
 		}
 	},
 
@@ -62,6 +64,9 @@ export default {
 
 	created() {
 		this.fetchData()
+		// TODO move the following from jQuery to plain JS
+		/* global $ */
+		$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', this.onDetectFullscreen)
 	},
 
 	destroyed() {
@@ -93,6 +98,10 @@ export default {
 			}
 		},
 
+		onDetectFullscreen() {
+			this.fullscreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen
+		},
+
 		onToggleDistractionFree() {
 			function launchIntoFullscreen(element) {
 				if (element.requestFullscreen) {
@@ -116,7 +125,7 @@ export default {
 				}
 			}
 
-			if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement) {
+			if (this.fullscreen) {
 				exitFullscreen()
 			} else {
 				launchIntoFullscreen(document.getElementById('note-editor'))
@@ -147,15 +156,20 @@ export default {
 }
 </script>
 <style scoped>
-.note-wrapper {
-	height: 100%;
-}
-
 .note-editor {
 	min-height: 100%;
 	background-color: var(--color-main-background);
 }
 
+/* distraction free styles */
+.note-editor.fullscreen {
+	width: 100vw;
+	height: 100vh;
+	overflow-y: auto;
+	background-color: var(--color-main-background);
+}
+
+/* main editor button */
 .action-buttons {
 	position: fixed;
 	bottom: 4px;
