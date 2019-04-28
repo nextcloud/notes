@@ -5,7 +5,10 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+window.tn = t.bind(this, 'notes')
+
 Vue.prototype.t = t
+Vue.prototype.tn = tn
 Vue.prototype.n = n
 Vue.prototype.OC = OC
 Vue.prototype.OCA = OCA

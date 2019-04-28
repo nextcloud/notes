@@ -66,7 +66,6 @@ export default {
 			/* Initialize Checkboxes */
 			let editor = this
 			// TODO move the following from jQuery to plain JS
-			/* global $ */
 			$('.CodeMirror-code').on('mousedown.checkbox touchstart.checkbox', '.cm-formatting-task', function(e) {
 				e.preventDefault()
 				e.stopImmediatePropagation()
@@ -76,7 +75,6 @@ export default {
 
 		toggleCheckbox(el) {
 			// TODO move the following from jQuery to plain JS
-			/* global $ */
 			let $el = $(el)
 			let doc = this.mde.codemirror.getDoc()
 			let index = $el.parents('.CodeMirror-line').index()

@@ -7,11 +7,11 @@
 		@close="onCloseSidebar"
 	>
 		<AppSidebarTab name="test" icon="test">
-			<div class="note-category" :title="t('notes', 'Set category')">
-				<h4>{{ t('notes', 'Category') }}</h4>
+			<div class="note-category" :title="tn('Set category')">
+				<h4>{{ tn('Category') }}</h4>
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category" :value="category" :options="categories"
-						:placeholder="t('notes', 'Uncategorized')"
+						:placeholder="tn('Uncategorized')"
 						:disabled="loading.category"
 						:class="['category-select', {'icon-loading-small': loading.category}]"
 						:show-no-results="false"
@@ -35,14 +35,14 @@
 				</form>
 			</div>
 			<div class="modified"
-				:title="t('notes', 'Click here to save manually')"
+				:title="tn('Click here to save manually')"
 				@click="onManualSave"
 			>
 				<div v-show="note.error" class="note-error">
-					{{ t('notes', 'Saving failed!') }}
+					{{ tn('Saving failed!') }}
 				</div>
-				{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
-				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
+				{{ tn('Last modified: {date}', { date: formattedDate }) }}
+				<span v-show="note.unsaved" :title="tn('Note has unsaved changes')"> * </span>
 			</div>
 		</AppSidebarTab>
 	</AppSidebar>

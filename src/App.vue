@@ -3,7 +3,7 @@
 		<AppNavigation :class="{loading: loading.notes}">
 			<AppNavigationNew
 				v-show="!loading.notes"
-				:text="t('notes', 'New note')"
+				:text="tn('New note')"
 				button-id="notes_new_note"
 				:button-class="['icon-add', { loading: loading.create }]"
 				@click="onNewNote"
@@ -21,10 +21,10 @@
 				<li v-if="filter.search && filteredNotes.length" class="search-result-header">
 					<a class="icon-search active">
 						<span v-if="filter.category">
-							{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
+							{{ tn('Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
 						</span>
 						<span v-else>
-							{{ t('notes', 'Search result for “{search}”', { search: filter.search }) }}
+							{{ tn('Search result for “{search}”', { search: filter.search }) }}
 						</span>
 					</a>
 				</li>
@@ -35,10 +35,10 @@
 						<div id="emptycontent" class="emptycontent-search">
 							<div class="icon-search" />
 							<h2 v-if="filter.category">
-								{{ t('notes', 'No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
+								{{ tn('No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
 							</h2>
 							<h2 v-else>
-								{{ t('notes', 'No search result for “{search}”', { search: filter.search }) }}
+								{{ tn('No search result for “{search}”', { search: filter.search }) }}
 							</h2>
 						</div>
 					</span>
@@ -115,7 +115,7 @@ export default {
 			let categories = this.categories
 			let categoryItems = []
 			categoryItems.push({
-				text: t('notes', 'All notes'),
+				text: tn('All notes'),
 				icon: 'nav-icon-recent',
 				action: this.onSelectCategory.bind(this, null),
 				utils: {
@@ -139,7 +139,7 @@ export default {
 
 		categoryItem() {
 			return {
-				text: this.filter.category === null ? t('notes', 'Categories') : NotesService.categoryLabel(this.filter.category),
+				text: this.filter.category === null ? tn('Categories') : NotesService.categoryLabel(this.filter.category),
 				icon: 'nav-icon-files',
 				collapsible: true,
 				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
@@ -271,7 +271,6 @@ export default {
 		onSearch(query) {
 			this.filter.search = query
 			// TODO move the following from jQuery to plain JS
-			/* global $ */
 			if ($('#app-navigation-toggle').css('display') !== 'none' && !$('body').hasClass('snapjs-left')) {
 				$('#app-navigation-toggle').click()
 			}
@@ -298,7 +297,7 @@ export default {
 		onClose(event) {
 			if (!this.notes.every(note => !note.unsaved)) {
 				event.preventDefault()
-				return t('notes', 'There are unsaved notes. Leaving the page will discard all changes!')
+				return tn('There are unsaved notes. Leaving the page will discard all changes!')
 			}
 		},
 	},

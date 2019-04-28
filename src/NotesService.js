@@ -113,7 +113,7 @@ export default {
 				let realCategory = response.data
 				if (category !== realCategory) {
 					OC.Notification.showTemporary(
-						t('notes', 'Updating the note\'s category has failed. Is the target directory writable?')
+						tn('Updating the note\'s category has failed. Is the target directory writable?')
 					)
 				}
 				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'category', value: realCategory })
@@ -161,6 +161,6 @@ export default {
 	},
 
 	categoryLabel(category) {
-		return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
+		return category === '' ? tn('Uncategorized') : category.replace(/\//g, ' / ')
 	},
 }

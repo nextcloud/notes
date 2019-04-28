@@ -65,7 +65,6 @@ export default {
 	created() {
 		this.fetchData()
 		// TODO move the following from jQuery to plain JS
-		/* global $ */
 		$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', this.onDetectFullscreen)
 	},
 
