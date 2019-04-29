@@ -5,6 +5,9 @@
 			@keyup.ctrl.83.prevent.stop="onManualSave"
 			@keyup.meta.83.prevent.stop="onManualSave"
 		>
+			<div v-show="!note.content" class="placeholder">
+				{{ tn('Write ...') }}
+			</div>
 			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
 				<button class="icon-details btn-sidebar" @click="onToggleSidebar" />
@@ -166,6 +169,14 @@ export default {
 	height: 100vh;
 	overflow-y: auto;
 	background-color: var(--color-main-background);
+}
+
+/* placeholder */
+.placeholder {
+	position: absolute;
+	padding: 2em;
+	font-size: 16px;
+	opacity: 0.5;
 }
 
 /* main editor button */

@@ -40,6 +40,7 @@ export default {
 
 	mounted() {
 		this.initialize()
+		this.mde.codemirror.focus()
 	},
 
 	destroyed() {
@@ -106,6 +107,7 @@ export default {
 	font-size: 16px;
 	line-height: 1.5em;
 	border: none;
+	background-color: inherit;
 }
 
 /* Markdown markup */
