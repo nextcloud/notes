@@ -189,6 +189,7 @@ export default {
 	justify-content: space-around;
 	width: 100px;
 }
+
 .action-buttons button {
 	padding: 14px;
 	width: 40px;
