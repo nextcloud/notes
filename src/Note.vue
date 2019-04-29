@@ -2,8 +2,6 @@
 	<AppContent :class="{ loading: loading || isManualSave }">
 		<div v-if="note && !loading" id="note-editor"
 			class="note-editor" :class="{ fullscreen: fullscreen }"
-			@keyup.ctrl.83.prevent.stop="onManualSave"
-			@keyup.meta.83.prevent.stop="onManualSave"
 		>
 			<div v-show="!note.content" class="placeholder">
 				{{ tn('Write ...') }}
@@ -69,9 +67,11 @@ export default {
 		this.fetchData()
 		// TODO move the following from jQuery to plain JS
 		$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', this.onDetectFullscreen)
+		$(document).bind('keypress.notes.save', this.onKeyPress)
 	},
 
 	destroyed() {
+		$(document).unbind('keypress.notes.save')
 		store.commit('setSidebarOpen', false)
 		this.onUpdateTitle(null)
 	},
@@ -150,7 +150,17 @@ export default {
 			}
 		},
 
-		// TODO register shortcut CTRL+S globally
+		onKeyPress(event) {
+			if (event.ctrlKey || event.metaKey) {
+				switch (String.fromCharCode(event.which).toLowerCase()) {
+				case 's':
+					event.preventDefault()
+					this.onManualSave()
+					break
+				}
+			}
+		},
+
 		onManualSave() {
 			NotesService.saveNoteManually(this.note.id)
 		},
