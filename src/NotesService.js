@@ -1,7 +1,10 @@
+import AppGlobal from './mixins/AppGlobal'
 import store from './store'
 import axios from 'nextcloud-axios'
 
 export default {
+
+	tn: AppGlobal.methods.tn,
 
 	url(url) {
 		url = `/apps/notes${url}`
@@ -113,7 +116,7 @@ export default {
 				let realCategory = response.data
 				if (category !== realCategory) {
 					OC.Notification.showTemporary(
-						tn('Updating the note\'s category has failed. Is the target directory writable?')
+						this.tn('Updating the note\'s category has failed. Is the target directory writable?')
 					)
 				}
 				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'category', value: realCategory })
@@ -161,6 +164,6 @@ export default {
 	},
 
 	categoryLabel(category) {
-		return category === '' ? tn('Uncategorized') : category.replace(/\//g, ' / ')
+		return category === '' ? this.tn('Uncategorized') : category.replace(/\//g, ' / ')
 	},
 }

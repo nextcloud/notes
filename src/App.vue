@@ -115,7 +115,7 @@ export default {
 			let categories = this.categories
 			let categoryItems = []
 			categoryItems.push({
-				text: tn('All notes'),
+				text: this.tn('All notes'),
 				icon: 'nav-icon-recent',
 				action: this.onSelectCategory.bind(this, null),
 				utils: {
@@ -139,7 +139,7 @@ export default {
 
 		categoryItem() {
 			return {
-				text: this.filter.category === null ? tn('Categories') : NotesService.categoryLabel(this.filter.category),
+				text: this.filter.category === null ? this.tn('Categories') : NotesService.categoryLabel(this.filter.category),
 				icon: 'nav-icon-files',
 				collapsible: true,
 				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
@@ -297,7 +297,7 @@ export default {
 		onClose(event) {
 			if (!this.notes.every(note => !note.unsaved)) {
 				event.preventDefault()
-				return tn('There are unsaved notes. Leaving the page will discard all changes!')
+				return this.tn('There are unsaved notes. Leaving the page will discard all changes!')
 			}
 		},
 	},

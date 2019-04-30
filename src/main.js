@@ -4,14 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import AppGlobal from './mixins/AppGlobal'
 
-window.tn = t.bind(this, 'notes')
-
-Vue.prototype.t = t
-Vue.prototype.tn = tn
-Vue.prototype.n = n
-Vue.prototype.OC = OC
-Vue.prototype.OCA = OCA
+Vue.mixin(AppGlobal)
 
 export default new Vue({
 	el: '#content',

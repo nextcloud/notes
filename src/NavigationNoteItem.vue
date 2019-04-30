@@ -46,12 +46,12 @@ export default {
 				utils: {
 					actions: [
 						{
-							text: tn('Favorite'),
+							text: this.tn('Favorite'),
 							icon: 'icon-starred' + (this.loading.favorite ? ' loading' : ''),
 							action: this.onToggleFavorite,
 						},
 						{
-							text: tn('Delete note'),
+							text: this.tn('Delete note'),
 							icon: 'icon-delete' + (this.loading.delete ? ' loading' : ''),
 							action: this.onDeleteNote,
 						},
