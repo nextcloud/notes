@@ -191,19 +191,13 @@ export default {
 
 /* main editor button */
 .action-buttons {
-	position: sticky;
-	bottom: 5px;
-	left: 100%;
+	position: fixed;
+	bottom: 4px;
+	right: 20px;
 	z-index: 2000;
-	display: flex;
-	justify-content: space-around;
-	width: 100px;
 }
 
 .action-buttons button {
-	padding: 14px;
-	width: 40px;
-	height: 40px;
-	margin: 0;
+	padding: 15px;
 }
 </style>
