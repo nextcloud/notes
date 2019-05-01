@@ -103,11 +103,16 @@ export default {
 
 .CodeMirror {
 	min-height: 100%;
-	max-width: 47em;
-	font-size: 16px;
 	line-height: 1.5em;
 	border: none;
 	background-color: inherit;
+}
+
+/* fix for mobile */
+.CodeMirror-code {
+	width: 100% !important;
+	border: none !important;
+	background-color: inherit !important;
 }
 
 /* Markdown markup */
@@ -177,7 +182,7 @@ export default {
 	position: absolute;
 }
 
-.CodeMirro .cm-formatting-task.cm-property + span {
+.CodeMirror .cm-formatting-task.cm-property + span {
 	opacity: 0.5;
 	text-decoration: line-through;
 }

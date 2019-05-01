@@ -4,11 +4,11 @@
 			class="note-editor" :class="{ fullscreen: fullscreen }"
 		>
 			<div v-show="!note.content" class="placeholder">
-				{{ tn('Write ...') }}
+				{{ tn('Write') }} …
 			</div>
 			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
-				<button class="icon-details btn-sidebar" @click="onToggleSidebar" />
+				<button v-show="!fullscreen" class="icon-details btn-sidebar" @click="onToggleSidebar" />
 				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree" />
 			</span>
 		</div>
@@ -170,6 +170,8 @@ export default {
 <style scoped>
 .note-editor {
 	min-height: 100%;
+	max-width: 47em;
+	font-size: 16px;
 	background-color: var(--color-main-background);
 }
 
@@ -178,14 +180,12 @@ export default {
 	width: 100vw;
 	height: 100vh;
 	overflow-y: auto;
-	background-color: var(--color-main-background);
 }
 
 /* placeholder */
 .placeholder {
 	position: absolute;
 	padding: 2em;
-	font-size: 16px;
 	opacity: 0.5;
 }
 
