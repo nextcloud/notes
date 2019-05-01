@@ -72,8 +72,8 @@ import {
 	AppNavigationItem,
 	Content,
 } from 'nextcloud-vue'
-import AppSettings from './AppSettings'
-import NavigationNoteItem from './NavigationNoteItem'
+import AppSettings from './components/AppSettings'
+import NavigationNoteItem from './components/NavigationNoteItem'
 import NotesService from './NotesService'
 import store from './store'
 

@@ -54,8 +54,8 @@ import {
 	AppSidebarTab,
 	Multiselect,
 } from 'nextcloud-vue'
-import NotesService from './NotesService'
-import store from './store'
+import NotesService from '../NotesService'
+import store from '../store'
 
 export default {
 	name: 'Sidebar',

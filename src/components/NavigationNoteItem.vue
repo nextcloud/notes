@@ -6,7 +6,7 @@
 import {
 	AppNavigationItem,
 } from 'nextcloud-vue'
-import NotesService from './NotesService'
+import NotesService from '../NotesService'
 
 export default {
 	name: 'NavigationNoteItem',

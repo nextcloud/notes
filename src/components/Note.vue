@@ -20,8 +20,8 @@ import {
 	AppContent,
 } from 'nextcloud-vue'
 import TheEditor from './EditorEasyMDE'
-import NotesService from './NotesService'
-import store from './store'
+import NotesService from '../NotesService'
+import store from '../store'
 
 export default {
 	name: 'Note',

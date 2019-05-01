@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Welcome from './Welcome'
-import Note from './Note'
-import Sidebar from './Sidebar'
+import Welcome from './components/Welcome'
+import Note from './components/Note'
+import Sidebar from './components/Sidebar'
 
 Vue.use(Router)
 
