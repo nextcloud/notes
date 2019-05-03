@@ -34,9 +34,15 @@ export default {
 
 	computed: {
 		item() {
+			let icon = ''
+			if (this.note.error) {
+				icon = 'nav-icon icon-error-color'
+			} else if (this.note.favorite) {
+				icon = 'nav-icon icon-starred'
+			}
 			return {
 				text: this.note.title + (this.note.unsaved ? ' *' : ''),
-				icon: this.note.favorite ? 'nav-icon icon-starred' : '',
+				icon: icon,
 				router: {
 					name: 'note',
 					params: {
@@ -65,6 +71,8 @@ export default {
 		onToggleFavorite() {
 			this.loading.favorite = true
 			NotesService.setFavorite(this.note.id, !this.note.favorite)
+				.catch(() => {
+				})
 				.finally(() => {
 					this.loading.favorite = false
 					this.menuOpen = false
@@ -77,6 +85,8 @@ export default {
 			NotesService.deleteNote(this.note.id)
 				.then(() => {
 					this.$emit('note-deleted')
+				})
+				.catch(() => {
 				})
 				.finally(() => {
 					this.loading.delete = false

@@ -143,6 +143,8 @@ export default {
 		onSetFavorite(favorite) {
 			this.loading.favorite = true
 			NotesService.setFavorite(this.note.id, favorite)
+				.catch(() => {
+				})
 				.finally(() => {
 					this.loading.favorite = false
 				})
@@ -154,6 +156,8 @@ export default {
 				this.loading.category = true
 				this.note.category = category
 				NotesService.setCategory(this.note.id, category)
+					.catch(() => {
+					})
 					.finally(() => {
 						this.loading.category = false
 					})

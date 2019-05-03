@@ -24,13 +24,6 @@ export default new Vuex.Store({
 			if (state.notesIds[id] === undefined) {
 				return null
 			}
-			if (state.notesIds[id].error) {
-				OC.Notification.show(
-					state.notesIds[id].errorMessage,
-					{ type: 'error' }
-				)
-				return false
-			}
 			return state.notesIds[id]
 		},
 
@@ -108,7 +101,7 @@ export default new Vuex.Store({
 		setNoteAttribute(state, params) {
 			let note = state.notesIds[params.noteId]
 			if (note) {
-				note[params.attribute] = params.value
+				Vue.set(note, params.attribute, params.value)
 			}
 		},
 

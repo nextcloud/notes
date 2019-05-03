@@ -11,6 +11,10 @@ export default {
 		return OC.generateUrl(url)
 	},
 
+	handleSyncError(message) {
+		OC.Notification.showTemporary(message + ' ' + this.tn('See JavaScript console for details.'))
+	},
+
 	setSettings(settings) {
 		return axios
 			.put(this.url('/settings'), settings)
@@ -21,7 +25,8 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				// TODO error handling
+				this.handleSyncError(this.tn('Updating settings has failed.'))
+				throw err
 			})
 	},
 
@@ -38,7 +43,8 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				// TODO error handling
+				this.handleSyncError(this.tn('Fetching notes has failed.'))
+				throw err
 			})
 	},
 
@@ -46,17 +52,24 @@ export default {
 		return axios
 			.get(this.url('/notes/' + noteId))
 			.then(response => {
-				store.commit('add', response.data)
+				let localNote = store.getters.getNote(parseInt(noteId))
+				// only overwrite if there are no unsaved changes
+				if (!localNote || !localNote.unsaved) {
+					store.commit('add', response.data)
+				}
 				return response.data
 			})
 			.catch(err => {
-				console.error(err)
-				// TODO error handling
+				if (err.response.status === 404) {
+					throw err
+				} else {
+					console.error(err)
+					let msg = this.tn('Fetching note {id} has failed.', { id: noteId })
+					store.commit('setNoteAttribute', { noteId: noteId, attribute: 'error', value: true })
+					store.commit('setNoteAttribute', { noteId: noteId, attribute: 'errorMessage', value: msg })
+					return store.getter.getNote(noteId)
+				}
 			})
-	},
-
-	noteExists(noteId) {
-		return store.getters.noteExists(noteId)
 	},
 
 	createNote(category) {
@@ -66,14 +79,19 @@ export default {
 				store.commit('add', response.data)
 				return response.data
 			})
+			.catch(err => {
+				console.error(err)
+				this.handleSyncError(this.tn('Creating new note has failed.'))
+				throw err
+			})
 	},
 
-	updateNote(note) {
+	_updateNote(note) {
 		return axios
 			.put(this.url('/notes/' + note.id), { content: note.content })
 			.then(response => {
 				let updated = response.data
-				note.error = false
+				note.saveError = false
 				note.title = updated.title
 				note.modified = updated.modified
 				if (updated.content === note.content) {
@@ -83,9 +101,9 @@ export default {
 				return note
 			})
 			.catch(err => {
+				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
 				console.error(err)
-				note.error = true
-				// TODO error handling
+				this.handleSyncError(this.tn('Updating note {id} has failed.', { id: note.id }))
 			})
 	},
 
@@ -94,6 +112,11 @@ export default {
 			.delete(this.url('/notes/' + noteId))
 			.then(() => {
 				store.commit('remove', noteId)
+			})
+			.catch(err => {
+				console.error(err)
+				this.handleSyncError(this.tn('Deleting note {id} has failed.', { id: noteId }))
+				throw err
 			})
 	},
 
@@ -105,7 +128,8 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				// TODO error handling
+				this.handleSyncError(this.tn('Toggling favorite for note {id} has failed.', { id: noteId }))
+				throw err
 			})
 	},
 
@@ -115,15 +139,14 @@ export default {
 			.then(response => {
 				let realCategory = response.data
 				if (category !== realCategory) {
-					OC.Notification.showTemporary(
-						this.tn('Updating the note\'s category has failed. Is the target directory writable?')
-					)
+					this.handleSyncError(this.tn('Updating the note\'s category has failed. Is the target directory writable?'))
 				}
 				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'category', value: realCategory })
 			})
 			.catch(err => {
 				console.error(err)
-				// TODO error handling
+				this.handleSyncError(this.tn('Updating the category for note {id} has failed.', { id: noteId }))
+				throw err
 			})
 	},
 
@@ -144,7 +167,7 @@ export default {
 		let promises = []
 		for (let i = 0; i < keys.length; i++) {
 			let note = unsaved[keys[i]]
-			promises.push(this.updateNote(note))
+			promises.push(this._updateNote(note))
 		}
 		store.commit('clearUnsaved')
 		Promise.all(promises).finally(() => {
@@ -155,8 +178,12 @@ export default {
 	},
 
 	saveNoteManually(noteId) {
-		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'error', value: false })
+		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'saveError', value: false })
 		this.saveNote(noteId, true)
+	},
+
+	noteExists(noteId) {
+		return store.getters.noteExists(noteId)
 	},
 
 	getCategories(maxLevel, details) {

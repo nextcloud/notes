@@ -49,7 +49,6 @@ export default {
 		settings() {
 			return store.state.settings
 		},
-
 	},
 
 	created() {
@@ -59,6 +58,8 @@ export default {
 		onChangeSettings() {
 			this.saving = true
 			return NotesService.setSettings(this.settings)
+				.catch(() => {
+				})
 				.finally(() => {
 					this.saving = false
 				})

@@ -1,8 +1,8 @@
 <template>
 	<Content app-name="notes" :content-class="{loading: loading.notes}">
-		<AppNavigation :class="{loading: loading.notes}">
+		<AppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<AppNavigationNew
-				v-show="!loading.notes"
+				v-show="!loading.notes && !error"
 				:text="tn('New note')"
 				button-id="notes_new_note"
 				:button-class="['icon-add', { loading: loading.create }]"
@@ -51,12 +51,12 @@
 					/>
 					<NavigationNoteItem v-for="note in item.notes"
 						:key="note.id" :note="note"
-						@note-deleted="routeDefault"
+						@note-deleted="routeFirst"
 					/>
 				</template>
 			</ul>
 
-			<AppSettings v-show="!loading.notes" @reload="reloadNotes" />
+			<AppSettings v-if="!loading.notes && !error" @reload="reloadNotes" />
 		</AppNavigation>
 
 		<router-view />
@@ -99,6 +99,7 @@ export default {
 				notes: false,
 				create: false,
 			},
+			error: false,
 		}
 	},
 
@@ -227,8 +228,13 @@ export default {
 			this.loading.notes = true
 			NotesService.fetchNotes()
 				.then(data => {
-					this.loading.notes = false
 					this.routeDefault(data.lastViewedNote)
+				})
+				.catch(() => {
+					this.error = true
+				})
+				.finally(() => {
+					this.loading.notes = false
 				})
 		},
 
@@ -253,11 +259,18 @@ export default {
 			if (this.$route.name !== 'note' || !NotesService.noteExists(this.$route.params.noteId)) {
 				if (NotesService.noteExists(defaultNoteId)) {
 					this.routeToNote(defaultNoteId)
-				} else if (this.filteredNotes.length > 0) {
-					this.routeToNote(this.filteredNotes[0].id)
 				} else {
-					this.$router.push({ name: 'welcome' })
+					this.routeFirst()
 				}
+			}
+		},
+
+		routeFirst() {
+			let availableNotes = this.filteredNotes.filter(note => !note.error)
+			if (availableNotes.length > 0) {
+				this.routeToNote(availableNotes[0].id)
+			} else {
+				this.$router.push({ name: 'welcome' })
 			}
 		},
 
@@ -281,10 +294,17 @@ export default {
 		},
 
 		onNewNote() {
+			if (this.loading.create) {
+				return
+			}
 			this.loading.create = true
 			NotesService.createNote(this.filter.category)
 				.then(note => {
 					this.routeToNote(note.id)
+				})
+				.catch(() => {
+				})
+				.finally(() => {
 					this.loading.create = false
 				})
 		},

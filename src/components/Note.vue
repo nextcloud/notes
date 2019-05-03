@@ -1,6 +1,6 @@
 <template>
-	<AppContent :class="{ loading: loading || isManualSave }">
-		<div v-if="note && !loading" id="note-editor"
+	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error) }">
+		<div v-if="!loading && note && !note.error" id="note-editor"
 			class="note-editor" :class="{ fullscreen: fullscreen }"
 		>
 			<div v-show="!note.content" class="placeholder">
@@ -8,8 +8,21 @@
 			</div>
 			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
-				<button v-show="!fullscreen" class="icon-details btn-sidebar" @click="onToggleSidebar" />
-				<button class="icon-fullscreen btn-fullscreen" @click="onToggleDistractionFree" />
+				<button v-show="note.saveError"
+					v-tooltip="tn('Save failed. Click to retry.')"
+					class="icon-error-color"
+					@click="onManualSave"
+				/>
+				<button v-show="!fullscreen"
+					v-tooltip="tn('Toggle sidebar')"
+					class="icon-details"
+					@click="onToggleSidebar"
+				/>
+				<button
+					v-tooltip="tn('Toggle fullscreen mode')"
+					class="icon-fullscreen"
+					@click="onToggleDistractionFree"
+				/>
 			</span>
 		</div>
 	</AppContent>
@@ -18,6 +31,7 @@
 
 import {
 	AppContent,
+	Tooltip,
 } from 'nextcloud-vue'
 import TheEditor from './EditorEasyMDE'
 import NotesService from '../NotesService'
@@ -29,6 +43,10 @@ export default {
 	components: {
 		AppContent,
 		TheEditor,
+	},
+
+	directives: {
+		tooltip: Tooltip,
 	},
 
 	props: {
@@ -82,12 +100,16 @@ export default {
 			this.onUpdateTitle(this.title)
 			this.loading = true
 			NotesService.fetchNote(this.noteId)
-				.then(note => {
-					this.loading = false
+				.then((note) => {
+					if (note.errorMessage) {
+						OC.Notification.showTemporary(note.errorMessage)
+					}
 				})
-				.catch(err => {
-					console.error(err)
-					// TODO error handling: show error and open another note
+				.catch(() => {
+					// note not found
+				})
+				.finally(() => {
+					this.loading = false
 				})
 		},
 
