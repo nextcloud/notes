@@ -2,21 +2,25 @@
 	<AppContent>
 		<div class="welcome-content">
 			<h2>{{ tn('Notes') }}</h2>
-			<p class="feature icon-add">
+			<div class="feature icon-add">
 				{{ tn('Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: tn('New note') }) }}
-			</p>
-			<p class="feature icon-fullscreen">
+			</div>
+			<div class="feature icon-fullscreen">
 				{{ tn('Write down your thoughts without any distractions.') }}
-			</p>
-			<p class="feature icon-toggle-filelist">
+			</div>
+			<div class="feature icon-toggle-filelist">
 				{{ tn('Use Markdown markups to style your text.') }}
-			</p>
-			<p class="feature icon-tag">
+			</div>
+			<div class="feature icon-files-dark">
 				{{ tn('Organize your notes in categories.') }}
-			</p>
-			<p class="feature icon-phone">
-				{{ tn('Install the Android app or iOS app in order to access your notes from everywhere.') }}
-			</p>
+			</div>
+			<div class="feature icon-phone">
+				{{ tn('Install the app for your mobile phone in order to access your notes from everywhere.') }}
+				<ul>
+					<li><a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">{{ tn('Android app') }}</a></li>
+					<li><a target="_blank" href="https://github.com/owncloud/notes-iOS-App">{{ tn('iOS app') }}</a></li>
+				</ul>
+			</div>
 		</div>
 	</AppContent>
 </template>
@@ -49,5 +53,10 @@ export default {
 	min-height: 32px;
 	padding-left: 32px;
 	margin-top: 1em;
+}
+
+.feature ul {
+	list-style: circle outside;
+	padding-left: 2em;
 }
 </style>
