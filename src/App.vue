@@ -312,6 +312,8 @@ export default {
 		onSelectCategory(category) {
 			this.$refs.categories.toggleCollapse()
 			this.filter.category = category
+			// TODO move the following from jQuery to plain JS
+			$('#app-navigation > ul').animate({ scrollTop: 0 }, 'fast')
 		},
 
 		onClose(event) {
