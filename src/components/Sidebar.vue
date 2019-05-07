@@ -22,7 +22,7 @@
 						@search-change="onEditCategory"
 					>
 						<template #option="{ option }">
-							<span :class="{ gray: option==='' }">{{ option | categoryLabel }}</span>
+							<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
 						</template>
 					</Multiselect>
 					<input
@@ -67,7 +67,8 @@ export default {
 	},
 
 	filters: {
-		categoryLabel: function(category) {
+		categoryOptionLabel: function(obj) {
+			let category = obj.isTag ? obj.label : obj
 			return NotesService.categoryLabel(category)
 		},
 	},
