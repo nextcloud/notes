@@ -177,19 +177,15 @@ export default {
 			function cmpRecent(a, b) {
 				if (a.favorite && !b.favorite) return -1
 				if (!a.favorite && b.favorite) return 1
-				if (a.modified > b.modified) return -1
-				if (a.modified < b.modified) return 1
-				return 0
+				return b.modified - a.modified
 			}
 
 			function cmpCategory(a, b) {
-				if (a.category < b.category) return -1
-				if (a.category > b.category) return 1
+				let cmpCat = a.category.localeCompare(b.category)
+				if (cmpCat !== 0) return cmpCat
 				if (a.favorite && !b.favorite) return -1
 				if (!a.favorite && b.favorite) return 1
-				if (a.title < b.title) return -1
-				if (a.title > b.title) return 1
-				return 0
+				return a.title.localeCompare(b.title)
 			}
 
 			notes.sort(this.filter.category === null ? cmpRecent : cmpCategory)
