@@ -4,22 +4,22 @@
 			class="note-editor" :class="{ fullscreen: fullscreen }"
 		>
 			<div v-show="!note.content" class="placeholder">
-				{{ tn('Write') }} …
+				{{ t('notes', 'Write') }} …
 			</div>
 			<TheEditor :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
 				<button v-show="note.saveError"
-					v-tooltip="tn('Save failed. Click to retry.')"
+					v-tooltip="t('notes', 'Save failed. Click to retry.')"
 					class="icon-error-color"
 					@click="onManualSave"
 				/>
 				<button v-show="!fullscreen"
-					v-tooltip="tn('Toggle sidebar')"
+					v-tooltip="t('notes', 'Toggle sidebar')"
 					class="icon-details"
 					@click="onToggleSidebar"
 				/>
 				<button
-					v-tooltip="tn('Toggle fullscreen mode')"
+					v-tooltip="t('notes', 'Toggle fullscreen mode')"
 					class="icon-fullscreen"
 					@click="onToggleDistractionFree"
 				/>

@@ -4,7 +4,7 @@ import axios from 'nextcloud-axios'
 
 export default {
 
-	tn: AppGlobal.methods.tn,
+	t: AppGlobal.methods.t,
 
 	url(url) {
 		url = `/apps/notes${url}`
@@ -12,7 +12,7 @@ export default {
 	},
 
 	handleSyncError(message) {
-		OC.Notification.showTemporary(message + ' ' + this.tn('See JavaScript console for details.'))
+		OC.Notification.showTemporary(message + ' ' + this.t('notes', 'See JavaScript console for details.'))
 	},
 
 	setSettings(settings) {
@@ -25,7 +25,7 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.tn('Updating settings has failed.'))
+				this.handleSyncError(this.t('notes', 'Updating settings has failed.'))
 				throw err
 			})
 	},
@@ -43,7 +43,7 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.tn('Fetching notes has failed.'))
+				this.handleSyncError(this.t('notes', 'Fetching notes has failed.'))
 				throw err
 			})
 	},
@@ -64,7 +64,7 @@ export default {
 					throw err
 				} else {
 					console.error(err)
-					let msg = this.tn('Fetching note {id} has failed.', { id: noteId })
+					let msg = this.t('notes', 'Fetching note {id} has failed.', { id: noteId })
 					store.commit('setNoteAttribute', { noteId: noteId, attribute: 'error', value: true })
 					store.commit('setNoteAttribute', { noteId: noteId, attribute: 'errorMessage', value: msg })
 					return store.getter.getNote(noteId)
@@ -81,7 +81,7 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.tn('Creating new note has failed.'))
+				this.handleSyncError(this.t('notes', 'Creating new note has failed.'))
 				throw err
 			})
 	},
@@ -103,7 +103,7 @@ export default {
 			.catch(err => {
 				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
 				console.error(err)
-				this.handleSyncError(this.tn('Updating note {id} has failed.', { id: note.id }))
+				this.handleSyncError(this.t('notes', 'Updating note {id} has failed.', { id: note.id }))
 			})
 	},
 
@@ -115,7 +115,7 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.tn('Deleting note {id} has failed.', { id: noteId }))
+				this.handleSyncError(this.t('notes', 'Deleting note {id} has failed.', { id: noteId }))
 				throw err
 			})
 	},
@@ -128,7 +128,7 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.tn('Toggling favorite for note {id} has failed.', { id: noteId }))
+				this.handleSyncError(this.t('notes', 'Toggling favorite for note {id} has failed.', { id: noteId }))
 				throw err
 			})
 	},
@@ -139,13 +139,13 @@ export default {
 			.then(response => {
 				let realCategory = response.data
 				if (category !== realCategory) {
-					this.handleSyncError(this.tn('Updating the note\'s category has failed. Is the target directory writable?'))
+					this.handleSyncError(this.t('notes', 'Updating the note\'s category has failed. Is the target directory writable?'))
 				}
 				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'category', value: realCategory })
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.tn('Updating the category for note {id} has failed.', { id: noteId }))
+				this.handleSyncError(this.t('notes', 'Updating the category for note {id} has failed.', { id: noteId }))
 				throw err
 			})
 	},
@@ -191,6 +191,6 @@ export default {
 	},
 
 	categoryLabel(category) {
-		return category === '' ? this.tn('Uncategorized') : category.replace(/\//g, ' / ')
+		return category === '' ? this.t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
 	},
 }

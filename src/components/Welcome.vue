@@ -1,24 +1,24 @@
 <template>
 	<AppContent>
 		<div class="welcome-content">
-			<h2>{{ tn('Notes') }}</h2>
+			<h2>{{ t('notes', 'Notes') }}</h2>
 			<div class="feature icon-add">
-				{{ tn('Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: tn('New note') }) }}
+				{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
 			</div>
 			<div class="feature icon-fullscreen">
-				{{ tn('Write down your thoughts without any distractions.') }}
+				{{ t('notes', 'Write down your thoughts without any distractions.') }}
 			</div>
 			<div class="feature icon-toggle-filelist">
-				{{ tn('Use Markdown markups to style your text.') }}
+				{{ t('notes', 'Use Markdown markups to style your text.') }}
 			</div>
 			<div class="feature icon-files-dark">
-				{{ tn('Organize your notes in categories.') }}
+				{{ t('notes', 'Organize your notes in categories.') }}
 			</div>
 			<div class="feature icon-phone">
-				{{ tn('Install the app for your mobile phone in order to access your notes from everywhere.') }}
+				{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 				<ul>
-					<li><a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">{{ tn('Android app') }}</a></li>
-					<li><a target="_blank" href="https://github.com/owncloud/notes-iOS-App">{{ tn('iOS app') }}</a></li>
+					<li><a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">{{ t('notes', 'Android app') }}</a></li>
+					<li><a target="_blank" href="https://github.com/owncloud/notes-iOS-App">{{ t('notes', 'iOS app') }}</a></li>
 				</ul>
 			</div>
 		</div>

@@ -56,12 +56,12 @@ export default {
 				utils: {
 					actions: [
 						{
-							text: this.note.favorite ? this.tn('Remove from favorites') : this.tn('Add to favorites'),
+							text: this.note.favorite ? this.t('notes', 'Remove from favorites') : this.t('notes', 'Add to favorites'),
 							icon: iconActionFavorite,
 							action: this.onToggleFavorite,
 						},
 						{
-							text: this.tn('Delete note'),
+							text: this.t('notes', 'Delete note'),
 							icon: 'icon-delete' + (this.loading.delete ? ' loading' : ''),
 							action: this.onDeleteNote,
 						},

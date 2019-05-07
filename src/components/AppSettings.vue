@@ -1,19 +1,19 @@
 <template>
-	<AppNavigationSettings :title="tn('Settings')" :class="{ loading: saving }">
+	<AppNavigationSettings :title="t('notes', 'Settings')" :class="{ loading: saving }">
 		<div class="settings-block">
 			<p class="settings-hint">
-				<label for="notesPath">{{ tn('Folder to store your notes') }}</label>
+				<label for="notesPath">{{ t('notes', 'Folder to store your notes') }}</label>
 			</p>
 			<form @submit.prevent="onChangeSettingsReload">
 				<input id="notesPath" v-model="settings.notesPath" type="text"
-					name="notesPath" :placeholder="tn('path to notes')"
+					name="notesPath" :placeholder="t('notes', 'path to notes')"
 					@change="onChangeSettingsReload"
 				><input type="submit" class="icon-confirm" value="">
 			</form>
 		</div>
 		<div class="settings-block">
 			<p class="settings-hint">
-				<label for="fileSuffix">{{ tn('File extension for new notes') }}</label>
+				<label for="fileSuffix">{{ t('notes', 'File extension for new notes') }}</label>
 			</p>
 			<select id="fileSuffix" v-model="settings.fileSuffix" @change="onChangeSettings">
 				<option v-for="ext in extensions" :key="ext" :value="ext">
