@@ -40,6 +40,10 @@ export default {
 			} else if (this.note.favorite) {
 				icon = 'nav-icon icon-starred'
 			}
+			let iconActionFavorite = this.note.favorite ? 'icon-star-dark' : 'icon-starred'
+			if (this.loading.favorite) {
+				iconActionFavorite += ' loading'
+			}
 			return {
 				text: this.note.title + (this.note.unsaved ? ' *' : ''),
 				icon: icon,
@@ -52,8 +56,8 @@ export default {
 				utils: {
 					actions: [
 						{
-							text: this.tn('Favorite'),
-							icon: 'icon-starred' + (this.loading.favorite ? ' loading' : ''),
+							text: this.note.favorite ? this.tn('Remove from favorites') : this.tn('Add to favorites'),
+							icon: iconActionFavorite,
 							action: this.onToggleFavorite,
 						},
 						{
