@@ -9,52 +9,13 @@
 				@click="onNewNote"
 			/>
 
-			<ul v-show="!loading.notes">
-				<!-- collapsible categories -->
-				<AppNavigationItem
-					v-if="notes.length"
-					ref="categories"
-					:item="categoryItem"
-				/>
-
-				<!-- search result header -->
-				<li v-if="filter.search && filteredNotes.length" class="search-result-header">
-					<a class="icon-search active">
-						<span v-if="filter.category">
-							{{ t('notes', 'Search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
-						</span>
-						<span v-else>
-							{{ t('notes', 'Search result for “{search}”', { search: filter.search }) }}
-						</span>
-					</a>
-				</li>
-
-				<!-- nothing found -->
-				<li v-if="!filteredNotes.length">
-					<span v-if="filter.search" class="nav-entry">
-						<div id="emptycontent" class="emptycontent-search">
-							<div class="icon-search" />
-							<h2 v-if="filter.category">
-								{{ t('notes', 'No search result for “{search}” in {category}', { search: filter.search, category: filter.category }) }}
-							</h2>
-							<h2 v-else>
-								{{ t('notes', 'No search result for “{search}”', { search: filter.search }) }}
-							</h2>
-						</div>
-					</span>
-				</li>
-
-				<!-- list of notes -->
-				<template v-for="item in noteItems">
-					<AppNavigationItem v-if="filter.category!==null && filter.category!==item.category"
-						:key="item.category" :item="categoryToItem(item.category)"
-					/>
-					<NavigationNoteItem v-for="note in item.notes"
-						:key="note.id" :note="note"
-						@note-deleted="routeFirst"
-					/>
-				</template>
-			</ul>
+			<NavigationList v-show="!loading.notes"
+				:filtered-notes="filteredNotes"
+				:category="filter.category"
+				:search="filter.search"
+				@category-selected="onSelectCategory"
+				@note-deleted="routeFirst"
+			/>
 
 			<AppSettings v-if="!loading.notes && !error" @reload="reloadNotes" />
 		</AppNavigation>
@@ -69,11 +30,10 @@
 import {
 	AppNavigation,
 	AppNavigationNew,
-	AppNavigationItem,
 	Content,
 } from 'nextcloud-vue'
 import AppSettings from './components/AppSettings'
-import NavigationNoteItem from './components/NavigationNoteItem'
+import NavigationList from './components/NavigationList'
 import NotesService from './NotesService'
 import store from './store'
 
@@ -83,10 +43,9 @@ export default {
 	components: {
 		AppNavigation,
 		AppNavigationNew,
-		AppNavigationItem,
 		AppSettings,
 		Content,
-		NavigationNoteItem,
+		NavigationList,
 	},
 
 	data: function() {
@@ -106,46 +65,6 @@ export default {
 	computed: {
 		notes() {
 			return store.state.notes
-		},
-
-		categories() {
-			return NotesService.getCategories(1, true)
-		},
-
-		categoryItems() {
-			let categories = this.categories
-			let categoryItems = []
-			categoryItems.push({
-				text: this.t('notes', 'All notes'),
-				icon: 'nav-icon-recent',
-				action: this.onSelectCategory.bind(this, null),
-				utils: {
-					counter: this.notes.length,
-				},
-			})
-			for (let i = 0; i < categories.length; i++) {
-				let category = categories[i]
-				let item = {
-					text: NotesService.categoryLabel(category.name),
-					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
-					action: this.onSelectCategory.bind(this, category.name),
-					utils: {
-						counter: category.count,
-					},
-				}
-				categoryItems.push(item)
-			}
-			return categoryItems
-		},
-
-		categoryItem() {
-			return {
-				text: this.filter.category === null ? this.t('notes', 'Categories') : NotesService.categoryLabel(this.filter.category),
-				icon: 'nav-icon-files',
-				collapsible: true,
-				classes: 'app-navigation-noclose separator-below' + (this.filter.category === null ? '' : ' category-header'),
-				children: this.categoryItems,
-			}
 		},
 
 		filteredNotes() {
@@ -192,24 +111,6 @@ export default {
 
 			return notes
 		},
-
-		groupedNotes() {
-			return this.filteredNotes.reduce(function(g, note) {
-				if (g.length === 0 || g[g.length - 1].category !== note.category) {
-					g.push({ category: note.category, notes: [] })
-				}
-				g[g.length - 1].notes.push(note)
-				return g
-			}, [])
-		},
-
-		noteItems() {
-			if (this.filter.category == null) {
-				return [ { notes: this.filteredNotes } ]
-			} else {
-				return this.groupedNotes
-			}
-		},
 	},
 
 	created() {
@@ -238,17 +139,6 @@ export default {
 			this.$router.push('/')
 			store.commit('removeAll')
 			this.loadNotes()
-		},
-
-		categoryToItem(category) {
-			let label = '…/' + category.substring(this.filter.category.length + 1)
-			return {
-				isLabel: true,
-				text: NotesService.categoryLabel(label),
-				classes: 'app-navigation-caption app-navigation-noclose',
-				icon: 'nav-icon-files',
-				action: this.onSelectCategory.bind(this, category),
-			}
 		},
 
 		routeDefault(defaultNoteId) {
@@ -306,7 +196,6 @@ export default {
 		},
 
 		onSelectCategory(category) {
-			this.$refs.categories.toggleCollapse()
 			this.filter.category = category
 			// TODO move the following from jQuery to plain JS
 			$('#app-navigation > ul').animate({ scrollTop: 0 }, 'fast')
@@ -321,29 +210,3 @@ export default {
 	},
 }
 </script>
-<style scoped>
-.content-wrapper {
-	height: 100%;
-}
-
-.separator-below {
-	border-bottom: 1px solid var(--color-border);
-}
-
-.search-result-header > a,
-.search-result-header > a * {
-	font-style: italic;
-	cursor: default;
-}
-
-li .nav-entry .emptycontent-search {
-	white-space: normal;
-}
-
-@media (max-height: 600px) {
-	li .nav-entry .emptycontent-search {
-		margin-top: inherit;
-	}
-}
-
-</style>

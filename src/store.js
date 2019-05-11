@@ -16,6 +16,10 @@ export default new Vuex.Store({
 	},
 
 	getters: {
+		numNotes: (state) => () => {
+			return state.notes.length
+		},
+
 		noteExists: (state) => (id) => {
 			return state.notesIds[id] !== undefined
 		},
