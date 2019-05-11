@@ -105,7 +105,12 @@ export default {
 	min-height: 100%;
 	line-height: 1.5em;
 	border: none;
+	color: inherit;
 	background-color: inherit;
+}
+
+.CodeMirror-cursor {
+    border-color: var(--color-main-text);
 }
 
 /* fix for mobile */
@@ -147,7 +152,7 @@ export default {
 	display: inline-block;
 	width: 100%;
 	line-height: 0.25;
-	background-color: #ccc;
+	background-color: var(--color-border-dark);
 }
 
 /* Code */
@@ -170,15 +175,16 @@ export default {
 
 .CodeMirror .cm-formatting-task.cm-meta::before {
 	content: '\2610';
-	font-size: 1.5em;
-	background: white;
-	position: absolute;
 }
 
 .CodeMirror .cm-formatting-task.cm-property::before {
 	content: '\2611';
+}
+
+.CodeMirror .cm-formatting-task.cm-meta::before,
+.CodeMirror .cm-formatting-task.cm-property::before {
 	font-size: 1.5em;
-	background: white;
+	background: var(--color-main-background);
 	position: absolute;
 }
 
