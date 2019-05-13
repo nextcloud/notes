@@ -110,7 +110,7 @@ export default {
 }
 
 .CodeMirror-cursor {
-    border-color: var(--color-main-text);
+	border-color: var(--color-main-text);
 }
 
 /* fix for mobile */
