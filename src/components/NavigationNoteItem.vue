@@ -61,6 +61,11 @@ export default {
 							action: this.onToggleFavorite,
 						},
 						{
+							text: NotesService.categoryLabel(this.note.category),
+							icon: 'icon-files-dark',
+							action: this.onCategorySelected,
+						},
+						{
 							text: this.t('notes', 'Delete note'),
 							icon: 'icon-delete' + (this.loading.delete ? ' loading' : ''),
 							action: this.onDeleteNote,
@@ -81,6 +86,11 @@ export default {
 					this.loading.favorite = false
 					this.menuOpen = false
 				})
+		},
+
+		onCategorySelected() {
+			this.menuOpen = false
+			this.$emit('category-selected', this.note.category)
 		},
 
 		onDeleteNote() {
