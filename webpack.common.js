@@ -45,9 +45,6 @@ module.exports = {
 		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 	],
 	resolve: {
-		extensions: ['*', '.js', '.vue', '.json'],
-		alias: {
-			'simplemde': 'easymde'
-		}
+		extensions: ['*', '.js', '.vue', '.json']
 	}
 }
