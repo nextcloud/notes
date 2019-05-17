@@ -6,52 +6,49 @@
 		@update:starred="onSetFavorite"
 		@close="onCloseSidebar"
 	>
-		<AppSidebarTab name="test" icon="test">
-			<div class="note-category" :title="t('notes', 'Set category')">
-				<h4>{{ t('notes', 'Category') }}</h4>
-				<form class="category" @submit.prevent.stop="">
-					<Multiselect id="category" :value="category" :options="categories"
-						:placeholder="t('notes', 'Uncategorized')"
-						:disabled="loading.category"
-						:class="['category-select', {'icon-loading-small': loading.category}]"
-						:show-no-results="false"
-						:taggable="true"
-						:preserve-search="true"
-						@input="onSaveCategory"
-						@close="onFinishEditCategory"
-						@search-change="onEditCategory"
-					>
-						<template #option="{ option }">
-							<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
-						</template>
-					</Multiselect>
-					<input
-						type="text" style="display: none"
-					><input
-						type="submit" value=""
-						class="icon-confirm loading"
-						:disabled="loading.category"
-					>
-				</form>
+		<div class="note-category" :title="t('notes', 'Set category')">
+			<h4>{{ t('notes', 'Category') }}</h4>
+			<form class="category" @submit.prevent.stop="">
+				<Multiselect id="category" :value="category" :options="categories"
+					:placeholder="t('notes', 'Uncategorized')"
+					:disabled="loading.category"
+					:class="['category-select', {'icon-loading-small': loading.category}]"
+					:show-no-results="false"
+					:taggable="true"
+					:preserve-search="true"
+					@input="onSaveCategory"
+					@close="onFinishEditCategory"
+					@search-change="onEditCategory"
+				>
+					<template #option="{ option }">
+						<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
+					</template>
+				</Multiselect>
+				<input
+					type="text" style="display: none"
+				><input
+					type="submit" value=""
+					class="icon-confirm loading"
+					:disabled="loading.category"
+				>
+			</form>
+		</div>
+		<div class="modified"
+			:title="t('notes', 'Click here to save manually')"
+			@click="onManualSave"
+		>
+			<div v-show="note.error" class="note-error">
+				{{ t('notes', 'Saving failed!') }}
 			</div>
-			<div class="modified"
-				:title="t('notes', 'Click here to save manually')"
-				@click="onManualSave"
-			>
-				<div v-show="note.error" class="note-error">
-					{{ t('notes', 'Saving failed!') }}
-				</div>
-				{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
-				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
-			</div>
-		</AppSidebarTab>
+			{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
+			<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
+		</div>
 	</AppSidebar>
 </template>
 <script>
 
 import {
 	AppSidebar,
-	AppSidebarTab,
 	Multiselect,
 } from 'nextcloud-vue'
 import NotesService from '../NotesService'
@@ -62,7 +59,6 @@ export default {
 
 	components: {
 		AppSidebar,
-		AppSidebarTab,
 		Multiselect,
 	},
 
