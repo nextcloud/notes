@@ -1,12 +1,12 @@
 <template>
 	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error) }">
-		<div v-if="!loading && note && !note.error" id="note-editor"
-			class="note-editor" :class="{ fullscreen: fullscreen }"
+		<div v-if="!loading && note && !note.error" id="note-container"
+			class="note-container" :class="{ fullscreen: fullscreen }"
 		>
 			<div v-show="!note.content" class="placeholder">
 				{{ t('notes', 'Write') }} …
 			</div>
-			<TheEditor :value="note.content" @input="onEdit" />
+			<TheEditor class="note-editor" :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
 				<button v-show="note.saveError"
 					v-tooltip="t('notes', 'Save failed. Click to retry.')"
@@ -152,7 +152,7 @@ export default {
 			if (this.fullscreen) {
 				exitFullscreen()
 			} else {
-				launchIntoFullscreen(document.getElementById('note-editor'))
+				launchIntoFullscreen(document.getElementById('note-container'))
 			}
 		},
 
@@ -190,18 +190,37 @@ export default {
 }
 </script>
 <style scoped>
-.note-editor {
+.note-container {
 	min-height: 100%;
-	max-width: 47em;
-	font-size: 16px;
+	width: 100%;
 	background-color: var(--color-main-background);
 }
 
+.note-editor {
+	max-width: 47em;
+	font-size: 16px;
+}
+
+/* center editor on large screens */
+@media (min-width: 1600px) {
+	.note-editor {
+		margin: 0 auto;
+	}
+	.note-container {
+		padding-right: 250px;
+	}
+}
+
 /* distraction free styles */
-.note-editor.fullscreen {
+.note-container.fullscreen {
 	width: 100vw;
 	height: 100vh;
 	overflow-y: auto;
+	padding: 0;
+}
+
+.note-container.fullscreen .note-editor {
+	margin: 0 auto;
 }
 
 /* placeholder */
