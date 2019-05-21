@@ -107,7 +107,7 @@ export default {
 
 	methods: {
 		categoryToItem(category) {
-			let label = '…/' + category.substring(this.category.length + 1)
+			const label = '…/' + category.substring(this.category.length + 1)
 			return {
 				isLabel: true,
 				text: NotesService.categoryLabel(label),

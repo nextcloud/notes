@@ -19,7 +19,7 @@ export default {
 		return axios
 			.put(this.url('/settings'), settings)
 			.then(response => {
-				let settings = response.data
+				const settings = response.data
 				store.commit('setSettings', settings)
 				return settings
 			})
@@ -52,7 +52,7 @@ export default {
 		return axios
 			.get(this.url('/notes/' + noteId))
 			.then(response => {
-				let localNote = store.getters.getNote(parseInt(noteId))
+				const localNote = store.getters.getNote(parseInt(noteId))
 				// only overwrite if there are no unsaved changes
 				if (!localNote || !localNote.unsaved) {
 					store.commit('add', response.data)
@@ -64,7 +64,7 @@ export default {
 					throw err
 				} else {
 					console.error(err)
-					let msg = this.t('notes', 'Fetching note {id} has failed.', { id: noteId })
+					const msg = this.t('notes', 'Fetching note {id} has failed.', { id: noteId })
 					store.commit('setNoteAttribute', { noteId: noteId, attribute: 'error', value: true })
 					store.commit('setNoteAttribute', { noteId: noteId, attribute: 'errorMessage', value: msg })
 					return store.getter.getNote(noteId)
@@ -90,7 +90,7 @@ export default {
 		return axios
 			.put(this.url('/notes/' + note.id), { content: note.content })
 			.then(response => {
-				let updated = response.data
+				const updated = response.data
 				note.saveError = false
 				note.title = updated.title
 				note.modified = updated.modified
@@ -137,7 +137,7 @@ export default {
 		return axios
 			.put(this.url('/notes/' + noteId + '/category'), { category: category })
 			.then(response => {
-				let realCategory = response.data
+				const realCategory = response.data
 				if (category !== realCategory) {
 					this.handleSyncError(this.t('notes', 'Updating the note\'s category has failed. Is the target directory writable?'))
 				}
@@ -158,17 +158,12 @@ export default {
 		this._saveNotes()
 	},
 	_saveNotes() {
-		let unsaved = store.state.unsaved
-		let keys = Object.keys(unsaved)
-		if (store.state.isSaving || keys.length === 0) {
+		const unsavedNotes = Object.values(store.state.unsaved)
+		if (store.state.isSaving || unsavedNotes.length === 0) {
 			return
 		}
 		store.commit('setSaving', true)
-		let promises = []
-		for (let i = 0; i < keys.length; i++) {
-			let note = unsaved[keys[i]]
-			promises.push(this._updateNote(note))
-		}
+		const promises = unsavedNotes.map(note => this._updateNote(note))
 		store.commit('clearUnsaved')
 		Promise.all(promises).finally(() => {
 			store.commit('setSaving', false)

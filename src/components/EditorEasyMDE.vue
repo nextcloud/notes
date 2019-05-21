@@ -64,24 +64,22 @@ export default {
 		},
 
 		initializeCheckboxes() {
-			/* Initialize Checkboxes */
-			let editor = this
 			// TODO move the following from jQuery to plain JS
-			$('.CodeMirror-code').on('mousedown.checkbox touchstart.checkbox', '.cm-formatting-task', function(e) {
-				e.preventDefault()
-				e.stopImmediatePropagation()
-				editor.toggleCheckbox(e.target)
+			$('.CodeMirror-code').on('mousedown.checkbox touchstart.checkbox', '.cm-formatting-task', event => {
+				event.preventDefault()
+				event.stopImmediatePropagation()
+				this.toggleCheckbox(event.target)
 			})
 		},
 
 		toggleCheckbox(el) {
 			// TODO move the following from jQuery to plain JS
-			let $el = $(el)
-			let doc = this.mde.codemirror.getDoc()
-			let index = $el.parents('.CodeMirror-line').index()
-			let line = doc.getLineHandle(index)
+			const $el = $(el)
+			const doc = this.mde.codemirror.getDoc()
+			const index = $el.parents('.CodeMirror-line').index()
+			const line = doc.getLineHandle(index)
 
-			let newvalue = ($el.text() === '[x]') ? '[ ]' : '[x]'
+			const newvalue = ($el.text() === '[x]') ? '[ ]' : '[x]'
 
 			// + 1 for some reason... not sure why
 			doc.replaceRange(newvalue,

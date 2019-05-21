@@ -68,9 +68,9 @@ export default {
 		},
 
 		filteredNotes() {
-			let search = this.filter.search.toLowerCase()
+			const search = this.filter.search.toLowerCase()
 
-			let notes = this.notes.filter(note => {
+			const notes = this.notes.filter(note => {
 				const searchFields = [ 'title', 'category' ]
 				if (this.filter.category !== null
 					&& this.filter.category !== note.category
@@ -78,17 +78,9 @@ export default {
 					return false
 				}
 				if (search !== '') {
-					let found = false
-					for (let j = 0; j < searchFields.length; j++) {
-						let searchField = searchFields[j]
-						if (note[searchField].toLowerCase().indexOf(search) !== -1) {
-							found = true
-							break
-						}
-					}
-					if (!found) {
-						return false
-					}
+					return searchFields.some(
+						searchField => note[searchField].toLowerCase().indexOf(search) !== -1
+					)
 				}
 				return true
 			})
@@ -100,7 +92,7 @@ export default {
 			}
 
 			function cmpCategory(a, b) {
-				let cmpCat = a.category.localeCompare(b.category)
+				const cmpCat = a.category.localeCompare(b.category)
 				if (cmpCat !== 0) return cmpCat
 				if (a.favorite && !b.favorite) return -1
 				if (!a.favorite && b.favorite) return 1
@@ -152,7 +144,7 @@ export default {
 		},
 
 		routeFirst() {
-			let availableNotes = this.filteredNotes.filter(note => !note.error)
+			const availableNotes = this.filteredNotes.filter(note => !note.error)
 			if (availableNotes.length > 0) {
 				this.routeToNote(availableNotes[0].id)
 			} else {

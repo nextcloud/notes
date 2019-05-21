@@ -114,7 +114,7 @@ export default {
 		},
 
 		onUpdateTitle(title) {
-			let defaultTitle = store.state.documentTitle
+			const defaultTitle = store.state.documentTitle
 			if (title) {
 				document.title = title + ' - ' + defaultTitle
 			} else {
@@ -162,7 +162,7 @@ export default {
 
 		onEdit(newContent) {
 			if (this.note.content !== newContent) {
-				let note = {
+				const note = {
 					...this.note,
 					content: newContent,
 					unsaved: true,

@@ -42,19 +42,16 @@ export default {
 		},
 
 		categoryItems() {
-			let categories = this.categories
-			let categoryItems = []
-			categoryItems.push({
+			const itemAllNotes = {
 				text: this.t('notes', 'All notes'),
 				icon: 'nav-icon-recent',
 				action: this.onSelectCategory.bind(this, null),
 				utils: {
 					counter: this.numNotes,
 				},
-			})
-			for (let i = 0; i < categories.length; i++) {
-				let category = categories[i]
-				let item = {
+			}
+			const itemsCategories = this.categories.map(category => (
+				{
 					text: NotesService.categoryLabel(category.name),
 					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
 					action: this.onSelectCategory.bind(this, category.name),
@@ -62,9 +59,8 @@ export default {
 						counter: category.count,
 					},
 				}
-				categoryItems.push(item)
-			}
-			return categoryItems
+			))
+			return [ itemAllNotes, ...itemsCategories ]
 		},
 
 		mainItem() {

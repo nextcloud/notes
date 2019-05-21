@@ -64,7 +64,7 @@ export default {
 
 	filters: {
 		categoryOptionLabel: function(obj) {
-			let category = obj.isTag ? obj.label : obj
+			const category = obj.isTag ? obj.label : obj
 			return NotesService.categoryLabel(category)
 		},
 	},
@@ -97,14 +97,12 @@ export default {
 			return OC.Util.formatDate(this.note.modified * 1000)
 		},
 		wordCount() {
-			let value = this.note.content
+			const value = this.note.content
 			if (value && (typeof value === 'string')) {
-				let wordCount = value.split(/\s+/).filter(
+				const wordCount = value.split(/\s+/).filter(
 					// only count words containing
 					// at least one alphanumeric character
-					function(value) {
-						return value.search(/[A-Za-z0-9]/) !== -1
-					}
+					value => value.search(/[A-Za-z0-9]/) !== -1
 				).length
 				return n('notes', '%n word', '%n words', wordCount)
 			} else {

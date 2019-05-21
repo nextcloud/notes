@@ -43,12 +43,12 @@ export default new Vuex.Store({
 				return i
 			}
 
-			let categories = {}
-			let notes = state.notes
-			for (let i = 0; i < notes.length; i += 1) {
-				let cat = notes[i].category
+			// get categories from notes
+			const categories = {}
+			for (const note of state.notes) {
+				let cat = note.category
 				if (maxLevel > 0) {
-					let index = nthIndexOf(cat, '/', maxLevel)
+					const index = nthIndexOf(cat, '/', maxLevel)
 					if (index > 0) {
 						cat = cat.substring(0, index)
 					}
@@ -59,8 +59,9 @@ export default new Vuex.Store({
 					categories[cat] += 1
 				}
 			}
-			let result = []
-			for (let category in categories) {
+			// get structured result from categories
+			const result = []
+			for (const category in categories) {
 				if (details) {
 					result.push({
 						name: category,
@@ -71,9 +72,7 @@ export default new Vuex.Store({
 				}
 			}
 			if (details) {
-				result.sort(function(a, b) {
-					return (a.name).localeCompare(b.name)
-				})
+				result.sort((a, b) => a.name.localeCompare(b.name))
 			} else {
 				result.sort()
 			}
@@ -83,7 +82,7 @@ export default new Vuex.Store({
 
 	mutations: {
 		add(state, updated) {
-			let note = state.notesIds[updated.id]
+			const note = state.notesIds[updated.id]
 			if (note) {
 				// don't update meta-data over full data
 				if (updated.content !== null || note.content === null) {
@@ -103,20 +102,17 @@ export default new Vuex.Store({
 		},
 
 		setNoteAttribute(state, params) {
-			let note = state.notesIds[params.noteId]
+			const note = state.notesIds[params.noteId]
 			if (note) {
 				Vue.set(note, params.attribute, params.value)
 			}
 		},
 
 		remove(state, id) {
-			for (let i = 0; i < state.notes.length; i++) {
-				let note = state.notes[i]
-				if (note.id === id) {
-					state.notes.splice(i, 1)
-					delete state.notesIds[id]
-					break
-				}
+			const index = state.notes.findIndex(note => note.id === id)
+			if (index !== -1) {
+				state.notes.splice(index, 1)
+				delete state.notesIds[id]
 			}
 		},
 
@@ -156,8 +152,8 @@ export default new Vuex.Store({
 
 	actions: {
 		addAll(context, notes) {
-			for (let i = 0; i < notes.length; i++) {
-				context.commit('add', notes[i])
+			for (const note of notes) {
+				context.commit('add', note)
 			}
 		},
 	},
