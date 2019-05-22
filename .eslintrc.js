@@ -1,95 +1,79 @@
 module.exports = {
 	root: true,
-	env: {
-		browser: true,
-		es6: true,
-		node: true,
-		jest: true
-	},
-	globals: {
-		$: true,
-		t: true,
-		n: true,
-		OC: true,
-		OCA: true,
-		Vue: true,
-		VueRouter: true
-	},
 	parserOptions: {
 		parser: 'babel-eslint',
-		ecmaVersion: 6
+		ecmaVersion: 6,
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:import/errors',
-		'plugin:import/warnings',
-		'plugin:node/recommended',
-		'plugin:vue/essential',
-		'plugin:vue/recommended',
-		'standard'
-	],
 	settings: {
 		'import/resolver': {
 			webpack: {
-				config: 'webpack.common.js'
+				config: 'webpack.common.js',
 			},
 			node: {
 				paths: ['src'],
-				extensions: ['.js', '.vue']
-			}
-		}
-	},
-	plugins: ['vue', 'node'],
-	rules: {
-		// space before function ()
-		'space-before-function-paren': ['error', 'never'],
-		// curly braces always space
-		'object-curly-spacing': ['error', 'always'],
-		// stay consistent with array brackets
-		'array-bracket-newline': ['error', 'consistent'],
-		// 1tbs brace style
-		'brace-style': 'error',
-		// tabs only
-		indent: ['error', 'tab'],
-		'no-tabs': 0,
-		'vue/html-indent': ['error', 'tab'],
-		// only debug console
-		'no-console': ['error', { allow: ['error', 'warn', 'info', 'debug'] }],
-		// classes blocks
-		'padded-blocks': ['error', { classes: 'always' }],
-		// always add a trailing comma, for diff readability
-		'comma-dangle': ['warn', 'always-multiline'],
-		// always have the operator in front
-		'operator-linebreak': ['error', 'before'],
-		// ternary on multiline
-		'multiline-ternary': ['error', 'always-multiline'],
-		// force proper JSDocs
-		'valid-jsdoc': [2, {
-			'prefer': {
-				'return': 'returns'
+				extensions: ['.js', '.vue'],
 			},
-			'requireReturn': false,
-			'requireReturnDescription': false
-		}],
-		// es6 import/export and require
-		'node/no-unpublished-require': ['off'],
-		'node/no-unsupported-features/es-syntax': ['off'],
-		// check case of component names
-		'vue/component-name-in-template-casing': ['error'],
-		// space before self-closing elements
+		},
+	},
+	extends: [
+		'eslint:recommended',
+		'plugin:import/recommended',
+		'plugin:vue/recommended',
+		'standard',
+	],
+	globals: {
+		$: 'readonly',
+		t: 'readonly',
+		n: 'readonly',
+		OC: 'readonly',
+		OCA: 'readonly',
+	},
+	plugins: [
+		'vue',
+	],
+	rules: {
+		// allow space before function () (was "always" in "standard")
+		'space-before-function-paren': ['error', 'never'],
+		// stay consistent with array brackets (not in "standard")
+		'array-bracket-newline': ['error', 'consistent'],
+
+		// tabs only (was spaces in "standard")
+		'indent': ['error', 'tab'],
+		// allow tabs for indentation (was forbidden in "standard")
+		'no-tabs': ['error', { allowIndentationTabs: true }],
+		// indentation in vue's html should be tabs (was spaces in "vue/strongly-recommended")
+		'vue/html-indent': ['error', 'tab'],
+
+		// only debug console (not in "standard")
+		'no-console': ['error', { allow: ['error', 'warn', 'info', 'debug'] }],
+		// always add a trailing comma, for diff readability (was "never" in "standard")
+		'comma-dangle': ['warn', 'always-multiline'],
+		// always have the operator in front (was "after" in "standard")
+		'operator-linebreak': ['error', 'before'],
+		// ternary on multiline (not in "standard")
+		'multiline-ternary': ['error', 'always-multiline'],
+
+		// disallow use of "var" (not in "standard")
+		'no-var': 'error',
+		// Suggest using const
+		'prefer-const': 'warn',
+
+		// check case of component names (not in "vue/recommended")
+		'vue/component-name-in-template-casing': 'error',
+		// no ending html tag on a new line (was warn in "vue/strongly-recommended")
+		'vue/html-closing-bracket-newline': 'error',
+		// space before self-closing elements (was warn in "vue/strongly-recommended")
 		'vue/html-closing-bracket-spacing': 'error',
-		// no ending html tag on a new line
-		'vue/html-closing-bracket-newline': ['warn', { multiline: 'always' }],
-		// code spacing with attributes
+		// code spacing with attributes (default is 1)
 		'vue/max-attributes-per-line': [
 			'error',
 			{
 				singleline: 3,
 				multiline: {
 					max: 3,
-					allowFirstLine: true
+					allowFirstLine: true,
 				}
 			}
-		]
-	}
+		],
+	},
 }
