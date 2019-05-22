@@ -3,10 +3,12 @@
 		<div v-if="!loading && note && !note.error" id="note-container"
 			class="note-container" :class="{ fullscreen: fullscreen }"
 		>
-			<div v-show="!note.content" class="placeholder">
-				{{ t('notes', 'Write') }} …
+			<div class="note-editor">
+				<div v-show="!note.content" class="placeholder">
+					{{ t('notes', 'Write …') }}
+				</div>
+				<TheEditor :value="note.content" @input="onEdit" />
 			</div>
-			<TheEditor class="note-editor" :value="note.content" @input="onEdit" />
 			<span class="action-buttons">
 				<button v-show="note.saveError"
 					v-tooltip="t('notes', 'Save failed. Click to retry.')"
