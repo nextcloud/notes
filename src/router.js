@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Loading from './components/Loading'
 import Welcome from './components/Welcome'
 import Note from './components/Note'
 import Sidebar from './components/Sidebar'
@@ -11,6 +12,11 @@ export default new Router({
 	base: OC.generateUrl('/apps/notes'),
 	linkActiveClass: 'active',
 	routes: [
+		{
+			path: '/',
+			name: 'loading',
+			component: Loading,
+		},
 		{
 			path: '/welcome',
 			name: 'welcome',
