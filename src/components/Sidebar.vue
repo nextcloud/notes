@@ -6,42 +6,44 @@
 		@update:starred="onSetFavorite"
 		@close="onCloseSidebar"
 	>
-		<div class="note-category" :title="t('notes', 'Set category')">
-			<h4>{{ t('notes', 'Category') }}</h4>
-			<form class="category" @submit.prevent.stop="">
-				<Multiselect id="category" :value="category" :options="categories"
-					:placeholder="t('notes', 'Uncategorized')"
-					:disabled="loading.category"
-					:class="['category-select', {'icon-loading-small': loading.category}]"
-					:show-no-results="false"
-					:taggable="true"
-					:preserve-search="true"
-					@input="onSaveCategory"
-					@close="onFinishEditCategory"
-					@search-change="onEditCategory"
-				>
-					<template #option="{ option }">
-						<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
-					</template>
-				</Multiselect>
-				<input
-					type="text" style="display: none"
-				><input
-					type="submit" value=""
-					class="icon-confirm loading"
-					:disabled="loading.category"
-				>
-			</form>
-		</div>
-		<div class="modified"
-			:title="t('notes', 'Click here to save manually')"
-			@click="onManualSave"
-		>
-			<div v-show="note.error" class="note-error">
-				{{ t('notes', 'Saving failed!') }}
+		<div class="sidebar-content-wrapper">
+			<div class="note-category" :title="t('notes', 'Set category')">
+				<h4>{{ t('notes', 'Category') }}</h4>
+				<form class="category" @submit.prevent.stop="">
+					<Multiselect id="category" :value="category" :options="categories"
+						:placeholder="t('notes', 'Uncategorized')"
+						:disabled="loading.category"
+						:class="['category-select', {'icon-loading-small': loading.category}]"
+						:show-no-results="false"
+						:taggable="true"
+						:preserve-search="true"
+						@input="onSaveCategory"
+						@close="onFinishEditCategory"
+						@search-change="onEditCategory"
+					>
+						<template #option="{ option }">
+							<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
+						</template>
+					</Multiselect>
+					<input
+						type="text" style="display: none"
+					><input
+						type="submit" value=""
+						class="icon-confirm loading"
+						:disabled="loading.category"
+					>
+				</form>
 			</div>
-			{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
-			<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
+			<div class="modified"
+				:title="t('notes', 'Click here to save manually')"
+				@click="onManualSave"
+			>
+				<div v-show="note.error" class="note-error">
+					{{ t('notes', 'Saving failed!') }}
+				</div>
+				{{ t('notes', 'Last modified: {date}', { date: formattedDate }) }}
+				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
+			</div>
 		</div>
 	</AppSidebar>
 </template>
@@ -167,6 +169,7 @@ export default {
 }
 </script>
 <style scoped>
+/*
 .close {
 	position: absolute;
 	top: 0;
@@ -175,6 +178,12 @@ export default {
 	z-index: 1;
 	width: 44px;
 	height: 44px;
+}
+*/
+
+.sidebar-content-wrapper {
+	padding: 0 10px;
+	min-height: 100%;
 }
 
 .note-error {
