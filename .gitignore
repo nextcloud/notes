@@ -1,6 +1,7 @@
 node_modules/
 *.log
-build/artifacts
+build/
+js/
 .rvm
 report
 clover.xml

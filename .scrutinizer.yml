@@ -1,16 +1,18 @@
 filter:
-    excluded_paths:
-        - 'js/vendor/*'
-        - 'js/public/*'
-        - 'js/tests/stubs/*'
-        - 'templates/*'
-        - 'l10n/*'
-        - 'tests/*'
+        excluded_paths:
+                - 'js/*'
+                - 'templates/*'
+                - 'l10n/*'
+                - 'tests/*'
 
-imports:
-    - javascript
-    - php
+build:
+        nodes:
+                analysis:
+                        tests:
+                                override:
+                                        - php-scrutinizer-run
+                                        - eslint-run --ext .js,.vue src
 
 tools:
-    external_code_coverage:
-        timeout: 1800
+        external_code_coverage: false
+        js_hint: false

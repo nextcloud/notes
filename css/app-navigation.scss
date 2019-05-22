@@ -1,0 +1,32 @@
+#app-navigation li.collapsible.category-header:not(.open) a {
+	font-weight: bold;
+}
+
+#app-navigation > ul > li.app-navigation-caption {
+	padding: 0;
+	pointer-events: inherit;
+}
+
+/* icons for sidebar */
+.nav-icon-files {
+	@include icon-color('folder', 'notes', $color-black);
+}
+
+.nav-icon-emptyfolder {
+	@include icon-color('folder-empty', 'notes', $color-black);
+}
+
+.nav-icon-recent {
+	@include icon-color('recent', 'notes', $color-black);
+}
+
+.app-navigation-entry-utils-menu-button {
+	visibility: hidden;
+}
+
+.active  .app-navigation-entry-utils-menu-button,
+li:hover .app-navigation-entry-utils-menu-button,
+li:focus .app-navigation-entry-utils-menu-button {
+	visibility: visible;
+}
+
