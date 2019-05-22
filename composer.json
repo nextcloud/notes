@@ -1,0 +1,5 @@
+{
+	"require-dev": {
+		"christophwurst/nextcloud": "^15.0"
+	}
+}
