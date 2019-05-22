@@ -1,0 +1,16 @@
+{
+	"eqeqeq": true,
+	"noarg": true,
+	"nonbsp": true,
+	"undef": true,
+	"unused": true,
+	"trailing": true,
+	"maxparams": 5,
+	"curly": true,
+	"browser": true,
+	"globals": {
+		"console": true,
+	},
+	"esversion": 6,
+	"asi": true
+}
