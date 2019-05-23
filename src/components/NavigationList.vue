@@ -39,6 +39,9 @@
 			<AppNavigationItem v-if="category!==null && category!==item.category"
 				:key="item.category" :item="categoryToItem(item.category)"
 			/>
+			<AppNavigationItem v-if="category===null && item.timeslot"
+				:key="item.timeslot" :item="timeslotToItem(item.timeslot)"
+			/>
 			<NavigationNoteItem v-for="note in item.notes"
 				:key="note.id" :note="note"
 				@category-selected="$emit('category-selected', $event)"
@@ -81,39 +84,95 @@ export default {
 		},
 	},
 
+	data: function() {
+		return {
+			timeslots: [],
+			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
+			lastYear: new Date(new Date().getFullYear() - 1, 0),
+		}
+	},
+
 	computed: {
 		numNotes() {
 			return store.getters.numNotes()
 		},
 
 		groupedNotes() {
-			return this.filteredNotes.reduce(function(g, note) {
-				if (g.length === 0 || g[g.length - 1].category !== note.category) {
-					g.push({ category: note.category, notes: [] })
-				}
-				g[g.length - 1].notes.push(note)
-				return g
-			}, [])
+			if (this.category === null) {
+				return this.filteredNotes.reduce((g, note) => {
+					const timeslot = this.getTimeslotFromNote(note)
+					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
+						g.push({ timeslot: timeslot, notes: [] })
+					}
+					g[g.length - 1].notes.push(note)
+					return g
+				}, [])
+			} else {
+				return this.filteredNotes.reduce((g, note) => {
+					if (g.length === 0 || g[g.length - 1].category !== note.category) {
+						g.push({ category: note.category, notes: [] })
+					}
+					g[g.length - 1].notes.push(note)
+					return g
+				}, [])
+			}
 		},
 
 		noteItems() {
-			if (this.category == null) {
-				return [ { notes: this.filteredNotes } ]
-			} else {
-				return this.groupedNotes
-			}
+			return this.groupedNotes
 		},
 	},
 
+	created() {
+		this.updateTimeslots()
+		setInterval(this.updateTimeslots, 1000 * 60)
+	},
+
 	methods: {
+		updateTimeslots() {
+			const now = new Date()
+			this.timeslots = [
+				{ t: new Date(now.getFullYear(), now.getMonth(), now.getDate()), l: t('notes', 'Today') },
+				{ t: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1), l: t('notes', 'Yesterday') },
+				{ t: new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay()), l: t('notes', 'This week') },
+				{ t: new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() - 7), l: t('notes', 'Last week') },
+				{ t: new Date(now.getFullYear(), now.getMonth(), 1), l: t('notes', 'This month') },
+				{ t: new Date(now.getFullYear(), now.getMonth() - 1, 1), l: t('notes', 'Last month') },
+			]
+		},
+
 		categoryToItem(category) {
 			const label = '…/' + category.substring(this.category.length + 1)
 			return {
-				isLabel: true,
 				text: NotesService.categoryLabel(label),
-				classes: 'app-navigation-caption app-navigation-noclose',
+				classes: 'app-navigation-caption caption-item app-navigation-noclose',
 				icon: 'nav-icon-files',
 				action: this.$emit.bind(this, 'category-selected', category),
+			}
+		},
+
+		timeslotToItem(timeslot) {
+			return {
+				caption: true,
+				text: timeslot,
+				classes: 'app-navigation-caption',
+			}
+		},
+
+		getTimeslotFromNote(note) {
+			if (note.favorite) {
+				return ''
+			}
+			const t = note.modified * 1000
+			for (const timeslot of this.timeslots) {
+				if (t >= timeslot.t.getTime()) {
+					return timeslot.l
+				}
+			}
+			if (t >= this.lastYear) {
+				return this.monthFormat.format(new Date(t))
+			} else {
+				return new Date(t).getFullYear()
 			}
 		},
 	},
