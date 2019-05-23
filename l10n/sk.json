@@ -1,26 +1,19 @@
 { "translations": {
     "Notes" : "Poznámky",
-    "New note" : "Nová poznámka",
-    "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opustením stránky stratíte všetky zmeny!",
-    "Please wait while new settings are applied…" : "Prosím počkajte, kým sa aplikujú nové nastavenia...",
-    "_%n word_::_%n words_" : ["%n slovo","%n slov","%n slov","%n slov"],
     "The last viewed note cannot be accessed. " : "Nedá sa pristupovať k posledne prehliadanej poznámke",
     "The notes folder is not accessible: %s" : "Priečinok s poznámkami je neprístupný: %s",
     "File error" : "Chyba súboru",
     "Encryption Error" : "Chyba šifrovania",
     "Error" : "Chyba",
+    "New note" : "Nová poznámka",
     "Distraction-free notes and writing" : "Písanie a poznámky, čo neodpútavajú pozornosť",
-    "No search result for {{search}}" : "Nenašli sa žiadne výsledky pre vyhľadávanie {{search}}",
-    "No notes found" : "Poznámky sa nenašli",
-    "Delete note" : "Zmazať poznámku",
-    "Favorite" : "Obľúbené",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opustením stránky stratíte všetky zmeny!",
     "Settings" : "Nastavenia",
     "Folder to store your notes" : "Priečinok na ukladanie poznámok",
     "path to notes" : "cesta k poznámkam",
     "File extension for new notes" : "Prípona súboru pre nové poznámky",
-    "The note has unsaved changes." : "Poznámka má neuložené zmeny.",
-    "Click here to try again" : "Pre nový pokus kliknite sem",
+    "Delete note" : "Zmazať poznámku",
     "Saving failed!" : "Ukladanie zlyhalo!",
-    "Note saved" : "Poznámka uložená"
+    "_%n word_::_%n words_" : ["%n slovo","%n slov","%n slov","%n slov"]
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

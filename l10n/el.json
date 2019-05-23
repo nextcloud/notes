@@ -1,26 +1,19 @@
 { "translations": {
     "Notes" : "Σημειώσεις",
-    "New note" : "Νέα σημείωση",
-    "There are unsaved notes. Leaving the page will discard all changes!" : "Υπάρχουν επισημάνσεις που δεν έχουν αποθηκευτεί. Αφήνοντας τη σελίδα θα διαγραφούν όλες οι αλλαγές!",
-    "_%n word_::_%n words_" : ["%n λέξη","%n λέξεις"],
     "File error" : "Σφάλμα αρχείου",
     "Encryption Error" : "Σφάλμα κρυπτογράφησης",
     "Error" : "Σφάλμα",
-    "Uncategorized" : "Μή-κατηγοριοποιημένα",
-    "Categories" : "Κατηγορίες",
-    "All notes" : "Όλες οι σημειώσεις",
-    "Search result for \"{{search}}\"" : "Αποτέλεσμα αναζήτησης για \"{{search}}\"",
-    "No notes found" : "Δεν βρέθηκαν σημειώσεις",
-    "Delete note" : "Διαγραφή σημείωσης",
-    "Favorite" : "Αγαπημένο",
+    "New note" : "Νέα σημείωση",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Υπάρχουν επισημάνσεις που δεν έχουν αποθηκευτεί. Αφήνοντας τη σελίδα θα διαγραφούν όλες οι αλλαγές!",
     "Settings" : "Ρυθμίσεις",
     "Folder to store your notes" : "Φάκελος αποθήκευσης των σημειώσεών σας",
     "path to notes" : "διαδρομή στις σημειώσεις",
+    "All notes" : "Όλες οι σημειώσεις",
+    "Categories" : "Κατηγορίες",
+    "Delete note" : "Διαγραφή σημείωσης",
     "Category" : "Κατηγορία",
-    "Edit category" : "Επεξεργασία κατηγορίας",
-    "The note has unsaved changes." : "Η σημείωση έχει αλλαγές που δεν έχουν σωθεί",
-    "Click here to try again" : "Κάντε κλίκ εδώ, για να δοκιμάσετε ξανά.",
+    "Uncategorized" : "Μή-κατηγοριοποιημένα",
     "Saving failed!" : "Απέτυχε η αποθήκευση!",
-    "Note saved" : "Η σημείωση αποθηκεύτηκε."
+    "_%n word_::_%n words_" : ["%n λέξη","%n λέξεις"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

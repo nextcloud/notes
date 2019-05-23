@@ -1,23 +1,16 @@
 { "translations": {
     "Notes" : "Muistiinpanot",
-    "New note" : "Uusi muistiinpano",
-    "There are unsaved notes. Leaving the page will discard all changes!" : "Havaittiin tallentamattomia muistiinpanoja. Sivulta poistuminen hylkää kaikki muutokset!",
-    "Please wait while new settings are applied…" : "Odota kun uusia asetuksia otetaan käyttöön…",
-    "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
     "File error" : "Tiedostovirhe",
     "Encryption Error" : "Salausvirhe",
     "Error" : "Virhe",
-    "No search result for {{search}}" : "Ei tuloksia haulla {{search}}",
-    "No notes found" : "Muistiinpanoja ei löytynyt",
-    "Delete note" : "Poista muistiinpano",
-    "Favorite" : "Suosikki",
+    "New note" : "Uusi muistiinpano",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Havaittiin tallentamattomia muistiinpanoja. Sivulta poistuminen hylkää kaikki muutokset!",
     "Settings" : "Asetukset",
     "Folder to store your notes" : "Kansio johon muistiinpanot tallennetaan",
     "path to notes" : "polku muistiinpanoihin",
     "File extension for new notes" : "Tiedostopääte uusille muistiinpanoille",
-    "The note has unsaved changes." : "Tässä muistiinpanossa on tallentamattomia muutoksia.",
-    "Click here to try again" : "Napsauta tästä yrittääksesi uudelleen",
+    "Delete note" : "Poista muistiinpano",
     "Saving failed!" : "Tallentaminen epäonnistui!",
-    "Note saved" : "Muistiinpano tallennettu"
+    "_%n word_::_%n words_" : ["%n sana","%n sanaa"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
