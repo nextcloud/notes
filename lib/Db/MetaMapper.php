@@ -28,19 +28,4 @@ class MetaMapper extends QBMapper {
 			);
 		return $this->findEntities($qb);
 	}
-/*
-	public function get($userId, $fileId) {
-		$qb = $this->db->getQueryBuilder();
-		$qb->select('*')
-			->from('*PREFIX*notes_meta')
-			->where(
-				$qb->expr()->and(
-					$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
-					$qb->expr()->eq('file_id', $qb->createNamedParameter($fileId, IQueryBuilder::PARAM_INT))
-				)
-
-			);
-		return $this->findEntity($qb);
-	}
-*/
 }
