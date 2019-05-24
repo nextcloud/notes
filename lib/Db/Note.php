@@ -15,6 +15,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\AppFramework\Db\Entity;
 use League\Flysystem\FileNotFoundException;
+
 /**
  * Class Note
  * @method integer getId()

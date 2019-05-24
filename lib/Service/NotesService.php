@@ -316,7 +316,7 @@ class NotesService {
      * @return boolean true if folder is accessible, or Exception otherwise
      */
     public function checkNotesFolder($userId) {
-        $folder = $this->getFolderForUser($userId);
+        $this->getFolderForUser($userId);
         return true;
     }
 
