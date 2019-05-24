@@ -97,6 +97,7 @@ export default {
 			return store.getters.numNotes()
 		},
 
+		// group notes by time ("All notes") or by category (if category chosen)
 		groupedNotes() {
 			if (this.category === null) {
 				return this.filteredNotes.reduce((g, note) => {
@@ -131,6 +132,7 @@ export default {
 	methods: {
 		updateTimeslots() {
 			const now = new Date()
+			// define the time groups we want to allow
 			this.timeslots = [
 				{ t: new Date(now.getFullYear(), now.getMonth(), now.getDate()), l: t('notes', 'Today') },
 				{ t: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1), l: t('notes', 'Yesterday') },
@@ -164,12 +166,10 @@ export default {
 				return ''
 			}
 			const t = note.modified * 1000
-			for (const timeslot of this.timeslots) {
-				if (t >= timeslot.t.getTime()) {
-					return timeslot.l
-				}
-			}
-			if (t >= this.lastYear) {
+			const timeslot = this.timeslots.find(timeslot => t >= timeslot.t.getTime())
+			if (timeslot !== undefined) {
+				return timeslot.l
+			} else if (t >= this.lastYear) {
 				return this.monthFormat.format(new Date(t))
 			} else {
 				return new Date(t).getFullYear()
