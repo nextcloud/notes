@@ -9,21 +9,38 @@
 namespace OCA\Notes\Db;
 
 use OCP\IDBConnection;
-use OCP\AppFramework\Db\Mapper;
+use OCP\AppFramework\Db\QBMapper;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 
-class MetaMapper extends Mapper {
+class MetaMapper extends QBMapper {
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'notes_meta');
+
 	}
 
 	public function getAll($userId) {
-		$sql = 'SELECT * FROM `*PREFIX*notes_meta` WHERE user_id=?';
-		return $this->findEntities($sql, [$userId]);
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from('*PREFIX*notes_meta')
+			->where(
+				$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
+			);
+		return $this->findEntities($qb);
 	}
-
+/*
 	public function get($userId, $fileId) {
-		$sql = 'SELECT * FROM `*PREFIX*notes_meta` WHERE user_id=? AND file_id=?';
-		return $this->findEntity($sql, [$userId, $fileId]);
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from('*PREFIX*notes_meta')
+			->where(
+				$qb->expr()->and(
+					$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
+					$qb->expr()->eq('file_id', $qb->createNamedParameter($fileId, IQueryBuilder::PARAM_INT))
+				)
+
+			);
+		return $this->findEntity($qb);
 	}
+*/
 }

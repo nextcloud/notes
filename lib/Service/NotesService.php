@@ -17,7 +17,6 @@ use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
 use OCP\ILogger;
 use OCP\Encryption\Exceptions\GenericEncryptionException;
-use League\Flysystem\FileNotFoundException;
 use OCA\Notes\Db\Note;
 use OCA\Notes\Service\SettingsService;
 use OCP\IConfig;
@@ -109,8 +108,6 @@ class NotesService {
         $id = $file->getId();
         try {
             $note = Note::fromFile($file, $notesFolder, $tags, $onlyMeta);
-        } catch(FileNotFoundException $e){
-            $note = Note::fromException($this->l10n->t('File error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         } catch(GenericEncryptionException $e) {
             $note = Note::fromException($this->l10n->t('Encryption Error').': ('.$file->getName().') '.$e->getMessage(), $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
         } catch(\Exception $e) {
@@ -149,8 +146,9 @@ class NotesService {
      * Updates a note. Be sure to check the returned note since the title is
      * dynamically generated and filename conflicts are resolved
      * @param int $id the id of the note used to update
-     * @param string $content the content which will be written into the note
+     * @param string|null $content the content which will be written into the note
      * the title is generated from the first line of the content
+     * @param string|null $category the category in which the note should be saved
      * @param int $mtime time of the note modification (optional)
      * @throws NoteDoesNotExistException if note does not exist
      * @return \OCA\Notes\Db\Note the updated note

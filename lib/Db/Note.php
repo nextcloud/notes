@@ -14,7 +14,6 @@ namespace OCA\Notes\Db;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\AppFramework\Db\Entity;
-use League\Flysystem\FileNotFoundException;
 
 /**
  * Class Note
@@ -63,7 +62,7 @@ class Note extends Entity {
         if(!$onlyMeta) {
             $fileContent=$file->getContent();
             if($fileContent===false){
-                throw new FileNotFoundException("File not found");
+                throw new \Exception("File not found");
             }
             $note->setContent(self::convertEncoding($fileContent));
         }

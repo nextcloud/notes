@@ -165,9 +165,9 @@ class NotesApiController extends ApiController {
     /**
      * Updates a note, used by create and update
      * @param int $id
-     * @param string $content
+     * @param string|null $content
      * @param int $modified
-     * @param boolean $favorite
+     * @param boolean|null $favorite
      * @return Note
      */
     private function updateData($id, $content, $category, $modified, $favorite) {
