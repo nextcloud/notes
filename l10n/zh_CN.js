@@ -17,6 +17,8 @@ OC.L10N.register(
     "File extension for new notes" : "新笔记的文件扩展名",
     "All notes" : "所有笔记",
     "Categories" : "分类",
+    "Search result for “{search}” in {category}" : "在{category}中搜索 “{search}”的结果",
+    "Search result for “{search}”" : "搜索 “{search}”的结果",
     "Delete note" : "删除笔记",
     "Category" : "分类",
     "Uncategorized" : "未分类",

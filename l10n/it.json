@@ -48,6 +48,7 @@
     "Creating new note has failed." : "Creazione nuova nota non riuscita.",
     "Updating note {id} has failed." : "Aggiornamento della nota {id} non riuscito.",
     "Deleting note {id} has failed." : "Eliminazione della nota {id} non riuscita.",
+    "Toggling favorite for note {id} has failed." : "L'attivazione come preferito della nota {id} non è riuscita",
     "Updating the note's category has failed. Is the target directory writable?" : "L'aggiornamento della categoria delle note non è riuscito. La cartella di destinazione è scrivibile?",
     "Updating the category for note {id} has failed." : "Aggiornamento della categoria per la nota {id} non riuscito."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
