@@ -169,21 +169,8 @@ export default {
 }
 </script>
 <style scoped>
-/*
-.close {
-	position: absolute;
-	top: 0;
-	right: 0;
-	opacity: 0.5;
-	z-index: 1;
-	width: 44px;
-	height: 44px;
-}
-*/
-
 .sidebar-content-wrapper {
 	padding: 0 10px;
-	min-height: 100%;
 }
 
 .note-error {
