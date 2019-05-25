@@ -1,15 +1,21 @@
 <?php
-/**
- * Nextcloud - Notes
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
- */
 
 namespace OCA\Notes\Db;
 
 use OCP\AppFramework\Db\Entity;
 
+/**
+ * Class Meta
+ * @method string getUserId()
+ * @method void setUserId(string $value)
+ * @method integer getFileId()
+ * @method void setFileId(integer $value)
+ * @method integer getLastUpdate()
+ * @method void setLastUpdate(integer $value)
+ * @method string getEtag()
+ * @method void setEtag(string $value)
+ * @package OCA\Notes\Db
+ */
 class Meta extends Entity {
 
 	public $userId;

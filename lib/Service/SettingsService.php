@@ -1,6 +1,7 @@
 <?php
 
 namespace OCA\Notes\Service;
+
 use OCP\AppFramework\Controller;
 
 use OCP\IConfig;
@@ -10,15 +11,15 @@ use OCP\IUserSession;
 use OCP\Files\IRootFolder;
 use OCP\AppFramework\Http\JSONResponse;
 
-class SettingsService
-{
+class SettingsService {
+
 	private $config;
 	private $root;
 
 	/* Default values */
 	private $defaults = [
-		"notesPath" => "Notes",
-		"fileSuffix" => ".txt",
+		'notesPath' => 'Notes',
+		'fileSuffix' => '.txt',
 	];
 
 	public function __construct(
@@ -32,8 +33,8 @@ class SettingsService
 	 */
 	public function set($uid, $settings) {
 		// remove illegal, empty and default settings
-		foreach($settings as $name => $value) {
-			if(!array_key_exists($name, $this->defaults)
+		foreach ($settings as $name => $value) {
+			if (!array_key_exists($name, $this->defaults)
 				|| empty($value)
 				|| $value === $this->defaults[$name]
 			) {
@@ -45,10 +46,10 @@ class SettingsService
 
 	public function getAll($uid) {
 		$settings = json_decode($this->config->getUserValue($uid, 'notes', 'settings'));
-		if(is_object($settings)) {
+		if (is_object($settings)) {
 			// use default for empty settings
-			foreach($this->defaults as $name => $defaultValue) {
-				if(!property_exists($settings, $name) || empty($settings->{$name})) {
+			foreach ($this->defaults as $name => $defaultValue) {
+				if (!property_exists($settings, $name) || empty($settings->{$name})) {
 					$settings->{$name} = $defaultValue;
 				}
 			}
@@ -63,7 +64,7 @@ class SettingsService
 	 */
 	public function get($uid, $name) {
 		$settings = $this->getAll($uid);
-		if(property_exists($settings, $name)) {
+		if (property_exists($settings, $name)) {
 			return $settings->{$name};
 		} else {
 			throw new \OCP\PreConditionNotMetException('Setting '.$name.' not found for user '.$uid.'.');

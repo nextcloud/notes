@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="MyStandard">
+    <description>
+        PSR2 with changes:
+            * tabs instead of spaces (https://gist.github.com/gsherwood/9d22f634c57f990a7c64)
+            * bracers on end of line instead new line
+    </description>
+    
+    <!-- tabs -->
+    <arg name="tab-width" value="4"/>
+    <rule ref="PSR2">
+        <!-- bracers -->
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine" />
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine" />
+
+        <!-- tabs -->
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+    </rule>
+    
+    <!-- tabs -->
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- bracers -->
+    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie" />
+    <rule ref="Generic.Classes.OpeningBraceSameLine"/>
+</ruleset>

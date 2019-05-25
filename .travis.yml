@@ -49,8 +49,7 @@ script:
   # - phpunit -c phpunit.integration.xml
 
   # build js
-  - make npm-init
+  - make init
   - make lint
-  - make stylelint
   - make build-js-production
 

@@ -17,14 +17,13 @@ $app = new App('notes');
 $container = $app->getContainer();
 
 $container->query('OCP\INavigationManager')->add(function () use ($container) {
-    $urlGenerator = $container->query('OCP\IURLGenerator');
-    $l10n = $container->query('OCP\IL10N');
-    return [
-        'id' => 'notes',
-        'order' => 10,
-        'href' => $urlGenerator->linkToRoute('notes.page.index'),
-        'icon' => $urlGenerator->imagePath('notes', 'notes.svg'),
-        'name' => $l10n->t('Notes')
-    ];
+	$urlGenerator = $container->query('OCP\IURLGenerator');
+	$l10n = $container->query('OCP\IL10N');
+	return [
+		'id' => 'notes',
+		'order' => 10,
+		'href' => $urlGenerator->linkToRoute('notes.page.index'),
+		'icon' => $urlGenerator->imagePath('notes', 'notes.svg'),
+		'name' => $l10n->t('Notes')
+	];
 });
-

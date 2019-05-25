@@ -1,5 +1,6 @@
 <?php
 namespace OCA\Notes\Controller;
+
 use OCP\AppFramework\Controller;
 
 use OCP\IConfig;
@@ -10,8 +11,8 @@ use OCP\Files\IRootFolder;
 use OCP\AppFramework\Http\JSONResponse;
 use OCA\Notes\Service\SettingsService;
 
-class SettingsController extends Controller
-{
+class SettingsController extends Controller {
+
 	private $service;
 	private $userSession;
 

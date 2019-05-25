@@ -1,10 +1,12 @@
 node_modules/
+vendor/
 *.log
 build/
 js/
 .rvm
 report
 clover.xml
+composer.lock
 
 # just sane ignores
 .*.sw[po]

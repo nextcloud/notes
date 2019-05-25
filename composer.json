@@ -1,5 +1,6 @@
 {
 	"require-dev": {
-		"christophwurst/nextcloud": "^15.0"
+		"christophwurst/nextcloud": "^15.0",
+		"squizlabs/php_codesniffer": "3.*"
 	}
 }
