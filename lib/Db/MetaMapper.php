@@ -10,7 +10,6 @@ class MetaMapper extends QBMapper {
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'notes_meta');
-
 	}
 
 	public function getAll($userId) {

@@ -6,6 +6,7 @@ js/
 .rvm
 report
 clover.xml
+composer.lock
 
 # just sane ignores
 .*.sw[po]

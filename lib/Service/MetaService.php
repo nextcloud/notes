@@ -1,10 +1,4 @@
 <?php
-/**
- * Nextcloud - Notes
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
- */
 
 namespace OCA\Notes\Service;
 
@@ -29,18 +23,18 @@ class MetaService {
 		$metas = $this->metaMapper->getAll($userId);
 		$metas = $this->getIndexedArray($metas, 'fileId');
 		$notes = $this->getIndexedArray($notes, 'id');
-		foreach($metas as $id=>$meta) {
-			if(!array_key_exists($id, $notes)) {
+		foreach ($metas as $id => $meta) {
+			if (!array_key_exists($id, $notes)) {
 				// DELETE obsolete notes
 				$this->metaMapper->delete($meta);
 				unset($metas[$id]);
 			}
 		}
-		foreach($notes as $id=>$note) {
-			if(!array_key_exists($id, $metas)) {
+		foreach ($notes as $id => $note) {
+			if (!array_key_exists($id, $metas)) {
 				// INSERT new notes
 				$metas[$note->getId()] = $this->create($userId, $note);
-			} elseif($note->getEtag()!==$metas[$id]->getEtag()) {
+			} elseif ($note->getEtag()!==$metas[$id]->getEtag()) {
 				// UPDATE changed notes
 				$meta = $metas[$id];
 				$this->updateIfNeeded($meta, $note);
@@ -53,7 +47,7 @@ class MetaService {
 		$property = ucfirst($property);
 		$getter = 'get'.$property;
 		$result = array();
-		foreach($data as $entity) {
+		foreach ($data as $entity) {
 			$result[$entity->$getter()] = $entity;
 		}
 		return $result;
@@ -66,7 +60,7 @@ class MetaService {
 	}
 
 	private function updateIfNeeded(&$meta, $note) {
-		if($note->getEtag()!==$meta->getEtag()) {
+		if ($note->getEtag()!==$meta->getEtag()) {
 			$meta->setEtag($note->getEtag());
 			$meta->setLastUpdate(time());
 			$this->metaMapper->update($meta);
