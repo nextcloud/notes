@@ -1,5 +1,5 @@
 <template>
-	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error) }">
+	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
 		<div v-if="!loading && note && !note.error" id="note-container"
 			class="note-container" :class="{ fullscreen: fullscreen }"
 		>
@@ -7,7 +7,8 @@
 				<div v-show="!note.content" class="placeholder">
 					{{ t('notes', 'Write …') }}
 				</div>
-				<TheEditor :value="note.content" @input="onEdit" />
+				<ThePreview v-if="preview" :value="note.content" />
+				<TheEditor v-else :value="note.content" @input="onEdit" />
 			</div>
 			<span class="action-buttons">
 				<button v-show="note.saveError"
@@ -15,15 +16,28 @@
 					class="icon-error-color"
 					@click="onManualSave"
 				/>
-				<button v-show="!fullscreen"
+				<button v-show="actionsOpen && !fullscreen"
 					v-tooltip="t('notes', 'Toggle sidebar')"
 					class="icon-details"
 					@click="onToggleSidebar"
 				/>
-				<button
+				<button v-show="actionsOpen"
+					v-tooltip="t('notes', 'Toggle preview')"
+					class="icon-toggle"
+					:class="{ active: preview }"
+					@click="onTogglePreview"
+				/>
+				<button v-show="actionsOpen"
 					v-tooltip="t('notes', 'Toggle fullscreen mode')"
 					class="icon-fullscreen"
+					:class="{ active: fullscreen }"
 					@click="onToggleDistractionFree"
+				/>
+				<button
+					v-tooltip="t('notes', 'Toggle action menu')"
+					class="icon-more"
+					:class="{ active: actionsOpen }"
+					@click="onToggleActions"
 				/>
 			</span>
 		</div>
@@ -36,6 +50,7 @@ import {
 	Tooltip,
 } from 'nextcloud-vue'
 import TheEditor from './EditorEasyMDE'
+import ThePreview from './EditorMarkdownIt'
 import NotesService from '../NotesService'
 import store from '../store'
 
@@ -45,6 +60,7 @@ export default {
 	components: {
 		AppContent,
 		TheEditor,
+		ThePreview,
 	},
 
 	directives: {
@@ -62,6 +78,8 @@ export default {
 		return {
 			loading: false,
 			fullscreen: false,
+			preview: false,
+			actionsOpen: false,
 		}
 	},
 
@@ -74,6 +92,9 @@ export default {
 		},
 		isManualSave() {
 			return store.state.isManualSave
+		},
+		sidebarOpen() {
+			return store.state.sidebarOpen
 		},
 	},
 
@@ -101,6 +122,7 @@ export default {
 			store.commit('setSidebarOpen', false)
 			this.onUpdateTitle(this.title)
 			this.loading = true
+			this.preview = false
 			NotesService.fetchNote(this.noteId)
 				.then((note) => {
 					if (note.errorMessage) {
@@ -122,6 +144,11 @@ export default {
 			} else {
 				document.title = defaultTitle
 			}
+		},
+
+		onTogglePreview() {
+			this.preview = !this.preview
+			this.actionsOpen = false
 		},
 
 		onDetectFullscreen() {
@@ -156,10 +183,16 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
 			}
+			this.actionsOpen = false
 		},
 
 		onToggleSidebar() {
 			store.commit('setSidebarOpen', !store.state.sidebarOpen)
+			this.actionsOpen = false
+		},
+
+		onToggleActions() {
+			this.actionsOpen = !this.actionsOpen
 		},
 
 		onEdit(newContent) {
@@ -201,6 +234,7 @@ export default {
 .note-editor {
 	max-width: 47em;
 	font-size: 16px;
+	padding: 0 1em;
 }
 
 /* center editor on large screens */
@@ -210,6 +244,11 @@ export default {
 	}
 	.note-container {
 		padding-right: 250px;
+		transition-duration: var(--animation-quick);
+		transition-property: padding-right;
+	}
+	.sidebar-open .note-container {
+		padding-right: 0px;
 	}
 }
 
