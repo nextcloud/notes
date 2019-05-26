@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Minnispunktar",
     "The last viewed note cannot be accessed. " : "Ekki hægt að lesa síðast skoðaða minnispunktinn.",
     "The notes folder is not accessible: %s" : "Mappa undir minnispunkta er ekki aðgengileg: %s",
-    "File error" : "Villa í skrá",
     "Encryption Error" : "Villa í dulritun",
     "Error" : "Villa",
     "New note" : "Nýr minnispunktur",

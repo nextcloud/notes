@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "הערות",
     "The last viewed note cannot be accessed. " : "אין גישה לפתק האחרון שנצפה.",
     "The notes folder is not accessible: %s" : "תיקיית הפתקים אינה נגישה: %s",
-    "File error" : "שגיאת קובץ",
     "Encryption Error" : "שגיאת הצפנה",
     "Error" : "שגיאה",
     "New note" : "הערה חדשה",

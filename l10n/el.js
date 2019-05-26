@@ -2,7 +2,6 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Σημειώσεις",
-    "File error" : "Σφάλμα αρχείου",
     "Encryption Error" : "Σφάλμα κρυπτογράφησης",
     "Error" : "Σφάλμα",
     "New note" : "Νέα σημείωση",

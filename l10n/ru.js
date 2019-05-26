@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Заметки",
     "The last viewed note cannot be accessed. " : "Не удалось перейти к последней просмотренной заметке",
     "The notes folder is not accessible: %s" : "Папка заметок недоступна: %s",
-    "File error" : "Ошибка файла",
     "Encryption Error" : "Ошибка шифрования",
     "Error" : "Ошибка",
     "New note" : "Новая заметка",

@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Anteckningar",
     "The last viewed note cannot be accessed. " : "Den senast visade anteckningen kan inte nås.",
     "The notes folder is not accessible: %s" : "Anteckningsmappen är inte tillgänglig: %s",
-    "File error" : "Fil-error",
     "Encryption Error" : "Krypteringsfel",
     "Error" : "Fel",
     "New note" : "Ny anteckning",

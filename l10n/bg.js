@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Бележки",
     "The last viewed note cannot be accessed. " : "Последно отворената бележка не е достъпна.",
     "The notes folder is not accessible: %s" : "Папката с бележки не е достъпна: %s",
-    "File error" : "File error",
     "Encryption Error" : "Encryption Error",
     "Error" : "Грешка",
     "New note" : "Нова бележка",

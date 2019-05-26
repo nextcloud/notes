@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Notas",
     "The last viewed note cannot be accessed. " : "No se puede acceder a la última nota visualizada.",
     "The notes folder is not accessible: %s" : "La carpeta de notas no es accesible: %s",
-    "File error" : "Error de archivo",
     "Encryption Error" : "Erro de cifrado",
     "Error" : "Error",
     "New note" : "Nueva nota",

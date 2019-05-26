@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Poznámky",
     "The last viewed note cannot be accessed. " : "Nedaří se přistoupit k naposledy zobrazené poznámce. ",
     "The notes folder is not accessible: %s" : "Složka s poznámkami není přístupná: %s",
-    "File error" : "Chyba souboru",
     "Encryption Error" : "Chyba šifrování",
     "Error" : "Chyba",
     "New note" : "Nová poznámka",

@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Jegyzetek",
     "The last viewed note cannot be accessed. " : "Az utoljára megtekintett jegyzet nem elérhető.",
     "The notes folder is not accessible: %s" : "A jegyzetek mappa nem elérhető: %s",
-    "File error" : "Fájlhiba",
     "Encryption Error" : "Titkosítási hiba",
     "Error" : "Hiba",
     "New note" : "Új jegyzet",

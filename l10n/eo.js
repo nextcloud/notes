@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Notoj",
     "The last viewed note cannot be accessed. " : "La laste vidita noto ne estas alirebla.",
     "The notes folder is not accessible: %s" : "La nota dosierujo ne estas alirebla: %s",
-    "File error" : "Eraro pri dosiero",
     "Encryption Error" : "Eraro pri ĉifrado",
     "Error" : "Eraro",
     "New note" : "Nova noto",

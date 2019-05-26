@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Notatki",
     "The last viewed note cannot be accessed. " : "Nie można uzyskać dostępu do ostatnio oglądanej notatki.",
     "The notes folder is not accessible: %s" : "Katalog notatek jest niedostępny: %s",
-    "File error" : "Błąd pliku",
     "Encryption Error" : "Błąd Szyfrowania",
     "Error" : "Błąd",
     "New note" : "Nowa notatka",

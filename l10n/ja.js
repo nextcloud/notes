@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "ノート",
     "The last viewed note cannot be accessed. " : "最後に閲覧したノートにはアクセスできません。",
     "The notes folder is not accessible: %s" : "ノートフォルダーはアクセスできません：%s",
-    "File error" : "ファイルエラー",
     "Encryption Error" : "暗号化エラー",
     "Error" : "エラー",
     "New note" : "新しいノート",

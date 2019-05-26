@@ -2,7 +2,6 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notas",
-    "File error" : "Lêerfout",
     "Encryption Error" : "Enkripsiefout",
     "Error" : "Fout",
     "New note" : "Nuwe nota",

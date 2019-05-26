@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Beležka",
     "The last viewed note cannot be accessed. " : "Do nazadnje pogledane zabeležke dostop ni mogoč.",
     "The notes folder is not accessible: %s" : "Mapa zabeležk ni dosegljiva: %s",
-    "File error" : "Napaka v datoteki",
     "Encryption Error" : "Napaka šifriranja",
     "Error" : "Napaka",
     "New note" : "Nova zabeležka",
