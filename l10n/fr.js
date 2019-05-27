@@ -31,6 +31,8 @@ OC.L10N.register(
     "Delete note" : "Supprimer la note",
     "Write …" : "écrit ...",
     "Save failed. Click to retry." : "L’enregistrement a échoué. Cliquez pour réessayer.",
+    "Toggle sidebar" : "Afficher la barre latérale",
+    "Toggle fullscreen mode" : "Basculer en mode plein écran",
     "Set category" : "Définir une catégorie",
     "Category" : "Catégorie",
     "Uncategorized" : "Non catégorisé",
