@@ -16,29 +16,33 @@
 					class="icon-error-color"
 					@click="onManualSave"
 				/>
-				<button v-show="actionsOpen && !fullscreen"
-					v-tooltip="t('notes', 'Toggle sidebar')"
-					class="icon-details"
-					@click="onToggleSidebar"
-				/>
-				<button v-show="actionsOpen"
-					v-tooltip="t('notes', 'Toggle preview')"
-					class="icon-toggle"
-					:class="{ active: preview }"
-					@click="onTogglePreview"
-				/>
-				<button v-show="actionsOpen"
-					v-tooltip="t('notes', 'Toggle fullscreen mode')"
-					class="icon-fullscreen"
-					:class="{ active: fullscreen }"
-					@click="onToggleDistractionFree"
-				/>
-				<button
-					v-tooltip="t('notes', 'Toggle action menu')"
-					class="icon-more"
-					:class="{ active: actionsOpen }"
-					@click="onToggleActions"
-				/>
+				<Actions :open.sync="actionsOpen" menuAlign="right">
+					<ActionButton v-show="!sidebarOpen && !fullscreen"
+						icon="icon-details"
+						@click="onToggleSidebar"
+					>
+						{{ t('notes', 'Show sidebar') }}
+					</ActionButton>
+					<ActionButton v-show="!preview"
+						icon="icon-toggle"
+						@click="onTogglePreview"
+					>
+						{{ t('notes', 'Show preview') }}
+					</ActionButton>
+					<ActionButton v-show="preview"
+						icon="icon-rename"
+						@click="onTogglePreview"
+					>
+						{{ t('notes', 'Edit note') }}
+					</ActionButton>
+					<ActionButton
+						icon="icon-fullscreen"
+						:class="{ active: fullscreen }"
+						@click="onToggleDistractionFree"
+					>
+						{{ t('notes', 'Fullscreen mode') }}
+					</ActionButton>
+				</Actions>
 			</span>
 		</div>
 	</AppContent>
@@ -46,6 +50,8 @@
 <script>
 
 import {
+	Actions,
+	ActionButton,
 	AppContent,
 	Tooltip,
 } from 'nextcloud-vue'
@@ -58,6 +64,8 @@ export default {
 	name: 'Note',
 
 	components: {
+		Actions,
+		ActionButton,
 		AppContent,
 		TheEditor,
 		ThePreview,
@@ -191,10 +199,6 @@ export default {
 			this.actionsOpen = false
 		},
 
-		onToggleActions() {
-			this.actionsOpen = !this.actionsOpen
-		},
-
 		onEdit(newContent) {
 			if (this.note.content !== newContent) {
 				const note = {
@@ -274,9 +278,14 @@ export default {
 /* main editor button */
 .action-buttons {
 	position: fixed;
-	bottom: 4px;
+	top: 50px;
 	right: 20px;
+	margin-top: 1em;
 	z-index: 2000;
+}
+
+.note-container.fullscreen .action-buttons {
+	top: 0px;
 }
 
 .action-buttons button {
