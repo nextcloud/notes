@@ -5,7 +5,7 @@
 		>
 			<div class="note-editor">
 				<div v-show="!note.content" class="placeholder">
-					{{ t('notes', 'Write …') }}
+					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
 				<ThePreview v-if="preview" :value="note.content" />
 				<TheEditor v-else :value="note.content" @input="onEdit" />
@@ -234,7 +234,7 @@ export default {
 .note-editor {
 	max-width: 47em;
 	font-size: 16px;
-	padding: 0 1em;
+	padding: 1em;
 }
 
 /* center editor on large screens */
@@ -267,7 +267,7 @@ export default {
 /* placeholder */
 .placeholder {
 	position: absolute;
-	padding: 2em;
+	padding: 1em;
 	opacity: 0.5;
 }
 

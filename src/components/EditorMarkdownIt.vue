@@ -42,7 +42,7 @@ export default {
 </script>
 <style lang="scss">
 .note-preview {
-	padding: 1em;
+	padding: 0 1em;
 	line-height: 1.5em;
 
 	& h1, & h2, & h3, & h4, & h5, & h6 {
