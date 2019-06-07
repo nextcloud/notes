@@ -1,13 +1,14 @@
 <template>
-	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error) }">
+	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
 		<div v-if="!loading && note && !note.error" id="note-container"
 			class="note-container" :class="{ fullscreen: fullscreen }"
 		>
 			<div class="note-editor">
 				<div v-show="!note.content" class="placeholder">
-					{{ t('notes', 'Write …') }}
+					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
-				<TheEditor :value="note.content" @input="onEdit" />
+				<ThePreview v-if="preview" :value="note.content" />
+				<TheEditor v-else :value="note.content" @input="onEdit" />
 			</div>
 			<span class="action-buttons">
 				<button v-show="note.saveError"
@@ -15,16 +16,33 @@
 					class="icon-error-color"
 					@click="onManualSave"
 				/>
-				<button v-show="!fullscreen"
-					v-tooltip="t('notes', 'Toggle sidebar')"
-					class="icon-details"
-					@click="onToggleSidebar"
-				/>
-				<button
-					v-tooltip="t('notes', 'Toggle fullscreen mode')"
-					class="icon-fullscreen"
-					@click="onToggleDistractionFree"
-				/>
+				<Actions :open.sync="actionsOpen" menu-align="right">
+					<ActionButton v-show="!sidebarOpen && !fullscreen"
+						icon="icon-details"
+						@click="onToggleSidebar"
+					>
+						{{ t('notes', 'Details') }}
+					</ActionButton>
+					<ActionButton v-show="!preview"
+						icon="icon-toggle"
+						@click="onTogglePreview"
+					>
+						{{ t('notes', 'Preview') }}
+					</ActionButton>
+					<ActionButton v-show="preview"
+						icon="icon-rename"
+						@click="onTogglePreview"
+					>
+						{{ t('notes', 'Edit') }}
+					</ActionButton>
+					<ActionButton
+						icon="icon-fullscreen"
+						:class="{ active: fullscreen }"
+						@click="onToggleDistractionFree"
+					>
+						{{ t('notes', 'Fullscreen') }}
+					</ActionButton>
+				</Actions>
 			</span>
 		</div>
 	</AppContent>
@@ -32,10 +50,13 @@
 <script>
 
 import {
+	Actions,
+	ActionButton,
 	AppContent,
 	Tooltip,
 } from 'nextcloud-vue'
 import TheEditor from './EditorEasyMDE'
+import ThePreview from './EditorMarkdownIt'
 import NotesService from '../NotesService'
 import store from '../store'
 
@@ -43,8 +64,11 @@ export default {
 	name: 'Note',
 
 	components: {
+		Actions,
+		ActionButton,
 		AppContent,
 		TheEditor,
+		ThePreview,
 	},
 
 	directives: {
@@ -62,6 +86,8 @@ export default {
 		return {
 			loading: false,
 			fullscreen: false,
+			preview: false,
+			actionsOpen: false,
 		}
 	},
 
@@ -74,6 +100,9 @@ export default {
 		},
 		isManualSave() {
 			return store.state.isManualSave
+		},
+		sidebarOpen() {
+			return store.state.sidebarOpen
 		},
 	},
 
@@ -101,6 +130,7 @@ export default {
 			store.commit('setSidebarOpen', false)
 			this.onUpdateTitle(this.title)
 			this.loading = true
+			this.preview = false
 			NotesService.fetchNote(this.noteId)
 				.then((note) => {
 					if (note.errorMessage) {
@@ -122,6 +152,11 @@ export default {
 			} else {
 				document.title = defaultTitle
 			}
+		},
+
+		onTogglePreview() {
+			this.preview = !this.preview
+			this.actionsOpen = false
 		},
 
 		onDetectFullscreen() {
@@ -156,10 +191,12 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
 			}
+			this.actionsOpen = false
 		},
 
 		onToggleSidebar() {
 			store.commit('setSidebarOpen', !store.state.sidebarOpen)
+			this.actionsOpen = false
 		},
 
 		onEdit(newContent) {
@@ -201,6 +238,7 @@ export default {
 .note-editor {
 	max-width: 47em;
 	font-size: 16px;
+	padding: 1em;
 }
 
 /* center editor on large screens */
@@ -210,6 +248,11 @@ export default {
 	}
 	.note-container {
 		padding-right: 250px;
+		transition-duration: var(--animation-quick);
+		transition-property: padding-right;
+	}
+	.sidebar-open .note-container {
+		padding-right: 0px;
 	}
 }
 
@@ -228,16 +271,21 @@ export default {
 /* placeholder */
 .placeholder {
 	position: absolute;
-	padding: 2em;
+	padding: 1em;
 	opacity: 0.5;
 }
 
 /* main editor button */
 .action-buttons {
 	position: fixed;
-	bottom: 4px;
+	top: 50px;
 	right: 20px;
+	margin-top: 1em;
 	z-index: 2000;
+}
+
+.note-container.fullscreen .action-buttons {
+	top: 0px;
 }
 
 .action-buttons button {
