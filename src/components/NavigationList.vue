@@ -41,6 +41,7 @@
 			/>
 			<AppNavigationItem v-if="category===null && item.timeslot"
 				:key="item.timeslot" :item="timeslotToItem(item.timeslot)"
+				class="timeslot"
 			/>
 			<NavigationNoteItem v-for="note in item.notes"
 				:key="note.id" :note="note"
@@ -157,7 +158,6 @@ export default {
 			return {
 				caption: true,
 				text: timeslot,
-				classes: 'app-navigation-caption',
 			}
 		},
 
