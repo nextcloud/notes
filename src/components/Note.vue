@@ -21,26 +21,26 @@
 						icon="icon-details"
 						@click="onToggleSidebar"
 					>
-						{{ t('notes', 'Show sidebar') }}
+						{{ t('notes', 'Details') }}
 					</ActionButton>
 					<ActionButton v-show="!preview"
 						icon="icon-toggle"
 						@click="onTogglePreview"
 					>
-						{{ t('notes', 'Show preview') }}
+						{{ t('notes', 'Preview') }}
 					</ActionButton>
 					<ActionButton v-show="preview"
 						icon="icon-rename"
 						@click="onTogglePreview"
 					>
-						{{ t('notes', 'Edit note') }}
+						{{ t('notes', 'Edit') }}
 					</ActionButton>
 					<ActionButton
 						icon="icon-fullscreen"
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
-						{{ t('notes', 'Fullscreen mode') }}
+						{{ t('notes', 'Fullscreen') }}
 					</ActionButton>
 				</Actions>
 			</span>
