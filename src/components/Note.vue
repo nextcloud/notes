@@ -16,7 +16,7 @@
 					class="icon-error-color"
 					@click="onManualSave"
 				/>
-				<Actions :open.sync="actionsOpen" menuAlign="right">
+				<Actions :open.sync="actionsOpen" menu-align="right">
 					<ActionButton v-show="!sidebarOpen && !fullscreen"
 						icon="icon-details"
 						@click="onToggleSidebar"
