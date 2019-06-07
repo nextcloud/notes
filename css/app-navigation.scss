@@ -7,6 +7,10 @@
 	pointer-events: inherit;
 }
 
+#app-navigation > ul > li.app-navigation-caption.timeslot {
+	color: var(--color-text-maxcontrast);
+}
+
 /* icons for sidebar */
 .nav-icon-files {
 	@include icon-color('folder', 'notes', $color-black);
