@@ -19,6 +19,7 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:import/recommended',
 		'plugin:vue/recommended',
+		'plugin:nextcloud/recommended',
 		'standard',
 	],
 	globals: {
