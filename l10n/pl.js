@@ -31,8 +31,6 @@ OC.L10N.register(
     "Delete note" : "Usuń notatkę",
     "Write …" : "Zapisywanie...",
     "Save failed. Click to retry." : "Zapisywanie nie powiodło się. Kliknij, aby spróbować ponownie.",
-    "Toggle sidebar" : "Przełącz pasek boczny",
-    "Toggle fullscreen mode" : "Przełącz tryb pełnoekranowy",
     "Set category" : "Ustaw kategorię",
     "Category" : "Kategoria",
     "Uncategorized" : "Bez kategorii",

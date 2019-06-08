@@ -31,8 +31,6 @@ OC.L10N.register(
     "Delete note" : "删除笔记",
     "Write …" : "编写 ...",
     "Save failed. Click to retry." : "保存失败。点击以重试。",
-    "Toggle sidebar" : "切换侧边栏",
-    "Toggle fullscreen mode" : "切换全屏模式",
     "Set category" : "设置分类",
     "Category" : "分类",
     "Uncategorized" : "未分类",

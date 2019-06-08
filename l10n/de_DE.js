@@ -31,8 +31,6 @@ OC.L10N.register(
     "Delete note" : "Notiz löschen",
     "Write …" : "Schreibe …",
     "Save failed. Click to retry." : "Speichern fehlgeschlagen. Klicken um es neu zu versuchen.",
-    "Toggle sidebar" : "Seitenleiste umschalten",
-    "Toggle fullscreen mode" : "Vollbildmodus an-/ausschalten",
     "Set category" : "Kategorie ändern",
     "Category" : "Kategorie",
     "Uncategorized" : "Ohne Kategorie",

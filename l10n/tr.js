@@ -31,8 +31,6 @@ OC.L10N.register(
     "Delete note" : "Notu sil",
     "Write …" : "Yazın …",
     "Save failed. Click to retry." : "Kaydedilemedi. Yeniden denemek için tıklayın.",
-    "Toggle sidebar" : "Yan çubuğu aç/kapat",
-    "Toggle fullscreen mode" : "Tam ekran kipini aç/kapat",
     "Set category" : "Kategoriyi ayarla",
     "Category" : "Kategori",
     "Uncategorized" : "Kategorisiz",

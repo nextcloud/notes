@@ -31,8 +31,6 @@ OC.L10N.register(
     "Delete note" : "Excluir anotação",
     "Write …" : "Escrever...",
     "Save failed. Click to retry." : "Falha ao salvar. Clique para retentar.",
-    "Toggle sidebar" : "Alternar barra lateral",
-    "Toggle fullscreen mode" : "Alternar modo de tela cheia",
     "Set category" : "Definir categoria",
     "Category" : "Categoria",
     "Uncategorized" : "Sem categoria",

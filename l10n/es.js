@@ -31,8 +31,6 @@ OC.L10N.register(
     "Delete note" : "Eliminar nota",
     "Write …" : "Escribir",
     "Save failed. Click to retry." : "Fallo al salvar. Presiona para reintentarlo.",
-    "Toggle sidebar" : "Mostrar/ocultar barra lateral",
-    "Toggle fullscreen mode" : "Cambiar a modo de pantalla completa",
     "Set category" : "Escoge categoría",
     "Category" : "Categorías",
     "Uncategorized" : "Sin categoría",
