@@ -11,11 +11,6 @@
 				<TheEditor v-else :value="note.content" @input="onEdit" />
 			</div>
 			<span class="action-buttons">
-				<button v-show="note.saveError"
-					v-tooltip="t('notes', 'Save failed. Click to retry.')"
-					class="icon-error-color"
-					@click="onManualSave"
-				/>
 				<Actions :open.sync="actionsOpen" menu-align="right">
 					<ActionButton v-show="!sidebarOpen && !fullscreen"
 						icon="icon-details"
@@ -23,13 +18,13 @@
 					>
 						{{ t('notes', 'Details') }}
 					</ActionButton>
-					<ActionButton v-show="!preview"
+					<ActionButton v-if="!preview"
 						icon="icon-toggle"
 						@click="onTogglePreview"
 					>
 						{{ t('notes', 'Preview') }}
 					</ActionButton>
-					<ActionButton v-show="preview"
+					<ActionButton v-else
 						icon="icon-rename"
 						@click="onTogglePreview"
 					>
@@ -43,6 +38,11 @@
 						{{ t('notes', 'Fullscreen') }}
 					</ActionButton>
 				</Actions>
+				<button v-show="note.saveError"
+					v-tooltip.right="t('notes', 'Save failed. Click to retry.')"
+					class="action-error icon-error-color"
+					@click="onManualSave"
+				/>
 			</span>
 		</div>
 	</AppContent>
@@ -280,8 +280,14 @@ export default {
 	position: fixed;
 	top: 50px;
 	right: 20px;
+	width: 44px;
 	margin-top: 1em;
 	z-index: 2000;
+}
+
+.action-buttons .action-error {
+	width: 44px;
+	height: 44px;
 }
 
 .note-container.fullscreen .action-buttons {
