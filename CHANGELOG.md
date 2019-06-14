@@ -13,9 +13,11 @@ Fixed for any bug fixes.
 - Security in case of vulnerabilities. 
 
 ## [Unreleased]
+
+## 3.0.0 - 2019-06-14
 ### Added
 - preview mode (#315, #23)
-- group list of notes by timeslots (#313)
+- group list of notes by timeslots (#313, #319)
 - sidebar for metadata details (instead of status-bar) (#290)
 - welcome screen (#290, #14)
 - show placeholder if note is empty (#290)
@@ -38,7 +40,8 @@ Fixed for any bug fixes.
 - copy & paste on text in Markdown syntax (#199)
 - when selecting text, the App navigation bar opens (#282)
 - title underlined with "=" doesn't get rendered in edit view (#259)
-- code style (#314, #290)
+- code quality (#314, #290)
+- editor code style (#305, #321)
 
 ## 2.6.0 - 2019-04-16
 - Checkbox functionality (#303)
