@@ -25,6 +25,7 @@ appstore: clean lint build-js-production
 	--exclude=.gitignore \
 	--exclude=l10n/no-php \
 	--exclude=Makefile \
+	--exclude=node_modules \
 	--exclude=package*.json \
 	--exclude=phpcs.xml \
 	--exclude=phpunit*xml \
@@ -35,6 +36,7 @@ appstore: clean lint build-js-production
 	--exclude=.travis.yml \
 	--exclude=.tx \
 	--exclude=vendor \
+	--exclude=webpack.*.js \
 	$(project_dir) $(sign_dir)
 	@echo "Signing…"
 	php ../server/occ integrity:sign-app \
@@ -114,8 +116,8 @@ lint-css-fix:
 
 # Cleaning
 clean:
-	rm -f js/notes.js
-	rm -f js/notes.js.map
+	rm -rf js/
+	rm -rf $(build_dir)
 
 clean-dev:
 	rm -rf node_modules
