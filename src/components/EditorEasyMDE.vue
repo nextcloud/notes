@@ -158,6 +158,10 @@ export default {
 	font-size: 90%;
 }
 
+.CodeMirror .cm-comment:only-child {
+	display: block;
+}
+
 /* Quotes */
 .cm-s-easymde .cm-quote {
 	color: inherit;
