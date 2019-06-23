@@ -15,6 +15,7 @@ OC.L10N.register(
     "All notes" : "Всички бележки",
     "Categories" : "Категории",
     "Delete note" : "Изтрий бележката",
+    "Details" : "Подробности",
     "Category" : "Категория",
     "Uncategorized" : "Некатегоризирана",
     "Saving failed!" : "Записването се провали!",
