@@ -46,7 +46,7 @@ OC.L10N.register(
     "_%n word_::_%n words_" : ["%n palavra","%n palavras"],
     "Write down your thoughts without any distractions." : "Anote seus pensamentos sem distrações.",
     "Use Markdown markups to style your text." : "Use marcações Markdown para estilizar seu texto.",
-    "Organize your notes in categories." : "Organizar suas anotações em categorias.",
+    "Organize your notes in categories." : "Organize suas anotações em categorias.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Instale o aplicativo em seu celular para acessar anotações a partir de qualquer lugar.",
     "Android app" : "Aplicativo Android",
     "iOS app" : "Aplicativo iOS",
