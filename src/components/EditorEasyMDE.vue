@@ -159,7 +159,8 @@ export default {
 }
 
 .CodeMirror .cm-comment:only-child {
-	display: block;
+	display: inline-block;
+	width: calc(100% - 1px);
 }
 
 /* Quotes */
