@@ -8,7 +8,7 @@
 	>
 		<div class="sidebar-content-wrapper">
 			<div class="note-category" :title="t('notes', 'Set category')">
-				<h4>{{ t('notes', 'Category') }}</h4>
+				<h4>{{ t('notes', 'Category') }} <span v-tooltip="t('notes', 'You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”.', { parent: t('notes', 'Category'), sub: t('notes', 'Subcategory')})" class="icon-info svg" /></h4>
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category" :value="category" :options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
@@ -52,6 +52,7 @@
 import {
 	AppSidebar,
 	Multiselect,
+	Tooltip,
 } from 'nextcloud-vue'
 import NotesService from '../NotesService'
 import store from '../store'
@@ -62,6 +63,10 @@ export default {
 	components: {
 		AppSidebar,
 		Multiselect,
+	},
+
+	directives: {
+		tooltip: Tooltip,
 	},
 
 	filters: {
@@ -192,6 +197,11 @@ form.category > .icon-confirm {
 form.category {
 	display: flex;
 	align-items: center;
+}
+
+.note-category .icon-info {
+	padding: 11px 20px;
+	vertical-align: super;
 }
 
 .category-select {
