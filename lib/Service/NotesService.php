@@ -190,7 +190,10 @@ class NotesService {
 		}
 
 		if ($content !== null) {
-			$file->putContent($content);
+			$stream = fopen('php://temp', 'r+');
+			fwrite($stream, $content);
+			rewind($stream);
+			$file->putContent($stream);
 		}
 
 		if ($mtime) {
