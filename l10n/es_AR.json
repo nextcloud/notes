@@ -1,0 +1,7 @@
+{ "translations": {
+    "Notes" : "Notas",
+    "New note" : "Nueva nota",
+    "Delete note" : "Borrar nota",
+    "_%n word_::_%n words_" : ["%n palabra","%n palabras"]
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

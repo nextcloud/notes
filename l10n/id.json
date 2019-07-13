@@ -1,0 +1,7 @@
+{ "translations": {
+    "Notes" : "Catatan",
+    "New note" : "Catatan baru",
+    "Delete note" : "Hapus catatan",
+    "_%n word_::_%n words_" : ["%n kata"]
+},"pluralForm" :"nplurals=1; plural=0;"
+}

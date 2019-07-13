@@ -1,0 +1,7 @@
+{ "translations": {
+    "Notes" : "یادداشت ها",
+    "New note" : "یادداشت جدید",
+    "Delete note" : "حذف یادداشت",
+    "_%n word_::_%n words_" : ["%n کلمه","%n کلمه"]
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
+}

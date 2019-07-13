@@ -1,0 +1,7 @@
+{ "translations": {
+    "Notes" : "Shënime",
+    "New note" : "Shënim i ri",
+    "Delete note" : "Fshije shënimin",
+    "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"]
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

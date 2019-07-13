@@ -1,0 +1,7 @@
+{ "translations": {
+    "Notes" : "Märkmed",
+    "New note" : "Uus märge",
+    "Delete note" : "Kustuta märge",
+    "_%n word_::_%n words_" : ["%n sõna","%n sõna"]
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
