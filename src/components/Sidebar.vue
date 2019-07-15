@@ -8,7 +8,7 @@
 	>
 		<div class="sidebar-content-wrapper">
 			<div class="note-category" :title="t('notes', 'Set category')">
-				<h4>{{ t('notes', 'Category') }} <span v-tooltip="t('notes', 'You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”.', { parent: t('notes', 'Category'), sub: t('notes', 'Subcategory')})" class="icon-info svg" /></h4>
+				<h4>{{ t('notes', 'Category') }} <span v-tooltip="categoriesInfo" class="icon-info svg" /></h4>
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category" :value="category" :options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
@@ -118,6 +118,9 @@ export default {
 		},
 		subtitle() {
 			return this.wordCount
+		},
+		categoriesInfo() {
+			return t('notes', 'You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”.', { parent: t('notes', 'Category'), sub: t('notes', 'Subcategory') })
 		},
 		categories() {
 			return [ '', ...NotesService.getCategories(0, false) ]
