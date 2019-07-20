@@ -52,7 +52,7 @@ OC.L10N.register(
     "Android app" : "Android-App",
     "iOS app" : "iOS-App",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Erstellen Sie eine Notiz per Klick auf „{newnote}“ in der App-Navigation.",
-    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Sie können Unterkategorien erstellen indem Sie „/“ als Trennung zwischen Ober- und Untergategorie verwenden, z.B. „{parent}/{sub}“.",
+    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Sie können Unterkategorien erstellen indem Sie „/“ als Trennung zwischen Ober- und Unterkategorie verwenden, z.B. „{parent}/{sub}“.",
     "See JavaScript console for details." : "Siehe JavaScript-Konsole für Details.",
     "Updating settings has failed." : "Aktualisierung der Einstellungen fehlgeschlagen.",
     "Fetching notes has failed." : "Laden der Notizen fehlgeschlagen.",
