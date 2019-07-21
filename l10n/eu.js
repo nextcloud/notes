@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Oharrak",
+    "Encryption Error" : "Zifratze errorea",
     "Error" : "Errorea",
     "New note" : "Ohar berria",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Gorde gabeko notak daude. Orrialdetik irtetzean aldaketa guztiak galduko dira!",
@@ -12,6 +13,7 @@ OC.L10N.register(
     "Delete note" : "Ezabatu oharra",
     "Category" : "Kategoria",
     "Saving failed!" : "Gordetzean errorea!",
+    "Subcategory" : "Azpikategoria",
     "_%n word_::_%n words_" : ["%n hitz","%n hitz"]
 },
 "nplurals=2; plural=(n != 1);");
