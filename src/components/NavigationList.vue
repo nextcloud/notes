@@ -39,9 +39,8 @@
 			<AppNavigationItem v-if="category!==null && category!==item.category"
 				:key="item.category" :item="categoryToItem(item.category)"
 			/>
-			<AppNavigationItem v-if="category===null && item.timeslot"
-				:key="item.timeslot" :item="timeslotToItem(item.timeslot)"
-				class="timeslot"
+			<AppNavigationCaption v-if="category===null && item.timeslot"
+				:key="item.timeslot" :text="item.timeslot"
 			/>
 			<NavigationNoteItem v-for="note in item.notes"
 				:key="note.id" :note="note"
@@ -55,6 +54,7 @@
 <script>
 import {
 	AppNavigationItem,
+	AppNavigationCaption,
 } from 'nextcloud-vue'
 import NavigationCategoriesItem from './NavigationCategoriesItem'
 import NavigationNoteItem from './NavigationNoteItem'
@@ -65,6 +65,7 @@ export default {
 	name: 'NavigationList',
 
 	components: {
+		AppNavigationCaption,
 		AppNavigationItem,
 		NavigationCategoriesItem,
 		NavigationNoteItem,
@@ -154,13 +155,6 @@ export default {
 			}
 		},
 
-		timeslotToItem(timeslot) {
-			return {
-				caption: true,
-				text: timeslot,
-			}
-		},
-
 		getTimeslotFromNote(note) {
 			if (note.favorite) {
 				return ''
@@ -172,7 +166,7 @@ export default {
 			} else if (t >= this.lastYear) {
 				return this.monthFormat.format(new Date(t))
 			} else {
-				return new Date(t).getFullYear()
+				return new Date(t).getFullYear().toString()
 			}
 		},
 	},
