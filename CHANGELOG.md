@@ -5,14 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and follows the requirements of the [Nextcloud Appstore Metadata specification](https://nextcloudappstore.readthedocs.io/en/latest/developer.html#changelog).
 
 Types of changes:
-- Added for new features.
-- Changed for changes in existing functionality.
-- Deprecated for soon-to-be removed features.
-- Removed for now removed features.
-Fixed for any bug fixes.
-- Security in case of vulnerabilities. 
+- *Added* for new features.
+- *Changed* for changes in existing functionality.
+- *Deprecated* for soon-to-be removed features.
+- *Removed* for now removed features.
+- *Fixed* for any bug fixes.
+- *Security* in case of vulnerabilities. 
 
 ## [Unreleased]
+
+
+## 3.0.1 - 2019-07-22
+
+### Added
+- media query for printing style (#323)
+- tooltip with subcategory documentation (#341)
+
+### Fixed
+- code block style on Chrome (#340)
+
 
 ## 3.0.0 - 2019-06-14
 ### Added
@@ -42,6 +53,7 @@ Fixed for any bug fixes.
 - title underlined with "=" doesn't get rendered in edit view (#259)
 - code quality (#314, #290)
 - editor code style (#305, #321)
+
 
 ## 2.6.0 - 2019-04-16
 - Checkbox functionality (#303)
