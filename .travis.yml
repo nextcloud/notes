@@ -5,7 +5,7 @@ php:
 addons:
   apt:
     packages:
-    - libxml2-utils
+      - libxml2-utils
 
 cache:
   directories:
