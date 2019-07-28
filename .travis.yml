@@ -2,6 +2,9 @@ language: php
 php:
   - 7.2
 
+services:
+  - mysql
+
 addons:
   apt:
     packages:
