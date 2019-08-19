@@ -54,14 +54,14 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "アプリのナビゲーションで「{newnote}」をクリックしてメモを書き始めます",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "親カテゴリとサブカテゴリの間の区切り文字として「/」を使用して、サブカテゴリを作成できます。 “ {parent} / {sub}”",
     "See JavaScript console for details." : "詳細はJavaScriptコンソールを見てください",
-    "Updating settings has failed." : "設定の更新に失敗しました",
-    "Fetching notes has failed." : "ノートの取得に失敗しました",
-    "Fetching note {id} has failed." : "ノート {id} の取得に失敗しました",
-    "Creating new note has failed." : "新規ノートの作成に失敗しました",
-    "Updating note {id} has failed." : "ノート {id} の更新に失敗しました",
-    "Deleting note {id} has failed." : "ノート {id} の削除に失敗しました",
-    "Toggling favorite for note {id} has failed." : "お気に入りノート {id} の切り替えに失敗しました。",
+    "Updating settings has failed." : "設定を更新できませんでした。",
+    "Fetching notes has failed." : "ノートを取得できませんでした。",
+    "Fetching note {id} has failed." : "ノート {id} を取得できませんでした",
+    "Creating new note has failed." : "新規ノートを作成できませんでした",
+    "Updating note {id} has failed." : "ノート {id} を更新できませんでした",
+    "Deleting note {id} has failed." : "ノート {id} を削除できませんでした",
+    "Toggling favorite for note {id} has failed." : "お気に入りノート {id} を切り替えできませんでした。",
     "Updating the note's category has failed. Is the target directory writable?" : "ノートのカテゴリを更新できませんでした。 ターゲットディレクトリは書き込み可能ですか？",
-    "Updating the category for note {id} has failed." : "ノート{id}のカテゴリの更新に失敗しました。"
+    "Updating the category for note {id} has failed." : "ノート{id}のカテゴリを更新できませんでした。"
 },
 "nplurals=1; plural=0;");
