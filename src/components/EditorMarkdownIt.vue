@@ -112,5 +112,13 @@ export default {
 		padding-left: 2ex;
 		color: var(--color-text-light)
 	}
+
+	& table th {
+		font-weight: bold;
+	}
+
+	& table td, & table th {
+		padding-right: 1.5em;
+	}
 }
 </style>
