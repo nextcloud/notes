@@ -158,11 +158,6 @@ export default {
 	font-size: 90%;
 }
 
-.CodeMirror .cm-comment:only-child {
-	display: inline-block;
-	width: calc(100% - 1px);
-}
-
 /* Quotes */
 .cm-s-easymde .cm-quote {
 	color: inherit;
