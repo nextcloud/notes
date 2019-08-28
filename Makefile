@@ -91,9 +91,12 @@ test-coverage:
 	npm run test:coverage
 
 # Linting
-lint: lint-php lint-js lint-css
+lint: lint-php lint-js lint-css lint-nextcloud
 
 lint-php:
+	# Check PHP syntax errors
+	@! find lib/ -name "*.php" | xargs -I{} php -l '{}' | grep -v "No syntax errors detected"
+	# PHP CodeSniffer
 	vendor/bin/phpcs --standard=phpcs.xml --runtime-set ignore_warnings_on_exit 1 appinfo/ lib/
 
 lint-js:
@@ -101,6 +104,11 @@ lint-js:
 
 lint-css:
 	npm run stylelint
+
+lint-nextcloud:
+	# Check info.xml schema validity
+	wget https://apps.nextcloud.com/schema/apps/info.xsd -P appinfo/ -N --no-verbose || [ -f appinfo/info.xsd ]
+	xmllint appinfo/info.xml --schema appinfo/info.xsd --noout
 
 # Fix lint
 lint-fix: lint-php-fix lint-js-fix lint-css-fix
