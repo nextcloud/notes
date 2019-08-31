@@ -15,6 +15,14 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.0.2 - 2019-08-31
+
+### Fixed
+- code block style (revert) (#362, #349)
+- table layout in preview mode (#362, #355)
+- dependency updates (#348, #354, #361, #363)
+
+
 ## 3.0.1 - 2019-07-22
 
 ### Added
