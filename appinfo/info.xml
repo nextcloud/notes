@@ -22,6 +22,6 @@ The Notes app is a distraction free notes taking app. It provides categories for
     <repository type="git">https://github.com/nextcloud/notes.git</repository>
     <screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes-thumbnail.jpg">https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png</screenshot>
     <dependencies>
-        <nextcloud min-version="15" max-version="17" />
+        <nextcloud min-version="15" max-version="18" />
     </dependencies>
 </info>
