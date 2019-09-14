@@ -53,7 +53,7 @@ import {
 	AppSidebar,
 	Multiselect,
 	Tooltip,
-} from 'nextcloud-vue'
+} from '@nextcloud/vue'
 import NotesService from '../NotesService'
 import store from '../store'
 

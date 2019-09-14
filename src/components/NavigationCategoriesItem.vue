@@ -1,14 +1,43 @@
 <template>
 	<AppNavigationItem
-		:item="mainItem"
+		:title="title"
+		icon="icon-files"
+		class="app-navigation-noclose separator-below"
+		:class="{ 'category-header': selectedCategory !== null }"
 		:open.sync="open"
-	/>
+		:allow-collapse="true"
+		@click.prevent.stop="onToggleCategories"
+	>
+		<template>
+			<AppNavigationItem
+				:title="t('notes', 'All notes')"
+				icon="icon-recent"
+				@click.prevent.stop="onSelectCategory(null)"
+			>
+				<AppNavigationCounter slot="counter">
+					{{ numNotes }}
+				</AppNavigationCounter>
+			</AppNavigationItem>
+
+			<AppNavigationItem v-for="category in categories"
+				:key="category.name"
+				:title="categoryTitle(category.name)"
+				:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
+				@click.prevent.stop="onSelectCategory(category.name)"
+			>
+				<AppNavigationCounter slot="counter">
+					{{ category.count }}
+				</AppNavigationCounter>
+			</AppNavigationItem>
+		</template>
+	</AppNavigationItem>
 </template>
 
 <script>
 import {
 	AppNavigationItem,
-} from 'nextcloud-vue'
+	AppNavigationCounter,
+} from '@nextcloud/vue'
 import NotesService from '../NotesService'
 import store from '../store'
 
@@ -17,6 +46,7 @@ export default {
 
 	components: {
 		AppNavigationItem,
+		AppNavigationCounter,
 	},
 
 	props: {
@@ -41,40 +71,20 @@ export default {
 			return NotesService.getCategories(1, true)
 		},
 
-		categoryItems() {
-			const itemAllNotes = {
-				text: this.t('notes', 'All notes'),
-				icon: 'nav-icon-recent',
-				action: this.onSelectCategory.bind(this, null),
-				utils: {
-					counter: this.numNotes,
-				},
-			}
-			const itemsCategories = this.categories.map(category => (
-				{
-					text: NotesService.categoryLabel(category.name),
-					icon: category.name === '' ? 'nav-icon-emptyfolder' : 'nav-icon-files',
-					action: this.onSelectCategory.bind(this, category.name),
-					utils: {
-						counter: category.count,
-					},
-				}
-			))
-			return [ itemAllNotes, ...itemsCategories ]
-		},
-
-		mainItem() {
-			return {
-				text: this.selectedCategory === null ? this.t('notes', 'Categories') : NotesService.categoryLabel(this.selectedCategory),
-				icon: 'nav-icon-files',
-				collapsible: true,
-				classes: 'app-navigation-noclose separator-below' + (this.selectedCategory === null ? '' : ' category-header'),
-				children: this.categoryItems,
-			}
+		title() {
+			return this.selectedCategory === null ? this.t('notes', 'Categories') : NotesService.categoryLabel(this.selectedCategory)
 		},
 	},
 
 	methods: {
+		categoryTitle(category) {
+			return NotesService.categoryLabel(category)
+		},
+
+		onToggleCategories() {
+			this.open = !this.open
+		},
+
 		onSelectCategory(category) {
 			this.open = false
 			this.$emit('category-selected', category)
