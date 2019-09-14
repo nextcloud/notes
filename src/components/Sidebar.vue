@@ -113,7 +113,7 @@ export default {
 				).length
 				return n('notes', '%n word', '%n words', wordCount)
 			} else {
-				return null
+				return ''
 			}
 		},
 		subtitle() {
