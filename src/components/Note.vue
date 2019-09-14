@@ -35,7 +35,7 @@
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
-						{{ t('notes', 'Fullscreen') }}
+						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</ActionButton>
 				</Actions>
 				<button v-show="note.saveError"
