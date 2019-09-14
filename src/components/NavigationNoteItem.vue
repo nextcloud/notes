@@ -94,7 +94,6 @@ export default {
 		},
 
 		onDeleteNote() {
-			// TODO disable editor
 			this.loading.delete = true
 			NotesService.deleteNote(this.note.id)
 				.then(() => {
