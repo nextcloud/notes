@@ -108,6 +108,7 @@ export default {
 	},
 
 	deleteNote(noteId) {
+		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: true })
 		return axios
 			.delete(this.url('/notes/' + noteId))
 			.then(() => {

@@ -1,6 +1,6 @@
 <template>
 	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
-		<div v-if="!loading && note && !note.error" id="note-container"
+		<div v-if="!loading && note && !note.error && !note.deleting" id="note-container"
 			class="note-container" :class="{ fullscreen: fullscreen }"
 		>
 			<div class="note-editor">
