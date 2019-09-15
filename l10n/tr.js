@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Ayrıntılar",
     "Preview" : "Ön izleme",
     "Edit" : "Düzenle",
-    "Fullscreen" : "Tam Ekran",
     "Save failed. Click to retry." : "Kaydedilemedi. Yeniden denemek için tıklayın.",
     "Set category" : "Kategoriyi ayarla",
     "Category" : "Kategori",

@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "详细信息",
     "Preview" : "预览",
     "Edit" : "编辑",
-    "Fullscreen" : "全屏",
     "Save failed. Click to retry." : "保存失败。点击以重试。",
     "Set category" : "设置分类",
     "Category" : "分类",

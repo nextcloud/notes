@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Dettagli",
     "Preview" : "Anteprima",
     "Edit" : "Modifica",
-    "Fullscreen" : "Schermo intero",
     "Save failed. Click to retry." : "Salvataggio non riuscito. Fai clic per riprovare.",
     "Set category" : "Imposta categoria",
     "Category" : "Categoria",

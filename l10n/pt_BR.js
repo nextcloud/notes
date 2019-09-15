@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Detalhes",
     "Preview" : "Pré-visualização",
     "Edit" : "Editar",
-    "Fullscreen" : "Tela cheia",
     "Save failed. Click to retry." : "Falha ao salvar. Clique para retentar.",
     "Set category" : "Definir categoria",
     "Category" : "Categoria",

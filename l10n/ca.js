@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Detalls",
     "Preview" : "Previsualitza",
     "Edit" : "Edita",
-    "Fullscreen" : "Pantalla completa",
     "Save failed. Click to retry." : "S'ha pogut desar. Feu clic per tornar-ho a provar.",
     "Set category" : "Estableix la categoria",
     "Category" : "Categoria",

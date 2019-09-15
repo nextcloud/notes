@@ -30,7 +30,6 @@ OC.L10N.register(
     "Details" : "Podrobnosti",
     "Preview" : "Náhled",
     "Edit" : "Upravit",
-    "Fullscreen" : "Celá obrazovka",
     "Save failed. Click to retry." : "Uložení se nezdařilo. Klikněte pro opětovný pokus.",
     "Set category" : "Nastavit kategorii",
     "Category" : "Kategorie",

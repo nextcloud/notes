@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Podrobnosti",
     "Preview" : "Náhľad",
     "Edit" : "Upraviť",
-    "Fullscreen" : "Celá obrazovka",
     "Save failed. Click to retry." : "Uloženie zlyhalo. Ťuknutím zopakujete.",
     "Set category" : "Vybrať kategóriu",
     "Category" : "Kategória",

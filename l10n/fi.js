@@ -32,7 +32,6 @@ OC.L10N.register(
     "Details" : "Tiedot",
     "Preview" : "Esikatselu",
     "Edit" : "Muokkaa",
-    "Fullscreen" : "Koko näyttö",
     "Save failed. Click to retry." : "Tallennus epäonnistui. Napsauta yrittääksesi uudelleen.",
     "Set category" : "Aseta luokka",
     "Category" : "Luokka",

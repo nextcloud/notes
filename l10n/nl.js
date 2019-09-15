@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Details",
     "Preview" : "Voorbeeld",
     "Edit" : "Bewerken",
-    "Fullscreen" : "Volledig scherm",
     "Save failed. Click to retry." : "Opslaan mislukt. Klik om opnieuw te proberen.",
     "Set category" : "Bepaal categorie",
     "Category" : "Categorie",

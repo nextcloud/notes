@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "詳細",
     "Preview" : "プレビュー",
     "Edit" : "編集",
-    "Fullscreen" : "全画面",
     "Save failed. Click to retry." : "保存失敗, クリックで再試行",
     "Set category" : "カテゴリを設定",
     "Category" : "カテゴリ",

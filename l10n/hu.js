@@ -29,7 +29,6 @@ OC.L10N.register(
     "Details" : "Részletek",
     "Preview" : "Előnézet",
     "Edit" : "Szerkesztés",
-    "Fullscreen" : "Teljes képernyő",
     "Set category" : "Kategória beállítása",
     "Category" : "Kategória",
     "Uncategorized" : "Kategorizálatlan",

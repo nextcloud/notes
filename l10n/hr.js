@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Pojedinosti",
     "Preview" : "Pretpregled",
     "Edit" : "Uredi",
-    "Fullscreen" : "Cijeli zaslon",
     "Save failed. Click to retry." : "Spremanje nije uspjelo. Kliknite za ponovni pokušaj.",
     "Set category" : "Postavi kategoriju",
     "Category" : "Kategorija",

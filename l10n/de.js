@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "Details",
     "Preview" : "Vorschau",
     "Edit" : "Bearbeiten",
-    "Fullscreen" : "Vollbild",
     "Save failed. Click to retry." : "Speichern fehlgeschlagen. Klicken um es erneut zu versuchen.",
     "Set category" : "Kategorie ändern",
     "Category" : "Kategorie",
