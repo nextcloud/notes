@@ -33,6 +33,8 @@ OC.L10N.register(
     "Details" : "Detaljer",
     "Preview" : "Förhandsvisa",
     "Edit" : "Redigera",
+    "Exit full screen" : "Avsluta fullskärm",
+    "Full screen" : "Fullskärm",
     "Save failed. Click to retry." : "Kunde inte spara. Klicka för att försöka igen.",
     "Set category" : "Ange kategori",
     "Category" : "Kategori",

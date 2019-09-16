@@ -34,6 +34,8 @@ OC.L10N.register(
     "Details" : "Szczegóły",
     "Preview" : "Podgląd",
     "Edit" : "Edycja",
+    "Exit full screen" : "Wyłącz tryb pełnoekranowy",
+    "Full screen" : "Tryb pełnoekranowy",
     "Save failed. Click to retry." : "Zapisywanie nie powiodło się. Kliknij, aby spróbować ponownie.",
     "Set category" : "Ustaw kategorię",
     "Category" : "Kategoria",
