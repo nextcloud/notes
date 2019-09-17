@@ -15,6 +15,15 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.0.3 - 2019-09-17
+
+### Fixed
+- fix null error in Sidebar subtitle (#374)
+- fix fullscreen wording (#375)
+- disable editor if note is deleting (#377)
+- dependency updates (#372)
+
+
 ## 3.0.2 - 2019-08-31
 
 ### Fixed
