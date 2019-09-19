@@ -109,6 +109,8 @@ lint-nextcloud:
 	# Check info.xml schema validity
 	wget https://apps.nextcloud.com/schema/apps/info.xsd -P appinfo/ -N --no-verbose || [ -f appinfo/info.xsd ]
 	xmllint appinfo/info.xml --schema appinfo/info.xsd --noout
+	# Check min-version consistency
+	php tests/nextcloud-version.php
 
 # Fix lint
 lint-fix: lint-php-fix lint-js-fix lint-css-fix
