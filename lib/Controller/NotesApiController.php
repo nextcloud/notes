@@ -34,7 +34,13 @@ class NotesApiController extends ApiController {
 	 * @param NotesService $service
 	 * @param IUserSession $userSession
 	 */
-	public function __construct($AppName, IRequest $request, NotesService $service, MetaService $metaService, IUserSession $userSession) {
+	public function __construct(
+		$AppName,
+		IRequest $request,
+		NotesService $service,
+		MetaService $metaService,
+		IUserSession $userSession
+	) {
 		parent::__construct($AppName, $request);
 		$this->service = $service;
 		$this->metaService = $metaService;
