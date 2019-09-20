@@ -39,10 +39,8 @@ class NoteUtil {
 
 	/**
 	 * gather note files in given directory and all subdirectories
-	 * @param Folder $folder
-	 * @return array
 	 */
-	public function gatherNoteFiles(Folder $folder) {
+	public function gatherNoteFiles(Folder $folder) : array {
 		$notes = [];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
@@ -60,17 +58,14 @@ class NoteUtil {
 
 	/**
 	 * test if file is a note
-	 *
-	 * @param \OCP\Files\File $file
-	 * @return bool
 	 */
-	public function isNote(File $file) {
+	public function isNote(File $file) : bool {
 		$allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
 		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
 		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
 	}
 
-	public function moveNote(Folder $notesFolder, File $file, $category, $title) {
+	public function moveNote(Folder $notesFolder, File $file, $category, string $title) {
 		$id = $file->getId();
 		$currentFilePath = $this->root->getFullPath($file->getPath());
 		$currentBasePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
@@ -118,7 +113,7 @@ class NoteUtil {
 	 * @return string the resolved filename to prevent overwriting different
 	 * files with the same title
 	 */
-	public function generateFileName(Folder $folder, $title, $suffix, $id) {
+	public function generateFileName(Folder $folder, string $title, string $suffix, int $id) : string {
 		$path = $title . $suffix;
 
 		// if file does not exist, that name has not been taken. Similar we don't
@@ -142,7 +137,7 @@ class NoteUtil {
 		}
 	}
 
-	public function getSafeTitleFromContent($content) {
+	public function getSafeTitleFromContent(string $content) : string {
 		// prepare content: remove markdown characters and empty spaces
 		$content = preg_replace("/^\s*[*+-]\s+/mu", "", $content); // list item
 		$content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
@@ -168,7 +163,7 @@ class NoteUtil {
 	}
 
 	/** removes characters that are illegal in a file or folder name on some operating systems */
-	public function sanitisePath($str) {
+	public function sanitisePath(string $str) : string {
 		// remove characters which are illegal on Windows (includes illegal characters on Unix/Linux)
 		// prevents also directory traversal by eliminiating slashes
 		// see also \OC\Files\Storage\Common::verifyPosixPath(...)
@@ -194,7 +189,7 @@ class NoteUtil {
 	 * @param string $path path to the folder
 	 * @return Folder
 	 */
-	public function getOrCreateFolder($path) : Folder {
+	public function getOrCreateFolder(string $path) : Folder {
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
 		} else {
