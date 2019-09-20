@@ -171,7 +171,7 @@ class NoteUtil {
 			$folder = $this->root->newFolder($path);
 		}
 		if (!($folder instanceof Folder)) {
-			throw new Exception($path.' is not a folder');
+			throw new \Exception($path.' is not a folder');
 		}
 		return $folder;
 	}
