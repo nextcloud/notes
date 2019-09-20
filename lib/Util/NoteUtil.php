@@ -146,7 +146,7 @@ class NoteUtil {
 		$this->logger->debug('BasePath is '.$basePath);
 
 		// assemble new file path
-		$newFilePath = $basePath . '/' . NoteUtil::generateFileName($folder, $title, $fileSuffix, $id);
+		$newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileSuffix, $id);
 
 		// if the current path is not the new path, the file has to be renamed
 		if ($currentFilePath !== $newFilePath) {
@@ -169,6 +169,9 @@ class NoteUtil {
 			$folder = $this->root->get($path);
 		} else {
 			$folder = $this->root->newFolder($path);
+		}
+		if (!($folder instanceof Folder)) {
+			throw new Exception($path.' is not a folder');
 		}
 		return $folder;
 	}

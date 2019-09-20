@@ -4,6 +4,7 @@ namespace OCA\Notes\Service;
 
 use OCP\IL10N;
 use OCP\ILogger;
+use OCP\Encryption\Exceptions\GenericEncryptionException;
 use OCP\Files\IRootFolder;
 use OCP\Files\File;
 use OCP\Files\FileInfo;
@@ -196,7 +197,8 @@ class NotesService {
 	 */
 	public function favorite($id, $favorite, $userId) {
 		$folder = $this->getFolderForUser($userId);
-		$file = $this->getFileById($folder, $id);
+		// check if file is note
+		$this->getFileById($folder, $id);
 		$tagger = \OC::$server->getTagManager()->load('files');
 		if ($favorite) {
 			$tagger->addToFavorites($id);
@@ -233,7 +235,7 @@ class NotesService {
 	private function getFileById(Folder $folder, $id) : File {
 		$file = $folder->getById($id);
 
-		if (count($file) <= 0 || !$this->noteUtil->isNote($file[0])) {
+		if (count($file) <= 0 || !($file[0] instanceof File) || !$this->noteUtil->isNote($file[0])) {
 			throw new NoteDoesNotExistException();
 		}
 		return $file[0];
