@@ -11,9 +11,7 @@ use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use OCA\Notes\Db\Note;
 use OCA\Notes\Service\SettingsService;
-use OCA\Notes\Util\NoteUtil;
 use OCP\IConfig;
-use OCP\IUserSession;
 
 /**
  * Class NotesService
@@ -255,7 +253,7 @@ class NotesService {
 	 * @return Folder
 	 */
 	private function getFolderForUser($userId) : Folder {
-		// TODO use IRootFolder->getUserFolder()
+		// TODO use IRootFolder->getUserFolder()  ?
 		$path = '/' . $userId . '/files/' . $this->settings->get($userId, 'notesPath');
 		try {
 			$folder = $this->noteUtil->getOrCreateFolder($path);
