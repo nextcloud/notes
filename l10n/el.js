@@ -2,9 +2,9 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Σημειώσεις",
+    "New note" : "Νέα σημείωση",
     "Encryption Error" : "Σφάλμα κρυπτογράφησης",
     "Error" : "Σφάλμα",
-    "New note" : "Νέα σημείωση",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Υπάρχουν επισημάνσεις που δεν έχουν αποθηκευτεί. Αφήνοντας τη σελίδα θα διαγραφούν όλες οι αλλαγές!",
     "Settings" : "Ρυθμίσεις",
     "Folder to store your notes" : "Φάκελος αποθήκευσης των σημειώσεών σας",
