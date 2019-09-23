@@ -130,7 +130,7 @@ export default {
 			store.commit('setSidebarOpen', false)
 			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.preview = false
+			this.preview = true
 			NotesService.fetchNote(this.noteId)
 				.then((note) => {
 					if (note.errorMessage) {
@@ -142,6 +142,9 @@ export default {
 				})
 				.finally(() => {
 					this.loading = false
+					if (!this.note.content) {
+						this.preview = false
+					}
 				})
 		},
 
