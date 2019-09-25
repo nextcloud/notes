@@ -8,6 +8,7 @@ OC.L10N.register(
     "Categories" : "Kategorijos",
     "Yesterday" : "Vakar",
     "Preview" : "Peržiūra",
+    "Full screen" : "Visas ekranas",
     "Save failed. Click to retry." : "Nepavyko įrašyti. Spustelėkite, norėdami bandyti dar kartą.",
     "Saving failed!" : "Įrašymas nepavyko!",
     "Android app" : "Android programėlė",
