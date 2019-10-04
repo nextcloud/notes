@@ -34,6 +34,8 @@ OC.L10N.register(
     "Details" : "Детаљи",
     "Preview" : "Претпреглед",
     "Edit" : "Измени",
+    "Exit full screen" : "Напусти цео екран",
+    "Full screen" : "Цео екран",
     "Save failed. Click to retry." : "Грешка при чувању. Кликните да покушате поново.",
     "Set category" : "Одаберите категорију",
     "Category" : "Категорија",
