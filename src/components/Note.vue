@@ -54,7 +54,7 @@ import {
 	ActionButton,
 	AppContent,
 	Tooltip,
-} from 'nextcloud-vue'
+} from '@nextcloud/vue'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
 import NotesService from '../NotesService'

@@ -27,7 +27,7 @@
 <script>
 import {
 	AppNavigationSettings,
-} from 'nextcloud-vue'
+} from '@nextcloud/vue'
 import NotesService from '../NotesService'
 import store from '../store'
 

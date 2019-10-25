@@ -31,7 +31,7 @@ import {
 	AppNavigation,
 	AppNavigationNew,
 	Content,
-} from 'nextcloud-vue'
+} from '@nextcloud/vue'
 import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
 import NotesService from './NotesService'

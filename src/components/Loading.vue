@@ -5,7 +5,7 @@
 
 import {
 	AppContent,
-} from 'nextcloud-vue'
+} from '@nextcloud/vue'
 
 export default {
 	name: 'Loading',

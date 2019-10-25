@@ -1,4 +1,4 @@
-#app-navigation li.collapsible.category-header:not(.open) a {
+.app-navigation-entry.category-header:not(.app-navigation-entry--opened) .app-navigation-entry__title {
 	font-weight: bold;
 }
 
@@ -12,25 +12,26 @@
 }
 
 /* icons for sidebar */
-.nav-icon-files {
+.icon-files {
 	@include icon-color('folder', 'notes', $color-black);
 }
 
-.nav-icon-emptyfolder {
+.icon-emptyfolder {
 	@include icon-color('folder-empty', 'notes', $color-black);
 }
 
-.nav-icon-recent {
+.icon-recent {
 	@include icon-color('recent', 'notes', $color-black);
 }
 
-.app-navigation-entry-utils-menu-button {
+.app-navigation-entry__utils .action-item {
 	visibility: hidden;
 }
 
-.active  .app-navigation-entry-utils-menu-button,
-li:hover .app-navigation-entry-utils-menu-button,
-li:focus .app-navigation-entry-utils-menu-button {
+li.actionsOpen .app-navigation-entry__utils .action-item,
+li.active .app-navigation-entry__utils .action-item,
+li:hover  .app-navigation-entry__utils .action-item,
+li:focus  .app-navigation-entry__utils .action-item {
 	visibility: visible;
 }
 
