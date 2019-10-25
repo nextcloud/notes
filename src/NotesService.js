@@ -1,6 +1,6 @@
 import AppGlobal from './mixins/AppGlobal'
 import store from './store'
-import axios from 'nextcloud-axios'
+import axios from '@nextcloud/axios'
 
 export default {
 
