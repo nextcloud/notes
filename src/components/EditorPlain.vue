@@ -6,7 +6,7 @@
 <script>
 
 export default {
-	name: 'TheEditor',
+	name: 'EditorPlain',
 
 	props: {
 		value: {

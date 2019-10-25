@@ -5,8 +5,11 @@
 				<label for="notesPath">{{ t('notes', 'Folder to store your notes') }}</label>
 			</p>
 			<form @submit.prevent="onChangeSettingsReload">
-				<input id="notesPath" v-model="settings.notesPath" type="text"
-					name="notesPath" :placeholder="t('notes', 'path to notes')"
+				<input id="notesPath"
+					v-model="settings.notesPath"
+					type="text"
+					name="notesPath"
+					:placeholder="t('notes', 'path to notes')"
 					@change="onChangeSettingsReload"
 				><input type="submit" class="icon-confirm" value="">
 			</form>

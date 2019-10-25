@@ -44,10 +44,12 @@
 				@click.native="$emit('category-selected', item.category)"
 			/>
 			<AppNavigationCaption v-if="category===null && item.timeslot"
-				:key="item.timeslot" :title="item.timeslot"
+				:key="item.timeslot"
+				:title="item.timeslot"
 			/>
 			<NavigationNoteItem v-for="note in item.notes"
-				:key="note.id" :note="note"
+				:key="note.id"
+				:note="note"
 				@category-selected="$emit('category-selected', $event)"
 				@note-deleted="$emit('note-deleted')"
 			/>

@@ -1,6 +1,7 @@
 <template>
 	<AppSidebar v-if="sidebarOpen"
-		:title="note.title" :subtitle="subtitle"
+		:title="note.title"
+		:subtitle="subtitle"
 		:star-loading="loading.favorite"
 		:starred="note.favorite"
 		@update:starred="onSetFavorite"
@@ -10,7 +11,9 @@
 			<div class="note-category" :title="t('notes', 'Set category')">
 				<h4>{{ t('notes', 'Category') }} <span v-tooltip="categoriesInfo" class="icon-info svg" /></h4>
 				<form class="category" @submit.prevent.stop="">
-					<Multiselect id="category" :value="category" :options="categories"
+					<Multiselect id="category"
+						:value="category"
+						:options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
 						:disabled="loading.category"
 						:class="['category-select', {'icon-loading-small': loading.category}]"
@@ -26,9 +29,11 @@
 						</template>
 					</Multiselect>
 					<input
-						type="text" style="display: none"
+						type="text"
+						style="display: none"
 					><input
-						type="submit" value=""
+						type="submit"
+						value=""
 						class="icon-confirm loading"
 						:disabled="loading.category"
 					>

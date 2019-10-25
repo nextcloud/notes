@@ -8,7 +8,7 @@
 import EasyMDE from 'easymde'
 
 export default {
-	name: 'TheEditor',
+	name: 'EditorEasyMDE',
 
 	props: {
 		value: {
