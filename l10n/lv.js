@@ -3,9 +3,9 @@ OC.L10N.register(
     {
     "Notes" : "Piezīmes",
     "New note" : "Jauna piezīme",
+    "Delete note" : "Dzēst piezīmi",
     "Remove from favorites" : "Noņemt no izlases",
     "Add to favorites" : "Pievienot izlasei",
-    "Delete note" : "Dzēst piezīmi",
     "Preview" : "Priekšskatīt",
     "Edit" : "Rediģēt",
     "_%n word_::_%n words_" : ["%n words","%n vārdi","%n vārdi"]
