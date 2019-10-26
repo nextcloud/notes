@@ -8,24 +8,15 @@
 		/>
 
 		<!-- search result header -->
-		<li v-if="search && filteredNotes.length" class="search-result-header">
-			<a class="icon-search active">
-				<span v-if="category">
-					{{ t('notes', 'Search result for “{search}” in {category}', { search: search, category: category }) }}
-				</span>
-				<span v-else>
-					{{ t('notes', 'Search result for “{search}”', { search: search }) }}
-				</span>
-			</a>
-		</li>
+		<AppNavigationCaption v-if="search && filteredNotes.length" :title="searchResultTitle" class="search-result-header" />
 
 		<!-- nothing found -->
-		<li v-if="search && !filteredNotes.length">
+		<li v-if="search && !filteredNotes.length" class="no-search-result">
 			<span class="nav-entry">
 				<div id="emptycontent" class="emptycontent-search">
 					<div class="icon-search" />
-					<h2 v-if="category">
-						{{ t('notes', 'No search result for “{search}” in {category}', { search: search, category: category }) }}
+					<h2 v-if="category!==null">
+						{{ t('notes', 'No search result for “{search}” in {category}', { search: search, category: categoryTitle(category) }) }}
 					</h2>
 					<h2 v-else>
 						{{ t('notes', 'No search result for “{search}”', { search: search }) }}
@@ -128,6 +119,14 @@ export default {
 		noteItems() {
 			return this.groupedNotes
 		},
+
+		searchResultTitle() {
+			if (this.category !== null) {
+				return t('notes', 'Search result for “{search}” in {category}', { search: this.search, category: this.categoryTitle(this.category) })
+			} else {
+				return t('notes', 'Search result for “{search}”', { search: this.search })
+			}
+		},
 	},
 
 	created() {
@@ -147,6 +146,10 @@ export default {
 				{ t: new Date(now.getFullYear(), now.getMonth(), 1), l: t('notes', 'This month') },
 				{ t: new Date(now.getFullYear(), now.getMonth() - 1, 1), l: t('notes', 'Last month') },
 			]
+		},
+
+		categoryTitle(category) {
+			return NotesService.categoryLabel(category)
 		},
 
 		categoryToLabel(category) {
@@ -171,10 +174,12 @@ export default {
 }
 </script>
 <style scoped>
-.search-result-header > a,
-.search-result-header > a * {
-	font-style: italic;
-	cursor: default;
+.search-result-header {
+	color: inherit;
+}
+
+li.no-search-result {
+	order: 1;
 }
 
 li .nav-entry .emptycontent-search {
