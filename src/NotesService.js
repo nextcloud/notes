@@ -107,8 +107,16 @@ export default {
 			})
 	},
 
+	prepareDeleteNote(noteId) {
+		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: 'prepare' })
+	},
+
+	undoDeleteNote(noteId) {
+		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: null })
+	},
+
 	deleteNote(noteId) {
-		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: true })
+		store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: 'deleting' })
 		return axios
 			.delete(this.url('/notes/' + noteId))
 			.then(() => {
@@ -117,6 +125,7 @@ export default {
 			.catch(err => {
 				console.error(err)
 				this.handleSyncError(this.t('notes', 'Deleting note {id} has failed.', { id: noteId }))
+				this.undoDeleteNote(noteId)
 				throw err
 			})
 	},

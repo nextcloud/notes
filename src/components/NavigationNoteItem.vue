@@ -5,8 +5,10 @@
 		:menu-open.sync="actionsOpen"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:class="{ actionsOpen }"
+		:undo="isPrepareDeleting"
+		@undo="onUndoDeleteNote"
 	>
-		<template slot="actions">
+		<template v-if="!note.deleting" slot="actions">
 			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</ActionButton>
@@ -49,6 +51,7 @@ export default {
 				delete: false,
 			},
 			actionsOpen: false,
+			undoTimer: null,
 		}
 	},
 
@@ -63,8 +66,16 @@ export default {
 			return icon
 		},
 
+		isPrepareDeleting() {
+			return this.note.deleting === 'prepare'
+		},
+
 		title() {
-			return this.note.title + (this.note.unsaved ? ' *' : '')
+			if (this.isPrepareDeleting) {
+				return this.t('notes', 'Deleted {title}', { title: this.note.title })
+			} else {
+				return this.note.title + (this.note.unsaved ? ' *' : '')
+			}
 		},
 
 		actionFavoriteText() {
@@ -106,18 +117,27 @@ export default {
 		},
 
 		onDeleteNote() {
+			this.actionsOpen = false
+			NotesService.prepareDeleteNote(this.note.id)
+			this.undoTimer = setTimeout(this.onDeleteNoteFinally, 7000)
+			this.$emit('note-deleted')
+		},
+
+		onUndoDeleteNote() {
+			clearTimeout(this.undoTimer)
+			NotesService.undoDeleteNote(this.note.id)
+		},
+
+		onDeleteNoteFinally() {
 			this.loading.delete = true
 			NotesService.deleteNote(this.note.id)
 				.then(() => {
-					this.$emit('note-deleted')
 				})
 				.catch(() => {
 				})
 				.finally(() => {
 					this.loading.delete = false
-					this.actionsOpen = false
 				})
-			// TODO implement undo
 		},
 	},
 }
