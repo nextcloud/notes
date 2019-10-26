@@ -71,12 +71,15 @@ export default {
 			const search = this.filter.search.toLowerCase()
 
 			const notes = this.notes.filter(note => {
-				const searchFields = [ 'title', 'category' ]
+				if (note.deleting === 'deleting') {
+					return false
+				}
 				if (this.filter.category !== null
 					&& this.filter.category !== note.category
 					&& !note.category.startsWith(this.filter.category + '/')) {
 					return false
 				}
+				const searchFields = [ 'title', 'category' ]
 				if (search !== '') {
 					return searchFields.some(
 						searchField => note[searchField].toLowerCase().indexOf(search) !== -1
@@ -144,7 +147,7 @@ export default {
 		},
 
 		routeFirst() {
-			const availableNotes = this.filteredNotes.filter(note => !note.error)
+			const availableNotes = this.filteredNotes.filter(note => !note.error && !note.deleting)
 			if (availableNotes.length > 0) {
 				this.routeToNote(availableNotes[0].id)
 			} else {
