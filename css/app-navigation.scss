@@ -29,6 +29,7 @@
 }
 
 li.actionsOpen .app-navigation-entry__utils .action-item,
+li.app-navigation-entry--deleted .app-navigation-entry__utils .action-item,
 li.active .app-navigation-entry__utils .action-item,
 li:hover  .app-navigation-entry__utils .action-item,
 li:focus  .app-navigation-entry__utils .action-item {
