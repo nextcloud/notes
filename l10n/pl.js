@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "W tym miesiącu",
     "Last month" : "W zeszłym miesiącu",
     "Delete note" : "Usuń notatkę",
+    "Deleted {title}" : "Usunięte {title}",
     "Remove from favorites" : "Usuń z ulubionych",
     "Add to favorites" : "Dodaj do ulubionych",
     "Empty note" : "Pusta notatka",

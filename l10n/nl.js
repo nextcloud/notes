@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "Deze maand",
     "Last month" : "Vorige maand",
     "Delete note" : "Verwijder notitie",
+    "Deleted {title}" : "{title} verwijderd",
     "Remove from favorites" : "Verwijderen uit favorieten",
     "Add to favorites" : "Toevoegen aan favorieten",
     "Empty note" : "Lege notitie",
