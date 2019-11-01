@@ -31,7 +31,7 @@ OC.L10N.register(
     "Remove from favorites" : "從最愛中移除",
     "Add to favorites" : "新增最愛",
     "Empty note" : "無內容",
-    "Write …" : "由此寫入...",
+    "Write …" : "由此寫入...標題",
     "Details" : "詳細資料",
     "Preview" : "預覽",
     "Edit" : "退出",
