@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "本月",
     "Last month" : "上月",
     "Delete note" : "删除笔记",
+    "Deleted {title}" : "已删除 {title}",
     "Remove from favorites" : "从收藏中移除",
     "Add to favorites" : "添加到收藏",
     "Empty note" : "空笔记",
