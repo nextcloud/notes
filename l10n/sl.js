@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "Ta mesec",
     "Last month" : "Zadnji mesec",
     "Delete note" : "Izbriši beležko",
+    "Deleted {title}" : "Izbrisano {title}",
     "Remove from favorites" : "Odstrani iz priljubljenih",
     "Add to favorites" : "Dodaj med priljubljene",
     "Empty note" : "Prazno sporočilo",
