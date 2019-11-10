@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "Tento měsíc",
     "Last month" : "Minulý měsíc",
     "Delete note" : "Smazat poznámku",
+    "Deleted {title}" : "Smazáno {title}",
     "Remove from favorites" : "Odebrat z oblíbených",
     "Add to favorites" : "Přidat do oblíbených",
     "Empty note" : "Prázdná poznámka",
