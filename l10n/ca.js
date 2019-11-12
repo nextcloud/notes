@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "Aquest mes",
     "Last month" : "El mes passat",
     "Delete note" : "Suprimeix la nota",
+    "Deleted {title}" : "S'ha eliminat {title}",
     "Remove from favorites" : "Suprimeix de favorits",
     "Add to favorites" : "Afegeix als preferits",
     "Empty note" : "Nota en blanc",

@@ -59,7 +59,7 @@
     "Creating new note has failed." : "Vytváření nové poznámky se nezdařilo.",
     "Updating note {id} has failed." : "Aktualizace poznámky {id} se nezdařila.",
     "Deleting note {id} has failed." : "Mazání poznámky {id} se nezdařilo.",
-    "Updating the note's category has failed. Is the target directory writable?" : "Aktualizace kategorie poznámky se nezdařila. Je cílový adresář přístupný pro zápis?",
+    "Updating the note's category has failed. Is the target directory writable?" : "Aktualizace kategorie poznámky se nezdařila. Je cílový adresář kontaktů přístupný pro zápis?",
     "Updating the category for note {id} has failed." : "Aktualizace kategorie u poznámky {id} se nezdařila."
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
