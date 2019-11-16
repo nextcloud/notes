@@ -30,9 +30,10 @@ class PageController extends Controller {
 	 * @return TemplateResponse
 	 */
 	public function index() {
+		$devMode = !is_file(dirname(__FILE__).'/../../js/notes.js');
 		$response = new TemplateResponse(
 			$this->appName,
-			'main',
+			$devMode ? 'dev-mode' : 'main',
 			[ ]
 		);
 
