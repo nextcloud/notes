@@ -49,7 +49,7 @@ class Note extends Entity {
 	 */
 	public static function fromFile(File $file, Folder $notesFolder, $tags = [], $onlyMeta = false) {
 		$note = new static();
-		$note->setId($file->getId());
+		$note->initCommonBaseFields($file, $notesFolder, $tags);
 		if (!$onlyMeta) {
 			$fileContent=$file->getContent();
 			if ($fileContent===false) {
@@ -58,13 +58,6 @@ class Note extends Entity {
 			$note->setContent(self::convertEncoding($fileContent));
 		}
 		$note->setModified($file->getMTime());
-		$note->setTitle(pathinfo($file->getName(), PATHINFO_FILENAME)); // remove extension
-		$subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
-		$note->setCategory($subdir ? $subdir : '');
-		if (is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {
-			$note->setFavorite(true);
-			//unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
-		}
 		if (!$onlyMeta) {
 			$note->updateETag();
 		}
@@ -78,19 +71,11 @@ class Note extends Entity {
 	 */
 	public static function fromException($message, File $file, Folder $notesFolder, $tags = []) {
 		$note = new static();
-		$note->setId($file->getId());
+		$note->initCommonBaseFields($file, $notesFolder, $tags);
 		$note->setErrorMessage($message);
 		$note->setError(true);
 		$note->setContent($message);
 		$note->setModified(null);
-		$note->setTitle(pathinfo($file->getName(), PATHINFO_FILENAME)); // remove extension
-		$subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
-		$note->setCategory($subdir ? $subdir : null);
-		if (is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {
-			$note->setFavorite(true);
-			//unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
-		}
-		$note->updateETag();
 		$note->resetUpdatedFields();
 		return $note;
 	}
@@ -100,6 +85,17 @@ class Note extends Entity {
 			$str = mb_convert_encoding($str, 'UTF-8');
 		}
 		return $str;
+	}
+
+	private function initCommonBaseFields(File $file, Folder $notesFolder, $tags) {
+		$this->setId($file->getId());
+		$this->setTitle(pathinfo($file->getName(), PATHINFO_FILENAME)); // remove extension
+		$subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
+		$this->setCategory($subdir ? $subdir : '');
+		if (is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {
+			$this->setFavorite(true);
+			//unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
+		}
 	}
 
 	private function updateETag() {
