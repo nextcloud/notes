@@ -2,16 +2,18 @@
 
 namespace OCA\Notes\Service;
 
-use OCP\IL10N;
-use OCP\ILogger;
 use OCP\Encryption\Exceptions\GenericEncryptionException;
-use OCP\Files\IRootFolder;
 use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
+use OCP\Files\IRootFolder;
+use OCP\IConfig;
+use OCP\IL10N;
+use OCP\ILogger;
+use OCP\ITagManager;
+
 use OCA\Notes\Db\Note;
 use OCA\Notes\Service\SettingsService;
-use OCP\IConfig;
 
 /**
  * Class NotesService
@@ -24,6 +26,7 @@ class NotesService {
 	private $root;
 	private $logger;
 	private $config;
+	private $tags;
 	private $settings;
 	private $noteUtil;
 	private $appName;
@@ -33,6 +36,7 @@ class NotesService {
 	 * @param IL10N $l10n
 	 * @param ILogger $logger
 	 * @param IConfig $config
+	 * @param ITagManager $tagManager
 	 * @param SettingsService $settings
 	 * @param NoteUtil $noteUtil
 	 * @param String $appName
@@ -42,6 +46,7 @@ class NotesService {
 		IL10N $l10n,
 		ILogger $logger,
 		IConfig $config,
+		ITagManager $tagManager,
 		SettingsService $settings,
 		NoteUtil $noteUtil,
 		$appName
@@ -50,6 +55,7 @@ class NotesService {
 		$this->l10n = $l10n;
 		$this->logger = $logger;
 		$this->config = $config;
+		$this->tags = $tagManager->load('files');
 		$this->settings = $settings;
 		$this->noteUtil = $noteUtil;
 		$this->appName = $appName;
@@ -67,12 +73,7 @@ class NotesService {
 		foreach ($notes as $note) {
 			$filesById[$note->getId()] = $note;
 		}
-		$tagger = \OC::$server->getTagManager()->load('files');
-		if ($tagger===null) {
-			$tags = [];
-		} else {
-			$tags = $tagger->getTagsForObjects(array_keys($filesById));
-		}
+		$tags = $this->tags->getTagsForObjects(array_keys($filesById));
 
 		$notes = [];
 		foreach ($filesById as $id => $file) {
@@ -96,12 +97,7 @@ class NotesService {
 	}
 
 	private function getTags($id) {
-		$tagger = \OC::$server->getTagManager()->load('files');
-		if ($tagger===null) {
-			$tags = [];
-		} else {
-			$tags = $tagger->getTagsForObjects([$id]);
-		}
+		$tags = $this->tags->getTagsForObjects([$id]);
 		return array_key_exists($id, $tags) ? $tags[$id] : [];
 	}
 
@@ -197,14 +193,13 @@ class NotesService {
 		$folder = $this->getFolderForUser($userId);
 		// check if file is note
 		$this->getFileById($folder, $id);
-		$tagger = \OC::$server->getTagManager()->load('files');
 		if ($favorite) {
-			$tagger->addToFavorites($id);
+			$this->tags->addToFavorites($id);
 		} else {
-			$tagger->removeFromFavorites($id);
+			$this->tags->removeFromFavorites($id);
 		}
 
-		$tags = $tagger->getTagsForObjects([$id]);
+		$tags = $this->tags->getTagsForObjects([$id]);
 		return array_key_exists($id, $tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
 	}
 
