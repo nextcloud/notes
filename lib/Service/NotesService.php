@@ -91,9 +91,9 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return Note
 	 */
-	public function get($id, $userId) : Note {
+	public function get($id, $userId, $onlyMeta = false) : Note {
 		$folder = $this->getFolderForUser($userId);
-		return $this->getNote($this->getFileById($folder, $id), $folder, $this->getTags($id));
+		return $this->getNote($this->getFileById($folder, $id), $folder, $this->getTags($id), $onlyMeta);
 	}
 
 	private function getTags($id) {
@@ -190,17 +190,16 @@ class NotesService {
 	 * @return boolean the new favorite state of the note
 	 */
 	public function favorite($id, $favorite, $userId) {
-		$folder = $this->getFolderForUser($userId);
-		// check if file is note
-		$this->getFileById($folder, $id);
-		if ($favorite) {
-			$this->tags->addToFavorites($id);
-		} else {
-			$this->tags->removeFromFavorites($id);
+		$note = $this->get($id, $userId, true);
+		if ($favorite !== $note->getFavorite()) {
+			if ($favorite) {
+				$this->tags->addToFavorites($id);
+			} else {
+				$this->tags->removeFromFavorites($id);
+			}
+			$note = $this->get($id, $userId, true);
 		}
-
-		$tags = $this->tags->getTagsForObjects([$id]);
-		return array_key_exists($id, $tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags[$id]);
+		return $note->getFavorite();
 	}
 
 
