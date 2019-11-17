@@ -77,7 +77,8 @@ class NotesService {
 
 		$notes = [];
 		foreach ($filesById as $id => $file) {
-			$notes[] = $this->getNote($file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : [], $onlyMeta);
+			$noteTags = is_array($tags) && array_key_exists($id, $tags) ? $tags[$id] : [];
+			$notes[] = $this->getNote($file, $notesFolder, $noteTags, $onlyMeta);
 		}
 
 		return $notes;
@@ -98,7 +99,7 @@ class NotesService {
 
 	private function getTags($id) {
 		$tags = $this->tags->getTagsForObjects([$id]);
-		return array_key_exists($id, $tags) ? $tags[$id] : [];
+		return is_array($tags) && array_key_exists($id, $tags) ? $tags[$id] : [];
 	}
 
 	private function getNote(File $file, Folder $notesFolder, $tags = [], $onlyMeta = false) : Note {
