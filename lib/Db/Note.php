@@ -52,9 +52,6 @@ class Note extends Entity {
 		$note->initCommonBaseFields($file, $notesFolder, $tags);
 		if (!$onlyMeta) {
 			$fileContent=$file->getContent();
-			if ($fileContent===false) {
-				throw new \Exception("File not found");
-			}
 			$note->setContent(self::convertEncoding($fileContent));
 		}
 		$note->setModified($file->getMTime());
