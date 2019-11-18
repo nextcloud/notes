@@ -64,6 +64,8 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "A exclusão da anotação {id} falhou.",
     "Toggling favorite for note {id} has failed." : "A alternância de favoritos para a anotação {id} falhou.",
     "Updating the note's category has failed. Is the target directory writable?" : "A atualização da categoria da nota falhou. O diretório de destino é gravável?",
-    "Updating the category for note {id} has failed." : "A atualização da categoria da anotação {id} falhou."
+    "Updating the category for note {id} has failed." : "A atualização da categoria da anotação {id} falhou.",
+    "Development Mode" : "Modo de Desenvolvimento",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Parece que o aplicativo Notes foi instalado a partir de uma fonte de desenvolvimento. Ao invés disso, instale-o a partir da <a href=\"%1$s\">Loja de Aplicativos Nextcloud</a> oficial. Se deseja criar o aplicativo Notes você mesmo, siga as <a href=\"%2$s\">instruções do desenvolvedor</a>."
 },
 "nplurals=2; plural=(n > 1);");

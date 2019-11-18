@@ -64,6 +64,8 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Löschen der Notiz {id} fehlgeschlagen.",
     "Toggling favorite for note {id} has failed." : "Favorit setzen der Notiz {id} fehlgeschlagen.",
     "Updating the note's category has failed. Is the target directory writable?" : "Aktualisierung der Notizen-Kategorie ist gescheitert. Bestehen Schreibrechte für das Zielverzeichnis?",
-    "Updating the category for note {id} has failed." : "Ändern der Kategorie für Notiz {id} fehlgeschlagen."
+    "Updating the category for note {id} has failed." : "Ändern der Kategorie für Notiz {id} fehlgeschlagen.",
+    "Development Mode" : "Entwickler-Modus",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Es scheint, dass die Notizen-App von einer Entwickler-Quelle installiert wurde. Bitte stattdessen von dem offiziellen <a href=\"%1$s\">Nextcloud-App-Store</a> installieren. Wenn Sie die Notizen-App selbst bauen möchten, folgen Sie bitte den <a href=\"%2$s\">Entwickler-Anleitungen</a>."
 },
 "nplurals=2; plural=(n != 1);");

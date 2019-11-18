@@ -63,6 +63,7 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Radering av anteckning {id} misslyckades.",
     "Toggling favorite for note {id} has failed." : "Växling av favorit för anteckning {id} misslyckades.",
     "Updating the note's category has failed. Is the target directory writable?" : "Uppdatering av anteckningens kategori misslyckades. Är målmappen skrivbar?",
-    "Updating the category for note {id} has failed." : "Uppdatering av kategori för anteckning {id} misslyckades."
+    "Updating the category for note {id} has failed." : "Uppdatering av kategori för anteckning {id} misslyckades.",
+    "Development Mode" : "Utvecklingsläge"
 },
 "nplurals=2; plural=(n != 1);");

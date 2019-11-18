@@ -3,7 +3,7 @@
     "The last viewed note cannot be accessed. " : "No se puede acceder a la última nota visualizada.",
     "The notes folder is not accessible: %s" : "La carpeta de notas no es accesible: %s",
     "New note" : "Nueva nota",
-    "Encryption Error" : "Erro de cifrado",
+    "Encryption Error" : "Error de cifrado",
     "Error" : "Error",
     "Distraction-free notes and writing" : "Escritura de notas sin distracciones",
     "The Notes app is a distraction free notes taking app. It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes) and [iOS](https://github.com/owncloud/notes-iOS-App) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "La app de Notas es una aplicación de escritura de notas sin distracciones. Soporta el formateo usando la sintaxis [Markdown](https://en.wikipedia.org/wiki/Markdown). Las notas se guardan como archivos en tu Nextcloud, por lo que puedes verlas y editarlas con cada cliente de Nextcloud. Además, una [API RESTful]](https://github.com/nextcloud/notes/wiki/API-0.2) permite una integración sencilla con apps de terceras partes (actualmente hay apps de notas para [Android](https://github.com/stefan-niedermann/nextcloud-notes) y [iOS](https://github.com/owncloud/notes-iOS-App) que permiten un acceso cómodo a tus notas de Nextcloud). Otras características incluyen el marcar notas como favoritas.",
@@ -62,6 +62,8 @@
     "Deleting note {id} has failed." : "El borrado de la nota {id} ha fallado.",
     "Toggling favorite for note {id} has failed." : "Fallo al marcar la nota {id} como favorita",
     "Updating the note's category has failed. Is the target directory writable?" : "Fallo al actualizar la categoría de la nota. ¿El directorio destino es escribible?",
-    "Updating the category for note {id} has failed." : "Fallo al actualizar la categoría de la nota {id}"
+    "Updating the category for note {id} has failed." : "Fallo al actualizar la categoría de la nota {id}",
+    "Development Mode" : "Modo de Desarrollo",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Parece que la aplicación de notas ha sido instalada desde una fuente de desarrollo. Por favor instálela desde la <a href=\"%1$s\">AppStore de Nextcloud</a> oficial. Si quieres hacer la aplicación de Notas por ti mismo, por favor sigue las <a href=\"%2$s\">instrucciones para desarrolladores</a>."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
