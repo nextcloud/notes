@@ -60,6 +60,8 @@
     "Updating note {id} has failed." : "Aktualizace poznámky {id} se nezdařila.",
     "Deleting note {id} has failed." : "Mazání poznámky {id} se nezdařilo.",
     "Updating the note's category has failed. Is the target directory writable?" : "Aktualizace kategorie poznámky se nezdařila. Je cílový adresář kontaktů přístupný pro zápis?",
-    "Updating the category for note {id} has failed." : "Aktualizace kategorie u poznámky {id} se nezdařila."
+    "Updating the category for note {id} has failed." : "Aktualizace kategorie u poznámky {id} se nezdařila.",
+    "Development Mode" : "Režim pro vývojáře",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Zdá se, že aplikace Poznámky byla nainstalována ze zdroje pro vývojáře. Nainstalujte ji namísto toho z oficiálního <a href=\"%1$s\">Nextcloud katalogu aplikací</a>. Pokud si chcete sestavit (zkompilovat) aplikaci Poznámky sami, následujte <a href=\"%2$s\">pokyny pro vývojáře</a>."
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
