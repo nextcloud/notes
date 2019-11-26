@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "Овог месеца",
     "Last month" : "Прошлог месеца",
     "Delete note" : "Обриши белешку",
+    "Deleted {title}" : "Обрисана {title}",
     "Remove from favorites" : "Уклони из омиљених",
     "Add to favorites" : "Додај у омиљене",
     "Empty note" : "Празна белешка",
@@ -63,6 +64,8 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Брисање белешке {id} није успело.",
     "Toggling favorite for note {id} has failed." : "Стављање/уклањање омиљене белешке {id} није успело.",
     "Updating the note's category has failed. Is the target directory writable?" : "Неуспешно ажурирање категорије белешке. Да ли у одредишни директоријум може да се пише?",
-    "Updating the category for note {id} has failed." : "Ажурирање категорије белешке {id} није успело."
+    "Updating the category for note {id} has failed." : "Ажурирање категорије белешке {id} није успело.",
+    "Development Mode" : "Развојни режим",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Изгледа да је апликација белешки инсталирана из развојног извора. Молимо да је инсталирате из званичне <a href=\"%1$s\">Некстклауд продавнице</a>. Ако желите само да искомпајлирате апликацију Белешки, пратите <a href=\"%2$s\">инструкције за програмере</a>."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
