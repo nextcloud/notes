@@ -64,6 +64,7 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Ha fallat la supressió de la nota {id}.",
     "Toggling favorite for note {id} has failed." : "Ha fallat el canvi de preferit per la nota {id}.",
     "Updating the note's category has failed. Is the target directory writable?" : "No s'ha pogut actualitzar la categoria de la nota. Teniu permís d'escriptura a la carpeta de destinació?",
-    "Updating the category for note {id} has failed." : "Ha fallat l'actualització de la categoria per la nota {id}."
+    "Updating the category for note {id} has failed." : "Ha fallat l'actualització de la categoria per la nota {id}.",
+    "Development Mode" : "Mode de desenvolupament"
 },
 "nplurals=2; plural=(n != 1);");
