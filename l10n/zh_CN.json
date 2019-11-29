@@ -62,6 +62,8 @@
     "Deleting note {id} has failed." : "删除笔记 {id} 失败。",
     "Toggling favorite for note {id} has failed." : "将笔记 {id} 设为收藏失败。",
     "Updating the note's category has failed. Is the target directory writable?" : "无法更新存储笔记的文件夹。请检查目标文件夹是否可写。",
-    "Updating the category for note {id} has failed." : "更新笔记 {id} 的分类失败。"
+    "Updating the category for note {id} has failed." : "更新笔记 {id} 的分类失败。",
+    "Development Mode" : "开发模式",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "笔记应用似乎是从一个开发来源安装的。请改从官方<a href=\"%1$s\">Nextcloud应用商店</a>来安装它。如果您想自己笔记应用，请参考<a href=\"%2$s\">开发者指南</a>。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
