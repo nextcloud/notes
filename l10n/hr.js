@@ -27,6 +27,7 @@ OC.L10N.register(
     "This month" : "Ovaj mjesec",
     "Last month" : "Prošli mjesec",
     "Delete note" : "Izbriši bilješku",
+    "Deleted {title}" : "Izbrisano {title}",
     "Remove from favorites" : "Ukloni iz favorita",
     "Add to favorites" : "Dodaj u favorite",
     "Empty note" : "Prazna bilješka",
@@ -34,6 +35,8 @@ OC.L10N.register(
     "Details" : "Pojedinosti",
     "Preview" : "Pretpregled",
     "Edit" : "Uredi",
+    "Exit full screen" : "Zatvori prikaz preko cijelog zaslona",
+    "Full screen" : "Prikaz preko cijelog zaslona",
     "Save failed. Click to retry." : "Spremanje nije uspjelo. Kliknite za ponovni pokušaj.",
     "Set category" : "Postavi kategoriju",
     "Category" : "Kategorija",
@@ -61,6 +64,8 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Brisanje bilješke {id} nije uspjelo.",
     "Toggling favorite for note {id} has failed." : "Postavljanje favorita za bilješku {id} nije uspjelo.",
     "Updating the note's category has failed. Is the target directory writable?" : "Ažuriranje kategorije bilješke nije uspjelo. Može li se pisati u ciljni direktorij?",
-    "Updating the category for note {id} has failed." : "Ažuriranje kategorije za bilješku {id} nije uspjelo."
+    "Updating the category for note {id} has failed." : "Ažuriranje kategorije za bilješku {id} nije uspjelo.",
+    "Development Mode" : "Razvojni način rada",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Čini se da je aplikacija za upravljanje bilješkama instalirana iz razvojnog izvora. Instalirajte je iz trgovine aplikacija <a href=\"%1$s\">Nextcloud App Store</a>. Ako želite sami izraditi aplikaciju Notes, slijedite <a href=“%2$s“>upute za razvojne inženjere</a>."
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");
