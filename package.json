@@ -12,14 +12,14 @@
 		"stylelint:fix": "stylelint 'src/**/*.vue' 'css/**/*.scss' --fix"
 	},
 	"dependencies": {
-		"@babel/polyfill": "^7.6.0",
+		"@babel/polyfill": "^7.7.0",
 		"@nextcloud/axios": "^0.5.0",
-		"@nextcloud/vue": "^1.0.0",
+		"@nextcloud/vue": "^1.2.2",
 		"easymde": "^2.8.0",
 		"markdown-it": "^10.0.0",
 		"vue": "^2.6.10",
 		"vue-router": "^3.1.3",
-		"vuex": "^3.1.1"
+		"vuex": "^3.1.2"
 	},
 	"browserslist": [
 		"extends @nextcloud/browserslist-config"
@@ -28,9 +28,9 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.6.4",
-		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
-		"@babel/preset-env": "^7.6.3",
+		"@babel/core": "^7.7.4",
+		"@babel/plugin-syntax-dynamic-import": "^7.7.4",
+		"@babel/preset-env": "^7.7.4",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"babel-eslint": "^10.0.3",
 		"babel-loader": "^8.0.6",
@@ -46,13 +46,13 @@
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
 		"eslint-plugin-vue": "^5.2.3",
-		"file-loader": "^4.2.0",
+		"file-loader": "^5.0.2",
 		"node-sass": "^4.13.0",
 		"sass-loader": "^7.3.1",
-		"stylelint": "^11.1.1",
-		"stylelint-config-recommended-scss": "^4.0.0",
-		"stylelint-scss": "^3.12.0",
-		"vue-loader": "^15.7.1",
+		"stylelint": "^12.0.0",
+		"stylelint-config-recommended-scss": "^4.1.0",
+		"stylelint-scss": "^3.13.0",
+		"vue-loader": "^15.7.2",
 		"vue-template-compiler": "^2.6.10",
 		"webpack": "^4.41.2",
 		"webpack-cli": "^3.3.10",
