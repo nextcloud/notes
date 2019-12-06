@@ -20,6 +20,7 @@ OC.L10N.register(
     "Category" : "Flokkur",
     "Uncategorized" : "Óflokkað",
     "Saving failed!" : "Vistun mistókst!",
+    "Subcategory" : "Undirflokkur",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
     "Updating the note's category has failed. Is the target directory writable?" : "Uppfærsla á flokki minnispunkts mistókst. Er móttökumappan skrifanleg?"
 },
