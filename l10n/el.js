@@ -16,7 +16,7 @@ OC.L10N.register(
     "This week" : "Αυτή την εβδομάδα",
     "Last week" : "Προηγούμενη εβδομάδα",
     "This month" : "Αυτό το μήνα",
-    "Last month" : "Προηγούμενο μήνα",
+    "Last month" : "Προηγούμενος μήνας",
     "Delete note" : "Διαγραφή σημείωσης",
     "Category" : "Κατηγορία",
     "Uncategorized" : "Μή-κατηγοριοποιημένα",
