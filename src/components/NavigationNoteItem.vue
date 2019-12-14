@@ -9,6 +9,9 @@
 		@undo="onUndoDeleteNote"
 	>
 		<template v-if="!note.deleting" slot="actions">
+			<ActionButton icon="icon-details" @click="onShowDetails">
+				{{ t('notes', 'Details') }}
+			</ActionButton>
 			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</ActionButton>
@@ -28,6 +31,7 @@ import {
 	AppNavigationItem,
 } from '@nextcloud/vue'
 import NotesService from '../NotesService'
+import store from '../store'
 
 export default {
 	name: 'NavigationNoteItem',
@@ -100,6 +104,12 @@ export default {
 	},
 
 	methods: {
+		onShowDetails() {
+			this.$router.push({ name: 'note', params: { noteId: this.note.id.toString() } }).catch(NavigationDuplicated => {})
+			this.$nextTick(() => store.commit('setSidebarOpen', true))
+			this.actionsOpen = false
+		},
+
 		onToggleFavorite() {
 			this.loading.favorite = true
 			NotesService.setFavorite(this.note.id, !this.note.favorite)
