@@ -12,7 +12,7 @@
 				{{ t('notes', 'Use Markdown markups to style your text.') }}
 			</div>
 			<div class="feature icon-files-dark">
-				{{ t('notes', 'Organize your notes in categories.') }}
+				{{ t('notes', 'Organize your notes in categories (use “{label}” action to edit a note\'s category).', { label: t('notes', 'Details') }) }}
 			</div>
 			<div class="feature icon-phone">
 				{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
