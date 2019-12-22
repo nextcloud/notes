@@ -22,9 +22,14 @@ OC.L10N.register(
     "Delete note" : "מחיקת הערה",
     "Remove from favorites" : "הסרה מהמועדפים",
     "Add to favorites" : "הוספה למועדפים",
+    "Details" : "פרטים",
+    "Preview" : "תצוגה מקדימה",
+    "Edit" : "עריכה",
     "Category" : "קטגוריה",
     "Uncategorized" : "ללא קטגוריה",
     "Saving failed!" : "השמירה נכשלה!",
-    "_%n word_::_%n words_" : ["%n מילה","%n מילים","%n מילים","%n מילים"]
+    "_%n word_::_%n words_" : ["%n מילה","%n מילים","%n מילים","%n מילים"],
+    "Android app" : "יישומון ל־Android",
+    "iOS app" : "יישומון ל־iOS"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

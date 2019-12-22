@@ -3,7 +3,23 @@ OC.L10N.register(
     {
     "Notes" : "Catatan",
     "New note" : "Catatan baru",
+    "Error" : "Kesalahan",
+    "Settings" : "Setelan",
+    "All notes" : "Semua catatan",
+    "Categories" : "Kategori",
+    "Today" : "Hari ini",
+    "Yesterday" : "Kemarin",
+    "This week" : "Pekan ini",
+    "This month" : "Bulan ini",
     "Delete note" : "Hapus catatan",
-    "_%n word_::_%n words_" : ["%n kata"]
+    "Remove from favorites" : "Remove from favorites",
+    "Add to favorites" : "Tambah ke favorit",
+    "Details" : "Detil",
+    "Preview" : "Pratinjau",
+    "Edit" : "Sunting",
+    "Category" : "Kategori",
+    "_%n word_::_%n words_" : ["%n kata"],
+    "Android app" : "Aplikasi Android",
+    "iOS app" : "Aplikasi iOS"
 },
 "nplurals=1; plural=0;");

@@ -7,8 +7,23 @@
     "Error" : "Fejl",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Der er noter der ikke er gemt. Hvis du forlader denne side vil de blive smidt væk!",
     "Settings" : "Indstillinger",
+    "All notes" : "Alle noter",
+    "Categories" : "Kategorier",
+    "Today" : "I dag",
+    "Yesterday" : "I går",
+    "This week" : "Denne uge",
+    "This month" : "Denne måned",
     "Delete note" : "Slet note",
+    "Remove from favorites" : "Fjernet fra favoritter",
+    "Add to favorites" : "Føj til favoritter",
+    "Details" : "Detaljer",
+    "Preview" : "Vis eksempel",
+    "Edit" : "Redigér",
+    "Category" : "Katergori",
+    "Uncategorized" : "Udenfor kategori",
     "Saving failed!" : "Kunne ikke gemme!",
-    "_%n word_::_%n words_" : ["%n ord","%n ord"]
+    "_%n word_::_%n words_" : ["%n ord","%n ord"],
+    "Android app" : "Android app",
+    "iOS app" : "iOS app"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

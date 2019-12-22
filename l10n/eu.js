@@ -17,6 +17,7 @@ OC.L10N.register(
     "This month" : "Hilabete honetan",
     "Last month" : "Azken hilabetean",
     "Delete note" : "Ezabatu oharra",
+    "Remove from favorites" : "Kendu gogokoetatik",
     "Add to favorites" : "Gehitu gogokoetan",
     "Empty note" : "Ohar hutsa",
     "Write …" : "Idatzi …",

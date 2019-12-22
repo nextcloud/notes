@@ -14,12 +14,23 @@
     "File extension for new notes" : "Skráarending fyrir nýja minnispunkta",
     "All notes" : "Allir minnispunktar",
     "Categories" : "Flokkar",
+    "Today" : "Í dag",
+    "Yesterday" : "Yesterday",
+    "This week" : "Í þessari viku",
+    "This month" : "Í þessum mánuði",
     "Delete note" : "Eyða minnispunkti",
+    "Remove from favorites" : "Fjarlægja úr eftirlætum",
+    "Add to favorites" : "Bæta í eftirlæti",
+    "Details" : "Details",
+    "Preview" : "Forskoðun",
+    "Edit" : "Breyta",
     "Category" : "Flokkur",
     "Uncategorized" : "Óflokkað",
     "Saving failed!" : "Vistun mistókst!",
     "Subcategory" : "Undirflokkur",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
+    "Android app" : "Android-forrit",
+    "iOS app" : "iOS-forrit",
     "Updating the note's category has failed. Is the target directory writable?" : "Uppfærsla á flokki minnispunkts mistókst. Er móttökumappan skrifanleg?"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

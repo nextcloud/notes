@@ -3,7 +3,23 @@ OC.L10N.register(
     {
     "Notes" : "Notas",
     "New note" : "Nova nota",
+    "Error" : "Erro",
+    "Settings" : "Definições",
+    "All notes" : "Todas as notas",
+    "Categories" : "Categorias",
+    "Today" : "Hoje",
+    "Yesterday" : "Ontem",
+    "This week" : "Esta semana",
+    "This month" : "Este mês",
     "Delete note" : "Apagar nota",
-    "_%n word_::_%n words_" : ["%n palavra","%n palavras"]
+    "Remove from favorites" : "Remover de favoritos",
+    "Add to favorites" : "Adicionar aos favoritos",
+    "Details" : "Detalhes",
+    "Preview" : "Pré-visualização",
+    "Edit" : "Editar",
+    "Category" : "Categoria",
+    "_%n word_::_%n words_" : ["%n palavra","%n palavras"],
+    "Android app" : "Aplicação Android",
+    "iOS app" : "Aplicação iOS"
 },
 "nplurals=2; plural=(n != 1);");

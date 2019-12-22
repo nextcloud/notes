@@ -3,7 +3,24 @@ OC.L10N.register(
     {
     "Notes" : "Shënime",
     "New note" : "Shënim i ri",
+    "Error" : "Error",
+    "Settings" : "Rregullimet",
+    "All notes" : "Të gjitha shënimet",
+    "Categories" : "Kategoritë",
+    "Today" : "Sot",
+    "Yesterday" : "Dje",
+    "This week" : "Këtë javë",
+    "This month" : "Këtë muaj",
     "Delete note" : "Fshije shënimin",
-    "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"]
+    "Remove from favorites" : "Remove from favorites",
+    "Add to favorites" : "Shtoje tek të parapëlqyerat",
+    "Details" : "Detajet",
+    "Preview" : "Parapamje ",
+    "Edit" : "Përpuno",
+    "Category" : "Kategori",
+    "Uncategorized" : "Të pakategorizuara",
+    "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"],
+    "Android app" : "Aplikacion Android",
+    "iOS app" : "Aplikacion iOS"
 },
 "nplurals=2; plural=(n != 1);");

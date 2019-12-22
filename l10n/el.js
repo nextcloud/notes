@@ -18,9 +18,16 @@ OC.L10N.register(
     "This month" : "Αυτό το μήνα",
     "Last month" : "Προηγούμενος μήνας",
     "Delete note" : "Διαγραφή σημείωσης",
+    "Remove from favorites" : "Αφαίρεση από τα αγαπημένα",
+    "Add to favorites" : "Προσθήκη στα αγαπημένα ",
+    "Details" : "Λεπτομέρειες",
+    "Preview" : "Προεπισκόπηση",
+    "Edit" : "Επεξεργασία",
     "Category" : "Κατηγορία",
     "Uncategorized" : "Μή-κατηγοριοποιημένα",
     "Saving failed!" : "Απέτυχε η αποθήκευση!",
-    "_%n word_::_%n words_" : ["%n λέξη","%n λέξεις"]
+    "_%n word_::_%n words_" : ["%n λέξη","%n λέξεις"],
+    "Android app" : "Εφαρμογή Android",
+    "iOS app" : "Εφαρμογή iOS"
 },
 "nplurals=2; plural=(n != 1);");
