@@ -1,6 +1,7 @@
 import AppGlobal from './mixins/AppGlobal'
 import store from './store'
 import axios from '@nextcloud/axios'
+import { showError } from '@nextcloud/dialogs'
 
 const t = AppGlobal.methods.t
 
@@ -10,11 +11,11 @@ function url(url) {
 }
 
 function handleSyncError(message) {
-	OC.Notification.showTemporary(message + ' ' + t('notes', 'See JavaScript console for details.'))
+	showError(message + ' ' + t('notes', 'See JavaScript console and server log for details.'))
 }
 
 function handleInsufficientStorage() {
-	OC.Notification.showTemporary(t('notes', 'Saving the note has failed due to insufficient storage.'))
+	showError(t('notes', 'Saving the note has failed due to insufficient storage.'))
 }
 
 export const setSettings = settings => {
@@ -41,7 +42,7 @@ export const fetchNotes = () => {
 				store.dispatch('addAll', response.data.notes)
 			}
 			if (response.data.errorMessage) {
-				OC.Notification.showTemporary(response.data.errorMessage)
+				showError(response.data.errorMessage)
 			}
 			return response.data
 		})
@@ -119,12 +120,22 @@ function _updateNote(note) {
 		})
 }
 
-export const prepareDeleteNote = noteId => {
-	store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: 'prepare' })
-}
-
-export const undoDeleteNote = noteId => {
-	store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: null })
+export const undoDeleteNote = (note) => {
+	return axios
+		.post(url('/notes/undo'), note)
+		.then(response => {
+			store.commit('add', response.data)
+			return response.data
+		})
+		.catch(err => {
+			console.error(err)
+			if (err.response.status === 507) {
+				handleInsufficientStorage()
+			} else {
+				handleSyncError(t('notes', 'Undo delete has failed for note {title}.', { title: note.title }))
+			}
+			throw err
+		})
 }
 
 export const deleteNote = noteId => {
@@ -137,8 +148,11 @@ export const deleteNote = noteId => {
 		.catch(err => {
 			console.error(err)
 			handleSyncError(t('notes', 'Deleting note {id} has failed.', { id: noteId }))
-			undoDeleteNote(noteId)
+			// remove note always since we don't know when the error happened
+			store.commit('remove', noteId)
 			throw err
+		})
+		.then(() => {
 		})
 }
 

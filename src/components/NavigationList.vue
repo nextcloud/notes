@@ -42,7 +42,7 @@
 				:key="note.id"
 				:note="note"
 				@category-selected="$emit('category-selected', $event)"
-				@note-deleted="$emit('note-deleted')"
+				@note-deleted="$emit('note-deleted', $event)"
 			/>
 		</template>
 		<AppNavigationItem

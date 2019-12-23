@@ -48,6 +48,11 @@ return ['routes' => [
 		'verb' => 'POST',
 	],
 	[
+		'name' => 'notes#undo',
+		'url' => '/notes/undo',
+		'verb' => 'POST',
+	],
+	[
 		'name' => 'notes#update',
 		'url' => '/notes/{id}',
 		'verb' => 'PUT',

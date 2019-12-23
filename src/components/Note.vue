@@ -57,6 +57,7 @@ import {
 	AppContent,
 	Tooltip,
 } from '@nextcloud/vue'
+import { showError } from '@nextcloud/dialogs'
 
 import { fetchNote, saveNote, saveNoteManually } from '../NotesService'
 import { closeNavbar } from '../nextcloud'
@@ -141,7 +142,7 @@ export default {
 			fetchNote(this.noteId)
 				.then((note) => {
 					if (note.errorMessage) {
-						OC.Notification.showTemporary(note.errorMessage)
+						showError(note.errorMessage)
 					}
 				})
 				.catch(() => {
