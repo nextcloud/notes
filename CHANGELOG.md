@@ -15,6 +15,23 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.1.0 - 2019-12-23
+
+### Added
+- undo for deleted notes (#54, #398)
+
+### Changed
+- App navigation was confusing (#364, #373)
+
+### Fixed
+- set font color to black for printing (#401; thanks to @bovender)
+- fix search result in app-navigation (#399)
+- update favorite only if different to current state (#407, #409)
+- warning if JavaScript was not built (#408)
+- improve code quality (#380, #381, #394, #396, #409)
+- dependency updates (#387, #373, #397, #400, #405, #412, #414)
+
+
 ## 3.0.3 - 2019-09-17
 
 ### Fixed
