@@ -5,10 +5,8 @@
 		:menu-open.sync="actionsOpen"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:class="{ actionsOpen }"
-		:undo="isPrepareDeleting"
-		@undo="onUndoDeleteNote"
 	>
-		<template v-if="!note.deleting" slot="actions">
+		<template #actions>
 			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</ActionButton>
@@ -27,8 +25,9 @@ import {
 	ActionButton,
 	AppNavigationItem,
 } from '@nextcloud/vue'
+import { showError } from '@nextcloud/dialogs'
 
-import { categoryLabel, setFavorite, prepareDeleteNote, undoDeleteNote, deleteNote } from '../NotesService'
+import { categoryLabel, setFavorite, fetchNote, deleteNote } from '../NotesService'
 
 export default {
 	name: 'NavigationNoteItem',
@@ -52,7 +51,6 @@ export default {
 				delete: false,
 			},
 			actionsOpen: false,
-			undoTimer: null,
 		}
 	},
 
@@ -67,16 +65,8 @@ export default {
 			return icon
 		},
 
-		isPrepareDeleting() {
-			return this.note.deleting === 'prepare'
-		},
-
 		title() {
-			if (this.isPrepareDeleting) {
-				return this.t('notes', 'Deleted {title}', { title: this.note.title })
-			} else {
-				return this.note.title + (this.note.unsaved ? ' *' : '')
-			}
+			return this.note.title + (this.note.unsaved ? ' *' : '')
 		},
 
 		actionFavoriteText() {
@@ -118,26 +108,30 @@ export default {
 		},
 
 		onDeleteNote() {
-			this.actionsOpen = false
-			prepareDeleteNote(this.note.id)
-			this.undoTimer = setTimeout(this.onDeleteNoteFinally, 7000)
-			this.$emit('note-deleted')
-		},
-
-		onUndoDeleteNote() {
-			clearTimeout(this.undoTimer)
-			undoDeleteNote(this.note.id)
-		},
-
-		onDeleteNoteFinally() {
 			this.loading.delete = true
-			deleteNote(this.note.id)
-				.then(() => {
+			fetchNote(this.note.id)
+				.then((note) => {
+					if (note.errorMessage) {
+						throw new Error('Note has errors')
+					}
+					deleteNote(this.note.id)
+						.then(() => {
+							// nothing to do, confirmation is done after event
+						})
+						.catch(() => {
+							// nothing to do, error is already shown by NotesService
+						})
+						.then(() => {
+							// always show undo, since error can relate to response only
+							this.$emit('note-deleted', note)
+							this.loading.delete = false
+							this.actionsOpen = false
+						})
 				})
 				.catch(() => {
-				})
-				.then(() => {
+					showError(this.t('notes', 'Error during preparing note for deletion.'))
 					this.loading.delete = false
+					this.actionsOpen = false
 				})
 		},
 	},

@@ -14,7 +14,7 @@
 				icon="icon-recent"
 				@click.prevent.stop="onSelectCategory(null)"
 			>
-				<AppNavigationCounter slot="counter">
+				<AppNavigationCounter #counter>
 					{{ numNotes }}
 				</AppNavigationCounter>
 			</AppNavigationItem>
@@ -25,7 +25,7 @@
 				:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
 				@click.prevent.stop="onSelectCategory(category.name)"
 			>
-				<AppNavigationCounter slot="counter">
+				<AppNavigationCounter #counter>
 					{{ category.count }}
 				</AppNavigationCounter>
 			</AppNavigationItem>

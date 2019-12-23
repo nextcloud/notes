@@ -14,7 +14,7 @@
 				:category="filter.category"
 				:search="filter.search"
 				@category-selected="onSelectCategory"
-				@note-deleted="routeFirst"
+				@note-deleted="onNoteDeleted"
 			/>
 
 			<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
@@ -40,8 +40,9 @@ import {
 	AppNavigationNew,
 	Content,
 } from '@nextcloud/vue'
+import { showSuccess } from '@nextcloud/dialogs'
 
-import { fetchNotes, noteExists, createNote } from './NotesService'
+import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
 import { openNavbar } from './nextcloud'
 import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
@@ -70,6 +71,9 @@ export default {
 				create: false,
 			},
 			error: false,
+			undoNotification: null,
+			undoTimer: null,
+			deletedNotes: [],
 		}
 	},
 
@@ -82,9 +86,6 @@ export default {
 			const search = this.filter.search.toLowerCase()
 
 			const notes = this.notes.filter(note => {
-				if (note.deleting === 'deleting') {
-					return false
-				}
 				if (this.filter.category !== null
 					&& this.filter.category !== note.category
 					&& !note.category.startsWith(this.filter.category + '/')) {
@@ -174,10 +175,12 @@ export default {
 		},
 
 		routeToNote(noteId) {
-			this.$router.push({
-				name: 'note',
-				params: { noteId: noteId.toString() },
-			})
+			if (this.$route.name !== 'note' || this.$route.params.noteId !== noteId.toString()) {
+				this.$router.push({
+					name: 'note',
+					params: { noteId: noteId.toString() },
+				})
+			}
 		},
 
 		onSearch(query) {
@@ -213,6 +216,59 @@ export default {
 			if (appNavigation) {
 				appNavigation.scrollTop = 0
 			}
+		},
+
+		onNoteDeleted(note) {
+			this.deletedNotes.push(note)
+			this.clearUndoTimer()
+			let label
+			if (this.deletedNotes.length === 1) {
+				label = this.t('notes', 'Deleted {title}', { title: note.title })
+			} else {
+				label = this.t('notes', 'Deleted {number} notes', { number: this.deletedNotes.length })
+			}
+			if (this.undoNotification === null) {
+				const action = '<button class="undo">' + this.t('notes', 'Undo Delete') + '</button>'
+				this.undoNotification = showSuccess(
+					'<span class="deletedLabel">' + label + '</span> ' + action,
+					{ isHTML: true, timeout: -1, onShow: this.onUndoNotificationClosed }
+				)
+				this.undoNotification.toastElement.getElementsByClassName('undo')
+					.forEach(element => { element.onclick = this.onUndoDelete })
+			} else {
+				this.undoNotification.toastElement.getElementsByClassName('deletedLabel')
+					.forEach(element => { element.textContent = label })
+			}
+			this.undoTimer = setTimeout(this.onRemoveUndoNotification, 12000)
+			this.routeFirst()
+		},
+
+		clearUndoTimer() {
+			if (this.undoTimer) {
+				clearTimeout(this.undoTimer)
+				this.undoTimer = null
+			}
+		},
+
+		onUndoDelete() {
+			this.deletedNotes.forEach(note => undoDeleteNote(note))
+			this.onRemoveUndoNotification()
+		},
+
+		onUndoNotificationClosed() {
+			if (this.undoNotification) {
+				this.undoNotification = null
+				this.onRemoveUndoNotification()
+			}
+		},
+
+		onRemoveUndoNotification() {
+			this.deletedNotes = []
+			if (this.undoNotification) {
+				this.undoNotification.hideToast()
+				this.undoNotification = null
+			}
+			this.clearUndoTimer()
 		},
 
 		onClose(event) {

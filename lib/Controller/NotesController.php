@@ -143,6 +143,34 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
+	 * @param string $content
+	 */
+	public function undo($id, $content, $category, $modified, $favorite) {
+		try {
+			// check if note still exists
+			$note = $this->notesService->get($id, $this->userId);
+			if ($note->getError()) {
+				throw new \Exception();
+			}
+		} catch (\Throwable $e) {
+			// re-create if note doesn't exit anymore
+			$note = $this->notesService->create($this->userId);
+			$note = $this->notesService->update(
+				$note->getId(),
+				$content,
+				$this->userId,
+				$category,
+				$modified
+			);
+			$note->favorite = $this->notesService->favorite($note->getId(), $favorite, $this->userId);
+		}
+		return new DataResponse($note);
+	}
+
+
+	/**
+	 * @NoAdminRequired
+	 *
 	 * @param int $id
 	 * @param string $content
 	 * @return DataResponse
