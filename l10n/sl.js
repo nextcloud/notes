@@ -64,6 +64,8 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Brisanje določila {id} sporočila je spodletelo.",
     "Toggling favorite for note {id} has failed." : "Preklop oznake priljubljeno za beležko {id} je spodletelo.",
     "Updating the note's category has failed. Is the target directory writable?" : "Posodabljanje kategorije zabeležke je spodletelo. Ali ima ciljno mesto nastavljena ustrezna dovoljenja za zapisovanje?",
-    "Updating the category for note {id} has failed." : "Posodabljanje kategorije za beležko {id} je spodletelo."
+    "Updating the category for note {id} has failed." : "Posodabljanje kategorije za beležko {id} je spodletelo.",
+    "Development Mode" : "Razvojni način",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Kaže, da je program nameščen in razvojne različice. Priporočena je namestitev iz uradne trgovine <a href=\"%1$s\">Nextcloud App Store</a>. Seveda lahko program izgradite tudi sami, upoštevajoč <a href=\"%2$s\">navodila za razvijalce</a>."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
