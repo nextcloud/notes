@@ -34,7 +34,8 @@ Before reporting bugs:
 
 1. Clone this into your `apps` folder of your Nextcloud
 2. In a terminal, run the command `make dev-setup` to install the dependencies
-3. Then to build the Javascript and whenever you make changes, run `make build-js`
+3. Then to build the Javascript run `make build-js` or `make watch-js` to
+   rebuild it when you make changes
 4. Enable the app through the app management of your Nextcloud
 
 
