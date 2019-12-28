@@ -1,0 +1,17 @@
+{
+	"name": "Notes",
+	"start_url": "/apps/notes/",
+	"icons": [
+		{
+			"src": "/apps/notes/img/favicon-touch.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		},
+		{
+			"src": "/apps/notes/img/favicon-touch.svg",
+			"type": "image/svg+xml",
+			"sizes": "16x16"
+		}
+	],
+	"display": "standalone"
+}
