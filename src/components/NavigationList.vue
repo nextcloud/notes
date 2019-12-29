@@ -45,25 +45,39 @@
 				@note-deleted="$emit('note-deleted')"
 			/>
 		</template>
+		<AppNavigationItem
+			v-if="notes.length != filteredNotes.length"
+			v-observe-visibility="onEndOfNotes"
+			:title="t('notes', 'Loading …')"
+			:loading="true"
+		/>
 	</ul>
 </template>
 
 <script>
 import {
 	AppNavigationCaption,
+	AppNavigationItem,
 } from '@nextcloud/vue'
 import NavigationCategoriesItem from './NavigationCategoriesItem'
 import NavigationNoteItem from './NavigationNoteItem'
 import NotesService from '../NotesService'
 import store from '../store'
 
+import { ObserveVisibility } from 'vue-observe-visibility'
+
 export default {
 	name: 'NavigationList',
 
 	components: {
 		AppNavigationCaption,
+		AppNavigationItem,
 		NavigationCategoriesItem,
 		NavigationNoteItem,
+	},
+
+	directives: {
+		'observe-visibility': ObserveVisibility,
 	},
 
 	props: {
@@ -86,6 +100,7 @@ export default {
 			timeslots: [],
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
+			showFirstNotesOnly: true,
 		}
 	},
 
@@ -94,10 +109,18 @@ export default {
 			return store.getters.numNotes()
 		},
 
+		notes() {
+			if (this.filteredNotes.length > 40 && this.showFirstNotesOnly) {
+				return this.filteredNotes.slice(0, 30)
+			} else {
+				return this.filteredNotes
+			}
+		},
+
 		// group notes by time ("All notes") or by category (if category chosen)
 		groupedNotes() {
 			if (this.category === null) {
-				return this.filteredNotes.reduce((g, note) => {
+				return this.notes.reduce((g, note) => {
 					const timeslot = this.getTimeslotFromNote(note)
 					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
 						g.push({ timeslot: timeslot, notes: [] })
@@ -106,7 +129,7 @@ export default {
 					return g
 				}, [])
 			} else {
-				return this.filteredNotes.reduce((g, note) => {
+				return this.notes.reduce((g, note) => {
 					if (g.length === 0 || g[g.length - 1].category !== note.category) {
 						g.push({ category: note.category, notes: [] })
 					}
@@ -127,6 +150,10 @@ export default {
 				return t('notes', 'Search result for “{search}”', { search: this.search })
 			}
 		},
+	},
+
+	watch: {
+		category: function() { this.showFirstNotesOnly = true },
 	},
 
 	created() {
@@ -168,6 +195,12 @@ export default {
 				return this.monthFormat.format(new Date(t))
 			} else {
 				return new Date(t).getFullYear().toString()
+			}
+		},
+
+		onEndOfNotes(isVisible) {
+			if (isVisible) {
+				this.showFirstNotesOnly = false
 			}
 		},
 	},
