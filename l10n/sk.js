@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "Kategórie",
     "No search result for “{search}” in {category}" : "Žiadny výsledok vyhľadávania pre “{search}” v kategórii {category}",
     "No search result for “{search}”" : "Žiadny výsledok vyhľadávania pre “{search}”",
+    "Loading …" : "Načítava sa...",
     "Search result for “{search}” in {category}" : "Výsledok vyhľadávania pre “{search}” v kategórii {category}",
     "Search result for “{search}”" : "Výsledok vyhľadávania pre “{search}”",
     "Today" : "Dnes",

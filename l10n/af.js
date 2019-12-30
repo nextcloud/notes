@@ -11,6 +11,7 @@ OC.L10N.register(
     "File extension for new notes" : "Lêeruitbreiding vir nuwe notas",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
+    "Loading …" : "Laai …",
     "Today" : "Vandag",
     "Yesterday" : "Gister",
     "Delete note" : "Skrap nota",

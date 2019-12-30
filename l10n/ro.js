@@ -6,6 +6,7 @@ OC.L10N.register(
     "Error" : "Eroare",
     "Settings" : "Setări",
     "All notes" : "Toate notițele",
+    "Loading …" : "Se încarcă…",
     "Today" : "Azi",
     "Yesterday" : "Ieri",
     "This week" : "Săptămâna asta",

@@ -14,6 +14,7 @@ OC.L10N.register(
     "File extension for new notes" : "Naujų užrašų failo prievardis",
     "All notes" : "Visi užrašai",
     "Categories" : "Kategorijos",
+    "Loading …" : "Įkeliama…",
     "Today" : "Šiandien",
     "Yesterday" : "Vakar",
     "This week" : "Šią savaitę",

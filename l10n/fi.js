@@ -16,6 +16,7 @@ OC.L10N.register(
     "Categories" : "Luokat",
     "No search result for “{search}” in {category}" : "Ei tuloksia haulla “{search}” luokasta {category}",
     "No search result for “{search}”" : "Ei tuloksia haulla “{search}”",
+    "Loading …" : "Ladataan…",
     "Search result for “{search}” in {category}" : "Tulos haulle “{search}” luokasta {category}",
     "Search result for “{search}”" : "Tulos haulle “{search}”",
     "Today" : "Tänään",

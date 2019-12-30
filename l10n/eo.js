@@ -16,6 +16,7 @@ OC.L10N.register(
     "File extension for new notes" : "Dosiersufikso por novaj notoj",
     "All notes" : "Ĉiuj notoj",
     "Categories" : "Kategorioj",
+    "Loading …" : "Ŝargado...",
     "Today" : "Hodiaŭ",
     "Yesterday" : "Hieraŭ",
     "Delete note" : "Forigi noton",

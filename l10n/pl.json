@@ -16,6 +16,7 @@
     "Categories" : "Kategorie",
     "No search result for “{search}” in {category}" : "Brak wyników wyszukiwania dla \"{search}” w {category}",
     "No search result for “{search}”" : "Brak wyników wyszukiwania dla “{search}”",
+    "Loading …" : "Wczytywanie…",
     "Search result for “{search}” in {category}" : "Wynik wyszukiwania dla “{search}” w {category}",
     "Search result for “{search}”" : "Wynik wyszukiwania dla “{search}”",
     "Today" : "Dzisiaj",

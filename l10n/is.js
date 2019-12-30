@@ -16,6 +16,7 @@ OC.L10N.register(
     "File extension for new notes" : "Skráarending fyrir nýja minnispunkta",
     "All notes" : "Allir minnispunktar",
     "Categories" : "Flokkar",
+    "Loading …" : "Hleð inn …",
     "Today" : "Í dag",
     "Yesterday" : "Yesterday",
     "This week" : "Í þessari viku",

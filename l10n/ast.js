@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "Settings",
     "All notes" : "Toles notes",
     "Categories" : "Estayes",
+    "Loading …" : "Cargando...",
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
     "This week" : "Esta selmana",

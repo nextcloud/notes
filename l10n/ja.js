@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "カテゴリ",
     "No search result for “{search}” in {category}" : "{category}の{search}の検索結果はありません",
     "No search result for “{search}”" : "{search}の検索結果はありません。",
+    "Loading …" : "読み込み中...",
     "Search result for “{search}” in {category}" : "{category}の{search}の検索結果",
     "Search result for “{search}”" : "\"{search}\"の検索結果",
     "Today" : "今日",

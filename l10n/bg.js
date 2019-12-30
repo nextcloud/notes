@@ -14,6 +14,7 @@ OC.L10N.register(
     "File extension for new notes" : "Разширение за файловете",
     "All notes" : "Всички бележки",
     "Categories" : "Категории",
+    "Loading …" : "Зарежда …",
     "Today" : "Днес",
     "Yesterday" : "Вчера",
     "This week" : "Тази седмица",

@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "Kategoriler",
     "No search result for “{search}” in {category}" : "\"{search}” için {category} içinde herhangi bir sonuç bulunamadı",
     "No search result for “{search}”" : "“{search}” için herhangi bir sonuç bulunamadı",
+    "Loading …" : "Yükleniyor …",
     "Search result for “{search}” in {category}" : "\"{search}” için {category} içinde bulunan sonuçlar",
     "Search result for “{search}”" : "“{search}” için bulunan sonuçlar",
     "Today" : "Bugün",

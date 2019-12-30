@@ -15,6 +15,7 @@ OC.L10N.register(
     "File extension for new notes" : "Fájlkiterjesztés új jegyzetekhez",
     "All notes" : "Összes jegyzet",
     "Categories" : "Kategóriák",
+    "Loading …" : "Töltés ...",
     "Today" : "Ma",
     "Yesterday" : "Tegnap",
     "This week" : "Ez a hét",

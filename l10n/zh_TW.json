@@ -16,6 +16,7 @@
     "Categories" : "分類",
     "No search result for “{search}” in {category}" : "在 {category} 分類中搜尋不到 “{search}”",
     "No search result for “{search}”" : "搜尋不到 “{search}”",
+    "Loading …" : "載入中 ...",
     "Search result for “{search}” in {category}" : "在 {category} 分類搜尋 “{search}” 結果",
     "Search result for “{search}”" : "搜尋 “{search}” 的結果",
     "Today" : "今天",

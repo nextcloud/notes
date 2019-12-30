@@ -16,6 +16,7 @@
     "Categories" : "Kategorie",
     "No search result for “{search}” in {category}" : "Žádné výsledky pro vyhledání „{search}“ v {category}",
     "No search result for “{search}”" : "Žádné výsledky pro hledání „{search}“",
+    "Loading …" : "Načítání…",
     "Search result for “{search}” in {category}" : "Výsledek hledání pro „{search}“ v {category}",
     "Search result for “{search}”" : "Výsledky hledání „{search}“",
     "Today" : "Dnes",

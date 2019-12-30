@@ -11,6 +11,7 @@ OC.L10N.register(
     "path to notes" : "διαδρομή στις σημειώσεις",
     "All notes" : "Όλες οι σημειώσεις",
     "Categories" : "Κατηγορίες",
+    "Loading …" : "Φόρτωση…",
     "Today" : "Σήμερα",
     "Yesterday" : "Χθές",
     "This week" : "Αυτή την εβδομάδα",

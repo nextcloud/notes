@@ -6,6 +6,7 @@ OC.L10N.register(
     "Error" : "Gwall",
     "Settings" : "Gosodiadau",
     "All notes" : "Pob nodyn",
+    "Loading …" : "Yn llwytho …",
     "Today" : "Heddiw",
     "Yesterday" : "Ddoe",
     "This week" : "Wythnos yma",

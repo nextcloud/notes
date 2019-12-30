@@ -8,6 +8,7 @@ OC.L10N.register(
     "Settings" : "Innstillinger",
     "All notes" : "Alle notater",
     "Categories" : "Kategorier",
+    "Loading …" : "Laster...",
     "Today" : "I dag",
     "Yesterday" : "I går",
     "This week" : "Denne uken",

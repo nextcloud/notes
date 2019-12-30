@@ -10,6 +10,7 @@ OC.L10N.register(
     "path to notes" : "oharretara bidea",
     "All notes" : "Ohar guztiak",
     "Categories" : "Kategoriak",
+    "Loading …" : "Kargatzen...",
     "Today" : "Gaur",
     "Yesterday" : "Atzo",
     "This week" : "Aste honetan",

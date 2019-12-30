@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "Kategorije",
     "No search result for “{search}” in {category}" : "Nema rezultata pretraživanja za „{search}” u {category}",
     "No search result for “{search}”" : "Nema rezultata pretraživanja za „{search}”",
+    "Loading …" : "Učitavanje…",
     "Search result for “{search}” in {category}" : "Rezultat pretraživanja za „{search}” u {category}",
     "Search result for “{search}”" : "Rezultat pretraživanja za „{search}”",
     "Today" : "Danas",

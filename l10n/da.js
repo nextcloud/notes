@@ -11,6 +11,7 @@ OC.L10N.register(
     "Settings" : "Indstillinger",
     "All notes" : "Alle noter",
     "Categories" : "Kategorier",
+    "Loading …" : "Indlæser…",
     "Today" : "I dag",
     "Yesterday" : "I går",
     "This week" : "Denne uge",

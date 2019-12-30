@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "Категорије",
     "No search result for “{search}” in {category}" : "Нема резултата претраге за „{search}“ у категорији {category}",
     "No search result for “{search}”" : "Нема резултата претраге за „{search}“",
+    "Loading …" : "Учитавање…",
     "Search result for “{search}” in {category}" : "Резултати претраге за „{search}“ у категорији {category}",
     "Search result for “{search}”" : "Резултати претраге за „{search}“",
     "Today" : "Данас",
