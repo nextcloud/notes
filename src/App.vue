@@ -36,6 +36,8 @@ import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
 import NotesService from './NotesService'
 import store from './store'
+import scrollTop from './animations/scrollTop'
+import { openNavbar } from './nextcloud'
 
 export default {
 	name: 'App',
@@ -164,10 +166,8 @@ export default {
 
 		onSearch(query) {
 			this.filter.search = query
-			// TODO move the following from jQuery to plain JS
-			if ($('#app-navigation-toggle').css('display') !== 'none' && !$('body').hasClass('snapjs-left')) {
-				$('#app-navigation-toggle').click()
-			}
+
+			openNavbar()
 		},
 
 		onResetSearch() {
@@ -192,8 +192,8 @@ export default {
 
 		onSelectCategory(category) {
 			this.filter.category = category
-			// TODO move the following from jQuery to plain JS
-			$('#app-navigation > ul').animate({ scrollTop: 0 }, 'fast')
+
+			scrollTop(document.querySelector('#app-navigation > ul'), 10000)
 		},
 
 		onClose(event) {

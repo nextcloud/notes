@@ -61,6 +61,7 @@ import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
 import NotesService from '../NotesService'
 import store from '../store'
+import { closeNavbar } from '../nextcloud'
 
 export default {
 	name: 'Note',
@@ -130,6 +131,9 @@ export default {
 	methods: {
 		fetchData() {
 			store.commit('setSidebarOpen', false)
+
+			closeNavbar()
+
 			this.onUpdateTitle(this.title)
 			this.loading = true
 			this.preview = false
