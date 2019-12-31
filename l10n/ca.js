@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "Categories",
     "No search result for “{search}” in {category}" : "No hi ha resultats de cerca per a “{search}” a {category}",
     "No search result for “{search}”" : "No hi ha resultats de cerca per a “{search}” ",
+    "Loading …" : "Carregant …",
     "Search result for “{search}” in {category}" : "Resultats de cerca de “{search}” a {category}",
     "Search result for “{search}”" : "Resultats de cerca de “{search}”",
     "Today" : "Avui",

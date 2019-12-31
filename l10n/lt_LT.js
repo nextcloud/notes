@@ -24,6 +24,7 @@ OC.L10N.register(
     "Delete note" : "Ištrinti užrašus",
     "Remove from favorites" : "Šalinti iš mėgstamų",
     "Add to favorites" : "Pridėti į mėgstamus",
+    "Empty note" : "Tušti užrašai",
     "Write …" : "Rašykite…",
     "Details" : "Išsamiau",
     "Preview" : "Peržiūra",
@@ -40,9 +41,11 @@ OC.L10N.register(
     "Note has unsaved changes" : "Užrašuose yra neįrašytų pakeitimų.",
     "Subcategory" : "Subkategorija",
     "_%n word_::_%n words_" : ["%n žodis","%n žodžiai","%n žodžių","%n žodis"],
+    "Write down your thoughts without any distractions." : "Užsirašykite savo mintis be jokio blaškymosi.",
     "Android app" : "Android programėlė",
     "iOS app" : "iOS programėlė",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Galite sukurti subkategorijas, naudodami \"/\" kaip skirtuką tarp viršesnės kategorijos ir subkategorijos, pvz., “{parent}/{sub}”.",
-    "See JavaScript console for details." : "Išsamesnei informacijai, žiūrėkite JavaScript pultą."
+    "See JavaScript console for details." : "Išsamesnei informacijai, žiūrėkite JavaScript pultą.",
+    "Updating settings has failed." : "Nepavyko atnaujinti nustatymų."
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

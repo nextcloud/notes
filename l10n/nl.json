@@ -63,6 +63,7 @@
     "Deleting note {id} has failed." : "Notitie {id} verwijderen mislukt.",
     "Toggling favorite for note {id} has failed." : "Favoriet instellen voor notitie {id} mislukt.",
     "Updating the note's category has failed. Is the target directory writable?" : "Bijwerken van de notitiecategorie mislukt. Is de doelmap beschrijfbaar?",
-    "Updating the category for note {id} has failed." : "Categorie bijwerken voor notitie {id} mislukt."
+    "Updating the category for note {id} has failed." : "Categorie bijwerken voor notitie {id} mislukt.",
+    "Development Mode" : "Ontwikkelmodus"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

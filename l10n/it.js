@@ -18,7 +18,7 @@ OC.L10N.register(
     "Categories" : "Categorie",
     "No search result for “{search}” in {category}" : "Nessun risultato di ricerca per \"{search}\" in {category}",
     "No search result for “{search}”" : "Nessun risultato di ricerca per \"{search}\"",
-    "Loading …" : "Caricamento in corso...",
+    "Loading …" : "Caricamento...",
     "Search result for “{search}” in {category}" : "Risultato di ricerca per \"{search}\" in {category}",
     "Search result for “{search}”" : "Risultato di ricerca per \"{search}\"",
     "Today" : "Oggi",

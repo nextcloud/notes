@@ -18,6 +18,7 @@ OC.L10N.register(
     "Categories" : "Категории",
     "No search result for “{search}” in {category}" : "Нема резултати од пребарувањето за “{search}” во {category}",
     "No search result for “{search}”" : "Нема резултати од пребарувањето за “{search}”",
+    "Loading …" : "Се вчитува…",
     "Search result for “{search}” in {category}" : "Резултати од пребарувањето за “{search}” во {category}",
     "Search result for “{search}”" : "Резултати од пребарувањето за “{search}”",
     "Today" : "Денес",
