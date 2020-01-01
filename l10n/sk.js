@@ -28,6 +28,7 @@ OC.L10N.register(
     "This month" : "Tento mesiac",
     "Last month" : "Minulý mesiac",
     "Delete note" : "Zmazať poznámku",
+    "Deleted {title}" : "Zmazané {title}",
     "Remove from favorites" : "Odstrániť z obľúbených",
     "Add to favorites" : "Pridať do obľúbených",
     "Empty note" : "Prázdna poznámka",
@@ -35,6 +36,8 @@ OC.L10N.register(
     "Details" : "Podrobnosti",
     "Preview" : "Náhľad",
     "Edit" : "Upraviť",
+    "Exit full screen" : "Opustiť celú obrazovku",
+    "Full screen" : "Na celú obrazovku",
     "Save failed. Click to retry." : "Uloženie zlyhalo. Ťuknutím zopakujete.",
     "Set category" : "Vybrať kategóriu",
     "Category" : "Kategória",
@@ -62,6 +65,8 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Zmazanie poznámky {id} zlyhalo.",
     "Toggling favorite for note {id} has failed." : "Zaradenie poznámky {id} do obľúbených zlyhalo.",
     "Updating the note's category has failed. Is the target directory writable?" : "Aktualizácia kategórie poznámky zlyhalo. Je možné do cieľového priečinka zapisovať?",
-    "Updating the category for note {id} has failed." : "Aktualizácia kategórie pre poznámku {id} zlyhala."
+    "Updating the category for note {id} has failed." : "Aktualizácia kategórie pre poznámku {id} zlyhala.",
+    "Development Mode" : "Režim pre vývojárov",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Zdá sa, že apka Poznámky bola nainštalovaná zo zdroja pre vývojárov. Nainštalujte ju prosím z oficiálneho <a href=\"%1$s\">Nextcloud katalógu apiek</a>. Ak si chcete zostaviť (skompilovať) aplikáciu Poznámky sami, nasledujte <a href=\"%2$s\">pokyny pre vývojárov</a>."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

@@ -66,6 +66,7 @@ OC.L10N.register(
     "Toggling favorite for note {id} has failed." : "Favoriet instellen voor notitie {id} mislukt.",
     "Updating the note's category has failed. Is the target directory writable?" : "Bijwerken van de notitiecategorie mislukt. Is de doelmap beschrijfbaar?",
     "Updating the category for note {id} has failed." : "Categorie bijwerken voor notitie {id} mislukt.",
-    "Development Mode" : "Ontwikkelmodus"
+    "Development Mode" : "Ontwikkelmodus",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "het lijkt erop dat de nottities app werd geïnstalleerd vanuit een ontwikkelbron. Installeer de app liever vanuit de officiële <a href=\"%1$s\">Nextcloud App Store</a>. Als je de Notities app zelf wilt opbouwen, volg dan de  <a href=\"%2$s\">ontwikkelaarsinstructies</a>."
 },
 "nplurals=2; plural=(n != 1);");
