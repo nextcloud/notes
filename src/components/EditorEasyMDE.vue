@@ -171,10 +171,6 @@ export default {
 	color: var(--color-main-background);
 }
 
-.CodeMirror .cm-formatting-task.cm-property::before {
-	background-image: var(--icon-checkmark-000);
-}
-
 .CodeMirror .cm-formatting-task.cm-meta::before,
 .CodeMirror .cm-formatting-task.cm-property::before {
 	content: '';
@@ -182,11 +178,17 @@ export default {
 	height: 14px;
 	position: absolute;
 	background-color: var(--color-main-background);
-	border: 1px solid #000;
+	border: 1px solid #878787;
 	border-radius: 1px;
 	background-position: center;
 	margin-top: 3px;
 	margin-left: 2px;
+}
+
+.CodeMirror .cm-formatting-task.cm-property::before {
+	background-image: var(--icon-checkmark-fff);
+	background-color: var(--color-primary-element);
+	border-color: var(--color-primary-element);
 }
 
 .CodeMirror .cm-formatting-task.cm-property + span {
