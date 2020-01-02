@@ -194,7 +194,7 @@ export default {
 
 			const appNavigation = document.querySelector('#app-navigation > ul')
 			if (appNavigation) {
-				appNavigation.scrollTop = 0;
+				appNavigation.scrollTop = 0
 			}
 		},
 
