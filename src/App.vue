@@ -36,7 +36,6 @@ import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
 import NotesService from './NotesService'
 import store from './store'
-import scrollTop from './animations/scrollTop'
 import { openNavbar } from './nextcloud'
 
 export default {
@@ -193,7 +192,10 @@ export default {
 		onSelectCategory(category) {
 			this.filter.category = category
 
-			scrollTop(document.querySelector('#app-navigation > ul'), 10000)
+			const appNavigation = document.querySelector('#app-navigation > ul')
+			if (appNavigation) {
+				appNavigation.scrollTop = 0;
+			}
 		},
 
 		onClose(event) {
