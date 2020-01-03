@@ -15,6 +15,14 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.1.1 - 2020-01-03
+
+### Fixed
+- fix sidebar behaviour in mobile mode (#425; thanks to @gko)
+- fix checkmark in editor (#419, #427)
+- speed-up switching categories (#424)
+
+
 ## 3.1.0 - 2019-12-23
 
 ### Added
