@@ -13,6 +13,7 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "جزئیات",
+    "Preview" : "پیش نمایش",
     "Edit" : "ویرایش",
     "Category" : "دسته‌بندی",
     "_%n word_::_%n words_" : ["%n کلمه","%n کلمه"],
