@@ -49,7 +49,7 @@ OC.L10N.register(
     "Subcategory" : "Subcategorie",
     "_%n word_::_%n words_" : ["%n woord","%n woorden"],
     "Write down your thoughts without any distractions." : "Schrijf je gedachten op zonder afleiding.",
-    "Use Markdown markups to style your text." : "Gebruik Markdown markups om je tekst te stijlen.",
+    "Use Markdown markups to style your text." : "Gebruik Markdown markeringen om je tekst op te maken.",
     "Organize your notes in categories." : "Organiseer je notities in categorieën. ",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Installeer de app op je mobiel om overal toegang tot je notities te krijgen.",
     "Android app" : "Android app",
