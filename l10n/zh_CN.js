@@ -18,7 +18,7 @@ OC.L10N.register(
     "Categories" : "分类",
     "No search result for “{search}” in {category}" : "在 {category} 中没有关于 “{search}”的搜索结果",
     "No search result for “{search}”" : "没有关于“{search}”的搜索结果",
-    "Loading …" : "加载中...",
+    "Loading …" : "正在加载…",
     "Search result for “{search}” in {category}" : "在{category}中搜索 “{search}”的结果",
     "Search result for “{search}”" : "搜索 “{search}”的结果",
     "Today" : "今天",
