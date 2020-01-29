@@ -5,6 +5,7 @@ OC.L10N.register(
     "New note" : "Нова нотатка",
     "Error" : "Помилка",
     "Settings" : "Налаштування",
+    "Categories" : "Категорії",
     "Today" : "Сьогодні",
     "Yesterday" : "Вчора",
     "Delete note" : "Вилучити нотатку",
