@@ -136,7 +136,13 @@ class NotesApiController extends ApiController {
 	public function create($content, $category = null, $modified = 0, $favorite = null) {
 		return $this->respond(function () use ($content, $category, $modified, $favorite) {
 			$note = $this->service->create($this->getUID());
-			return $this->updateData($note->getId(), $content, $category, $modified, $favorite);
+			try {
+				$note = $this->updateData($note->getId(), $content, $category, $modified, $favorite);
+			} catch(\Throwable $e) {
+				// roll-back note creation
+				$this->service->delete($note->getId(), $this->getUID());
+				throw $e;
+			}
 		});
 	}
 
