@@ -249,15 +249,6 @@ class NotesService {
 
 	/**
 	 * @param string $userId the user id
-	 * @return boolean true if folder is accessible, or Exception otherwise
-	 */
-	public function checkNotesFolder($userId) {
-		$this->getFolderForUser($userId);
-		return true;
-	}
-
-	/**
-	 * @param string $userId the user id
 	 * @return Folder
 	 */
 	private function getFolderForUser($userId) : Folder {

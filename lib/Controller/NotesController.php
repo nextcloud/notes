@@ -64,7 +64,6 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function index() {
-		$notes = $this->notesService->getAll($this->userId, true);
 		$settings = $this->settingsService->getAll($this->userId);
 
 		$errorMessage = null;
@@ -74,8 +73,9 @@ class NotesController extends Controller {
 			'notesLastViewedNote'
 		);
 		// check if notes folder is accessible
+		$notes = null;
 		try {
-			$this->notesService->checkNotesFolder($this->userId);
+			$notes = $this->notesService->getAll($this->userId, true);
 			if ($lastViewedNote) {
 				// check if note exists
 				try {

@@ -39,7 +39,9 @@ export default {
 			.get(this.url('/notes'))
 			.then(response => {
 				store.commit('setSettings', response.data.settings)
-				store.dispatch('addAll', response.data.notes)
+				if (response.data.notes !== null) {
+					store.dispatch('addAll', response.data.notes)
+				}
 				if (response.data.errorMessage) {
 					OC.Notification.showTemporary(response.data.errorMessage)
 				}

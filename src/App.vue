@@ -17,10 +17,17 @@
 				@note-deleted="routeFirst"
 			/>
 
-			<AppSettings v-if="!loading.notes && !error" @reload="reloadNotes" />
+			<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
 		</AppNavigation>
 
-		<router-view />
+		<AppContent v-if="error">
+			<div style="margin: 2em;">
+				<h2>{{ t('notes', 'Error') }}</h2>
+				<p>{{ error }}</p>
+				<p>{{ t('notes', 'Please chose a valid path in {label} (bottom left corner).', { label: t('notes', 'Settings') }) }}</p>
+			</div>
+		</AppContent>
+		<router-view v-else />
 
 		<router-view name="sidebar" />
 	</Content>
@@ -28,6 +35,7 @@
 
 <script>
 import {
+	AppContent,
 	AppNavigation,
 	AppNavigationNew,
 	Content,
@@ -42,6 +50,7 @@ export default {
 	name: 'App',
 
 	components: {
+		AppContent,
 		AppNavigation,
 		AppNavigationNew,
 		AppSettings,
@@ -121,7 +130,12 @@ export default {
 			this.loading.notes = true
 			NotesService.fetchNotes()
 				.then(data => {
-					this.routeDefault(data.lastViewedNote)
+					if (data.notes !== null) {
+						this.error = false
+						this.routeDefault(data.lastViewedNote)
+					} else {
+						this.error = data.errorMessage
+					}
 				})
 				.catch(() => {
 					this.error = true
@@ -132,7 +146,9 @@ export default {
 		},
 
 		reloadNotes() {
-			this.$router.push('/')
+			if (this.$route.path !== '/') {
+				this.$router.push('/')
+			}
 			store.commit('removeAll')
 			this.loadNotes()
 		},
