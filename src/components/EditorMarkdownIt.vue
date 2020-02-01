@@ -92,7 +92,7 @@ export default {
 	}
 
 	& a {
-		color: var(--color-primary);
+		color: var(--color-primary-element);
 	}
 
 	& pre, & code {
