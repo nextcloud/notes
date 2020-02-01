@@ -6,10 +6,12 @@ use OCP\AppFramework\Controller;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
+use OCA\Notes\Service\InsufficientStorageException;
 
 /**
  * Class NotesController
@@ -123,14 +125,18 @@ class NotesController extends Controller {
 	 * @param string $content
 	 */
 	public function create($content = '', $category = null) {
-		$note = $this->notesService->create($this->userId);
-		$note = $this->notesService->update(
-			$note->getId(),
-			$content,
-			$this->userId,
-			$category
-		);
-		return new DataResponse($note);
+		try {
+			$note = $this->notesService->create($this->userId);
+			$note = $this->notesService->update(
+				$note->getId(),
+				$content,
+				$this->userId,
+				$category
+			);
+			return new DataResponse($note);
+		} catch (InsufficientStorageException $e) {
+			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
+		}
 	}
 
 
@@ -142,8 +148,12 @@ class NotesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function update($id, $content) {
-		$note = $this->notesService->update($id, $content, $this->userId);
-		return new DataResponse($note);
+		try {
+			$note = $this->notesService->update($id, $content, $this->userId);
+			return new DataResponse($note);
+		} catch (InsufficientStorageException $e) {
+			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
+		}
 	}
 
 

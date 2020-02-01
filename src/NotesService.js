@@ -15,6 +15,10 @@ export default {
 		OC.Notification.showTemporary(message + ' ' + this.t('notes', 'See JavaScript console for details.'))
 	},
 
+	handleInsufficientStorage() {
+		OC.Notification.showTemporary(this.t('notes', 'Saving the note has failed due to insufficient storage.'))
+	},
+
 	setSettings(settings) {
 		return axios
 			.put(this.url('/settings'), settings)
@@ -81,7 +85,11 @@ export default {
 			})
 			.catch(err => {
 				console.error(err)
-				this.handleSyncError(this.t('notes', 'Creating new note has failed.'))
+				if (err.response.status === 507) {
+					this.handleInsufficientStorage()
+				} else {
+					this.handleSyncError(this.t('notes', 'Creating new note has failed.'))
+				}
 				throw err
 			})
 	},
@@ -103,7 +111,11 @@ export default {
 			.catch(err => {
 				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
 				console.error(err)
-				this.handleSyncError(this.t('notes', 'Updating note {id} has failed.', { id: note.id }))
+				if (err.response.status === 507) {
+					this.handleInsufficientStorage()
+				} else {
+					this.handleSyncError(this.t('notes', 'Updating note {id} has failed.', { id: note.id }))
+				}
 			})
 	},
 
