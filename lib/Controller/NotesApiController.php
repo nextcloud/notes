@@ -113,12 +113,9 @@ class NotesApiController extends ApiController {
 	 */
 	public function get($id, $exclude = '') {
 		$exclude = explode(',', $exclude);
-
-		return $this->respond(function () use ($id, $exclude) {
-			$note = $this->service->get($id, $this->getUID());
-			$note = $this->excludeFields($note, $exclude);
-			return $note;
-		});
+		$note = $this->service->get($id, $this->getUID());
+		$note = $this->excludeFields($note, $exclude);
+		return new DataResponse($note);
 	}
 
 
@@ -134,16 +131,15 @@ class NotesApiController extends ApiController {
 	 * @return DataResponse
 	 */
 	public function create($content, $category = null, $modified = 0, $favorite = null) {
-		return $this->respond(function () use ($content, $category, $modified, $favorite) {
-			$note = $this->service->create($this->getUID());
-			try {
-				$note = $this->updateData($note->getId(), $content, $category, $modified, $favorite);
-			} catch(\Throwable $e) {
-				// roll-back note creation
-				$this->service->delete($note->getId(), $this->getUID());
-				throw $e;
-			}
-		});
+		$note = $this->service->create($this->getUID());
+		try {
+			$note = $this->updateData($note->getId(), $content, $category, $modified, $favorite);
+		} catch (\Throwable $e) {
+			// roll-back note creation
+			$this->service->delete($note->getId(), $this->getUID());
+			throw $e;
+		}
+		return new DataResponse($note);
 	}
 
 
@@ -160,9 +156,8 @@ class NotesApiController extends ApiController {
 	 * @return DataResponse
 	 */
 	public function update($id, $content = null, $category = null, $modified = 0, $favorite = null) {
-		return $this->respond(function () use ($id, $content, $category, $modified, $favorite) {
-			return $this->updateData($id, $content, $category, $modified, $favorite);
-		});
+		$note = $this->updateData($id, $content, $category, $modified, $favorite);
+		return new DataResponse($note);
 	}
 
 	/**
@@ -193,9 +188,7 @@ class NotesApiController extends ApiController {
 	 * @return DataResponse
 	 */
 	public function destroy($id) {
-		return $this->respond(function () use ($id) {
-			$this->service->delete($id, $this->getUID());
-			return [];
-		});
+		$this->service->delete($id, $this->getUID());
+		return new DataResponse([]);
 	}
 }
