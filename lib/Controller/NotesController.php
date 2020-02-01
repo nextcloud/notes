@@ -112,9 +112,8 @@ class NotesController extends Controller {
 			$id
 		);
 
-		return $this->respond(function () use ($id) {
-			return $this->notesService->get($id, $this->userId);
-		});
+		$note = $this->notesService->get($id, $this->userId);
+		return new DataResponse($note);
 	}
 
 
@@ -143,9 +142,8 @@ class NotesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function update($id, $content) {
-		return $this->respond(function () use ($id, $content) {
-			return $this->notesService->update($id, $content, $this->userId);
-		});
+		$note = $this->notesService->update($id, $content, $this->userId);
+		return new DataResponse($note);
 	}
 
 
@@ -158,10 +156,8 @@ class NotesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function category($id, $category) {
-		return $this->respond(function () use ($id, $category) {
-			$note = $this->notesService->update($id, null, $this->userId, $category);
-			return $note->category;
-		});
+		$note = $this->notesService->update($id, null, $this->userId, $category);
+		return new DataResponse($note->category);
 	}
 
 
@@ -173,9 +169,8 @@ class NotesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function favorite($id, $favorite) {
-		return $this->respond(function () use ($id, $favorite) {
-			return $this->notesService->favorite($id, $favorite, $this->userId);
-		});
+		$result = $this->notesService->favorite($id, $favorite, $this->userId);
+		return new DataResponse($result);
 	}
 
 
@@ -186,9 +181,7 @@ class NotesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function destroy($id) {
-		return $this->respond(function () use ($id) {
-			$this->notesService->delete($id, $this->userId);
-			return [];
-		});
+		$this->notesService->delete($id, $this->userId);
+		return new DataResponse([]);
 	}
 }
