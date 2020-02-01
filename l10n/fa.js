@@ -6,6 +6,7 @@ OC.L10N.register(
     "Error" : "خطا",
     "Settings" : "تنظیمات",
     "All notes" : "همه یادداشت ها",
+    "Categories" : "دسته بندی ها",
     "Today" : "Today",
     "Yesterday" : "دیروز",
     "Last month" : "ماه گذشته",
