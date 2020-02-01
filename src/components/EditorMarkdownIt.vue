@@ -99,6 +99,7 @@ export default {
 		background: var(--color-background-dark);
 		font-size: 90%;
 		padding: 0.2ex 0.5ex;
+		white-space: pre-wrap;
 	}
 
 	& pre code {
