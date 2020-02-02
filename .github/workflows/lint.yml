@@ -1,0 +1,49 @@
+name: Lint
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  lint-js:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Set up Node
+      uses: actions/setup-node@v1
+    - name: Set up Stylelint Problem Matcher
+      uses: xt0rted/stylelint-problem-matcher@v1
+    - name: Install Dependencies
+      run: npm ci
+    - name: lint JavaScript
+      run: make lint-js
+    - name: lint Stylesheets
+      run: make lint-css
+    - name: build JavaScript
+      run: make build-js-production
+    env:
+      CI: true
+
+  lint-xml:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Setup xmllint
+      run: sudo apt-get install --no-install-recommends -y libxml2-utils
+    - name: lint XML
+      run: make lint-xml
+
+  lint-php:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Set up php${{ matrix.php-versions }}
+      uses: shivammathur/setup-php@master
+    - name: Install Dependencies
+      run: composer install --prefer-dist
+    - name: lint PHP
+      run: make lint-php
