@@ -11,8 +11,6 @@ build:
                         tests:
                                 override:
                                         - php-scrutinizer-run
-                                        - phpcs-run --standard=phpcs.xml appinfo/ lib/
-                                        - eslint-run --ext .js,.vue src
 
 tools:
         external_code_coverage: false
