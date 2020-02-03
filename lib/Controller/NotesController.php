@@ -177,7 +177,7 @@ class NotesController extends Controller {
 	 */
 	public function update($id, $content) {
 		try {
-			$note = $this->notesService->update($id, $content, $this->userId);
+			$note = $this->notesService->setContent($this->userId, $id, $content);
 			return new DataResponse($note);
 		} catch (InsufficientStorageException $e) {
 			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
@@ -194,8 +194,21 @@ class NotesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function category($id, $category) {
-		$note = $this->notesService->update($id, null, $this->userId, $category);
-		return new DataResponse($note->category);
+		$note = $this->notesService->setTitleCategory($this->userId, $id, null, $category);
+		return new DataResponse($note->getCategory()); // @phan-suppress-current-line PhanTypeMismatchArgument
+	}
+
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param int $id
+	 * @param string $title
+	 * @return DataResponse
+	 */
+	public function title($id, $title) {
+		$note = $this->notesService->setTitleCategory($this->userId, $id, $title, null);
+		return new DataResponse($note->getTitle()); // @phan-suppress-current-line PhanTypeMismatchArgument
 	}
 
 

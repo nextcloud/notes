@@ -65,6 +65,12 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 	[
+		'name' => 'notes#title',
+		'url' => '/notes/{id}/title',
+		'verb' => 'PUT',
+		'requirements' => ['id' => '\d+'],
+	],
+	[
 		'name' => 'notes#favorite',
 		'url' => '/notes/{id}/favorite',
 		'verb' => 'PUT',

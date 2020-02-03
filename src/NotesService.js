@@ -77,6 +77,19 @@ export const fetchNote = noteId => {
 		})
 }
 
+export const setTitle = (noteId, title) => {
+	return axios
+		.put(url('/notes/' + noteId + '/title'), { title: title })
+		.then(response => {
+			store.commit('setNoteAttribute', { noteId: noteId, attribute: 'title', value: response.data })
+		})
+		.catch(err => {
+			console.error(err)
+			handleSyncError(t('notes', 'Renaming note {id} has failed.', { id: noteId }))
+			throw err
+		})
+}
+
 export const createNote = category => {
 	return axios
 		.post(url('/notes'), { category: category })

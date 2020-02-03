@@ -67,7 +67,7 @@ class NoteUtil {
 		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
 	}
 
-	public function moveNote(Folder $notesFolder, File $file, $category, string $title) : void {
+	public function moveNote(Folder $notesFolder, File $file, string $title, ?string $category = null) : void {
 		$id = $file->getId();
 		$currentFilePath = $this->root->getFullPath($file->getPath());
 		$currentBasePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
@@ -229,7 +229,7 @@ class NoteUtil {
 	 * @param int $requiredBytes amount of storage needed in $folder
 	 * @throws InsufficientStorageException
 	 */
-	public function ensureSufficientStorage(Folder $folder, $requiredBytes) : void {
+	public function ensureSufficientStorage(Folder $folder, int $requiredBytes) : void {
 		$availableBytes = $folder->getFreeSpace();
 		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
 			$this->logger->error(
