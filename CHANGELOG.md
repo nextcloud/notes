@@ -15,6 +15,20 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.1.2 - 2020-02-03
+
+### Added
+- support for Nextcloud 19 (#439)
+- API: send HTTP 507 if storage is insufficient (#438/#449)
+
+### Fixed
+- fix wrapping in a note's code elements (#447)
+- fix link-color in preview mode (#448)
+- improved error handling (#449)
+- improve error handling if notes path fails (#450)
+- dependency updates (#441, #452)
+
+
 ## 3.1.1 - 2020-01-03
 
 ### Fixed
