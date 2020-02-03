@@ -5,16 +5,22 @@
 		:menu-open.sync="actionsOpen"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:class="{ actionsOpen }"
+		:loading="loading.note"
+		:editable="true"
+		:edit-label="t('notes', 'Rename')"
+		:edit-placeholder="t('notes', 'Note\'s title')"
+		@update:title="onRename"
 	>
 		<template #actions>
 			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</ActionButton>
-			<ActionButton icon="icon-files-dark" @click="onCategorySelected">
-				{{ actionCategoryText }}
-			</ActionButton>
 			<ActionButton :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
+			</ActionButton>
+			<ActionSeparator />
+			<ActionButton icon="icon-files-dark" @click="onCategorySelected">
+				{{ actionCategoryText }}
 			</ActionButton>
 		</template>
 	</AppNavigationItem>
@@ -23,17 +29,19 @@
 <script>
 import {
 	ActionButton,
+	ActionSeparator,
 	AppNavigationItem,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 
-import { categoryLabel, setFavorite, fetchNote, deleteNote } from '../NotesService'
+import { categoryLabel, setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService'
 
 export default {
 	name: 'NavigationNoteItem',
 
 	components: {
 		ActionButton,
+		ActionSeparator,
 		AppNavigationItem,
 	},
 
@@ -47,6 +55,7 @@ export default {
 	data: function() {
 		return {
 			loading: {
+				note: false,
 				favorite: false,
 				delete: false,
 			},
@@ -105,6 +114,16 @@ export default {
 		onCategorySelected() {
 			this.actionsOpen = false
 			this.$emit('category-selected', this.note.category)
+		},
+
+		onRename(newTitle) {
+			this.loading.note = true
+			setTitle(this.note.id, newTitle)
+				.catch(() => {
+				})
+				.finally(() => {
+					this.loading.note = false
+				})
 		},
 
 		onDeleteNote() {

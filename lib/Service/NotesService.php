@@ -65,7 +65,7 @@ class NotesService {
 	 * @param string $userId
 	 * @return array with all notes in the current directory
 	 */
-	public function getAll($userId, $onlyMeta = false) {
+	public function getAll(string $userId, bool $onlyMeta = false) {
 		$notesFolder = $this->getFolderForUser($userId);
 		$notes = $this->noteUtil->gatherNoteFiles($notesFolder);
 		$filesById = [];
@@ -91,17 +91,17 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return Note
 	 */
-	public function get($id, $userId, $onlyMeta = false) : Note {
+	public function get(int $id, string $userId, bool $onlyMeta = false) : Note {
 		$folder = $this->getFolderForUser($userId);
 		return $this->getNote($this->getFileById($folder, $id), $folder, $this->getTags($id), $onlyMeta);
 	}
 
-	private function getTags($id) {
+	private function getTags(int $id) {
 		$tags = $this->tags->getTagsForObjects([$id]);
 		return is_array($tags) && array_key_exists($id, $tags) ? $tags[$id] : [];
 	}
 
-	private function getNote(File $file, Folder $notesFolder, $tags = [], $onlyMeta = false) : Note {
+	private function getNote(File $file, Folder $notesFolder, array $tags = [], bool $onlyMeta = false) : Note {
 		$id = $file->getId();
 		try {
 			$note = Note::fromFile($file, $notesFolder, $tags, $onlyMeta);
@@ -122,7 +122,7 @@ class NotesService {
 	 * @see update for setting note content
 	 * @return Note the newly created note
 	 */
-	public function create($userId) : Note {
+	public function create(string $userId) : Note {
 		$title = $this->l10n->t('New note');
 		$folder = $this->getFolderForUser($userId);
 		$this->noteUtil->ensureSufficientStorage($folder, 1);
@@ -160,7 +160,7 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return \OCA\Notes\Db\Note the updated note
 	 */
-	public function update($id, $content, $userId, $category = null, $mtime = 0) : Note {
+	public function update(int $id, ?string $content, string $userId, ?string $category = null, int $mtime = 0) : Note {
 		$notesFolder = $this->getFolderForUser($userId);
 		$file = $this->getFileById($notesFolder, $id);
 		$title = $this->noteUtil->getSafeTitleFromContent($content===null ? $file->getContent() : $content);
@@ -168,9 +168,9 @@ class NotesService {
 		// rename/move file with respect to title/category
 		// this can fail if access rights are not sufficient or category name is illegal
 		try {
-			$this->noteUtil->moveNote($notesFolder, $file, $category, $title);
+			$this->noteUtil->moveNote($notesFolder, $file, $title, $category);
 		} catch (\OCP\Files\NotPermittedException $e) {
-			$err = 'Moving note '.$id.' ('.$title.') to the desired target is not allowed.'
+			$err = 'Moving note '.$file->getId().' ('.$title.') to the desired target is not allowed.'
 				.' Please check the note\'s target category ('.$category.').';
 			$this->logger->error($err, ['app' => $this->appName]);
 		} catch (\Exception $e) {
@@ -180,13 +180,36 @@ class NotesService {
 		}
 
 		if ($content !== null) {
-			$this->noteUtil->ensureSufficientStorage($file->getParent(), strlen($content));
-			$file->putContent($content);
+			$this->setContentForFile($file, $content);
 		}
 
 		if ($mtime) {
 			$file->touch($mtime);
 		}
+
+		return $this->getNote($file, $notesFolder, $this->getTags($id));
+	}
+
+	private function setContentForFile(File $file, $content) : void {
+		$this->noteUtil->ensureSufficientStorage($file->getParent(), strlen($content));
+		$file->putContent($content);
+	}
+
+	public function setContent(string $userId, int $id, string $content) : Note {
+		$notesFolder = $this->getFolderForUser($userId);
+		$file = $this->getFileById($notesFolder, $id);
+		$this->setContentForFile($file, $content);
+		return $this->getNote($file, $notesFolder, $this->getTags($id));
+	}
+
+	public function setTitleCategory(string $userId, int $id, ?string $title, ?string $category = null) : Note {
+		$notesFolder = $this->getFolderForUser($userId);
+		$file = $this->getFileById($notesFolder, $id);
+		if ($title === null) {
+			$note = $this->getNote($file, $notesFolder, [], true);
+			$title = $note->getTitle();
+		}
+		$this->noteUtil->moveNote($notesFolder, $file, $title, $category);
 
 		return $this->getNote($file, $notesFolder, $this->getTags($id));
 	}
@@ -198,7 +221,7 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not exist
 	 * @return boolean the new favorite state of the note
 	 */
-	public function favorite($id, $favorite, $userId) {
+	public function favorite(int $id, bool $favorite, string $userId) {
 		$note = $this->get($id, $userId, true);
 		if ($favorite !== $note->getFavorite()) {
 			if ($favorite) {
@@ -219,7 +242,7 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not
 	 * exist
 	 */
-	public function delete($id, $userId) {
+	public function delete(int $id, string $userId) {
 		$notesFolder = $this->getFolderForUser($userId);
 		$file = $this->getFileById($notesFolder, $id);
 		$parent = $file->getParent();
@@ -233,7 +256,7 @@ class NotesService {
 	 * @throws NoteDoesNotExistException
 	 * @return \OCP\Files\File
 	 */
-	private function getFileById(Folder $folder, $id) : File {
+	private function getFileById(Folder $folder, int $id) : File {
 		$file = $folder->getById($id);
 
 		if (count($file) <= 0 || !($file[0] instanceof File) || !$this->noteUtil->isNote($file[0])) {
@@ -246,7 +269,7 @@ class NotesService {
 	 * @param string $userId the user id
 	 * @return Folder
 	 */
-	private function getFolderForUser($userId) : Folder {
+	private function getFolderForUser(string $userId) : Folder {
 		// TODO use IRootFolder->getUserFolder()  ?
 		$path = '/' . $userId . '/files/' . $this->settings->get($userId, 'notesPath');
 		try {
