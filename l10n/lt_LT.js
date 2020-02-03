@@ -47,6 +47,7 @@ OC.L10N.register(
     "iOS app" : "iOS programėlė",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Galite sukurti subkategorijas, naudodami \"/\" kaip skirtuką tarp viršesnės kategorijos ir subkategorijos, pvz., “{parent}/{sub}”.",
     "See JavaScript console for details." : "Išsamesnei informacijai, žiūrėkite JavaScript pultą.",
-    "Updating settings has failed." : "Nepavyko atnaujinti nustatymų."
+    "Updating settings has failed." : "Nepavyko atnaujinti nustatymų.",
+    "Development Mode" : "Plėtotojo veiksena"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
