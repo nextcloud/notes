@@ -53,7 +53,9 @@
     "iOS app" : "iOS-app",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Böja skriva en anteckning genom att klicka på “{newnote}” i menyn.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Du kan skapa underkategorier genom att använda “/” som avgränsare mellan överordnad kategori och underkategori, t.ex. “{parent}/{sub}”.",
+    "Please chose a valid path in {label} (bottom left corner)." : "Välj en giltig sökväg i {label} (nedre vänstra hörnet).",
     "See JavaScript console for details." : "Se JavaScript-konsolen för mer information.",
+    "Saving the note has failed due to insufficient storage." : "Kunde inte spara anteckningen på grund av otillräckligt lagringsutrymme.",
     "Updating settings has failed." : "Kunde inte uppdatera inställningar. ",
     "Fetching notes has failed." : "Kunde inte hämta anteckningar.",
     "Fetching note {id} has failed." : "Hämtning av anteckning {id} misslyckades.",
@@ -63,6 +65,7 @@
     "Toggling favorite for note {id} has failed." : "Växling av favorit för anteckning {id} misslyckades.",
     "Updating the note's category has failed. Is the target directory writable?" : "Uppdatering av anteckningens kategori misslyckades. Är målmappen skrivbar?",
     "Updating the category for note {id} has failed." : "Uppdatering av kategori för anteckning {id} misslyckades.",
-    "Development Mode" : "Utvecklingsläge"
+    "Development Mode" : "Utvecklingsläge",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Det ser ut som att anteckningsappen installerades från en utvecklingskälla. Installera från den officiella <a href=\"%1$s\">Nextcloud App-Store</a> istället. Om du vill bygga Notes-appen själv, följ <a href=\"%2$s\">utvecklarinstruktionerna</a>."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
