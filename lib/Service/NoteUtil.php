@@ -217,4 +217,18 @@ class NoteUtil {
 			$this->deleteEmptyFolder($notesFolder, $parent);
 		}
 	}
+
+	/**
+	 * Checks if there is enough space left on storage. Throws an Exception if storage is not sufficient.
+	 * @param File file that needs storage
+	 * @throws InsufficientStorageException
+	 */
+	public function ensureSufficientStorage(File $file, $requiredBytes) : void {
+		$folder = $file->getParent();
+		$availableBytes = $folder->getFreeSpace();
+		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
+			$this->logger->error('Insufficient storage in '.$folder->getPath().': available are '.$availableBytes.'; required are '.$requiredBytes, ['app' => $this->appName]);
+			throw new InsufficientStorageException($requiredBytes.' are required in '.$folder->getPath());
+		}
+	}
 }
