@@ -15,6 +15,15 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.1.3 - 2020-02-05
+
+### Changed
+- API: send HTTP 404 if note is not found (#457)
+
+### Fixed
+- fix InsufficientStorageException on unknown free space (#456)
+
+
 ## 3.1.2 - 2020-02-03
 
 ### Added
