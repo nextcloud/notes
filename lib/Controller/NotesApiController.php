@@ -11,6 +11,7 @@ use OCP\IUserSession;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\InsufficientStorageException;
+use OCA\Notes\Service\NoteDoesNotExistException;
 use OCA\Notes\Db\Note;
 
 /**
@@ -113,10 +114,14 @@ class NotesApiController extends ApiController {
 	 * @return DataResponse
 	 */
 	public function get($id, $exclude = '') {
-		$exclude = explode(',', $exclude);
-		$note = $this->service->get($id, $this->getUID());
-		$note = $this->excludeFields($note, $exclude);
-		return new DataResponse($note);
+		try {
+			$exclude = explode(',', $exclude);
+			$note = $this->service->get($id, $this->getUID());
+			$note = $this->excludeFields($note, $exclude);
+			return new DataResponse($note);
+		} catch (NoteDoesNotExistException $e) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
 	}
 
 
@@ -164,6 +169,8 @@ class NotesApiController extends ApiController {
 		try {
 			$note = $this->updateData($id, $content, $category, $modified, $favorite);
 			return new DataResponse($note);
+		} catch (NoteDoesNotExistException $e) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (InsufficientStorageException $e) {
 			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
 		}
@@ -197,7 +204,11 @@ class NotesApiController extends ApiController {
 	 * @return DataResponse
 	 */
 	public function destroy($id) {
-		$this->service->delete($id, $this->getUID());
-		return new DataResponse([]);
+		try {
+			$this->service->delete($id, $this->getUID());
+			return new DataResponse([]);
+		} catch (NoteDoesNotExistException $e) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
 	}
 }
