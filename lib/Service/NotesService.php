@@ -126,7 +126,7 @@ class NotesService {
 	public function create($userId) : Note {
 		$title = $this->l10n->t('New note');
 		$folder = $this->getFolderForUser($userId);
-		$this->noteUtil->ensureSufficientStorage($file, 1);
+		$this->noteUtil->ensureSufficientStorage($folder, 1);
 
 		// check new note exists already and we need to number it
 		// pass -1 because no file has id -1 and that will ensure
@@ -181,7 +181,7 @@ class NotesService {
 		}
 
 		if ($content !== null) {
-			$this->noteUtil->ensureSufficientStorage($file, strlen($content));
+			$this->noteUtil->ensureSufficientStorage($file->getParent(), strlen($content));
 			$file->putContent($content);
 		}
 

@@ -223,8 +223,7 @@ class NoteUtil {
 	 * @param File file that needs storage
 	 * @throws InsufficientStorageException
 	 */
-	public function ensureSufficientStorage(File $file, $requiredBytes) : void {
-		$folder = $file->getParent();
+	public function ensureSufficientStorage(Folder $folder, $requiredBytes) : void {
 		$availableBytes = $folder->getFreeSpace();
 		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
 			$this->logger->error('Insufficient storage in '.$folder->getPath().': available are '.$availableBytes.'; required are '.$requiredBytes, ['app' => $this->appName]);
