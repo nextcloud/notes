@@ -126,13 +126,13 @@ class NotesService {
 	public function create($userId) : Note {
 		$title = $this->l10n->t('New note');
 		$folder = $this->getFolderForUser($userId);
-		$this->noteUtil->ensureSufficientStorage($file, 1);
 
 		// check new note exists already and we need to number it
 		// pass -1 because no file has id -1 and that will ensure
 		// to only return filenames that dont yet exist
 		$path = $this->noteUtil->generateFileName($folder, $title, $this->settings->get($userId, 'fileSuffix'), -1);
 		$file = $folder->newFile($path);
+		$this->noteUtil->ensureSufficientStorage($file, 1);
 
 		// try to write some content
 		try {
