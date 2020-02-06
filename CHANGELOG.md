@@ -15,6 +15,12 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.1.4 - 2020-02-06
+
+### Fixed
+- fix regression for v3.1.3 (#459)
+
+
 ## 3.1.3 - 2020-02-05
 
 ### Changed
