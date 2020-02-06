@@ -2,7 +2,6 @@
 
 namespace OCA\Notes\Service;
 
-use OCA\Notes\Db\Note;
 use OCA\Notes\Db\Meta;
 use OCA\Notes\Db\MetaMapper;
 

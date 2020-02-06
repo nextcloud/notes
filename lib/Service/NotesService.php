@@ -4,7 +4,6 @@ namespace OCA\Notes\Service;
 
 use OCP\Encryption\Exceptions\GenericEncryptionException;
 use OCP\Files\File;
-use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\IConfig;
