@@ -2,14 +2,7 @@
 
 namespace OCA\Notes\Service;
 
-use OCP\AppFramework\Controller;
-
 use OCP\IConfig;
-use OCP\IRequest;
-use OCP\IUserManager;
-use OCP\IUserSession;
-use OCP\Files\IRootFolder;
-use OCP\AppFramework\Http\JSONResponse;
 
 class SettingsService {
 

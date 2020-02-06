@@ -38,6 +38,8 @@ class Note extends Entity {
 	public $error = false;
 	public $errorMessage='';
 
+	private const TAG_FAVORITE = \OC\Tags::TAG_FAVORITE; // @phan-suppress-current-line PhanUndeclaredClassConstant
+
 	public function __construct() {
 		$this->addType('modified', 'integer');
 		$this->addType('favorite', 'boolean');
@@ -54,7 +56,6 @@ class Note extends Entity {
 			$fileContent=$file->getContent();
 			$note->setContent(self::convertEncoding($fileContent));
 		}
-		$note->setModified($file->getMTime());
 		if (!$onlyMeta) {
 			$note->updateETag();
 		}
@@ -72,7 +73,6 @@ class Note extends Entity {
 		$note->setErrorMessage($message);
 		$note->setError(true);
 		$note->setContent($message);
-		$note->setModified(null);
 		$note->resetUpdatedFields();
 		return $note;
 	}
@@ -87,11 +87,12 @@ class Note extends Entity {
 	private function initCommonBaseFields(File $file, Folder $notesFolder, $tags) {
 		$this->setId($file->getId());
 		$this->setTitle(pathinfo($file->getName(), PATHINFO_FILENAME)); // remove extension
+		$this->setModified($file->getMTime());
 		$subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
 		$this->setCategory($subdir ? $subdir : '');
-		if (is_array($tags) && in_array(\OC\Tags::TAG_FAVORITE, $tags)) {
+		if (is_array($tags) && in_array(self::TAG_FAVORITE, $tags)) {
 			$this->setFavorite(true);
-			//unset($tags[array_search(\OC\Tags::TAG_FAVORITE, $tags)]);
+			//unset($tags[array_search(self::TAG_FAVORITE, $tags)]);
 		}
 	}
 

@@ -111,7 +111,7 @@ class NotesController extends Controller {
 			$this->userId,
 			$this->appName,
 			'notesLastViewedNote',
-			$id
+			strval($id)
 		);
 
 		$note = $this->notesService->get($id, $this->userId);
@@ -180,7 +180,7 @@ class NotesController extends Controller {
 	 */
 	public function favorite($id, $favorite) {
 		$result = $this->notesService->favorite($id, $favorite, $this->userId);
-		return new DataResponse($result);
+		return new DataResponse($result); // @phan-suppress-current-line PhanTypeMismatchArgument
 	}
 
 

@@ -2,35 +2,37 @@
 
 namespace OCA\Notes\Service;
 
+use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\ILogger;
-use OCP\Encryption\Exceptions\GenericEncryptionException;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
 use OCP\Files\File;
 use OCP\Files\Folder;
 
-use OCA\Notes\Db\Note;
-
 class NoteUtil {
 
+	private $db;
 	private $l10n;
 	private $root;
 	private $logger;
 	private $appName;
 
 	/**
+	 * @param IDBConnection $db
 	 * @param IRootFolder $root
 	 * @param IL10N $l10n
 	 * @param ILogger $logger
 	 * @param String $appName
 	 */
 	public function __construct(
+		IDBConnection $db,
 		IRootFolder $root,
 		IL10N $l10n,
 		ILogger $logger,
 		$appName
 	) {
+		$this->db = $db;
 		$this->root = $root;
 		$this->l10n = $l10n;
 		$this->logger = $logger;
@@ -44,7 +46,7 @@ class NoteUtil {
 		$notes = [];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
-			if ($node->getType() === FileInfo::TYPE_FOLDER) {
+			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
 				$notes = array_merge($notes, $this->gatherNoteFiles($node));
 				continue;
 			}
@@ -59,7 +61,7 @@ class NoteUtil {
 	/**
 	 * test if file is a note
 	 */
-	public function isNote(File $file) : bool {
+	public function isNote(FileInfo $file) : bool {
 		$allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
 		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
 		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
@@ -96,7 +98,10 @@ class NoteUtil {
 			$file->move($newFilePath);
 		}
 		if ($currentBasePath !== $basePath) {
-			$this->deleteEmptyFolder($notesFolder, $this->root->get($currentBasePath));
+			$fileBasePath = $this->root->get($currentBasePath);
+			if ($fileBasePath instanceof Folder) {
+				$this->deleteEmptyFolder($notesFolder, $fileBasePath);
+			}
 		}
 	}
 
@@ -171,7 +176,7 @@ class NoteUtil {
 
 		// if mysql doesn't support 4byte UTF-8, then remove those characters
 		// see \OC\Files\Storage\Common::verifyPath(...)
-		if (!\OC::$server->getDatabaseConnection()->supports4ByteText()) {
+		if (!$this->db->supports4ByteText()) {
 			$str = preg_replace('%(?:
                 \xF0[\x90-\xBF][\x80-\xBF]{2}      # planes 1-3
               | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
