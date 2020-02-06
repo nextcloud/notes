@@ -28,7 +28,7 @@ Before reporting bugs:
 
 ## :warning: Developer Info
 
-[![build state](https://travis-ci.org/nextcloud/notes.png)](https://travis-ci.org/nextcloud/notes)
+[![Lint](https://github.com/nextcloud/notes/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/nextcloud/notes/actions?query=workflow%3ALint+event%3Apush+branch%3Amaster)
 
 **Building the app**
 
