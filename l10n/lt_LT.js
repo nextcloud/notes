@@ -36,7 +36,7 @@ OC.L10N.register(
     "Save failed. Click to retry." : "Nepavyko įrašyti. Spustelėkite, norėdami bandyti dar kartą.",
     "Set category" : "Nustatyti kategoriją",
     "Category" : "Kategorija",
-    "Uncategorized" : "Nekategorizuotas",
+    "Uncategorized" : "Nekategorizuoti",
     "Click here to save manually" : "Spustelėkite čia norėdami įrašyti rankiniu būdu",
     "Saving failed!" : "Įrašymas nepavyko!",
     "Last modified: {date}" : "Paskutinis modifikavimas: {date}",
