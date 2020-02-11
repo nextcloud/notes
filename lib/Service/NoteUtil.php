@@ -67,7 +67,7 @@ class NoteUtil {
 		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
 	}
 
-	public function moveNote(Folder $notesFolder, File $file, $category, string $title) {
+	public function moveNote(Folder $notesFolder, File $file, $category, string $title) : void {
 		$id = $file->getId();
 		$currentFilePath = $this->root->getFullPath($file->getPath());
 		$currentBasePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
@@ -211,7 +211,7 @@ class NoteUtil {
 	 * @param Folder root folder for notes
 	 * @param Folder folder to delete
 	 */
-	public function deleteEmptyFolder(Folder $notesFolder, Folder $folder) {
+	public function deleteEmptyFolder(Folder $notesFolder, Folder $folder) : void {
 		$content = $folder->getDirectoryListing();
 		$isEmpty = !count($content);
 		$isNotesFolder = $folder->getPath()===$notesFolder->getPath();
@@ -225,7 +225,7 @@ class NoteUtil {
 
 	/**
 	 * Checks if there is enough space left on storage. Throws an Exception if storage is not sufficient.
-	 * @param File file that needs storage
+	 * @param Folder folder that needs storage
 	 * @throws InsufficientStorageException
 	 */
 	public function ensureSufficientStorage(Folder $folder, $requiredBytes) : void {
