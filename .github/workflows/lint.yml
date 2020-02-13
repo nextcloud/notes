@@ -33,6 +33,8 @@ jobs:
       uses: actions/checkout@master
     - name: Setup xmllint
       run: sudo apt-get install --no-install-recommends -y libxml2-utils
+    - name: Setup xmllint problem matcher
+      uses: korelstar/xmllint-problem-matcher@master
     - name: lint XML
       run: make lint-xml
 
