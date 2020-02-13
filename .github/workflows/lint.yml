@@ -45,7 +45,7 @@ jobs:
         version: [min, max]
         include:
           - version: min
-            php-version: 7.0
+            php-version: 7.1
           - version: max
             php-version: 7.4
     steps:
@@ -60,5 +60,7 @@ jobs:
     - name: Install latest Nextcloud API (dev-master)
       if: matrix.version == 'max'
       run: composer require --dev christophwurst/nextcloud:dev-master
+    - name: Load problem matcher for php -l
+      uses: korelstar/phplint-problem-matcher@master
     - name: lint PHP
-      run: make lint-php
+      run: make -k lint-php
