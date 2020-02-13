@@ -40,12 +40,25 @@ jobs:
 
   lint-php:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [min, max]
+        include:
+          - version: min
+            php-version: 7.0
+          - version: max
+            php-version: 7.4
     steps:
     - name: Checkout
       uses: actions/checkout@master
     - name: Set up php${{ matrix.php-versions }}
-      uses: shivammathur/setup-php@master
+      uses: shivammathur/setup-php@v1
+      with:
+        php-version: ${{ matrix.php-version }}
     - name: Install Dependencies
       run: composer install --prefer-dist
+    - name: Install latest Nextcloud API (dev-master)
+      if: matrix.version == 'max'
+      run: composer require --dev christophwurst/nextcloud:dev-master
     - name: lint PHP
       run: make lint-php
