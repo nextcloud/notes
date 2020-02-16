@@ -99,7 +99,7 @@ exit($exit);
 function annotateCheck($type, $filename, $line, $message, $colorize=false)
 {
     if ($colorize) {
-        echo "\033[".($type==='error' ? '91' : '93')."m";
+        echo "\033[".($type==='error' ? '91' : '93')."m\n";
     }
     echo "::{$type} file={$filename},line={$line}::{$message}\n";
     if ($colorize) {
