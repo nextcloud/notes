@@ -27,7 +27,8 @@ import {
 	ActionButton,
 	AppNavigationItem,
 } from '@nextcloud/vue'
-import NotesService from '../NotesService'
+
+import { categoryLabel, setFavorite, prepareDeleteNote, undoDeleteNote, deleteNote } from '../NotesService'
 
 export default {
 	name: 'NavigationNoteItem',
@@ -91,7 +92,7 @@ export default {
 		},
 
 		actionCategoryText() {
-			return NotesService.categoryLabel(this.note.category)
+			return categoryLabel(this.note.category)
 		},
 
 		actionDeleteIcon() {
@@ -102,10 +103,10 @@ export default {
 	methods: {
 		onToggleFavorite() {
 			this.loading.favorite = true
-			NotesService.setFavorite(this.note.id, !this.note.favorite)
+			setFavorite(this.note.id, !this.note.favorite)
 				.catch(() => {
 				})
-				.finally(() => {
+				.then(() => {
 					this.loading.favorite = false
 					this.actionsOpen = false
 				})
@@ -118,24 +119,24 @@ export default {
 
 		onDeleteNote() {
 			this.actionsOpen = false
-			NotesService.prepareDeleteNote(this.note.id)
+			prepareDeleteNote(this.note.id)
 			this.undoTimer = setTimeout(this.onDeleteNoteFinally, 7000)
 			this.$emit('note-deleted')
 		},
 
 		onUndoDeleteNote() {
 			clearTimeout(this.undoTimer)
-			NotesService.undoDeleteNote(this.note.id)
+			undoDeleteNote(this.note.id)
 		},
 
 		onDeleteNoteFinally() {
 			this.loading.delete = true
-			NotesService.deleteNote(this.note.id)
+			deleteNote(this.note.id)
 				.then(() => {
 				})
 				.catch(() => {
 				})
-				.finally(() => {
+				.then(() => {
 					this.loading.delete = false
 				})
 		},

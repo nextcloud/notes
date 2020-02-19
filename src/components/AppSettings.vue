@@ -31,7 +31,8 @@
 import {
 	AppNavigationSettings,
 } from '@nextcloud/vue'
-import NotesService from '../NotesService'
+
+import { setSettings } from '../NotesService'
 import store from '../store'
 
 export default {
@@ -60,10 +61,10 @@ export default {
 	methods: {
 		onChangeSettings() {
 			this.saving = true
-			return NotesService.setSettings(this.settings)
+			return setSettings(this.settings)
 				.catch(() => {
 				})
-				.finally(() => {
+				.then(() => {
 					this.saving = false
 				})
 		},

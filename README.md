@@ -22,8 +22,8 @@ Before reporting bugs:
 
 ## :busts_in_silhouette: Maintainers
 - [Kristof Hamann](https://github.com/korelstar)
-- [Hendrik Leppelsack](https://github.com/Henni)
-- [Lukas Reschke](https://github.com/LukasReschke)
+- [Hendrik Leppelsack](https://github.com/Henni) (formerly)
+- [Lukas Reschke](https://github.com/LukasReschke) (formerly)
 
 
 ## :warning: Developer Info

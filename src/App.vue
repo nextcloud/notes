@@ -40,11 +40,12 @@ import {
 	AppNavigationNew,
 	Content,
 } from '@nextcloud/vue'
+
+import { fetchNotes, noteExists, createNote } from './NotesService'
+import { openNavbar } from './nextcloud'
 import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
-import NotesService from './NotesService'
 import store from './store'
-import { openNavbar } from './nextcloud'
 
 export default {
 	name: 'App',
@@ -128,7 +129,7 @@ export default {
 	methods: {
 		loadNotes() {
 			this.loading.notes = true
-			NotesService.fetchNotes()
+			fetchNotes()
 				.then(data => {
 					if (data.notes !== null) {
 						this.error = false
@@ -140,7 +141,7 @@ export default {
 				.catch(() => {
 					this.error = true
 				})
-				.finally(() => {
+				.then(() => {
 					this.loading.notes = false
 				})
 		},
@@ -154,8 +155,8 @@ export default {
 		},
 
 		routeDefault(defaultNoteId) {
-			if (this.$route.name !== 'note' || !NotesService.noteExists(this.$route.params.noteId)) {
-				if (NotesService.noteExists(defaultNoteId)) {
+			if (this.$route.name !== 'note' || !noteExists(this.$route.params.noteId)) {
+				if (noteExists(defaultNoteId)) {
 					this.routeToNote(defaultNoteId)
 				} else {
 					this.routeFirst()
@@ -194,13 +195,13 @@ export default {
 				return
 			}
 			this.loading.create = true
-			NotesService.createNote(this.filter.category)
+			createNote(this.filter.category)
 				.then(note => {
 					this.routeToNote(note.id)
 				})
 				.catch(() => {
 				})
-				.finally(() => {
+				.then(() => {
 					this.loading.create = false
 				})
 		},

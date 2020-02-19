@@ -14,9 +14,7 @@ appstore: clean lint build-js-production
 	rsync -a \
 	--exclude=.babelrc.js \
 	--exclude=build \
-	--exclude=composer.json \
-	--exclude=composer.lock \
-	--exclude=composer.phar \
+	--exclude=composer.* \
 	--exclude=CONTRIBUTING.md \
 	--exclude=.editorconfig \
 	--exclude=.eslintrc.js \
@@ -27,7 +25,6 @@ appstore: clean lint build-js-production
 	--exclude=Makefile \
 	--exclude=node_modules \
 	--exclude=package*.json \
-	--exclude=phpcs.xml \
 	--exclude=phpunit*xml \
 	--exclude=.scrutinizer.yml \
 	--exclude=src \
@@ -108,11 +105,11 @@ lint-php-ncversion:
 
 lint-php-phan:
 	# PHAN
-	vendor/bin/phan --allow-polyfill-parser -k .phan/config.php --no-progress-bar -m checkstyle | vendor/bin/cs2pr
+	vendor/bin/phan --allow-polyfill-parser -k tests/phan-config.php --no-progress-bar -m checkstyle | vendor/bin/cs2pr
 
 lint-php-phpcs:
 	# PHP CodeSniffer
-	vendor/bin/phpcs --standard=phpcs.xml appinfo/ lib/ --report=checkstyle | vendor/bin/cs2pr
+	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ --report=checkstyle | vendor/bin/cs2pr
 
 
 lint-js:
