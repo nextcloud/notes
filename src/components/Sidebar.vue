@@ -59,6 +59,7 @@ import {
 	Multiselect,
 	Tooltip,
 } from '@nextcloud/vue'
+import moment from '@nextcloud/moment'
 
 import { categoryLabel, getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
 import store from '../store'
@@ -107,7 +108,7 @@ export default {
 			return this.note ? this.note.category : ''
 		},
 		formattedDate() {
-			return OC.Util.formatDate(this.note.modified * 1000)
+			return moment(this.note.modified * 1000).format('LLL')
 		},
 		wordCount() {
 			const value = this.note.content
