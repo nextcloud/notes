@@ -59,7 +59,8 @@ import {
 	Multiselect,
 	Tooltip,
 } from '@nextcloud/vue'
-import NotesService from '../NotesService'
+
+import { categoryLabel, getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
 import store from '../store'
 
 export default {
@@ -77,7 +78,7 @@ export default {
 	filters: {
 		categoryOptionLabel: function(obj) {
 			const category = obj.isTag ? obj.label : obj
-			return NotesService.categoryLabel(category)
+			return categoryLabel(category)
 		},
 	},
 
@@ -128,7 +129,7 @@ export default {
 			return t('notes', 'You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”.', { parent: t('notes', 'Category'), sub: t('notes', 'Subcategory') })
 		},
 		categories() {
-			return [ '', ...NotesService.getCategories(0, false) ]
+			return [ '', ...getCategories(0, false) ]
 		},
 		sidebarOpen() {
 			return store.state.sidebarOpen
@@ -152,10 +153,10 @@ export default {
 
 		onSetFavorite(favorite) {
 			this.loading.favorite = true
-			NotesService.setFavorite(this.note.id, favorite)
+			setFavorite(this.note.id, favorite)
 				.catch(() => {
 				})
-				.finally(() => {
+				.then(() => {
 					this.loading.favorite = false
 				})
 		},
@@ -165,17 +166,17 @@ export default {
 			if (category !== null && this.note.category !== category) {
 				this.loading.category = true
 				this.note.category = category
-				NotesService.setCategory(this.note.id, category)
+				setCategory(this.note.id, category)
 					.catch(() => {
 					})
-					.finally(() => {
+					.then(() => {
 						this.loading.category = false
 					})
 			}
 		},
 
 		onManualSave() {
-			NotesService.saveNoteManually(this.note.id)
+			saveNoteManually(this.note.id)
 		},
 
 	},

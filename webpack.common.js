@@ -12,26 +12,27 @@ module.exports = {
 		rules: [
 			{
 				test: /\.css$/,
-				use: ['vue-style-loader', 'css-loader']
+				use: ['vue-style-loader', 'css-loader'],
 			},
 			{
 				test: /\.scss$/,
-				use: ['vue-style-loader', 'css-loader', 'sass-loader']
+				use: ['vue-style-loader', 'css-loader', 'sass-loader'],
 			},
 			{
 				test: /\.vue$/,
-				loader: 'vue-loader'
+				loader: 'vue-loader',
 			},
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(png|jpg|gif|svg)$/,
-				loader: 'file-loader',
+				loader: 'url-loader',
 				options: {
-					name: '[name].[ext]?[hash]'
+					name: '[name].[ext]?[hash]',
+					limit: 8192,
 				}
 			},
 		],
@@ -41,5 +42,6 @@ module.exports = {
 	],
 	resolve: {
 		extensions: ['*', '.js', '.vue', '.json'],
+		symlinks: false,
 	},
 }

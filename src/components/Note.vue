@@ -57,11 +57,12 @@ import {
 	AppContent,
 	Tooltip,
 } from '@nextcloud/vue'
+
+import { fetchNote, saveNote, saveNoteManually } from '../NotesService'
+import { closeNavbar } from '../nextcloud'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
-import NotesService from '../NotesService'
 import store from '../store'
-import { closeNavbar } from '../nextcloud'
 
 export default {
 	name: 'Note',
@@ -137,7 +138,7 @@ export default {
 			this.onUpdateTitle(this.title)
 			this.loading = true
 			this.preview = false
-			NotesService.fetchNote(this.noteId)
+			fetchNote(this.noteId)
 				.then((note) => {
 					if (note.errorMessage) {
 						OC.Notification.showTemporary(note.errorMessage)
@@ -146,7 +147,7 @@ export default {
 				.catch(() => {
 					// note not found
 				})
-				.finally(() => {
+				.then(() => {
 					this.loading = false
 				})
 		},
@@ -213,7 +214,7 @@ export default {
 					unsaved: true,
 				}
 				store.commit('add', note)
-				setTimeout(NotesService.saveNote.bind(NotesService, note.id), 1000)
+				setTimeout(saveNote.bind(this, note.id), 1000)
 			}
 		},
 
@@ -229,7 +230,7 @@ export default {
 		},
 
 		onManualSave() {
-			NotesService.saveNoteManually(this.note.id)
+			saveNoteManually(this.note.id)
 		},
 	},
 }

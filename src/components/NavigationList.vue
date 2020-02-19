@@ -59,9 +59,10 @@ import {
 	AppNavigationCaption,
 	AppNavigationItem,
 } from '@nextcloud/vue'
+
+import { categoryLabel } from '../NotesService'
 import NavigationCategoriesItem from './NavigationCategoriesItem'
 import NavigationNoteItem from './NavigationNoteItem'
-import NotesService from '../NotesService'
 import store from '../store'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
@@ -176,11 +177,11 @@ export default {
 		},
 
 		categoryTitle(category) {
-			return NotesService.categoryLabel(category)
+			return categoryLabel(category)
 		},
 
 		categoryToLabel(category) {
-			return NotesService.categoryLabel(category.substring(this.category.length + 1))
+			return categoryLabel(category.substring(this.category.length + 1))
 		},
 
 		getTimeslotFromNote(note) {

@@ -38,7 +38,9 @@ import {
 	AppNavigationItem,
 	AppNavigationCounter,
 } from '@nextcloud/vue'
-import NotesService from '../NotesService'
+
+import { getCategories, categoryLabel } from '../NotesService'
+
 import store from '../store'
 
 export default {
@@ -68,17 +70,17 @@ export default {
 		},
 
 		categories() {
-			return NotesService.getCategories(1, true)
+			return getCategories(1, true)
 		},
 
 		title() {
-			return this.selectedCategory === null ? this.t('notes', 'Categories') : NotesService.categoryLabel(this.selectedCategory)
+			return this.selectedCategory === null ? this.t('notes', 'Categories') : categoryLabel(this.selectedCategory)
 		},
 	},
 
 	methods: {
 		categoryTitle(category) {
-			return NotesService.categoryLabel(category)
+			return categoryLabel(category)
 		},
 
 		onToggleCategories() {
