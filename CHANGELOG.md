@@ -15,6 +15,12 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.1.5 - 2020-02-12
+
+### Fixed
+- fix regression for PHP 7.0
+
+
 ## 3.1.4 - 2020-02-06
 
 ### Fixed
