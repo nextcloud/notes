@@ -38,8 +38,6 @@ class Note extends Entity {
 	public $error = false;
 	public $errorMessage='';
 
-	private const TAG_FAVORITE = \OC\Tags::TAG_FAVORITE; // @phan-suppress-current-line PhanUndeclaredClassConstant
-
 	public function __construct() {
 		$this->addType('modified', 'integer');
 		$this->addType('favorite', 'boolean');
@@ -84,15 +82,30 @@ class Note extends Entity {
 		return $str;
 	}
 
+	// TODO NC19: replace this by OCP\ITags::TAG_FAVORITE
+	// OCP\ITags::TAG_FAVORITE was introduced in NC19
+	// https://github.com/nextcloud/server/pull/19412
+	/**
+	 * @suppress PhanUndeclaredClassConstant
+	 * @suppress PhanUndeclaredConstant
+	 * @suppress PhanUndeclaredConstantOfClass
+	 */
+	private static function getTagFavorite() {
+		if (defined('OCP\ITags::TAG_FAVORITE')) {
+			return \OCP\ITags::TAG_FAVORITE;
+		} else {
+			return \OC\Tags::TAG_FAVORITE;
+		}
+	}
+
 	private function initCommonBaseFields(File $file, Folder $notesFolder, $tags) {
 		$this->setId($file->getId());
 		$this->setTitle(pathinfo($file->getName(), PATHINFO_FILENAME)); // remove extension
 		$this->setModified($file->getMTime());
 		$subdir = substr(dirname($file->getPath()), strlen($notesFolder->getPath())+1);
 		$this->setCategory($subdir ? $subdir : '');
-		if (is_array($tags) && in_array(self::TAG_FAVORITE, $tags)) {
+		if (is_array($tags) && in_array(self::getTagFavorite(), $tags)) {
 			$this->setFavorite(true);
-			//unset($tags[array_search(self::TAG_FAVORITE, $tags)]);
 		}
 	}
 
