@@ -9,6 +9,7 @@ OC.L10N.register(
     "Error" : "Klaida",
     "Distraction-free notes and writing" : "Neblaškantys užrašai ir rašymas",
     "Settings" : "Nustatymai",
+    "Deleted {title}" : "{title} ištrinti",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Yra neįrašytų užrašų. Išėjus iš šio puslapio, visi pakeitimai bus atmesti!",
     "Folder to store your notes" : "Aplankas, kuriame saugoti jūsų užrašus",
     "path to notes" : "kelias į užrašus",
@@ -23,7 +24,6 @@ OC.L10N.register(
     "This month" : "Šį mėnesį",
     "Last month" : "Praeitą mėnesį",
     "Delete note" : "Ištrinti užrašus",
-    "Deleted {title}" : "{title} ištrinti",
     "Remove from favorites" : "Šalinti iš mėgstamų",
     "Add to favorites" : "Pridėti į mėgstamus",
     "Empty note" : "Tušti užrašai",
@@ -47,7 +47,6 @@ OC.L10N.register(
     "Android app" : "Android programėlė",
     "iOS app" : "iOS programėlė",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Galite sukurti subkategorijas, naudodami \"/\" kaip skirtuką tarp viršesnės kategorijos ir subkategorijos, pvz., “{parent}/{sub}”.",
-    "See JavaScript console for details." : "Išsamesnei informacijai, žiūrėkite JavaScript pultą.",
     "Updating settings has failed." : "Nepavyko atnaujinti nustatymų.",
     "Development Mode" : "Plėtotojo veiksena"
 },

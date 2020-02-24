@@ -48,7 +48,6 @@ OC.L10N.register(
     "Organize your notes in categories." : "Organisoi muistiinpanosi luokkiin.",
     "Android app" : "Android-sovellus",
     "iOS app" : "iOS-sovellus",
-    "See JavaScript console for details." : "Katso yksityiskohdat JavaScript-konsolista.",
     "Updating settings has failed." : "Asetusten päivittäminen epäonnistui.",
     "Fetching notes has failed." : "Muistiinpanojen noutaminen epäonnistui.",
     "Fetching note {id} has failed." : "Muistiinpanon {id} noutaminen epäonnistui.",
