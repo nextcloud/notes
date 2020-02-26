@@ -67,7 +67,7 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Recupero della nota {id} non riuscito.",
     "Creating new note has failed." : "Creazione nuova nota non riuscita.",
     "Updating note {id} has failed." : "Aggiornamento della nota {id} non riuscito.",
-    "Undo delete has failed for note {title}." : "Annullamento eliminazione fallito per la nota {title}.",
+    "Undo delete has failed for note {title}." : "Annullamento eliminazione non riuscito per la nota {title}.",
     "Deleting note {id} has failed." : "Eliminazione della nota {id} non riuscita.",
     "Toggling favorite for note {id} has failed." : "L'attivazione come preferito della nota {id} non è riuscita",
     "Updating the note's category has failed. Is the target directory writable?" : "L'aggiornamento della categoria delle note non è riuscito. La cartella di destinazione è scrivibile?",
