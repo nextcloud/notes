@@ -170,14 +170,14 @@ class NotesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 *
-	 * @param int $id
-	 * @param string $content
-	 * @return DataResponse
 	 */
-	public function update($id, $content) {
+	public function update(int $id, string $content, bool $autotitle) : DataResponse {
 		try {
-			$note = $this->notesService->setContent($this->userId, $id, $content);
+			if ($autotitle) {
+				$note = $this->notesService->update($id, $content, $this->userId);
+			} else {
+				$note = $this->notesService->setContent($this->userId, $id, $content);
+			}
 			return new DataResponse($note);
 		} catch (InsufficientStorageException $e) {
 			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
