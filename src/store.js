@@ -91,6 +91,7 @@ export default new Vuex.Store({
 					note.content = updated.content
 					note.favorite = updated.favorite
 					note.category = updated.category
+					Vue.set(note, 'autotitle', updated.autotitle)
 					Vue.set(note, 'unsaved', updated.unsaved)
 					Vue.set(note, 'error', updated.error)
 					Vue.set(note, 'errorMessage', updated.errorMessage)

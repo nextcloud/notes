@@ -58,6 +58,7 @@ export const fetchNote = noteId => {
 		.get(url('/notes/' + noteId))
 		.then(response => {
 			const localNote = store.getters.getNote(parseInt(noteId))
+			response.data.autotitle = response.data.content.length === 0
 			// only overwrite if there are no unsaved changes
 			if (!localNote || !localNote.unsaved) {
 				store.commit('add', response.data)
@@ -110,7 +111,7 @@ export const createNote = category => {
 
 function _updateNote(note) {
 	return axios
-		.put(url('/notes/' + note.id), { content: note.content })
+		.put(url('/notes/' + note.id), { content: note.content, autotitle: note.autotitle })
 		.then(response => {
 			const updated = response.data
 			note.saveError = false

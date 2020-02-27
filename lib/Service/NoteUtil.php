@@ -69,6 +69,7 @@ class NoteUtil {
 
 	public function moveNote(Folder $notesFolder, File $file, string $title, ?string $category = null) : void {
 		$id = $file->getId();
+		$title = $this->getSafeTitle($title);
 		$currentFilePath = $this->root->getFullPath($file->getPath());
 		$currentBasePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
 		$fileSuffix = '.' . pathinfo($file->getName(), PATHINFO_EXTENSION);
@@ -148,7 +149,10 @@ class NoteUtil {
 		$content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
 		$content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
 		$content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
+		return $this->getSafeTitle($content);
+	}
 
+	public function getSafeTitle(string $content) : string {
 		// sanitize: prevent directory traversal, illegal characters and unintended file names
 		$content = $this->sanitisePath($content);
 
