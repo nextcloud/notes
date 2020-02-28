@@ -105,11 +105,11 @@ lint-php-ncversion:
 
 lint-php-phan:
 	# PHAN
-	vendor/bin/phan --allow-polyfill-parser -k tests/phan-config.php --no-progress-bar -m checkstyle | vendor/bin/cs2pr
+	vendor/bin/phan --allow-polyfill-parser -k tests/phan-config.php --no-progress-bar -m checkstyle | vendor/bin/cs2pr --colorize
 
 lint-php-phpcs:
 	# PHP CodeSniffer
-	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ --report=checkstyle | vendor/bin/cs2pr
+	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
 
 
 lint-js:
