@@ -15,6 +15,17 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.2.0 - 2020-03-14
+
+### Changed
+- new undo design using notifications (#431)
+- new app navigation design (`@nextcloud/vue` #481)
+
+### Fixed
+- dependency updates (#463, #475, #480 [security], #481 [security])
+- maintenance (#451, #462, #465, #469, #472)
+
+
 ## 3.1.5 - 2020-02-12
 
 ### Fixed
