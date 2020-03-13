@@ -231,7 +231,7 @@ export default {
 				const action = '<button class="undo">' + this.t('notes', 'Undo Delete') + '</button>'
 				this.undoNotification = showSuccess(
 					'<span class="deletedLabel">' + label + '</span> ' + action,
-					{ isHTML: true, timeout: -1, onShow: this.onUndoNotificationClosed }
+					{ isHTML: true, timeout: -1, onRemove: this.onUndoNotificationClosed }
 				)
 				this.undoNotification.toastElement.getElementsByClassName('undo')
 					.forEach(element => { element.onclick = this.onUndoDelete })
