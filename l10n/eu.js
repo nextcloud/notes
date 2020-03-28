@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Errorea",
     "Settings" : "Ezarpenak",
     "Deleted {title}" : "{title} ezabatuta",
+    "Deleted {number} notes" : "{number} ohar ezabatuta",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Gorde gabeko notak daude. Orrialdetik irtetzean aldaketa guztiak galduko dira!",
     "Folder to store your notes" : "Zure oharrak gordetzeko karpeta",
     "path to notes" : "oharretara bidea",
