@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - stable*
   pull_request:
 
 jobs:
@@ -10,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
     - name: Set up Node
       uses: actions/setup-node@v1
     - name: Set up Stylelint Problem Matcher
@@ -30,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
     - name: Setup xmllint
       run: |
         sudo apt update
@@ -52,9 +53,9 @@ jobs:
             php-version: 7.4
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
     - name: Set up php${{ matrix.php-versions }}
-      uses: shivammathur/setup-php@v1
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-version }}
     - name: Install Dependencies
@@ -66,3 +67,4 @@ jobs:
       uses: korelstar/phplint-problem-matcher@master
     - name: lint PHP
       run: make -k lint-php
+

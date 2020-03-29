@@ -1,0 +1,58 @@
+name: Test
+on:
+  push:
+    branches:
+      - master
+      - stable*
+  pull_request:
+
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up php
+      uses: shivammathur/setup-php@v2
+    - name: Install Dependencies
+      run: composer install --prefer-dist
+    - name: Prepare MySQL database
+      run: |
+        sudo systemctl start mysql
+        mysql -u root -proot -e "CREATE DATABASE nextcloud;"
+        mysql -u root -proot -e "CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY '';"
+        mysql -u root -proot -e "GRANT ALL ON nextcloud.* TO 'nextcloud'@'localhost';"
+    - name: Prepare Nextcloud server
+      working-directory: ../
+      run: |
+        git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b master server
+        cp -r notes server/apps/
+    - name: Setup Nextcloud server
+      working-directory: ../server/
+      run: |
+        php occ maintenance:install --database-name nextcloud --database-user nextcloud --admin-user admin --admin-pass admin --database mysql --database-pass=''
+        OC_PASS=test php occ user:add --password-from-env --display-name="Test" test
+        OC_PASS=test php occ user:add --password-from-env --display-name="QuotaTest" quotatest
+        php occ user:setting quotatest files quota "0"
+    - name: Setup Notes app
+      working-directory: ../server/
+      run: |
+        php occ app:enable notes
+        php occ app:check-code notes
+    - name: Create some reference notes
+      working-directory: ../
+      run: |
+        mkdir -p server/data/test/files/
+        mkdir -p server/data/quotatest/files/
+        cp -r notes/tests/reference-notes server/data/test/files/Notes
+        cp -r notes/tests/reference-notes server/data/quotatest/files/Notes
+        php server/occ files:scan --all
+    - name: Start Nextcloud server
+      working-directory: ../server/
+      run: "php -S localhost:8080 &"
+    - name: Test API
+      run: make test-api
+    - name: Show nextcloud.log
+      if: always()
+      run: "cat ../server/data/nextcloud.log"
+
