@@ -1,20 +1,20 @@
 <?php
 
 function getNCVersionFromComposer($path) {
-	if(!file_exists($path)) {
+	if (!file_exists($path)) {
 		throw new Exception('Composer file does not exists: '.$path);
 	}
-	if(!is_readable($path)) {
+	if (!is_readable($path)) {
 		throw new Exception('Composer file is not readable: '.$path);
 	}
 	$content = file_get_contents($path);
 	$json = json_decode($content);
-	if(!is_object($json)) {
+	if (!is_object($json)) {
 		throw new Exception('Composer file does not contain valid JSON');
 	}
 	$dev = getValidProperty($json, 'require-dev');
 	$v = getValidProperty($dev, 'christophwurst/nextcloud');
-	if(substr($v, 0, 1)=='^') {
+	if (substr($v, 0, 1)=='^') {
 		$v = substr($v, 1);
 	}
 	return $v;
@@ -22,21 +22,21 @@ function getNCVersionFromComposer($path) {
 
 
 function getNCVersionFromComposerBranchAlias($path) {
-	if(!file_exists($path)) {
+	if (!file_exists($path)) {
 		throw new Exception('Composer file does not exists: '.$path);
 	}
-	if(!is_readable($path)) {
+	if (!is_readable($path)) {
 		throw new Exception('Composer file is not readable: '.$path);
 	}
 	$content = file_get_contents($path);
 	$json = json_decode($content);
-	if(!is_object($json)) {
+	if (!is_object($json)) {
 		throw new Exception('Composer file does not contain valid JSON');
 	}
 	$extra = getValidProperty($json, 'extra');
 	$branchAlias = getValidProperty($extra, 'branch-alias');
 	$v = getValidProperty($branchAlias, 'dev-master');
-	if(substr($v, -4)=='-dev') {
+	if (substr($v, -4)=='-dev') {
 		$v = substr($v, 0, -4);
 	}
 	return $v;
@@ -44,17 +44,17 @@ function getNCVersionFromComposerBranchAlias($path) {
 
 
 function getValidProperty($json, $prop) {
-	if(!property_exists($json, $prop)) {
+	if (!property_exists($json, $prop)) {
 		throw new Exception('Composer file has no "'.$prop.'" section');
 	}
 	return $json->{$prop};
 }
 
-function getNCVersionFromAppInfo($path, $minmax='min') {
-	if(!file_exists($path)) {
+function getNCVersionFromAppInfo($path, $minmax = 'min') {
+	if (!file_exists($path)) {
 		throw new Exception('AppInfo does not exists: '.$path);
 	}
-	if(!is_readable($path)) {
+	if (!is_readable($path)) {
 		throw new Exception('AppInfo is not readable: '.$path);
 	}
 	$content = file_get_contents($path);
@@ -68,8 +68,8 @@ function versionCompare($sv1, $sv2) {
 	$v1 = explode('.', $sv1);
 	$v2 = explode('.', $sv2);
 	$count = min(count($v1), count($v2));
-	for($i=0; $i<$count; $i++) {
-		if($v1[$i] !== $v2[$i]) {
+	for ($i=0; $i<$count; $i++) {
+		if ($v1[$i] !== $v2[$i]) {
 			return false;
 		}
 	}
@@ -79,7 +79,7 @@ function versionCompare($sv1, $sv2) {
 echo 'Testing Nextcloud version ';
 try {
 	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
-	if($vComposer === 'dev-master') {
+	if ($vComposer === 'dev-master') {
 		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/christophwurst/nextcloud/composer.json');
 		$vAppInfo = getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'max');
 		echo 'max';
@@ -88,14 +88,13 @@ try {
 		echo 'min';
 	}
 	echo ': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
-	if(versionCompare($vComposer, $vAppInfo)) {
+	if (versionCompare($vComposer, $vAppInfo)) {
 		echo 'OK'.PHP_EOL;
 	} else {
 		echo 'FAILED'.PHP_EOL;
 		exit(1);
 	}
-} catch(Exception $e) {
+} catch (Exception $e) {
 	echo $e->getMessage().PHP_EOL;
 	exit(1);
 }
-?>
