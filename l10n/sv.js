@@ -21,7 +21,7 @@ OC.L10N.register(
     "Categories" : "Kategorier",
     "No search result for “{search}” in {category}" : "Inget sökresultat för “{search}” i {category}",
     "No search result for “{search}”" : "Inget sökresultat för “{search}”",
-    "Loading …" : "Laddar ...",
+    "Loading …" : "Läser in ...",
     "Search result for “{search}” in {category}" : "Sökresultat för “{search}” i {category}",
     "Search result for “{search}”" : "Sökresultat för “{search}”",
     "Today" : "Idag",
