@@ -78,14 +78,10 @@ watch-js:
 	npm run watch
 
 # Testing
-test:
-	npm run test
+test: test-api
 
-test-watch:
-	npm run test:watch
-
-test-coverage:
-	npm run test:coverage
+test-api:
+	phpunit --bootstrap vendor/autoload.php --testdox tests/api/
 
 
 # Linting
@@ -109,7 +105,7 @@ lint-php-phan:
 
 lint-php-phpcs:
 	# PHP CodeSniffer
-	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
+	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ tests/api/ --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
 
 
 lint-js:
@@ -128,7 +124,7 @@ lint-xml:
 lint-fix: lint-php-fix lint-js-fix lint-css-fix
 
 lint-php-fix:
-	vendor/bin/phpcbf --standard=phpcs.xml appinfo/ lib/
+	vendor/bin/phpcbf --standard=tests/phpcs.xml appinfo/ lib/ tests/api/
 
 lint-js-fix:
 	npm run lint:fix
