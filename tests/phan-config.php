@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'directory_list' => [
-        'lib/',
-        'vendor/',
-    ],
-    "exclude_analysis_directory_list" => [
-        'vendor/',
-    ],
+	'directory_list' => [
+		'lib/',
+		'vendor/',
+	],
+	"exclude_analysis_directory_list" => [
+		'vendor/',
+	],
 ];
