@@ -14,7 +14,7 @@ OC.L10N.register(
     "Deleted {number} notes" : "Eliminadas {number} notas",
     "Undo Delete" : "Desfacer a eliminación",
     "Please chose a valid path in {label} (bottom left corner)." : "Escolla unha ruta válida en {label} (canto inferior esquerdo).",
-    "There are unsaved notes. Leaving the page will discard all changes!" : "Hai notas sen gardar. Saír da páxina descartará todos os cambios!",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Hai notas sen gardar. Saír da páxina desbotará todos os cambios!",
     "Folder to store your notes" : "Cartafol para almacenar as súas notas",
     "path to notes" : "ruta ás notas",
     "File extension for new notes" : "Extensión do ficheiro para notas novas",
