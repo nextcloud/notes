@@ -110,6 +110,17 @@ export default {
 	border-color: var(--color-main-text);
 }
 
+/* text selection */
+.CodeMirror .CodeMirror-selectedtext {
+	background-color: var(--color-primary-element) !important;
+	color: var(--color-primary-text) !important;
+	opacity: 1 !important;
+}
+
+.CodeMirror .CodeMirror-selected {
+	background: inherit !important;
+}
+
 /* fix for mobile */
 .CodeMirror-code {
 	width: 100% !important;
@@ -142,6 +153,11 @@ export default {
 
 .cm-s-easymde .cm-header-4 {
 	font-size: 110%;
+}
+
+.CodeMirror .cm-link {
+	color: var(--color-primary-element);
+	text-decoration: none;
 }
 
 /* horizontal line */
