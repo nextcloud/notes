@@ -2,6 +2,8 @@
 
 namespace OCA\Notes\Db;
 
+use OCA\Notes\Service\Note;
+
 use OCP\AppFramework\Db\Entity;
 
 /**

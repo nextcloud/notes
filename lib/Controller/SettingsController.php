@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace OCA\Notes\Controller;
 
-use OCP\AppFramework\Controller;
+use OCA\Notes\Service\SettingsService;
 
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IUserSession;
-use OCP\AppFramework\Http\JSONResponse;
-use OCA\Notes\Service\SettingsService;
 
 class SettingsController extends Controller {
 
@@ -14,7 +15,7 @@ class SettingsController extends Controller {
 	private $userSession;
 
 	public function __construct(
-		$appName,
+		string $appName,
 		IRequest $request,
 		SettingsService $service,
 		IUserSession $userSession

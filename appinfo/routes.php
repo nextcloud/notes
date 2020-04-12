@@ -1,16 +1,6 @@
 <?php
-/**
- * Nextcloud - Notes
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
- *
- * @author Bernhard Posselt <dev@bernhard-posselt.com>
- * @copyright Bernhard Posselt 2012, 2014
- */
-
 return ['routes' => [
-	// page
+	//////////  P A G E  //////////
 	[
 		'name' => 'page#index',
 		'url' => '/',
@@ -30,7 +20,8 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 
-	// notes
+
+	//////////  N O T E S  //////////
 	[
 		'name' => 'notes#index',
 		'url' => '/notes',
@@ -59,22 +50,13 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 	[
-		'name' => 'notes#category',
-		'url' => '/notes/{id}/category',
+		'name' => 'notes#updateProperty',
+		'url' => '/notes/{id}/{property}',
 		'verb' => 'PUT',
-		'requirements' => ['id' => '\d+'],
-	],
-	[
-		'name' => 'notes#title',
-		'url' => '/notes/{id}/title',
-		'verb' => 'PUT',
-		'requirements' => ['id' => '\d+'],
-	],
-	[
-		'name' => 'notes#favorite',
-		'url' => '/notes/{id}/favorite',
-		'verb' => 'PUT',
-		'requirements' => ['id' => '\d+'],
+		'requirements' => [
+			'id' => '\d+',
+			'property' => '(modified|title|category|favorite)',
+		],
 	],
 	[
 		'name' => 'notes#destroy',
@@ -83,43 +65,88 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 
-	// api
+
+	//////////  S E T T I N G S  //////////
+	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
+	['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
+
+
+	//////////  A P I  //////////
 	[
 		'name' => 'notes_api#index',
-		'url' => '/api/v0.2/notes',
+		'url' => '/api/{apiVersion}/notes',
 		'verb' => 'GET',
+		'requirements' => [
+			'apiVersion' => '(v0.2|v1)',
+		],
 	],
 	[
 		'name' => 'notes_api#get',
-		'url' => '/api/v0.2/notes/{id}',
+		'url' => '/api/{apiVersion}/notes/{id}',
 		'verb' => 'GET',
-		'requirements' => ['id' => '\d+'],
+		'requirements' => [
+			'apiVersion' => '(v0.2|v1)',
+			'id' => '\d+',
+		],
+	],
+	[
+		'name' => 'notes_api#createAutoTitle',
+		'url' => '/api/{apiVersion}/notes',
+		'verb' => 'POST',
+		'requirements' => [
+			'apiVersion' => '(v0.2)',
+		],
 	],
 	[
 		'name' => 'notes_api#create',
-		'url' => '/api/v0.2/notes',
+		'url' => '/api/{apiVersion}/notes',
 		'verb' => 'POST',
+		'requirements' => [
+			'apiVersion' => '(v1)',
+		],
+	],
+	[
+		'name' => 'notes_api#updateAutoTitle',
+		'url' => '/api/{apiVersion}/notes/{id}',
+		'verb' => 'PUT',
+		'requirements' => [
+			'apiVersion' => '(v0.2)',
+			'id' => '\d+',
+		],
 	],
 	[
 		'name' => 'notes_api#update',
-		'url' => '/api/v0.2/notes/{id}',
+		'url' => '/api/{apiVersion}/notes/{id}',
 		'verb' => 'PUT',
-		'requirements' => ['id' => '\d+'],
+		'requirements' => [
+			'apiVersion' => '(v1)',
+			'id' => '\d+',
+		],
 	],
 	[
 		'name' => 'notes_api#destroy',
-		'url' => '/api/v0.2/notes/{id}',
+		'url' => '/api/{apiVersion}/notes/{id}',
 		'verb' => 'DELETE',
-		'requirements' => ['id' => '\d+'],
+		'requirements' => [
+			'apiVersion' => '(v0.2|v1)',
+			'id' => '\d+',
+		],
+	],
+	[
+		'name' => 'notes_api#fail',
+		'url' => '/api/{catchAll}',
+		'verb' => 'GET',
+		'requirements' => [
+			'catchAll' => '.*',
+		],
 	],
 	[
 		'name' => 'notes_api#preflighted_cors',
-		'url' => '/api/v0.2/{path}',
+		'url' => '/api/{apiVersion}/{path}',
 		'verb' => 'OPTIONS',
-		'requirements' => ['path' => '.+'],
+		'requirements' => [
+			'apiVersion' => '(v0.2|v1)',
+			'path' => '.+',
+		],
 	],
-
-	// settings
-	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
-	['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
 ]];

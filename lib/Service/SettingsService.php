@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
@@ -24,7 +24,7 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function set($uid, $settings) {
+	public function set(string $uid, array $settings) : void {
 		// remove illegal, empty and default settings
 		foreach ($settings as $name => $value) {
 			if (!array_key_exists($name, $this->defaults)
@@ -37,7 +37,7 @@ class SettingsService {
 		$this->config->setUserValue($uid, 'notes', 'settings', json_encode($settings));
 	}
 
-	public function getAll($uid) {
+	public function getAll(string $uid) : \stdClass {
 		$settings = json_decode($this->config->getUserValue($uid, 'notes', 'settings'));
 		if (is_object($settings)) {
 			// use default for empty settings
@@ -55,7 +55,7 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function get($uid, $name) {
+	public function get(string $uid, string $name) : string {
 		$settings = $this->getAll($uid);
 		if (property_exists($settings, $name)) {
 			return $settings->{$name};

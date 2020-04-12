@@ -1,6 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
+
+use OCA\Notes\Service\NotesService;
+use OCA\Notes\Service\MetaService;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
@@ -8,120 +11,64 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\IUserSession;
 
-use OCA\Notes\Service\NotesService;
-use OCA\Notes\Service\MetaService;
-use OCA\Notes\Service\InsufficientStorageException;
-use OCA\Notes\Service\NoteDoesNotExistException;
-use OCA\Notes\Db\Note;
-
-/**
- * Class NotesApiController
- *
- * @package OCA\Notes\Controller
- */
 class NotesApiController extends ApiController {
-
-	use Errors;
 
 	/** @var NotesService */
 	private $service;
 	/** @var MetaService */
 	private $metaService;
+	/** @var Helper */
+	private $helper;
 	/** @var IUserSession */
 	private $userSession;
 
-	/**
-	 * @param string $AppName
-	 * @param IRequest $request
-	 * @param NotesService $service
-	 * @param IUserSession $userSession
-	 */
 	public function __construct(
-		$AppName,
+		string $AppName,
 		IRequest $request,
 		NotesService $service,
 		MetaService $metaService,
+		Helper $helper,
 		IUserSession $userSession
 	) {
 		parent::__construct($AppName, $request);
 		$this->service = $service;
 		$this->metaService = $metaService;
+		$this->helper = $helper;
 		$this->userSession = $userSession;
 	}
 
-	private function getUID() {
+	private function getUID() : string {
 		return $this->userSession->getUser()->getUID();
 	}
 
-	/**
-	 * @param Note $note
-	 * @param string[] $exclude the fields that should be removed from the
-	 * notes
-	 * @return Note
-	 */
-	private function excludeFields(Note &$note, array $exclude) {
-		if (count($exclude) > 0) {
-			foreach ($exclude as $field) {
-				if (property_exists($note, $field)) {
-					unset($note->$field);
-				}
-			}
-		}
-		return $note;
-	}
-
 
 	/**
 	 * @NoAdminRequired
 	 * @CORS
 	 * @NoCSRFRequired
-	 *
-	 * @param string $exclude
-	 * @return DataResponse
 	 */
-	public function index($exclude = '', $pruneBefore = 0) {
-		$exclude = explode(',', $exclude);
-		$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-		$notes = $this->service->getAll($this->getUID());
-		$metas = $this->metaService->updateAll($this->getUID(), $notes);
-		foreach ($notes as $note) {
-			$lastUpdate = $metas[$note->getId()]->getLastUpdate();
-			if ($pruneBefore && $lastUpdate<$pruneBefore) {
-				$vars = get_object_vars($note);
-				unset($vars['id']);
-				$this->excludeFields($note, array_keys($vars));
-			} else {
-				$this->excludeFields($note, $exclude);
-			}
-		}
-		$etag = md5(json_encode($notes));
-		if ($this->request->getHeader('If-None-Match') === '"'.$etag.'"') {
-			return new DataResponse([], Http::STATUS_NOT_MODIFIED);
-		}
-		return (new DataResponse($notes))
-			->setLastModified($now)
-			->setETag($etag);
-	}
-
-
-	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
-	 *
-	 * @param int $id
-	 * @param string $exclude
-	 * @return DataResponse
-	 */
-	public function get($id, $exclude = '') {
-		try {
+	public function index(string $exclude = '', int $pruneBefore = 0) : DataResponse {
+		return $this->helper->handleErrorResponse(function () use ($exclude, $pruneBefore) {
 			$exclude = explode(',', $exclude);
-			$note = $this->service->get($id, $this->getUID());
-			$note = $this->excludeFields($note, $exclude);
-			return new DataResponse($note);
-		} catch (NoteDoesNotExistException $e) {
-			return new DataResponse([], Http::STATUS_NOT_FOUND);
-		}
+			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
+			$notes = $this->service->getAll($this->getUID());
+			$metas = $this->metaService->updateAll($this->getUID(), $notes);
+			$notesData = array_map(function ($note) use ($metas, $pruneBefore, $exclude) {
+				$lastUpdate = $metas[$note->getId()]->getLastUpdate();
+				if ($pruneBefore && $lastUpdate<$pruneBefore) {
+					return [ 'id' => $note->getId() ];
+				} else {
+					return $note->getData($exclude);
+				}
+			}, $notes);
+			$etag = md5(json_encode($notesData));
+			if ($this->request->getHeader('If-None-Match') === '"'.$etag.'"') {
+				return new DataResponse([], Http::STATUS_NOT_MODIFIED);
+			}
+			return (new DataResponse($notesData))
+				->setLastModified($now)
+				->setETag($etag);
+		});
 	}
 
 
@@ -129,86 +76,148 @@ class NotesApiController extends ApiController {
 	 * @NoAdminRequired
 	 * @CORS
 	 * @NoCSRFRequired
-	 *
-	 * @param string $content
-	 * @param string $category
-	 * @param int $modified
-	 * @param boolean $favorite
-	 * @return DataResponse
 	 */
-	public function create($content, $category = null, $modified = 0, $favorite = null) {
-		try {
-			$note = $this->service->create($this->getUID());
+	public function get(int $id, string $exclude = '') : DataResponse {
+		return $this->helper->handleErrorResponse(function () use ($id, $exclude) {
+			$exclude = explode(',', $exclude);
+			$note = $this->service->get($this->getUID(), $id);
+			return $note->getData($exclude);
+		});
+	}
+
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 */
+	public function create(
+		string $category = '',
+		string $title = '',
+		string $content = '',
+		int $modified = 0,
+		bool $favorite = false
+	) : DataResponse {
+		return $this->helper->handleErrorResponse(function () use ($category, $title, $content, $modified, $favorite) {
+			$note = $this->service->create($this->getUID(), $title, $category);
 			try {
-				$note = $this->updateData($note->getId(), $content, $category, $modified, $favorite);
+				$note->setContent($content);
+				if ($modified) {
+					$note->setModified($modified);
+				}
+				if ($favorite) {
+					$note->setFavorite($favorite);
+				}
 			} catch (\Throwable $e) {
 				// roll-back note creation
-				$this->service->delete($note->getId(), $this->getUID());
+				$this->service->delete($this->getUID(), $note->getId());
 				throw $e;
 			}
-			return new DataResponse($note);
-		} catch (InsufficientStorageException $e) {
-			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
-		}
-	}
-
-
-	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
-	 *
-	 * @param int $id
-	 * @param string $content
-	 * @param string $category
-	 * @param int $modified
-	 * @param boolean $favorite
-	 * @return DataResponse
-	 */
-	public function update($id, $content = null, $category = null, $modified = 0, $favorite = null) {
-		try {
-			$note = $this->updateData($id, $content, $category, $modified, $favorite);
-			return new DataResponse($note);
-		} catch (NoteDoesNotExistException $e) {
-			return new DataResponse([], Http::STATUS_NOT_FOUND);
-		} catch (InsufficientStorageException $e) {
-			return new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
-		}
-	}
-
-	/**
-	 * Updates a note, used by create and update
-	 * @param int $id
-	 * @param string|null $content
-	 * @param int $modified
-	 * @param boolean|null $favorite
-	 * @return Note
-	 */
-	private function updateData($id, $content, $category, $modified, $favorite) {
-		if ($favorite!==null) {
-			$this->service->favorite($id, $favorite, $this->getUID());
-		}
-		if ($content===null) {
-			return $this->service->get($id, $this->getUID());
-		} else {
-			return $this->service->update($id, $content, $this->getUID(), $category, $modified);
-		}
+			return $note->getData();
+		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * @CORS
 	 * @NoCSRFRequired
-	 *
-	 * @param int $id
-	 * @return DataResponse
+	 * @deprecated this was used in API v0.2 only, use #create() instead
 	 */
-	public function destroy($id) {
-		try {
-			$this->service->delete($id, $this->getUID());
-			return new DataResponse([]);
-		} catch (NoteDoesNotExistException $e) {
-			return new DataResponse([], Http::STATUS_NOT_FOUND);
-		}
+	public function createAutoTitle(
+		string $category = '',
+		string $content = '',
+		int $modified = 0,
+		bool $favorite = false
+	) : DataResponse {
+		return $this->helper->handleErrorResponse(function () use ($category, $content, $modified, $favorite) {
+			$title = $this->service->getTitleFromContent($content);
+			return $this->create($category, $title, $content, $modified, $favorite);
+		});
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 */
+	public function update(
+		int $id,
+		?string $content = null,
+		?int $modified = null,
+		?string $title = null,
+		?string $category = null,
+		?bool $favorite = null
+	) : DataResponse {
+		return $this->helper->handleErrorResponse(function () use (
+			$id,
+			$content,
+			$modified,
+			$title,
+			$category,
+			$favorite
+		) {
+			$note = $this->service->get($this->getUID(), $id);
+			if ($content !== null) {
+				$note->setContent($content);
+			}
+			if ($modified !== null) {
+				$note->setModified($modified);
+			}
+			if ($title !== null) {
+				$note->setTitleCategory($title, $category);
+			} elseif ($category !== null) {
+				$note->setCategory($category);
+			}
+			if ($favorite !== null) {
+				$note->setFavorite($favorite);
+			}
+			return $note->getData();
+		});
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 * @deprecated this was used in API v0.2 only, use #update() instead
+	 */
+	public function updateAutoTitle(
+		int $id,
+		?string $content = null,
+		?int $modified = null,
+		?string $category = null,
+		?bool $favorite = null
+	) : DataResponse {
+		return $this->helper->handleErrorResponse(function () use ($id, $content, $modified, $category, $favorite) {
+			if ($content === null) {
+				$note = $this->service->get($this->getUID(), $id);
+				$title = $this->service->getTitleFromContent($note->getContent());
+			} else {
+				$title = $this->service->getTitleFromContent($content);
+			}
+			return $this->update($id, $content, $modified, $title, $category, $favorite);
+		});
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 */
+	public function destroy(int $id) : DataResponse {
+		return $this->helper->handleErrorResponse(function () use ($id) {
+			$this->service->delete($this->getUID(), $id);
+			return [];
+		});
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function fail() : DataResponse {
+		return $this->helper->handleErrorResponse(function () {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		});
 	}
 }

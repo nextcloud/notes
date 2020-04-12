@@ -1,109 +1,65 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
+use OCP\Files\Folder;
+use OCP\Files\IRootFolder;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\ILogger;
-use OCP\Files\IRootFolder;
-use OCP\Files\FileInfo;
-use OCP\Files\File;
-use OCP\Files\Folder;
 
 class NoteUtil {
 
 	private $db;
 	private $l10n;
 	private $root;
+	private $tagService;
+	private $cachedTags;
 	private $logger;
 	private $appName;
 
-	/**
-	 * @param IDBConnection $db
-	 * @param IRootFolder $root
-	 * @param IL10N $l10n
-	 * @param ILogger $logger
-	 * @param String $appName
-	 */
 	public function __construct(
-		IDBConnection $db,
 		IRootFolder $root,
+		IDBConnection $db,
+		TagService $tagService,
 		IL10N $l10n,
 		ILogger $logger,
-		$appName
+		string $appName
 	) {
-		$this->db = $db;
 		$this->root = $root;
+		$this->db = $db;
+		$this->tagService = $tagService;
 		$this->l10n = $l10n;
 		$this->logger = $logger;
 		$this->appName = $appName;
 	}
 
-	/**
-	 * gather note files in given directory and all subdirectories
-	 */
-	public function gatherNoteFiles(Folder $folder) : array {
-		$notes = [];
-		$nodes = $folder->getDirectoryListing();
-		foreach ($nodes as $node) {
-			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
-				$notes = array_merge($notes, $this->gatherNoteFiles($node));
-				continue;
-			}
-			if ($this->isNote($node)) {
-				$notes[] = $node;
-			}
-		}
-		return $notes;
+	public function getRoot() : IRootFolder {
+		return $this->root;
 	}
 
-
-	/**
-	 * test if file is a note
-	 */
-	public function isNote(FileInfo $file) : bool {
-		$allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
-		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
-		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
+	public function getTagService() : TagService {
+		return $this->tagService;
 	}
 
-	public function moveNote(Folder $notesFolder, File $file, string $title, ?string $category = null) : void {
-		$id = $file->getId();
-		$title = $this->getSafeTitle($title);
-		$currentFilePath = $this->root->getFullPath($file->getPath());
-		$currentBasePath = pathinfo($currentFilePath, PATHINFO_DIRNAME);
-		$fileSuffix = '.' . pathinfo($file->getName(), PATHINFO_EXTENSION);
+	public function getL10N() : IL10N {
+		return $this->l10n;
+	}
 
-		// detect (new) folder path based on category name
-		if ($category===null) {
-			$basePath = $currentBasePath;
-		} else {
-			$basePath = $notesFolder->getPath();
-			if (!empty($category)) {
-				// sanitise path
-				$cats = explode('/', $category);
-				$cats = array_map([$this, 'sanitisePath'], $cats);
-				$cats = array_filter($cats, function ($str) {
-					return !empty($str);
-				});
-				$basePath .= '/'.implode('/', $cats);
-			}
-		}
-		$folder = $this->getOrCreateFolder($basePath);
+	public function getLogger() : ILogger {
+		return $this->logger;
+	}
 
-		// assemble new file path
-		$newFilePath = $basePath . '/' . $this->generateFileName($folder, $title, $fileSuffix, $id);
-
-		// if the current path is not the new path, the file has to be renamed
-		if ($currentFilePath !== $newFilePath) {
-			$file->move($newFilePath);
-		}
-		if ($currentBasePath !== $basePath) {
-			$fileBasePath = $this->root->get($currentBasePath);
-			if ($fileBasePath instanceof Folder) {
-				$this->deleteEmptyFolder($notesFolder, $fileBasePath);
-			}
-		}
+	public function getCategoryFolder(Folder $notesFolder, string $category) {
+		$path = $notesFolder->getPath();
+		// sanitise path
+		$cats = explode('/', $category);
+		$cats = array_map([$this, 'sanitisePath'], $cats);
+		$cats = array_filter($cats, function ($str) {
+			return $str !== '';
+		});
+		$path .= '/'.implode('/', $cats);
+		return $this->getOrCreateFolder($path);
 	}
 
 	/**
@@ -120,12 +76,13 @@ class NoteUtil {
 	 * files with the same title
 	 */
 	public function generateFileName(Folder $folder, string $title, string $suffix, int $id) : string {
-		$path = $title . $suffix;
+		$title = $this->getSafeTitle($title);
+		$filename = $title . $suffix;
 
 		// if file does not exist, that name has not been taken. Similar we don't
 		// need to handle file collisions if it is the filename did not change
-		if (!$folder->nodeExists($path) || $folder->get($path)->getId() === $id) {
-			return $path;
+		if (!$folder->nodeExists($filename) || $folder->get($filename)->getId() === $id) {
+			return $filename;
 		} else {
 			// increments name (2) to name (3)
 			$match = preg_match('/\((?P<id>\d+)\)$/u', $title, $matches);
@@ -141,15 +98,6 @@ class NoteUtil {
 			}
 			return $this->generateFileName($folder, $newTitle, $suffix, $id);
 		}
-	}
-
-	public function getSafeTitleFromContent(string $content) : string {
-		// prepare content: remove markdown characters and empty spaces
-		$content = preg_replace("/^\s*[*+-]\s+/mu", "", $content); // list item
-		$content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
-		$content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
-		$content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
-		return $this->getSafeTitle($content);
 	}
 
 	public function getSafeTitle(string $content) : string {
@@ -172,7 +120,7 @@ class NoteUtil {
 	}
 
 	/** removes characters that are illegal in a file or folder name on some operating systems */
-	public function sanitisePath(string $str) : string {
+	private function sanitisePath(string $str) : string {
 		// remove characters which are illegal on Windows (includes illegal characters on Unix/Linux)
 		// prevents also directory traversal by eliminiating slashes
 		// see also \OC\Files\Storage\Common::verifyPosixPath(...)
@@ -212,10 +160,10 @@ class NoteUtil {
 
 	/*
 	 * Delete a folder and it's parent(s) if it's/they're empty
-	 * @param Folder $notesFolder root folder for notes
 	 * @param Folder $folder folder to delete
+	 * @param Folder $notesFolder root notes folder
 	 */
-	public function deleteEmptyFolder(Folder $notesFolder, Folder $folder) : void {
+	public function deleteEmptyFolder(Folder $folder, Folder $notesFolder) : void {
 		$content = $folder->getDirectoryListing();
 		$isEmpty = !count($content);
 		$isNotesFolder = $folder->getPath()===$notesFolder->getPath();
@@ -223,7 +171,7 @@ class NoteUtil {
 			$this->logger->info('Deleting empty category folder '.$folder->getPath(), ['app' => $this->appName]);
 			$parent = $folder->getParent();
 			$folder->delete();
-			$this->deleteEmptyFolder($notesFolder, $parent);
+			$this->deleteEmptyFolder($parent, $notesFolder);
 		}
 	}
 

@@ -9,7 +9,7 @@ class Capabilities implements ICapability {
 	public function getCapabilities() {
 		return [
 			'notes' => [
-				'api_version' => [ '0.2' ],
+				'api_version' => Application::$API_VERSIONS,
 			],
 		];
 	}

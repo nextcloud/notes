@@ -1,13 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
 use Exception;
 
-/**
- * Class NotesFolderException
- *
- * @package OCA\Notes\Service
- */
 class NotesFolderException extends Exception {
 }

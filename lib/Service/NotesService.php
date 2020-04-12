@@ -1,137 +1,61 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
-use OCP\Encryption\Exceptions\GenericEncryptionException;
-use OCP\Files\File;
-use OCP\Files\Folder;
-use OCP\Files\IRootFolder;
-use OCP\IConfig;
-use OCP\IL10N;
-use OCP\ILogger;
-use OCP\ITagManager;
-
-use OCA\Notes\Db\Note;
 use OCA\Notes\Service\SettingsService;
 
-/**
- * Class NotesService
- *
- * @package OCA\Notes\Service
- */
+use OCP\Files\File;
+use OCP\Files\FileInfo;
+use OCP\Files\Folder;
+
 class NotesService {
 
-	private $l10n;
-	private $root;
-	private $logger;
-	private $config;
-	private $tags;
 	private $settings;
 	private $noteUtil;
-	private $appName;
 
-	/**
-	 * @param IRootFolder $root
-	 * @param IL10N $l10n
-	 * @param ILogger $logger
-	 * @param IConfig $config
-	 * @param ITagManager $tagManager
-	 * @param SettingsService $settings
-	 * @param NoteUtil $noteUtil
-	 * @param String $appName
-	 */
 	public function __construct(
-		IRootFolder $root,
-		IL10N $l10n,
-		ILogger $logger,
-		IConfig $config,
-		ITagManager $tagManager,
 		SettingsService $settings,
-		NoteUtil $noteUtil,
-		$appName
+		NoteUtil $noteUtil
 	) {
-		$this->root = $root;
-		$this->l10n = $l10n;
-		$this->logger = $logger;
-		$this->config = $config;
-		$this->tags = $tagManager->load('files');
 		$this->settings = $settings;
 		$this->noteUtil = $noteUtil;
-		$this->appName = $appName;
 	}
 
-
-	/**
-	 * @param string $userId
-	 * @return array with all notes in the current directory
-	 */
-	public function getAll(string $userId, bool $onlyMeta = false) {
-		$notesFolder = $this->getFolderForUser($userId);
-		$notes = $this->noteUtil->gatherNoteFiles($notesFolder);
-		$filesById = [];
-		foreach ($notes as $note) {
-			$filesById[$note->getId()] = $note;
-		}
-		$tags = $this->tags->getTagsForObjects(array_keys($filesById));
-
-		$notes = [];
-		foreach ($filesById as $id => $file) {
-			$noteTags = is_array($tags) && array_key_exists($id, $tags) ? $tags[$id] : [];
-			$notes[] = $this->getNote($file, $notesFolder, $noteTags, $onlyMeta);
-		}
-
+	public function getAll(string $userId) {
+		$notesFolder = $this->getNotesFolder($userId);
+		$files = $this->gatherNoteFiles($notesFolder);
+		$fileIds = array_map(function (File $file) : int {
+			return $file->getId();
+		}, $files);
+		// pre-load tags for all notes (performance improvement)
+		$this->noteUtil->getTagService()->loadTags($fileIds);
+		$notes = array_map(function (File $file) use ($notesFolder) : Note {
+			return new Note($file, $notesFolder, $this->noteUtil);
+		}, $files);
 		return $notes;
 	}
 
-
-	/**
-	 * Used to get a single note by id
-	 * @param int $id the id of the note to get
-	 * @param string $userId
-	 * @throws NoteDoesNotExistException if note does not exist
-	 * @return Note
-	 */
-	public function get(int $id, string $userId, bool $onlyMeta = false) : Note {
-		$folder = $this->getFolderForUser($userId);
-		return $this->getNote($this->getFileById($folder, $id), $folder, $this->getTags($id), $onlyMeta);
-	}
-
-	private function getTags(int $id) {
-		$tags = $this->tags->getTagsForObjects([$id]);
-		return is_array($tags) && array_key_exists($id, $tags) ? $tags[$id] : [];
-	}
-
-	private function getNote(File $file, Folder $notesFolder, array $tags = [], bool $onlyMeta = false) : Note {
-		$id = $file->getId();
-		try {
-			$note = Note::fromFile($file, $notesFolder, $tags, $onlyMeta);
-		} catch (GenericEncryptionException $e) {
-			$message = $this->l10n->t('Encryption Error').': ('.$file->getName().') '.$e->getMessage();
-			$note = Note::fromException($message, $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-		} catch (\Exception $e) {
-			$message = $this->l10n->t('Error').': ('.$file->getName().') '.$e->getMessage();
-			$note = Note::fromException($message, $file, $notesFolder, array_key_exists($id, $tags) ? $tags[$id] : []);
-		}
-		return $note;
+	public function get(string $userId, int $id) : Note {
+		$notesFolder = $this->getNotesFolder($userId);
+		return new Note($this->getFileById($notesFolder, $id), $notesFolder, $this->noteUtil);
 	}
 
 
 	/**
-	 * Creates a note and returns the empty note
-	 * @param string $userId
-	 * @see update for setting note content
-	 * @return Note the newly created note
+	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function create(string $userId) : Note {
-		$title = $this->l10n->t('New note');
-		$folder = $this->getFolderForUser($userId);
+	public function create(string $userId, string $title, string $category) : Note {
+		// get folder based on category
+		$notesFolder = $this->getNotesFolder($userId);
+		$folder = $this->noteUtil->getCategoryFolder($notesFolder, $category);
 		$this->noteUtil->ensureSufficientStorage($folder, 1);
 
-		// check new note exists already and we need to number it
-		// pass -1 because no file has id -1 and that will ensure
-		// to only return filenames that dont yet exist
-		$path = $this->noteUtil->generateFileName($folder, $title, $this->settings->get($userId, 'fileSuffix'), -1);
-		$file = $folder->newFile($path);
+		// get file name
+		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
+		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
+
+		// create file
+		$file = $folder->newFile($filename);
 
 		// try to write some content
 		try {
@@ -141,142 +65,90 @@ class NotesService {
 			$file->putContent(' ');
 		} catch (\Throwable $e) {
 			// if writing the content fails, we have to roll back the note creation
-			$this->delete($file->getId(), $userId);
+			$this->delete($userId, $file->getId());
 			throw $e;
 		}
 
-		return $this->getNote($file, $folder);
+		return new Note($file, $notesFolder, $this->noteUtil);
 	}
 
 
 	/**
-	 * Updates a note. Be sure to check the returned note since the title is
-	 * dynamically generated and filename conflicts are resolved
-	 * @param int $id the id of the note used to update
-	 * @param string|null $content the content which will be written into the note
-	 * the title is generated from the first line of the content
-	 * @param string|null $category the category in which the note should be saved
-	 * @param int $mtime time of the note modification (optional)
 	 * @throws NoteDoesNotExistException if note does not exist
-	 * @return \OCA\Notes\Db\Note the updated note
 	 */
-	public function update(int $id, ?string $content, string $userId, ?string $category = null, int $mtime = 0) : Note {
-		$notesFolder = $this->getFolderForUser($userId);
-		$file = $this->getFileById($notesFolder, $id);
-		$title = $this->noteUtil->getSafeTitleFromContent($content===null ? $file->getContent() : $content);
-
-		// rename/move file with respect to title/category
-		// this can fail if access rights are not sufficient or category name is illegal
-		try {
-			$this->noteUtil->moveNote($notesFolder, $file, $title, $category);
-		} catch (\OCP\Files\NotPermittedException $e) {
-			$err = 'Moving note '.$file->getId().' ('.$title.') to the desired target is not allowed.'
-				.' Please check the note\'s target category ('.$category.').';
-			$this->logger->error($err, ['app' => $this->appName]);
-		} catch (\Exception $e) {
-			$err = 'Moving note '.$id.' ('.$title.') to the desired target has failed '
-				.'with a '.get_class($e).': '.$e->getMessage();
-			$this->logger->error($err, ['app' => $this->appName]);
-		}
-
-		if ($content !== null) {
-			$this->setContentForFile($file, $content);
-		}
-
-		if ($mtime) {
-			$file->touch($mtime);
-		}
-
-		return $this->getNote($file, $notesFolder, $this->getTags($id));
-	}
-
-	private function setContentForFile(File $file, $content) : void {
-		$this->noteUtil->ensureSufficientStorage($file->getParent(), strlen($content));
-		$file->putContent($content);
-	}
-
-	public function setContent(string $userId, int $id, string $content) : Note {
-		$notesFolder = $this->getFolderForUser($userId);
-		$file = $this->getFileById($notesFolder, $id);
-		$this->setContentForFile($file, $content);
-		return $this->getNote($file, $notesFolder, $this->getTags($id));
-	}
-
-	public function setTitleCategory(string $userId, int $id, ?string $title, ?string $category = null) : Note {
-		$notesFolder = $this->getFolderForUser($userId);
-		$file = $this->getFileById($notesFolder, $id);
-		if ($title === null) {
-			$note = $this->getNote($file, $notesFolder, [], true);
-			$title = $note->getTitle();
-		}
-		$this->noteUtil->moveNote($notesFolder, $file, $title, $category);
-
-		return $this->getNote($file, $notesFolder, $this->getTags($id));
-	}
-
-	/**
-	 * Set or unset a note as favorite.
-	 * @param int $id the id of the note used to update
-	 * @param boolean $favorite whether the note should be a favorite or not
-	 * @throws NoteDoesNotExistException if note does not exist
-	 * @return boolean the new favorite state of the note
-	 */
-	public function favorite(int $id, bool $favorite, string $userId) {
-		$note = $this->get($id, $userId, true);
-		if ($favorite !== $note->getFavorite()) {
-			if ($favorite) {
-				$this->tags->addToFavorites($id);
-			} else {
-				$this->tags->removeFromFavorites($id);
-			}
-			$note = $this->get($id, $userId, true);
-		}
-		return $note->getFavorite();
-	}
-
-
-	/**
-	 * Deletes a note
-	 * @param int $id the id of the note which should be deleted
-	 * @param string $userId
-	 * @throws NoteDoesNotExistException if note does not
-	 * exist
-	 */
-	public function delete(int $id, string $userId) {
-		$notesFolder = $this->getFolderForUser($userId);
+	public function delete(string $userId, int $id) {
+		$notesFolder = $this->getNotesFolder($userId);
 		$file = $this->getFileById($notesFolder, $id);
 		$parent = $file->getParent();
 		$file->delete();
-		$this->noteUtil->deleteEmptyFolder($notesFolder, $parent);
+		$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);
 	}
 
-	/**
-	 * @param Folder $folder
-	 * @param int $id
-	 * @throws NoteDoesNotExistException
-	 * @return \OCP\Files\File
-	 */
-	private function getFileById(Folder $folder, int $id) : File {
-		$file = $folder->getById($id);
-
-		if (count($file) <= 0 || !($file[0] instanceof File) || !$this->noteUtil->isNote($file[0])) {
-			throw new NoteDoesNotExistException();
-		}
-		return $file[0];
+	public function getTitleFromContent(string $content) : string {
+		// prepare content: remove markdown characters and empty spaces
+		$content = preg_replace("/^\s*[*+-]\s+/mu", "", $content); // list item
+		$content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
+		$content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
+		$content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
+		return $this->noteUtil->getSafeTitle($content);
 	}
+
+
+
+
+
 
 	/**
 	 * @param string $userId the user id
 	 * @return Folder
 	 */
-	private function getFolderForUser(string $userId) : Folder {
-		// TODO use IRootFolder->getUserFolder()  ?
-		$path = '/' . $userId . '/files/' . $this->settings->get($userId, 'notesPath');
+	private function getNotesFolder(string $userId) : Folder {
+		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
+		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
 		try {
 			$folder = $this->noteUtil->getOrCreateFolder($path);
 		} catch (\Exception $e) {
 			throw new NotesFolderException($path);
 		}
 		return $folder;
+	}
+
+	/**
+	 * gather note files in given directory and all subdirectories
+	 */
+	private static function gatherNoteFiles(Folder $folder) : array {
+		$files = [];
+		$nodes = $folder->getDirectoryListing();
+		foreach ($nodes as $node) {
+			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
+				$files = array_merge($files, self::gatherNoteFiles($node));
+				continue;
+			}
+			if (self::isNote($node)) {
+				$files[] = $node;
+			}
+		}
+		return $files;
+	}
+
+	/**
+	 * test if file is a note
+	 */
+	private static function isNote(FileInfo $file) : bool {
+		static $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
+		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
+		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
+	}
+
+	/**
+	 * @throws NoteDoesNotExistException
+	 */
+	private static function getFileById(Folder $folder, int $id) : File {
+		$file = $folder->getById($id);
+
+		if (count($file) <= 0 || !($file[0] instanceof File) || !self::isNote($file[0])) {
+			throw new NoteDoesNotExistException();
+		}
+		return $file[0];
 	}
 }
