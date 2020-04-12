@@ -198,7 +198,7 @@ export default {
 				return
 			}
 			this.loading.create = true
-			createNote(this.filter.category)
+			createNote(this.filter.category || '')
 				.then(note => {
 					this.routeToNote(note.id)
 				})

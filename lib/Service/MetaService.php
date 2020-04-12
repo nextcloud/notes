@@ -1,15 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
 use OCA\Notes\Db\Meta;
 use OCA\Notes\Db\MetaMapper;
 
-/**
- * Class MetaService
- *
- * @package OCA\Notes\Service
- */
 class MetaService {
 
 	private $metaMapper;
@@ -18,7 +13,7 @@ class MetaService {
 		$this->metaMapper = $metaMapper;
 	}
 
-	public function updateAll($userId, Array $notes) {
+	public function updateAll(string $userId, array $notes) : array {
 		$metas = $this->metaMapper->getAll($userId);
 		$metas = $this->getIndexedArray($metas, 'fileId');
 		$notes = $this->getIndexedArray($notes, 'id');
@@ -42,7 +37,7 @@ class MetaService {
 		return $metas;
 	}
 
-	private function getIndexedArray(array $data, $property) {
+	private function getIndexedArray(array $data, string $property) : array {
 		$property = ucfirst($property);
 		$getter = 'get'.$property;
 		$result = array();
@@ -52,13 +47,13 @@ class MetaService {
 		return $result;
 	}
 
-	private function create($userId, $note) {
+	private function create(string $userId, Note $note) : Meta {
 		$meta = Meta::fromNote($note, $userId);
 		$this->metaMapper->insert($meta);
 		return $meta;
 	}
 
-	private function updateIfNeeded(&$meta, $note) {
+	private function updateIfNeeded(Meta &$meta, Note $note) : void {
 		if ($note->getEtag()!==$meta->getEtag()) {
 			$meta->setEtag($note->getEtag());
 			$meta->setLastUpdate(time());

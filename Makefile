@@ -47,7 +47,7 @@ appstore: clean lint build-js-production
 
 ### from vueexample
 
-all: dev-setup lint build-js-production test
+all: dev-setup build-js-production
 
 # Dev env management
 dev-setup: clean clean-dev init

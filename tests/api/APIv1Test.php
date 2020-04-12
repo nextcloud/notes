@@ -2,9 +2,9 @@
 
 namespace OCA\Notes\Tests\API;
 
-class APIv02Test extends CommonAPITest {
+class APIv1Test extends CommonAPITest {
 
 	public function __construct() {
-		parent::__construct('0.2', true);
+		parent::__construct('1.0', false);
 	}
 }

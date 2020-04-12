@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
@@ -7,18 +7,9 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IRequest;
 
-/**
- * Class PageController
- *
- * @package OCA\Notes\Controller
- */
 class PageController extends Controller {
 
-	/**
-	 * @param string $AppName
-	 * @param IRequest $request
-	 */
-	public function __construct($AppName, IRequest $request) {
+	public function __construct(string $AppName, IRequest $request) {
 		parent::__construct($AppName, $request);
 	}
 
@@ -29,7 +20,7 @@ class PageController extends Controller {
 	 *
 	 * @return TemplateResponse
 	 */
-	public function index() {
+	public function index() : TemplateResponse {
 		$devMode = !is_file(dirname(__FILE__).'/../../js/notes.js');
 		$response = new TemplateResponse(
 			$this->appName,

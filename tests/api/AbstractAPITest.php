@@ -14,8 +14,13 @@ abstract class AbstractAPITest extends TestCase {
 	}
 
 	protected function setUp() : void {
+		if ($this->apiVersion === '0.2') {
+			$v = $this->apiVersion;
+		} else {
+			$v = intval($this->apiVersion);
+		}
 		$this->http = new \GuzzleHttp\Client([
-			'base_uri' => 'http://localhost:8080/index.php/apps/notes/api/'.$this->apiVersion.'/',
+			'base_uri' => 'http://localhost:8080/index.php/apps/notes/api/v'.$v.'/',
 			'auth' => ['test', 'test'],
 			'http_errors' => false,
 		]);
@@ -28,11 +33,23 @@ abstract class AbstractAPITest extends TestCase {
 		string $contentTypeExp = 'application/json; charset=utf-8'
 	) {
 		$this->assertEquals($statusExp, $response->getStatusCode(), $message.': Response status code');
-		$this->assertTrue($response->hasHeader('Content-Type'), $message.': Response has content-type header');
+		$this->assertTrue(
+			$response->hasHeader('Content-Type'),
+			$message.': Response has content-type header'
+		);
 		$this->assertEquals(
 			$contentTypeExp,
 			$response->getHeaderLine('Content-Type'),
 			$message.': Response content type'
+		);
+		$this->assertTrue(
+			$response->hasHeader('X-Notes-API-Versions'),
+			$message.': Response has Notes-API-Versions header'
+		);
+		$this->assertContains(
+			$this->apiVersion,
+			explode(', ', $response->getHeaderLine('X-Notes-API-Versions')),
+			$message.': Response Notes-API-Versions header'
 		);
 	}
 
@@ -47,7 +64,7 @@ abstract class AbstractAPITest extends TestCase {
 		$response = $this->http->request('GET', 'notes' . $param);
 		$this->checkResponse($response, $messagePrefix, 200);
 		$notes = json_decode($response->getBody()->getContents());
-		$notesMap = self::getNotesIdMap($notes);
+		$notesMap = $this->getNotesIdMap($notes, $messagePrefix);
 		$this->assertEquals(count($refNotes), count($notes), $messagePrefix.': Number of notes');
 		foreach ($refNotes as $refNote) {
 			$this->assertArrayHasKey(
@@ -140,9 +157,10 @@ abstract class AbstractAPITest extends TestCase {
 		);
 	}
 
-	protected static function getNotesIdMap(array $notes) : array {
+	protected function getNotesIdMap(array $notes, string $messagePrefix) : array {
 		$map = [];
 		foreach ($notes as $note) {
+			$this->assertObjectHasAttribute('id', $note, $messagePrefix.': Note has property id');
 			$map[$note->id] = $note;
 		}
 		return $map;
