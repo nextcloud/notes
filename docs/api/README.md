@@ -47,10 +47,10 @@ It contains a coma-separated list of versions, e.g., `X-Notes-API-Versions: 0.2,
 
 ## Major API versions
 
-| Version | Supported by app version | Remarks |
-|:-------:|--------------------------|---------|
-| **0.2** | since 1.0 (2015)         | *(deprecated)* |
-| **1**   | since 3.3 (April 2020)   | see [documentation](v1.md) |
+| API version | Supported by app version | Remarks |
+|:-----------:|--------------------------|---------|
+|  **0.2**    | since 1.0 (2015)         | *(deprecated)* |
+|  **1**      | since 3.3 (April 2020)   | see [documentation](v1.md) |
 
 ## Compability between minor versions
 
