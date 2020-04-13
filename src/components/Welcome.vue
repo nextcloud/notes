@@ -48,6 +48,10 @@ export default {
 	margin-bottom: 1em;
 }
 
+.welcome-content a {
+	color: var(--color-primary-element);
+}
+
 .feature {
 	background-position: left top;
 	min-height: 32px;
