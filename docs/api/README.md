@@ -18,36 +18,29 @@ We distinguish major and minor versions:
 - a major version comes with changes that are incompatible to the previous version and therefore would break old clients. Major versions come with a new base URL path.
 - a minor version has changes that are realized compatible to the previous version. Old clients can still use the current API endpoint, but they need adoption in order to use new features.
 
-Supported API versions can be queried using the [Nextcloud Capabilities API](https://docs.nextcloud.com/server/latest/developer_manual/client_apis/OCS/ocs-api-overview.html#capabilities-api).
+From Notes app version 3.3, supported API versions can be queried using the [Nextcloud Capabilities API](https://docs.nextcloud.com/server/latest/developer_manual/client_apis/OCS/ocs-api-overview.html#capabilities-api).
 
 A request like
 
 	curl -u test:test -X GET -H "OCS-APIRequest: true" -H "Accept: application/json" http://localhost/ocs/v2.php/cloud/capabilities 
 
-will return the following result:
+will return the following result (irrelevant attributes are omitted):
 
 ```json
 {
   "ocs": {
-    ...
     "data": {
-      ...
       "capabilities": {
-        ...
         "notes": {
-          "api_version": [
-            "0.2",
-            "1.0"
-          ]
-        },
-        ...
+          "api_version": [ "0.2", "1.0" ]
+        }
       }
     }
   }
 }
 ```
 
-The list of supported API versions is also provided in every response from the Notes API.
+From Notes app version 3.3, the list of supported API versions is also provided in every response from the Notes API.
 For this, the HTTP header `X-Notes-API-Versions` is used.
 It contains a coma-separated list of versions, e.g., `X-Notes-API-Versions: 0.2, 1.0`.
 
@@ -55,7 +48,6 @@ It contains a coma-separated list of versions, e.g., `X-Notes-API-Versions: 0.2,
 ## Major API versions
 
 TODO Table
-
 
 ## Compability between minor versions
 
