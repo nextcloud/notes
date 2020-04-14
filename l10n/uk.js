@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Нотатки",
-    "New note" : "Нова нотатка",
     "Error" : "Помилка",
+    "New note" : "Нова нотатка",
     "Settings" : "Налаштування",
     "Categories" : "Категорії",
     "Today" : "Сьогодні",

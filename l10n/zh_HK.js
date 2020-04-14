@@ -2,11 +2,12 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "筆記",
-    "New note" : "新筆記",
     "Error" : "錯誤",
+    "New note" : "新筆記",
     "Settings" : "設定",
     "Today" : "今日",
     "Yesterday" : "明日",
+    "Rename" : "重新命名",
     "Delete note" : "刪除筆記",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

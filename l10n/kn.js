@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "﻿ತಪ್ಪಾಗಿದೆ",
     "Settings" : "ಆಯ್ಕೆ",
     "Today" : "Today",
+    "Rename" : "﻿ಮರುಹೆಸರಿಸು",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Edit" : "ಸಂಪಾದಿಸು"

@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Ghi chép",
-    "New note" : "Ghi chú mới",
     "Error" : "Lỗi",
+    "New note" : "Ghi chú mới",
     "Settings" : "Thiết lập",
     "Today" : "Hôm nay",
     "Yesterday" : "Hôm qua",

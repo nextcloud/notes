@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Eslatmalar",
-    "New note" : "Yangi eslatma",
     "Error" : "Xato",
+    "New note" : "Yangi eslatma",
     "Settings" : "Sozlamalar"
 },
 "nplurals=1; plural=0;");

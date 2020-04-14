@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Shënime",
-    "New note" : "Shënim i ri",
     "Error" : "Error",
+    "New note" : "Shënim i ri",
     "Settings" : "Rregullimet",
     "All notes" : "Të gjitha shënimet",
     "Categories" : "Kategoritë",

@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Qeydlər",
-    "New note" : "Yeni qeyd",
     "Error" : "Səhv",
+    "New note" : "Yeni qeyd",
     "Settings" : "Quraşdırmalar",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",

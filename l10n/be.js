@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "Памылка",
     "Settings" : "Налады",
     "Today" : "Today",
+    "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites"
 },

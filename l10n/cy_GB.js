@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Nodiadau",
-    "New note" : "Nodyn newydd",
     "Error" : "Gwall",
+    "New note" : "Nodyn newydd",
     "Settings" : "Gosodiadau",
     "All notes" : "Pob nodyn",
     "Loading …" : "Yn llwytho …",
@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "Ddoe",
     "This week" : "Wythnos yma",
     "This month" : "Mis yma",
+    "Rename" : "Ailenwi",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Manylion",

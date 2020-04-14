@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Тэмдэглэл",
-    "New note" : "Шинэ тэмдэглэл",
     "Error" : "Алдаа",
+    "New note" : "Шинэ тэмдэглэл",
     "Settings" : "Тохиргоо",
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",
@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "өчигдөр",
     "This week" : "7 хоног",
     "This month" : "1 сар",
+    "Rename" : "Нэрлэнэ үү",
     "Delete note" : "Тэмдэглэл устгах",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

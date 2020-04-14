@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "บันทึกย่อ",
-    "New note" : "สร้างบันทึกใหม่",
     "Error" : "ข้อผิดพลาด",
+    "New note" : "สร้างบันทึกใหม่",
     "Settings" : "ตั้งค่า",
     "Today" : "วันนี้",
     "Yesterday" : "เมื่อวานนี้",

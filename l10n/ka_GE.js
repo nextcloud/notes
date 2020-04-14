@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "ჩანაწერები",
-    "New note" : "ახალი ჩანაწერი",
     "Error" : "შეცდომა",
+    "New note" : "ახალი ჩანაწერი",
     "Settings" : "პარამეტრები",
     "There are unsaved notes. Leaving the page will discard all changes!" : "არსებობს შეუნახავი ჩანაწერები. გვერდის დატოვება ყველა ცვლილებას უარყოფს!",
     "Categories" : "კატეგორიები",

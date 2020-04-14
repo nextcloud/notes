@@ -2,9 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Oharrak",
-    "New note" : "Ohar berria",
-    "Encryption Error" : "Zifratze errorea",
     "Error" : "Errorea",
+    "New note" : "Ohar berria",
     "Settings" : "Ezarpenak",
     "Deleted {title}" : "{title} ezabatuta",
     "Deleted {number} notes" : "{number} ohar ezabatuta",
@@ -20,6 +19,7 @@ OC.L10N.register(
     "Last week" : "Azken astean",
     "This month" : "Hilabete honetan",
     "Last month" : "Azken hilabetean",
+    "Rename" : "Berrizendatu",
     "Delete note" : "Ezabatu oharra",
     "Remove from favorites" : "Kendu gogokoetatik",
     "Add to favorites" : "Gehitu gogokoetan",

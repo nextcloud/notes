@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "নোট",
-    "New note" : "নতুন নোট",
     "Error" : "সমস্যা",
+    "New note" : "নতুন নোট",
     "Settings" : "সেটিংস",
     "Today" : "আজ",
     "Yesterday" : "গতকাল",

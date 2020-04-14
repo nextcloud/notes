@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notas",
-    "New note" : "Nota nueva",
     "Error" : "Error",
+    "New note" : "Nota nueva",
     "Settings" : "Configuraciones ",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin salvar. ¡Al salir de la página perderá todos los cambios!",
     "Categories" : "Categorías",
@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
     "This month" : "Este mes",
+    "Rename" : "Renombrar",
     "Delete note" : "Borrar nota",
     "Remove from favorites" : "Eliminar de favoritos",
     "Add to favorites" : "Agregar a tus favoritos",

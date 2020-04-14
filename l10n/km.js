@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "កំណត់​ចំណាំ",
-    "New note" : "កំណត់​ចំណាំ​ថ្មី",
     "Error" : "កំហុស",
+    "New note" : "កំណត់​ចំណាំ​ថ្មី",
     "Settings" : "ការកំណត់",
     "Today" : "ថ្ងៃ​នេះ",
     "Delete note" : "លុប​កំណត់​ចំណាំ",

@@ -2,8 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Note",
-    "New note" : "Notă nouă",
     "Error" : "Eroare",
+    "New note" : "Notă nouă",
     "Settings" : "Setări",
     "All notes" : "Toate notițele",
     "Loading …" : "Se încarcă…",

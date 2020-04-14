@@ -2,9 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notas",
-    "New note" : "Nuwe nota",
-    "Encryption Error" : "Enkripsiefout",
     "Error" : "Fout",
+    "New note" : "Nuwe nota",
     "Settings" : "Instellings",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Daar is ongestoorde veranderinge. Indien die bladsy gesluit word sal alle veranderinge geskrap word!",
     "path to notes" : "pad na notas",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "Loading …" : "Laai …",
     "Today" : "Vandag",
     "Yesterday" : "Gister",
+    "Rename" : "Hernoem",
     "Delete note" : "Skrap nota",
     "Remove from favorites" : "Verwyder uit gunstelinge",
     "Add to favorites" : "Voeg by gunstelinge",

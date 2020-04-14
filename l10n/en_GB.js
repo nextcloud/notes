@@ -3,9 +3,8 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "The last viewed note cannot be accessed. " : "The last viewed note cannot be accessed. ",
-    "New note" : "New note",
-    "Encryption Error" : "Encryption Error",
     "Error" : "Error",
+    "New note" : "New note",
     "Distraction-free notes and writing" : "Distraction-free notes and writing",
     "Settings" : "Settings",
     "There are unsaved notes. Leaving the page will discard all changes!" : "There are unsaved notes. Leaving the page will discard all changes!",
