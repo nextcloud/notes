@@ -28,6 +28,7 @@ OC.L10N.register(
     "Last week" : "هفته گذشته",
     "This month" : "این ماه",
     "Last month" : "ماه گذشته",
+    "Rename" : "تغییرنام",
     "Delete note" : "حذف یادداشت",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "افزودن به علاقه مندی ها",

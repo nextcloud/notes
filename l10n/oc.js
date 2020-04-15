@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "Paramètres",
     "Today" : "Uèi",
     "Yesterday" : "Ièr",
+    "Rename" : "Renomenar",
     "Delete note" : "Suprimir la nòta",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "Quraşdırmalar",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
+    "Rename" : "Adı dəyiş",
     "Delete note" : "Qeydi sil",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

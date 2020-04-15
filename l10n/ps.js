@@ -6,6 +6,7 @@ OC.L10N.register(
     "Settings" : "سمونې",
     "Today" : "نن",
     "Yesterday" : "پرون",
+    "Rename" : "نوم بدلول",
     "Remove from favorites" : "له نښو ويستل",
     "Add to favorites" : "په نښه کول",
     "Details" : "معلومات"

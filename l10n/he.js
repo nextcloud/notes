@@ -18,6 +18,7 @@ OC.L10N.register(
     "Yesterday" : "אתמול",
     "This week" : "השבוע",
     "This month" : "החודש",
+    "Rename" : "שינוי שם",
     "Delete note" : "מחיקת הערה",
     "Remove from favorites" : "הסרה מהמועדפים",
     "Add to favorites" : "הוספה למועדפים",

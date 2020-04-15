@@ -20,6 +20,7 @@ OC.L10N.register(
     "Yesterday" : "Yesterday",
     "This week" : "Í þessari viku",
     "This month" : "Í þessum mánuði",
+    "Rename" : "Endurnefna",
     "Delete note" : "Eyða minnispunkti",
     "Remove from favorites" : "Fjarlægja úr eftirlætum",
     "Add to favorites" : "Bæta í eftirlæti",

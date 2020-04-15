@@ -24,6 +24,7 @@ OC.L10N.register(
     "Last week" : "Viime viikolla",
     "This month" : "Tässä kuussa",
     "Last month" : "Viime kuussa",
+    "Rename" : "Nimeä uudelleen",
     "Delete note" : "Poista muistiinpano",
     "Remove from favorites" : "Poista suosikeista",
     "Add to favorites" : "Lisää suosikkeihin",

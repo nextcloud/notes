@@ -12,6 +12,7 @@ OC.L10N.register(
     "Yesterday" : "어제",
     "This week" : "이번 주",
     "This month" : "이번 달",
+    "Rename" : "이름 바꾸기",
     "Delete note" : "메모 삭제",
     "Remove from favorites" : "즐겨찾기에서 제거",
     "Add to favorites" : "즐겨찾기에 추가",

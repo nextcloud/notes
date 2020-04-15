@@ -23,6 +23,7 @@ OC.L10N.register(
     "Last week" : "Praeitą savaitę",
     "This month" : "Šį mėnesį",
     "Last month" : "Praeitą mėnesį",
+    "Rename" : "Pervadinti",
     "Delete note" : "Ištrinti užrašus",
     "Remove from favorites" : "Šalinti iš mėgstamų",
     "Add to favorites" : "Pridėti į mėgstamus",

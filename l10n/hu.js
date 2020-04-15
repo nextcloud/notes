@@ -21,6 +21,7 @@ OC.L10N.register(
     "Last week" : "Előző hét",
     "This month" : "Ez a hónap",
     "Last month" : "Előző hónap",
+    "Rename" : "Átnevezés",
     "Delete note" : "Jegyzet törlése",
     "Remove from favorites" : "Eltávolítás a kedvencekből",
     "Add to favorites" : "Hozzáadás a kedvencekhez",

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "Ieri",
     "This week" : "Săptămâna asta",
     "This month" : "Luna asta",
+    "Rename" : "Redenumire",
     "Delete note" : "Şterge nota",
     "Remove from favorites" : "Șterge din favorite",
     "Add to favorites" : "Adăugați la favorite",

@@ -30,6 +30,7 @@ OC.L10N.register(
     "Last week" : "先週",
     "This month" : "今月",
     "Last month" : "先月",
+    "Rename" : "名前変更",
     "Delete note" : "ノートを削除",
     "Remove from favorites" : "お気に入りから削除",
     "Add to favorites" : "お気に入りに追加",

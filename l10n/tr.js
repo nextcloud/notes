@@ -30,6 +30,7 @@ OC.L10N.register(
     "Last week" : "Geçen hafta",
     "This month" : "Bu ay",
     "Last month" : "Geçen ay",
+    "Rename" : "Yeniden adlandır",
     "Delete note" : "Notu sil",
     "Remove from favorites" : "Sık kullanılanlardan çıkar",
     "Add to favorites" : "Sık kullanılanlara ekle",

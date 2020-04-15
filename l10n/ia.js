@@ -9,6 +9,7 @@ OC.L10N.register(
     "Yesterday" : "Heri",
     "This week" : "Iste septimana",
     "This month" : "Iste mense",
+    "Rename" : "Renominar",
     "Delete note" : "Dele nota",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

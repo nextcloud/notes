@@ -12,6 +12,7 @@ OC.L10N.register(
     "Yesterday" : "Ayeri",
     "This week" : "Esta selmana",
     "This month" : "Esti mes",
+    "Rename" : "Renomar",
     "Delete note" : "Desaniciar nota",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

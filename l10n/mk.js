@@ -27,6 +27,7 @@ OC.L10N.register(
     "Last week" : "Минатата недела",
     "This month" : "Овој месец",
     "Last month" : "Минатиот месец",
+    "Rename" : "Преименувај",
     "Delete note" : "Избриши белешка",
     "Remove from favorites" : "Отстрани од фаворити",
     "Add to favorites" : "Додади во фаворити",

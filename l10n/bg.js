@@ -18,6 +18,7 @@ OC.L10N.register(
     "Yesterday" : "Вчера",
     "This week" : "Тази седмица",
     "This month" : "Този месец",
+    "Rename" : "Преименувай",
     "Delete note" : "Изтрий бележката",
     "Remove from favorites" : "Премахни от любимите",
     "Add to favorites" : "Добави към любимите",

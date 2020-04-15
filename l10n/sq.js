@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "Dje",
     "This week" : "Këtë javë",
     "This month" : "Këtë muaj",
+    "Rename" : "Rename",
     "Delete note" : "Fshije shënimin",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Shtoje tek të parapëlqyerat",

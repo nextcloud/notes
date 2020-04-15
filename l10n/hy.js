@@ -9,6 +9,7 @@ OC.L10N.register(
     "Yesterday" : "երեկ",
     "This week" : "այս շաբաթ",
     "This month" : "այս ամիս",
+    "Rename" : "Վերանվանել",
     "Delete note" : "Ջնջել նոթը",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

@@ -14,6 +14,7 @@ OC.L10N.register(
     "Yesterday" : "Yesterday",
     "This week" : "This week",
     "This month" : "This month",
+    "Rename" : "Rename",
     "Delete note" : "Delete note",
     "Remove from favorites" : "Remove from favourites",
     "Add to favorites" : "Add to favourites",

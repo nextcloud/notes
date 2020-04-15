@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "Instillingar",
     "Today" : "I dag",
     "Yesterday" : "i går",
+    "Rename" : "Gje nytt namn",
     "Delete note" : "Slett notat",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

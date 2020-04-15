@@ -29,6 +29,7 @@ OC.L10N.register(
     "Last week" : "Förra veckan",
     "This month" : "Denna månad",
     "Last month" : "Förra månaden",
+    "Rename" : "Byt namn",
     "Delete note" : "Radera anteckning",
     "Remove from favorites" : "Ta bort från favoriter",
     "Add to favorites" : "Lägg till som favorit",

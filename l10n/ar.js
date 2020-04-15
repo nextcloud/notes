@@ -12,6 +12,7 @@ OC.L10N.register(
     "Last week" : "الأسبوع الماضي",
     "This month" : "هذا الشهر",
     "Last month" : "الشهر الماضي",
+    "Rename" : "إعادة التسمية",
     "Delete note" : "حذف الملاحظة ",
     "Remove from favorites" : "إزالتها مِن المفضلة",
     "Add to favorites" : "أضفه إلى المفضلة",

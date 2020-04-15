@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "ตั้งค่า",
     "Today" : "วันนี้",
     "Yesterday" : "เมื่อวานนี้",
+    "Rename" : "เปลี่ยนชื่อ",
     "Delete note" : "ลบบันทึกย่อ",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

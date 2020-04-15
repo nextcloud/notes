@@ -18,6 +18,7 @@ OC.L10N.register(
     "Loading …" : "Ŝargado...",
     "Today" : "Hodiaŭ",
     "Yesterday" : "Hieraŭ",
+    "Rename" : "Alinomi",
     "Delete note" : "Forigi noton",
     "Remove from favorites" : "Forigi el pliŝataĵoj",
     "Add to favorites" : "Aldoni al pliŝataĵoj",

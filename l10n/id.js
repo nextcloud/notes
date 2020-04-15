@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "Kemarin",
     "This week" : "Pekan ini",
     "This month" : "Bulan ini",
+    "Rename" : "Ubah nama",
     "Delete note" : "Hapus catatan",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Tambah ke favorit",

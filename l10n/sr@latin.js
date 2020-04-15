@@ -12,6 +12,7 @@ OC.L10N.register(
     "Last week" : "Prošle nedelje",
     "This month" : "Ovog meseca",
     "Last month" : "Prošlog meseca",
+    "Rename" : "Preimenuj",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Detalji",

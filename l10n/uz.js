@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Eslatmalar",
     "Error" : "Xato",
     "New note" : "Yangi eslatma",
-    "Settings" : "Sozlamalar"
+    "Settings" : "Sozlamalar",
+    "Rename" : "Nomni o'zgartiring"
 },
 "nplurals=1; plural=0;");

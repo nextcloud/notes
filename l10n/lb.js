@@ -6,6 +6,7 @@ OC.L10N.register(
     "Settings" : "Astellungen",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
+    "Rename" : "Ëmbenennen",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Detailer",

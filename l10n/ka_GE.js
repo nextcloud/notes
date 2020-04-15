@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "გუშინ",
     "This week" : "ამ კვირაში",
     "This month" : "ამ თვეში",
+    "Rename" : "სახელის შეცვლა",
     "Delete note" : "ჩანაწერის გაუქმება",
     "Remove from favorites" : "რჩეულებიდან ამოშლა",
     "Add to favorites" : "რჩეულებში დამატება",

@@ -30,6 +30,7 @@ OC.L10N.register(
     "Last week" : "La semana pasada",
     "This month" : "Este mes",
     "Last month" : "El mes pasado",
+    "Rename" : "Renombrar",
     "Delete note" : "Eliminar nota",
     "Remove from favorites" : "Eliminar de favoritos",
     "Add to favorites" : "Añadir a favoritos",

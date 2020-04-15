@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "সেটিংস",
     "Today" : "আজ",
     "Yesterday" : "গতকাল",
+    "Rename" : "পূনঃনামকরণ",
     "Delete note" : "নোট মোছ",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

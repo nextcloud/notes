@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "ایرر",
     "Settings" : "سیٹینگز",
     "Today" : "آج",
+    "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Edit" : "تدوین کریں"

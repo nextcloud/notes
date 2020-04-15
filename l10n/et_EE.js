@@ -8,6 +8,7 @@ OC.L10N.register(
     "Categories" : "Kategooriad",
     "Today" : "Täna",
     "Yesterday" : "Eile",
+    "Rename" : "Nimeta ümber",
     "Delete note" : "Kustuta märge",
     "Remove from favorites" : "Eemalda lemmikutest",
     "Add to favorites" : "Lisa lemmikutesse",

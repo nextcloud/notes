@@ -8,6 +8,7 @@ OC.L10N.register(
     "Categories" : "Категорії",
     "Today" : "Сьогодні",
     "Yesterday" : "Вчора",
+    "Rename" : "Перейменувати",
     "Delete note" : "Вилучити нотатку",
     "Remove from favorites" : "Видалено з улюбленого",
     "Add to favorites" : "Додати до обраного",

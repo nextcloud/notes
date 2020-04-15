@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last week" : "Forrige uke",
     "This month" : "Denne måneden",
     "Last month" : "Forrige måned",
+    "Rename" : "Endre navn",
     "Delete note" : "Slett notat",
     "Remove from favorites" : "Fjern fra favoritter",
     "Add to favorites" : "Legg til i favoritter",

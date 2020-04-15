@@ -11,6 +11,7 @@ OC.L10N.register(
     "Yesterday" : "Ontem",
     "This week" : "Esta semana",
     "This month" : "Este mês",
+    "Rename" : "Renomear",
     "Delete note" : "Apagar nota",
     "Remove from favorites" : "Remover de favoritos",
     "Add to favorites" : "Adicionar aos favoritos",

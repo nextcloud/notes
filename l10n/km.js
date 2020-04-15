@@ -6,6 +6,7 @@ OC.L10N.register(
     "New note" : "កំណត់​ចំណាំ​ថ្មី",
     "Settings" : "ការកំណត់",
     "Today" : "ថ្ងៃ​នេះ",
+    "Rename" : "ប្ដូរ​ឈ្មោះ",
     "Delete note" : "លុប​កំណត់​ចំណាំ",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

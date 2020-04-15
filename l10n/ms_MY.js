@@ -7,6 +7,7 @@ OC.L10N.register(
     "Settings" : "Tetapan",
     "Today" : "Hari ini",
     "Yesterday" : "Semalam",
+    "Rename" : "Namakan",
     "Delete note" : "Hapus nota",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
