@@ -30,7 +30,7 @@ OC.L10N.register(
     "Last week" : "Letzte Woche",
     "This month" : "Dieser Monat",
     "Last month" : "Letzter Monat",
-    "Rename" : "Benötigt keine Übersetzung. Für Android wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Rename" : "Umbenennen",
     "Note's title" : "Titel der Notiz",
     "Delete note" : "Notiz löschen",
     "Remove from favorites" : "Von Favoriten entfernen",
