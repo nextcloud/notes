@@ -14,6 +14,7 @@ OC.L10N.register(
     "File extension for new notes" : "סיומת קובץ לפתקיות חדשות",
     "All notes" : "כל הפתקים",
     "Categories" : "קטגוריות",
+    "Loading …" : "בטעינה",
     "Today" : "היום",
     "Yesterday" : "אתמול",
     "This week" : "השבוע",
