@@ -1,13 +1,15 @@
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
+import { showError } from '@nextcloud/dialogs'
+
 import AppGlobal from './mixins/AppGlobal'
 import store from './store'
-import axios from '@nextcloud/axios'
-import { showError } from '@nextcloud/dialogs'
 
 const t = AppGlobal.methods.t
 
 function url(url) {
-	url = `/apps/notes${url}`
-	return OC.generateUrl(url)
+	url = `apps/notes${url}`
+	return generateUrl(url)
 }
 
 function handleSyncError(message) {

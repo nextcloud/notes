@@ -56,11 +56,12 @@ import {
 	ActionButton,
 	AppContent,
 	Tooltip,
+	isMobile,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
+import { emit } from '@nextcloud/event-bus'
 
 import { fetchNote, saveNote, saveNoteManually } from '../NotesService'
-import { closeNavbar } from '../nextcloud'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
 import store from '../store'
@@ -79,6 +80,8 @@ export default {
 	directives: {
 		tooltip: Tooltip,
 	},
+
+	mixins: [isMobile],
 
 	props: {
 		noteId: {
@@ -134,7 +137,9 @@ export default {
 		fetchData() {
 			store.commit('setSidebarOpen', false)
 
-			closeNavbar()
+			if (this.isMobile) {
+				emit('toggle-navigation', { open: false })
+			}
 
 			this.onUpdateTitle(this.title)
 			this.loading = true
