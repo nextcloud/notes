@@ -41,9 +41,9 @@ import {
 	Content,
 } from '@nextcloud/vue'
 import { showSuccess } from '@nextcloud/dialogs'
+import { emit } from '@nextcloud/event-bus'
 
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
-import { openNavbar } from './nextcloud'
 import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
 import store from './store'
@@ -186,7 +186,7 @@ export default {
 		onSearch(query) {
 			this.filter.search = query
 
-			openNavbar()
+			emit('toggle-navigation', { open: true })
 		},
 
 		onResetSearch() {
