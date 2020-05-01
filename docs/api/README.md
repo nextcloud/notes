@@ -4,7 +4,15 @@ The notes app comes with a REST-based API.
 It can be used in order to provide full access to notes from third-party apps.
 This documentation describes the API in detail.
 In this file, general information about the API is provided.
-The endpoint specification for specific version can be found in separate files.
+The endpoint specification for a specific version can be found in separate files (see table below).
+
+
+## Major API versions
+
+| API version | Supported by app version | Remarks |
+|:-----------:|--------------------------|---------|
+|  **1**      | since 3.3 (May 2020)     | **[documentation](v1.md)** |
+|  **0.2**    | since 1.0 (2015)         | *(deprecated)* |
 
 
 ## Versions and Capabilites
@@ -22,7 +30,7 @@ From Notes app version 3.3, supported API versions can be queried using the [Nex
 
 A request like
 
-	curl -u test:test -X GET -H "OCS-APIRequest: true" -H "Accept: application/json" http://localhost/ocs/v2.php/cloud/capabilities 
+	curl -u user:password -X GET -H "OCS-APIRequest: true" -H "Accept: application/json" https://yournextcloud.com/ocs/v2.php/cloud/capabilities 
 
 will return the following result (irrelevant attributes are omitted):
 
@@ -45,19 +53,12 @@ For this, the HTTP header `X-Notes-API-Versions` is used.
 It contains a coma-separated list of versions, e.g., `X-Notes-API-Versions: 0.2, 1.0`.
 
 
-## Major API versions
-
-| API version | Supported by app version | Remarks |
-|:-----------:|--------------------------|---------|
-|  **0.2**    | since 1.0 (2015)         | *(deprecated)* |
-|  **1**      | since 3.3 (April 2020)   | see [documentation](v1.md) |
-
 ## Compability between minor versions
 
 In order to realize forward compatibility between minor versions, clients must follow some general rules regarding the API:
 
-- when processing the JSON response, unknown fields must be ignored (e.g. if API version v1.0 does not define the note's attribute "tags", client must ignore such a field in order to be compatible with a possible future version v1.4 which defines such a field)
-- when processing the HTTP response code, a client must be able to handle newly introduced error codes (e.g. if API v1.0 does not explicitly define response code 5xx, the client must handle 
+- when processing the JSON response, unknown fields must be ignored (e.g. if API version 1.0 does not define the note's attribute "tags", a client must ignore such an unkown field in order to be compatible with a possible future version (e.g. 1.4) which defines such a field)
+- when processing the HTTP response code, a client must be able to handle newly introduced error codes (e.g. if API 1.0 does not explicitly define response code 405, the client must handle it at least like 400; same with a 5xx code).
 
 In order to realize backwards compatibility between minor versions, a client must follow the following rules:
 
@@ -72,18 +73,14 @@ If a client requires a certain feature, it should check the `X-Notes-API-Version
 Because REST is stateless you have to send user and password each time you access the API.
 Therefore running Nextcloud **with SSL is highly recommended** otherwise **everyone in your network can log your credentials**.
 
-The base URL for all calls is:
+You can test your request using `curl`:
 
-    https://user:password@yournextcloud.com/index.php/apps/notes/api/v1/
-
-All defined routes in the specification are appended to this url. To access all notes for instance use this url:
-
-    https://user:password@yournextcloud.com/index.php/apps/notes/api/v1/notes
+    curl -u user:password https://yournextcloud.com/index.php/apps/notes/api/v1/notes
 
 
 ## Input parameters
 
-In general the input parameters can be in the URL or request body, the app framework doesn't differentiate between them.
+In general the input parameters can be in the URL or request body. The app framework doesn't differentiate between them.
 
 Therefore, JSON in the request body like:
 ```js
@@ -103,4 +100,3 @@ It is recommended though that you use the following convention:
 * **DELETE**: parameters as JSON in the request body
 
 The output is JSON.
-
