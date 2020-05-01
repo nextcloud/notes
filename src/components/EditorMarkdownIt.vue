@@ -122,5 +122,9 @@ export default {
 	& table td, & table th {
 		padding-right: 1.5em;
 	}
+
+	& table td:empty::after {
+		content: '\00a0';
+	}
 }
 </style>
