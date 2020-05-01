@@ -9,10 +9,10 @@ The endpoint specification for a specific version can be found in separate files
 
 ## Major API versions
 
-| API version | Supported by app version | Remarks |
+| API version | Supported by app version | Documentation  |
 |:-----------:|:-------------------------|:--------|
-|  **1**      | since 3.3 (May 2020)     | **[documentation](v1.md)** |
-|  **0.2**    | since 1.0 (2015)         | *(deprecated)* |
+|  **1**      | since Notes 3.3 (May 2020)     | **[Documentation](v1.md)** |
+|  **0.2**    | since Notes 1.0 (2015)         | *(deprecated)* |
 
 
 ## Versions and Capabilites
