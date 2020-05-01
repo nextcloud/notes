@@ -39,7 +39,7 @@ Before reporting bugs:
 4. Enable the app through the app management of your Nextcloud
 
 
-**Third-party apps**
+**REST API for third-party apps**
 
-The notes app provides a JSON-API for third-party apps. You can find the documentation in [the wiki](https://github.com/nextcloud/notes/wiki).
+The notes app provides a JSON-API for third-party apps. Please have a look at our **[API documentation](docs/api/README.md)**.
 
