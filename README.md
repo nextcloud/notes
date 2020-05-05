@@ -30,7 +30,7 @@ Before reporting bugs:
 
 [![Lint](https://github.com/nextcloud/notes/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/nextcloud/notes/actions?query=workflow%3ALint+event%3Apush+branch%3Amaster)
 
-**Building the app**
+### Building the app
 
 1. Clone this into your `apps` folder of your Nextcloud
 2. In a terminal, run the command `make dev-setup` to install the dependencies
@@ -39,7 +39,7 @@ Before reporting bugs:
 4. Enable the app through the app management of your Nextcloud
 
 
-**REST API for third-party apps**
+### REST API for third-party apps
 
 The notes app provides a JSON-API for third-party apps. Please have a look at our **[API documentation](docs/api/README.md)**.
 
