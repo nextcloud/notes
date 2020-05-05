@@ -1,7 +1,7 @@
 # Notes
 
 <!-- The following paragraph should be kept synchronized with the description in appinfo/info.xml -->
-The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [RESTful API](https://github.com/nextcloud/notes/wiki/API-0.2) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites.
+The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites.
 
 ![Screenshot of Nextcloud Notes](https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png)
 
@@ -29,8 +29,9 @@ Before reporting bugs:
 ## :warning: Developer Info
 
 [![Lint](https://github.com/nextcloud/notes/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/nextcloud/notes/actions?query=workflow%3ALint+event%3Apush+branch%3Amaster)
+[![Test](https://github.com/nextcloud/notes/workflows/Test/badge.svg?branch=master&event=push)](https://github.com/nextcloud/notes/actions?query=workflow%3ATest+event%3Apush+branch%3Amaster)
 
-**Building the app**
+### Building the app
 
 1. Clone this into your `apps` folder of your Nextcloud
 2. In a terminal, run the command `make dev-setup` to install the dependencies
@@ -39,7 +40,6 @@ Before reporting bugs:
 4. Enable the app through the app management of your Nextcloud
 
 
-**Third-party apps**
+### REST API for third-party apps
 
-The notes app provides a JSON-API for third-party apps. You can find the documentation in [the wiki](https://github.com/nextcloud/notes/wiki).
-
+The notes app provides a JSON-API for third-party apps. Please have a look at our **[API documentation](docs/api/README.md)**.
