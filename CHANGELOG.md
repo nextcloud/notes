@@ -15,6 +15,23 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.3.0 - 2020-05-05
+
+### Added
+- API v1 (#474, #491)
+
+### Changed
+- manuel edit of a note's title (#474)
+
+### Deprecated
+- API v0.2 (#491)
+
+### Fixed
+- editor: colors in dark-mode (#485)
+- preview: show empty table rows (#500)
+- maintenance (#479, #483, #488, #490, #499)
+
+
 ## 3.2.0 - 2020-03-14
 
 ### Changed
