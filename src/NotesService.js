@@ -60,7 +60,6 @@ export const fetchNote = noteId => {
 		.get(url('/notes/' + noteId))
 		.then(response => {
 			const localNote = store.getters.getNote(parseInt(noteId))
-			response.data.autotitle = response.data.content.length === 0
 			// only overwrite if there are no unsaved changes
 			if (!localNote || !localNote.unsaved) {
 				store.commit('add', response.data)
@@ -240,4 +239,8 @@ export const getCategories = (maxLevel, details) => {
 
 export const categoryLabel = (category) => {
 	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
+}
+
+export const routeIsNewNote = ($route) => {
+	return {}.hasOwnProperty.call($route.query, 'new')
 }

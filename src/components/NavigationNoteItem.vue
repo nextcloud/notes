@@ -34,7 +34,7 @@ import {
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 
-import { categoryLabel, setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService'
+import { categoryLabel, setFavorite, setTitle, fetchNote, deleteNote, routeIsNewNote } from '../NotesService'
 
 export default {
 	name: 'NavigationNoteItem',
@@ -124,6 +124,12 @@ export default {
 				.finally(() => {
 					this.loading.note = false
 				})
+			if (routeIsNewNote(this.$route)) {
+				this.$router.replace({
+					name: 'note',
+					params: { noteId: this.note.id.toString() },
+				})
+			}
 		},
 
 		onDeleteNote() {

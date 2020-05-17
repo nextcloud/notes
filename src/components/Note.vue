@@ -61,7 +61,7 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
-import { fetchNote, saveNote, saveNoteManually } from '../NotesService'
+import { fetchNote, saveNote, saveNoteManually, routeIsNewNote } from '../NotesService'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
 import store from '../store'
@@ -115,8 +115,11 @@ export default {
 	},
 
 	watch: {
-		// call again the method if the route changes
-		'$route': 'fetchData',
+		$route(to, from) {
+			if (to.name !== from.name || to.params.noteId !== from.params.noteId) {
+				this.fetchData()
+			}
+		},
 		title: 'onUpdateTitle',
 	},
 
@@ -218,6 +221,7 @@ export default {
 					...this.note,
 					content: newContent,
 					unsaved: true,
+					autotitle: routeIsNewNote(this.$route),
 				}
 				store.commit('add', note)
 				setTimeout(saveNote.bind(this, note.id), 1000)
