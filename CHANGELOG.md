@@ -15,6 +15,14 @@ Types of changes:
 ## [Unreleased]
 
 
+## 3.3.1 - 2020-05-17
+
+### Fixed
+- fix autotitle (#511)
+- relax autosave (#513)
+- maintenance (#514)
+
+
 ## 3.3.0 - 2020-05-05
 
 ### Added
