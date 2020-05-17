@@ -96,6 +96,7 @@ export default {
 			fullscreen: false,
 			preview: false,
 			actionsOpen: false,
+			autosaveTimer: null,
 		}
 	},
 
@@ -224,7 +225,12 @@ export default {
 					autotitle: routeIsNewNote(this.$route),
 				}
 				store.commit('add', note)
-				setTimeout(saveNote.bind(this, note.id), 1000)
+				if (this.autosaveTimer === null) {
+					this.autosaveTimer = setTimeout(() => {
+						this.autosaveTimer = null
+						saveNote(note.id)
+					}, 2000)
+				}
 			}
 		},
 
