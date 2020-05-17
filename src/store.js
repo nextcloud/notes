@@ -85,7 +85,7 @@ export default new Vuex.Store({
 			const note = state.notesIds[updated.id]
 			if (note) {
 				// don't update meta-data over full data
-				if (updated.content !== null || note.content === null) {
+				if (updated.content !== undefined || note.content === undefined) {
 					note.title = updated.title
 					note.modified = updated.modified
 					note.content = updated.content
