@@ -82,8 +82,8 @@ abstract class AbstractAPITest extends TestCase {
 	}
 
 	protected function checkReferenceNote(
-		object $refNote,
-		object $note,
+		\stdClass $refNote,
+		\stdClass $note,
 		string $messagePrefix,
 		array $expectExclude = []
 	) : void {
@@ -136,8 +136,8 @@ abstract class AbstractAPITest extends TestCase {
 	}
 
 	protected function checkNoteEmpty(
-		object $refNote,
-		object $note,
+		\stdClass $refNote,
+		\stdClass $note,
 		string $messagePrefix
 	) : void {
 		$this->assertEquals(

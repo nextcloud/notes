@@ -9,11 +9,23 @@ on:
 jobs:
   test-api:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [min, max]
+        include:
+          - version: min
+            php-version: 7.1
+          - version: max
+            php-version: 7.4
+    env:
+      SERVER_BRANCH: master
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Set up php
+    - name: Set up php${{ matrix.php-versions }}
       uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
     - name: Install Dependencies
       run: composer install --prefer-dist
     - name: Prepare MySQL database
@@ -22,15 +34,19 @@ jobs:
         mysql -u root -proot -e "CREATE DATABASE nextcloud;"
         mysql -u root -proot -e "CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY '';"
         mysql -u root -proot -e "GRANT ALL ON nextcloud.* TO 'nextcloud'@'localhost';"
-    - name: Prepare Nextcloud server
+    - name: Select Nextcloud server branch
+      run: echo "::set-env name=SERVER_BRANCH::stable$(php tests/nextcloud-version.php --appinfo)"
+      if: matrix.version == 'min'
+    - name: Prepare Nextcloud server using ${{ env.SERVER_BRANCH }}
       working-directory: ../
       run: |
-        git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b master server
+        git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b ${SERVER_BRANCH} server
         cp -r notes server/apps/
     - name: Setup Nextcloud server
       working-directory: ../server/
       run: |
         php occ maintenance:install --database-name nextcloud --database-user nextcloud --admin-user admin --admin-pass admin --database mysql --database-pass=''
+        php occ -V
         OC_PASS=test php occ user:add --password-from-env --display-name="Test" test
         OC_PASS=test php occ user:add --password-from-env --display-name="QuotaTest" quotatest
         php occ user:setting quotatest files quota "0"
