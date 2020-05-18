@@ -21,18 +21,18 @@ class NotesService {
 		$this->noteUtil = $noteUtil;
 	}
 
-	public function getAll(string $userId) {
+	public function getAll(string $userId) : array {
 		$notesFolder = $this->getNotesFolder($userId);
-		$files = $this->gatherNoteFiles($notesFolder);
+		$data = $this->gatherNoteFiles($notesFolder);
 		$fileIds = array_map(function (File $file) : int {
 			return $file->getId();
-		}, $files);
+		}, $data['files']);
 		// pre-load tags for all notes (performance improvement)
 		$this->noteUtil->getTagService()->loadTags($fileIds);
 		$notes = array_map(function (File $file) use ($notesFolder) : Note {
 			return new Note($file, $notesFolder, $this->noteUtil);
-		}, $files);
-		return $notes;
+		}, $data['files']);
+		return [ 'notes' => $notes, 'categories' => $data['categories'] ];
 	}
 
 	public function get(string $userId, int $id) : Note {
@@ -116,19 +116,24 @@ class NotesService {
 	/**
 	 * gather note files in given directory and all subdirectories
 	 */
-	private static function gatherNoteFiles(Folder $folder) : array {
-		$files = [];
+	private static function gatherNoteFiles(Folder $folder, string $categoryPrefix = '') : array {
+		$data = [
+			'files' => [],
+			'categories' => [],
+		];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
-				$files = array_merge($files, self::gatherNoteFiles($node));
-				continue;
-			}
-			if (self::isNote($node)) {
-				$files[] = $node;
+				$subCategory = $categoryPrefix . $node->getName();
+				$data['categories'][] = $subCategory;
+				$data_sub = self::gatherNoteFiles($node, $subCategory . '/');
+				$data['files'] = array_merge($data['files'], $data_sub['files']);
+				$data['categories'] = array_merge($data['categories'], $data_sub['categories']);
+			} elseif (self::isNote($node)) {
+				$data['files'][] = $node;
 			}
 		}
-		return $files;
+		return $data;
 	}
 
 	/**

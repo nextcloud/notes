@@ -51,7 +51,7 @@ class NotesApiController extends ApiController {
 		return $this->helper->handleErrorResponse(function () use ($exclude, $pruneBefore) {
 			$exclude = explode(',', $exclude);
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-			$notes = $this->service->getAll($this->getUID());
+			$notes = $this->service->getAll($this->getUID())['notes'];
 			$metas = $this->metaService->updateAll($this->getUID(), $notes);
 			$notesData = array_map(function ($note) use ($metas, $pruneBefore, $exclude) {
 				$lastUpdate = $metas[$note->getId()]->getLastUpdate();
