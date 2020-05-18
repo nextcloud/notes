@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Db;
 
@@ -29,7 +29,7 @@ class Meta extends Entity {
 	 * @param Note $note
 	 * @return static
 	 */
-	public static function fromNote(Note $note, $userId) {
+	public static function fromNote(Note $note, $userId) : Meta {
 		$meta = new static();
 		$meta->setUserId($userId);
 		$meta->setFileId($note->getId());

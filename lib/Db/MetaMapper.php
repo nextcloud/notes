@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OCA\Notes\Db;
 
@@ -12,7 +12,7 @@ class MetaMapper extends QBMapper {
 		parent::__construct($db, 'notes_meta');
 	}
 
-	public function getAll($userId) {
+	public function getAll($userId) : array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from('*PREFIX*notes_meta')
