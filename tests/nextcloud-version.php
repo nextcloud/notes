@@ -79,6 +79,11 @@ function versionCompare($sv1, $sv2, $type) {
 	return true;
 }
 
+if (in_array('--appinfo', $argv)) {
+	echo getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'min');
+	exit;
+}
+
 echo 'Testing Nextcloud version ';
 try {
 	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
