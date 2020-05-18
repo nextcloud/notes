@@ -64,11 +64,14 @@ function getNCVersionFromAppInfo($path, $minmax = 'min') {
 	return $v;
 }
 
-function versionCompare($sv1, $sv2) {
+function versionCompare($sv1, $sv2, $type) {
 	$v1 = explode('.', $sv1);
 	$v2 = explode('.', $sv2);
 	$count = min(count($v1), count($v2));
 	for ($i=0; $i<$count; $i++) {
+		if ($type == 'max' && $v1[$i] < $v2[$i]) {
+			return true;
+		}
 		if ($v1[$i] !== $v2[$i]) {
 			return false;
 		}
@@ -82,13 +85,13 @@ try {
 	if ($vComposer === 'dev-master') {
 		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/christophwurst/nextcloud/composer.json');
 		$vAppInfo = getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'max');
-		echo 'max';
+		$type = 'max';
 	} else {
 		$vAppInfo = getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'min');
-		echo 'min';
+		$type = 'min';
 	}
-	echo ': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
-	if (versionCompare($vComposer, $vAppInfo)) {
+	echo $type.': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
+	if (versionCompare($vComposer, $vAppInfo, $type)) {
 		echo 'OK'.PHP_EOL;
 	} else {
 		echo 'FAILED'.PHP_EOL;
