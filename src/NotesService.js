@@ -40,6 +40,7 @@ export const fetchNotes = () => {
 		.get(url('/notes'))
 		.then(response => {
 			store.commit('setSettings', response.data.settings)
+			store.commit('setCategories', response.data.categories)
 			if (response.data.notes !== null) {
 				store.dispatch('addAll', response.data.notes)
 			}
@@ -234,7 +235,12 @@ export const noteExists = (noteId) => {
 }
 
 export const getCategories = (maxLevel, details) => {
-	return store.getters.getCategories(maxLevel, details)
+	const categories = store.getters.getCategories(maxLevel, details)
+	if (maxLevel === 0) {
+		return [...new Set([...categories, ...store.state.categories])]
+	} else {
+		return categories
+	}
 }
 
 export const categoryLabel = (category) => {

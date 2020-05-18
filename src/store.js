@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		settings: {},
+		categories: [],
 		notes: [],
 		notesIds: {},
 		unsaved: {},
@@ -132,6 +133,10 @@ export default new Vuex.Store({
 
 		setSettings(state, settings) {
 			state.settings = settings
+		},
+
+		setCategories(state, categories) {
+			state.categories = categories
 		},
 
 		setSaving(state, isSaving) {

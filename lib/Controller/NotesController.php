@@ -61,12 +61,14 @@ class NotesController extends Controller {
 				'notesLastViewedNote'
 			);
 			// check if notes folder is accessible
-			$notes = null;
+			$notesData = null;
+			$categories = null;
 			try {
-				$notes = $this->notesService->getAll($this->userId);
+				$data = $this->notesService->getAll($this->userId);
+				$categories = $data['categories'];
 				$notesData = array_map(function ($note) {
 					return $note->getData([ 'content' ]);
-				}, $notes);
+				}, $data['notes']);
 				if ($lastViewedNote) {
 					// check if note exists
 					try {
@@ -83,6 +85,7 @@ class NotesController extends Controller {
 
 			return [
 				'notes' => $notesData,
+				'categories' => $categories,
 				'settings' => $settings,
 				'lastViewedNote' => $lastViewedNote,
 				'errorMessage' => $errorMessage,
