@@ -7,7 +7,7 @@ use OCA\Notes\Service\MetaService;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IUserSession;
 
@@ -47,7 +47,7 @@ class NotesApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 */
-	public function index(string $exclude = '', int $pruneBefore = 0) : DataResponse {
+	public function index(string $exclude = '', int $pruneBefore = 0) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($exclude, $pruneBefore) {
 			$exclude = explode(',', $exclude);
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
@@ -62,10 +62,7 @@ class NotesApiController extends ApiController {
 				}
 			}, $notes);
 			$etag = md5(json_encode($notesData));
-			if ($this->request->getHeader('If-None-Match') === '"'.$etag.'"') {
-				return new DataResponse([], Http::STATUS_NOT_MODIFIED);
-			}
-			return (new DataResponse($notesData))
+			return (new JSONResponse($notesData))
 				->setLastModified($now)
 				->setETag($etag);
 		});
@@ -77,7 +74,7 @@ class NotesApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 */
-	public function get(int $id, string $exclude = '') : DataResponse {
+	public function get(int $id, string $exclude = '') : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $exclude) {
 			$exclude = explode(',', $exclude);
 			$note = $this->service->get($this->getUID(), $id);
@@ -97,7 +94,7 @@ class NotesApiController extends ApiController {
 		string $content = '',
 		int $modified = 0,
 		bool $favorite = false
-	) : DataResponse {
+	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category, $title, $content, $modified, $favorite) {
 			$note = $this->service->create($this->getUID(), $title, $category);
 			try {
@@ -128,7 +125,7 @@ class NotesApiController extends ApiController {
 		string $content = '',
 		int $modified = 0,
 		bool $favorite = false
-	) : DataResponse {
+	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category, $content, $modified, $favorite) {
 			$title = $this->service->getTitleFromContent($content);
 			return $this->create($category, $title, $content, $modified, $favorite);
@@ -147,7 +144,7 @@ class NotesApiController extends ApiController {
 		?string $title = null,
 		?string $category = null,
 		?bool $favorite = null
-	) : DataResponse {
+	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$id,
 			$content,
@@ -187,7 +184,7 @@ class NotesApiController extends ApiController {
 		?int $modified = null,
 		?string $category = null,
 		?bool $favorite = null
-	) : DataResponse {
+	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content, $modified, $category, $favorite) {
 			if ($content === null) {
 				$note = $this->service->get($this->getUID(), $id);
@@ -204,7 +201,7 @@ class NotesApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 */
-	public function destroy(int $id) : DataResponse {
+	public function destroy(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$this->service->delete($this->getUID(), $id);
 			return [];
@@ -215,9 +212,9 @@ class NotesApiController extends ApiController {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function fail() : DataResponse {
+	public function fail() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			return new JSONResponse([], Http::STATUS_BAD_REQUEST);
 		});
 	}
 }

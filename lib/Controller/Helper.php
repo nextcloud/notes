@@ -7,7 +7,7 @@ use OCA\Notes\Service\InsufficientStorageException;
 use OCA\Notes\Service\NoteDoesNotExistException;
 
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\ILogger;
 
 class Helper {
@@ -23,19 +23,19 @@ class Helper {
 		$this->appName = $appName;
 	}
 
-	public function handleErrorResponse(callable $respond) : DataResponse {
+	public function handleErrorResponse(callable $respond) : JSONResponse {
 		try {
 			$data = $respond();
-			$response = $data instanceof DataResponse ? $data : new DataResponse($data);
+			$response = $data instanceof JSONResponse ? $data : new JSONResponse($data);
 		} catch (NoteDoesNotExistException $e) {
 			$this->logger->logException($e, [ 'app' => $this->appName ]);
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
+			$response = new JSONResponse([], Http::STATUS_NOT_FOUND);
 		} catch (InsufficientStorageException $e) {
 			$this->logger->logException($e, [ 'app' => $this->appName ]);
-			$response = new DataResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
+			$response = new JSONResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
 		} catch (\Throwable $e) {
 			$this->logger->logException($e, [ 'app' => $this->appName ]);
-			$response = new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+			$response = new JSONResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 		$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS));
 		return $response;
