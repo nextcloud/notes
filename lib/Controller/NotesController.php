@@ -10,7 +10,7 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 
 class NotesController extends Controller {
 
@@ -50,7 +50,7 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function index() : DataResponse {
+	public function index() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
 			$settings = $this->settingsService->getAll($this->userId);
 
@@ -97,7 +97,7 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function get(int $id) : DataResponse {
+	public function get(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$note = $this->notesService->get($this->userId, $id);
 
@@ -117,7 +117,7 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $category) : DataResponse {
+	public function create(string $category) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category) {
 			$note = $this->notesService->create($this->userId, '', $category);
 			$note->setContent('');
@@ -136,7 +136,7 @@ class NotesController extends Controller {
 		string $category,
 		int $modified,
 		bool $favorite
-	) : DataResponse {
+	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$id,
 			$title,
@@ -168,7 +168,7 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, string $content, bool $autotitle) : DataResponse {
+	public function update(int $id, string $content, bool $autotitle) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content, $autotitle) {
 			$note = $this->notesService->get($this->userId, $id);
 			$note->setContent($content);
@@ -191,7 +191,7 @@ class NotesController extends Controller {
 		?string $title = null,
 		?string $category = null,
 		?bool $favorite = null
-	) : DataResponse {
+	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$id,
 			$property,
@@ -232,7 +232,7 @@ class NotesController extends Controller {
 					break;
 
 				default:
-					return new DataResponse([], Http::STATUS_BAD_REQUEST);
+					return new JSONResponse([], Http::STATUS_BAD_REQUEST);
 			}
 			return $result;
 		});
@@ -242,7 +242,7 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $id) : DataResponse {
+	public function destroy(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$this->notesService->delete($this->userId, $id);
 			return [];
