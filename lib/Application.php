@@ -6,7 +6,7 @@ use OCP\AppFramework\App;
 
 class Application extends App {
 
-	public static $API_VERSIONS = [ '0.2', '1.0' ];
+	public static $API_VERSIONS = [ '0.2', '1.1' ];
 
 	public function __construct(array $urlParams = []) {
 		parent::__construct('notes', $urlParams);

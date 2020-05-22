@@ -144,6 +144,31 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->assertEquals(404, $response->getStatusCode());
 	}
 
+	/**
+	 * @depends testCheckForReferenceNotes
+	 * @depends testCreateNotes
+	 */
+	public function testGetNotesWithCategory(array $refNotes, array $testNotes) : void {
+		if ($this->getAPIMajorVersion() < 1) {
+			$this->markTestSkipped('Get Notes with Category requires API v1');
+		}
+		$allNotes = array_merge($refNotes, $testNotes);
+		$this->checkGetReferenceNotes($allNotes, 'Pre-condition');
+		$note = $testNotes[0];
+		$category = $note->category;
+		$filteredNotes = array_filter(
+			$allNotes,
+			function ($note) use ($category) {
+				return $category === $note->category;
+			}
+		);
+		$this->assertNotEmpty($filteredNotes, 'Filtered notes');
+		$this->checkGetReferenceNotes(
+			$filteredNotes,
+			'Get notes with category '.$category,
+			'?category='.urlencode($category)
+		);
+	}
 
 	/**
 	 * @depends testCheckForReferenceNotes

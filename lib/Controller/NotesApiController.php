@@ -47,11 +47,16 @@ class NotesApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 */
-	public function index(string $exclude = '', int $pruneBefore = 0) : JSONResponse {
-		return $this->helper->handleErrorResponse(function () use ($exclude, $pruneBefore) {
+	public function index(?string $category = null, string $exclude = '', int $pruneBefore = 0) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($category, $exclude, $pruneBefore) {
 			$exclude = explode(',', $exclude);
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
 			$notes = $this->service->getAll($this->getUID())['notes'];
+			if ($category !== null) {
+				$notes = array_values(array_filter($notes, function ($note) use ($category) {
+					return $note->getCategory() === $category;
+				}));
+			}
 			$metas = $this->metaService->updateAll($this->getUID(), $notes);
 			$notesData = array_map(function ($note) use ($metas, $pruneBefore, $exclude) {
 				$lastUpdate = $metas[$note->getId()]->getLastUpdate();

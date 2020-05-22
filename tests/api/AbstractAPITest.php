@@ -13,12 +13,16 @@ abstract class AbstractAPITest extends TestCase {
 		$this->apiVersion = $apiVersion;
 	}
 
-	protected function setUp() : void {
+	protected function getAPIMajorVersion() {
 		if ($this->apiVersion === '0.2') {
-			$v = $this->apiVersion;
+			return $this->apiVersion;
 		} else {
-			$v = intval($this->apiVersion);
+			return intval($this->apiVersion);
 		}
+	}
+
+	protected function setUp() : void {
+		$v = $this->getAPIMajorVersion();
 		$this->http = new \GuzzleHttp\Client([
 			'base_uri' => 'http://localhost:8080/index.php/apps/notes/api/v'.$v.'/',
 			'auth' => ['test', 'test'],
