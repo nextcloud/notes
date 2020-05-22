@@ -158,10 +158,16 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$category = $note->category;
 		$filteredNotes = array_filter(
 			$allNotes,
-			function($note) use ($category) { return $category === $note->category; }
-			);
+			function ($note) use ($category) {
+				return $category === $note->category;
+			}
+		);
 		$this->assertNotEmpty($filteredNotes, 'Filtered notes');
-		$this->checkGetReferenceNotes($filteredNotes, 'Get notes with category '.$category, '?category='.urlencode($category));
+		$this->checkGetReferenceNotes(
+			$filteredNotes,
+			'Get notes with category '.$category,
+			'?category='.urlencode($category)
+		);
 	}
 
 	/**
