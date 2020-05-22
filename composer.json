@@ -6,7 +6,7 @@
 		"guzzlehttp/guzzle": "^6.5",
 		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
 	},
-	"autoload": {
+	"autoload-dev": {
 		"psr-4": {
 			"OCA\\Notes\\Tests\\API\\": "tests/api/"
 		}
