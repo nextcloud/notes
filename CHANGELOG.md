@@ -12,7 +12,18 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
-## [Unreleased]
+
+## 3.4.0 - 2020-05-24
+
+### Added
+- API: filter notes by category (API v1.1) (#518)
+
+### Changed
+- show empty categories in Sidebar (#515)
+
+### Fixed
+- Category list: fix notes count (#517)
+- maintenance (#516, #520)
 
 
 ## 3.3.1 - 2020-05-17
