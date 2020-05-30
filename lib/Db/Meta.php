@@ -2,8 +2,6 @@
 
 namespace OCA\Notes\Db;
 
-use OCA\Notes\Service\Note;
-
 use OCP\AppFramework\Db\Entity;
 
 /**
@@ -16,25 +14,18 @@ use OCP\AppFramework\Db\Entity;
  * @method void setLastUpdate(integer $value)
  * @method string getEtag()
  * @method void setEtag(string $value)
+ * @method string getContentEtag()
+ * @method void setContentEtag(string $value)
+ * @method string getFileEtag()
+ * @method void setFileEtag(string $value)
  * @package OCA\Notes\Db
  */
 class Meta extends Entity {
 
-	public $userId;
-	public $fileId;
-	public $lastUpdate;
-	public $etag;
-
-	/**
-	 * @param Note $note
-	 * @return static
-	 */
-	public static function fromNote(Note $note, $userId) : Meta {
-		$meta = new static();
-		$meta->setUserId($userId);
-		$meta->setFileId($note->getId());
-		$meta->setLastUpdate(time());
-		$meta->setEtag($note->getEtag());
-		return $meta;
-	}
+	protected $userId;
+	protected $fileId;
+	protected $lastUpdate;
+	protected $etag;
+	protected $contentEtag;
+	protected $fileEtag;
 }

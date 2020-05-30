@@ -12,7 +12,7 @@ use OCP\ILogger;
 
 class Helper {
 
-	private $logger;
+	public $logger;
 	private $appName;
 
 	public function __construct(

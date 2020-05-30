@@ -83,14 +83,8 @@ class Note {
 		return $data;
 	}
 
-	public function getEtag() : string {
-		$data = $this->getData();
-		// collect all relevant attributes
-		$str = '';
-		foreach ($data as $key => $val) {
-			$str .= $val;
-		}
-		return md5($str);
+	public function getFileEtag() : string {
+		return $this->file->getEtag();
 	}
 
 

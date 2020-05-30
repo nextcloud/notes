@@ -10,13 +10,16 @@ use OCP\Files\Folder;
 
 class NotesService {
 
+	private $metaService;
 	private $settings;
 	private $noteUtil;
 
 	public function __construct(
+		MetaService $metaService,
 		SettingsService $settings,
 		NoteUtil $noteUtil
 	) {
+		$this->metaService = $metaService;
 		$this->settings = $settings;
 		$this->noteUtil = $noteUtil;
 	}
@@ -37,7 +40,9 @@ class NotesService {
 
 	public function get(string $userId, int $id) : Note {
 		$notesFolder = $this->getNotesFolder($userId);
-		return new Note($this->getFileById($notesFolder, $id), $notesFolder, $this->noteUtil);
+		$note = new Note($this->getFileById($notesFolder, $id), $notesFolder, $this->noteUtil);
+		$this->metaService->update($userId, $note);
+		return $note;
 	}
 
 
