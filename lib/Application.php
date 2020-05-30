@@ -13,6 +13,11 @@ class Application extends App {
 	}
 
 	public function register() : void {
+		$this->registerNavigation();
+		$this->registerHooks();
+	}
+
+	private function registerNavigation() : void {
 		$container = $this->getContainer();
 		$container->registerCapability(Capabilities::class);
 		$server = $container->getServer();
@@ -27,5 +32,9 @@ class Application extends App {
 				'name' => $l10n->t('Notes'),
 			];
 		});
+	}
+
+	public function registerHooks() : void {
+		$this->getContainer()->query('OCA\\Notes\\NotesHooks')->register();
 	}
 }

@@ -15,10 +15,35 @@ class MetaMapper extends QBMapper {
 	public function getAll($userId) : array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
-			->from('*PREFIX*notes_meta')
+			->from($this->tableName)
 			->where(
 				$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
 			);
 		return $this->findEntities($qb);
+	}
+
+	public function findById(string $userId, int $fileId) : Meta {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from($this->tableName)
+			->where(
+				$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
+				$qb->expr()->eq('file_id', $qb->createNamedParameter($fileId, IQueryBuilder::PARAM_INT))
+			);
+		return $this->findEntity($qb);
+	}
+
+	public function deleteAll() : void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->tableName)->execute();
+	}
+
+	public function deleteByNote(int $id) : void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->tableName)
+			->where(
+				$qb->expr()->eq('file_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
+			)
+			->execute();
 	}
 }
