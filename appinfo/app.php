@@ -1,4 +1,6 @@
 <?php
 
-$app = new OCA\Notes\Application();
+use OCA\Notes\Application;
+
+$app = \OC::$server->query(Application::class);
 $app->register();
