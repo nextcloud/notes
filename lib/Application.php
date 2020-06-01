@@ -13,28 +13,8 @@ class Application extends App {
 	}
 
 	public function register() : void {
-		$this->registerNavigation();
-		$this->registerHooks();
-	}
-
-	private function registerNavigation() : void {
 		$container = $this->getContainer();
 		$container->registerCapability(Capabilities::class);
-		$server = $container->getServer();
-		$server->getNavigationManager()->add(function () use ($server) {
-			$urlGenerator = $server->getURLGenerator();
-			$l10n = $server->getL10N('notes');
-			return [
-				'id' => 'notes',
-				'order' => 10,
-				'href' => $urlGenerator->linkToRoute('notes.page.index'),
-				'icon' => $urlGenerator->imagePath('notes', 'notes.svg'),
-				'name' => $l10n->t('Notes'),
-			];
-		});
-	}
-
-	public function registerHooks() : void {
-		$this->getContainer()->query('OCA\\Notes\\NotesHooks')->register();
+		$container->query(NotesHooks::class)->register();
 	}
 }
