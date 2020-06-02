@@ -1,9 +1,9 @@
 { "translations": {
-    "Notes" : "ノート",
     "The last viewed note cannot be accessed. " : "最後に閲覧したノートにはアクセスできません。",
     "The notes folder is not accessible: %s" : "ノートフォルダーはアクセスできません：%s",
     "Error" : "エラー",
     "New note" : "新しいノート",
+    "Notes" : "ノート",
     "Distraction-free notes and writing" : "集中モードのノートと執筆",
     "Settings" : "設定",
     "Deleted {title}" : "{title}を削除しました",

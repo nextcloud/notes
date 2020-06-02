@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Notes",
     "Error" : "Памылка",
+    "Notes" : "Notes",
     "Settings" : "Налады",
     "Today" : "Today",
     "Rename" : "Rename",

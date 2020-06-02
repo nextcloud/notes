@@ -1,9 +1,9 @@
 { "translations": {
-    "Notes" : "Bilješke",
     "The last viewed note cannot be accessed. " : "Nije moguće pristupiti posljednje pregledanoj bilješci. ",
     "The notes folder is not accessible: %s" : "Mapa s bilješkama nije dostupna: %s",
     "Error" : "Pogreška",
     "New note" : "Nova bilješka",
+    "Notes" : "Bilješke",
     "Distraction-free notes and writing" : "Bilješke i pisanje bez ometanja",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Aplikacija Notes za [Nextcloud](https://www.nextcloud.com/) omogućuje vam pisanje bilješki bez ometanja. Iskoristite njene kategorije za bolju organizaciju i mogućnosti oblikovanja koristeći sintaksu [Markdown](https://en.wikipedia.org/wiki/Markdown). Bilješke se spremaju kao datoteke u vašem Nextcloudu pa ih možete pregledati i uređivati sa svakim Nextcloudovim klijentom. Nadalje, zasebni [REST API](docs/api/README.md) omogućuje jednostavnu integraciju s aplikacijama trećih strana (trenutno postoje aplikacije za pisanje bilješki za [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) i [console](https://git.danielmoch.com/nncli/about) koje omogućuju praktičan pristup vašim Nextcloudovim bilješkama). Dodatne značajke uključuju obilježavanje bilješki kao favorite.",
     "Settings" : "Postavke",

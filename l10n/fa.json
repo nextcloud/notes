@@ -1,9 +1,9 @@
 { "translations": {
-    "Notes" : "یادداشت ها",
     "The last viewed note cannot be accessed. " : "آخرین یادداشت مشاهده شده قابل دسترسی نیست.",
     "The notes folder is not accessible: %s" : "پوشه یادداشت ها در دسترس نیست: %s",
     "Error" : "خطا",
     "New note" : "یادداشت جدید",
+    "Notes" : "یادداشت ها",
     "Distraction-free notes and writing" : "یادداشت ها و نوشتن بدون حواس پرتی",
     "Settings" : "تنظیمات",
     "Deleted {title}" : "حذف {عنوان}",

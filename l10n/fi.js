@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Muistiinpanot",
     "The last viewed note cannot be accessed. " : "Ei pääsyä viimeksi katsottuun muistiinpanoon.",
     "The notes folder is not accessible: %s" : "Ei pääsyä muistiinpanokansioon: %s",
     "Error" : "Virhe",
     "New note" : "Uusi muistiinpano",
+    "Notes" : "Muistiinpanot",
     "Settings" : "Asetukset",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Havaittiin tallentamattomia muistiinpanoja. Sivulta poistuminen hylkää kaikki muutokset!",
     "Folder to store your notes" : "Kansio johon muistiinpanot tallennetaan",

@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Beležka",
     "The last viewed note cannot be accessed. " : "Do nazadnje pogledane zabeležke dostop ni mogoč.",
     "The notes folder is not accessible: %s" : "Mapa zabeležk ni dosegljiva: %s",
     "Error" : "Napaka",
     "New note" : "Nova zabeležka",
+    "Notes" : "Beležka",
     "Distraction-free notes and writing" : "Enostavno beleženje in zapisovanje",
     "Settings" : "Nastavitve",
     "Deleted {title}" : "Izbrisano {title}",

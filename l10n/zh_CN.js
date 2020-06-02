@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "笔记",
     "The last viewed note cannot be accessed. " : "不能访问上次查看的笔记。",
     "The notes folder is not accessible: %s" : "笔记文件夹无法访问：%s",
     "Error" : "错误",
     "New note" : "新建笔记",
+    "Notes" : "笔记",
     "Distraction-free notes and writing" : "无干扰的笔记和写作",
     "Settings" : "设置",
     "Deleted {title}" : "已删除 {title}",

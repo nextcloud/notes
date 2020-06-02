@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Notizen",
     "Error" : "Fehler",
+    "Notes" : "Notizen",
     "Settings" : "Astellungen",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",

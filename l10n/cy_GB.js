@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Nodiadau",
     "Error" : "Gwall",
     "New note" : "Nodyn newydd",
+    "Notes" : "Nodiadau",
     "Settings" : "Gosodiadau",
     "All notes" : "Pob nodyn",
     "Loading …" : "Yn llwytho …",

@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Тэмдэглэл",
     "Error" : "Алдаа",
     "New note" : "Шинэ тэмдэглэл",
+    "Notes" : "Тэмдэглэл",
     "Settings" : "Тохиргоо",
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",

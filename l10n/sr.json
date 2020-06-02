@@ -1,9 +1,9 @@
 { "translations": {
-    "Notes" : "Белешке",
     "The last viewed note cannot be accessed. " : "Не може се приступити последње прегледаној белешци.",
     "The notes folder is not accessible: %s" : "Фасцикла са белешкама није доступна: %s",
     "Error" : "Грешка",
     "New note" : "Нова белешка",
+    "Notes" : "Белешке",
     "Distraction-free notes and writing" : "Белешке и писање без ометања",
     "Settings" : "Поставке",
     "Deleted {title}" : "Обрисана {title}",

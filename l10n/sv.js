@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Anteckningar",
     "The last viewed note cannot be accessed. " : "Den senast visade anteckningen kan inte nås.",
     "The notes folder is not accessible: %s" : "Anteckningsmappen är inte tillgänglig: %s",
     "Error" : "Fel",
     "New note" : "Ny anteckning",
+    "Notes" : "Anteckningar",
     "Distraction-free notes and writing" : "Distraktionsfria anteckningar och skrivning",
     "Settings" : "Inställningar",
     "Deleted {title}" : "Raderad {title}",

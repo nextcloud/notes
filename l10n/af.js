@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Notas",
     "Error" : "Fout",
     "New note" : "Nuwe nota",
+    "Notes" : "Notas",
     "Settings" : "Instellings",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Daar is ongestoorde veranderinge. Indien die bladsy gesluit word sal alle veranderinge geskrap word!",
     "path to notes" : "pad na notas",

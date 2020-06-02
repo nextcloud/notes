@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Jegyzetek",
     "The last viewed note cannot be accessed. " : "Az utoljára megtekintett jegyzet nem elérhető.",
     "The notes folder is not accessible: %s" : "A jegyzetek mappa nem érhető el: %s",
     "Error" : "Hiba",
     "New note" : "Új jegyzet",
+    "Notes" : "Jegyzetek",
     "Distraction-free notes and writing" : "Figyelemelterelés nélküli jegyzetelés és írás",
     "Settings" : "Beállítások",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Mentetlen jegyzetek vannak. Az oldal elhagyásával a változások elvesznek.",

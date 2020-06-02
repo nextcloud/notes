@@ -1,9 +1,9 @@
 { "translations": {
-    "Notes" : "Notas",
     "The last viewed note cannot be accessed. " : "No se puede acceder a la última nota visualizada.",
     "The notes folder is not accessible: %s" : "La carpeta de notas no es accesible: %s",
     "Error" : "Error",
     "New note" : "Nueva nota",
+    "Notes" : "Notas",
     "Distraction-free notes and writing" : "Escritura de notas sin distracciones",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "La app de Notas es una aplicación de escritura de notas sin distracciones. Ofrece categorías para mejorar la organización y soporta el formato mediante [Markdown](https://en.wikipedia.org/wiki/Markdown). Las notas se guardan como archivos en tu Nextcloud, por lo que puedes verlas y editarlas con cada cliente de Nextcloud. Además, una [API REST]](https://github.com/nextcloud/notes/wiki/API-0.2) separada permite una integración sencilla con apps de terceras partes (actualmente hay apps de notas para [Android](https://github.com/stefan-niedermann/nextcloud-notes) y [iOS](https://github.com/owncloud/notes-iOS-App) y la [consola](https://git.danielmoch.com/nncli/about) que permiten un acceso cómodo a tus notas de Nextcloud). Otras características incluyen el marcar notas como favoritas.",
     "Settings" : "Configuración",

@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Catatan",
     "Error" : "Kesalahan",
     "New note" : "Catatan baru",
+    "Notes" : "Catatan",
     "Settings" : "Setelan",
     "All notes" : "Semua catatan",
     "Categories" : "Kategori",

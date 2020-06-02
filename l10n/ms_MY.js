@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Nota",
     "Error" : "Ralat",
     "New note" : "Note baharu",
+    "Notes" : "Nota",
     "Settings" : "Tetapan",
     "Today" : "Hari ini",
     "Yesterday" : "Semalam",

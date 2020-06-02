@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "筆記",
     "The last viewed note cannot be accessed. " : "無法打開最近一次檢視的筆記",
     "The notes folder is not accessible: %s" : "無法打開筆記資料夾：%s",
     "Error" : "錯誤",
     "New note" : "新筆記",
+    "Notes" : "筆記",
     "Distraction-free notes and writing" : "可以讓你專心記錄不受干擾的筆記應用",
     "Settings" : "設定",
     "Deleted {title}" : "已刪除 {title}",

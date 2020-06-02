@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Белешки",
     "The last viewed note cannot be accessed. " : "Неможе да се пристапи до последно прегледаната белешка.",
     "The notes folder is not accessible: %s" : "Папката со белешки не е достапна: %s",
     "Error" : "Грешка",
     "New note" : "Нова белешка",
+    "Notes" : "Белешки",
     "Distraction-free notes and writing" : "Пушување на белешки без одвлекување на вниманието",
     "Settings" : "Параметри",
     "Deleted {title}" : "Избришана {title}",

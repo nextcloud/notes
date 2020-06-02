@@ -1,11 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "הערות",
     "The last viewed note cannot be accessed. " : "אין גישה לפתק האחרון שנצפה.",
     "The notes folder is not accessible: %s" : "תיקיית הפתקים אינה נגישה: %s",
     "Error" : "שגיאה",
     "New note" : "פתק חדש",
+    "Notes" : "הערות",
     "Distraction-free notes and writing" : "פתקים וכתיבה ללא הסחות דעת",
     "Settings" : "הגדרות",
     "Deleted {title}" : "{title} נמחק",

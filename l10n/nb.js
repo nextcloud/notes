@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Notater",
     "Error" : "Feil",
     "New note" : "Nytt notat",
+    "Notes" : "Notater",
     "Settings" : "Innstillinger",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Det finnes ulagrede notater. Å forlate siden vil forkaste alle endringer!",
     "All notes" : "Alle notater",

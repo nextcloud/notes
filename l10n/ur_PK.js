@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Notes",
     "Error" : "ایرر",
+    "Notes" : "Notes",
     "Settings" : "سیٹینگز",
     "Today" : "آج",
     "Rename" : "Rename",

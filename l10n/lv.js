@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "Piezīmes",
     "Error" : "Kļūda",
     "New note" : "Jauna piezīme",
+    "Notes" : "Piezīmes",
     "Settings" : "Iestatījumi",
     "All notes" : "Visas piezīmes",
     "Categories" : "Kategorijas",

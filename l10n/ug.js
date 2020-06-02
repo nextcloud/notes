@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Notes" : "ئىزاھاتلار",
     "Error" : "خاتالىق",
+    "Notes" : "ئىزاھاتلار",
     "Settings" : "تەڭشەكلەر",
     "Today" : "بۈگۈن",
     "Rename" : "ئات ئۆزگەرت",
