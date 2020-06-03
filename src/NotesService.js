@@ -147,7 +147,7 @@ function _updateNote(note) {
 			if (err.response.status === 507) {
 				handleInsufficientStorage()
 			} else {
-				handleSyncError(t('notes', 'Updating note {id} has failed.', { id: note.id }))
+				handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }))
 			}
 		})
 }
