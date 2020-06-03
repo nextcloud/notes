@@ -1,6 +1,6 @@
 <template>
 	<AppSidebar v-if="sidebarOpen"
-		:title="note.title"
+		:title="title"
 		:subtitle="subtitle"
 		:star-loading="loading.favorite"
 		:starred="note.favorite"
@@ -104,6 +104,9 @@ export default {
 		note() {
 			return store.getters.getNote(parseInt(this.noteId))
 		},
+		title() {
+			return this.note ? this.note.title : ''
+		},
 		category() {
 			return this.note ? this.note.category : ''
 		},
@@ -111,14 +114,16 @@ export default {
 			return moment(this.note.modified * 1000).format('LLL')
 		},
 		wordCount() {
-			const value = this.note.content
+			const value = this.note?.content
 			if (value && (typeof value === 'string')) {
 				const wordCount = value.split(/\s+/).filter(
 					// only count words containing
 					// at least one alphanumeric character
 					value => value.search(/[A-Za-z0-9]/) !== -1
 				).length
+				const charCount = Array.from(value).length
 				return n('notes', '%n word', '%n words', wordCount)
+					+ ', ' + n('notes', '%n character', '%n characters', charCount)
 			} else {
 				return ''
 			}
