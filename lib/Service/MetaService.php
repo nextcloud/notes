@@ -118,7 +118,13 @@ class MetaService {
 		$meta->setFileId($note->getId());
 		$meta->setLastUpdate(time());
 		$this->updateIfNeeded($meta, $note, true);
-		$this->metaMapper->insert($meta);
+		try {
+			$this->metaMapper->insert($meta);
+			/* @phan-suppress-next-line PhanUndeclaredClassCatch */
+		} catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+			// It's likely that a concurrent request created this entry, too.
+			// We can ignore this, since the result should be the same.
+		}
 		return $meta;
 	}
 

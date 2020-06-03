@@ -138,7 +138,7 @@ export default {
 			return [ '', ...getCategories(0, false) ]
 		},
 		sidebarOpen() {
-			return store.state.sidebarOpen
+			return store.state.app.sidebarOpen
 		},
 	},
 

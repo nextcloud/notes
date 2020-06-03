@@ -51,7 +51,7 @@ export default {
 
 	computed: {
 		settings() {
-			return store.state.settings
+			return store.state.app.settings
 		},
 	},
 

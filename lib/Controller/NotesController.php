@@ -3,6 +3,7 @@
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\NotesService;
+use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
@@ -16,6 +17,8 @@ class NotesController extends Controller {
 
 	/** @var NotesService */
 	private $notesService;
+	/** @var MetaService */
+	private $metaService;
 	/** @var SettingsService */
 	private $settingsService;
 	/** @var Helper */
@@ -31,6 +34,7 @@ class NotesController extends Controller {
 		string $AppName,
 		IRequest $request,
 		NotesService $notesService,
+		MetaService $metaService,
 		SettingsService $settingsService,
 		Helper $helper,
 		IConfig $settings,
@@ -39,6 +43,7 @@ class NotesController extends Controller {
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
+		$this->metaService = $metaService;
 		$this->settingsService = $settingsService;
 		$this->helper = $helper;
 		$this->settings = $settings;
@@ -50,8 +55,9 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function index() : JSONResponse {
-		return $this->helper->handleErrorResponse(function () {
+	public function index(int $pruneBefore = 0) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($pruneBefore) {
+			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
 			$settings = $this->settingsService->getAll($this->userId);
 
 			$errorMessage = null;
@@ -65,9 +71,15 @@ class NotesController extends Controller {
 			$categories = null;
 			try {
 				$data = $this->notesService->getAll($this->userId);
+				$metas = $this->metaService->updateAll($this->userId, $data['notes']);
 				$categories = $data['categories'];
-				$notesData = array_map(function ($note) {
-					return $note->getData([ 'content' ]);
+				$notesData = array_map(function ($note) use ($metas, $pruneBefore) {
+					$lastUpdate = $metas[$note->getId()]->getLastUpdate();
+					if ($pruneBefore && $lastUpdate<$pruneBefore) {
+						return [ 'id' => $note->getId() ];
+					} else {
+						return $note->getData([ 'content' ]);
+					}
 				}, $data['notes']);
 				if ($lastViewedNote) {
 					// check if note exists
@@ -83,13 +95,18 @@ class NotesController extends Controller {
 				$errorMessage = $this->l10n->t('The notes folder is not accessible: %s', $e->getMessage());
 			}
 
-			return [
+			$result = [
 				'notes' => $notesData,
 				'categories' => $categories,
 				'settings' => $settings,
 				'lastViewedNote' => $lastViewedNote,
 				'errorMessage' => $errorMessage,
 			];
+			$etag = md5(json_encode($result));
+			return (new JSONResponse($result))
+				->setLastModified($now)
+				->setETag($etag)
+			;
 		});
 	}
 
