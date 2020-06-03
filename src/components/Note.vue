@@ -108,10 +108,10 @@ export default {
 			return this.note ? this.note.title : ''
 		},
 		isManualSave() {
-			return store.state.isManualSave
+			return store.state.app.isManualSave
 		},
 		sidebarOpen() {
-			return store.state.sidebarOpen
+			return store.state.app.sidebarOpen
 		},
 	},
 
@@ -163,7 +163,7 @@ export default {
 		},
 
 		onUpdateTitle(title) {
-			const defaultTitle = store.state.documentTitle
+			const defaultTitle = store.state.app.documentTitle
 			if (title) {
 				document.title = title + ' - ' + defaultTitle
 			} else {
@@ -212,7 +212,7 @@ export default {
 		},
 
 		onToggleSidebar() {
-			store.commit('setSidebarOpen', !store.state.sidebarOpen)
+			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 			this.actionsOpen = false
 		},
 
@@ -224,7 +224,7 @@ export default {
 					unsaved: true,
 					autotitle: routeIsNewNote(this.$route),
 				}
-				store.commit('add', note)
+				store.commit('updateNote', note)
 				if (this.autosaveTimer === null) {
 					this.autosaveTimer = setTimeout(() => {
 						this.autosaveTimer = null

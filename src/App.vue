@@ -67,7 +67,7 @@ export default {
 				search: '',
 			},
 			loading: {
-				notes: false,
+				notes: true,
 				create: false,
 			},
 			error: false,
@@ -79,7 +79,7 @@ export default {
 
 	computed: {
 		notes() {
-			return store.state.notes
+			return store.state.notes.notes
 		},
 
 		filteredNotes() {
@@ -129,9 +129,12 @@ export default {
 
 	methods: {
 		loadNotes() {
-			this.loading.notes = true
 			fetchNotes()
 				.then(data => {
+					if (data === null) {
+						// nothing changed
+						return
+					}
 					if (data.notes !== null) {
 						this.error = false
 						this.routeDefault(data.lastViewedNote)
@@ -140,10 +143,14 @@ export default {
 					}
 				})
 				.catch(() => {
-					this.error = true
+					// only show error state if not loading in background
+					if (this.loading.notes) {
+						this.error = true
+					}
 				})
 				.then(() => {
 					this.loading.notes = false
+					setTimeout(this.loadNotes, 25000)
 				})
 		},
 
@@ -151,7 +158,8 @@ export default {
 			if (this.$route.path !== '/') {
 				this.$router.push('/')
 			}
-			store.commit('removeAll')
+			store.commit('removeAllNotes')
+			this.loading.notes = true
 			this.loadNotes()
 		},
 
