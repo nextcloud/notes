@@ -96,6 +96,7 @@ export default {
 
 .markdown-editor {
 	min-height: 100%;
+	margin-bottom: 30vh;
 }
 
 .CodeMirror {
