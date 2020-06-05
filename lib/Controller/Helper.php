@@ -25,7 +25,19 @@ class Helper {
 
 	public function handleErrorResponse(callable $respond) : JSONResponse {
 		try {
-			$data = $respond();
+			// retry on LockedException
+			$maxRetries = 5;
+			for ($try=1; $try <= $maxRetries; $try++) {
+				try {
+					$data = $respond();
+					break;
+				} catch (\OCP\Lock\LockedException $e) {
+					if ($try >= $maxRetries) {
+						throw $e;
+					}
+					sleep(1);
+				}
+			}
 			$response = $data instanceof JSONResponse ? $data : new JSONResponse($data);
 		} catch (NoteDoesNotExistException $e) {
 			$this->logger->logException($e, [ 'app' => $this->appName ]);
@@ -33,6 +45,9 @@ class Helper {
 		} catch (InsufficientStorageException $e) {
 			$this->logger->logException($e, [ 'app' => $this->appName ]);
 			$response = new JSONResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
+		} catch (\OCP\Lock\LockedException $e) {
+			$this->logger->logException($e, [ 'app' => $this->appName ]);
+			$response = new JSONResponse([], Http::STATUS_LOCKED);
 		} catch (\Throwable $e) {
 			$this->logger->logException($e, [ 'app' => $this->appName ]);
 			$response = new JSONResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
