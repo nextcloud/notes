@@ -60,26 +60,29 @@ export default {
 			this.mde.codemirror.on('change', () => {
 				this.$emit('input', this.mde.value())
 			})
-			this.initializeCheckboxes()
-		},
 
-		initializeCheckboxes() {
-			// TODO move the following from jQuery to plain JS
-			$('.CodeMirror-code').on('mousedown.checkbox touchstart.checkbox', '.cm-formatting-task', event => {
-				event.preventDefault()
-				event.stopImmediatePropagation()
-				this.toggleCheckbox(event.target)
+			document.querySelectorAll('.CodeMirror-code').forEach((codeElement) => {
+				codeElement.addEventListener('mousedown', this.onClickCodeElement)
+				codeElement.addEventListener('touchstart', this.onClickCodeElement)
 			})
 		},
 
+		onClickCodeElement(event) {
+			const element = event.target.closest('.cm-formatting-task')
+			if (element !== null) {
+				event.preventDefault()
+				event.stopImmediatePropagation()
+				this.toggleCheckbox(event.target)
+			}
+		},
+
 		toggleCheckbox(el) {
-			// TODO move the following from jQuery to plain JS
-			const $el = $(el)
 			const doc = this.mde.codemirror.getDoc()
-			const index = $el.parents('.CodeMirror-line').index()
+			const domLine = el.closest('.CodeMirror-line')
+			const index = [].indexOf.call(domLine.parentElement.children, domLine)
 			const line = doc.getLineHandle(index)
 
-			const newvalue = ($el.text() === '[x]') ? '[ ]' : '[x]'
+			const newvalue = (el.textContent === '[x]') ? '[ ]' : '[x]'
 
 			// + 1 for some reason... not sure why
 			doc.replaceRange(newvalue,

@@ -126,13 +126,17 @@ export default {
 
 	created() {
 		this.fetchData()
-		// TODO move the following from jQuery to plain JS
-		$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', this.onDetectFullscreen)
-		$(document).bind('keypress.notes.save', this.onKeyPress)
+		document.addEventListener('webkitfullscreenchange', this.onDetectFullscreen)
+		document.addEventListener('mozfullscreenchange', this.onDetectFullscreen)
+		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
+		document.addEventListener('keydown', this.onKeyPress)
 	},
 
 	destroyed() {
-		$(document).unbind('keypress.notes.save')
+		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
+		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)
+		document.removeEventListener('fullscreenchange', this.onDetectFullscreen)
+		document.removeEventListener('keydown', this.onKeyPress)
 		store.commit('setSidebarOpen', false)
 		this.onUpdateTitle(null)
 	},
@@ -246,6 +250,11 @@ export default {
 		},
 
 		onManualSave() {
+			const note = {
+				...this.note,
+				autotitle: routeIsNewNote(this.$route),
+			}
+			store.commit('add', note)
 			saveNoteManually(this.note.id)
 		},
 	},
