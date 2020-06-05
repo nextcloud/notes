@@ -51,6 +51,7 @@
     "Note has unsaved changes" : "Poznámka má neuložené zmeny",
     "Subcategory" : "Podkategória",
     "_%n word_::_%n words_" : ["%n slovo","%n slov","%n slov","%n slov"],
+    "_%n character_::_%n characters_" : ["%n znak","%n znaky","%n znaky","%n znakov"],
     "Write down your thoughts without any distractions." : "Zapíšte si nápady bez rušivých elementov.",
     "Use Markdown markups to style your text." : "Použite formát Markdown na formátovanie vášho textu.",
     "Organize your notes in categories." : "Organizujte si poznámky do kategórií.",

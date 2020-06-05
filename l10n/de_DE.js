@@ -53,6 +53,7 @@ OC.L10N.register(
     "Note has unsaved changes" : "Notiz enthält nicht gespeicherte Änderungen",
     "Subcategory" : "Unterkategorie",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
+    "_%n character_::_%n characters_" : ["%n Zeichen","%n Zeichen"],
     "Write down your thoughts without any distractions." : "Schreiben Sie Ihre Gedanken ohne jegliche Störungen auf.",
     "Use Markdown markups to style your text." : "Verwenden Sie Markdown um Ihren Text zu gestalten.",
     "Organize your notes in categories." : "Sortieren Sie Ihre Notizen in Kategorien.",

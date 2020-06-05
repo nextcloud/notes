@@ -53,6 +53,7 @@ OC.L10N.register(
     "Note has unsaved changes" : "V poznámce jsou neuložené změny",
     "Subcategory" : "Podkategorie",
     "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slova"],
+    "_%n character_::_%n characters_" : ["%n znak","%n znaky","%n znaků","%n znaky"],
     "Write down your thoughts without any distractions." : "Zapište si své myšlenky, aniž byste u toho byli rozptylováni.",
     "Use Markdown markups to style your text." : "Pro formátování textu použijte Markdown značky.",
     "Organize your notes in categories." : "Uspořádávejte své poznámky do kategorií.",

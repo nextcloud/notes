@@ -53,6 +53,7 @@ OC.L10N.register(
     "Note has unsaved changes" : "Kaydedilmemiş değişiklikler var",
     "Subcategory" : "Alt kategori",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
+    "_%n character_::_%n characters_" : ["%n karakter","%n karakter"],
     "Write down your thoughts without any distractions." : "Konuyu dağıtmadan düşüncelerinizi yazın.",
     "Use Markdown markups to style your text." : "Metni biçimlendirmek için markdown kod imlerini kullanın.",
     "Organize your notes in categories." : "Kategorileri kullanarak notlarınızı gruplayabilirsiniz.",

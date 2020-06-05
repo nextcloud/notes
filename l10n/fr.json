@@ -51,6 +51,7 @@
     "Note has unsaved changes" : "Note a des changements non sauvegardés",
     "Subcategory" : "Sous-catégorie",
     "_%n word_::_%n words_" : ["%n mot","%n mots"],
+    "_%n character_::_%n characters_" : ["%n caractère","%n caractères"],
     "Write down your thoughts without any distractions." : "Écrivez vos idées facilement.",
     "Use Markdown markups to style your text." : "Utilisez la syntaxe Markdown pour mettre en forme votre texte.",
     "Organize your notes in categories." : "Organisez vos notes en catégories.",
