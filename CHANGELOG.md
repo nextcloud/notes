@@ -13,6 +13,21 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.5.0 - 2020-06-06
+
+### Added
+- auto-refresh notes list (#519)
+- allow scrolling past the note end (#529)
+- show number of characters (#530)
+
+### Changed
+- speed-up synchronization (#525)
+
+### Fixed
+- retry on LockedException (should fix #350)
+- maintenance (#526, #527, #531)
+
+
 ## 3.4.0 - 2020-05-24
 
 ### Added
