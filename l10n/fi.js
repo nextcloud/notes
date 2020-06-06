@@ -52,7 +52,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "Muistiinpanojen noutaminen epäonnistui.",
     "Fetching note {id} has failed." : "Muistiinpanon {id} noutaminen epäonnistui.",
     "Creating new note has failed." : "Uuden muistiinpanon luominen epäonnistui.",
-    "Updating note {id} has failed." : "Muistiinpanon {id} päivittäminen epäonnistui.",
     "Deleting note {id} has failed." : "Muistiinpanon {id} poistaminen epäonnistui."
 },
 "nplurals=2; plural=(n != 1);");

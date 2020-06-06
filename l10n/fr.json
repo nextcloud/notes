@@ -67,7 +67,6 @@
     "Fetching note {id} has failed." : "La recherche de la note {id} a échoué.",
     "Renaming note {id} has failed." : "Impossible de renommer la note {id}.",
     "Creating new note has failed." : "La création d'une nouvelle note a échoué.",
-    "Updating note {id} has failed." : "La mise à jour de la note {id} a échoué.",
     "Undo delete has failed for note {title}." : "Impossible d'annuler la suppression de la note {title}.",
     "Deleting note {id} has failed." : "La suppression de la note {id} a échoué.",
     "Toggling favorite for note {id} has failed." : "Le changement de favori pour la note {id} a échoué.",

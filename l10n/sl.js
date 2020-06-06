@@ -65,7 +65,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "Pridobivanje zabeležk je spodletelo.",
     "Fetching note {id} has failed." : "Pridobivanje določila {id} sporočila je spodletelo.",
     "Creating new note has failed." : "Ustvarjanje nove zabeležke je spodletelo.",
-    "Updating note {id} has failed." : "Posodabljanje določila {id} sporočila je spodletelo.",
     "Undo delete has failed for note {title}." : "Razveljavitev brisanja je za zabeležko {title} spodletelo.",
     "Deleting note {id} has failed." : "Brisanje določila {id} sporočila je spodletelo.",
     "Toggling favorite for note {id} has failed." : "Preklop oznake priljubljeno za beležko {id} je spodletelo.",

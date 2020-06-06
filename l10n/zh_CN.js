@@ -65,7 +65,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "获取笔记失败。",
     "Fetching note {id} has failed." : "获取笔记 {id} 失败。",
     "Creating new note has failed." : "创建新笔记失败。",
-    "Updating note {id} has failed." : "更新笔记 {id} 失败。",
     "Undo delete has failed for note {title}." : "笔记 {title} 的撤消删除失败。",
     "Deleting note {id} has failed." : "删除笔记 {id} 失败。",
     "Toggling favorite for note {id} has failed." : "将笔记 {id} 设为收藏失败。",

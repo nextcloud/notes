@@ -69,7 +69,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Not {id} alınamadı.",
     "Renaming note {id} has failed." : "{id} notu yeniden adlandırılamadı.",
     "Creating new note has failed." : "Yeni not eklenemedi.",
-    "Updating note {id} has failed." : "Not {id} güncellenemedi.",
     "Undo delete has failed for note {title}." : "Silinen {title} notu geri alınamadı.",
     "Deleting note {id} has failed." : "Not {id} silinemedi.",
     "Toggling favorite for note {id} has failed." : "Not {id} sık kullanılanlara eklenemedi/çıkarılamadı.",

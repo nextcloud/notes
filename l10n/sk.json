@@ -67,7 +67,6 @@
     "Fetching note {id} has failed." : "Získavanie poznámky {id} zlyhalo.",
     "Renaming note {id} has failed." : "Nepodarilo sa premenovat poznámku {id}",
     "Creating new note has failed." : "Vytvorenie novej poznámky zlyhalo.",
-    "Updating note {id} has failed." : "Aktualizácia poznámky {id} zlyhala.",
     "Undo delete has failed for note {title}." : "Zrušenie odstránenia zlyhalo pre poznámku {title}.",
     "Deleting note {id} has failed." : "Zmazanie poznámky {id} zlyhalo.",
     "Toggling favorite for note {id} has failed." : "Zaradenie poznámky {id} do obľúbených zlyhalo.",

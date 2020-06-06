@@ -64,7 +64,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "ノートを取得できませんでした。",
     "Fetching note {id} has failed." : "ノート {id} を取得できませんでした",
     "Creating new note has failed." : "新規ノートを作成できませんでした",
-    "Updating note {id} has failed." : "ノート {id} を更新できませんでした",
     "Undo delete has failed for note {title}." : "メモ{title}の削除取り消しに失敗しました。",
     "Deleting note {id} has failed." : "ノート {id} を削除できませんでした",
     "Toggling favorite for note {id} has failed." : "お気に入りノート {id} を切り替えできませんでした。",

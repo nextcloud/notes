@@ -61,7 +61,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "ثبت نام یادداشت انجام نشد.",
     "Fetching note {id} has failed." : "یادداشت برداری {id} انجام نشد.",
     "Creating new note has failed." : "ایجاد یادداشت جدید انجام نشد.",
-    "Updating note {id} has failed." : "به روز رسانی توجه داشته باشید {id} تعریف شکست خورده است.",
     "Deleting note {id} has failed." : "حذف یادداشت {شناسه} انجام نشد.",
     "Toggling favorite for note {id} has failed." : "روشن نیست مورد علاقه برای توجه داشته باشید {id} تعریف شکست خورده است.",
     "Updating the note's category has failed. Is the target directory writable?" : "به روزرسانی دسته یادداشت انجام نشد. آیا فهرست مسیر قابل نوشتن است؟",

@@ -68,7 +68,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Dohvaćanje bilješke {id} nije uspjelo.",
     "Renaming note {id} has failed." : "Preimenovanje bilješke {id} nije uspjelo.",
     "Creating new note has failed." : "Stvaranje nove bilješke nije uspjelo.",
-    "Updating note {id} has failed." : "Ažuriranje bilješke {id} nije uspjelo.",
     "Undo delete has failed for note {title}." : "Nije uspjelo vraćanje izbrisanog za bilješku {title}.",
     "Deleting note {id} has failed." : "Brisanje bilješke {id} nije uspjelo.",
     "Toggling favorite for note {id} has failed." : "Postavljanje favorita za bilješku {id} nije uspjelo.",

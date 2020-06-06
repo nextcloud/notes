@@ -68,7 +68,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Не удалось получить заметку {id}.",
     "Renaming note {id} has failed." : "Не удалось переименовать заметку {id}.",
     "Creating new note has failed." : "Не удалось создать заметку.",
-    "Updating note {id} has failed." : "Не удалось обновить заметку {id}.",
     "Undo delete has failed for note {title}." : "Не удалось отменить удаление заметки {title}.",
     "Deleting note {id} has failed." : "Не удалось удалить заметку {id}.",
     "Toggling favorite for note {id} has failed." : "Не удалось установить отметку «избранное» для заметки {id}.",

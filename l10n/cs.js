@@ -69,7 +69,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Načítání poznámky {id} se nezdařilo.",
     "Renaming note {id} has failed." : "Přejmenování poznámky {id} se nezdařilo.",
     "Creating new note has failed." : "Vytváření nové poznámky se nezdařilo.",
-    "Updating note {id} has failed." : "Aktualizace poznámky {id} se nezdařila.",
     "Undo delete has failed for note {title}." : "Vzetí vymazání poznámky {title} zpět se nezdařilo.",
     "Deleting note {id} has failed." : "Mazání poznámky {id} se nezdařilo.",
     "Toggling favorite for note {id} has failed." : "Označení / zrušení označení poznámky {id} jako oblíbené se nezdařilo.",

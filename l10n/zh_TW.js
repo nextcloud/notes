@@ -59,7 +59,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "取得筆記失敗",
     "Fetching note {id} has failed." : "取得筆記 {id} 失敗",
     "Creating new note has failed." : "新建筆記失敗",
-    "Updating note {id} has failed." : "更新筆記 {id} 失敗",
     "Deleting note {id} has failed." : "刪除筆記 {id} 失敗",
     "Toggling favorite for note {id} has failed." : "增/減筆記{id} 到最愛失敗",
     "Updating the note's category has failed. Is the target directory writable?" : "更新筆記的分類失敗。檢查目的地目錄屬性是否為可寫入？",

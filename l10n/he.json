@@ -65,7 +65,6 @@
     "Fetching note {id} has failed." : "קבלת הפתק {id} נכשלה.",
     "Renaming note {id} has failed." : "שינוי שם הפתק {id} נכשל.",
     "Creating new note has failed." : "יצירת פתק חדש נכשלה.",
-    "Updating note {id} has failed." : "עדכון הפתק {id} נכשל.",
     "Undo delete has failed for note {title}." : "ביטול מחיקת הפתק {title} נכשלה.",
     "Deleting note {id} has failed." : "מחיקת הפתק {id} נכשלה.",
     "Toggling favorite for note {id} has failed." : "החלפת מצב העדפה לפתק {id} נכשלה.",

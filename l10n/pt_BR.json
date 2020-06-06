@@ -67,7 +67,6 @@
     "Fetching note {id} has failed." : "A busca da anotação {id} falhou.",
     "Renaming note {id} has failed." : "Erro ao renomear a anotação {id}.",
     "Creating new note has failed." : "A criação de uma nova anotação falhou.",
-    "Updating note {id} has failed." : "A atualização da anotação {id} falhou.",
     "Undo delete has failed for note {title}." : "Erro ao desfazer exclusão da anotação {title}.",
     "Deleting note {id} has failed." : "A exclusão da anotação {id} falhou.",
     "Toggling favorite for note {id} has failed." : "A alternância de favoritos para a anotação {id} falhou.",

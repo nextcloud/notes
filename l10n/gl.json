@@ -67,7 +67,6 @@
     "Fetching note {id} has failed." : "Produciuse un fallo ao recuperar a nota {id}.",
     "Renaming note {id} has failed." : "Produciuse un fallo ao renomear a nota {id}.",
     "Creating new note has failed." : "Produciuse un fallo ao crear a nova nota.",
-    "Updating note {id} has failed." : "Produciuse un fallo ao actualizar a nota {id}.",
     "Undo delete has failed for note {title}." : "Produciuse un fallo ao desfacer a eliminación da nota {title}.",
     "Deleting note {id} has failed." : "Produciuse un fallo ao eliminar a nota {id}.",
     "Toggling favorite for note {id} has failed." : "Produciuse un fallo ao activar o favorito para a nota {id}.",

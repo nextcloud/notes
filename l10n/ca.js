@@ -68,7 +68,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Ha fallat l'obtenció de la nota {id}.",
     "Renaming note {id} has failed." : "El canvi de nom de la nota {id} ha fallat.",
     "Creating new note has failed." : "Ha fallat la creació de la nova nota.",
-    "Updating note {id} has failed." : "Ha fallat l'actualització de la nota {id}.",
     "Undo delete has failed for note {title}." : "Desfés la supressió ha fallat per a la nota {title}.",
     "Deleting note {id} has failed." : "Ha fallat la supressió de la nota {id}.",
     "Toggling favorite for note {id} has failed." : "Ha fallat el canvi de preferit per la nota {id}.",

@@ -67,7 +67,6 @@
     "Fetching note {id} has failed." : "Pobieranie notatki {id} nie powiódł się.",
     "Renaming note {id} has failed." : "Zmiana nazwy notatki {id} nie powiodła się.",
     "Creating new note has failed." : "Utworzenie nowej notatki nie powiodło się.",
-    "Updating note {id} has failed." : "Aktualizacja notatki {id} nie powiodła się.",
     "Undo delete has failed for note {title}." : "Cofnięcie usunięcia notatki {title} nie powiodło się.",
     "Deleting note {id} has failed." : "Usunięcie notatki {id} nie powiodło się.",
     "Toggling favorite for note {id} has failed." : "Przełączenie ulubionej notatki {id} nie powiodło się.",

@@ -68,7 +68,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "{id} oharrak eskuratzeak huts egin du.",
     "Renaming note {id} has failed." : "{id} oharra berrizendatzeak huts egin du.",
     "Creating new note has failed." : "Ohar berria sortzeak huts egin du.",
-    "Updating note {id} has failed." : "{id} oharra eguneratzeak huts egin du.",
     "Undo delete has failed for note {title}." : "{title} oharra ezabatzea desegiteak huts egin du.",
     "Deleting note {id} has failed." : "{id} oharra ezabatzeak huts egin du.",
     "Toggling favorite for note {id} has failed." : "{id} oharrari gogoko egoera txandakatzeak huts egin du.",

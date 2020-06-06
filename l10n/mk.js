@@ -59,7 +59,6 @@ OC.L10N.register(
     "Fetching notes has failed." : "Неуспешно превземање на белешката.",
     "Fetching note {id} has failed." : "Неуспешно превземање на белешката {id}.",
     "Creating new note has failed." : "Неуспешно креирање на нова белешка.",
-    "Updating note {id} has failed." : "Неуспешно ажурирање на белешката {id}.",
     "Deleting note {id} has failed." : "Неуспешно бришење на белешката {id}.",
     "Toggling favorite for note {id} has failed." : "Неуспешно поставување во омилени белешки за белешката {id}.",
     "Updating the note's category has failed. Is the target directory writable?" : "Неуспешно ажурирање на категорија за белешките. Дали во папката може да зачувува?",

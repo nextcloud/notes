@@ -69,7 +69,6 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Fallo al recuperar la nota {id}",
     "Renaming note {id} has failed." : "Fallo al renombrar la nota {id} .",
     "Creating new note has failed." : "Fallo al crear una nueva nota.",
-    "Updating note {id} has failed." : "Fallo al actualizar la nota {id} .",
     "Undo delete has failed for note {title}." : "Ha fallado la operación de Deshacer el borrado para la nota {title}.",
     "Deleting note {id} has failed." : "El borrado de la nota {id} ha fallado.",
     "Toggling favorite for note {id} has failed." : "Fallo al marcar la nota {id} como favorita",
