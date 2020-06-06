@@ -22,6 +22,7 @@ Types of changes:
 
 ### Changed
 - speed-up synchronization (#525)
+- new app icon (#522)
 
 ### Fixed
 - retry on LockedException (should fix #350)
