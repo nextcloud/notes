@@ -69,6 +69,7 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Abruf der Notiz {id} fehlgeschlagen.",
     "Renaming note {id} has failed." : "Umbenennen der Notiz {id} fehlgeschlagen.",
     "Creating new note has failed." : "Erstellen der neuen Notiz fehlgeschlagen.",
+    "Saving note {id} has failed." : "Speichern der Notiz {id} fehlgeschlagen.",
     "Undo delete has failed for note {title}." : "Fehler beim Wiederherstellen der Notiz {title}.",
     "Deleting note {id} has failed." : "Löschen der Notiz {id} fehlgeschlagen.",
     "Toggling favorite for note {id} has failed." : "Setzen der Notiz {id} als Favorit fehlgeschlagen.",

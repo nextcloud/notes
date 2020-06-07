@@ -69,6 +69,7 @@ OC.L10N.register(
     "Fetching note {id} has failed." : "Notitie {id} ophalen mislukt.",
     "Renaming note {id} has failed." : "Hernoemen notitie {id} mislukt.",
     "Creating new note has failed." : "Notitie aanmaken mislukt.",
+    "Saving note {id} has failed." : "Opslaan notitie {id} mislukt.",
     "Undo delete has failed for note {title}." : "Ongedaan maken Verwijderen mislukt voor notitie {title}.",
     "Deleting note {id} has failed." : "Notitie {id} verwijderen mislukt.",
     "Toggling favorite for note {id} has failed." : "Favoriet instellen voor notitie {id} mislukt.",
