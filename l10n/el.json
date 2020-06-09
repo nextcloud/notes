@@ -67,6 +67,7 @@
     "Fetching note {id} has failed." : "Η λήψη της σημείωσης {id} απέτυχε.",
     "Renaming note {id} has failed." : "Η μετονομασία της σημείωσης {id} απέτυχε.",
     "Creating new note has failed." : "Η δημιουργία νέας σημείωσης απέτυχε.",
+    "Saving note {id} has failed." : "Η αποθήκευση της σημείωσης {id} απέτυχε.",
     "Undo delete has failed for note {title}." : "Αποτυχία διαγραφής για την σημείωση {title}.",
     "Deleting note {id} has failed." : "Η διαγραφή της σημείωσης {id} απέτυχε.",
     "Toggling favorite for note {id} has failed." : "Η εναλλαγή του αγαπημένου για τη σημείωση {id} απέτυχε.",

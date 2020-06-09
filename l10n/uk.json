@@ -10,12 +10,12 @@
     "Rename" : "Перейменувати",
     "Delete note" : "Вилучити нотатку",
     "Remove from favorites" : "Вилучено з улюбленого",
-    "Add to favorites" : "Додати до обраного",
+    "Add to favorites" : "Додати до улюбленого",
     "Details" : "Деталі",
     "Edit" : "Редашувати",
     "Category" : "Категорія",
     "_%n word_::_%n words_" : ["%n слово","%n слів","%n слів","%n слів"],
-    "Android app" : "Android-додаток",
-    "iOS app" : "iOS додаток"
+    "Android app" : "Застосунок для Android",
+    "iOS app" : "Застосунок для iOS"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }
