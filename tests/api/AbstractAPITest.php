@@ -46,15 +46,17 @@ abstract class AbstractAPITest extends TestCase {
 			$response->getHeaderLine('Content-Type'),
 			$message.': Response content type'
 		);
-		$this->assertTrue(
-			$response->hasHeader('X-Notes-API-Versions'),
-			$message.': Response has Notes-API-Versions header'
-		);
-		$this->assertContains(
-			$this->apiVersion,
-			explode(', ', $response->getHeaderLine('X-Notes-API-Versions')),
-			$message.': Response Notes-API-Versions header'
-		);
+		if ($statusExp !== 401) {
+			$this->assertTrue(
+				$response->hasHeader('X-Notes-API-Versions'),
+				$message.': Response has Notes-API-Versions header'
+			);
+			$this->assertContains(
+				$this->apiVersion,
+				explode(', ', $response->getHeaderLine('X-Notes-API-Versions')),
+				$message.': Response Notes-API-Versions header'
+			);
+		}
 	}
 
 	protected function checkGetReferenceNotes(

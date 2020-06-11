@@ -238,5 +238,9 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->assertEquals(507, $response2->getStatusCode());
 	}
 
-	// TODO Test settings (switch to another notes folder)
+	public function testUnauthorized() {
+		$auth = ['test', 'wrongpassword'];
+		$response = $this->http->request('GET', 'notes', [ 'auth' => $auth ]);
+		$this->checkResponse($response, 'Get existing notes', 401);
+	}
 }
