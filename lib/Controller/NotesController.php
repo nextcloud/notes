@@ -25,8 +25,6 @@ class NotesController extends Controller {
 	private $helper;
 	/** @var IConfig */
 	private $settings;
-	/** @var string */
-	private $userId;
 	/** @var IL10N */
 	private $l10n;
 
@@ -38,8 +36,7 @@ class NotesController extends Controller {
 		SettingsService $settingsService,
 		Helper $helper,
 		IConfig $settings,
-		IL10N $l10n,
-		string $UserId
+		IL10N $l10n
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -47,7 +44,6 @@ class NotesController extends Controller {
 		$this->settingsService = $settingsService;
 		$this->helper = $helper;
 		$this->settings = $settings;
-		$this->userId = $UserId;
 		$this->l10n = $l10n;
 	}
 
@@ -57,12 +53,13 @@ class NotesController extends Controller {
 	 */
 	public function index(int $pruneBefore = 0) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($pruneBefore) {
+			$userId = $this->helper->getUID();
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-			$settings = $this->settingsService->getAll($this->userId);
+			$settings = $this->settingsService->getAll($userId);
 
 			$errorMessage = null;
 			$lastViewedNote = (int) $this->settings->getUserValue(
-				$this->userId,
+				$userId,
 				$this->appName,
 				'notesLastViewedNote'
 			);
@@ -70,8 +67,8 @@ class NotesController extends Controller {
 			$notesData = null;
 			$categories = null;
 			try {
-				$data = $this->notesService->getAll($this->userId);
-				$metas = $this->metaService->updateAll($this->userId, $data['notes']);
+				$data = $this->notesService->getAll($userId);
+				$metas = $this->metaService->updateAll($userId, $data['notes']);
 				$categories = $data['categories'];
 				$notesData = array_map(function ($note) use ($metas, $pruneBefore) {
 					$lastUpdate = $metas[$note->getId()]->getLastUpdate();
@@ -84,9 +81,9 @@ class NotesController extends Controller {
 				if ($lastViewedNote) {
 					// check if note exists
 					try {
-						$this->notesService->get($this->userId, $lastViewedNote);
+						$this->notesService->get($userId, $lastViewedNote);
 					} catch (\Exception $ex) {
-						$this->settings->deleteUserValue($this->userId, $this->appName, 'notesLastViewedNote');
+						$this->settings->deleteUserValue($userId, $this->appName, 'notesLastViewedNote');
 						$lastViewedNote = 0;
 						$errorMessage = $this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
 					}
@@ -116,11 +113,11 @@ class NotesController extends Controller {
 	 */
 	public function get(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
-			$note = $this->notesService->get($this->userId, $id);
+			$note = $this->notesService->get($this->helper->getUID(), $id);
 
 			// save the last viewed note
 			$this->settings->setUserValue(
-				$this->userId,
+				$this->helper->getUID(),
 				$this->appName,
 				'notesLastViewedNote',
 				strval($id)
@@ -136,7 +133,7 @@ class NotesController extends Controller {
 	 */
 	public function create(string $category) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category) {
-			$note = $this->notesService->create($this->userId, '', $category);
+			$note = $this->notesService->create($this->helper->getUID(), '', $category);
 			$note->setContent('');
 			return $note->getData();
 		});
@@ -164,7 +161,7 @@ class NotesController extends Controller {
 		) {
 			try {
 				// check if note still exists
-				$note = $this->notesService->get($this->userId, $id);
+				$note = $this->notesService->get($this->helper->getUID(), $id);
 				$noteData = $note->getData();
 				if ($noteData['error']) {
 					throw new \Exception();
@@ -172,7 +169,7 @@ class NotesController extends Controller {
 				return $noteData;
 			} catch (\Throwable $e) {
 				// re-create if note doesn't exit anymore
-				$note = $this->notesService->create($this->userId, $title, $category);
+				$note = $this->notesService->create($this->helper->getUID(), $title, $category);
 				$note->setContent($content);
 				$note->setModified($modified);
 				$note->setFavorite($favorite);
@@ -187,7 +184,7 @@ class NotesController extends Controller {
 	 */
 	public function update(int $id, string $content, bool $autotitle) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content, $autotitle) {
-			$note = $this->notesService->get($this->userId, $id);
+			$note = $this->notesService->get($this->helper->getUID(), $id);
 			$note->setContent($content);
 			if ($autotitle) {
 				$title = $this->notesService->getTitleFromContent($content);
@@ -217,7 +214,7 @@ class NotesController extends Controller {
 			$category,
 			$favorite
 		) {
-			$note = $this->notesService->get($this->userId, $id);
+			$note = $this->notesService->get($this->helper->getUID(), $id);
 			$result = null;
 			switch ($property) {
 				case 'modified':
@@ -261,7 +258,7 @@ class NotesController extends Controller {
 	 */
 	public function destroy(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
-			$this->notesService->delete($this->userId, $id);
+			$this->notesService->delete($this->helper->getUID(), $id);
 			return [];
 		});
 	}

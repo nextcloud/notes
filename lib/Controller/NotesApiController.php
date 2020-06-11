@@ -9,7 +9,6 @@ use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\IUserSession;
 
 class NotesApiController extends ApiController {
 
@@ -19,26 +18,18 @@ class NotesApiController extends ApiController {
 	private $metaService;
 	/** @var Helper */
 	private $helper;
-	/** @var IUserSession */
-	private $userSession;
 
 	public function __construct(
 		string $AppName,
 		IRequest $request,
 		NotesService $service,
 		MetaService $metaService,
-		Helper $helper,
-		IUserSession $userSession
+		Helper $helper
 	) {
 		parent::__construct($AppName, $request);
 		$this->service = $service;
 		$this->metaService = $metaService;
 		$this->helper = $helper;
-		$this->userSession = $userSession;
-	}
-
-	private function getUID() : string {
-		return $this->userSession->getUser()->getUID();
 	}
 
 
@@ -51,8 +42,8 @@ class NotesApiController extends ApiController {
 		return $this->helper->handleErrorResponse(function () use ($category, $exclude, $pruneBefore) {
 			$exclude = explode(',', $exclude);
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-			$notes = $this->service->getAll($this->getUID())['notes'];
-			$metas = $this->metaService->updateAll($this->getUID(), $notes);
+			$notes = $this->service->getAll($this->helper->getUID())['notes'];
+			$metas = $this->metaService->updateAll($this->helper->getUID(), $notes);
 			if ($category !== null) {
 				$notes = array_values(array_filter($notes, function ($note) use ($category) {
 					return $note->getCategory() === $category;
@@ -82,7 +73,7 @@ class NotesApiController extends ApiController {
 	public function get(int $id, string $exclude = '') : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $exclude) {
 			$exclude = explode(',', $exclude);
-			$note = $this->service->get($this->getUID(), $id);
+			$note = $this->service->get($this->helper->getUID(), $id);
 			return $note->getData($exclude);
 		});
 	}
@@ -101,7 +92,7 @@ class NotesApiController extends ApiController {
 		bool $favorite = false
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category, $title, $content, $modified, $favorite) {
-			$note = $this->service->create($this->getUID(), $title, $category);
+			$note = $this->service->create($this->helper->getUID(), $title, $category);
 			try {
 				$note->setContent($content);
 				if ($modified) {
@@ -112,7 +103,7 @@ class NotesApiController extends ApiController {
 				}
 			} catch (\Throwable $e) {
 				// roll-back note creation
-				$this->service->delete($this->getUID(), $note->getId());
+				$this->service->delete($this->helper->getUID(), $note->getId());
 				throw $e;
 			}
 			return $note->getData();
@@ -158,7 +149,7 @@ class NotesApiController extends ApiController {
 			$category,
 			$favorite
 		) {
-			$note = $this->service->get($this->getUID(), $id);
+			$note = $this->service->get($this->helper->getUID(), $id);
 			if ($content !== null) {
 				$note->setContent($content);
 			}
@@ -192,7 +183,7 @@ class NotesApiController extends ApiController {
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content, $modified, $category, $favorite) {
 			if ($content === null) {
-				$note = $this->service->get($this->getUID(), $id);
+				$note = $this->service->get($this->helper->getUID(), $id);
 				$title = $this->service->getTitleFromContent($note->getContent());
 			} else {
 				$title = $this->service->getTitleFromContent($content);
@@ -208,7 +199,7 @@ class NotesApiController extends ApiController {
 	 */
 	public function destroy(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
-			$this->service->delete($this->getUID(), $id);
+			$this->service->delete($this->helper->getUID(), $id);
 			return [];
 		});
 	}

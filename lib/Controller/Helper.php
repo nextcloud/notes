@@ -9,18 +9,29 @@ use OCA\Notes\Service\NoteDoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\ILogger;
+use OCP\IUserSession;
 
 class Helper {
 
+	/** @var ILogger */
 	public $logger;
+	/** @var string */
 	private $appName;
+	/** @var IUserSession */
+	private $userSession;
 
 	public function __construct(
+		IUserSession $userSession,
 		ILogger $logger,
 		string $appName
 	) {
+		$this->userSession = $userSession;
 		$this->logger = $logger;
 		$this->appName = $appName;
+	}
+
+	public function getUID() : string {
+		return $this->userSession->getUser()->getUID();
 	}
 
 	public function handleErrorResponse(callable $respond) : JSONResponse {
