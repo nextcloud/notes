@@ -13,6 +13,15 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.5.1 - 2020-06-11
+
+### Fixed
+- editor: jump to end on click below (#540)
+- editor: fix Home/End key behavior (#543)
+- improve error handling (#541)
+- maintenance (#542, #544)
+
+
 ## 3.5.0 - 2020-06-06
 
 ### Added
