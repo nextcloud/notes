@@ -1,5 +1,5 @@
 <template>
-	<div class="markdown-editor">
+	<div class="markdown-editor" @click="onClickEditor">
 		<textarea />
 	</div>
 </template>
@@ -91,6 +91,15 @@ export default {
 			)
 		},
 
+		onClickEditor(event) {
+			const cm = event.target.closest('.CodeMirror')
+			// if click is outside of editor, then jump to end position
+			if (cm === null) {
+				this.mde.codemirror.setCursor(this.mde.codemirror.lineCount(), 0)
+				this.mde.codemirror.focus()
+			}
+		},
+
 	},
 }
 </script>
@@ -99,7 +108,7 @@ export default {
 
 .markdown-editor {
 	min-height: 100%;
-	margin-bottom: 30vh;
+	padding-bottom: 30vh;
 }
 
 .CodeMirror {

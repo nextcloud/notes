@@ -271,6 +271,7 @@ export default {
 	max-width: 47em;
 	font-size: 16px;
 	padding: 1em;
+	padding-bottom: 0;
 }
 
 /* center editor on large screens */
