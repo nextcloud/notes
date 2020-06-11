@@ -36,6 +36,9 @@ class Note {
 
 	public function getContent() : string {
 		$content = $this->file->getContent();
+		if (!is_string($content)) {
+			throw new \Exception('Can\'t read file content.');
+		}
 		if (!mb_check_encoding($content, 'UTF-8')) {
 			$content = mb_convert_encoding($content, 'UTF-8');
 		}
