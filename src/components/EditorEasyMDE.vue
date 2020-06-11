@@ -57,10 +57,18 @@ export default {
 
 			this.mde = new EasyMDE(config)
 
+			// keys Home/End should apply to the visual line
+			this.mde.codemirror.addKeyMap({
+				'Home': 'goLineLeft',
+				'End': 'goLineRight',
+			})
+
+			// pass event for changes
 			this.mde.codemirror.on('change', () => {
 				this.$emit('input', this.mde.value())
 			})
 
+			// listen for click/touch events in order to toggle checkboxes
 			document.querySelectorAll('.CodeMirror-code').forEach((codeElement) => {
 				codeElement.addEventListener('mousedown', this.onClickCodeElement)
 				codeElement.addEventListener('touchstart', this.onClickCodeElement)
