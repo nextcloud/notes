@@ -77,6 +77,7 @@ class Note {
 			try {
 				$data['content'] = $this->getContent();
 			} catch (\Throwable $e) {
+				$this->noteUtil->logException($e);
 				$message = $this->noteUtil->getL10N()->t('Error').': ('.$this->file->getName().') '.$e->getMessage();
 				$data['content'] = $message;
 				$data['error'] = true;
