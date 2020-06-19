@@ -50,7 +50,7 @@ function getValidProperty($json, $prop) {
 	return $json->{$prop};
 }
 
-function getNCVersionFromAppInfo($path, $minmax = 'min') {
+function getDependencyVersionFromAppInfo($path, $type = 'nextcloud', $minmax = 'min') {
 	if (!file_exists($path)) {
 		throw new Exception('AppInfo does not exists: '.$path);
 	}
@@ -59,7 +59,7 @@ function getNCVersionFromAppInfo($path, $minmax = 'min') {
 	}
 	$content = file_get_contents($path);
 	$info = new SimpleXMLElement($content);
-	$nc = $info->dependencies->nextcloud;
+	$nc = $info->dependencies->$type;
 	$v = (string)$nc->attributes()->{$minmax.'-version'};
 	return $v;
 }
@@ -79,8 +79,19 @@ function versionCompare($sv1, $sv2, $type) {
 	return true;
 }
 
+$pathAppInfo = __DIR__.'/../appinfo/info.xml';
+
+
 if (in_array('--appinfo', $argv)) {
-	echo getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'min');
+	echo getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');
+	exit;
+}
+if (in_array('--php-min', $argv)) {
+	echo getDependencyVersionFromAppInfo($pathAppInfo, 'php', 'min');
+	exit;
+}
+if (in_array('--php-max', $argv)) {
+	echo getDependencyVersionFromAppInfo($pathAppInfo, 'php', 'max');
 	exit;
 }
 
@@ -89,10 +100,10 @@ try {
 	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
 	if ($vComposer === 'dev-master') {
 		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/christophwurst/nextcloud/composer.json');
-		$vAppInfo = getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'max');
+		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'max');
 		$type = 'max';
 	} else {
-		$vAppInfo = getNCVersionFromAppInfo(__DIR__.'/../appinfo/info.xml', 'min');
+		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');
 		$type = 'min';
 	}
 	echo $type.': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
