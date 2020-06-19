@@ -50,6 +50,10 @@ class NoteUtil {
 		return $this->logger;
 	}
 
+	public function logException(\Throwable $e) : void {
+		$this->logger->logException($e, ['app' => $this->appName]);
+	}
+
 	public function getCategoryFolder(Folder $notesFolder, string $category) {
 		$path = $notesFolder->getPath();
 		// sanitise path

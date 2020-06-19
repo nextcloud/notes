@@ -110,11 +110,7 @@ class NotesService {
 	private function getNotesFolder(string $userId) : Folder {
 		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
 		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
-		try {
-			$folder = $this->noteUtil->getOrCreateFolder($path);
-		} catch (\Exception $e) {
-			throw new NotesFolderException($path);
-		}
+		$folder = $this->noteUtil->getOrCreateFolder($path);
 		return $folder;
 	}
 

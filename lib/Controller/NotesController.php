@@ -5,6 +5,7 @@ namespace OCA\Notes\Controller;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
+use OCA\Notes\Service\NoteDoesNotExistException;
 
 use OCP\AppFramework\Controller;
 use OCP\IRequest;
@@ -82,13 +83,17 @@ class NotesController extends Controller {
 					// check if note exists
 					try {
 						$this->notesService->get($userId, $lastViewedNote);
-					} catch (\Exception $ex) {
+					} catch (\Throwable $ex) {
+						if (!($ex instanceof NoteDoesNotExistException)) {
+							$this->helper->logException($ex);
+						}
 						$this->settings->deleteUserValue($userId, $this->appName, 'notesLastViewedNote');
 						$lastViewedNote = 0;
 						$errorMessage = $this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
 					}
 				}
-			} catch (\Exception $e) {
+			} catch (\Throwable $e) {
+				$this->helper->logException($e);
 				$errorMessage = $this->l10n->t('The notes folder is not accessible: %s', $e->getMessage());
 			}
 

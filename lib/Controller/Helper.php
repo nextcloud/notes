@@ -34,6 +34,10 @@ class Helper {
 		return $this->userSession->getUser()->getUID();
 	}
 
+	public function logException(\Throwable $e) : void {
+		$this->logger->logException($e, ['app' => $this->appName]);
+	}
+
 	public function handleErrorResponse(callable $respond) : JSONResponse {
 		try {
 			// retry on LockedException
@@ -51,16 +55,16 @@ class Helper {
 			}
 			$response = $data instanceof JSONResponse ? $data : new JSONResponse($data);
 		} catch (NoteDoesNotExistException $e) {
-			$this->logger->logException($e, [ 'app' => $this->appName ]);
+			$this->logException($e);
 			$response = new JSONResponse([], Http::STATUS_NOT_FOUND);
 		} catch (InsufficientStorageException $e) {
-			$this->logger->logException($e, [ 'app' => $this->appName ]);
+			$this->logException($e);
 			$response = new JSONResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
 		} catch (\OCP\Lock\LockedException $e) {
-			$this->logger->logException($e, [ 'app' => $this->appName ]);
+			$this->logException($e);
 			$response = new JSONResponse([], Http::STATUS_LOCKED);
 		} catch (\Throwable $e) {
-			$this->logger->logException($e, [ 'app' => $this->appName ]);
+			$this->logException($e);
 			$response = new JSONResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 		$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS));
