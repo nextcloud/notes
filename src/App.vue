@@ -9,13 +9,15 @@
 				@click="onNewNote"
 			/>
 
-			<NavigationList v-show="!loading.notes"
-				:filtered-notes="filteredNotes"
-				:category="filter.category"
-				:search="filter.search"
-				@category-selected="onSelectCategory"
-				@note-deleted="onNoteDeleted"
-			/>
+			<template #list>
+				<NavigationList v-show="!loading.notes"
+					:filtered-notes="filteredNotes"
+					:category="filter.category"
+					:search="filter.search"
+					@category-selected="onSelectCategory"
+					@note-deleted="onNoteDeleted"
+				/>
+			</template>
 
 			<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
 		</AppNavigation>
