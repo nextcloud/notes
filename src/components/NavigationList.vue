@@ -1,5 +1,5 @@
 <template>
-	<ul>
+	<Fragment>
 		<!-- collapsible categories -->
 		<NavigationCategoriesItem
 			v-if="numNotes"
@@ -51,7 +51,7 @@
 			:title="t('notes', 'Loading …')"
 			:loading="true"
 		/>
-	</ul>
+	</Fragment>
 </template>
 
 <script>
@@ -59,6 +59,7 @@ import {
 	AppNavigationCaption,
 	AppNavigationItem,
 } from '@nextcloud/vue'
+import { Fragment } from 'vue-fragment'
 
 import { categoryLabel } from '../NotesService'
 import NavigationCategoriesItem from './NavigationCategoriesItem'
@@ -73,6 +74,7 @@ export default {
 	components: {
 		AppNavigationCaption,
 		AppNavigationItem,
+		Fragment,
 		NavigationCategoriesItem,
 		NavigationNoteItem,
 	},

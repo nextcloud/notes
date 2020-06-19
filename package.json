@@ -17,10 +17,11 @@
 		"@nextcloud/event-bus": "^1.2.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.1.0",
-		"@nextcloud/vue": "^2.0.0",
+		"@nextcloud/vue": "^2.1.0",
 		"easymde": "^2.10.1",
 		"markdown-it": "^11.0.0",
 		"vue": "^2.6.11",
+		"vue-fragment": "^1.5.1",
 		"vue-observe-visibility": "^0.4.6",
 		"vue-router": "^3.3.2",
 		"vuex": "^3.4.0"
