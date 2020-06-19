@@ -2,7 +2,7 @@
 	"require-dev": {
 		"christophwurst/nextcloud": "^16.0",
 		"squizlabs/php_codesniffer": "3.*",
-		"phan/phan": "^2.0",
+		"phan/phan": "^3.0",
 		"guzzlehttp/guzzle": "^6.5",
 		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
 	},
