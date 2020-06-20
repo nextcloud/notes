@@ -134,7 +134,7 @@ const actions = {
 		for (const note of notes) {
 			noteIds[note.id] = true
 			// TODO check for parallel (local) changes!
-			// only update, if note has changes (see API "purgeBefore")
+			// only update, if note has changes (see API "pruneBefore")
 			if (note.title !== undefined) {
 				context.commit('updateNote', note)
 			}
