@@ -6,6 +6,7 @@ OC.L10N.register(
     "Notes" : "Ghi chép",
     "Settings" : "Thiết lập",
     "Categories" : "Các hạng mục",
+    "Loading …" : "Đang tải...",
     "Today" : "Hôm nay",
     "Yesterday" : "Hôm qua",
     "Rename" : "Đổi tên",
