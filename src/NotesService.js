@@ -12,12 +12,25 @@ function url(url) {
 	return generateUrl(url)
 }
 
-function handleSyncError(message) {
-	showError(message + ' ' + t('notes', 'See JavaScript console and server log for details.'))
-}
-
-function handleInsufficientStorage() {
-	showError(t('notes', 'Saving the note has failed due to insufficient storage.'))
+function handleSyncError(message, err = null) {
+	if (err?.response) {
+		const statusCode = err.response?.status
+		switch (statusCode) {
+		case 404:
+			showError(message + ' ' + t('notes', 'Note not found.'))
+			break
+		case 423:
+			showError(message + ' ' + t('notes', 'Note is locked.'))
+			break
+		case 507:
+			showError(message + ' ' + t('notes', 'Insufficient storage.'))
+			break
+		default:
+			showError(message + ' HTTP ' + statusCode + ' (' + err.response.data?.errorType + ')')
+		}
+	} else {
+		showError(message + ' ' + t('notes', 'See JavaScript console and server log for details.'))
+	}
 }
 
 export const setSettings = settings => {
@@ -30,7 +43,7 @@ export const setSettings = settings => {
 		})
 		.catch(err => {
 			console.error(err)
-			handleSyncError(t('notes', 'Updating settings has failed.'))
+			handleSyncError(t('notes', 'Updating settings has failed.'), err)
 			throw err
 		})
 }
@@ -66,7 +79,7 @@ export const fetchNotes = () => {
 				return null
 			} else {
 				console.error(err)
-				handleSyncError(t('notes', 'Fetching notes has failed.'))
+				handleSyncError(t('notes', 'Fetching notes has failed.'), err)
 				throw err
 			}
 		})
@@ -119,7 +132,7 @@ export const refreshNote = (noteId, lastETag) => {
 		.catch(err => {
 			if (err.response.status !== 304) {
 				console.error(err)
-				handleSyncError(t('notes', 'Refreshing note {id} has failed.', { id: noteId }))
+				handleSyncError(t('notes', 'Refreshing note {id} has failed.', { id: noteId }), err)
 			}
 			return null
 		})
@@ -133,7 +146,7 @@ export const setTitle = (noteId, title) => {
 		})
 		.catch(err => {
 			console.error(err)
-			handleSyncError(t('notes', 'Renaming note {id} has failed.', { id: noteId }))
+			handleSyncError(t('notes', 'Renaming note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
 }
@@ -147,11 +160,7 @@ export const createNote = category => {
 		})
 		.catch(err => {
 			console.error(err)
-			if (err.response.status === 507) {
-				handleInsufficientStorage()
-			} else {
-				handleSyncError(t('notes', 'Creating new note has failed.'))
-			}
+			handleSyncError(t('notes', 'Creating new note has failed.'), err)
 			throw err
 		})
 }
@@ -173,11 +182,7 @@ function _updateNote(note) {
 		.catch(err => {
 			store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
 			console.error(err)
-			if (err.response.status === 507) {
-				handleInsufficientStorage()
-			} else {
-				handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }))
-			}
+			handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }), err)
 		})
 }
 
@@ -190,11 +195,7 @@ export const undoDeleteNote = (note) => {
 		})
 		.catch(err => {
 			console.error(err)
-			if (err.response.status === 507) {
-				handleInsufficientStorage()
-			} else {
-				handleSyncError(t('notes', 'Undo delete has failed for note {title}.', { title: note.title }))
-			}
+			handleSyncError(t('notes', 'Undo delete has failed for note {title}.', { title: note.title }), err)
 			throw err
 		})
 }
@@ -208,7 +209,7 @@ export const deleteNote = noteId => {
 		})
 		.catch(err => {
 			console.error(err)
-			handleSyncError(t('notes', 'Deleting note {id} has failed.', { id: noteId }))
+			handleSyncError(t('notes', 'Deleting note {id} has failed.', { id: noteId }), err)
 			// remove note always since we don't know when the error happened
 			store.commit('removeNote', noteId)
 			throw err
@@ -225,7 +226,7 @@ export const setFavorite = (noteId, favorite) => {
 		})
 		.catch(err => {
 			console.error(err)
-			handleSyncError(t('notes', 'Toggling favorite for note {id} has failed.', { id: noteId }))
+			handleSyncError(t('notes', 'Toggling favorite for note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
 }
@@ -242,7 +243,7 @@ export const setCategory = (noteId, category) => {
 		})
 		.catch(err => {
 			console.error(err)
-			handleSyncError(t('notes', 'Updating the category for note {id} has failed.', { id: noteId }))
+			handleSyncError(t('notes', 'Updating the category for note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
 }

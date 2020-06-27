@@ -3,8 +3,6 @@
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Application;
-use OCA\Notes\Service\InsufficientStorageException;
-use OCA\Notes\Service\NoteDoesNotExistException;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
@@ -38,6 +36,13 @@ class Helper {
 		$this->logger->logException($e, ['app' => $this->appName]);
 	}
 
+	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {
+		$response = [
+			'errorType' => get_class($e)
+		];
+		return new JSONResponse($response, $statusCode);
+	}
+
 	public function handleErrorResponse(callable $respond) : JSONResponse {
 		try {
 			// retry on LockedException
@@ -54,18 +59,18 @@ class Helper {
 				}
 			}
 			$response = $data instanceof JSONResponse ? $data : new JSONResponse($data);
-		} catch (NoteDoesNotExistException $e) {
+		} catch (\OCA\Notes\Service\NoteDoesNotExistException $e) {
 			$this->logException($e);
-			$response = new JSONResponse([], Http::STATUS_NOT_FOUND);
-		} catch (InsufficientStorageException $e) {
+			$response = $this->createErrorResponse($e, Http::STATUS_NOT_FOUND);
+		} catch (\OCA\Notes\Service\InsufficientStorageException $e) {
 			$this->logException($e);
-			$response = new JSONResponse([], Http::STATUS_INSUFFICIENT_STORAGE);
+			$response = $this->createErrorResponse($e, Http::STATUS_INSUFFICIENT_STORAGE);
 		} catch (\OCP\Lock\LockedException $e) {
 			$this->logException($e);
-			$response = new JSONResponse([], Http::STATUS_LOCKED);
+			$response = $this->createErrorResponse($e, Http::STATUS_LOCKED);
 		} catch (\Throwable $e) {
 			$this->logException($e);
-			$response = new JSONResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+			$response = $this->createErrorResponse($e, Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 		$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS));
 		return $response;
