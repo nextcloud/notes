@@ -76,13 +76,13 @@ const mutations = {
 	updateNote(state, updated) {
 		const note = state.notesIds[updated.id]
 		if (note) {
+			note.title = updated.title
+			note.modified = updated.modified
+			note.favorite = updated.favorite
+			note.category = updated.category
 			// don't update meta-data over full data
 			if (updated.content !== undefined || note.content === undefined) {
-				note.title = updated.title
-				note.modified = updated.modified
 				note.content = updated.content
-				note.favorite = updated.favorite
-				note.category = updated.category
 				Vue.set(note, 'autotitle', updated.autotitle)
 				Vue.set(note, 'unsaved', updated.unsaved)
 				Vue.set(note, 'error', updated.error)

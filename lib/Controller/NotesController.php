@@ -128,7 +128,11 @@ class NotesController extends Controller {
 				strval($id)
 			);
 
-			return $note->getData();
+			$result = $note->getData();
+			$etag = md5(json_encode($result));
+			return (new JSONResponse($result))
+				->setETag($etag)
+			;
 		});
 	}
 
