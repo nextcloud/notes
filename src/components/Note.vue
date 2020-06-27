@@ -63,6 +63,7 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
+import { config } from '../config'
 import { fetchNote, refreshNote, saveNote, saveNoteManually, autotitleNote, routeIsNewNote } from '../NotesService'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
@@ -244,7 +245,7 @@ export default {
 			this.refreshTimer = setTimeout(() => {
 				this.refreshTimer = null
 				this.refreshNote()
-			}, 10000)
+			}, config.interval.note.refresh * 1000)
 		},
 
 		refreshNote() {
@@ -273,7 +274,7 @@ export default {
 					this.autosaveTimer = setTimeout(() => {
 						this.autosaveTimer = null
 						saveNote(note.id)
-					}, 2000)
+					}, config.interval.note.autosave * 1000)
 				}
 
 				// (re-) start auto refresh timer
@@ -282,21 +283,17 @@ export default {
 
 				// stop old autotitle timer
 				if (this.autotitleTimer !== null) {
-					console.debug('clear autotitle timer')
 					clearTimeout(this.autotitleTimer)
 					this.autotitleTimer = null
 				}
 				// start autotitle timer if note is new
 				if (this.isNewNote) {
-					console.debug('start autotitle timer')
 					this.autotitleTimer = setTimeout(() => {
-						console.debug('execute autotitle timer')
 						this.autotitleTimer = null
 						if (this.isNewNote) {
-							console.debug('autotitle note')
 							autotitleNote(note.id)
 						}
-					}, 5000)
+					}, config.interval.note.autotitle * 1000)
 				}
 			}
 		},
