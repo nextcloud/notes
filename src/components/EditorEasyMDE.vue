@@ -33,7 +33,9 @@ export default {
 	watch: {
 		value(val) {
 			if (val !== this.mde.value()) {
+				const position = this.mde.codemirror.getCursor()
 				this.mde.value(val)
+				this.mde.codemirror.setCursor(position)
 			}
 		},
 	},

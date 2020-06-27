@@ -61,7 +61,7 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
-import { fetchNote, saveNote, saveNoteManually, routeIsNewNote } from '../NotesService'
+import { fetchNote, refreshNote, saveNote, saveNoteManually, routeIsNewNote } from '../NotesService'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
 import store from '../store'
@@ -97,6 +97,8 @@ export default {
 			preview: false,
 			actionsOpen: false,
 			autosaveTimer: null,
+			refreshTimer: null,
+			etag: null,
 		}
 	},
 
@@ -133,6 +135,7 @@ export default {
 	},
 
 	destroyed() {
+		this.stopRefreshTimer()
 		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('fullscreenchange', this.onDetectFullscreen)
@@ -144,6 +147,8 @@ export default {
 	methods: {
 		fetchData() {
 			store.commit('setSidebarOpen', false)
+			this.etag = null
+			this.stopRefreshTimer()
 
 			if (this.isMobile) {
 				emit('toggle-navigation', { open: false })
@@ -152,11 +157,12 @@ export default {
 			this.onUpdateTitle(this.title)
 			this.loading = true
 			this.preview = false
-			fetchNote(this.noteId)
+			fetchNote(parseInt(this.noteId))
 				.then((note) => {
 					if (note.errorMessage) {
 						showError(note.errorMessage)
 					}
+					this.startRefreshTimer()
 				})
 				.catch(() => {
 					// note not found
@@ -220,8 +226,34 @@ export default {
 			this.actionsOpen = false
 		},
 
+		stopRefreshTimer() {
+			if (this.refreshTimer !== null) {
+				clearTimeout(this.refreshTimer)
+				this.refreshTimer = null
+			}
+		},
+
+		startRefreshTimer() {
+			this.stopRefreshTimer()
+			this.refreshTimer = setTimeout(() => {
+				this.refreshTimer = null
+				this.refreshNote()
+			}, 10000)
+		},
+
+		refreshNote() {
+			refreshNote(parseInt(this.noteId), this.etag).then(etag => {
+				if (etag) {
+					this.etag = etag
+					this.$forceUpdate()
+				}
+				this.startRefreshTimer()
+			})
+		},
+
 		onEdit(newContent) {
 			if (this.note.content !== newContent) {
+				this.stopRefreshTimer()
 				const note = {
 					...this.note,
 					content: newContent,
@@ -229,12 +261,15 @@ export default {
 					autotitle: routeIsNewNote(this.$route),
 				}
 				store.commit('updateNote', note)
+				this.$forceUpdate()
 				if (this.autosaveTimer === null) {
 					this.autosaveTimer = setTimeout(() => {
 						this.autosaveTimer = null
 						saveNote(note.id)
 					}, 2000)
 				}
+				// TODO should be after save is finished
+				this.startRefreshTimer()
 			}
 		},
 

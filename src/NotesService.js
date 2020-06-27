@@ -96,6 +96,35 @@ export const fetchNote = noteId => {
 		})
 }
 
+export const refreshNote = (noteId, lastETag) => {
+	const headers = {}
+	if (lastETag) {
+		headers['If-None-Match'] = lastETag
+	}
+	const oldContent = store.getters.getNote(noteId).content
+	return axios
+		.get(
+			url('/notes/' + noteId),
+			{ headers }
+		)
+		.then(response => {
+			const currentContent = store.getters.getNote(noteId).content
+			// only update if local content has not changed
+			if (oldContent === currentContent) {
+				store.commit('updateNote', response.data)
+				return response.headers['etag']
+			}
+			return null
+		})
+		.catch(err => {
+			if (err.response.status !== 304) {
+				console.error(err)
+				handleSyncError(t('notes', 'Refreshing note {id} has failed.', { id: noteId }))
+			}
+			return null
+		})
+}
+
 export const setTitle = (noteId, title) => {
 	return axios
 		.put(url('/notes/' + noteId + '/title'), { title: title })
