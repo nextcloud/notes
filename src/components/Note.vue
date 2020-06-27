@@ -63,7 +63,7 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
-import { fetchNote, refreshNote, saveNote, saveNoteManually, routeIsNewNote } from '../NotesService'
+import { fetchNote, refreshNote, saveNote, saveNoteManually, autotitleNote, routeIsNewNote } from '../NotesService'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
 import store from '../store'
@@ -99,6 +99,7 @@ export default {
 			preview: false,
 			actionsOpen: false,
 			autosaveTimer: null,
+			autotitleTimer: null,
 			refreshTimer: null,
 			etag: null,
 		}
@@ -110,6 +111,9 @@ export default {
 		},
 		title() {
 			return this.note ? this.note.title : ''
+		},
+		isNewNote() {
+			return routeIsNewNote(this.$route)
 		},
 		isManualSave() {
 			return store.state.app.isManualSave
@@ -260,18 +264,40 @@ export default {
 					...this.note,
 					content: newContent,
 					unsaved: true,
-					autotitle: routeIsNewNote(this.$route),
 				}
 				store.commit('updateNote', note)
 				this.$forceUpdate()
+
+				// queue auto saving note content
 				if (this.autosaveTimer === null) {
 					this.autosaveTimer = setTimeout(() => {
 						this.autosaveTimer = null
 						saveNote(note.id)
 					}, 2000)
 				}
+
+				// (re-) start auto refresh timer
 				// TODO should be after save is finished
 				this.startRefreshTimer()
+
+				// stop old autotitle timer
+				if (this.autotitleTimer !== null) {
+					console.debug('clear autotitle timer')
+					clearTimeout(this.autotitleTimer)
+					this.autotitleTimer = null
+				}
+				// start autotitle timer if note is new
+				if (this.isNewNote) {
+					console.debug('start autotitle timer')
+					this.autotitleTimer = setTimeout(() => {
+						console.debug('execute autotitle timer')
+						this.autotitleTimer = null
+						if (this.isNewNote) {
+							console.debug('autotitle note')
+							autotitleNote(note.id)
+						}
+					}, 5000)
+				}
 			}
 		},
 
@@ -293,7 +319,6 @@ export default {
 		onManualSave() {
 			const note = {
 				...this.note,
-				autotitle: routeIsNewNote(this.$route),
 			}
 			store.commit('add', note)
 			saveNoteManually(this.note.id)

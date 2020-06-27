@@ -167,7 +167,7 @@ export const createNote = category => {
 
 function _updateNote(note) {
 	return axios
-		.put(url('/notes/' + note.id), { content: note.content, autotitle: note.autotitle })
+		.put(url('/notes/' + note.id), { content: note.content })
 		.then(response => {
 			const updated = response.data
 			note.saveError = false
@@ -183,6 +183,18 @@ function _updateNote(note) {
 			store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
 			console.error(err)
 			handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }), err)
+		})
+}
+
+export const autotitleNote = noteId => {
+	return axios
+		.put(url('/notes/' + noteId + '/autotitle'))
+		.then((response) => {
+			store.commit('setNoteAttribute', { noteId: noteId, attribute: 'title', value: response.data })
+		})
+		.catch(err => {
+			console.error(err)
+			handleSyncError(t('notes', 'Updating title for note {id} has failed.', { id: noteId }), err)
 		})
 }
 
