@@ -191,14 +191,26 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, string $content, bool $autotitle) : JSONResponse {
-		return $this->helper->handleErrorResponse(function () use ($id, $content, $autotitle) {
+	public function autotitle(int $id) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($id) {
+			$note = $this->notesService->get($this->helper->getUID(), $id);
+			$oldTitle = $note->getTitle();
+			$newTitle = $this->notesService->getTitleFromContent($note->getContent());
+			if ($oldTitle !== $newTitle) {
+				$note->setTitle($newTitle);
+			}
+			return $note->getTitle();
+		});
+	}
+
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function update(int $id, string $content) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($id, $content) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);
 			$note->setContent($content);
-			if ($autotitle) {
-				$title = $this->notesService->getTitleFromContent($content);
-				$note->setTitle($title);
-			}
 			return $note->getData();
 		});
 	}

@@ -83,7 +83,6 @@ const mutations = {
 			// don't update meta-data over full data
 			if (updated.content !== undefined || note.content === undefined) {
 				note.content = updated.content
-				Vue.set(note, 'autotitle', updated.autotitle)
 				Vue.set(note, 'unsaved', updated.unsaved)
 				Vue.set(note, 'error', updated.error)
 				Vue.set(note, 'errorMessage', updated.errorMessage)

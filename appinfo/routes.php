@@ -44,6 +44,12 @@ return ['routes' => [
 		'verb' => 'POST',
 	],
 	[
+		'name' => 'notes#autotitle',
+		'url' => '/notes/{id}/autotitle',
+		'verb' => 'PUT',
+		'requirements' => ['id' => '\d+'],
+	],
+	[
 		'name' => 'notes#update',
 		'url' => '/notes/{id}',
 		'verb' => 'PUT',
