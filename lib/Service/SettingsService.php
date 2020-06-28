@@ -3,22 +3,42 @@
 namespace OCA\Notes\Service;
 
 use OCP\IConfig;
+use OCP\IL10N;
+use OCP\Files\IRootFolder;
 
 class SettingsService {
 
 	private $config;
+	private $l10n;
 	private $root;
 
 	/* Default values */
-	private $defaults = [
-		'notesPath' => 'Notes',
-		'fileSuffix' => '.txt',
-	];
+	private $defaults;
 
 	public function __construct(
-		IConfig $config
+		IConfig $config,
+		IL10N $l10n,
+		IRootFolder $root
 	) {
 		$this->config = $config;
+		$this->l10n = $l10n;
+		$this->root = $root;
+		$this->defaults = [
+			'fileSuffix' => '.txt',
+			'notesPath' => function (string $uid) {
+				return $this->getDefaultNotesPath($uid);
+			},
+		];
+	}
+
+	private function getDefaultNotesPath(string $uid) : string {
+		$defaultFolder = 'Notes';
+		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
+		if ($defaultExists) {
+			return $defaultFolder;
+		} else {
+			return $this->l10n->t($defaultFolder);
+		}
 	}
 
 	/**
@@ -39,15 +59,23 @@ class SettingsService {
 
 	public function getAll(string $uid) : \stdClass {
 		$settings = json_decode($this->config->getUserValue($uid, 'notes', 'settings'));
-		if (is_object($settings)) {
-			// use default for empty settings
-			foreach ($this->defaults as $name => $defaultValue) {
-				if (!property_exists($settings, $name) || empty($settings->{$name})) {
+		if (!is_object($settings)) {
+			$settings = new \stdClass();
+		}
+		// use default for empty settings
+		$toBeSaved = false;
+		foreach ($this->defaults as $name => $defaultValue) {
+			if (!property_exists($settings, $name) || empty($settings->{$name})) {
+				if (is_callable($defaultValue)) {
+					$settings->{$name} = $defaultValue($uid);
+					$toBeSaved = true;
+				} else {
 					$settings->{$name} = $defaultValue;
 				}
 			}
-		} else {
-			$settings = (object)$this->defaults;
+		}
+		if ($toBeSaved) {
+			$this->set($uid, (array) $settings);
 		}
 		return $settings;
 	}
