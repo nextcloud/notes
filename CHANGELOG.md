@@ -13,6 +13,21 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.6.0 - 2020-06-28
+
+### Added
+- auto refresh current note (#553)
+- add CTRL+/ as shortcut for preview toggle (#556)
+- API: add app version to capabilities (#545)
+
+### Changed
+- localize default notes folder (#557)
+
+### Fixed
+- debounce autotitle (#555)
+- maintenance (#548, #550, #554, #558)
+
+
 ## 3.5.1 - 2020-06-11
 
 ### Fixed
