@@ -180,7 +180,9 @@ export default {
 			if (availableNotes.length > 0) {
 				this.routeToNote(availableNotes[0].id)
 			} else {
-				this.$router.push({ name: 'welcome' })
+				if (this.$route.name !== 'welcome') {
+					this.$router.push({ name: 'welcome' })
+				}
 			}
 		},
 

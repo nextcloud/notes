@@ -20,19 +20,12 @@
 					>
 						{{ t('notes', 'Details') }}
 					</ActionButton>
-					<ActionButton v-if="!preview"
-						icon="icon-toggle"
+					<ActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
+						:icon="preview ? 'icon-rename' : 'icon-toggle'"
 						@click="onTogglePreview"
 					>
-						{{ t('notes', 'Preview') }}
-					</ActionButton>
-					<ActionButton v-else
-						icon="icon-rename"
-						v-tooltip.left="t('notes', 'CTRL + /')"
-						@click="onTogglePreview"
-					>
-						{{ t('notes', 'Edit') }}
+						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</ActionButton>
 					<ActionButton
 						icon="icon-fullscreen"
@@ -317,7 +310,7 @@ export default {
 			const note = {
 				...this.note,
 			}
-			store.commit('add', note)
+			store.commit('updateNote', note)
 			saveNoteManually(this.note.id)
 		},
 	},

@@ -79,7 +79,7 @@ class NotesController extends Controller {
 						return $note->getData([ 'content' ]);
 					}
 				}, $data['notes']);
-				if ($lastViewedNote) {
+				if ($lastViewedNote && !$pruneBefore) {
 					// check if note exists
 					try {
 						$this->notesService->get($userId, $lastViewedNote);
