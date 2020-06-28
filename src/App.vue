@@ -19,7 +19,9 @@
 				/>
 			</template>
 
-			<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
+			<template #footer>
+				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
+			</template>
 		</AppNavigation>
 
 		<AppContent v-if="error">
