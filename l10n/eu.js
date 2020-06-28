@@ -62,7 +62,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Hasi ohar bat idazten aplikazioaren nabigazioko “{newnote}” aukeran klik eginez.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Azpikategoriak sor ditzakezu “/” banatzaile bezala erabiliz kategoria guraso eta azpikategoriaren artean. Adibidez “{parent}/{sub}”.",
     "See JavaScript console and server log for details." : "Ikusi JavaScript kontsola eta zerbitzariaren egunkariak xehetasunetarako.",
-    "Saving the note has failed due to insufficient storage." : "Oharra gordetzeak huts egin du behar adina leku ez dagoelako.",
     "Updating settings has failed." : "Ezarpenak eguneratzeak huts egin du.",
     "Fetching notes has failed." : "Oharrak eskuratzeak huts egin du.",
     "Fetching note {id} has failed." : "{id} oharrak eskuratzeak huts egin du.",

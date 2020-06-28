@@ -62,7 +62,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Чтобы написать создать заметку, нажмите «{newnote}» в панели навигации приложения.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Для создания вложенных категорий используйте разделитель «/», например: «{parent}/{sub}».",
     "See JavaScript console and server log for details." : "Подробные сведения приведены в консоли JavaScript и файле журнала сервера.",
-    "Saving the note has failed due to insufficient storage." : "Не удалось сохранить заметку, недостаточно свободного места.",
     "Updating settings has failed." : "Не удалось сохранить изменения.",
     "Fetching notes has failed." : "Не удалось получить заметки.",
     "Fetching note {id} has failed." : "Не удалось получить заметку {id}.",

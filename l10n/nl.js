@@ -63,7 +63,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Start een nieuwe notitie door op \"{newnote}\" te klikken in de app navigatie.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Je kunt sub-categorieën maken door “/” te gebruiken als scheidingsteken tussen hoofdcategorie en sub-categorie, bijv. “{parent}/{sub}”.",
     "See JavaScript console and server log for details." : "Bekijk JavaScript console en server-log voor details.",
-    "Saving the note has failed due to insufficient storage." : "Het opslaan van de notitie is mislukt vanwege onvoldoende opslag.",
     "Updating settings has failed." : "Update instellingen mislukt.",
     "Fetching notes has failed." : "Notities ophalen mislukt.",
     "Fetching note {id} has failed." : "Notitie {id} ophalen mislukt.",

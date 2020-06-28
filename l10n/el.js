@@ -63,7 +63,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Ξεκινήστε μια σημείωση κάνοντας κλικ στο \"{newnote}\" από το μενού εφαρμογών.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Μπορείτε να δημιουργήσετε υποκατηγορίες χρησιμοποιώντας το \"/\" ως οριοθέτη μεταξύ της κατηγορίας και της υποκατηγορίας, π.χ. \"{Parent}/{sub}\".",
     "See JavaScript console and server log for details." : "Δείτε την κονσόλα JavaScript και το ιστορικό του διακομιστή για λεπτομέρειες.",
-    "Saving the note has failed due to insufficient storage." : "Η αποθήκευση της σημείωσης απέτυχε λόγω ανεπαρκούς χώρου αποθήκευσης.",
     "Updating settings has failed." : "Η ενημέρωση ρυθμίσεων απέτυχε.",
     "Fetching notes has failed." : "Η λήψη σημειώσεων απέτυχε.",
     "Fetching note {id} has failed." : "Η λήψη της σημείωσης {id} απέτυχε.",

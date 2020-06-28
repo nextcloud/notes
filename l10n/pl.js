@@ -63,7 +63,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Zacznij pisać notatkę, klikając “{newnote}” w nawigacji aplikacji.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Możesz tworzyć podkategorie, używając „/” jako separatora między kategorią nadrzędną a podkategorią, np. „{parent}/{sub}”.",
     "See JavaScript console and server log for details." : "Szczegółowe informacje można znaleźć w konsoli JavaScript i w dzienniku serwera.",
-    "Saving the note has failed due to insufficient storage." : "Zapisywanie notatki nie powiodło się z powodu niewystarczającej ilości miejsca.",
     "Updating settings has failed." : "Aktualizacja ustawień nie powiodła się.",
     "Fetching notes has failed." : "Pobieranie notatek nie powiodło się.",
     "Fetching note {id} has failed." : "Pobieranie notatki {id} nie powiódł się.",

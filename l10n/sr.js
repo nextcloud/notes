@@ -61,7 +61,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Крените да пишете белешке кликајући „{newnote}“ из навигације апликације.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Можете да направите подкатегорије користећи „/“ као разграничавач између категорије родитеља и подкатегорије, нпр. „{parent}/{sub}“",
     "See JavaScript console and server log for details." : "Погледајте JavaScript конзолу и дневник са сервера за детаље.",
-    "Saving the note has failed due to insufficient storage." : "Чување белешке није успело звог недовољно простора.",
     "Updating settings has failed." : "Ажурирање подешавања није успело.",
     "Fetching notes has failed." : "Дохватање белешки није успело.",
     "Fetching note {id} has failed." : "Дохватање белешке {id} није успело.",

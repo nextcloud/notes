@@ -61,7 +61,6 @@
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Commencez à écrire une note en cliquant sur “{newnote}” dans la navigation de l'application.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Vous pouvez créer des sous-catégories en utilisant le séparateur “/” entre le parent et la sous-catégorie, par exemple “{père}/{fils}”.",
     "See JavaScript console and server log for details." : "Voir la console Javascript et le journal du serveur pour plus de détails.",
-    "Saving the note has failed due to insufficient storage." : "La note n'a pas pu être enregistrée car l'espace disponible est insuffisant.",
     "Updating settings has failed." : "La mise à jour des paramètres a échoué.",
     "Fetching notes has failed." : "La recherche de notes a échoué.",
     "Fetching note {id} has failed." : "La recherche de la note {id} a échoué.",

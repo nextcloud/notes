@@ -62,7 +62,6 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Böja skriva en anteckning genom att klicka på “{newnote}” i menyn.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Du kan skapa underkategorier genom att använda “/” som avgränsare mellan överordnad kategori och underkategori, t.ex. “{parent}/{sub}”.",
     "See JavaScript console and server log for details." : "Se JavaScript-konsol och serverlogg för detaljer.",
-    "Saving the note has failed due to insufficient storage." : "Kunde inte spara anteckningen på grund av otillräckligt lagringsutrymme.",
     "Updating settings has failed." : "Kunde inte uppdatera inställningar. ",
     "Fetching notes has failed." : "Kunde inte hämta anteckningar.",
     "Fetching note {id} has failed." : "Hämtning av anteckning {id} misslyckades.",

@@ -61,7 +61,6 @@
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Psaní poznámky zahájíte kliknutím na „{newnote}“ v navigaci aplikace.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Dílčí kategorie je možné vytvářet použitím „/“ (dopředné lomítko) jako oddělovače mezi nadřazenou kategorií a podkategorií, např.: „{nadřazená}/{podkategorie}“.",
     "See JavaScript console and server log for details." : "Podrobnosti viz konzole JavaScript a záznamy událostí na serveru.",
-    "Saving the note has failed due to insufficient storage." : "Uložení poznámky se nezdařilo z důvodu nedostatku místa na úložišti (kvóta?)",
     "Updating settings has failed." : "Aktualizace nastavení se nezdařila.",
     "Fetching notes has failed." : "Načítání poznámek se nezdařilo.",
     "Fetching note {id} has failed." : "Načítání poznámky {id} se nezdařilo.",

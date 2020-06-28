@@ -61,7 +61,6 @@
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Uygulama menüsünden “{newnote}” üzerine tıklayarak bir not yazmaya başlayın.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Üst kategori ile alt kategori arasında “/” karakterini kullanarak alt kategoriler oluşturabilirsiniz. Örnek “{üst}/{alt}”.",
     "See JavaScript console and server log for details." : "Ayrıntılı bilgi almak için JavaScript konsoluna ve sunucu günlüğüne bakın.",
-    "Saving the note has failed due to insufficient storage." : "Depolama alanı yetersiz olduğundan not kaydedilemedi.",
     "Updating settings has failed." : "Ayarlar güncellenemedi.",
     "Fetching notes has failed." : "Notlar alınamadı.",
     "Fetching note {id} has failed." : "Not {id} alınamadı.",

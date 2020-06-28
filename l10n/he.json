@@ -59,7 +59,6 @@
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "ניתן להתחיל לכתוב פתק על ידי לחיצה על „{newnote}” בניווט של היישומון.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "ניתן ליצור תת־קטגוריות על ידי שימוש ב־„/” כמפריד בין קטגוריית ההורה ותת־הקטגוריה, למשל: „‎{parent}/{sub}‎”.",
     "See JavaScript console and server log for details." : "ניתן להביט במסוף ה־JavaScript וביומן השרת לקבלת פרטים.",
-    "Saving the note has failed due to insufficient storage." : "שמירת הפתק נכשלה עקב מחסור בשטח אחסון פנוי.",
     "Updating settings has failed." : "עדכון ההגדרות נכשל.",
     "Fetching notes has failed." : "קבלת הפתקים נכשלה.",
     "Fetching note {id} has failed." : "קבלת הפתק {id} נכשלה.",

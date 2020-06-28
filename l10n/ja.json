@@ -61,7 +61,6 @@
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "アプリのナビゲーションで「{newnote}」をクリックしてメモを書き始めます",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "親カテゴリとサブカテゴリの間の区切り文字として「/」を使用して、サブカテゴリを作成できます。 “ {parent} / {sub}”",
     "See JavaScript console and server log for details." : "詳細については、JavaScriptコンソールとサーバーログを参照してください。",
-    "Saving the note has failed due to insufficient storage." : "ストレージ容量が不足しているため、メモの保存に失敗しました。",
     "Updating settings has failed." : "設定を更新できませんでした。",
     "Fetching notes has failed." : "ノートを取得できませんでした。",
     "Fetching note {id} has failed." : "ノート {id} を取得できませんでした。",

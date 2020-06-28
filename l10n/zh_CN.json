@@ -58,7 +58,6 @@
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "在应用导航栏中点击“{newnote}”开始做笔记",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "您可以创建子类别，在父类别和子类别之间使用 “/” 作为分隔符，例如 “{parent}/{sub}”。",
     "See JavaScript console and server log for details." : "有关详情请参见 JavaScript 控制台和服务器日志。",
-    "Saving the note has failed due to insufficient storage." : "由于存储空间不足，无法保存笔记。",
     "Updating settings has failed." : "更新设置失败。",
     "Fetching notes has failed." : "获取笔记失败。",
     "Fetching note {id} has failed." : "获取笔记 {id} 失败。",

@@ -54,7 +54,6 @@
     "iOS app" : "اپ iOS",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "نوشتن یادداشت را با کلیک کردن روی \"{newnote}\" در ناوبری برنامه شروع کنید.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "شما می توانید زیر شاخه ها با استفاده از به عنوان حائل بین دسته پدر و مادر و زیرشاخه، به عنوان مثال، ایجاد \"/\" \"{پدر و مادر} / {زیر}\".",
-    "Saving the note has failed due to insufficient storage." : "صرفه جویی در یادداشت به دلیل ذخیره کافی نیست.",
     "Updating settings has failed." : "به روزرسانی تنظیمات انجام نشد.",
     "Fetching notes has failed." : "ثبت نام یادداشت انجام نشد.",
     "Fetching note {id} has failed." : "یادداشت برداری {id} انجام نشد.",
