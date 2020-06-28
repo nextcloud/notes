@@ -22,12 +22,14 @@
 					</ActionButton>
 					<ActionButton v-if="!preview"
 						icon="icon-toggle"
+						v-tooltip.left="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
 						{{ t('notes', 'Preview') }}
 					</ActionButton>
 					<ActionButton v-else
 						icon="icon-rename"
+						v-tooltip.left="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
 						{{ t('notes', 'Edit') }}
@@ -275,10 +277,14 @@ export default {
 
 		onKeyPress(event) {
 			if (event.ctrlKey || event.metaKey) {
-				switch (String.fromCharCode(event.which).toLowerCase()) {
+				switch (event.key.toLowerCase()) {
 				case 's':
 					event.preventDefault()
 					this.onManualSave()
+					break
+				case '/':
+					event.preventDefault()
+					this.onTogglePreview()
 					break
 				}
 			}
