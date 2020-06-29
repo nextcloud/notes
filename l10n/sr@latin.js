@@ -16,8 +16,8 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Detalji",
-    "Preview" : "Pregled",
     "Edit" : "Uredi",
+    "Preview" : "Pregled",
     "Category" : "Kategorija",
     "Uncategorized" : "Nekategorizovano"
 },

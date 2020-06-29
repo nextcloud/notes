@@ -16,8 +16,8 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Дэлгэрэнгүй",
-    "Preview" : "шалгах",
     "Edit" : "засварлах",
+    "Preview" : "шалгах",
     "Category" : "Ангилал"
 },
 "nplurals=2; plural=(n != 1);");

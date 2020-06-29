@@ -16,8 +16,8 @@ OC.L10N.register(
     "Remove from favorites" : "Șterge din favorite",
     "Add to favorites" : "Adăugați la favorite",
     "Details" : "Detalii",
-    "Preview" : "Previzualizare",
     "Edit" : "Editează",
+    "Preview" : "Previzualizare",
     "_%n word_::_%n words_" : ["%n cuvânt","%n cuvinte","%n cuvinte"],
     "Android app" : "Aplicație Android",
     "iOS app" : "Aplicație iOS"

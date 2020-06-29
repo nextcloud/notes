@@ -15,8 +15,8 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Manylion",
-    "Preview" : "Rhagolwg",
     "Edit" : "Golygu",
+    "Preview" : "Rhagolwg",
     "Category" : "Categori",
     "Uncategorized" : "Dim categori"
 },
