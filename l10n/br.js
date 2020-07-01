@@ -1,6 +1,7 @@
 OC.L10N.register(
     "notes",
     {
+    "Error" : "Fazi",
     "Settings" : "Arventennoù",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
