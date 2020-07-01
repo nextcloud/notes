@@ -24,7 +24,7 @@
 		"vue-fragment": "^1.5.1",
 		"vue-observe-visibility": "^0.4.6",
 		"vue-router": "^3.3.4",
-		"vuex": "^3.4.0"
+		"vuex": "^3.5.1"
 	},
 	"browserslist": [
 		"extends @nextcloud/browserslist-config"
@@ -33,9 +33,9 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.10.3",
+		"@babel/core": "^7.10.4",
 		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
-		"@babel/preset-env": "^7.10.3",
+		"@babel/preset-env": "^7.10.4",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"@nextcloud/eslint-config": "^2.0.0",
 		"@nextcloud/eslint-plugin": "^1.4.0",
