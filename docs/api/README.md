@@ -95,7 +95,7 @@ You can test your request using `curl`:
 
     curl -u user:password https://yournextcloud.com/index.php/apps/notes/api/v1/notes
 
-
+If you have enabled two-factor authentication you will have to create and use an app specific password for accessing the API. Please see [Nextcloud documentation](https://docs.nextcloud.com/server/latest/user_manual/session_management.html) for further details.
 ## Input parameters
 
 In general the input parameters can be in the URL or request body. The app framework doesn't differentiate between them.
