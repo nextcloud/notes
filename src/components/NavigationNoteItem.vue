@@ -52,7 +52,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			loading: {
 				note: false,

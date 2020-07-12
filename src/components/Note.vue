@@ -86,7 +86,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			loading: false,
 			fullscreen: false,

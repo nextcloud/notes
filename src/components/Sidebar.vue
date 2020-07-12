@@ -77,7 +77,7 @@ export default {
 	},
 
 	filters: {
-		categoryOptionLabel: function(obj) {
+		categoryOptionLabel(obj) {
 			const category = obj.isTag ? obj.label : obj
 			return categoryLabel(category)
 		},
@@ -90,7 +90,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			loading: {
 				category: false,
@@ -135,7 +135,7 @@ export default {
 			return t('notes', 'You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”.', { parent: t('notes', 'Category'), sub: t('notes', 'Subcategory') })
 		},
 		categories() {
-			return [ '', ...getCategories(0, false) ]
+			return ['', ...getCategories(0, false)]
 		},
 		sidebarOpen() {
 			return store.state.app.sidebarOpen
