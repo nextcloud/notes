@@ -42,7 +42,7 @@ export default {
 		AppNavigationSettings,
 	},
 
-	data: function() {
+	data() {
 		return {
 			extensions: ['.txt', '.md'],
 			saving: false,

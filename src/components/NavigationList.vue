@@ -98,7 +98,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			timeslots: [],
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
@@ -126,7 +126,7 @@ export default {
 				return this.notes.reduce((g, note) => {
 					const timeslot = this.getTimeslotFromNote(note)
 					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
-						g.push({ timeslot: timeslot, notes: [] })
+						g.push({ timeslot, notes: [] })
 					}
 					g[g.length - 1].notes.push(note)
 					return g
@@ -156,7 +156,7 @@ export default {
 	},
 
 	watch: {
-		category: function() { this.showFirstNotesOnly = true },
+		category() { this.showFirstNotesOnly = true },
 	},
 
 	created() {

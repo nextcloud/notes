@@ -58,7 +58,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			open: false,
 		}

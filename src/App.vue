@@ -64,7 +64,7 @@ export default {
 		NavigationList,
 	},
 
-	data: function() {
+	data() {
 		return {
 			filter: {
 				category: null,
@@ -95,7 +95,7 @@ export default {
 					&& !note.category.startsWith(this.filter.category + '/')) {
 					return false
 				}
-				const searchFields = [ 'title', 'category' ]
+				const searchFields = ['title', 'category']
 				if (search !== '') {
 					return searchFields.some(
 						searchField => note[searchField].toLowerCase().indexOf(search) !== -1

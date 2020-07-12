@@ -17,7 +17,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			config: {
 				spellChecker: false,
@@ -61,8 +61,8 @@ export default {
 
 			// keys Home/End should apply to the visual line
 			this.mde.codemirror.addKeyMap({
-				'Home': 'goLineLeft',
-				'End': 'goLineRight',
+				Home: 'goLineLeft',
+				End: 'goLineRight',
 			})
 
 			// pass event for changes

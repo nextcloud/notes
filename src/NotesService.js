@@ -69,7 +69,7 @@ export const fetchNotes = () => {
 			if (response.data.errorMessage) {
 				showError(response.data.errorMessage)
 			}
-			store.commit('setSyncETag', response.headers['etag'])
+			store.commit('setSyncETag', response.headers.etag)
 			store.commit('setSyncLastModified', response.headers['last-modified'])
 			return response.data
 		})
@@ -102,8 +102,8 @@ export const fetchNote = noteId => {
 			} else {
 				console.error(err)
 				const msg = t('notes', 'Fetching note {id} has failed.', { id: noteId })
-				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'error', value: true })
-				store.commit('setNoteAttribute', { noteId: noteId, attribute: 'errorMessage', value: msg })
+				store.commit('setNoteAttribute', { noteId, attribute: 'error', value: true })
+				store.commit('setNoteAttribute', { noteId, attribute: 'errorMessage', value: msg })
 				return store.getter.getNote(noteId)
 			}
 		})
@@ -125,7 +125,7 @@ export const refreshNote = (noteId, lastETag) => {
 			// only update if local content has not changed
 			if (oldContent === currentContent) {
 				store.commit('updateNote', response.data)
-				return response.headers['etag']
+				return response.headers.etag
 			}
 			return null
 		})
@@ -140,9 +140,9 @@ export const refreshNote = (noteId, lastETag) => {
 
 export const setTitle = (noteId, title) => {
 	return axios
-		.put(url('/notes/' + noteId + '/title'), { title: title })
+		.put(url('/notes/' + noteId + '/title'), { title })
 		.then(response => {
-			store.commit('setNoteAttribute', { noteId: noteId, attribute: 'title', value: response.data })
+			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data })
 		})
 		.catch(err => {
 			console.error(err)
@@ -153,7 +153,7 @@ export const setTitle = (noteId, title) => {
 
 export const createNote = category => {
 	return axios
-		.post(url('/notes'), { category: category })
+		.post(url('/notes'), { category })
 		.then(response => {
 			store.commit('updateNote', response.data)
 			return response.data
@@ -190,7 +190,7 @@ export const autotitleNote = noteId => {
 	return axios
 		.put(url('/notes/' + noteId + '/autotitle'))
 		.then((response) => {
-			store.commit('setNoteAttribute', { noteId: noteId, attribute: 'title', value: response.data })
+			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data })
 		})
 		.catch(err => {
 			console.error(err)
@@ -213,7 +213,7 @@ export const undoDeleteNote = (note) => {
 }
 
 export const deleteNote = noteId => {
-	store.commit('setNoteAttribute', { noteId: noteId, attribute: 'deleting', value: 'deleting' })
+	store.commit('setNoteAttribute', { noteId, attribute: 'deleting', value: 'deleting' })
 	return axios
 		.delete(url('/notes/' + noteId))
 		.then(() => {
@@ -232,9 +232,9 @@ export const deleteNote = noteId => {
 
 export const setFavorite = (noteId, favorite) => {
 	return axios
-		.put(url('/notes/' + noteId + '/favorite'), { favorite: favorite })
+		.put(url('/notes/' + noteId + '/favorite'), { favorite })
 		.then(response => {
-			store.commit('setNoteAttribute', { noteId: noteId, attribute: 'favorite', value: response.data })
+			store.commit('setNoteAttribute', { noteId, attribute: 'favorite', value: response.data })
 		})
 		.catch(err => {
 			console.error(err)
@@ -245,13 +245,13 @@ export const setFavorite = (noteId, favorite) => {
 
 export const setCategory = (noteId, category) => {
 	return axios
-		.put(url('/notes/' + noteId + '/category'), { category: category })
+		.put(url('/notes/' + noteId + '/category'), { category })
 		.then(response => {
 			const realCategory = response.data
 			if (category !== realCategory) {
 				handleSyncError(t('notes', 'Updating the note\'s category has failed. Is the target directory writable?'))
 			}
-			store.commit('setNoteAttribute', { noteId: noteId, attribute: 'category', value: realCategory })
+			store.commit('setNoteAttribute', { noteId, attribute: 'category', value: realCategory })
 		})
 		.catch(err => {
 			console.error(err)
@@ -284,7 +284,7 @@ function _saveNotes() {
 }
 
 export const saveNoteManually = (noteId) => {
-	store.commit('setNoteAttribute', { noteId: noteId, attribute: 'saveError', value: false })
+	store.commit('setNoteAttribute', { noteId, attribute: 'saveError', value: false })
 	saveNote(noteId, true)
 }
 

@@ -16,7 +16,7 @@ export default {
 		},
 	},
 
-	data: function() {
+	data() {
 		return {
 			html: '',
 			md: new MarkdownIt({
