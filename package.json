@@ -1,11 +1,12 @@
 {
+	"name": "notes",
 	"homepage": "https://github.com/nextcloud/notes",
 	"license": "agpl",
 	"private": true,
 	"scripts": {
-		"dev": "webpack --config webpack.dev.js",
-		"watch": "webpack --progress --watch --config webpack.dev.js",
-		"build": "webpack --progress --hide-modules --config webpack.prod.js",
+		"build": "NODE_ENV=production webpack --progress --hide-modules --config webpack.js",
+		"dev": "NODE_ENV=development webpack --progress --config webpack.js",
+		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
 		"lint": "eslint --ext .js,.vue src",
 		"lint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint 'src/**/*.vue' 'css/**/*.scss'",
@@ -18,8 +19,10 @@
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.1.0",
 		"@nextcloud/vue": "^2.2.1",
+		"@nextcloud/webpack-vue-config": "^1.0.3",
 		"easymde": "^2.10.1",
 		"markdown-it": "^11.0.0",
+		"stylelint-webpack-plugin": "^2.1.0",
 		"vue": "^2.6.11",
 		"vue-fragment": "^1.5.1",
 		"vue-observe-visibility": "^0.4.6",
@@ -46,7 +49,7 @@
 		"eslint": "^6.8.0",
 		"eslint-config-standard": "^14.1.1",
 		"eslint-import-resolver-webpack": "^0.12.2",
-		"eslint-loader": "^3.0.4",
+		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
@@ -63,6 +66,6 @@
 		"vue-template-compiler": "^2.6.11",
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.12",
-		"webpack-merge": "^4.2.2"
+		"webpack-merge": "^5.0.9"
 	}
 }

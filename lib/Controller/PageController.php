@@ -22,7 +22,7 @@ class PageController extends Controller {
 	 * @return TemplateResponse
 	 */
 	public function index() : TemplateResponse {
-		$devMode = !is_file(dirname(__FILE__).'/../../js/notes.js');
+		$devMode = !is_file(dirname(__FILE__).'/../../js/notes-main.js');
 		$response = new TemplateResponse(
 			$this->appName,
 			$devMode ? 'dev-mode' : 'main',
