@@ -47,6 +47,7 @@ import {
 import { showSuccess } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
+import { config } from './config'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
 import AppSettings from './components/AppSettings'
 import NavigationList from './components/NavigationList'
@@ -154,7 +155,7 @@ export default {
 				})
 				.then(() => {
 					this.loading.notes = false
-					setTimeout(this.loadNotes, 25000)
+					setTimeout(this.loadNotes, config.interval.notes.refresh * 1000)
 				})
 		},
 
