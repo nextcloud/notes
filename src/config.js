@@ -5,5 +5,8 @@ export const config = {
 			autotitle: 2,
 			refresh: 10,
 		},
+		notes: {
+			refresh: 25,
+		},
 	},
 }
