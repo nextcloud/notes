@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Migration;
 
@@ -8,7 +10,6 @@ use OCP\Migration\IRepairStep;
 use OCP\Migration\IOutput;
 
 class Cleanup implements IRepairStep {
-
 	private $metaMapper;
 
 	public function __construct(MetaMapper $metaMapper) {

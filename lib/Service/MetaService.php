@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
@@ -47,7 +49,6 @@ use OCA\Notes\Db\MetaMapper;
  * with this approach! :-)
  */
 class MetaService {
-
 	private $metaMapper;
 
 	public function __construct(MetaMapper $metaMapper) {
@@ -105,7 +106,7 @@ class MetaService {
 	private function getIndexedArray(array $data, string $property) : array {
 		$property = ucfirst($property);
 		$getter = 'get'.$property;
-		$result = array();
+		$result = [];
 		foreach ($data as $entity) {
 			$result[$entity->$getter()] = $entity;
 		}

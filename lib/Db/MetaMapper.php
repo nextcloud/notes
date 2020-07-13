@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Db;
 
@@ -7,7 +9,6 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 
 class MetaMapper extends QBMapper {
-
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'notes_meta');
 	}

@@ -1,9 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Tests\API;
 
 abstract class CommonAPITest extends AbstractAPITest {
-
 	private $requiredAttributes = [
 		'id' => 'integer',
 		'content' => 'string',
