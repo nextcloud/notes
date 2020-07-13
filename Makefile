@@ -109,7 +109,7 @@ lint-php-phpcs:
 
 lint-php-cs-fixer:
 	# PHP Coding Standards Fixer (with Nextcloud coding standards)
-	vendor/bin/php-cs-fixer fix --dry-run --diff
+	vendor/bin/php-cs-fixer fix --dry-run --diff --format=checkstyle | vendor/bin/cs2pr --colorize
 
 
 lint-js:
