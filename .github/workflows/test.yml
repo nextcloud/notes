@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         version: [min, max]
+      fail-fast: false
     env:
       SERVER_BRANCH: master
     steps:
