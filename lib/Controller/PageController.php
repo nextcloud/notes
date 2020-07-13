@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
@@ -8,7 +10,6 @@ use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IRequest;
 
 class PageController extends Controller {
-
 	public function __construct(string $AppName, IRequest $request) {
 		parent::__construct($AppName, $request);
 	}

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Db;
 
@@ -21,7 +23,6 @@ use OCP\AppFramework\Db\Entity;
  * @package OCA\Notes\Db
  */
 class Meta extends Entity {
-
 	protected $userId;
 	protected $fileId;
 	protected $lastUpdate;

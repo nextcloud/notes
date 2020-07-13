@@ -88,8 +88,8 @@ test-api:
 lint: lint-php lint-js lint-css lint-xml
 
 
-lint-php: lint-php-lint lint-php-ncversion lint-php-phan lint-php-phpcs
-lint-phpfast: lint-php-lint lint-php-ncversion lint-php-phpcs
+lint-php: lint-phpfast lint-php-phan
+lint-phpfast: lint-php-lint lint-php-ncversion lint-php-cs-fixer lint-php-phpcs
 
 lint-php-lint:
 	# Check PHP syntax errors
@@ -106,6 +106,10 @@ lint-php-phan:
 lint-php-phpcs:
 	# PHP CodeSniffer
 	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ tests/api/ --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
+
+lint-php-cs-fixer:
+	# PHP Coding Standards Fixer (with Nextcloud coding standards)
+	vendor/bin/php-cs-fixer fix --dry-run --diff
 
 
 lint-js:
@@ -125,6 +129,7 @@ lint-fix: lint-php-fix lint-js-fix lint-css-fix
 
 lint-php-fix:
 	vendor/bin/phpcbf --standard=tests/phpcs.xml appinfo/ lib/ tests/api/
+	vendor/bin/php-cs-fixer fix
 
 lint-js-fix:
 	npm run lint:fix

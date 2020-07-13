@@ -1,15 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Service;
-
-use OCA\Notes\Service\SettingsService;
 
 use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 
 class NotesService {
-
 	private $metaService;
 	private $settings;
 	private $noteUtil;

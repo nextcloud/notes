@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
@@ -9,7 +11,6 @@ use OCP\IL10N;
 use OCP\ILogger;
 
 class NoteUtil {
-
 	private $db;
 	private $l10n;
 	private $root;

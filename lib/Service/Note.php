@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
@@ -6,7 +8,6 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 
 class Note {
-
 	private $file;
 	private $notesFolder;
 	private $noteUtil;

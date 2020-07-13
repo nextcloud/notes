@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
@@ -7,7 +9,6 @@ use OCP\IL10N;
 use OCP\Files\IRootFolder;
 
 class SettingsService {
-
 	private $config;
 	private $l10n;
 	private $root;

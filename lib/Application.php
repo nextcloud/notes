@@ -1,11 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace OCA\Notes;
 
 use OCP\AppFramework\App;
 
 class Application extends App {
-
 	public static $API_VERSIONS = [ '0.2', '1.1' ];
 
 	public function __construct(array $urlParams = []) {
