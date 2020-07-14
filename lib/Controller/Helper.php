@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Application;
+use OCA\Notes\Service\Util;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
@@ -47,19 +48,7 @@ class Helper {
 
 	public function handleErrorResponse(callable $respond) : JSONResponse {
 		try {
-			// retry on LockedException
-			$maxRetries = 5;
-			for ($try=1; $try <= $maxRetries; $try++) {
-				try {
-					$data = $respond();
-					break;
-				} catch (\OCP\Lock\LockedException $e) {
-					if ($try >= $maxRetries) {
-						throw $e;
-					}
-					sleep(1);
-				}
-			}
+			$data = Util::retryIfLocked($respond);
 			$response = $data instanceof JSONResponse ? $data : new JSONResponse($data);
 		} catch (\OCA\Notes\Service\NoteDoesNotExistException $e) {
 			$this->logException($e);
