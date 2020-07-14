@@ -67,10 +67,11 @@ export const fetchNotes = () => {
 				store.dispatch('updateNotes', response.data.notes)
 			}
 			if (response.data.errorMessage) {
-				showError(response.data.errorMessage)
+				showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: response.data.errorMessage }))
+			} else {
+				store.commit('setSyncETag', response.headers.etag)
+				store.commit('setSyncLastModified', response.headers['last-modified'])
 			}
-			store.commit('setSyncETag', response.headers.etag)
-			store.commit('setSyncLastModified', response.headers['last-modified'])
 			return response.data
 		})
 		.catch(err => {

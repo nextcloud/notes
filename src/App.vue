@@ -28,7 +28,7 @@
 			<div style="margin: 2em;">
 				<h2>{{ t('notes', 'Error') }}</h2>
 				<p>{{ error }}</p>
-				<p>{{ t('notes', 'Please chose a valid path in {label} (bottom left corner).', { label: t('notes', 'Settings') }) }}</p>
+				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
 		</AppContent>
 		<router-view v-else />
@@ -143,8 +143,11 @@ export default {
 					if (data.notes !== null) {
 						this.error = false
 						this.routeDefault(data.lastViewedNote)
-					} else {
+					} else if (this.loading.notes) {
+						// only show error state if not loading in background
 						this.error = data.errorMessage
+					} else {
+						console.error('Server error while updating list of notes: ' + data.errorMessage)
 					}
 				})
 				.catch(() => {

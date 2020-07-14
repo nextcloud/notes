@@ -7,7 +7,6 @@ namespace OCA\Notes\Controller;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
-use OCA\Notes\Service\NoteDoesNotExistException;
 
 use OCP\AppFramework\Controller;
 use OCP\IRequest;
@@ -50,6 +49,23 @@ class NotesController extends Controller {
 		$this->l10n = $l10n;
 	}
 
+	private function getNotesAndCategories(string $userId, int $pruneBefore) : array {
+		$data = $this->notesService->getAll($userId);
+		$metas = $this->metaService->updateAll($userId, $data['notes']);
+		$notes = array_map(function ($note) use ($metas, $pruneBefore) {
+			$lastUpdate = $metas[$note->getId()]->getLastUpdate();
+			if ($pruneBefore && $lastUpdate<$pruneBefore) {
+				return [ 'id' => $note->getId() ];
+			} else {
+				return $note->getData([ 'content' ]);
+			}
+		}, $data['notes']);
+		return [
+			'notes' => $notes,
+			'categories' => $data['categories'],
+		];
+	}
+
 
 	/**
 	 * @NoAdminRequired
@@ -60,47 +76,30 @@ class NotesController extends Controller {
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
 			$settings = $this->settingsService->getAll($userId);
 
-			$errorMessage = null;
 			$lastViewedNote = (int) $this->settings->getUserValue(
 				$userId,
 				$this->appName,
 				'notesLastViewedNote'
 			);
-			// check if notes folder is accessible
-			$notesData = null;
+			$errorMessage = null;
+			$notes = null;
 			$categories = null;
+
 			try {
-				$data = $this->notesService->getAll($userId);
-				$metas = $this->metaService->updateAll($userId, $data['notes']);
-				$categories = $data['categories'];
-				$notesData = array_map(function ($note) use ($metas, $pruneBefore) {
-					$lastUpdate = $metas[$note->getId()]->getLastUpdate();
-					if ($pruneBefore && $lastUpdate<$pruneBefore) {
-						return [ 'id' => $note->getId() ];
-					} else {
-						return $note->getData([ 'content' ]);
-					}
-				}, $data['notes']);
-				if ($lastViewedNote && !$pruneBefore) {
-					// check if note exists
-					try {
-						$this->notesService->get($userId, $lastViewedNote);
-					} catch (\Throwable $ex) {
-						if (!($ex instanceof NoteDoesNotExistException)) {
-							$this->helper->logException($ex);
-						}
-						$this->settings->deleteUserValue($userId, $this->appName, 'notesLastViewedNote');
-						$lastViewedNote = 0;
-						$errorMessage = $this->l10n->t('The last viewed note cannot be accessed. ').$ex->getMessage();
-					}
-				}
+				$nac = $this->getNotesAndCategories($userId, $pruneBefore);
+				[ 'notes' => $notes, 'categories' => $categories ] = $nac;
 			} catch (\Throwable $e) {
 				$this->helper->logException($e);
-				$errorMessage = $this->l10n->t('The notes folder is not accessible: %s', $e->getMessage());
+				$errorMessage = $this->l10n->t('Reading notes from filesystem has failed.').' ('.get_class($e).')';
+			}
+
+			if ($errorMessage === null && $lastViewedNote && is_array($notes) && !count($notes)) {
+				$this->settings->deleteUserValue($userId, $this->appName, 'notesLastViewedNote');
+				$lastViewedNote = 0;
 			}
 
 			$result = [
-				'notes' => $notesData,
+				'notes' => $notes,
 				'categories' => $categories,
 				'settings' => $settings,
 				'lastViewedNote' => $lastViewedNote,
