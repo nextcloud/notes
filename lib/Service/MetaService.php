@@ -155,7 +155,9 @@ class MetaService {
 
 	// warning: this is expensive
 	private function generateContentEtag(Note $note) : string {
-		return md5($note->getContent());
+		return Util::retryIfLocked(function () use ($note) {
+			return md5($note->getContent());
+		}, 3);
 	}
 
 	// this is not expensive, since we use the content ETag instead of the content itself
