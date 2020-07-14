@@ -212,6 +212,7 @@ class NotesController extends Controller {
 		return $this->helper->handleErrorResponse(function () use ($id, $content) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);
 			$note->setContent($content);
+			$this->metaService->update($this->helper->getUID(), $note);
 			return $note->getData();
 		});
 	}
