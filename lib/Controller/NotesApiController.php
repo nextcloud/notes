@@ -166,6 +166,7 @@ class NotesApiController extends ApiController {
 			if ($favorite !== null) {
 				$note->setFavorite($favorite);
 			}
+			$this->metaService->update($this->helper->getUID(), $note);
 			return $note->getData();
 		});
 	}
