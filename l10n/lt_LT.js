@@ -1,16 +1,14 @@
 OC.L10N.register(
     "notes",
     {
-    "The last viewed note cannot be accessed. " : "Nepavyksta gauti prieigos prie paskutinių rodytų užrašų.",
-    "The notes folder is not accessible: %s" : "Užrašų aplankas yra nepasiekiamas: %s",
     "Error" : "Klaida",
     "New note" : "Nauji užrašai",
     "Notes" : "Užrašai",
     "Distraction-free notes and writing" : "Neblaškantys užrašai ir rašymas",
-    "Settings" : "Nustatymai",
     "Deleted {title}" : "{title} ištrinti",
     "Undo Delete" : "Atšaukti ištrynimą",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Yra neįrašytų užrašų. Išėjus iš šio puslapio, visi pakeitimai bus atmesti!",
+    "Settings" : "Nustatymai",
     "Folder to store your notes" : "Aplankas, kuriame saugoti jūsų užrašus",
     "path to notes" : "kelias į užrašus",
     "File extension for new notes" : "Naujų užrašų failo prievardis",

@@ -1,13 +1,11 @@
 OC.L10N.register(
     "notes",
     {
-    "The last viewed note cannot be accessed. " : "Последно отворената бележка не е достъпна.",
-    "The notes folder is not accessible: %s" : "Папката с бележки не е достъпна: %s",
     "Error" : "Грешка",
     "New note" : "Нова бележка",
     "Notes" : "Бележки",
-    "Settings" : "Настройки",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Има незаписани бележки. Напускайте тази страница, направени промени ще бъдат загубени!",
+    "Settings" : "Настройки",
     "Folder to store your notes" : "Папка за съхранение на бележките",
     "path to notes" : "път до бележките",
     "File extension for new notes" : "Разширение за файловете",

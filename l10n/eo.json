@@ -1,12 +1,10 @@
 { "translations": {
-    "The last viewed note cannot be accessed. " : "La laste vidita noto ne estas alirebla.",
-    "The notes folder is not accessible: %s" : "La nota dosierujo ne estas alirebla: %s",
     "Error" : "Eraro",
     "New note" : "Nova noto",
     "Notes" : "Notoj",
     "Distraction-free notes and writing" : "Sendistraj notoj kaj skribado",
-    "Settings" : "Agordoj",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Estas nekonservitaj notoj. Foriro el la paĝo perdos ĉiujn ŝanĝojn!",
+    "Settings" : "Agordoj",
     "Folder to store your notes" : "Dosiero, en kiu konservi viajn notojn",
     "path to notes" : "vojo al notoj",
     "File extension for new notes" : "Dosiersufikso por novaj notoj",

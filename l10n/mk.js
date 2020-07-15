@@ -1,17 +1,15 @@
 OC.L10N.register(
     "notes",
     {
-    "The last viewed note cannot be accessed. " : "Неможе да се пристапи до последно прегледаната белешка.",
-    "The notes folder is not accessible: %s" : "Папката со белешки не е достапна: %s",
     "Error" : "Грешка",
     "New note" : "Нова белешка",
     "Notes" : "Белешки",
     "Distraction-free notes and writing" : "Пушување на белешки без одвлекување на вниманието",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Апликацијата Белешки е апликација за белешки без одвраќање. Обезбедува категории за подобра организација и поддржува форматирање користејќи [Markdown] (https://en.wikipedia.org/wiki/Markdown) синтакса. Белешките се зачувуваат како датотеки во вашиот Nextcloud, за да можете да ги гледате и уредувате истите со секој клиент на Nextcloud. Понатаму, посебна [RESTful API] (https://github.com/nextcloud/notes/wiki/API-0.2) дозволува лесна интеграција во апликации од трети страни (во моментов, има апликации за белешки за [Android] (https : //github.com/stefan-niedermann/nextcloud-notes) и [iOS] (https://github.com/owncloud/notes-iOS-App) кои овозможуваат удобен пристап до вашите белешки за Nextcloud). Дополнителни карактеристики вклучуваат белешки за обележување како омилени.",
-    "Settings" : "Параметри",
     "Deleted {title}" : "Избришана {title}",
     "Deleted {number} notes" : "Избришани {number} белешки",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Имате незачувана белешка. Со напуштање на стрната нема да се зачуваат промените!",
+    "Settings" : "Параметри",
     "Folder to store your notes" : "Папка за зачувување на вашите белешки",
     "path to notes" : "патека до белешките",
     "File extension for new notes" : "Наставка на дадотека за нови белешки",

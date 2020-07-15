@@ -1,16 +1,13 @@
 OC.L10N.register(
     "notes",
     {
-    "The last viewed note cannot be accessed. " : "آخرین یادداشت مشاهده شده قابل دسترسی نیست.",
-    "The notes folder is not accessible: %s" : "پوشه یادداشت ها در دسترس نیست: %s",
     "Error" : "خطا",
     "New note" : "یادداشت جدید",
     "Notes" : "یادداشت ها",
     "Distraction-free notes and writing" : "یادداشت ها و نوشتن بدون حواس پرتی",
-    "Settings" : "تنظیمات",
     "Deleted {title}" : "حذف {عنوان}",
-    "Please chose a valid path in {label} (bottom left corner)." : "لطفاً یک مسیر معتبر را در {label} (گوشه پایین سمت چپ) انتخاب کنید.",
     "There are unsaved notes. Leaving the page will discard all changes!" : "یادداشتهای ذخیره نشده وجود دارد. ترک صفحه باعث می شود همه تغییرات از بین بروند!",
+    "Settings" : "تنظیمات",
     "Folder to store your notes" : "پوشه برای ذخیره یادداشت های خود",
     "path to notes" : "مسیر یادداشت ها",
     "File extension for new notes" : "پسوند پرونده برای یادداشتهای جدید",
