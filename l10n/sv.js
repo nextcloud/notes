@@ -1,10 +1,12 @@
 OC.L10N.register(
     "notes",
     {
+    "Reading notes from filesystem has failed." : "Läsa anteckningar från filsystemet misslyckades.",
     "Error" : "Fel",
     "New note" : "Ny anteckning",
     "Notes" : "Anteckningar",
     "Distraction-free notes and writing" : "Distraktionsfria anteckningar och skrivning",
+    "Please see Nextcloud server log for details." : "Se Nextcloud serverlogg för mer information.",
     "Deleted {title}" : "Raderad {title}",
     "Deleted {number} notes" : "Raderade {number} anteckningar",
     "Undo Delete" : "Ångra radering",
@@ -64,6 +66,7 @@ OC.L10N.register(
     "Insufficient storage." : "Otillräckligt utrymme.",
     "See JavaScript console and server log for details." : "Se JavaScript-konsol och serverlogg för detaljer.",
     "Updating settings has failed." : "Kunde inte uppdatera inställningar. ",
+    "Error from Nextcloud server: {msg}" : "Fel från Nextcloud server: {msg}",
     "Fetching notes has failed." : "Kunde inte hämta anteckningar.",
     "Fetching note {id} has failed." : "Hämtning av anteckning {id} misslyckades.",
     "Refreshing note {id} has failed." : "Uppdatering av anteckning {id} misslyckades.",

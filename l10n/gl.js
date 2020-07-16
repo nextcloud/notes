@@ -1,11 +1,13 @@
 OC.L10N.register(
     "notes",
     {
+    "Reading notes from filesystem has failed." : "Produciuse un fallo na lectura de notas do sistema de ficheiros.",
     "Error" : "Erro",
     "New note" : "Nova nota",
     "Notes" : "Notas",
     "Distraction-free notes and writing" : "Escritura de notas sen distraccións ",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "A aplicación Notas é unha aplicación que toma notas sen distracción para [Nextcloud] (https://www.nextcloud.com/). Fornece categorías para unha mellor organización e admite o formato coa sintaxe [Markdown](https://es.wikipedia.org/wiki/Markdown). As notas gárdanse como ficheiros no Nextcloud, polo que pode velas e editalas con calquera cliente Nextcloud. Ademais, unha [REST API](docs/api/README.md) separada permite unha fácil integración en aplicacións de terceiros (actualmente hai aplicacións de notas para [Android](https://github.com/stefan-niedermann/nextcloud-notes) [[iOS](https://github.com/owncloud/notes-iOS-App) and the [consola](https://git.danielmoch.com/nncli/about) que permiten un acceso cómodo ás súas notas do Nextcloud). Outras características inclúen marcar notas como favoritas.",
+    "Please see Nextcloud server log for details." : "Vexa o rexistro do servidor do Nextcloud para obter máis detalles.",
     "Deleted {title}" : "{title} foi eliminado",
     "Deleted {number} notes" : "Eliminadas {number} notas",
     "Undo Delete" : "Desfacer a eliminación",
@@ -65,6 +67,7 @@ OC.L10N.register(
     "Insufficient storage." : "Non ten espazo de almacenamento abondo.",
     "See JavaScript console and server log for details." : "Vexa a consola de JavaScript e o rexistro do servidor para os detalles.",
     "Updating settings has failed." : "Produciuse un fallo ao actualizar a configuración.",
+    "Error from Nextcloud server: {msg}" : "Produciuse un erro no servidor do Nextcloud: {msg}",
     "Fetching notes has failed." : "Produciuse un fallo ao recuperar as notas.",
     "Fetching note {id} has failed." : "Produciuse un fallo ao recuperar a nota {id}.",
     "Refreshing note {id} has failed." : "Produciuse un fallo ao actualizar a nota {id}.",

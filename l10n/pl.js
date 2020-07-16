@@ -1,11 +1,13 @@
 OC.L10N.register(
     "notes",
     {
+    "Reading notes from filesystem has failed." : "Odczytanie notatek z systemu plików nie powiodło się.",
     "Error" : "Błąd",
     "New note" : "Nowa notatka",
     "Notes" : "Notatki",
     "Distraction-free notes and writing" : "Ogólnodostępne notowanie i pisanie ",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Aplikacja Notatki, to bezpłatna aplikacja do robienia notatek dla [Nextcloud](https://www.nextcloud.com/). Zapewnia kategorie dla lepszej organizacji i obsługuje formatowanie przy użyciu składni [Markdown](https://en.wikipedia.org/wiki/Markdown). Notatki są zapisywane jako pliki w Twoim Nextcloud, dzięki czemu możesz je przeglądać i edytować z każdym klientem Nextcloud. Ponadto osobny [REST API](docs/api/README.md) pozwala na łatwą integrację z aplikacjami innych firm (obecnie istnieją aplikacje do notatek dla[Android](https://github.com/stefan-niedermann/nextcloud-notes) i [iOS](https://github.com/owncloud/notes-iOS-App)), które umożliwiają wygodny dostęp do notatek Nextcloud). Kolejne funkcje obejmują oznaczanie notatek jako ulubionych.",
+    "Please see Nextcloud server log for details." : "Szczegółowe informacje można znaleźć w dzienniku serwera Nextcloud.",
     "Deleted {title}" : "Usunięte {title}",
     "Deleted {number} notes" : "Usunięto {number} notatki",
     "Undo Delete" : "Cofnij usunięcie",
@@ -65,6 +67,7 @@ OC.L10N.register(
     "Insufficient storage." : "Niewystarczająca ilość miejsca.",
     "See JavaScript console and server log for details." : "Szczegółowe informacje można znaleźć w konsoli JavaScript i w dzienniku serwera.",
     "Updating settings has failed." : "Aktualizacja ustawień nie powiodła się.",
+    "Error from Nextcloud server: {msg}" : "Błąd z serwera Nextcloud: {msg}",
     "Fetching notes has failed." : "Pobranie notatek nie powiodło się.",
     "Fetching note {id} has failed." : "Pobranie notatki {id} nie powiodło się.",
     "Refreshing note {id} has failed." : "Odświeżenie notatki {id} nie powiodło się.",

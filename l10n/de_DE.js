@@ -1,11 +1,13 @@
 OC.L10N.register(
     "notes",
     {
+    "Reading notes from filesystem has failed." : "Laden der Notizen vom Dateisystem ist fehlgeschlagen.",
     "Error" : "Fehler",
     "New note" : "Neue Notiz",
     "Notes" : "Notizen",
     "Distraction-free notes and writing" : "Ablenkungsfreie Notizen und Schreiben",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Die Notes-App ist eine leicht zu bedienende App zum Erstellen von Notizen in der [Nextcloud](https://www.nextcloud.com/). Zur besseren Übersicht bietet diese die Möglichkeit zur Einordnung der Notizen in Kategorien. Für die Formatierung wird [Markdown](https://en.wikipedia.org/wiki/Markdown)-Syntax unterstützt. Notizen werden als Dateien in der Nextcloud abgelegt. So kann diese mit jedem Nextcloud-Client editiert werden. Des Weiteren erlaubt eine separate [REST API](docs/api/README.md) die einfache Integration in Drittanbieter-Apps (aktuell gibt es Notes-Apps für [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) und die [Konsole](https://git.danielmoch.com/nncli/file/README.rst.html) welche bequemen Zugang zu den Notizen in der Nextcloud erlauben). Weitere Funktionen ermöglichen es unter anderem Notizen als Favoriten zu markieren.",
+    "Please see Nextcloud server log for details." : "Für Details siehe Protokolldatei des Nextcloud-Servers.",
     "Deleted {title}" : "{title} gelöscht",
     "Deleted {number} notes" : "{number} Notizen gelöscht",
     "Undo Delete" : "Wiederherstellen",
@@ -65,6 +67,7 @@ OC.L10N.register(
     "Insufficient storage." : "Speicherplatz nicht ausreichend.",
     "See JavaScript console and server log for details." : "Siehe JavaScript-Konsole und Server-Protokoll für Details.",
     "Updating settings has failed." : "Aktualisierung der Einstellungen fehlgeschlagen.",
+    "Error from Nextcloud server: {msg}" : "Fehler vom Nextcloud-Server: {msg}",
     "Fetching notes has failed." : "Laden der Notizen fehlgeschlagen.",
     "Fetching note {id} has failed." : "Abruf der Notiz {id} fehlgeschlagen.",
     "Refreshing note {id} has failed." : "Aktualisieren der Notiz {id} fehlgeschlagen.",
