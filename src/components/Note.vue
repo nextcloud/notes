@@ -242,6 +242,10 @@ export default {
 		},
 
 		refreshNote() {
+			if (this.note.unsaved) {
+				this.startRefreshTimer()
+				return
+			}
 			refreshNote(parseInt(this.noteId), this.etag).then(etag => {
 				if (etag) {
 					this.etag = etag
