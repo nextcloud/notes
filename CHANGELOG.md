@@ -13,6 +13,15 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.6.1 - 2020-07-17
+
+### Fixed
+
+- fix note refresh for unsaved changes (#576)
+- improved error handling (#573)
+- maintenance (#563, #567, #569, #571, #572, #575)
+
+
 ## 3.6.0 - 2020-06-28
 
 ### Added
