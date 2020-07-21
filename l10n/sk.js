@@ -1,11 +1,13 @@
 OC.L10N.register(
     "notes",
     {
+    "Reading notes from filesystem has failed." : "Čítanie poznámok zo súborového systému zlyhalo.",
     "Error" : "Chyba",
     "New note" : "Nová poznámka",
     "Notes" : "Poznámky",
     "Distraction-free notes and writing" : "Písanie a poznámky, čo neodpútavajú pozornosť",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Aplikácia Poznámky pre [Nextcloud](https://www.nextcloud.com/) je bez rozptyľovania. Pre lepšiu organizáciu poskytuje kategórie a podporuje formátovanie pomocou [Markdown](https://en.wikipedia.org/wiki/Markdown). Poznámky sa ukladajú ako súbory vo vašom Nextcloude, takže si ich môžete prezerať a upravovať s každým klientom Nextcloudu. Samostatné [REST API](docs/api/README.md) navyše umožňuje ľahkú integráciu do aplikácií tretích strán (v súčasnosti existujú aplikácie pre poznámky pre [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) a [console](https://git.danielmoch.com/nncli/about), ktoré umožňujú pohodlný prístup do vašich poznámok Nextcloud). Medzi ďalšie vlastnosti patrí označovanie poznámok ako obľúbených položiek.",
+    "Please see Nextcloud server log for details." : "Podrobnosti nájdete v protokole servera Nextcloud.",
     "Deleted {title}" : "Zmazané {title}",
     "Deleted {number} notes" : "Vymazaných {number} poznámok",
     "Undo Delete" : "Zrušiť odstránenie",
@@ -65,6 +67,7 @@ OC.L10N.register(
     "Insufficient storage." : "Nedostatočný úložný priestor.",
     "See JavaScript console and server log for details." : "Podrobnosti nájdete v konzole JavaScriptu a protokole servera.",
     "Updating settings has failed." : "Aktualizácia nastavení zlyhala.",
+    "Error from Nextcloud server: {msg}" : "Chyba Nextcloud servera: {msg}",
     "Fetching notes has failed." : "Získavanie poznámok zlyhalo.",
     "Fetching note {id} has failed." : "Získavanie poznámky {id} zlyhalo.",
     "Refreshing note {id} has failed." : "Obnovenie poznámky {id} zlyhalo.",
