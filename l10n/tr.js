@@ -1,11 +1,13 @@
 OC.L10N.register(
     "notes",
     {
+    "Reading notes from filesystem has failed." : "Notlar dosya sisteminden okunamadı.",
     "Error" : "Hata",
     "New note" : "Not ekle",
     "Notes" : "Notlar",
     "Distraction-free notes and writing" : "Dikkatinizi dağıtmadan notlar alabilirsiniz",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Notlar uygulaması [Nextcloud](https://www.nextcloud.com/) için dikkat dağıtmadan not alınabilmesini sağlar. Kategoriler ile daha notları düzenleyebilme ve [Markdown](https://en.wikipedia.org/wiki/Markdown) kod imleri ile biçimlendirme yapılabilmesini sağlar. Notlar Nextcloud alanınıza dosya olarak kaydedilir böylece her Nextcloud istemcisi tarafından görülüp düzenlenebilir. Ayrıca [REST API](docs/api/README.md) ile üçüncü tarafların uygulamaları ile kolayca bütünleştirilebilir (şu anda  [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) ve [console](https://git.danielmoch.com/nncli/about) için Nextcloud notlarına erişebilen uygulamalar bulunmaktadır). Gelecek sürümlerde notları sık kullanılanlar olarak işaretlemek gibi özellikler sunulacaktır.",
+    "Please see Nextcloud server log for details." : "Ayrıntılar için Nextcloud sunucu günlüğüne bakın.",
     "Deleted {title}" : "{title} silindi",
     "Deleted {number} notes" : "{number} not silindi",
     "Undo Delete" : "Silmeyi Geri Al",
@@ -65,6 +67,7 @@ OC.L10N.register(
     "Insufficient storage." : "Depolama alanı yetersiz.",
     "See JavaScript console and server log for details." : "Ayrıntılı bilgi almak için JavaScript konsoluna ve sunucu günlüğüne bakın.",
     "Updating settings has failed." : "Ayarlar güncellenemedi.",
+    "Error from Nextcloud server: {msg}" : "Nextcloud sunucu hatası: {msg}",
     "Fetching notes has failed." : "Notlar alınamadı.",
     "Fetching note {id} has failed." : "Not {id} alınamadı.",
     "Refreshing note {id} has failed." : "Not {id} yenilenemedi.",
