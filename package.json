@@ -18,9 +18,9 @@
 		"@nextcloud/event-bus": "^1.2.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.1.0",
-		"@nextcloud/vue": "^2.2.1",
+		"@nextcloud/vue": "^2.3.0",
 		"@nextcloud/webpack-vue-config": "^1.1.0",
-		"easymde": "^2.10.1",
+		"easymde": "^2.11.0",
 		"markdown-it": "^11.0.0",
 		"stylelint-webpack-plugin": "^2.1.0",
 		"vue": "^2.6.11",
@@ -48,7 +48,6 @@
 		"css-loader": "^3.6.0",
 		"eslint": "^6.8.0",
 		"eslint-config-standard": "^14.1.1",
-		"eslint-import-resolver-webpack": "^0.12.2",
 		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-node": "^11.1.0",
@@ -64,7 +63,7 @@
 		"url-loader": "^4.1.0",
 		"vue-loader": "^15.9.3",
 		"vue-template-compiler": "^2.6.11",
-		"webpack": "^4.43.0",
+		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12"
 	}
 }
