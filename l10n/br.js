@@ -11,6 +11,7 @@ OC.L10N.register(
     "Details" : "Munudoù",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Cheñch",
+    "Preview" : "Ragwell",
     "Android app" : "Meziant Android",
     "iOS app" : "Meziant iOS"
 },
