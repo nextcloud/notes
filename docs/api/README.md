@@ -1,4 +1,4 @@
-# API documentation
+# Rest API documentation of Nextcloud Notes
 
 The notes app comes with a REST-based API.
 It can be used in order to provide full access to notes from third-party apps.
