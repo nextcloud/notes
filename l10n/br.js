@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Error" : "Fazi",
     "Settings" : "Arventennoù",
+    "Loading …" : "O Kargañ ...",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
     "Rename" : "Adenvel",
