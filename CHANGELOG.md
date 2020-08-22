@@ -13,6 +13,14 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.6.2 - 2020-08-22
+
+### Fixed
+
+- fix cannot create notes when using object storage (#566)
+- maintenance (#577, #578, #582, #585, #588)
+
+
 ## 3.6.1 - 2020-07-17
 
 ### Fixed
