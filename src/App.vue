@@ -46,6 +46,7 @@ import {
 } from '@nextcloud/vue'
 import { showSuccess } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
+import '@nextcloud/dialogs/styles/toast.scss'
 
 import { config } from './config'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
