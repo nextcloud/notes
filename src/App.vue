@@ -128,7 +128,9 @@ export default {
 
 	created() {
 		store.commit('setDocumentTitle', document.title)
-		this.search = new OCA.Search(this.onSearch, this.onResetSearch)
+		if (typeof OCA.Search === 'function') {
+			this.search = new OCA.Search(this.onSearch, this.onResetSearch)
+		}
 		window.addEventListener('beforeunload', this.onClose)
 		this.loadNotes()
 	},
