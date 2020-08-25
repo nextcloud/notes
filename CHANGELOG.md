@@ -13,6 +13,15 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.6.3 - 2020-08-25
+
+### Fixed
+
+- fix toasts (#591)
+- improved error handling (#593)
+- maintenance (#594)
+
+
 ## 3.6.2 - 2020-08-22
 
 ### Fixed
