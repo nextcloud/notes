@@ -50,9 +50,11 @@ use OCA\Notes\Db\MetaMapper;
  */
 class MetaService {
 	private $metaMapper;
+	private $noteUtil;
 
-	public function __construct(MetaMapper $metaMapper) {
+	public function __construct(MetaMapper $metaMapper, NoteUtil $noteUtil) {
 		$this->metaMapper = $metaMapper;
+		$this->noteUtil = $noteUtil;
 	}
 
 	public function deleteByNote(int $id) : void {
@@ -130,7 +132,7 @@ class MetaService {
 	}
 
 	private function updateIfNeeded(Meta &$meta, Note $note, bool $forceUpdate) : bool {
-		$generateContentEtag = $forceUpdate;
+		$generateContentEtag = $forceUpdate || !$meta->getContentEtag();
 		$fileEtag = $note->getFileEtag();
 		// a changed File-ETag is an indicator for changed content
 		if ($fileEtag !== $meta->getFileEtag()) {
@@ -155,9 +157,14 @@ class MetaService {
 
 	// warning: this is expensive
 	private function generateContentEtag(Note $note) : string {
-		return Util::retryIfLocked(function () use ($note) {
-			return md5($note->getContent());
-		}, 3);
+		try {
+			return Util::retryIfLocked(function () use ($note) {
+				return md5($note->getContent());
+			}, 3);
+		} catch (\Throwable $t) {
+			$this->noteUtil->logException($t);
+			return '';
+		}
 	}
 
 	// this is not expensive, since we use the content ETag instead of the content itself
