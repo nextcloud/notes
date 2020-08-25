@@ -42,7 +42,7 @@ class Note {
 			$content = '';
 		}
 		if (!is_string($content)) {
-			throw new \Exception('Can\'t read file content.');
+			throw new \Exception('Can\'t read file content for '.$this->file->getPath());
 		}
 		if (!mb_check_encoding($content, 'UTF-8')) {
 			$content = mb_convert_encoding($content, 'UTF-8');
