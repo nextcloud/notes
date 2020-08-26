@@ -9,26 +9,23 @@ use OCA\Notes\Service\Util;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\ILogger;
 use OCP\IUserSession;
+
+use Psr\Log\LoggerInterface;
 
 class Helper {
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	public $logger;
-	/** @var string */
-	private $appName;
 	/** @var IUserSession */
 	private $userSession;
 
 	public function __construct(
 		IUserSession $userSession,
-		ILogger $logger,
-		string $appName
+		LoggerInterface $logger
 	) {
 		$this->userSession = $userSession;
 		$this->logger = $logger;
-		$this->appName = $appName;
 	}
 
 	public function getUID() : string {
@@ -36,7 +33,7 @@ class Helper {
 	}
 
 	public function logException(\Throwable $e) : void {
-		$this->logger->logException($e, ['app' => $this->appName]);
+		$this->logger->error('Controller failed with '.get_class($e), [ 'exception' => $e ]);
 	}
 
 	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {

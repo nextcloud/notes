@@ -7,32 +7,25 @@ namespace OCA\Notes\Service;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\IDBConnection;
-use OCP\IL10N;
-use OCP\ILogger;
 
 class NoteUtil {
+	/** @var Util */
+	public $util;
 	private $db;
-	private $l10n;
 	private $root;
 	private $tagService;
 	private $cachedTags;
-	private $logger;
-	private $appName;
 
 	public function __construct(
+		Util $util,
 		IRootFolder $root,
 		IDBConnection $db,
-		TagService $tagService,
-		IL10N $l10n,
-		ILogger $logger,
-		string $appName
+		TagService $tagService
 	) {
+		$this->util = $util;
 		$this->root = $root;
 		$this->db = $db;
 		$this->tagService = $tagService;
-		$this->l10n = $l10n;
-		$this->logger = $logger;
-		$this->appName = $appName;
 	}
 
 	public function getRoot() : IRootFolder {
@@ -41,18 +34,6 @@ class NoteUtil {
 
 	public function getTagService() : TagService {
 		return $this->tagService;
-	}
-
-	public function getL10N() : IL10N {
-		return $this->l10n;
-	}
-
-	public function getLogger() : ILogger {
-		return $this->logger;
-	}
-
-	public function logException(\Throwable $e) : void {
-		$this->logger->logException($e, ['app' => $this->appName]);
 	}
 
 	public function getCategoryFolder(Folder $notesFolder, string $category) {
@@ -118,7 +99,7 @@ class NoteUtil {
 
 		// ensure that title is not empty
 		if (empty($title)) {
-			$title = $this->l10n->t('New note');
+			$title = $this->util->l10n->t('New note');
 		}
 
 		return $title;
@@ -173,7 +154,7 @@ class NoteUtil {
 		$isEmpty = !count($content);
 		$isNotesFolder = $folder->getPath()===$notesFolder->getPath();
 		if ($isEmpty && !$isNotesFolder) {
-			$this->logger->info('Deleting empty category folder '.$folder->getPath(), ['app' => $this->appName]);
+			$this->util->logger->debug('Deleting empty category folder '.$folder->getPath());
 			$parent = $folder->getParent();
 			$folder->delete();
 			$this->deleteEmptyFolder($parent, $notesFolder);
@@ -189,11 +170,10 @@ class NoteUtil {
 	public function ensureSufficientStorage(Folder $folder, int $requiredBytes) : void {
 		$availableBytes = $folder->getFreeSpace();
 		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
-			$this->logger->error(
+			$this->util->logger->error(
 				'Insufficient storage in '.$folder->getPath().': '.
 				'available are '.$availableBytes.'; '.
-				'required are '.$requiredBytes,
-				['app' => $this->appName]
+				'required are '.$requiredBytes
 			);
 			throw new InsufficientStorageException($requiredBytes.' are required in '.$folder->getPath());
 		}

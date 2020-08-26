@@ -50,11 +50,11 @@ use OCA\Notes\Db\MetaMapper;
  */
 class MetaService {
 	private $metaMapper;
-	private $noteUtil;
+	private $util;
 
-	public function __construct(MetaMapper $metaMapper, NoteUtil $noteUtil) {
+	public function __construct(MetaMapper $metaMapper, Util $util) {
 		$this->metaMapper = $metaMapper;
-		$this->noteUtil = $noteUtil;
+		$this->util = $util;
 	}
 
 	public function deleteByNote(int $id) : void {
@@ -162,7 +162,10 @@ class MetaService {
 				return md5($note->getContent());
 			}, 3);
 		} catch (\Throwable $t) {
-			$this->noteUtil->logException($t);
+			$this->util->logger->error(
+				'Could not generate Content Etag for note '.$note->getId(),
+				[ 'exception' => $t ]
+			);
 			return '';
 		}
 	}
