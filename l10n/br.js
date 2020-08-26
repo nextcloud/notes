@@ -6,6 +6,7 @@ OC.L10N.register(
     "Loading …" : "O Kargañ ...",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
+    "This week" : "Er sizhun-mañ",
     "Rename" : "Adenvel",
     "Remove from favorites" : "Diverkañañ eus ar pennrolloù",
     "Add to favorites" : "Ouzhpennañ er pennrolloù",
