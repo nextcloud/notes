@@ -6,9 +6,10 @@ namespace OCA\Notes;
 
 use OCA\Notes\Service\MetaService;
 
-use OCP\ILogger;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
+
+use Psr\Log\LoggerInterface;
 
 class NotesHooks {
 	private $logger;
@@ -16,7 +17,7 @@ class NotesHooks {
 	private $metaService;
 
 	public function __construct(
-		ILogger $logger,
+		LoggerInterface $logger,
 		IRootFolder $rootFolder,
 		MetaService $metaService
 	) {
@@ -26,12 +27,13 @@ class NotesHooks {
 	}
 
 	public function register() : void {
+		$this->logger->error('Register NotesHooks');
 		$this->listenTo(
 			$this->rootFolder,
 			'\OC\Files',
 			'preWrite',
 			function (Node $node) {
-				// $this->logger->warning('preWrite: ' . $node->getPath(), ['app'=>'notes']);
+				// $this->logger->debug('preWrite: ' . $node->getPath());
 				$this->onFileModified($node);
 			}
 		);
@@ -40,7 +42,7 @@ class NotesHooks {
 			'\OC\Files',
 			'preTouch',
 			function (Node $node) {
-				// $this->logger->warning('preTouch: ' . $node->getPath(), ['app'=>'notes']);
+				// $this->logger->debug('preTouch: ' . $node->getPath());
 				$this->onFileModified($node);
 			}
 		);
@@ -49,7 +51,7 @@ class NotesHooks {
 			'\OC\Files',
 			'preDelete',
 			function (Node $node) {
-				// $this->logger->warning('preDelete: ' . $node->getPath(), ['app'=>'notes']);
+				// $this->logger->debug('preDelete: ' . $node->getPath());
 				$this->onFileModified($node);
 			}
 		);
@@ -58,7 +60,7 @@ class NotesHooks {
 			'\OC\Files',
 			'preRename',
 			function (Node $source, Node $target) {
-				// $this->logger->warning('preRename: ' . $source->getPath(), ['app'=>'notes']);
+				// $this->logger->debug('preRename: ' . $source->getPath());
 				$this->onFileModified($source);
 			}
 		);
@@ -70,6 +72,7 @@ class NotesHooks {
 	}
 
 	private function onFileModified(Node $node) : void {
+		// $this->logger->debug('NotesHook for ' . $node->getPath());
 		try {
 			$this->metaService->deleteByNote($node->getId());
 		} catch (\Throwable $e) {

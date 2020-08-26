@@ -10,12 +10,16 @@ use OCP\Files\Folder;
 class Note {
 	private $file;
 	private $notesFolder;
+	/** @var NoteUtil */
 	private $noteUtil;
+	/** @var Util */
+	private $util;
 
 	public function __construct(File $file, Folder $notesFolder, NoteUtil $noteUtil) {
 		$this->file = $file;
 		$this->notesFolder = $notesFolder;
 		$this->noteUtil = $noteUtil;
+		$this->util = $noteUtil->util;
 	}
 
 
@@ -82,8 +86,11 @@ class Note {
 			try {
 				$data['content'] = $this->getContent();
 			} catch (\Throwable $e) {
-				$this->noteUtil->logException($e);
-				$message = $this->noteUtil->getL10N()->t('Error').': ('.$this->file->getName().') '.$e->getMessage();
+				$this->util->logger->error(
+					'Could not read content for file: '.$this->file->getPath(),
+					[ 'exception' => $e ]
+				);
+				$message = $this->util->l10n->t('Error').': ('.$this->file->getName().') '.$e->getMessage();
 				$data['content'] = $message;
 				$data['error'] = true;
 				$data['errorMessage'] = $message;
