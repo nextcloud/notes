@@ -13,6 +13,13 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 3.6.4 - 2020-08-26
+
+### Fixed
+
+- fix Nextcloud 20 compatibility (#597)
+
+
 ## 3.6.3 - 2020-08-25
 
 ### Fixed
