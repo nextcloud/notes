@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\Notes;
+namespace OCA\Notes\AppInfo;
 
 use OCP\Capabilities\ICapability;
 use OCP\App\IAppManager;
