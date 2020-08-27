@@ -10,10 +10,11 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 
 class Application extends App implements IBootstrap {
+	public const APP_ID = 'notes';
 	public static $API_VERSIONS = [ '0.2', '1.1' ];
 
 	public function __construct(array $urlParams = []) {
-		parent::__construct('notes', $urlParams);
+		parent::__construct(self::APP_ID, $urlParams);
 	}
 
 	public function register(IRegistrationContext $context): void {

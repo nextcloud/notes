@@ -18,9 +18,9 @@ class Capabilities implements ICapability {
 
 	public function getCapabilities() {
 		return [
-			'notes' => [
+			Application::APP_ID => [
 				'api_version' => Application::$API_VERSIONS,
-				'version' => $this->appManager->getAppVersion('notes'),
+				'version' => $this->appManager->getAppVersion(Application::APP_ID),
 			],
 		];
 	}

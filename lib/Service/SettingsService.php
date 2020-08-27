@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
+use OCA\Notes\AppInfo\Application;
+
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
@@ -55,11 +57,11 @@ class SettingsService {
 				unset($settings[$name]);
 			}
 		}
-		$this->config->setUserValue($uid, 'notes', 'settings', json_encode($settings));
+		$this->config->setUserValue($uid, Application::APP_ID, 'settings', json_encode($settings));
 	}
 
 	public function getAll(string $uid) : \stdClass {
-		$settings = json_decode($this->config->getUserValue($uid, 'notes', 'settings'));
+		$settings = json_decode($this->config->getUserValue($uid, Application::APP_ID, 'settings'));
 		if (!is_object($settings)) {
 			$settings = new \stdClass();
 		}
