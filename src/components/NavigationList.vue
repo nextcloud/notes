@@ -7,24 +7,6 @@
 			@category-selected="$emit('category-selected', $event)"
 		/>
 
-		<!-- search result header -->
-		<AppNavigationCaption v-if="search && filteredNotes.length" :title="searchResultTitle" class="search-result-header" />
-
-		<!-- nothing found -->
-		<li v-if="search && !filteredNotes.length" class="no-search-result">
-			<span class="nav-entry">
-				<div id="emptycontent" class="emptycontent-search">
-					<div class="icon-search" />
-					<h2 v-if="category!==null">
-						{{ t('notes', 'No search result for “{search}” in {category}', { search: search, category: categoryTitle(category) }) }}
-					</h2>
-					<h2 v-else>
-						{{ t('notes', 'No search result for “{search}”', { search: search }) }}
-					</h2>
-				</div>
-			</span>
-		</li>
-
 		<!-- list of notes -->
 		<template v-for="item in noteItems">
 			<AppNavigationCaption v-if="category!==null && category!==item.category"
@@ -92,10 +74,6 @@ export default {
 			type: String,
 			default: null,
 		},
-		search: {
-			type: String,
-			default: '',
-		},
 	},
 
 	data() {
@@ -144,14 +122,6 @@ export default {
 
 		noteItems() {
 			return this.groupedNotes
-		},
-
-		searchResultTitle() {
-			if (this.category !== null) {
-				return t('notes', 'Search result for “{search}” in {category}', { search: this.search, category: this.categoryTitle(this.category) })
-			} else {
-				return t('notes', 'Search result for “{search}”', { search: this.search })
-			}
 		},
 	},
 
@@ -209,23 +179,3 @@ export default {
 	},
 }
 </script>
-<style scoped>
-.search-result-header {
-	color: inherit;
-}
-
-li.no-search-result {
-	order: 1;
-}
-
-li .nav-entry .emptycontent-search {
-	white-space: normal;
-}
-
-@media (max-height: 600px) {
-	li .nav-entry .emptycontent-search {
-		margin-top: inherit;
-	}
-}
-
-</style>
