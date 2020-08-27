@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\Notes;
+namespace OCA\Notes\AppInfo;
 
 use OCA\Notes\Service\MetaService;
 
@@ -27,7 +27,6 @@ class NotesHooks {
 	}
 
 	public function register() : void {
-		$this->logger->error('Register NotesHooks');
 		$this->listenTo(
 			$this->rootFolder,
 			'\OC\Files',

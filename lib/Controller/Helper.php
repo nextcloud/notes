@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
-use OCA\Notes\Application;
+use OCA\Notes\AppInfo\Application;
 use OCA\Notes\Service\Util;
 
 use OCP\AppFramework\Http;
