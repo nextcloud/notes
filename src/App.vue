@@ -13,7 +13,6 @@
 				<NavigationList v-show="!loading.notes"
 					:filtered-notes="filteredNotes"
 					:category="filter.category"
-					:search="filter.search"
 					@category-selected="onSelectCategory"
 					@note-deleted="onNoteDeleted"
 				/>
@@ -45,7 +44,6 @@ import {
 	Content,
 } from '@nextcloud/vue'
 import { showSuccess } from '@nextcloud/dialogs'
-import { emit } from '@nextcloud/event-bus'
 import '@nextcloud/dialogs/styles/toast.scss'
 
 import { config } from './config'
@@ -70,7 +68,6 @@ export default {
 		return {
 			filter: {
 				category: null,
-				search: '',
 			},
 			loading: {
 				notes: true,
@@ -89,19 +86,11 @@ export default {
 		},
 
 		filteredNotes() {
-			const search = this.filter.search.toLowerCase()
-
 			const notes = this.notes.filter(note => {
 				if (this.filter.category !== null
 					&& this.filter.category !== note.category
 					&& !note.category.startsWith(this.filter.category + '/')) {
 					return false
-				}
-				const searchFields = ['title', 'category']
-				if (search !== '') {
-					return searchFields.some(
-						searchField => note[searchField].toLowerCase().indexOf(search) !== -1
-					)
 				}
 				return true
 			})
@@ -128,9 +117,6 @@ export default {
 
 	created() {
 		store.commit('setDocumentTitle', document.title)
-		if (typeof OCA.Search === 'function') {
-			this.search = new OCA.Search(this.onSearch, this.onResetSearch)
-		}
 		window.addEventListener('beforeunload', this.onClose)
 		this.loadNotes()
 	},
@@ -203,16 +189,6 @@ export default {
 					query,
 				})
 			}
-		},
-
-		onSearch(query) {
-			this.filter.search = query
-
-			emit('toggle-navigation', { open: true })
-		},
-
-		onResetSearch() {
-			this.filter.search = ''
 		},
 
 		onNewNote() {
