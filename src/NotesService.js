@@ -2,10 +2,7 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
-import AppGlobal from './mixins/AppGlobal'
 import store from './store'
-
-const t = AppGlobal.methods.t
 
 function url(url) {
 	url = `apps/notes${url}`
