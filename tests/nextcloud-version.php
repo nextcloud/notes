@@ -64,6 +64,21 @@ function getDependencyVersionFromAppInfo($path, $type = 'nextcloud', $minmax = '
 	return $v;
 }
 
+function isServerBranch($branch) : bool {
+	require_once dirname(__FILE__).'/../vendor/autoload.php';
+	$http = new \GuzzleHttp\Client(['http_errors' => false]);
+	$response = $http->request('GET', 'https://api.github.com/repos/nextcloud/server/branches/'.$branch);
+	$status = $response->getStatusCode();
+	switch ($status) {
+	case 200:
+		return true;
+	case 404:
+		return false;
+	default:
+		throw new \Exception('HTTP Error while checking branch '.$branch.' for Nextcloud server: '.$status);
+	}
+}
+
 function versionCompare($sv1, $sv2, $type) {
 	$v1 = explode('.', $sv1);
 	$v2 = explode('.', $sv2);
@@ -84,6 +99,15 @@ $pathAppInfo = __DIR__.'/../appinfo/info.xml';
 
 if (in_array('--appinfo', $argv)) {
 	echo getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');
+	exit;
+}
+if (in_array('--serverbranch', $argv)) {
+	$ncVersion = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');
+	$branch = 'stable' . $ncVersion;
+	if (!isServerBranch($branch)) {
+		$branch = 'master';
+	}
+	echo $branch;
 	exit;
 }
 if (in_array('--php-min', $argv)) {
