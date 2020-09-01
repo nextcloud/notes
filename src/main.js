@@ -2,9 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import AppGlobal from './mixins/AppGlobal'
 
-Vue.mixin(AppGlobal)
+Vue.mixin({ methods: { t, n } })
 
 export default new Vue({
 	el: '#content',
