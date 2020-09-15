@@ -20,6 +20,7 @@ class Application extends App implements IBootstrap {
 
 	public function register(IRegistrationContext $context): void {
 		$context->registerCapability(Capabilities::class);
+		$context->registerSearchProvider(SearchProvider::class);
 		$context->registerDashboardWidget(DashboardWidget::class);
 		$context->registerEventListener(
 			BeforeTemplateRenderedEvent::class,
