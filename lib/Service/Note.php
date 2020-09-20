@@ -54,6 +54,22 @@ class Note {
 		return $content;
 	}
 
+	public function getExcerpt(int $maxlen = 100) : string {
+		$excerpt = trim($this->noteUtil->stripMarkdown($this->getContent()));
+		$title = $this->getTitle();
+		if (!empty($title)) {
+			$length = strlen($title);
+			if (strncasecmp($excerpt, $title, $length) === 0) {
+				$excerpt = substr($excerpt, $length);
+			}
+		}
+		$excerpt = trim($excerpt);
+		if (strlen($excerpt) > $maxlen) {
+			$excerpt = substr($excerpt, 0, $maxlen) . '…';
+		}
+		return str_replace("\n", "\u{2003}", $excerpt);
+	}
+
 	public function getModified() : int {
 		return $this->file->getMTime();
 	}

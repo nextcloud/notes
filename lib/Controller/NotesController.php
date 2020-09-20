@@ -117,6 +117,38 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
+	public function dashboard() : JSONResponse {
+		return $this->helper->handleErrorResponse(function () {
+			$maxItems = 7;
+			$userId = $this->helper->getUID();
+			$notes = $this->notesService->getTopNotes($userId, $maxItems + 1);
+			$hasMoreNotes = count($notes) > $maxItems;
+			$notes = array_slice($notes, 0, $maxItems);
+			$items = array_map(function ($note) {
+				$excerpt = '';
+				try {
+					$excerpt = $note->getExcerpt();
+				} catch (\Throwable $e) {
+				}
+				return [
+					'id' => $note->getId(),
+					'title' => $note->getTitle(),
+					'category' => $note->getCategory(),
+					'favorite' => $note->getFavorite(),
+					'excerpt' => $excerpt,
+				];
+			}, $notes);
+			return [
+				'items' => $items,
+				'hasMoreItems' => $hasMoreNotes,
+			];
+		});
+	}
+
+
+	/**
+	 * @NoAdminRequired
+	 */
 	public function get(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);

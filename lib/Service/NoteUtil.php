@@ -127,6 +127,15 @@ class NoteUtil {
 		return trim($str);
 	}
 
+	public function stripMarkdown(string $str) : string {
+		// prepare content: remove markdown characters and empty spaces
+		$str = preg_replace("/^\s*[*+-]\s+/mu", "", $str); // list item
+		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $str); // headline
+		$str = preg_replace("/^(=+|-+)$/mu", "", $str); // separate line for headline
+		$str = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $str); // emphasis
+		return $str;
+	}
+
 	/**
 	 * Finds a folder and creates it if non-existent
 	 * @param string $path path to the folder
