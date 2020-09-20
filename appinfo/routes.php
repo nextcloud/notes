@@ -14,6 +14,12 @@ return ['routes' => [
 		'postfix' => 'welcome',
 	],
 	[
+		'name' => 'page#create',
+		'url' => '/new',
+		'verb' => 'GET',
+		'postfix' => 'new',
+	],
+	[
 		'name' => 'page#index',
 		'url' => '/note/{id}',
 		'verb' => 'GET',
@@ -26,6 +32,11 @@ return ['routes' => [
 	[
 		'name' => 'notes#index',
 		'url' => '/notes',
+		'verb' => 'GET',
+	],
+	[
+		'name' => 'notes#dashboard',
+		'url' => '/notes/dashboard',
 		'verb' => 'GET',
 	],
 	[

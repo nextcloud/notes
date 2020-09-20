@@ -45,6 +45,19 @@ export const setSettings = settings => {
 		})
 }
 
+export const getDashboardData = () => {
+	return axios
+		.get(url('/notes/dashboard'))
+		.then(response => {
+			return response.data
+		})
+		.catch(err => {
+			console.error(err)
+			handleSyncError(t('notes', 'Fetching notes for dashboard has failed.'), err)
+			throw err
+		})
+}
+
 export const fetchNotes = () => {
 	const lastETag = store.state.sync.etag
 	const lastModified = store.state.sync.lastModified

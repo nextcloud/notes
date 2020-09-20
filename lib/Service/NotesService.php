@@ -37,6 +37,20 @@ class NotesService {
 		return [ 'notes' => $notes, 'categories' => $data['categories'] ];
 	}
 
+	public function getTopNotes(string $userId, int $count) : array {
+		$notes = $this->getAll($userId)['notes'];
+		usort($notes, function (Note $a, Note $b) {
+			$favA = $a->getFavorite();
+			$favB = $b->getFavorite();
+			if ($favA === $favB) {
+				return $b->getModified() - $a->getModified();
+			} else {
+				return $favA > $favB ? -1 : 1;
+			}
+		});
+		return array_slice($notes, 0, $count);
+	}
+
 	public function get(string $userId, int $id) : Note {
 		$notesFolder = $this->getNotesFolder($userId);
 		$note = new Note($this->getFileById($notesFolder, $id), $notesFolder, $this->noteUtil);
@@ -89,11 +103,7 @@ class NotesService {
 	}
 
 	public function getTitleFromContent(string $content) : string {
-		// prepare content: remove markdown characters and empty spaces
-		$content = preg_replace("/^\s*[*+-]\s+/mu", "", $content); // list item
-		$content = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $content); // headline
-		$content = preg_replace("/^(=+|-+)$/mu", "", $content); // separate line for headline
-		$content = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $content); // emphasis
+		$content = $this->noteUtil->stripMarkdown($content);
 		return $this->noteUtil->getSafeTitle($content);
 	}
 
