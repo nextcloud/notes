@@ -210,22 +210,18 @@ export const undoDeleteNote = (note) => {
 		})
 }
 
-export const deleteNote = noteId => {
+export const deleteNote = async(noteId, onNoteDeleted) => {
 	store.commit('setNoteAttribute', { noteId, attribute: 'deleting', value: 'deleting' })
-	return axios
-		.delete(url('/notes/' + noteId))
-		.then(() => {
-			store.commit('removeNote', noteId)
-		})
-		.catch(err => {
-			console.error(err)
-			handleSyncError(t('notes', 'Deleting note {id} has failed.', { id: noteId }), err)
-			// remove note always since we don't know when the error happened
-			store.commit('removeNote', noteId)
-			throw err
-		})
-		.then(() => {
-		})
+	try {
+		await axios.delete(url('/notes/' + noteId))
+	} catch (err) {
+		console.error(err)
+		handleSyncError(t('notes', 'Deleting note {id} has failed.', { id: noteId }), err)
+	}
+	// remove note always since we don't know when exactly the error happened
+	// (note could be deleted on server even if an error was thrown)
+	onNoteDeleted()
+	store.commit('removeNote', noteId)
 }
 
 export const setFavorite = (noteId, favorite) => {
