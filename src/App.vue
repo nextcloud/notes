@@ -273,8 +273,14 @@ export default {
 		},
 
 		onUndoDelete() {
+			const number = this.deletedNotes.length
 			this.deletedNotes.forEach(note => undoDeleteNote(note))
 			this.onRemoveUndoNotification()
+			if (number === 1) {
+				showSuccess(this.t('notes', 'Note recovered'))
+			} else {
+				showSuccess(this.t('notes', 'Recovered {number} notes', { number }))
+			}
 		},
 
 		onUndoNotificationClosed() {
