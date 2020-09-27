@@ -132,32 +132,23 @@ export default {
 			}
 		},
 
-		onDeleteNote() {
+		async onDeleteNote() {
 			this.loading.delete = true
-			fetchNote(this.note.id)
-				.then((note) => {
-					if (note.errorMessage) {
-						throw new Error('Note has errors')
-					}
-					deleteNote(this.note.id)
-						.then(() => {
-							// nothing to do, confirmation is done after event
-						})
-						.catch(() => {
-							// nothing to do, error is already shown by NotesService
-						})
-						.then(() => {
-							// always show undo, since error can relate to response only
-							this.$emit('note-deleted', note)
-							this.loading.delete = false
-							this.actionsOpen = false
-						})
-				})
-				.catch(() => {
-					showError(this.t('notes', 'Error during preparing note for deletion.'))
+			try {
+				const note = await fetchNote(this.note.id)
+				if (note.errorMessage) {
+					throw new Error('Note has errors')
+				}
+				await deleteNote(this.note.id, () => {
+					this.$emit('note-deleted', note)
 					this.loading.delete = false
 					this.actionsOpen = false
 				})
+			} catch (e) {
+				showError(this.t('notes', 'Error during preparing note for deletion.'))
+				this.loading.delete = false
+				this.actionsOpen = false
+			}
 		},
 	},
 }

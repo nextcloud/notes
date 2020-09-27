@@ -101,11 +101,8 @@ const mutations = {
 	},
 
 	removeNote(state, id) {
-		const index = state.notes.findIndex(note => note.id === id)
-		if (index !== -1) {
-			state.notes.splice(index, 1)
-			delete state.notesIds[id]
-		}
+		state.notes = state.notes.filter(note => note.id !== id)
+		Vue.delete(state.notesIds, id)
 	},
 
 	removeAllNotes(state) {
