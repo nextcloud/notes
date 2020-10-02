@@ -1,11 +1,12 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Noter",
     "Error" : "Fejl",
     "New note" : "Ny note",
-    "Notes" : "Noter",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Der er noter der ikke er gemt. Hvis du forlader denne side vil de blive smidt væk!",
     "Settings" : "Indstillinger",
+    "No notes yet" : "Ingen noter endnu",
     "All notes" : "Alle noter",
     "Categories" : "Kategorier",
     "Loading …" : "Indlæser…",

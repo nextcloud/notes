@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Error" : "شسیب",
     "Notes" : "شسیب",
+    "Error" : "شسیب",
     "Settings" : "سمونې",
     "Today" : "نن",
     "Yesterday" : "پرون",

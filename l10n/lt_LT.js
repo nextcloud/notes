@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Užrašai",
     "Error" : "Klaida",
     "New note" : "Nauji užrašai",
-    "Notes" : "Užrašai",
     "Distraction-free notes and writing" : "Neblaškantys užrašai ir rašymas",
     "Deleted {title}" : "{title} ištrinti",
     "Undo Delete" : "Atšaukti ištrynimą",
@@ -12,6 +12,7 @@ OC.L10N.register(
     "Folder to store your notes" : "Aplankas, kuriame saugoti jūsų užrašus",
     "path to notes" : "kelias į užrašus",
     "File extension for new notes" : "Naujų užrašų failo prievardis",
+    "No notes yet" : "Nėra užrašų",
     "All notes" : "Visi užrašai",
     "Categories" : "Kategorijos",
     "Loading …" : "Įkeliama…",

@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Error" : "දෝෂයක්",
     "Notes" : "සටහන්",
+    "Error" : "දෝෂයක්",
     "Settings" : "සැකසුම්",
     "Today" : "අද",
     "Yesterday" : "ඊයේ",

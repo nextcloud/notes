@@ -1,10 +1,11 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Նոթեր",
     "Error" : "Սխալ",
     "New note" : "Նոր նոթ",
-    "Notes" : "Նոթեր",
     "Settings" : "կարգավորումներ",
+    "No notes yet" : "առայժմ գրառում չկա",
     "Today" : "այսօր",
     "Yesterday" : "երեկ",
     "This week" : "այս շաբաթ",

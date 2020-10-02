@@ -1,10 +1,11 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Тэмдэглэл",
     "Error" : "Алдаа",
     "New note" : "Шинэ тэмдэглэл",
-    "Notes" : "Тэмдэглэл",
     "Settings" : "Тохиргоо",
+    "No notes yet" : "шинэ тэмдэглэл алга",
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",
     "Today" : "өнөөдөр",

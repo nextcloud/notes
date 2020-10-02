@@ -1,8 +1,8 @@
 OC.L10N.register(
     "notes",
     {
-    "Error" : "Greška",
     "Notes" : "Notes",
+    "Error" : "Greška",
     "Settings" : "Podešavanje",
     "Today" : "Danas",
     "Yesterday" : "Jučer",

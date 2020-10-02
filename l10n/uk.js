@@ -1,10 +1,11 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Нотатки",
     "Error" : "Помилка",
     "New note" : "Нова нотатка",
-    "Notes" : "Нотатки",
     "Settings" : "Налаштування",
+    "No notes yet" : "Нотатки поки відсутні",
     "All notes" : "Усі нотатки",
     "Categories" : "Категорії",
     "Loading …" : "Завантаження...",

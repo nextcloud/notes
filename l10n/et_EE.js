@@ -1,10 +1,11 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Märkmed",
     "Error" : "Viga",
     "New note" : "Uus märge",
-    "Notes" : "Märkmed",
     "Settings" : "Seaded",
+    "No notes yet" : "Märkmeid veel pole",
     "Categories" : "Kategooriad",
     "Today" : "Täna",
     "Yesterday" : "Eile",

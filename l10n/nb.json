@@ -1,9 +1,10 @@
 { "translations": {
+    "Notes" : "Notater",
     "Error" : "Feil",
     "New note" : "Nytt notat",
-    "Notes" : "Notater",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Det finnes ulagrede notater. Å forlate siden vil forkaste alle endringer!",
     "Settings" : "Innstillinger",
+    "No notes yet" : "Ingen notater enda",
     "All notes" : "Alle notater",
     "Categories" : "Kategorier",
     "Loading …" : "Laster...",

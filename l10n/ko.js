@@ -1,11 +1,12 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "메모",
     "Error" : "오류",
     "New note" : "새 메모",
-    "Notes" : "메모",
     "There are unsaved notes. Leaving the page will discard all changes!" : "저장하지 않은 메모가 있습니다. 이 페이지를 벗어나면 변경 사항이 손실됩니다!",
     "Settings" : "설정",
+    "No notes yet" : "아직 메모 없음",
     "Categories" : "분류",
     "Loading …" : "불러오는 중 …",
     "Today" : "오늘",

@@ -1,15 +1,16 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Minnispunktar",
     "Error" : "Villa",
     "New note" : "Nýr minnispunktur",
-    "Notes" : "Minnispunktar",
     "Distraction-free notes and writing" : "Augljós ritun og skoðun minnispunkta",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Það eru óvistaðir minnispunktar. Ef farið er af síðunni munu allar breytingar tapast!",
     "Settings" : "Stillingar",
     "Folder to store your notes" : "Mappa til að geyma minnispunktana þína",
     "path to notes" : "slóð að minnispunktum",
     "File extension for new notes" : "Skráarending fyrir nýja minnispunkta",
+    "No notes yet" : "Engir minnispunktar ennþá",
     "All notes" : "Allir minnispunktar",
     "Categories" : "Flokkar",
     "Loading …" : "Hleð inn …",

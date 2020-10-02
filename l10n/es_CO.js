@@ -1,11 +1,12 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Notas",
     "Error" : "Error",
     "New note" : "Nota nueva",
-    "Notes" : "Notas",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin salvar. ¡Al salir de la página perderá todos los cambios!",
     "Settings" : "Configuraciones ",
+    "No notes yet" : "Aún no hay notas",
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
     "Today" : "Hoy",

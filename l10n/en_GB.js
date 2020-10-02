@@ -1,12 +1,13 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Notes",
     "Error" : "Error",
     "New note" : "New note",
-    "Notes" : "Notes",
     "Distraction-free notes and writing" : "Distraction-free notes and writing",
     "There are unsaved notes. Leaving the page will discard all changes!" : "There are unsaved notes. Leaving the page will discard all changes!",
     "Settings" : "Settings",
+    "No notes yet" : "No notes yet",
     "All notes" : "All notes",
     "Categories" : "Categories",
     "Today" : "Today",

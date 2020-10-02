@@ -1,9 +1,10 @@
 { "translations": {
+    "Notes" : "ჩანაწერები",
     "Error" : "შეცდომა",
     "New note" : "ახალი ჩანაწერი",
-    "Notes" : "ჩანაწერები",
     "There are unsaved notes. Leaving the page will discard all changes!" : "არსებობს შეუნახავი ჩანაწერები. გვერდის დატოვება ყველა ცვლილებას უარყოფს!",
     "Settings" : "პარამეტრები",
+    "No notes yet" : "ჯერ ჩანაწერები არაა",
     "Categories" : "კატეგორიები",
     "Today" : "დღეს",
     "Yesterday" : "გუშინ",

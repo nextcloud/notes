@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Ghi chép",
     "Error" : "Lỗi",
     "New note" : "Ghi chú mới",
-    "Notes" : "Ghi chép",
     "Settings" : "Thiết lập",
     "Categories" : "Các hạng mục",
     "Loading …" : "Đang tải...",

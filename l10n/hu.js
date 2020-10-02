@@ -1,15 +1,16 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Jegyzetek",
     "Error" : "Hiba",
     "New note" : "Új jegyzet",
-    "Notes" : "Jegyzetek",
     "Distraction-free notes and writing" : "Figyelemelterelés nélküli jegyzetelés és írás",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Mentetlen jegyzetek vannak. Az oldal elhagyásával a változások elvesznek.",
     "Settings" : "Beállítások",
     "Folder to store your notes" : "A jegyzetek tárolási mappája",
     "path to notes" : "megjegyzések útvonala",
     "File extension for new notes" : "Fájlkiterjesztés új jegyzetekhez",
+    "No notes yet" : "Még nincsenek jegyzetek",
     "All notes" : "Összes jegyzet",
     "Categories" : "Kategóriák",
     "Loading …" : "Töltés ...",

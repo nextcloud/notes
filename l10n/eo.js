@@ -1,9 +1,9 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Notoj",
     "Error" : "Eraro",
     "New note" : "Nova noto",
-    "Notes" : "Notoj",
     "Distraction-free notes and writing" : "Sendistraj notoj kaj skribado",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Estas nekonservitaj notoj. Foriro el la paĝo perdos ĉiujn ŝanĝojn!",
     "Settings" : "Agordoj",
