@@ -13,6 +13,19 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.0.0 - 2020-10-03
+
+### Added
+
+- dashboard widget (#614)
+- unified search (#600)
+
+### Changed
+
+- migrate to Nextcloud 20 / require at least Nextcloud 20 (#599)
+- maintenance (#609, #617)
+
+
 ## 3.6.4 - 2020-08-26
 
 ### Fixed
