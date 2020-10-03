@@ -25,7 +25,7 @@
 						{{ t('notes', 'No notes yet') }}
 					</p>
 					<p>
-						<a :href="createNoteUrl" class="button">{{ t('note', 'New note') }}</a>
+						<a :href="createNoteUrl" class="button">{{ t('notes', 'New note') }}</a>
 					</p>
 				</template>
 			</EmptyContent>
