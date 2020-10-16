@@ -10,6 +10,7 @@ OC.L10N.register(
     "Please see Nextcloud server log for details." : "Verifique os logs do servidor Nextcloud para detalhes.",
     "Deleted {title}" : "{title} excluído",
     "Undo Delete" : "Desfazer Exclusão",
+    "Note recovered" : "Nota recuperada",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Existem anotações não salvas. Saindo da página elas serão perdidas!",
     "Settings" : "Configurações",
     "Folder to store your notes" : "Pasta para armazenar anotações",
