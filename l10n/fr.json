@@ -65,6 +65,7 @@
     "Insufficient storage." : "Espace libre insuffisant.",
     "See JavaScript console and server log for details." : "Voir la console Javascript et le journal du serveur pour plus de détails.",
     "Updating settings has failed." : "La mise à jour des paramètres a échoué.",
+    "Fetching notes for dashboard has failed." : "La récupération des notes pour le tableau de bord a échoué.",
     "Error from Nextcloud server: {msg}" : "Erreur du serveur Nextcloud : {msg}",
     "Fetching notes has failed." : "La recherche de notes a échoué.",
     "Fetching note {id} has failed." : "La recherche de la note {id} a échoué.",
