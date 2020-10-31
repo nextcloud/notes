@@ -43,7 +43,7 @@ import {
 	AppNavigationNew,
 	Content,
 } from '@nextcloud/vue'
-import { showSuccess } from '@nextcloud/dialogs'
+import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
 import { config } from './config'
@@ -229,7 +229,7 @@ export default {
 				const action = '<button class="undo">' + this.t('notes', 'Undo Delete') + '</button>'
 				this.undoNotification = showSuccess(
 					'<span class="deletedLabel">' + label + '</span> ' + action,
-					{ isHTML: true, timeout: -1, onRemove: this.onUndoNotificationClosed }
+					{ isHTML: true, timeout: TOAST_PERMANENT_TIMEOUT, onRemove: this.onUndoNotificationClosed }
 				)
 				this.undoNotification.toastElement.getElementsByClassName('undo')
 					.forEach(element => { element.onclick = this.onUndoDelete })
@@ -237,7 +237,7 @@ export default {
 				this.undoNotification.toastElement.getElementsByClassName('deletedLabel')
 					.forEach(element => { element.textContent = label })
 			}
-			this.undoTimer = setTimeout(this.onRemoveUndoNotification, 12000)
+			this.undoTimer = setTimeout(this.onRemoveUndoNotification, TOAST_UNDO_TIMEOUT)
 			this.routeFirst()
 		},
 
