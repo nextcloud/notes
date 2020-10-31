@@ -45,7 +45,7 @@ OC.L10N.register(
     "Subcategory" : "子类别",
     "_%n word_::_%n words_" : ["%n 个字"],
     "Write down your thoughts without any distractions." : "心无旁骛地写下您的想法。",
-    "Use Markdown markups to style your text." : "使用Markdown标注来格式化您的文本。",
+    "Use Markdown markups to style your text." : "使用 Markdown 标注来格式化您的文本。",
     "Organize your notes in categories." : "在分类中组织您的笔记。",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "在您的手机中安装此应用以随时随地访问您的笔记。",
     "Android app" : "安卓应用",
