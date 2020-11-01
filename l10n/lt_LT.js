@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "Klaida",
     "New note" : "Nauji užrašai",
     "Distraction-free notes and writing" : "Neblaškantys užrašai ir rašymas",
+    "Please see Nextcloud server log for details." : "Išsamesnei informacijai žiūrėkite Nextcloud serverio žurnalą.",
     "Deleted {title}" : "{title} ištrinti",
     "Undo Delete" : "Atšaukti ištrynimą",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Yra neįrašytų užrašų. Išėjus iš šio puslapio, visi pakeitimai bus atmesti!",
