@@ -26,7 +26,7 @@ OC.L10N.register(
     "Last month" : "Förra månaden",
     "Rename" : "Byt namn",
     "Note's title" : "Anteckningens titel",
-    "Delete note" : "Radera anteckning",
+    "Delete note" : "Ta bort anteckning",
     "Remove from favorites" : "Ta bort från favoriter",
     "Add to favorites" : "Lägg till som favorit",
     "Error during preparing note for deletion." : "Fel vid förberedelse av anteckning för radering.",
