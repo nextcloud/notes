@@ -49,8 +49,12 @@ class Note {
 			throw new \Exception('Can\'t read file content for '.$this->file->getPath());
 		}
 		if (!mb_check_encoding($content, 'UTF-8')) {
+			$this->util->logger->warning(
+				'File encoding for '.$this->file->getPath().' is not UTF-8. This may cause problems.'
+			);
 			$content = mb_convert_encoding($content, 'UTF-8');
 		}
+		$content = str_replace([ pack('H*', 'FEFF'), pack('H*', 'FFEF'), pack('H*', 'EFBBBF') ], '', $content);
 		return $content;
 	}
 
