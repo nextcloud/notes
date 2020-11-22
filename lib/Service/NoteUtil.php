@@ -94,6 +94,9 @@ class NoteUtil {
 		$splitContent = preg_split("/\R/u", $content, 2);
 		$title = trim($splitContent[0]);
 
+		// replace (Unicode) white-space with normal space
+		$title = preg_replace('/\s/u', ' ', $title);
+
 		// using a maximum of 100 chars should be enough
 		$title = mb_substr($title, 0, 100, "UTF-8");
 
@@ -123,7 +126,7 @@ class NoteUtil {
 		}
 
 		// prevent file to be hidden
-		$str = preg_replace("/^[\. ]+/mu", "", $str);
+		$str = preg_replace('/^[\.\s]+/mu', '', $str);
 		return trim($str);
 	}
 
