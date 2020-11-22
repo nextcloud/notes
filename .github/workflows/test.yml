@@ -21,7 +21,7 @@ jobs:
     - name: Determine PHP version
       env:
         VERSION_MINMAX: ${{ matrix.version }}
-      run: echo "::set-env name=PHP_VERSION::$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)"
+      run: echo "PHP_VERSION=$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)" >> $GITHUB_ENV
     - name: Set up PHP ${{ env.PHP_VERSION }}
       uses: shivammathur/setup-php@v2
       with:
@@ -37,7 +37,7 @@ jobs:
         mysql -u root -proot -e "GRANT ALL ON nextcloud.* TO 'nextcloud'@'localhost';"
     - name: Select Nextcloud server branch
       if: matrix.version == 'min'
-      run: echo "::set-env name=SERVER_BRANCH::$(php tests/nextcloud-version.php --serverbranch)"
+      run: echo "SERVER_BRANCH=$(php tests/nextcloud-version.php --serverbranch)" >> $GITHUB_ENV
     - name: Prepare Nextcloud server using ${{ env.SERVER_BRANCH }}
       working-directory: ../
       run: |
