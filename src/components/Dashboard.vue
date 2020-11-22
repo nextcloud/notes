@@ -4,13 +4,13 @@
 		:show-more-text="t('notes', 'notes')"
 		:show-more-url="showMoreUrl"
 	>
-		<template v-slot:default="{ item }">
+		<template #default="{ item }">
 			<DashboardWidgetItem
 				:target-url="getItemTargetUrl(item)"
 				:main-text="item.title"
 				:sub-text="subtext(item)"
 			>
-				<template v-slot:avatar>
+				<template #avatar>
 					<div
 						class="note-item"
 						:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
@@ -18,7 +18,7 @@
 				</template>
 			</DashboardWidgetItem>
 		</template>
-		<template v-slot:empty-content>
+		<template #empty-content>
 			<EmptyContent icon="icon-notes">
 				<template #desc>
 					<p class="notes-empty-content-label">

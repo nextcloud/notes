@@ -121,7 +121,7 @@ export default {
 	padding-bottom: 30vh;
 }
 
-.CodeMirror {
+.EasyMDEContainer .CodeMirror {
 	min-height: 100%;
 	line-height: 1.5em;
 	border: none;
