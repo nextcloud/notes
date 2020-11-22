@@ -53,7 +53,7 @@ jobs:
     - name: Determine PHP version
       env:
         VERSION_MINMAX: ${{ matrix.version }}
-      run: echo "::set-env name=PHP_VERSION::$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)"
+      run: echo "PHP_VERSION=$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)" >> $GITHUB_ENV
     - name: Set up PHP ${{ env.PHP_VERSION }}
       uses: shivammathur/setup-php@v2
       with:
