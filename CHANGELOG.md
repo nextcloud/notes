@@ -13,6 +13,13 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.0.1 - 2020-11-23
+
+- fix multi-byte handling in excerpt for dashboard (#630)
+- improve handling of files with special chars (#632)
+- maintenance (#625, #631, #633)
+
+
 ## 4.0.0 - 2020-10-03
 
 ### Added
