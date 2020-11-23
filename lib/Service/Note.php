@@ -62,13 +62,13 @@ class Note {
 		$excerpt = trim($this->noteUtil->stripMarkdown($this->getContent()));
 		$title = $this->getTitle();
 		if (!empty($title)) {
-			$length = strlen($title);
+			$length = mb_strlen($title, "utf-8");
 			if (strncasecmp($excerpt, $title, $length) === 0) {
 				$excerpt = mb_substr($excerpt, $length, null, "utf-8");
 			}
 		}
 		$excerpt = trim($excerpt);
-		if (strlen($excerpt) > $maxlen) {
+		if (mb_strlen($excerpt, "utf-8") > $maxlen) {
 			$excerpt = mb_substr($excerpt, 0, $maxlen, "utf-8") . '…';
 		}
 		return str_replace("\n", "\u{2003}", $excerpt);
