@@ -28,7 +28,7 @@
 		"vue-fragment": "^1.5.1",
 		"vue-observe-visibility": "^0.4.6",
 		"vue-router": "^3.4.9",
-		"vuex": "^3.5.1"
+		"vuex": "^3.6.0"
 	},
 	"browserslist": [
 		"extends @nextcloud/browserslist-config"
