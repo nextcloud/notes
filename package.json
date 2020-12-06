@@ -18,7 +18,7 @@
 		"@nextcloud/event-bus": "^1.2.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.2.0",
-		"@nextcloud/vue": "^3.2.0",
+		"@nextcloud/vue": "^3.3.1",
 		"@nextcloud/vue-dashboard": "^1.0.1",
 		"@nextcloud/webpack-vue-config": "^2.0.0",
 		"easymde": "^2.13.0",
@@ -28,7 +28,7 @@
 		"vue-fragment": "^1.5.1",
 		"vue-observe-visibility": "^0.4.6",
 		"vue-router": "^3.4.9",
-		"vuex": "^3.5.1"
+		"vuex": "^3.6.0"
 	},
 	"browserslist": [
 		"extends @nextcloud/browserslist-config"
@@ -37,24 +37,24 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.12.7",
+		"@babel/core": "^7.12.9",
 		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
 		"@babel/preset-env": "^7.12.7",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"@nextcloud/eslint-config": "^3.0.0",
 		"@nextcloud/eslint-plugin": "^2.0.0",
 		"babel-eslint": "^10.1.0",
-		"babel-loader": "^8.2.1",
-		"core-js": "^3.7.0",
+		"babel-loader": "^8.2.2",
+		"core-js": "^3.8.1",
 		"css-loader": "^4.3.0",
-		"eslint": "^7.14.0",
+		"eslint": "^7.15.0",
 		"eslint-config-standard": "^16.0.2",
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.1.0",
-		"eslint-plugin-vue": "^7.1.0",
-		"eslint-webpack-plugin": "^2.4.0",
+		"eslint-plugin-vue": "^7.2.0",
+		"eslint-webpack-plugin": "^2.4.1",
 		"file-loader": "^6.2.0",
 		"node-sass": "^5.0.0",
 		"sass-loader": "^10.1.0",
