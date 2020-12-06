@@ -25,6 +25,7 @@ appstore: clean lint build-js-production
 	--exclude=Makefile \
 	--exclude=node_modules \
 	--exclude=package*.json \
+	--exclude=.php_cs.* \
 	--exclude=phpunit*xml \
 	--exclude=.scrutinizer.yml \
 	--exclude=src \
@@ -33,7 +34,7 @@ appstore: clean lint build-js-production
 	--exclude=.travis.yml \
 	--exclude=.tx \
 	--exclude=vendor \
-	--exclude=webpack.*.js \
+	--exclude=webpack*.js \
 	$(project_dir) $(sign_dir)
 	@echo "Signing…"
 	php ../server/occ integrity:sign-app \
