@@ -11,6 +11,7 @@ OC.L10N.register(
     "Folder to store your notes" : "Папка за зачувување на вашите белешки",
     "path to notes" : "патека до белешките",
     "File extension for new notes" : "Наставка на дадотека за нови белешки",
+    "No notes yet" : "Сеуште нема забелешки",
     "All notes" : "Сите белешки",
     "Categories" : "Категории",
     "Loading …" : "Се вчитува…",
