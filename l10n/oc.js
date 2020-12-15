@@ -13,6 +13,8 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Details" : "Detalhs",
     "Edit" : "Modificar",
+    "Exit full screen" : "Sortir de l’ecran complèt",
+    "Full screen" : "Ecran complèt",
     "_%n word_::_%n words_" : ["%n mot","%n mots"],
     "Android app" : "Aplicacion Android",
     "iOS app" : "Aplicacion iOS"
