@@ -7,23 +7,26 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is. Please note, that issues with the Android app have to be reported under https://github.com/stefan-niedermann/nextcloud-notes/issues
+Please make a clear and concise description of what the bug is. Please note, that issues with the Android app have to be reported under https://github.com/stefan-niedermann/nextcloud-notes/issues and issues with Nextcloud's Text app have to be reported under https://github.com/nextcloud/text/issues .
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Steps to reproduce
+1.
+2.
+3.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### Expected behaviour
+Tell us what should happen
 
-**Screenshots**
+### Actual behaviour
+Tell us what happens instead
+
+### Screenshots
 If applicable, add screenshots to help explain your problem.
 
-**Server (please complete the following information):**
+
+## Server
+Please complete the following information.
+
 - Notes app version: 
 - Nextcloud version: 
 - OS: 
@@ -31,9 +34,23 @@ If applicable, add screenshots to help explain your problem.
 - PHP version: 
 - Database: 
 
-**Client (please complete the following information):**
- - Browser (incl. version): 
+**Nextcloud configuration:**
+
+<details>
+```
+If you have access to your command line run e.g.:
+sudo -u www-data php occ config:list system
+from within your Nextcloud installation folder
+```
+</details>
+
+
+## Client
+Please complete the following information.
+
+- Browser (incl. version): 
  - OS: 
 
-**Log files**
+
+## Log files
 Add relevant parts of your `nextcloud.log` and/or your browser's JavaScript console here.
