@@ -1,16 +1,21 @@
 <template>
-	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
+	<AppContent :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
 		<div v-if="!loading && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
 			<div class="note-editor">
-				<div v-show="!note.content" class="placeholder">
-					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
-				</div>
-				<ThePreview v-if="preview" :value="note.content" />
-				<TheEditor v-else :value="note.content" @input="onEdit" />
+				<component :is="viewer.component"
+					ref="texteditor"
+					:fileid="fileId"
+					:basename="title"
+					:active="true"
+					:has-preview="true"
+					mime="text/markdown"
+					class="text-editor"
+					@ready="onEditorReady"
+				/>
 			</div>
 			<span class="action-buttons">
 				<Actions :open.sync="actionsOpen" menu-align="right">
@@ -21,13 +26,6 @@
 						{{ t('notes', 'Details') }}
 					</ActionButton>
 					<ActionButton
-						v-tooltip.left="t('notes', 'CTRL + /')"
-						:icon="preview ? 'icon-rename' : 'icon-toggle'"
-						@click="onTogglePreview"
-					>
-						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
-					</ActionButton>
-					<ActionButton
 						icon="icon-fullscreen"
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
@@ -35,11 +33,6 @@
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</ActionButton>
 				</Actions>
-				<button v-show="note.saveError"
-					v-tooltip.right="t('notes', 'Save failed. Click to retry.')"
-					class="action-error icon-error-color"
-					@click="onManualSave"
-				/>
 			</span>
 		</div>
 	</AppContent>
@@ -53,13 +46,10 @@ import {
 	Tooltip,
 	isMobile,
 } from '@nextcloud/vue'
-import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
 import { config } from '../config'
-import { fetchNote, refreshNote, saveNote, saveNoteManually, autotitleNote, routeIsNewNote } from '../NotesService'
-import TheEditor from './EditorEasyMDE'
-import ThePreview from './EditorMarkdownIt'
+import { autotitleNote, routeIsNewNote } from '../NotesService'
 import store from '../store'
 
 export default {
@@ -69,8 +59,6 @@ export default {
 		Actions,
 		ActionButton,
 		AppContent,
-		TheEditor,
-		ThePreview,
 	},
 
 	directives: {
@@ -90,11 +78,8 @@ export default {
 		return {
 			loading: false,
 			fullscreen: false,
-			preview: false,
 			actionsOpen: false,
-			autosaveTimer: null,
 			autotitleTimer: null,
-			refreshTimer: null,
 			etag: null,
 		}
 	},
@@ -109,25 +94,30 @@ export default {
 		isNewNote() {
 			return routeIsNewNote(this.$route)
 		},
-		isManualSave() {
-			return store.state.app.isManualSave
-		},
 		sidebarOpen() {
 			return store.state.app.sidebarOpen
+		},
+		fileId() {
+			return parseInt(this.noteId)
+		},
+		viewer() {
+			return OCA.Viewer.availableHandlers.filter(h => h.id === 'text')[0]
 		},
 	},
 
 	watch: {
 		$route(to, from) {
 			if (to.name !== from.name || to.params.noteId !== from.params.noteId) {
-				this.fetchData()
+				// this.loading = true
+				this.initNote()
+				this.$refs.texteditor.$children[0].reconnect()
 			}
 		},
 		title: 'onUpdateTitle',
 	},
 
 	created() {
-		this.fetchData()
+		this.initNote()
 		document.addEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('mozfullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
@@ -135,7 +125,6 @@ export default {
 	},
 
 	destroyed() {
-		this.stopRefreshTimer()
 		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('fullscreenchange', this.onDetectFullscreen)
@@ -145,31 +134,14 @@ export default {
 	},
 
 	methods: {
-		fetchData() {
+		initNote() {
 			store.commit('setSidebarOpen', false)
-			this.etag = null
-			this.stopRefreshTimer()
 
 			if (this.isMobile) {
 				emit('toggle-navigation', { open: false })
 			}
 
 			this.onUpdateTitle(this.title)
-			this.loading = true
-			this.preview = false
-			fetchNote(parseInt(this.noteId))
-				.then((note) => {
-					if (note.errorMessage) {
-						showError(note.errorMessage)
-					}
-					this.startRefreshTimer()
-				})
-				.catch(() => {
-					// note not found
-				})
-				.then(() => {
-					this.loading = false
-				})
 		},
 
 		onUpdateTitle(title) {
@@ -179,11 +151,6 @@ export default {
 			} else {
 				document.title = defaultTitle
 			}
-		},
-
-		onTogglePreview() {
-			this.preview = !this.preview
-			this.actionsOpen = false
 		},
 
 		onDetectFullscreen() {
@@ -226,38 +193,13 @@ export default {
 			this.actionsOpen = false
 		},
 
-		stopRefreshTimer() {
-			if (this.refreshTimer !== null) {
-				clearTimeout(this.refreshTimer)
-				this.refreshTimer = null
-			}
-		},
-
-		startRefreshTimer() {
-			this.stopRefreshTimer()
-			this.refreshTimer = setTimeout(() => {
-				this.refreshTimer = null
-				this.refreshNote()
-			}, config.interval.note.refresh * 1000)
-		},
-
-		refreshNote() {
-			if (this.note.unsaved) {
-				this.startRefreshTimer()
-				return
-			}
-			refreshNote(parseInt(this.noteId), this.etag).then(etag => {
-				if (etag) {
-					this.etag = etag
-					this.$forceUpdate()
-				}
-				this.startRefreshTimer()
-			})
+		onEditorReady() {
+			console.debug('onEditorReady')
+			this.loading = false
 		},
 
 		onEdit(newContent) {
 			if (this.note.content !== newContent) {
-				this.stopRefreshTimer()
 				const note = {
 					...this.note,
 					content: newContent,
@@ -265,18 +207,6 @@ export default {
 				}
 				store.commit('updateNote', note)
 				this.$forceUpdate()
-
-				// queue auto saving note content
-				if (this.autosaveTimer === null) {
-					this.autosaveTimer = setTimeout(() => {
-						this.autosaveTimer = null
-						saveNote(note.id)
-					}, config.interval.note.autosave * 1000)
-				}
-
-				// (re-) start auto refresh timer
-				// TODO should be after save is finished
-				this.startRefreshTimer()
 
 				// stop old autotitle timer
 				if (this.autotitleTimer !== null) {
@@ -296,26 +226,6 @@ export default {
 		},
 
 		onKeyPress(event) {
-			if (event.ctrlKey || event.metaKey) {
-				switch (event.key.toLowerCase()) {
-				case 's':
-					event.preventDefault()
-					this.onManualSave()
-					break
-				case '/':
-					event.preventDefault()
-					this.onTogglePreview()
-					break
-				}
-			}
-		},
-
-		onManualSave() {
-			const note = {
-				...this.note,
-			}
-			store.commit('updateNote', note)
-			saveNoteManually(this.note.id)
 		},
 	},
 }
@@ -332,6 +242,11 @@ export default {
 	font-size: 16px;
 	padding: 1em;
 	padding-bottom: 0;
+}
+
+.text-editor {
+	position: absolute !important;
+	top: 0 !important;
 }
 
 /* center editor on large screens */
