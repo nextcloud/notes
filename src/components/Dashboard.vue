@@ -1,8 +1,6 @@
 <template>
 	<DashboardWidget :items="items"
 		:loading="loading"
-		:show-more-text="t('notes', 'notes')"
-		:show-more-url="showMoreUrl"
 	>
 		<template #default="{ item }">
 			<DashboardWidgetItem
