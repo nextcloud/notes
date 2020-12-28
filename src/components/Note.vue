@@ -13,7 +13,7 @@
 				<TheEditor v-else :value="note.content" @input="onEdit" />
 			</div>
 			<span class="action-buttons">
-				<Actions :open.sync="actionsOpen" menu-align="right">
+				<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
 					<ActionButton v-show="!sidebarOpen && !fullscreen"
 						icon="icon-details"
 						@click="onToggleSidebar"
