@@ -223,7 +223,7 @@ export default {
 			if (this.deletedNotes.length === 1) {
 				label = this.t('notes', 'Deleted {title}', { title: note.title })
 			} else {
-				label = this.n('notes', 'Deleted {number} note', 'Deleted {number} notes', { number: this.deletedNotes.length })
+				label = this.n('notes', 'Deleted {number} note', 'Deleted {number} notes', this.deletedNotes.length, { number: this.deletedNotes.length })
 			}
 			if (this.undoNotification === null) {
 				const action = '<button class="undo">' + this.t('notes', 'Undo Delete') + '</button>'
@@ -255,7 +255,7 @@ export default {
 			if (number === 1) {
 				showSuccess(this.t('notes', 'Note recovered'))
 			} else {
-				showSuccess(this.n('notes', 'Recovered {number} note', 'Recovered {number} notes', { number }))
+				showSuccess(this.n('notes', 'Recovered {number} note', 'Recovered {number} notes', number, { number }))
 			}
 		},
 
