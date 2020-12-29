@@ -13,6 +13,15 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.0.2 - 2020-12-29
+
+- fix actions popover (#653)
+- fix deletion of multiple notes (#657)
+- remove "more" entry from dashboard (#656)
+- exclude dev files from build (#644)
+- maintenance (#645, #649, #654, #658)
+
+
 ## 4.0.1 - 2020-11-23
 
 - fix multi-byte handling in excerpt for dashboard (#630)
