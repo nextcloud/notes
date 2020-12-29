@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Složka pro ukládání vašich poznámek",
     "path to notes" : "popis umístění poznámek",
     "File extension for new notes" : "Přípona souboru pro nové poznámky",
-    "notes" : "poznámky",
     "No notes yet" : "Zatím žádné poznámky",
     "All notes" : "Všechny poznámky",
     "Categories" : "Kategorie",

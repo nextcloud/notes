@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Cartella in cui memorizzare le tue note",
     "path to notes" : "percorso delle note",
     "File extension for new notes" : "Estensione dei file per le nuove note",
-    "notes" : "note",
     "No notes yet" : "Ancora nessuna nota",
     "All notes" : "Tutte le note",
     "Categories" : "Categorie",

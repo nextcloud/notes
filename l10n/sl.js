@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Mapa za shranjevanje zabeležk",
     "path to notes" : "pot do mape",
     "File extension for new notes" : "Privzeta pripona datotek za nove zabeležke",
-    "notes" : "zabeležke",
     "No notes yet" : "Ni še dodane nobene zabeležke.",
     "All notes" : "Vse zabeležke",
     "Categories" : "Kategorije",

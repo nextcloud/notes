@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Map om je notities op te slaan",
     "path to notes" : "pad naar notities",
     "File extension for new notes" : "Bestandsextensies voor nieuwe notities",
-    "notes" : "notities",
     "No notes yet" : "Nog geen notities",
     "All notes" : "Alle notities",
     "Categories" : "Categorieën",

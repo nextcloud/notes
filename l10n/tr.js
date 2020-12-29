@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Notlarınızın kaydedileceği klasör",
     "path to notes" : "notların yolu",
     "File extension for new notes" : "Yeni notlar için dosya uzantısı",
-    "notes" : "notlar",
     "No notes yet" : "Henüz bir not yok",
     "All notes" : "Tüm notlar",
     "Categories" : "Kategoriler",

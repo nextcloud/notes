@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Carpeta on es desen les notes",
     "path to notes" : "camí de les notes",
     "File extension for new notes" : "Extensió de fitxer per a les notes noves",
-    "notes" : "notes",
     "No notes yet" : "Encara no hi ha notes",
     "All notes" : "Totes les notes",
     "Categories" : "Categories",

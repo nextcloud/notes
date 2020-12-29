@@ -16,7 +16,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Kansio johon muistiinpanot tallennetaan",
     "path to notes" : "polku muistiinpanoihin",
     "File extension for new notes" : "Tiedostopääte uusille muistiinpanoille",
-    "notes" : "muistiinpanot",
     "No notes yet" : "Ei muistiinpanoja",
     "All notes" : "Kaikki muistiinpanot",
     "Categories" : "Luokat",

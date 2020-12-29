@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Папка для хранения заметок",
     "path to notes" : "путь к заметкам",
     "File extension for new notes" : "Расширения файлов новых заметок",
-    "notes" : "заметок",
     "No notes yet" : "Нет ни одной заметки",
     "All notes" : "Все заметки",
     "Categories" : "Категории",

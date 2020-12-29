@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Cartafol para almacenar as súas notas",
     "path to notes" : "ruta ás notas",
     "File extension for new notes" : "Extensión do ficheiro para notas novas",
-    "notes" : "notas",
     "No notes yet" : "Aínda non hai notas",
     "All notes" : "Todas as notas",
     "Categories" : "Categorías",

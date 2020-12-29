@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Фасцикла за складиштење белешки",
     "path to notes" : "путања до белешки",
     "File extension for new notes" : "Екстензија фајлова код нових белешки",
-    "notes" : "белешке",
     "No notes yet" : "Још нема белешки",
     "All notes" : "Све белешке",
     "Categories" : "Категорије",

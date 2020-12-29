@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Mapa za spremanje bilješki",
     "path to notes" : "put do bilješki",
     "File extension for new notes" : "Ekstenzija datoteke za nove bilješke",
-    "notes" : "bilješke",
     "No notes yet" : "Još nema bilješki",
     "All notes" : "Sve bilješke",
     "Categories" : "Kategorije",

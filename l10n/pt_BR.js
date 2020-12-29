@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Pasta para armazenar anotações",
     "path to notes" : "caminho para notas",
     "File extension for new notes" : "Extensão de arquivo para novas anotações",
-    "notes" : "notas",
     "No notes yet" : "Nenhuma anotação ainda",
     "All notes" : "Todas as notas",
     "Categories" : "Categorias",

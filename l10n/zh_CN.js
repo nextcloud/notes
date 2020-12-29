@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "保存您的笔记的文件夹",
     "path to notes" : "笔记的路径",
     "File extension for new notes" : "新笔记的文件扩展名",
-    "notes" : "笔记",
     "No notes yet" : "还没有便签",
     "All notes" : "所有笔记",
     "Categories" : "分类",

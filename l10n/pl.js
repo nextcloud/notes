@@ -18,7 +18,6 @@ OC.L10N.register(
     "Folder to store your notes" : "Katalog przechowywania notatek",
     "path to notes" : "ścieżka do notatek",
     "File extension for new notes" : "Rozszerzenie pliku dla nowych notatek",
-    "notes" : "notatki",
     "No notes yet" : "Brak notatek",
     "All notes" : "Wszystkie notatki",
     "Categories" : "Kategorie",
