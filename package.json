@@ -26,7 +26,7 @@
 		"stylelint-webpack-plugin": "^2.1.1",
 		"vue": "^2.6.12",
 		"vue-fragment": "^1.5.1",
-		"vue-observe-visibility": "^0.4.6",
+		"vue-observe-visibility": "^1.0.0",
 		"vue-router": "^3.4.9",
 		"vuex": "^3.6.0"
 	},
