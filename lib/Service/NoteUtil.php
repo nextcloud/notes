@@ -9,6 +9,7 @@ use OCP\Files\IRootFolder;
 use OCP\IDBConnection;
 
 class NoteUtil {
+	private const MAX_TITLE_LENGTH = 100;
 	/** @var Util */
 	public $util;
 	private $db;
@@ -71,17 +72,18 @@ class NoteUtil {
 			return $filename;
 		} else {
 			// increments name (2) to name (3)
-			$match = preg_match('/\((?P<id>\d+)\)$/u', $title, $matches);
+			$match = preg_match('/\s\((?P<id>\d+)\)$/u', $title, $matches);
 			if ($match) {
 				$newId = ((int) $matches['id']) + 1;
-				$newTitle = preg_replace(
-					'/(.*)\s\((\d+)\)$/u',
-					'$1 (' . $newId . ')',
-					$title
-				);
+				$baseTitle = preg_replace('/\s\(\d+\)$/u', '', $title);
+				$idSuffix = ' (' . $newId . ')';
 			} else {
-				$newTitle = $title . ' (2)';
+				$baseTitle = $title;
+				$idSuffix = ' (2)';
 			}
+			// make sure there's enough room for the ID suffix before appending or it will be
+			// trimmed by getSafeTitle() and could cause infinite recursion
+			$newTitle = mb_substr($baseTitle, 0, self::MAX_TITLE_LENGTH - mb_strlen($idSuffix), "UTF-8") . $idSuffix;
 			return $this->generateFileName($folder, $newTitle, $suffix, $id);
 		}
 	}
@@ -98,7 +100,7 @@ class NoteUtil {
 		$title = preg_replace('/\s/u', ' ', $title);
 
 		// using a maximum of 100 chars should be enough
-		$title = mb_substr($title, 0, 100, "UTF-8");
+		$title = mb_substr($title, 0, self::MAX_TITLE_LENGTH, "UTF-8");
 
 		// ensure that title is not empty
 		if (empty($title)) {
