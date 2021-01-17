@@ -66,7 +66,7 @@ OC.L10N.register(
     "Insufficient storage." : "Non ten espazo de almacenamento abondo.",
     "See JavaScript console and server log for details." : "Vexa a consola de JavaScript e o rexistro do servidor para os detalles.",
     "Updating settings has failed." : "Produciuse un fallo ao actualizar a configuración.",
-    "Fetching notes for dashboard has failed." : "Fallou a obtención de notas para o panel.",
+    "Fetching notes for dashboard has failed." : "Fallou a obtención de notas para o taboleiro.",
     "Error from Nextcloud server: {msg}" : "Produciuse un erro no servidor do Nextcloud: {msg}",
     "Fetching notes has failed." : "Produciuse un fallo ao obter as notas.",
     "Fetching note {id} has failed." : "Produciuse un fallo ao obter a nota {id}.",
