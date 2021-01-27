@@ -6,6 +6,7 @@ OC.L10N.register(
     "Error" : "錯誤",
     "New note" : "新筆記",
     "Distraction-free notes and writing" : "可以讓你專心記錄不受干擾的筆記應用",
+    "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "筆記應用程式是用於 [Nextcloud](https://www.nextcloud.com/) 的無干擾筆記應用程式。其提供了更好的組織分類，並使用 [Markdown](https://zh.wikipedia.org/wiki/Markdown) 語法來支援格式化。筆記是以檔案的形式儲存在您的 Nextcloud 中，這樣您就可以使用各種 Nextcloud 客戶端檢視並編輯它們。此外，也有獨立的 [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) 可輕鬆地整合至第三方的應用程式（目前有供  [Android](https://github.com/stefan-niedermann/nextcloud-notes)、[iOS](https://github.com/owncloud/notes-iOS-App) 與[終端機](https://git.danielmoch.com/nncli/about)使用的應用程式，可讓您方便存取您的 Nextcloud 筆記）。還有將筆記加入收藏的功能。",
     "Please see Nextcloud server log for details." : "請檢視 Nextcloud 伺服器記錄以取得進一步資訊。",
     "Deleted {title}" : "已刪除 {title}",
     "Undo Delete" : "復原刪除",
@@ -79,6 +80,7 @@ OC.L10N.register(
     "Toggling favorite for note {id} has failed." : "增/減筆記{id} 到最愛失敗",
     "Updating the note's category has failed. Is the target directory writable?" : "更新筆記的分類失敗。檢查目的地目錄屬性是否為可寫入？",
     "Updating the category for note {id} has failed." : "更新筆記 {id} 的分類失敗",
-    "Development Mode" : "研發模式"
+    "Development Mode" : "研發模式",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "看來筆記應用程式是從開發中的原始碼安裝的。請從官方的 <a href=\"%1$s\">Nextcloud App Store</a> 安裝。如果您想要自行建構筆記應用程式，請遵循<a href=\"%2$s\">開發者說明</a>進行操作。"
 },
 "nplurals=1; plural=0;");
