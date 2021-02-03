@@ -37,9 +37,9 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.12.10",
+		"@babel/core": "^7.12.13",
 		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
-		"@babel/preset-env": "^7.12.11",
+		"@babel/preset-env": "^7.12.13",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"@nextcloud/eslint-config": "^3.0.0",
 		"@nextcloud/eslint-plugin": "^2.0.0",
@@ -65,7 +65,7 @@
 		"url-loader": "^4.1.1",
 		"vue-loader": "^15.9.6",
 		"vue-template-compiler": "^2.6.12",
-		"webpack": "^4.44.2",
+		"webpack": "^4.46.0",
 		"webpack-cli": "^3.3.12",
 		"webpack-merge": "^5.7.3"
 	}
