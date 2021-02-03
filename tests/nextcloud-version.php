@@ -14,7 +14,7 @@ function getNCVersionFromComposer($path) {
 	}
 	$dev = getValidProperty($json, 'require-dev');
 	$v = getValidProperty($dev, 'christophwurst/nextcloud');
-	if (substr($v, 0, 1)=='^') {
+	if (substr($v, 0, 1) == '^') {
 		$v = substr($v, 1);
 	}
 	return $v;
@@ -36,7 +36,7 @@ function getNCVersionFromComposerBranchAlias($path) {
 	$extra = getValidProperty($json, 'extra');
 	$branchAlias = getValidProperty($extra, 'branch-alias');
 	$v = getValidProperty($branchAlias, 'dev-master');
-	if (substr($v, -4)=='-dev') {
+	if (substr($v, -4) == '-dev') {
 		$v = substr($v, 0, -4);
 	}
 	return $v;
@@ -83,7 +83,7 @@ function versionCompare($sv1, $sv2, $type) {
 	$v1 = explode('.', $sv1);
 	$v2 = explode('.', $sv2);
 	$count = min(count($v1), count($v2));
-	for ($i=0; $i<$count; $i++) {
+	for ($i = 0; $i < $count; $i++) {
 		if ($type == 'max' && $v1[$i] < $v2[$i]) {
 			return true;
 		}

@@ -111,7 +111,7 @@ abstract class AbstractAPITest extends TestCase {
 				$note,
 				$messagePrefix.': Note has property '.$key.' (reference note: '.$refNote->title.')'
 			);
-			if ($key==='title') {
+			if ($key === 'title') {
 				// allow suffix for title (e.g. "Note title (2)")
 				$this->assertStringStartsWith(
 					$refNote->$key,
@@ -125,7 +125,7 @@ abstract class AbstractAPITest extends TestCase {
 						$messagePrefix.': Property '.$key.' suffix (reference note: '.$refNote->title.')'
 					);
 				}
-			} elseif ($key==='modified') {
+			} elseif ($key === 'modified') {
 				// allow delta if the test runs slowly
 				$this->assertEqualsWithDelta(
 					$refNote->$key,

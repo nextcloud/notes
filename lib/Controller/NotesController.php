@@ -54,7 +54,7 @@ class NotesController extends Controller {
 		$metas = $this->metaService->updateAll($userId, $data['notes']);
 		$notes = array_map(function ($note) use ($metas, $pruneBefore) {
 			$lastUpdate = $metas[$note->getId()]->getLastUpdate();
-			if ($pruneBefore && $lastUpdate<$pruneBefore) {
+			if ($pruneBefore && $lastUpdate < $pruneBefore) {
 				return [ 'id' => $note->getId() ];
 			} else {
 				return $note->getData([ 'content' ]);

@@ -136,7 +136,7 @@ class Note {
 	 * @throws \OCP\Files\NotPermittedException
 	 */
 	public function setTitleCategory(string $title, ?string $category = null) : void {
-		if ($category===null) {
+		if ($category === null) {
 			$category = $this->getCategory();
 		}
 		$oldParent = $this->file->getParent();
