@@ -166,7 +166,7 @@ class NoteUtil {
 	public function deleteEmptyFolder(Folder $folder, Folder $notesFolder) : void {
 		$content = $folder->getDirectoryListing();
 		$isEmpty = !count($content);
-		$isNotesFolder = $folder->getPath()===$notesFolder->getPath();
+		$isNotesFolder = $folder->getPath() === $notesFolder->getPath();
 		if ($isEmpty && !$isNotesFolder) {
 			$this->util->logger->debug('Deleting empty category folder '.$folder->getPath());
 			$parent = $folder->getParent();

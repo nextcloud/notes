@@ -53,7 +53,7 @@ class NotesApiController extends ApiController {
 			}
 			$notesData = array_map(function ($note) use ($metas, $pruneBefore, $exclude) {
 				$lastUpdate = $metas[$note->getId()]->getLastUpdate();
-				if ($pruneBefore && $lastUpdate<$pruneBefore) {
+				if ($pruneBefore && $lastUpdate < $pruneBefore) {
 					return [ 'id' => $note->getId() ];
 				} else {
 					return $note->getData($exclude);

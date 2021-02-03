@@ -232,10 +232,10 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$note = $notes[0]; // @phan-suppress-current-line PhanTypeArraySuspiciousNullable
 		$request = (object)[ 'content' => 'New test content' ];
 		// update will fail
-		$response1 = $this->http->request('PUT', 'notes/'.$note->id, [ 'auth' => $auth, 'json' =>  $request]);
+		$response1 = $this->http->request('PUT', 'notes/'.$note->id, [ 'auth' => $auth, 'json' => $request]);
 		$this->assertEquals(507, $response1->getStatusCode());
 		// craete will fail
-		$response2 = $this->http->request('POST', 'notes', [ 'auth' => $auth, 'json' =>  $request]);
+		$response2 = $this->http->request('POST', 'notes', [ 'auth' => $auth, 'json' => $request]);
 		$this->assertEquals(507, $response2->getStatusCode());
 	}
 
