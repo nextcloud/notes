@@ -9,6 +9,7 @@ OC.L10N.register(
     "Rename" : "නැවත නම් කරන්න",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
+    "Details" : "විස්තර",
     "Edit" : "සකසන්න"
 },
 "nplurals=2; plural=(n != 1);");
