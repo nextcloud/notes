@@ -13,6 +13,7 @@ OC.L10N.register(
     "Loading …" : "Laai …",
     "Today" : "Vandag",
     "Yesterday" : "Gister",
+    "This week" : "Vandeesweek",
     "Rename" : "Hernoem",
     "Delete note" : "Skrap nota",
     "Remove from favorites" : "Verwyder uit gunstelinge",
