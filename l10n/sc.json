@@ -1,0 +1,9 @@
+{ "translations": {
+    "Error" : "Errore",
+    "Settings" : "Impostatziones",
+    "Rename" : "Torra a numenare",
+    "Details" : "Detàllios",
+    "Edit" : "Modìfica ",
+    "Preview" : "Anteprima"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
