@@ -1,6 +1,7 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Notas",
     "Error" : "Errore",
     "Settings" : "Impostatziones",
     "Rename" : "Torra a numenare",
