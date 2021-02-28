@@ -26,6 +26,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
+        extensions: pdo_mysql, zip, gd
         tools: phpunit:8.5.8
     - name: Install Dependencies
       run: composer install --prefer-dist
@@ -33,7 +34,7 @@ jobs:
       run: |
         sudo systemctl start mysql
         mysql -u root -proot -e "CREATE DATABASE nextcloud;"
-        mysql -u root -proot -e "CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY '';"
+        mysql -u root -proot -e "CREATE USER 'nextcloud'@'localhost' IDENTIFIED WITH mysql_native_password BY '';"
         mysql -u root -proot -e "GRANT ALL ON nextcloud.* TO 'nextcloud'@'localhost';"
     - name: Select Nextcloud server branch
       if: matrix.version == 'min'
