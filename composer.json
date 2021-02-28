@@ -3,7 +3,7 @@
 		"christophwurst/nextcloud": "^20.0",
 		"nextcloud/coding-standard": "^0.5.0",
 		"squizlabs/php_codesniffer": "3.*",
-		"phan/phan": "^3.0",
+		"phan/phan": "^4.0",
 		"guzzlehttp/guzzle": "^7.0",
 		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
 	},
