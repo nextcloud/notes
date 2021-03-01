@@ -47,6 +47,8 @@ jobs:
       matrix:
         version: [min, max]
       fail-fast: false
+    env:
+        NC_API_TAG: 'dev-master'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -58,11 +60,13 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
+    - name: Determine minimum Nextcloud API version
+      if: matrix.version == 'min'
+      run: echo "NC_API_TAG=$(php tests/nextcloud-version.php --appinfo)" >> $GITHUB_ENV
     - name: Install Dependencies
-      run: composer install --prefer-dist
-    - name: Install latest Nextcloud API (dev-master)
-      if: matrix.version == 'max'
-      run: composer require --dev christophwurst/nextcloud:dev-master
+      run: |
+        composer require --dev christophwurst/nextcloud:$NC_API_TAG
+        composer install --prefer-dist
     - name: Load problem matcher for php -l
       uses: korelstar/phplint-problem-matcher@master
     - name: lint PHP
