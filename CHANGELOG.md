@@ -19,6 +19,7 @@ Types of changes:
 - fix long duplicate title generation (#665, thanks to @skazi0)
 - maintenance (#663, #673, #678, #686, #688)
 
+
 ## 4.0.2 - 2020-12-29
 
 - fix actions popover (#653)

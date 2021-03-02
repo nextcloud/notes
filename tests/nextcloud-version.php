@@ -17,6 +17,9 @@ function getNCVersionFromComposer($path) {
 	if (substr($v, 0, 1) == '^') {
 		$v = substr($v, 1);
 	}
+	if (substr($v, 0, 2) == '>=') {
+		$v = substr($v, 2);
+	}
 	return $v;
 }
 
