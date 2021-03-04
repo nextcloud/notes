@@ -6,7 +6,7 @@ OC.L10N.register(
     "New note" : "ملاحظة جديدة ",
     "Settings" : "الإعدادات",
     "No notes yet" : "لا ملاحظات حاليا",
-    "All notes" : "جميع الملاحظات\n",
+    "All notes" : "جميع الملاحظات",
     "Categories" : "الفئات",
     "Today" : "اليوم",
     "Yesterday" : "البارحة",
