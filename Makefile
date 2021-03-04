@@ -30,6 +30,8 @@ npm-update:
 
 ##### Building #####
 
+build: clean build-js-production assemble
+
 appstore: lint build
 	@echo "Signing…"
 	php ../server/occ integrity:sign-app \
@@ -40,8 +42,7 @@ appstore: lint build
 		-C $(build_dir) $(app_name)
 	openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(build_dir)/$(app_name).tar.gz | openssl base64
 
-
-build: clean build-js-production
+assemble:
 	mkdir -p $(build_dir)
 	rsync -a \
 	--exclude=.babelrc.js \
