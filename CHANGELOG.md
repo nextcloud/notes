@@ -13,6 +13,12 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.0.4 - 2021-03-06
+
+- fix note creation on encrypted s3 storage (#690)
+- maintenance (#691)
+
+
 ## 4.0.3 - 2021-03-02
 
 - add PHP8 support (#685)
