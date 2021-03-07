@@ -49,21 +49,8 @@ class NotesApiController extends ApiController {
 		return $this->helper->handleErrorResponse(function () use ($category, $exclude, $pruneBefore) {
 			$exclude = explode(',', $exclude);
 			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-			$notes = $this->service->getAll($this->helper->getUID())['notes'];
-			$metas = $this->metaService->updateAll($this->helper->getUID(), $notes);
-			if ($category !== null) {
-				$notes = array_values(array_filter($notes, function ($note) use ($category) {
-					return $note->getCategory() === $category;
-				}));
-			}
-			$notesData = array_map(function ($note) use ($metas, $pruneBefore, $exclude) {
-				$lastUpdate = $metas[$note->getId()]->getLastUpdate();
-				if ($pruneBefore && $lastUpdate < $pruneBefore) {
-					return [ 'id' => $note->getId() ];
-				} else {
-					return $note->getData($exclude);
-				}
-			}, $notes);
+			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category);
+			$notesData = $data['notes'];
 			$etag = md5(json_encode($notesData));
 			return (new JSONResponse($notesData))
 				->setLastModified($now)
@@ -81,7 +68,7 @@ class NotesApiController extends ApiController {
 		return $this->helper->handleErrorResponse(function () use ($id, $exclude) {
 			$exclude = explode(',', $exclude);
 			$note = $this->service->get($this->helper->getUID(), $id);
-			return $note->getData($exclude);
+			return $this->helper->getNoteData($note, $exclude);
 		});
 	}
 
@@ -113,7 +100,7 @@ class NotesApiController extends ApiController {
 				$this->service->delete($this->helper->getUID(), $note->getId());
 				throw $e;
 			}
-			return $note->getData();
+			return $this->helper->getNoteData($note);
 		});
 	}
 
@@ -171,8 +158,7 @@ class NotesApiController extends ApiController {
 			if ($favorite !== null) {
 				$note->setFavorite($favorite);
 			}
-			$this->metaService->update($this->helper->getUID(), $note);
-			return $note->getData();
+			return $this->helper->getNoteData($note);
 		});
 	}
 

@@ -92,17 +92,18 @@ class MetaService {
 		return $metas;
 	}
 
-	public function update(string $userId, Note $note) : void {
+	public function update(string $userId, Note $note) : Meta {
 		$meta = null;
 		try {
 			$meta = $this->metaMapper->findById($userId, $note->getId());
 		} catch (\OCP\AppFramework\Db\DoesNotExistException $e) {
 		}
 		if ($meta === null) {
-			$this->createMeta($userId, $note);
+			$meta = $this->createMeta($userId, $note);
 		} elseif ($this->updateIfNeeded($meta, $note, true)) {
 			$this->metaMapper->update($meta);
 		}
+		return $meta;
 	}
 
 	private function getIndexedArray(array $data, string $property) : array {
