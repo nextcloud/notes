@@ -12,6 +12,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		'category' => 'string',
 		'modified' => 'integer',
 		'favorite' => 'boolean',
+		'etag' => 'string',
 	];
 
 	private $requiredSettings = [
@@ -184,7 +185,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->checkGetReferenceNotes(array_merge($refNotes, $testNotes), 'Pre-condition');
 		$note = $testNotes[0];
 		// test update note with all attributes
-		$this->updateNote($note, (object)[
+		$rn1 = $this->updateNote($note, (object)[
 			'title' => 'First *manual* edited title',
 			'content' => '# *First* edited/ note'.PHP_EOL.'This is some body content with some data.',
 			'favorite' => false,
@@ -194,19 +195,22 @@ abstract class CommonAPITest extends AbstractAPITest {
 			'title' => $this->autotitle ? 'First edited note' : 'First manual edited title',
 		]);
 		// test update note with single attributes
-		$this->updateNote($note, (object)[
+		$rn2 = $this->updateNote($note, (object)[
 			'category' => 'Test/Third Category',
 		], (object)[]);
 		// TODO test update category with read-only folder (target category)
-		$this->updateNote($note, (object)[
+		$rn3 = $this->updateNote($note, (object)[
 			'favorite' => true,
 		], (object)[]);
-		$this->updateNote($note, (object)[
+		$rn4 = $this->updateNote($note, (object)[
 			'content' => '# First multi edited note'.PHP_EOL.'This is some body content with some data.',
 		], (object)[
 			'title' => $this->autotitle ? 'First multi edited note' : 'First manual edited title',
 			'modified' => time(),
 		]);
+		$this->assertNotEquals($rn1->etag, $rn2->etag, 'ETag changed on update (1)');
+		$this->assertNotEquals($rn2->etag, $rn3->etag, 'ETag changed on update (2)');
+		$this->assertNotEquals($rn3->etag, $rn4->etag, 'ETag changed on update (3)');
 		$this->checkGetReferenceNotes(array_merge($refNotes, $testNotes), 'After updating notes');
 		return $testNotes;
 	}

@@ -49,24 +49,6 @@ class NotesController extends Controller {
 		$this->l10n = $l10n;
 	}
 
-	private function getNotesAndCategories(string $userId, int $pruneBefore) : array {
-		$data = $this->notesService->getAll($userId);
-		$metas = $this->metaService->updateAll($userId, $data['notes']);
-		$notes = array_map(function ($note) use ($metas, $pruneBefore) {
-			$lastUpdate = $metas[$note->getId()]->getLastUpdate();
-			if ($pruneBefore && $lastUpdate < $pruneBefore) {
-				return [ 'id' => $note->getId() ];
-			} else {
-				return $note->getData([ 'content' ]);
-			}
-		}, $data['notes']);
-		return [
-			'notes' => $notes,
-			'categories' => $data['categories'],
-		];
-	}
-
-
 	/**
 	 * @NoAdminRequired
 	 */
@@ -86,7 +68,7 @@ class NotesController extends Controller {
 			$categories = null;
 
 			try {
-				$nac = $this->getNotesAndCategories($userId, $pruneBefore);
+				$nac = $this->helper->getNotesAndCategories($pruneBefore, [ 'etag', 'content' ]);
 				[ 'notes' => $notes, 'categories' => $categories ] = $nac;
 			} catch (\Throwable $e) {
 				$this->helper->logException($e);
@@ -161,10 +143,9 @@ class NotesController extends Controller {
 				strval($id)
 			);
 
-			$result = $note->getData();
-			$etag = md5(json_encode($result));
-			return (new JSONResponse($result))
-				->setETag($etag)
+			$noteData = $this->helper->getNoteData($note);
+			return (new JSONResponse($noteData))
+				->setETag($noteData['etag'])
 			;
 		});
 	}
@@ -176,7 +157,7 @@ class NotesController extends Controller {
 	public function create(string $category) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category) {
 			$note = $this->notesService->create($this->helper->getUID(), '', $category);
-			return $note->getData();
+			return $this->helper->getNoteData($note);
 		});
 	}
 
@@ -203,7 +184,7 @@ class NotesController extends Controller {
 			try {
 				// check if note still exists
 				$note = $this->notesService->get($this->helper->getUID(), $id);
-				$noteData = $note->getData();
+				$noteData = $this->helper->getNoteData($note);
 				if ($noteData['error']) {
 					throw new \Exception();
 				}
@@ -214,7 +195,7 @@ class NotesController extends Controller {
 				$note->setContent($content);
 				$note->setModified($modified);
 				$note->setFavorite($favorite);
-				return $note->getData();
+				return $this->helper->getNoteData($note);
 			}
 		});
 	}
@@ -243,8 +224,7 @@ class NotesController extends Controller {
 		return $this->helper->handleErrorResponse(function () use ($id, $content) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);
 			$note->setContent($content);
-			$this->metaService->update($this->helper->getUID(), $note);
-			return $note->getData();
+			return $this->helper->getNoteData($note);
 		});
 	}
 
