@@ -39,16 +39,18 @@ abstract class AbstractAPITest extends TestCase {
 		string $contentTypeExp = 'application/json; charset=utf-8'
 	) {
 		$this->assertEquals($statusExp, $response->getStatusCode(), $message.': Response status code');
-		$this->assertTrue(
-			$response->hasHeader('Content-Type'),
-			$message.': Response has content-type header'
-		);
-		$this->assertEquals(
-			$contentTypeExp,
-			$response->getHeaderLine('Content-Type'),
-			$message.': Response content type'
-		);
-		if ($statusExp !== 401) {
+		if ($statusExp !== 304) {
+			$this->assertTrue(
+				$response->hasHeader('Content-Type'),
+				$message.': Response has content-type header'
+			);
+			$this->assertEquals(
+				$contentTypeExp,
+				$response->getHeaderLine('Content-Type'),
+				$message.': Response content type'
+			);
+		}
+		if ($statusExp !== 401 && $statusExp !== 304) {
 			$this->assertTrue(
 				$response->hasHeader('X-Notes-API-Versions'),
 				$message.': Response has Notes-API-Versions header'
