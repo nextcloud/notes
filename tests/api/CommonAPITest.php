@@ -197,7 +197,13 @@ abstract class CommonAPITest extends AbstractAPITest {
 		// test update note with single attributes
 		$rn2 = $this->updateNote($note, (object)[
 			'category' => 'Test/Third Category',
-		], (object)[]);
+		], (object)[], $rn1->etag);
+		// test update note with wrong ETag
+		$this->updateNote($note, (object)[
+			'category' => 'New Fail',
+		], (object)[
+			'category' => 'Test/Third Category',
+		], 'wrongetag', 412);
 		// TODO test update category with read-only folder (target category)
 		$rn3 = $this->updateNote($note, (object)[
 			'favorite' => true,

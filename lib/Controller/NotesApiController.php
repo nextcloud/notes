@@ -143,7 +143,7 @@ class NotesApiController extends ApiController {
 			$category,
 			$favorite
 		) {
-			$note = $this->service->get($this->helper->getUID(), $id);
+			$note = $this->helper->getNoteWithETagCheck($id, $this->request);
 			if ($content !== null) {
 				$note->setContent($content);
 			}

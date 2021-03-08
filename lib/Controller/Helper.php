@@ -13,6 +13,7 @@ use OCA\Notes\Service\Util;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\IRequest;
 use OCP\IUserSession;
 
 use Psr\Log\LoggerInterface;
@@ -42,6 +43,20 @@ class Helper {
 
 	public function getUID() : string {
 		return $this->userSession->getUser()->getUID();
+	}
+
+	public function getNoteWithETagCheck(int $id, IRequest $request) : Note {
+		$userId = $this->getUID();
+		$note = $this->notesService->get($userId, $id);
+		$ifMatch = $request->getHeader('If-Match');
+		if ($ifMatch) {
+			$matchEtags = preg_split('/,\s*/', $ifMatch);
+			$meta = $this->metaService->update($userId, $note);
+			if (!in_array('"'.$meta->getEtag().'"', $matchEtags)) {
+				throw new ETagDoesNotMatchException($note);
+			}
+		}
+		return $note;
 	}
 
 	public function getNoteData(Note $note, array $exclude = [], Meta $meta = null) : array {
@@ -96,6 +111,8 @@ class Helper {
 		try {
 			$data = Util::retryIfLocked($respond);
 			$response = $data instanceof JSONResponse ? $data : new JSONResponse($data);
+		} catch (\OCA\Notes\Controller\ETagDoesNotMatchException $e) {
+			$response = new JSONResponse($this->getNoteData($e->note), Http::STATUS_PRECONDITION_FAILED);
 		} catch (\OCA\Notes\Service\NoteDoesNotExistException $e) {
 			$this->logException($e);
 			$response = $this->createErrorResponse($e, Http::STATUS_NOT_FOUND);
