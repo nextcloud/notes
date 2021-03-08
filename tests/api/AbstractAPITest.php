@@ -188,9 +188,19 @@ abstract class AbstractAPITest extends TestCase {
 		return $note;
 	}
 
-	protected function updateNote(\stdClass &$note, \stdClass $request, \stdClass $expected) {
-		$response = $this->http->request('PUT', 'notes/'.$note->id, [ 'json' => $request ]);
-		$this->checkResponse($response, 'Update note '.$note->title, 200);
+	protected function updateNote(
+		\stdClass &$note,
+		\stdClass $request,
+		\stdClass $expected,
+		string $etag = null,
+		int $statusExp = 200
+	) {
+		$requestOptions = [ 'json' => $request ];
+		if ($etag !== null) {
+			$requestOptions['headers'] = [ 'If-Match' => '"'.$etag.'"' ];
+		}
+		$response = $this->http->request('PUT', 'notes/'.$note->id, $requestOptions);
+		$this->checkResponse($response, 'Update note '.$note->title, $statusExp);
 		$responseNote = json_decode($response->getBody()->getContents());
 		foreach (get_object_vars($request) as $key => $val) {
 			$note->$key = $val;

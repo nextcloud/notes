@@ -222,7 +222,7 @@ class NotesController extends Controller {
 	 */
 	public function update(int $id, string $content) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content) {
-			$note = $this->notesService->get($this->helper->getUID(), $id);
+			$note = $this->helper->getNoteWithETagCheck($id, $this->request);
 			$note->setContent($content);
 			return $this->helper->getNoteData($note);
 		});
