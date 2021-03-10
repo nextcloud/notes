@@ -62,7 +62,7 @@ OC.L10N.register(
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Psaní poznámky zahájíte kliknutím na „{newnote}“ v navigaci aplikace.",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Dílčí kategorie je možné vytvářet použitím „/“ (dopředné lomítko) jako oddělovače mezi nadřazenou kategorií a podkategorií, např.: „{nadřazená}/{podkategorie}“.",
     "Note not found." : "Poznámka nenalezena.",
-    "Note is locked." : "Poznámka je uzamčena",
+    "Note is locked." : "Poznámka je uzamčena.",
     "Insufficient storage." : "Nedostatečná kapacita úložiště",
     "See JavaScript console and server log for details." : "Podrobnosti viz konzole JavaScript a záznamy událostí na serveru.",
     "Updating settings has failed." : "Aktualizace nastavení se nezdařila.",
