@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { copyNote } from '../Util'
 
 const state = {
 	categories: [],
@@ -76,13 +77,11 @@ const mutations = {
 	updateNote(state, updated) {
 		const note = state.notesIds[updated.id]
 		if (note) {
-			note.title = updated.title
-			note.modified = updated.modified
-			note.favorite = updated.favorite
-			note.category = updated.category
+			copyNote(updated, note, ['id', 'etag', 'content'])
 			// don't update meta-data over full data
-			if (updated.content !== undefined || note.content === undefined) {
+			if (updated.content !== undefined && updated.etag !== undefined) {
 				note.content = updated.content
+				note.etag = updated.etag
 				Vue.set(note, 'unsaved', updated.unsaved)
 				Vue.set(note, 'error', updated.error)
 				Vue.set(note, 'errorMessage', updated.errorMessage)

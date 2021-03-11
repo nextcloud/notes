@@ -21,11 +21,13 @@
 		"@nextcloud/vue": "^3.8.0",
 		"@nextcloud/vue-dashboard": "^2.0.0",
 		"@nextcloud/webpack-vue-config": "^4.0.1",
+		"diff": "^5.0.0",
 		"easymde": "^2.14.0",
 		"markdown-it": "^12.0.4",
 		"stylelint-webpack-plugin": "^2.1.1",
 		"vue": "^2.6.12",
 		"vue-fragment": "1.5.1",
+		"vue-material-design-icons": "^4.11.0",
 		"vue-observe-visibility": "^1.0.0",
 		"vue-router": "^3.5.1",
 		"vuex": "^3.6.2"

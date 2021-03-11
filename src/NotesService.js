@@ -3,6 +3,7 @@ import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
 import store from './store'
+import { copyNote } from './Util'
 
 function url(url) {
 	url = `apps/notes${url}`
@@ -103,7 +104,7 @@ export const fetchNote = noteId => {
 			const localNote = store.getters.getNote(parseInt(noteId))
 			// only overwrite if there are no unsaved changes
 			if (!localNote || !localNote.unsaved) {
-				store.commit('updateNote', response.data)
+				_updateLocalNote(response.data)
 			}
 			return response.data
 		})
@@ -125,17 +126,22 @@ export const refreshNote = (noteId, lastETag) => {
 	if (lastETag) {
 		headers['If-None-Match'] = lastETag
 	}
-	const oldContent = store.getters.getNote(noteId).content
+	const note = store.getters.getNote(noteId)
+	const oldContent = note.content
 	return axios
 		.get(
 			url('/notes/' + noteId),
 			{ headers }
 		)
 		.then(response => {
+			if (note.conflict) {
+				store.commit('setNoteAttribute', { noteId, attribute: 'conflict', value: response.data })
+				return response.headers.etag
+			}
 			const currentContent = store.getters.getNote(noteId).content
 			// only update if local content has not changed
 			if (oldContent === currentContent) {
-				store.commit('updateNote', response.data)
+				_updateLocalNote(response.data)
 				return response.headers.etag
 			}
 			return null
@@ -166,7 +172,7 @@ export const createNote = category => {
 	return axios
 		.post(url('/notes'), { category })
 		.then(response => {
-			store.commit('updateNote', response.data)
+			_updateLocalNote(response.data)
 			return response.data
 		})
 		.catch(err => {
@@ -176,25 +182,85 @@ export const createNote = category => {
 		})
 }
 
+function _updateLocalNote(note, reference) {
+	if (reference === undefined) {
+		reference = copyNote(note, {})
+	}
+	store.commit('updateNote', note)
+	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'reference', value: reference })
+}
+
 function _updateNote(note) {
+	const requestOptions = { headers: { 'If-Match': '"' + note.etag + '"' } }
 	return axios
-		.put(url('/notes/' + note.id), { content: note.content })
+		.put(url('/notes/' + note.id), { content: note.content }, requestOptions)
 		.then(response => {
-			const updated = response.data
 			note.saveError = false
-			note.title = updated.title
-			note.modified = updated.modified
+			store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
+			const updated = response.data
 			if (updated.content === note.content) {
-				note.unsaved = false
+				// everything is fine
+				// => update note with remote data
+				_updateLocalNote(
+					{ ...updated, unsaved: false }
+				)
+			} else {
+				// content has changed locally in the meanwhile
+				// => merge note, but exclude content
+				_updateLocalNote(
+					copyNote(updated, note, ['content']),
+					copyNote(updated, {})
+				)
 			}
-			store.commit('updateNote', note)
-			return note
 		})
 		.catch(err => {
-			store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
-			console.error(err)
-			handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }), err)
+			if (err.response && err.response.status === 412) {
+				// ETag does not match, try to merge changes
+				note.saveError = false
+				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
+				const reference = note.reference
+				const remote = err.response.data
+				if (remote.content === note.content) {
+					// content is already up-to-date
+					// => update note with remote data
+					_updateLocalNote(
+						{ ...remote, unsaved: false }
+					)
+				} else if (remote.content === reference.content) {
+					// remote content has not changed
+					// => use all other attributes and sync again
+					_updateLocalNote(
+						copyNote(remote, note, ['content']),
+						copyNote(remote, {})
+					)
+					saveNote(note.id)
+				} else {
+					console.info('Note update conflict. Manual resolution required.')
+					store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: remote })
+				}
+			} else {
+				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
+				console.error(err)
+				handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }), err)
+			}
 		})
+}
+
+export const conflictSolutionLocal = note => {
+	note.etag = note.conflict.etag
+	_updateLocalNote(
+		copyNote(note.conflict, note, ['content']),
+		copyNote(note.conflict, {})
+	)
+	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
+	saveNote(note.id)
+}
+
+export const conflictSolutionRemote = note => {
+	_updateLocalNote(
+		{ ...note.conflict, unsaved: false }
+	)
+	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
 }
 
 export const autotitleNote = noteId => {
@@ -213,7 +279,7 @@ export const undoDeleteNote = (note) => {
 	return axios
 		.post(url('/notes/undo'), note)
 		.then(response => {
-			store.commit('updateNote', response.data)
+			_updateLocalNote(response.data)
 			return response.data
 		})
 		.catch(err => {
