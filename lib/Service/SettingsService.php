@@ -15,8 +15,8 @@ class SettingsService {
 	private $l10n;
 	private $root;
 
-	/* Default values */
-	private $defaults;
+	/* Allowed attributes */
+	private $attrs;
 
 	public function __construct(
 		IConfig $config,
@@ -26,11 +26,35 @@ class SettingsService {
 		$this->config = $config;
 		$this->l10n = $l10n;
 		$this->root = $root;
-		$this->defaults = [
-			'fileSuffix' => '.txt',
-			'notesPath' => function (string $uid) {
-				return $this->getDefaultNotesPath($uid);
-			},
+		$this->attrs = [
+			'fileSuffix' => [
+				'default' => '.txt',
+				'validate' => function ($value) {
+					if (in_array($value, [ '.txt', '.md' ])) {
+						return $value;
+					} else {
+						return '.txt';
+					}
+				},
+			],
+			'notesPath' => [
+				'default' => function (string $uid) {
+					return $this->getDefaultNotesPath($uid);
+				},
+				'validate' => function ($value) {
+					$value = str_replace([ '/', '\\' ], DIRECTORY_SEPARATOR, $value);
+					$parts = explode(DIRECTORY_SEPARATOR, $value);
+					$path = [];
+					foreach ($parts as $part) {
+						if ($part === '..') {
+							array_pop($path);
+						} elseif (strlen($part) && $part !== '.') {
+							array_push($path, $part);
+						}
+					}
+					return implode(DIRECTORY_SEPARATOR, $path);
+				},
+			],
 		];
 	}
 
@@ -50,11 +74,13 @@ class SettingsService {
 	public function set(string $uid, array $settings) : void {
 		// remove illegal, empty and default settings
 		foreach ($settings as $name => $value) {
-			if (!array_key_exists($name, $this->defaults)
+			if (!array_key_exists($name, $this->attrs)
 				|| empty($value)
-				|| $value === $this->defaults[$name]
+				|| $value === $this->attrs[$name]['default']
 			) {
 				unset($settings[$name]);
+			} else {
+				$settings[$name] = $this->attrs[$name]['validate']($value);
 			}
 		}
 		$this->config->setUserValue($uid, Application::APP_ID, 'settings', json_encode($settings));
@@ -67,8 +93,9 @@ class SettingsService {
 		}
 		// use default for empty settings
 		$toBeSaved = false;
-		foreach ($this->defaults as $name => $defaultValue) {
+		foreach ($this->attrs as $name => $attr) {
 			if (!property_exists($settings, $name) || empty($settings->{$name})) {
+				$defaultValue = $attr['default'];
 				if (is_callable($defaultValue)) {
 					$settings->{$name} = $defaultValue($uid);
 					$toBeSaved = true;
