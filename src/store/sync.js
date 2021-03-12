@@ -22,6 +22,11 @@ const mutations = {
 		}
 	},
 
+	clearSyncCache(state) {
+		state.etag = null
+		state.lastModified = 0
+	},
+
 	setSyncActive(state, active) {
 		state.active = active
 	},

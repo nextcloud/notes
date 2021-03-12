@@ -156,6 +156,7 @@ export default {
 				this.$router.push('/')
 			}
 			store.commit('removeAllNotes')
+			store.commit('clearSyncCache')
 			this.loading.notes = true
 			this.loadNotes()
 		},
