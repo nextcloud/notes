@@ -6,6 +6,7 @@ namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
+use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
@@ -18,6 +19,8 @@ class NotesApiController extends ApiController {
 	private $service;
 	/** @var MetaService */
 	private $metaService;
+	/** @var SettingsService */
+	private $settingsService;
 	/** @var Helper */
 	private $helper;
 
@@ -26,11 +29,13 @@ class NotesApiController extends ApiController {
 		IRequest $request,
 		NotesService $service,
 		MetaService $metaService,
+		SettingsService $settingsService,
 		Helper $helper
 	) {
 		parent::__construct($AppName, $request);
 		$this->service = $service;
 		$this->metaService = $metaService;
+		$this->settingsService = $settingsService;
 		$this->helper = $helper;
 	}
 
@@ -207,6 +212,28 @@ class NotesApiController extends ApiController {
 		});
 	}
 
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 */
+	public function setSettings() {
+		return $this->helper->handleErrorResponse(function () {
+			$this->settingsService->set($this->helper->getUID(), $this->request->getParams());
+			return $this->getSettings();
+		});
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+	 */
+	public function getSettings() {
+		return $this->helper->handleErrorResponse(function () {
+			return $this->settingsService->getAll($this->helper->getUID());
+		});
+	}
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired

@@ -14,6 +14,11 @@ abstract class CommonAPITest extends AbstractAPITest {
 		'favorite' => 'boolean',
 	];
 
+	private $requiredSettings = [
+		'notesPath' => 'string',
+		'fileSuffix' => 'string',
+	];
+
 	private $autotitle;
 
 	public function __construct(string $apiVersion, bool $autotitle) {
@@ -243,5 +248,57 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$auth = ['test', 'wrongpassword'];
 		$response = $this->http->request('GET', 'notes', [ 'auth' => $auth ]);
 		$this->checkResponse($response, 'Get existing notes', 401);
+	}
+
+	public function testGetSettings() : \stdClass {
+		if ($this->getAPIMajorVersion() < 1) {
+			$this->markTestSkipped('Settings API requires API v1');
+		}
+		$response = $this->http->request('GET', 'settings');
+		$this->checkResponse($response, 'Get settings', 200);
+		$settings = json_decode($response->getBody()->getContents());
+		foreach ($this->requiredSettings as $key => $type) {
+			$this->assertObjectHasAttribute($key, $settings, 'Settings has property '.$key);
+			$this->assertEquals($type, gettype($settings->$key), 'Property type of '.$key);
+		}
+		return $settings;
+	}
+
+	/**
+	 * @depends testCheckForReferenceNotes
+	 * @depends testGetSettings
+	 */
+	public function testSettings(array $refNotes, \stdClass $settings) : void {
+		if ($this->getAPIMajorVersion() < 1) {
+			$this->markTestSkipped('Settings API requires API v1');
+		}
+		$this->checkGetReferenceNotes($refNotes, 'Pre-condition');
+		$originalPath = $settings->notesPath;
+		$this->updateSettings($settings, (object)[
+			'notesPath' => 'New-Test-Notes-Folder1',
+			'fileSuffix' => '.md',
+		], (object)[], 'Update both settings');
+		$this->checkGetReferenceNotes([], 'Notes are gone after changing notes path');
+		$this->updateSettings($settings, (object)[
+			'notesPath' => '../../Test/./../New-Test-Notes-Folder2',
+		], (object)[
+			'notesPath' => 'New-Test-Notes-Folder2',
+		], 'Update notesPath with path traversal check');
+		$this->updateSettings($settings, (object)[
+			'fileSuffix' => 'illegal value',
+		], (object)[
+			'fileSuffix' => '.txt',
+		], 'Update fileSuffix with illegal value');
+		$this->updateSettings($settings, (object)[
+			'notesPath' => null,
+			'fileSuffix' => null,
+		], (object)[
+			'notesPath' => 'Notes',
+			'fileSuffix' => '.txt',
+		], 'Update settings with default values');
+		$this->updateSettings($settings, (object)[
+			'notesPath' => $originalPath,
+		], (object)[], 'Update notesPath to original value');
+		$this->checkGetReferenceNotes($refNotes, 'Post-condition');
 	}
 }

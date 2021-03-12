@@ -72,25 +72,38 @@ class SettingsService {
 	 * @throws \OCP\PreConditionNotMetException
 	 */
 	public function set(string $uid, array $settings) : void {
+		// load existing values for missing attributes
+		$oldSettings = $this->getSettingsFromDB($uid);
+		foreach ($oldSettings as $name => $value) {
+			if (!array_key_exists($name, $settings)) {
+				$settings[$name] = $value;
+			}
+		}
 		// remove illegal, empty and default settings
 		foreach ($settings as $name => $value) {
+			if ($value !== null && array_key_exists($name, $this->attrs)) {
+				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
+			}
 			if (!array_key_exists($name, $this->attrs)
 				|| empty($value)
 				|| $value === $this->attrs[$name]['default']
 			) {
 				unset($settings[$name]);
-			} else {
-				$settings[$name] = $this->attrs[$name]['validate']($value);
 			}
 		}
 		$this->config->setUserValue($uid, Application::APP_ID, 'settings', json_encode($settings));
 	}
 
-	public function getAll(string $uid) : \stdClass {
+	private function getSettingsFromDB(string $uid) : \stdClass {
 		$settings = json_decode($this->config->getUserValue($uid, Application::APP_ID, 'settings'));
 		if (!is_object($settings)) {
 			$settings = new \stdClass();
 		}
+		return $settings;
+	}
+
+	public function getAll(string $uid) : \stdClass {
+		$settings = $this->getSettingsFromDB($uid);
 		// use default for empty settings
 		$toBeSaved = false;
 		foreach ($this->attrs as $name => $attr) {

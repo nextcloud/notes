@@ -151,6 +151,22 @@ return ['routes' => [
 		],
 	],
 	[
+		'name' => 'notes_api#setSettings',
+		'url' => '/api/{apiVersion}/settings',
+		'verb' => 'PUT',
+		'requirements' => [
+			'apiVersion' => '(v1)',
+		],
+	],
+	[
+		'name' => 'notes_api#getSettings',
+		'url' => '/api/{apiVersion}/settings',
+		'verb' => 'GET',
+		'requirements' => [
+			'apiVersion' => '(v1)',
+		],
+	],
+	[
 		'name' => 'notes_api#fail',
 		'url' => '/api/{catchAll}',
 		'verb' => 'GET',

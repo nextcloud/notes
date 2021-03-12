@@ -200,4 +200,41 @@ abstract class AbstractAPITest extends TestCase {
 		}
 		$this->checkReferenceNote($note, $responseNote, 'Updated note');
 	}
+
+	protected function checkObject(
+		\stdClass $ref,
+		\stdClass $obj,
+		string $messagePrefix
+	) : void {
+		foreach (get_object_vars($ref) as $key => $val) {
+			$this->assertObjectHasAttribute(
+				$key,
+				$obj,
+				$messagePrefix.': Object has property '.$key
+			);
+			$this->assertEquals(
+				$ref->$key,
+				$obj->$key,
+				$messagePrefix.': Property '.$key
+			);
+		}
+	}
+
+	protected function updateSettings(
+		\stdClass &$settings,
+		\stdClass $request,
+		\stdClass $expected,
+		string $messagePrefix
+	) {
+		$response = $this->http->request('PUT', 'settings', [ 'json' => $request ]);
+		$this->checkResponse($response, $messagePrefix, 200);
+		$responseSettings = json_decode($response->getBody()->getContents());
+		foreach (get_object_vars($request) as $key => $val) {
+			$settings->$key = $val;
+		}
+		foreach (get_object_vars($expected) as $key => $val) {
+			$settings->$key = $val;
+		}
+		$this->checkObject($settings, $responseSettings, $messagePrefix);
+	}
 }
