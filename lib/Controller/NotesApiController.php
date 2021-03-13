@@ -68,7 +68,10 @@ class NotesApiController extends ApiController {
 		return $this->helper->handleErrorResponse(function () use ($id, $exclude) {
 			$exclude = explode(',', $exclude);
 			$note = $this->service->get($this->helper->getUID(), $id);
-			return $this->helper->getNoteData($note, $exclude);
+			$noteData = $this->helper->getNoteData($note, $exclude);
+			return (new JSONResponse($noteData))
+				->setETag($noteData['etag'])
+			;
 		});
 	}
 
