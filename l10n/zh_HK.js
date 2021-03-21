@@ -32,7 +32,7 @@ OC.L10N.register(
     "Note's title" : "筆記標題",
     "Delete note" : "刪除筆記",
     "Remove from favorites" : "從最愛中移除",
-    "Add to favorites" : "加入最愛",
+    "Add to favorites" : "加到我的最愛",
     "Error during preparing note for deletion." : "準備刪除筆記時錯誤。",
     "Empty note" : "無內容",
     "Write …" : "編寫 ...",
