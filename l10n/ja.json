@@ -8,6 +8,7 @@
     "Deleted {title}" : "{title}を削除しました",
     "Undo Delete" : "削除取り消し",
     "There are unsaved notes. Leaving the page will discard all changes!" : "保存されていないノートがあります。このページから移動するとすべての変更は破棄されます。",
+    "_Deleted {number} note_::_Deleted {number} notes_" : ["{number}つのメモを削除しました"],
     "Settings" : "設定",
     "Folder to store your notes" : "ノートを保存するフォルダー",
     "path to notes" : "ノートへのパス",
