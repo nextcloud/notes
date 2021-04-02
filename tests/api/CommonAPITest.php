@@ -65,7 +65,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->checkResponse($response1, 'Initial response', 200);
 		$this->assertTrue($response1->hasHeader('ETag'), 'Initial response has ETag header');
 		$etag = $response1->getHeaderLine('ETag');
-		$this->assertRegExp('/^"[[:alnum:]]{32}"$/', $etag, 'ETag format');
+		$this->assertMatchesRegularExpression('/^"[[:alnum:]]{32}"$/', $etag, 'ETag format');
 
 		// Test If-None-Match with ETag
 		$response2 = $this->http->request('GET', 'notes', [ 'headers' => [ 'If-None-Match' => $etag ] ]);
