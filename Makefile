@@ -2,6 +2,7 @@ app_name=notes
 project_dir=$(CURDIR)/../$(app_name)
 build_dir=$(CURDIR)/build/artifacts
 cert_dir=$(HOME)/.nextcloud/certificates
+php_dirs=appinfo/ lib/ tests/api/
 
 
 all: dev-setup build
@@ -99,7 +100,7 @@ lint-phpfast: lint-php-lint lint-php-ncversion lint-php-cs-fixer lint-php-phpcs
 
 lint-php-lint:
 	# Check PHP syntax errors
-	@! find lib/ -name "*.php" | xargs -I{} php -l '{}' | grep -v "No syntax errors detected"
+	@! find $(php_dirs) -name "*.php" | xargs -I{} php -l '{}' | grep -v "No syntax errors detected"
 
 lint-php-ncversion:
 	# Check min-version consistency
@@ -111,7 +112,7 @@ lint-php-phan:
 
 lint-php-phpcs:
 	# PHP CodeSniffer
-	vendor/bin/phpcs --standard=tests/phpcs.xml appinfo/ lib/ tests/api/ --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
+	vendor/bin/phpcs --standard=tests/phpcs.xml $(php_dirs) --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
 
 lint-php-cs-fixer:
 	# PHP Coding Standards Fixer (with Nextcloud coding standards)
@@ -136,7 +137,7 @@ lint-xml:
 lint-fix: lint-php-fix lint-js-fix lint-css-fix
 
 lint-php-fix:
-	vendor/bin/phpcbf --standard=tests/phpcs.xml appinfo/ lib/ tests/api/
+	vendor/bin/phpcbf --standard=tests/phpcs.xml $(php_dirs)
 	vendor/bin/php-cs-fixer fix
 
 lint-js-fix:
