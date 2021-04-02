@@ -19,3 +19,11 @@ export const copyNote = (from, to, exclude) => {
 	})
 	return to
 }
+
+export const categoryLabel = (category) => {
+	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
+}
+
+export const routeIsNewNote = ($route) => {
+	return {}.hasOwnProperty.call($route.query, 'new')
+}

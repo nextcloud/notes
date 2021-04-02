@@ -58,9 +58,7 @@ jobs:
         php occ user:setting quotatest files quota "0"
     - name: Setup Notes app
       working-directory: ../server/
-      run: |
-        php occ app:enable notes
-        php occ app:check-code notes
+      run: php occ app:enable notes
     - name: Create some reference notes
       working-directory: ../
       run: |

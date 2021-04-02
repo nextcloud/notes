@@ -37,7 +37,8 @@ import {
 	AppNavigationCounter,
 } from '@nextcloud/vue'
 
-import { getCategories, categoryLabel } from '../NotesService'
+import { getCategories } from '../NotesService'
+import { categoryLabel } from '../Util'
 
 import store from '../store'
 

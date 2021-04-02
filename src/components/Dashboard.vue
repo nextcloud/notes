@@ -35,7 +35,8 @@
 import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
 import { EmptyContent } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
-import { getDashboardData, categoryLabel } from '../NotesService'
+import { getDashboardData } from '../NotesService'
+import { categoryLabel } from '../Util'
 
 export default {
 	name: 'Dashboard',

@@ -373,11 +373,3 @@ export const getCategories = (maxLevel, details) => {
 		return categories
 	}
 }
-
-export const categoryLabel = (category) => {
-	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
-}
-
-export const routeIsNewNote = ($route) => {
-	return {}.hasOwnProperty.call($route.query, 'new')
-}
