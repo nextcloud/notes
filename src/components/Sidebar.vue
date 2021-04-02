@@ -61,7 +61,8 @@ import {
 } from '@nextcloud/vue'
 import moment from '@nextcloud/moment'
 
-import { categoryLabel, getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
+import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
+import { categoryLabel } from '../Util'
 import store from '../store'
 
 export default {

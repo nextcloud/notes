@@ -43,7 +43,7 @@ import {
 } from '@nextcloud/vue'
 import { Fragment } from 'vue-fragment'
 
-import { categoryLabel } from '../NotesService'
+import { categoryLabel } from '../Util'
 import NavigationCategoriesItem from './NavigationCategoriesItem'
 import NavigationNoteItem from './NavigationNoteItem'
 import store from '../store'
