@@ -121,7 +121,7 @@ abstract class AbstractAPITest extends TestCase {
 					$messagePrefix.': Property '.$key.' (reference note: '.$refNote->title.')'
 				);
 				if (strlen($refNote->$key) !== strlen($note->$key)) {
-					$this->assertRegExp(
+					$this->assertMatchesRegularExpression(
 						'/^ \(\d+\)$/',
 						substr($note->$key, strlen($refNote->$key)),
 						$messagePrefix.': Property '.$key.' suffix (reference note: '.$refNote->title.')'
