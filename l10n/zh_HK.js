@@ -35,7 +35,7 @@ OC.L10N.register(
     "Add to favorites" : "加到我的最愛",
     "Error during preparing note for deletion." : "準備刪除筆記時錯誤。",
     "Empty note" : "無內容",
-    "Write …" : "編寫 。。。",
+    "Write …" : "編寫 ...",
     "Details" : "詳細資料",
     "CTRL + /" : "CTRL + /",
     "Edit" : "編輯",
