@@ -9,6 +9,7 @@ OC.L10N.register(
     "Please see Nextcloud server log for details." : "Ikus Nextcloud zerbitzari-egunkaria xehetasunak eskuratzeko.",
     "Deleted {title}" : "{title} ezabatuta",
     "Undo Delete" : "Desegin ezabatzea",
+    "Note recovered" : "Oharra berreskuratuta",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Gorde gabeko oharrak daude. Orrialdetik irtetean aldaketa guztiak galduko dira!",
     "Settings" : "Ezarpenak",
     "Folder to store your notes" : "Zure oharrak gordetzeko karpeta",
