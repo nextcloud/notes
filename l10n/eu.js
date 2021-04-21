@@ -31,6 +31,7 @@ OC.L10N.register(
     "Remove from favorites" : "Kendu gogokoetatik",
     "Add to favorites" : "Gehitu gogokoetan",
     "Error during preparing note for deletion." : "Errorea oharra ezabatzeko prestatzean.",
+    "Use current version" : "Erabili uneko bertsioa",
     "Empty note" : "Ohar hutsa",
     "Write …" : "Idatzi …",
     "Details" : "Xehetasunak",
