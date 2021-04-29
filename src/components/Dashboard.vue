@@ -97,7 +97,7 @@ export default {
 </script>
 <style scoped>
 .note-item-favorite {
-	background: var(--icon-star-dark-fc0);
+	background: var(--icon-star-dark-FC0, var(--icon-star-dark-fc0));
 }
 
 .note-item {
