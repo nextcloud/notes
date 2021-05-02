@@ -14,6 +14,7 @@ class CapabilitiesTest extends TestCase {
 			'base_uri' => 'http://localhost:8080/',
 			'auth' => ['test', 'test'],
 			'http_errors' => false,
+			'headers' => ['Accept' => 'application/json'],
 		]);
 	}
 
@@ -21,7 +22,6 @@ class CapabilitiesTest extends TestCase {
 		$response = $this->http->request('GET', 'ocs/v2.php/cloud/capabilities', [
 			'headers' => [
 				'OCS-APIRequest' => 'true',
-				'Accept' => 'application/json',
 			]
 		]);
 		$this->assertEquals(200, $response->getStatusCode(), 'Response status code');
