@@ -201,6 +201,9 @@ abstract class AbstractAPITest extends TestCase {
 		}
 		$response = $this->http->request('PUT', 'notes/'.$note->id, $requestOptions);
 		$this->checkResponse($response, 'Update note '.$note->title, $statusExp);
+		if ($statusExp === 403) {
+			return $note;
+		}
 		$responseNote = json_decode($response->getBody()->getContents());
 		foreach (get_object_vars($request) as $key => $val) {
 			$note->$key = $val;

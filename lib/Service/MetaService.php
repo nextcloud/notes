@@ -179,6 +179,7 @@ class MetaService {
 			$note->getModified(),
 			$note->getCategory(),
 			$note->getFavorite(),
+			$note->getReadOnly(),
 			$meta->getContentEtag(),
 		];
 		return md5(json_encode($data));

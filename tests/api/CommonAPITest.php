@@ -7,6 +7,7 @@ namespace OCA\Notes\Tests\API;
 abstract class CommonAPITest extends AbstractAPITest {
 	private $requiredAttributes = [
 		'id' => 'integer',
+		'readonly' => 'boolean',
 		'content' => 'string',
 		'title' => 'string',
 		'category' => 'string',
@@ -122,6 +123,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		], (object)[
 			'title' => $this->autotitle ? 'First test note' : 'First manual title',
 			'category' => 'Test/New Category',
+			'readonly' => false,
 		]);
 		$testNotes[] = $this->createNote((object)[
 			'content' => 'Note with Defaults'.PHP_EOL.'This is some body content with some data.',
@@ -130,6 +132,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 			'favorite' => false,
 			'category' => '',
 			'modified' => time(),
+			'readonly' => false,
 		]);
 		$this->checkGetReferenceNotes(array_merge($refNotes, $testNotes), 'After creating notes');
 		return $testNotes;

@@ -66,6 +66,7 @@ jobs:
         mkdir -p server/data/quotatest/files/
         cp -r notes/tests/reference-notes server/data/test/files/Notes
         cp -r notes/tests/reference-notes server/data/quotatest/files/Notes
+        chmod 444 server/data/test/files/Notes/ReadOnly/ReadOnly-Note.txt
         php server/occ files:scan --all
     - name: Start Nextcloud server
       working-directory: ../server/

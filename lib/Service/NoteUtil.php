@@ -6,6 +6,7 @@ namespace OCA\Notes\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\Node;
 use OCP\IDBConnection;
 
 class NoteUtil {
@@ -190,6 +191,17 @@ class NoteUtil {
 				'required are '.$requiredBytes
 			);
 			throw new InsufficientStorageException($requiredBytes.' are required in '.$folder->getPath());
+		}
+	}
+
+	/**
+	 * Checks if the file/folder is writable. Throws an Exception if not.
+	 * @param Node $node to be checked
+	 * @throws NoteNotWritableException
+	 */
+	public function ensureNoteIsWritable(Node $node) : void {
+		if (!$node->isUpdateable()) {
+			throw new NoteNotWritableException();
 		}
 	}
 }
