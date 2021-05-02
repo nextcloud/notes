@@ -174,6 +174,7 @@ export default {
 		document.addEventListener('mozfullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('keydown', this.onKeyPress)
+		document.addEventListener('visibilitychange', this.onVisibilityChange)
 	},
 
 	destroyed() {
@@ -182,6 +183,7 @@ export default {
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('keydown', this.onKeyPress)
+		document.removeEventListener('visibilitychange', this.onVisibilityChange)
 		store.commit('setSidebarOpen', false)
 		this.onUpdateTitle(null)
 	},
@@ -268,6 +270,13 @@ export default {
 			this.actionsOpen = false
 		},
 
+		onVisibilityChange() {
+			if (document.visibilityState === 'visible') {
+				this.stopRefreshTimer()
+				this.refreshNote()
+			}
+		},
+
 		stopRefreshTimer() {
 			if (this.refreshTimer !== null) {
 				clearTimeout(this.refreshTimer)
@@ -277,10 +286,11 @@ export default {
 
 		startRefreshTimer() {
 			this.stopRefreshTimer()
+			const interval = document.visibilityState === 'visible' ? config.interval.note.refresh : config.interval.note.refreshHidden
 			this.refreshTimer = setTimeout(() => {
 				this.refreshTimer = null
 				this.refreshNote()
-			}, config.interval.note.refresh * 1000)
+			}, interval * 1000)
 		},
 
 		refreshNote() {
