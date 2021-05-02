@@ -29,6 +29,7 @@ abstract class AbstractAPITest extends TestCase {
 			'base_uri' => 'http://localhost:8080/index.php/apps/notes/api/v'.$v.'/',
 			'auth' => ['test', 'test'],
 			'http_errors' => false,
+			'headers' => ['Accept' => 'application/json'],
 		]);
 	}
 
