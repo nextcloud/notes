@@ -82,6 +82,10 @@ class Note {
 		return $this->noteUtil->getTagService()->isFavorite($this->getId());
 	}
 
+	public function getReadOnly() : bool {
+		return !$this->file->isUpdateable();
+	}
+
 
 	public function getData(array $exclude = []) : array {
 		$data = [];
@@ -99,6 +103,9 @@ class Note {
 		}
 		if (!in_array('favorite', $exclude)) {
 			$data['favorite'] = $this->getFavorite();
+		}
+		if (!in_array('readonly', $exclude)) {
+			$data['readonly'] = $this->getReadOnly();
 		}
 		$data['error'] = false;
 		$data['errorMessage'] = '';
@@ -125,10 +132,12 @@ class Note {
 
 
 	public function setTitle(string $title) : void {
+		$this->noteUtil->ensureNoteIsWritable($this->file);
 		$this->setTitleCategory($title);
 	}
 
 	public function setCategory(string $category) : void {
+		$this->noteUtil->ensureNoteIsWritable($this->file);
 		$this->setTitleCategory($this->getTitle(), $category);
 	}
 
@@ -136,6 +145,7 @@ class Note {
 	 * @throws \OCP\Files\NotPermittedException
 	 */
 	public function setTitleCategory(string $title, ?string $category = null) : void {
+		$this->noteUtil->ensureNoteIsWritable($this->file);
 		if ($category === null) {
 			$category = $this->getCategory();
 		}
@@ -155,11 +165,13 @@ class Note {
 	}
 
 	public function setContent(string $content) : void {
+		$this->noteUtil->ensureNoteIsWritable($this->file);
 		$this->noteUtil->ensureSufficientStorage($this->file->getParent(), strlen($content));
 		$this->file->putContent($content);
 	}
 
 	public function setModified(int $modified) : void {
+		$this->noteUtil->ensureNoteIsWritable($this->file);
 		$this->file->touch($modified);
 	}
 

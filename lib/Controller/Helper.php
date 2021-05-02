@@ -119,6 +119,9 @@ class Helper {
 		} catch (\OCA\Notes\Service\InsufficientStorageException $e) {
 			$this->logException($e);
 			$response = $this->createErrorResponse($e, Http::STATUS_INSUFFICIENT_STORAGE);
+		} catch (\OCA\Notes\Service\NoteNotWritableException $e) {
+			$this->logException($e);
+			$response = $this->createErrorResponse($e, Http::STATUS_FORBIDDEN);
 		} catch (\OCP\Lock\LockedException $e) {
 			$this->logException($e);
 			$response = $this->createErrorResponse($e, Http::STATUS_LOCKED);

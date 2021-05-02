@@ -118,6 +118,7 @@ class NotesService {
 	public function delete(string $userId, int $id) {
 		$notesFolder = $this->getNotesFolder($userId);
 		$file = $this->getFileById($notesFolder, $id);
+		$this->noteUtil->ensureNoteIsWritable($file);
 		$parent = $file->getParent();
 		$file->delete();
 		$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);

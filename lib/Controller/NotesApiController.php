@@ -147,18 +147,18 @@ class NotesApiController extends ApiController {
 			$favorite
 		) {
 			$note = $this->helper->getNoteWithETagCheck($id, $this->request);
-			if ($content !== null) {
+			if ($content !== null && $content !== $note->getContent()) {
 				$note->setContent($content);
 			}
-			if ($modified !== null) {
+			if ($modified !== null && $modified !== $note->getModified()) {
 				$note->setModified($modified);
 			}
-			if ($title !== null) {
+			if ($title !== null && $title !== $note->getTitle()) {
 				$note->setTitleCategory($title, $category);
-			} elseif ($category !== null) {
+			} elseif ($category !== null && $category !== $note->getCategory()) {
 				$note->setCategory($category);
 			}
-			if ($favorite !== null) {
+			if ($favorite !== null && $favorite !== $note->getFavorite()) {
 				$note->setFavorite($favorite);
 			}
 			return $this->helper->getNoteData($note);
