@@ -77,6 +77,7 @@ export default {
 			undoNotification: null,
 			undoTimer: null,
 			deletedNotes: [],
+			refreshTimer: null,
 		}
 	},
 
@@ -118,7 +119,13 @@ export default {
 	created() {
 		store.commit('setDocumentTitle', document.title)
 		window.addEventListener('beforeunload', this.onClose)
+		document.addEventListener('visibilitychange', this.onVisibilityChange)
 		this.loadNotes()
+	},
+
+	destroyed() {
+		document.removeEventListener('visibilitychange', this.onVisibilityChange)
+		this.stopRefreshTimer()
 	},
 
 	methods: {
@@ -147,8 +154,32 @@ export default {
 				})
 				.then(() => {
 					this.loading.notes = false
-					setTimeout(this.loadNotes, config.interval.notes.refresh * 1000)
+					this.startRefreshTimer(config.interval.notes.refresh)
 				})
+		},
+
+		startRefreshTimer(seconds) {
+			if (this.refreshTimer === null && document.visibilityState === 'visible') {
+				this.refreshTimer = setTimeout(() => {
+					this.refreshTimer = null
+					this.loadNotes()
+				}, seconds * 1000)
+			}
+		},
+
+		stopRefreshTimer() {
+			if (this.refreshTimer !== null) {
+				clearTimeout(this.refreshTimer)
+				this.refreshTimer = null
+			}
+		},
+
+		onVisibilityChange() {
+			if (document.visibilityState === 'visible') {
+				this.startRefreshTimer(config.interval.notes.refreshAfterHidden)
+			} else {
+				this.stopRefreshTimer()
+			}
 		},
 
 		reloadNotes() {
