@@ -15,6 +15,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		readonly: {
+			type: Boolean,
+			required: true,
+		},
 	},
 
 	data() {
@@ -75,6 +79,10 @@ export default {
 				codeElement.addEventListener('mousedown', this.onClickCodeElement)
 				codeElement.addEventListener('touchstart', this.onClickCodeElement)
 			})
+
+			if (this.readonly) {
+				this.mde.codemirror.options.readOnly = true
+			}
 		},
 
 		onClickCodeElement(event) {

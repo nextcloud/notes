@@ -31,7 +31,11 @@
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
 				<ThePreview v-if="preview" :value="note.content" />
-				<TheEditor v-else :value="note.content" @input="onEdit" />
+				<TheEditor v-else
+					:value="note.content"
+					:readonly="note.readonly"
+					@input="onEdit"
+				/>
 			</div>
 			<span class="action-buttons">
 				<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
@@ -54,6 +58,12 @@
 						@click="onToggleDistractionFree"
 					>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
+					</ActionButton>
+				</Actions>
+				<Actions v-if="note.readonly">
+					<ActionButton>
+						<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
+						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</ActionButton>
 				</Actions>
 				<Actions v-if="note.saveError" class="action-error">
@@ -86,6 +96,7 @@ import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
+import PencilOffIcon from 'vue-material-design-icons/PencilOff'
 
 import { config } from '../config'
 import { fetchNote, refreshNote, saveNote, saveNoteManually, autotitleNote, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
@@ -104,6 +115,7 @@ export default {
 		AppContent,
 		ConflictSolution,
 		Modal,
+		PencilOffIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,

@@ -8,7 +8,7 @@
 		@close="onCloseSidebar"
 	>
 		<div class="sidebar-content-wrapper">
-			<div class="note-category" :title="t('notes', 'Set category')">
+			<div v-if="!note.readonly" class="note-category" :title="t('notes', 'Set category')">
 				<h4>{{ t('notes', 'Category') }} <span v-tooltip="categoriesInfo" class="icon-info svg" /></h4>
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category"

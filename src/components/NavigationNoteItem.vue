@@ -6,7 +6,7 @@
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:class="{ actionsOpen }"
 		:loading="loading.note"
-		:editable="true"
+		:editable="!note.readonly"
 		:edit-label="t('notes', 'Rename')"
 		:edit-placeholder="t('notes', 'Note\'s title')"
 		@update:title="onRename"
@@ -15,7 +15,7 @@
 			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</ActionButton>
-			<ActionButton :icon="actionDeleteIcon" @click="onDeleteNote">
+			<ActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
 			</ActionButton>
 			<ActionSeparator />
