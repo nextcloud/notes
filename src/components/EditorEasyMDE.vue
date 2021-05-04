@@ -21,6 +21,8 @@ export default {
 		return {
 			config: {
 				spellChecker: false,
+				nativeSpellcheck: true,
+				inputStyle: 'contenteditable',
 				autoDownloadFontAwesome: false,
 				toolbar: false,
 				status: false,
@@ -131,6 +133,13 @@ export default {
 
 .CodeMirror-cursor {
 	border-color: var(--color-main-text);
+}
+
+/* overwrite Nextcloud style for contenteditable */
+.CodeMirror .CodeMirror-code {
+	font-size: inherit;
+	margin: 0;
+	padding: 0;
 }
 
 /* text selection */
