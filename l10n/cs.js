@@ -46,7 +46,7 @@ OC.L10N.register(
     "Exit full screen" : "Opustit celou obrazovku",
     "Full screen" : "Na celou obrazovku",
     "Save failed. Click to retry." : "Uložení se nezdařilo. Klikněte pro opětovný pokus.",
-    "Update conflict. Click for resolving manually." : "Konflikt aktualizace. Klikněte pro manuální řešení.",
+    "Update conflict. Click for resolving manually." : "Konflikt aktualizace. Pokud chcete vyřešit ručně, klikněte sem.",
     "Set category" : "Nastavit kategorii",
     "Category" : "Kategorie",
     "Uncategorized" : "Nezařazené",
