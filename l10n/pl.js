@@ -45,6 +45,7 @@ OC.L10N.register(
     "Preview" : "Podgląd",
     "Exit full screen" : "Wyłącz tryb pełnoekranowy",
     "Full screen" : "Tryb pełnoekranowy",
+    "Note is read-only. You cannot change it." : "Notatka jest tylko do odczytu. Nie możesz jej zmienić.",
     "Save failed. Click to retry." : "Zapisywanie nie powiodło się. Kliknij, aby spróbować ponownie.",
     "Update conflict. Click for resolving manually." : "Zaktualizuj konflikt. Kliknij, aby rozwiązać ręcznie.",
     "Set category" : "Ustaw kategorię",

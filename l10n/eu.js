@@ -45,6 +45,7 @@ OC.L10N.register(
     "Preview" : "Aurrebista",
     "Exit full screen" : "Irten pantaila osotik",
     "Full screen" : "Pantaila osoa",
+    "Note is read-only. You cannot change it." : "Oharra irakurtzeko soilik da. Ezin duzu aldatu.",
     "Save failed. Click to retry." : "Huts egin du gordetzean. Egin klik berriro saiatzeko.",
     "Update conflict. Click for resolving manually." : "Eguneraketa gatazka. Egin klik eskuz ebazteko.",
     "Set category" : "Ezarri kategoria",

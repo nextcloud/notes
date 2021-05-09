@@ -45,6 +45,7 @@ OC.L10N.register(
     "Preview" : "预览",
     "Exit full screen" : "退出全屏",
     "Full screen" : "全屏",
+    "Note is read-only. You cannot change it." : "笔记为只读状态。你不能更改它。",
     "Save failed. Click to retry." : "保存失败。点击以重试。",
     "Update conflict. Click for resolving manually." : "更新冲突。点击手动解决",
     "Set category" : "设置分类",
