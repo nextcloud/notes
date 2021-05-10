@@ -45,6 +45,7 @@ OC.L10N.register(
     "Preview" : "Vista previa",
     "Exit full screen" : "Salir de pantalla completa",
     "Full screen" : "Pantalla completa",
+    "Note is read-only. You cannot change it." : "La nota es de sólo lectura. No la puede cambiar.",
     "Save failed. Click to retry." : "Fallo al guardar. Presiona para reintentarlo.",
     "Update conflict. Click for resolving manually." : "Conflicto al actualizar. Elija manualmente para resolver el problema.",
     "Set category" : "Escoge categoría",
