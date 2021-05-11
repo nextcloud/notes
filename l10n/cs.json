@@ -43,6 +43,7 @@
     "Preview" : "Náhled",
     "Exit full screen" : "Opustit celou obrazovku",
     "Full screen" : "Na celou obrazovku",
+    "Note is read-only. You cannot change it." : "Poznámka je pouze pro čtení. Nemůžete ji měnit.",
     "Save failed. Click to retry." : "Uložení se nezdařilo. Klikněte pro opětovný pokus.",
     "Update conflict. Click for resolving manually." : "Konflikt aktualizace. Pokud chcete vyřešit ručně, klikněte sem.",
     "Set category" : "Nastavit kategorii",
