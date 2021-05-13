@@ -45,6 +45,7 @@ OC.L10N.register(
     "Preview" : "Ön izleme",
     "Exit full screen" : "Tam ekrandan çık",
     "Full screen" : "Tam ekran",
+    "Note is read-only. You cannot change it." : "Not salt okunur olduğundan değiştiremezsiniz.",
     "Save failed. Click to retry." : "Kaydedilemedi. Yeniden denemek için tıklayın.",
     "Update conflict. Click for resolving manually." : "Güncelleme çakışması. El ile çözümlemek için tıklayın.",
     "Set category" : "Kategoriyi ayarla",
