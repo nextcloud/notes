@@ -31,6 +31,7 @@ export default {
 				toolbar: false,
 				status: false,
 				forceSync: true,
+				tabSize: 4,
 			},
 			mde: null,
 		}
