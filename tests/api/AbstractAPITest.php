@@ -68,8 +68,8 @@ abstract class AbstractAPITest extends TestCase {
 		array $refNotes,
 		string $message,
 		?string $param = '',
-		bool $expectEmpty = false,
-		array $expectExclude = []
+		array $expectExclude = [],
+		array $expectedFullNotes = null
 	) : void {
 		$messagePrefix = 'Check reference notes '.$message;
 		$response = $this->http->request('GET', 'notes' . $param);
@@ -84,7 +84,7 @@ abstract class AbstractAPITest extends TestCase {
 				$messagePrefix.': Reference note '.$refNote->title.' exists'
 			);
 			$note = $notesMap[$refNote->id];
-			if ($expectEmpty) {
+			if ($expectedFullNotes !== null && !in_array($refNote->id, $expectedFullNotes)) {
 				$this->checkNoteEmpty($refNote, $note, $messagePrefix);
 			} else {
 				$this->checkReferenceNote($refNote, $note, $messagePrefix, $expectExclude);

@@ -43,14 +43,12 @@ abstract class CommonAPITest extends AbstractAPITest {
 			$refNotes,
 			'exclude content',
 			'?exclude=content',
-			false,
 			['content']
 		);
 		$this->checkGetReferenceNotes(
 			$refNotes,
 			'exclude content and category',
 			'?exclude=content,category',
-			false,
 			['content','category']
 		);
 	}
@@ -83,25 +81,29 @@ abstract class CommonAPITest extends AbstractAPITest {
 			$refNotes,
 			'pruneBefore with Last-Modified',
 			'?pruneBefore='.$dt->getTimestamp(),
-			true
+			[],
+			[]
 		);
 		$this->checkGetReferenceNotes(
 			$refNotes,
 			'pruneBefore with 1',
 			'?pruneBefore=1',
-			false
+			[],
+			array_column($refNotes, 'id')
 		);
 		$this->checkGetReferenceNotes(
 			$refNotes,
 			'pruneBefore with PHP_INT_MAX (32bit)',
 			'?pruneBefore=2147483647', // 2038-01-19 03:14:07
-			true
+			[],
+			[]
 		);
 		$this->checkGetReferenceNotes(
 			$refNotes,
 			'pruneBefore with PHP_INT_MAX (64bit)',
 			'?pruneBefore=9223372036854775807',
-			true
+			[],
+			[]
 		);
 	}
 
@@ -191,6 +193,44 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->assertNotEquals($rn3->etag, $rn4->etag, 'ETag changed on update (3)');
 		$this->checkGetReferenceNotes(array_merge($refNotes, $testNotes), 'After updating notes');
 		return $testNotes;
+	}
+
+	/**
+	 * @depends testCheckForReferenceNotes
+	 * @depends testUpdateNotes
+	 */
+	public function testGetNotesWithPruneBeforeWithUpdate(array $refNotes, array $testNotes) : void {
+		sleep(1); // wait for 'Last-Modified' to be >= Last-change + 1
+		$response1 = $this->http->request('GET', 'notes');
+		$this->checkResponse($response1, 'Initial response', 200);
+		$this->assertTrue($response1->hasHeader('Last-Modified'), 'Initial response has Last-Modified header');
+		$lastModified = $response1->getHeaderLine('Last-Modified');
+		$dt = \DateTime::createFromFormat(\DateTime::RFC2822, $lastModified);
+		$this->assertInstanceOf(\DateTime::class, $dt);
+
+		$allNotes = array_merge($refNotes, $testNotes);
+
+		$this->checkGetReferenceNotes(
+			$allNotes,
+			'pruneBefore with Last-Modified before changing note',
+			'?pruneBefore='.$dt->getTimestamp(),
+			[],
+			[]
+		);
+
+		$note = $testNotes[0];
+		$rn1 = $this->updateNote($note, (object)[
+			'content' => $note->content.PHP_EOL.'Updated for pruneBefore test.',
+		], (object)[]);
+
+		$this->checkGetReferenceNotes(
+			$allNotes,
+			'pruneBefore with Last-Modified after changing note',
+			'?pruneBefore='.$dt->getTimestamp(),
+			[],
+			[ $note->id ]
+		);
+		$this->checkGetReferenceNotes(array_merge($refNotes, $testNotes), 'After updating notes');
 	}
 
 	/**
