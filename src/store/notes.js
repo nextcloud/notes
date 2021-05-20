@@ -123,20 +123,15 @@ const mutations = {
 }
 
 const actions = {
-	updateNotes(context, notes) {
-		const noteIds = {}
+	updateNotes(context, { noteIds, notes }) {
 		// add/update new notes
 		for (const note of notes) {
-			noteIds[note.id] = true
 			// TODO check for parallel (local) changes!
-			// only update, if note has changes (see API "pruneBefore")
-			if (note.title !== undefined) {
-				context.commit('updateNote', note)
-			}
+			context.commit('updateNote', note)
 		}
 		// remove deleted notes
 		context.state.notes.forEach(note => {
-			if (noteIds[note.id] === undefined) {
+			if (!noteIds.includes(note.id)) {
 				context.commit('removeNote', note.id)
 			}
 		})

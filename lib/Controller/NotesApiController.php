@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\NotesService;
+use OCA\Notes\Service\MetaNote;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
 
@@ -45,16 +46,37 @@ class NotesApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 */
-	public function index(?string $category = null, string $exclude = '', int $pruneBefore = 0) : JSONResponse {
-		return $this->helper->handleErrorResponse(function () use ($category, $exclude, $pruneBefore) {
+	public function index(
+		?string $category = null,
+		string $exclude = '',
+		int $pruneBefore = 0,
+		int $chunkSize = 0,
+		string $chunkCursor = null
+	) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use (
+			$category,
+			$exclude,
+			$pruneBefore,
+			$chunkSize,
+			$chunkCursor
+		) {
 			$exclude = explode(',', $exclude);
-			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
-			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category);
-			$notesData = $data['notes'];
-			$etag = md5(json_encode($notesData));
-			return (new JSONResponse($notesData))
-				->setLastModified($now)
-				->setETag($etag);
+			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor);
+			$notesData = $data['notesData'];
+			if (!$data['chunkCursor']) {
+				// if last chunk, then send all notes (pruned)
+				$notesData += array_map(function (MetaNote $m) {
+					return [ 'id' => $m->note->getId() ];
+				}, $data['notesAll']);
+			}
+			$response = new JSONResponse(array_values($notesData));
+			$response->setLastModified($data['lastUpdate']);
+			$response->setETag(md5(json_encode($notesData)));
+			if ($data['chunkCursor']) {
+				$response->addHeader('X-Notes-Chunk-Cursor', $data['chunkCursor']->toString());
+				$response->addHeader('X-Notes-Chunk-Pending', $data['numPendingNotes']);
+			}
+			return $response;
 		});
 	}
 

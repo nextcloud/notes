@@ -55,7 +55,6 @@ class NotesController extends Controller {
 	public function index(int $pruneBefore = 0) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($pruneBefore) {
 			$userId = $this->helper->getUID();
-			$now = new \DateTime(); // this must be before loading notes if there are concurrent changes possible
 			$settings = $this->settingsService->getAll($userId);
 
 			$lastViewedNote = (int) $this->settings->getUserValue(
@@ -64,32 +63,33 @@ class NotesController extends Controller {
 				'notesLastViewedNote'
 			);
 			$errorMessage = null;
-			$notes = null;
-			$categories = null;
+			$nac = null;
 
 			try {
 				$nac = $this->helper->getNotesAndCategories($pruneBefore, [ 'etag', 'content' ]);
-				[ 'notes' => $notes, 'categories' => $categories ] = $nac;
 			} catch (\Throwable $e) {
 				$this->helper->logException($e);
 				$errorMessage = $this->l10n->t('Reading notes from filesystem has failed.').' ('.get_class($e).')';
 			}
 
-			if ($errorMessage === null && $lastViewedNote && is_array($notes) && !count($notes)) {
+			if ($errorMessage === null && $lastViewedNote
+				&& is_array($nac) && is_array($nac['notesAll']) && !count($nac['notesAll'])
+			) {
 				$this->settings->deleteUserValue($userId, $this->appName, 'notesLastViewedNote');
 				$lastViewedNote = 0;
 			}
 
 			$result = [
-				'notes' => $notes,
-				'categories' => $categories,
+				'notesData' => array_values($nac['notesData'] ?? null),
+				'noteIds' => array_keys($nac['notesAll']),
+				'categories' => $nac['categories'] ?? null,
 				'settings' => $settings,
 				'lastViewedNote' => $lastViewedNote,
 				'errorMessage' => $errorMessage,
 			];
 			$etag = md5(json_encode($result));
 			return (new JSONResponse($result))
-				->setLastModified($now)
+				->setLastModified($nac['lastUpdate'] ?? null)
 				->setETag($etag)
 			;
 		});

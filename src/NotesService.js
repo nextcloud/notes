@@ -74,8 +74,8 @@ export const fetchNotes = () => {
 		.then(response => {
 			store.commit('setSettings', response.data.settings)
 			store.commit('setCategories', response.data.categories)
-			if (response.data.notes !== null) {
-				store.dispatch('updateNotes', response.data.notes)
+			if (response.data.noteIds !== null) {
+				store.dispatch('updateNotes', { noteIds: response.data.noteIds, notes: response.data.notesData })
 			}
 			if (response.data.errorMessage) {
 				showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: response.data.errorMessage }))

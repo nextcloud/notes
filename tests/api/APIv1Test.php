@@ -70,6 +70,89 @@ class APIv1Test extends CommonAPITest {
 		);
 	}
 
+	protected function checkGetChunkNotes(
+		array $indexedRefNotes,
+		int $chunkSize,
+		string $messagePrefix,
+		string $chunkCursor = null,
+		array $collectedNotes = []
+	) : array {
+		$requestCount = 0;
+		$previousChunkCursor = null;
+		do {
+			$requestCount++;
+			$previousChunkCursor = $chunkCursor;
+			$query = '?chunkSize='.$chunkSize;
+			if ($chunkCursor) {
+				$query .= '&chunkCursor='.$chunkCursor;
+			}
+			$response = $this->http->request('GET', 'notes'.$query);
+			$chunkCursor = $response->getHeaderLine('X-Notes-Chunk-Cursor');
+			$this->checkResponse($response, $messagePrefix.'Check response '.$requestCount, 200);
+			$notes = json_decode($response->getBody()->getContents());
+			if ($chunkCursor) {
+				$this->assertIsArray($notes, $messagePrefix.'Response '.$requestCount);
+				$this->assertLessThanOrEqual(
+					$chunkSize,
+					count($notes),
+					$messagePrefix.'Notes of response '.$requestCount
+				);
+				foreach ($notes as $note) {
+					$this->assertArrayNotHasKey(
+						$note->id,
+						$collectedNotes,
+						$messagePrefix.'Note ID of response '.$requestCount.' in collectedNotes'
+					);
+					$this->assertArrayHasKey(
+						$note->id,
+						$indexedRefNotes,
+						$messagePrefix.'Note ID of response '.$requestCount.' in refNotes'
+					);
+					$this->checkReferenceNote(
+						$indexedRefNotes[$note->id],
+						$note,
+						$messagePrefix.'Note in response '.$requestCount
+					);
+					$collectedNotes[$note->id] = $note;
+				}
+			} else {
+				$leftIds = array_diff(array_keys($indexedRefNotes), array_keys($collectedNotes));
+				$this->checkReferenceNotes(
+					$indexedRefNotes,
+					$notes,
+					$messagePrefix.'Notes of response '.$requestCount,
+					[],
+					$leftIds
+				);
+			}
+		} while ($chunkCursor && $requestCount < 100);
+		$this->assertEmpty($chunkCursor, $messagePrefix.'Last response Chunk Cursor');
+		return [
+			'previousChunkCursor' => $previousChunkCursor,
+			'collectedNotes' => $collectedNotes,
+		];
+	}
+
+	/**
+	 * @depends testCheckForReferenceNotes
+	 * @depends testCreateNotes
+	 */
+	public function testGetChunkedNotes(array $refNotes, array $testNotes) : void {
+		sleep(1); // wait for 'Last-Modified' to be >= Last-change + 1
+		$indexedRefNotes = $this->getNotesIdMap(array_merge($refNotes, $testNotes), 'RefNotes');
+		$l = $this->checkGetChunkNotes($indexedRefNotes, 2, 'Test1: ');
+
+		$note = $testNotes[0];
+		$rn1 = $this->updateNote($note, (object)[
+			'category' => 'ChunkedNote',
+		], (object)[]);
+
+		$collectedNotes = $l['collectedNotes'];
+		$this->assertArrayHasKey($note->id, $collectedNotes, 'Updated note is not in last chunk.');
+		unset($collectedNotes[$note->id]);
+		$this->checkGetChunkNotes($indexedRefNotes, 2, 'Test2: ', $l['previousChunkCursor'], $collectedNotes);
+	}
+
 	public function testGetSettings() : \stdClass {
 		$response = $this->http->request('GET', 'settings');
 		$this->checkResponse($response, 'Get settings', 200);

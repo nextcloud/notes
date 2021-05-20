@@ -26,7 +26,7 @@ use OCA\Notes\Db\MetaMapper;
  * time and the next synchronization time. However, this is totally sufficient
  * for this purpose.
  *
- * Therefore, on synchronization, the method `MetaService.updateAll` is called.
+ * Therefore, on synchronization, the method `MetaService.getAll` is called.
  * It generates an ETag for each note and compares it with the ETag from
  * `notes_meta` database table in order to detect changes (or creates an entry
  * if not existent). If there are changes, the ETag is updated and `LastUpdate`
@@ -61,18 +61,17 @@ class MetaService {
 		$this->metaMapper->deleteByNote($id);
 	}
 
-	public function updateAll(string $userId, array $notes, bool $forceUpdate = false) : array {
+	public function getAll(string $userId, array $notes, bool $forceUpdate = false) : array {
 		// load data
 		$metas = $this->metaMapper->getAll($userId);
 		$metas = $this->getIndexedArray($metas, 'fileId');
-		$notes = $this->getIndexedArray($notes, 'id');
+		$result = [];
 
 		// delete obsolete notes
 		foreach ($metas as $id => $meta) {
 			if (!array_key_exists($id, $notes)) {
 				// DELETE obsolete notes
 				$this->metaMapper->delete($meta);
-				unset($metas[$id]);
 			}
 		}
 
@@ -80,7 +79,7 @@ class MetaService {
 		foreach ($notes as $id => $note) {
 			if (!array_key_exists($id, $metas)) {
 				// INSERT new notes
-				$metas[$note->getId()] = $this->createMeta($userId, $note);
+				$meta = $this->createMeta($userId, $note);
 			} else {
 				// UPDATE changed notes
 				$meta = $metas[$id];
@@ -88,8 +87,9 @@ class MetaService {
 					$this->metaMapper->update($meta);
 				}
 			}
+			$result[$id] = new MetaNote($note, $meta);
 		}
-		return $metas;
+		return $result;
 	}
 
 	public function update(string $userId, Note $note) : Meta {
