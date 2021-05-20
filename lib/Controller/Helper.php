@@ -8,6 +8,7 @@ use OCA\Notes\AppInfo\Application;
 use OCA\Notes\Db\Meta;
 use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
+use OCA\Notes\Service\MetaNote;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\Util;
 
@@ -71,28 +72,60 @@ class Helper {
 	public function getNotesAndCategories(
 		int $pruneBefore,
 		array $exclude,
-		string $category = null
+		string $category = null,
+		int $chunkSize = 0,
+		string $chunkCursorStr = null
 	) : array {
 		$userId = $this->getUID();
+		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
+		$lastUpdate = $chunkCursor->timeStart ?? new \DateTime();
 		$data = $this->notesService->getAll($userId);
-		$notes = $data['notes'];
-		$metas = $this->metaService->updateAll($userId, $notes);
+		$metaNotes = $this->metaService->getAll($userId, $data['notes']);
+
+		// if a category is requested, then ignore all other notes
 		if ($category !== null) {
-			$notes = array_values(array_filter($notes, function ($note) use ($category) {
-				return $note->getCategory() === $category;
-			}));
+			$metaNotes = array_filter($metaNotes, function (MetaNote $m) use ($category) {
+				return $m->note->getCategory() === $category;
+			});
 		}
-		$notesData = array_map(function ($note) use ($metas, $pruneBefore, $exclude) {
-			$meta = $metas[$note->getId()];
-			if ($pruneBefore && $meta->getLastUpdate() < $pruneBefore) {
-				return [ 'id' => $note->getId() ];
-			} else {
-				return $this->getNoteData($note, $exclude, $meta);
-			}
-		}, $notes);
+
+		// list of notes that should be sent to the client
+		$fullNotes = array_filter($metaNotes, function (MetaNote $m) use ($pruneBefore, $chunkCursor) {
+			$isPruned = $pruneBefore && $m->meta->getLastUpdate() < $pruneBefore;
+			$noteLastUpdate = (int)$m->meta->getLastUpdate();
+			$isBeforeCursor = $chunkCursor && (
+				$noteLastUpdate < $chunkCursor->noteLastUpdate
+				|| ($noteLastUpdate === $chunkCursor->noteLastUpdate
+				&& $m->note->getId() <= $chunkCursor->noteId)
+			);
+			return !$isPruned && !$isBeforeCursor;
+		});
+
+		// sort the list for slicing the next chunk
+		uasort($fullNotes, function (MetaNote $a, MetaNote $b) {
+			return $a->meta->getLastUpdate() <=> $b->meta->getLastUpdate()
+				?: $a->note->getId() <=> $b->note->getId();
+		});
+
+		// slice the next chunk
+		$chunkedNotes = $chunkSize ? array_slice($fullNotes, 0, $chunkSize, true) : $fullNotes;
+		$numPendingNotes = count($fullNotes) - count($chunkedNotes);
+
+		// if the chunk does not contain all remaining notes, then generate new chunk cursor
+		$newChunkCursor = $numPendingNotes ? ChunkCursor::fromNote($lastUpdate, end($chunkedNotes)) : null;
+
+		// load data for the current chunk
+		$notesData = array_map(function (MetaNote $m) use ($exclude) {
+			return $this->getNoteData($m->note, $exclude, $m->meta);
+		}, $chunkedNotes);
+
 		return [
-			'notes' => $notesData,
 			'categories' => $data['categories'],
+			'notesAll' => $metaNotes,
+			'notesData' => $notesData,
+			'lastUpdate' => $lastUpdate,
+			'chunkCursor' => $newChunkCursor,
+			'numPendingNotes' => $numPendingNotes,
 		];
 	}
 

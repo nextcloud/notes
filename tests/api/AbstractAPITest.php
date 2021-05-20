@@ -75,6 +75,17 @@ abstract class AbstractAPITest extends TestCase {
 		$response = $this->http->request('GET', 'notes' . $param);
 		$this->checkResponse($response, $messagePrefix, 200);
 		$notes = json_decode($response->getBody()->getContents());
+		$this->checkReferenceNotes($refNotes, $notes, $messagePrefix, $expectExclude, $expectedFullNotes);
+	}
+
+	protected function checkReferenceNotes(
+		array $refNotes,
+		array $notes,
+		string $messagePrefix,
+		array $expectExclude = [],
+		array $expectedFullNotes = null
+	) : void {
+		$this->assertIsArray($notes, $messagePrefix);
 		$notesMap = $this->getNotesIdMap($notes, $messagePrefix);
 		$this->assertEquals(count($refNotes), count($notes), $messagePrefix.': Number of notes');
 		foreach ($refNotes as $refNote) {

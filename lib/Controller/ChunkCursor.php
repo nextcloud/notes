@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace OCA\Notes\Controller;
+
+use OCA\Notes\Service\MetaNote;
+
+class ChunkCursor {
+	/** @var \DateTime */
+	public $timeStart;
+	/** @var integer */
+	public $noteLastUpdate;
+	/** @var integer */
+	public $noteId;
+
+	public static function fromString(string $str) : ?ChunkCursor {
+		if (preg_match('/^(\d+)-(\d+)-(\d+)$/', $str, $matches)) {
+			$cc = new static();
+			$cc->timeStart = new \DateTime();
+			$cc->timeStart->setTimestamp((int)$matches[1]);
+			$cc->noteLastUpdate = (int)$matches[2];
+			$cc->noteId = (int)$matches[3];
+			return $cc;
+		} else {
+			return null;
+		}
+	}
+
+	public static function fromNote(\DateTime $timeStart, MetaNote $m) : ChunkCursor {
+		$cc = new static();
+		$cc->timeStart = $timeStart;
+		$cc->noteLastUpdate = $m->meta->getLastUpdate();
+		$cc->noteId = $m->note->getId();
+		return $cc;
+	}
+
+	public function toString() : string {
+		return $this->timeStart->getTimestamp() . '-' . $this->noteLastUpdate . '-' . $this->noteId;
+	}
+}

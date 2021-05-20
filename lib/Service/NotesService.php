@@ -26,9 +26,7 @@ class NotesService {
 	public function getAll(string $userId) : array {
 		$notesFolder = $this->getNotesFolder($userId);
 		$data = $this->gatherNoteFiles($notesFolder);
-		$fileIds = array_map(function (File $file) : int {
-			return $file->getId();
-		}, $data['files']);
+		$fileIds = array_keys($data['files']);
 		// pre-load tags for all notes (performance improvement)
 		$this->noteUtil->getTagService()->loadTags($fileIds);
 		$notes = array_map(function (File $file) use ($notesFolder) : Note {
@@ -159,10 +157,10 @@ class NotesService {
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
 				$data_sub = self::gatherNoteFiles($node, $subCategory . '/');
-				$data['files'] = array_merge($data['files'], $data_sub['files']);
-				$data['categories'] = array_merge($data['categories'], $data_sub['categories']);
+				$data['files'] = $data['files'] + $data_sub['files'];
+				$data['categories'] = $data['categories'] + $data_sub['categories'];
 			} elseif (self::isNote($node)) {
-				$data['files'][] = $node;
+				$data['files'][$node->getId()] = $node;
 			}
 		}
 		return $data;
