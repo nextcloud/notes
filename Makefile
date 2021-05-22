@@ -46,7 +46,7 @@ appstore: lint build
 assemble:
 	mkdir -p $(build_dir)
 	rsync -a \
-	--exclude=.babelrc.js \
+	--exclude=babel.config.js \
 	--exclude=build \
 	--exclude=composer.* \
 	--exclude=CONTRIBUTING.md \
