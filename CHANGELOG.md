@@ -13,6 +13,20 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.1.0 - 2021-06-27
+
+- API: new minor API version 1.2 (#701)
+- API: new settings API (#694)
+- API: allow requesting notes list in chunks (#720)
+- API and frontend: Prevent lost updates by using ETags for notes (#692)
+- API and frontend: new attribute "readonly" for read-only notes (#711)
+- slow-down refresh interval if app is hidden (#710)
+- EasyMDE: Always use contenteditable and native spellcheck (#712)
+- fix action buttons running out of window (#717)
+- change EasyMDE tab size to 4 (#718)
+- maintenance (#693, #699, #705, #709, #719, #723, #727, #731)
+
+
 ## 4.0.4 - 2021-03-06
 
 - fix note creation on encrypted s3 storage (#690)
