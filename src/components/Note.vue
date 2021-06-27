@@ -215,8 +215,8 @@ export default {
 			this.preview = false
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
-					if (note.errorMessage) {
-						showError(note.errorMessage)
+					if (note.error) {
+						showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: note.errorType }))
 					}
 					this.startRefreshTimer()
 				})

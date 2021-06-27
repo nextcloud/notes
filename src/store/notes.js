@@ -84,7 +84,7 @@ const mutations = {
 				note.etag = updated.etag
 				Vue.set(note, 'unsaved', updated.unsaved)
 				Vue.set(note, 'error', updated.error)
-				Vue.set(note, 'errorMessage', updated.errorMessage)
+				Vue.set(note, 'errorType', updated.errorType)
 			}
 		} else {
 			state.notes.push(updated)

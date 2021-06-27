@@ -77,8 +77,8 @@ export const fetchNotes = () => {
 			if (response.data.noteIds !== null) {
 				store.dispatch('updateNotes', { noteIds: response.data.noteIds, notes: response.data.notesData })
 			}
-			if (response.data.errorMessage) {
-				showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: response.data.errorMessage }))
+			if (response.data.error) {
+				showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: response.data.errorType }))
 			} else {
 				store.commit('setSyncETag', response.headers.etag)
 				store.commit('setSyncLastModified', response.headers['last-modified'])
@@ -115,7 +115,7 @@ export const fetchNote = noteId => {
 				console.error(err)
 				const msg = t('notes', 'Fetching note {id} has failed.', { id: noteId })
 				store.commit('setNoteAttribute', { noteId, attribute: 'error', value: true })
-				store.commit('setNoteAttribute', { noteId, attribute: 'errorMessage', value: msg })
+				store.commit('setNoteAttribute', { noteId, attribute: 'errorType', value: msg })
 				return store.getter.getNote(noteId)
 			}
 		})
