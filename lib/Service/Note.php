@@ -108,7 +108,7 @@ class Note {
 			$data['readonly'] = $this->getReadOnly();
 		}
 		$data['error'] = false;
-		$data['errorMessage'] = '';
+		$data['errorType'] = '';
 		if (!in_array('content', $exclude)) {
 			try {
 				$data['content'] = $this->getContent();
@@ -117,10 +117,11 @@ class Note {
 					'Could not read content for file: '.$this->file->getPath(),
 					[ 'exception' => $e ]
 				);
-				$message = $this->util->l10n->t('Error').': ('.$this->file->getName().') '.$e->getMessage();
+				$message = $this->util->l10n->t('Error').': '.get_class($e);
 				$data['content'] = $message;
 				$data['error'] = true;
-				$data['errorMessage'] = $message;
+				$data['errorType'] = get_class($e);
+				$data['readonly'] = true;
 			}
 		}
 		return $data;
