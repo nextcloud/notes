@@ -34,7 +34,7 @@ OC.L10N.register(
     "Empty note" : "یادداشت خالی",
     "Write …" : "نوشتن …",
     "Details" : "جزئیات",
-    "Edit" : "ویرایش کردن",
+    "Edit" : "ویرایش",
     "Preview" : "پیش نمایش",
     "Exit full screen" : "خروج از تمام صفحه",
     "Full screen" : "تمام صفحه",
