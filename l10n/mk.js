@@ -34,6 +34,7 @@ OC.L10N.register(
     "Remove from favorites" : "Отстрани од фаворити",
     "Add to favorites" : "Додади во фаворити",
     "Error during preparing note for deletion." : "Грешка при обидот за бришење на белешката.",
+    "Use current version" : "Користи ја моменталната верзија",
     "Empty note" : "Празна белешка",
     "Write …" : "Пишувај ...",
     "Details" : "Детали",
