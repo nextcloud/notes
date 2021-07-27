@@ -124,10 +124,15 @@ class MetaService {
 		$this->updateIfNeeded($meta, $note, true);
 		try {
 			$this->metaMapper->insert($meta);
-			/* @phan-suppress-next-line PhanUndeclaredClassCatch */
-		} catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+		} catch (\Throwable $e) {
 			// It's likely that a concurrent request created this entry, too.
 			// We can ignore this, since the result should be the same.
+			// But we log it for being able to detect other problems.
+			// (If this happens often, this may cause performance problems.)
+			$this->util->logger->warning(
+				'Could not insert meta data for note '.$note->getId(),
+				[ 'exception' => $e ]
+			);
 		}
 		return $meta;
 	}
