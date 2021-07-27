@@ -80,8 +80,8 @@ class NotesController extends Controller {
 			}
 
 			$result = [
-				'notesData' => array_values($nac['notesData'] ?? null),
-				'noteIds' => array_keys($nac['notesAll']),
+				'notesData' => $nac ? array_values($nac['notesData']) : null,
+				'noteIds' => $nac ? array_keys($nac['notesAll']) : null,
 				'categories' => $nac['categories'] ?? null,
 				'settings' => $settings,
 				'lastViewedNote' => $lastViewedNote,
