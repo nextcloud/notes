@@ -137,7 +137,7 @@ export default {
 			this.loading.delete = true
 			try {
 				const note = await fetchNote(this.note.id)
-				if (note.errorMessage) {
+				if (note.errorType) {
 					throw new Error('Note has errors')
 				}
 				await deleteNote(this.note.id, () => {
