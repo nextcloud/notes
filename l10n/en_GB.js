@@ -18,6 +18,7 @@ OC.L10N.register(
     "Delete note" : "Delete note",
     "Remove from favorites" : "Remove from favourites",
     "Add to favorites" : "Add to favourites",
+    "Error during preparing note for deletion." : "Error while preparing note for deletion.",
     "Details" : "Details",
     "Edit" : "Edit",
     "Preview" : "Preview",
