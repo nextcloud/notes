@@ -13,6 +13,13 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.1.1 - 2021-07-31
+
+- fix error handling if loading notes fails (#740)
+- rewrite save queue (#742)
+- maintenance (#743)
+
+
 ## 4.1.0 - 2021-06-27
 
 - API: new minor API version 1.2 (#701)
