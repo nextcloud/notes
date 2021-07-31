@@ -235,7 +235,7 @@ function _updateNote(note) {
 						copyNote(remote, note, ['content']),
 						copyNote(remote, {})
 					)
-					saveNote(note.id)
+					queueCommand(note.id, 'content')
 				} else {
 					console.info('Note update conflict. Manual resolution required.')
 					store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: remote })
@@ -255,7 +255,7 @@ export const conflictSolutionLocal = note => {
 		copyNote(note.conflict, {})
 	)
 	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
-	saveNote(note.id)
+	queueCommand(note.id, 'content')
 }
 
 export const conflictSolutionRemote = note => {
@@ -335,32 +335,49 @@ export const setCategory = (noteId, category) => {
 		})
 }
 
-export const saveNote = (noteId, manualSave = false) => {
-	store.commit('addUnsaved', noteId)
-	if (manualSave) {
-		store.commit('setManualSave', true)
-	}
-	_saveNotes()
+export const queueCommand = (noteId, type) => {
+	store.commit('addToQueue', { noteId, type })
+	_processQueue()
 }
 
-function _saveNotes() {
-	const unsavedNotes = Object.values(store.state.notes.unsaved)
-	if (store.state.app.isSaving || unsavedNotes.length === 0) {
+function _processQueue() {
+	const queue = Object.values(store.state.sync.queue)
+	if (store.state.app.isSaving || queue.length === 0) {
 		return
 	}
 	store.commit('setSaving', true)
-	const promises = unsavedNotes.map(note => _updateNote(note))
-	store.commit('clearUnsaved')
-	Promise.all(promises).then(() => {
+	store.commit('clearQueue')
+
+	async function _executeQueueCommands() {
+		for (const cmd of queue) {
+			try {
+				switch (cmd.type) {
+				case 'content':
+					await _updateNote(store.state.notes.notesIds[cmd.noteId])
+					break
+				case 'autotitle':
+					await autotitleNote(cmd.noteId)
+					break
+				default:
+					console.error('Unknown queue command: ' + cmd.type)
+				}
+
+			} catch (e) {
+				console.error('Command has failed with error:')
+				console.error(e)
+			}
+		}
 		store.commit('setSaving', false)
 		store.commit('setManualSave', false)
-		_saveNotes()
-	})
+		_processQueue()
+	}
+	_executeQueueCommands()
 }
 
 export const saveNoteManually = (noteId) => {
 	store.commit('setNoteAttribute', { noteId, attribute: 'saveError', value: false })
-	saveNote(noteId, true)
+	store.commit('setManualSave', true)
+	queueCommand(noteId, 'content')
 }
 
 export const noteExists = (noteId) => {

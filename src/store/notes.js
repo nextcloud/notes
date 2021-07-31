@@ -5,7 +5,6 @@ const state = {
 	categories: [],
 	notes: [],
 	notesIds: {},
-	unsaved: {},
 }
 
 const getters = {
@@ -107,14 +106,6 @@ const mutations = {
 	removeAllNotes(state) {
 		state.notes = []
 		state.notesIds = {}
-	},
-
-	addUnsaved(state, id) {
-		Vue.set(state.unsaved, id, state.notesIds[id])
-	},
-
-	clearUnsaved(state) {
-		state.unsaved = {}
 	},
 
 	setCategories(state, categories) {

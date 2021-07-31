@@ -1,4 +1,7 @@
+import Vue from 'vue'
+
 const state = {
+	queue: {},
 	etag: null,
 	lastModified: 0,
 	active: false,
@@ -9,6 +12,16 @@ const getters = {
 }
 
 const mutations = {
+	addToQueue(state, { noteId, type }) {
+		const cmd = { noteId, type }
+		const key = noteId + '-' + type
+		Vue.set(state.queue, key, cmd)
+	},
+
+	clearQueue(state) {
+		state.queue = {}
+	},
+
 	setSyncETag(state, etag) {
 		if (etag) {
 			state.etag = etag
