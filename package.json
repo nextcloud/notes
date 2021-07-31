@@ -22,8 +22,8 @@
 		"@nextcloud/vue-dashboard": "^2.0.1",
 		"diff": "^5.0.0",
 		"easymde": "^2.15.0",
-		"markdown-it": "^12.0.6",
-		"vue": "^2.6.13",
+		"markdown-it": "^12.1.0",
+		"vue": "^2.6.14",
 		"vue-fragment": "1.5.1",
 		"vue-material-design-icons": "^4.12.1",
 		"vue-observe-visibility": "^1.0.0",
@@ -38,10 +38,10 @@
 		"npm": ">=7.0.0"
 	},
 	"devDependencies": {
-		"@nextcloud/babel-config": "^1.0.0-beta.1",
+		"@nextcloud/babel-config": "^1.0.0",
 		"@nextcloud/browserslist-config": "^2.1.0",
-		"@nextcloud/eslint-config": "^5.1.0",
+		"@nextcloud/eslint-config": "^6.0.0",
 		"@nextcloud/stylelint-config": "^1.0.0-beta.0",
-		"@nextcloud/webpack-vue-config": "^4.0.3"
+		"@nextcloud/webpack-vue-config": "^4.1.0"
 	}
 }

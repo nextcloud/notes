@@ -289,7 +289,7 @@ export const undoDeleteNote = (note) => {
 		})
 }
 
-export const deleteNote = async(noteId, onNoteDeleted) => {
+export const deleteNote = async (noteId, onNoteDeleted) => {
 	store.commit('setNoteAttribute', { noteId, attribute: 'deleting', value: 'deleting' })
 	try {
 		await axios.delete(url('/notes/' + noteId))
