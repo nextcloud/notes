@@ -99,7 +99,7 @@ import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
 import PencilOffIcon from 'vue-material-design-icons/PencilOff'
 
 import { config } from '../config'
-import { fetchNote, refreshNote, saveNote, saveNoteManually, autotitleNote, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
+import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
@@ -334,7 +334,7 @@ export default {
 				if (this.autosaveTimer === null) {
 					this.autosaveTimer = setTimeout(() => {
 						this.autosaveTimer = null
-						saveNote(note.id)
+						queueCommand(note.id, 'content')
 					}, config.interval.note.autosave * 1000)
 				}
 
@@ -352,7 +352,7 @@ export default {
 					this.autotitleTimer = setTimeout(() => {
 						this.autotitleTimer = null
 						if (this.isNewNote) {
-							autotitleNote(note.id)
+							queueCommand(note.id, 'autotitle')
 						}
 					}, config.interval.note.autotitle * 1000)
 				}
