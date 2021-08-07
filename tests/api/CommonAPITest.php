@@ -266,7 +266,12 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->assertEquals(507, $response2->getStatusCode());
 	}
 
-	public function testUnauthorized() {
+	public function testNotAuthenticated() {
+		$response = $this->http->request('GET', 'notes', [ 'auth' => null ]);
+		$this->checkResponse($response, 'Get existing notes', 401);
+	}
+
+	public function testWrongCredentials() {
 		$auth = ['test', 'wrongpassword'];
 		$response = $this->http->request('GET', 'notes', [ 'auth' => $auth ]);
 		$this->checkResponse($response, 'Get existing notes', 401);
