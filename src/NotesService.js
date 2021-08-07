@@ -88,7 +88,7 @@ export const fetchNotes = () => {
 			return response.data
 		})
 		.catch(err => {
-			if (err.response && err.response.status === 304) {
+			if (err?.response?.status === 304) {
 				store.commit('setSyncLastModified', err.response.headers['last-modified'])
 				return null
 			} else {
@@ -111,7 +111,7 @@ export const fetchNote = noteId => {
 			return response.data
 		})
 		.catch(err => {
-			if (err.response.status === 404) {
+			if (err?.response?.status === 404) {
 				throw err
 			} else {
 				console.error(err)
@@ -149,7 +149,14 @@ export const refreshNote = (noteId, lastETag) => {
 			return null
 		})
 		.catch(err => {
-			if (err.response.status !== 304) {
+			if (err?.response?.status === 304 || note.deleting) {
+				// ignore error if note is deleting or not changed
+				return null
+			} else if (err?.code === 'ECONNABORTED') {
+				// ignore cancelled request
+				console.debug('Refresh Note request was cancelled.')
+				return null
+			} else {
 				console.error(err)
 				handleSyncError(t('notes', 'Refreshing note {id} has failed.', { id: noteId }), err)
 			}
@@ -216,7 +223,7 @@ function _updateNote(note) {
 			}
 		})
 		.catch(err => {
-			if (err.response && err.response.status === 412) {
+			if (err?.response?.status === 412) {
 				// ETag does not match, try to merge changes
 				note.saveError = false
 				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
