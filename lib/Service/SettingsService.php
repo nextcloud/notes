@@ -27,16 +27,7 @@ class SettingsService {
 		$this->l10n = $l10n;
 		$this->root = $root;
 		$this->attrs = [
-			'fileSuffix' => [
-				'default' => '.txt',
-				'validate' => function ($value) {
-					if (in_array($value, [ '.txt', '.md' ])) {
-						return $value;
-					} else {
-						return '.txt';
-					}
-				},
-			],
+			'fileSuffix' => $this->getListAttrs('.txt', '.md'),
 			'notesPath' => [
 				'default' => function (string $uid) {
 					return $this->getDefaultNotesPath($uid);
@@ -55,6 +46,21 @@ class SettingsService {
 					return implode(DIRECTORY_SEPARATOR, $path);
 				},
 			],
+			'noteMode' => $this->getListAttrs('edit', 'preview'),
+		];
+	}
+
+	private function getListAttrs(...$values) : array {
+		$first = $values[0];
+		return [
+			'default' => $first,
+			'validate' => function ($value) use ($values, $first) {
+				if (in_array($value, $values)) {
+					return $value;
+				} else {
+					return $first;
+				}
+			},
 		];
 	}
 
