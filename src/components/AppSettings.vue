@@ -24,6 +24,16 @@
 				</option>
 			</select>
 		</div>
+		<div class="settings-block">
+			<p class="settings-hint">
+				<label for="noteMode">{{ t('notes', 'Display mode for notes') }}</label>
+			</p>
+			<select id="noteMode" v-model="settings.noteMode" @change="onChangeSettings">
+				<option v-for="mode in noteModes" :key="mode.value" :value="mode.value">
+					{{ mode.label }}
+				</option>
+			</select>
+		</div>
 	</AppNavigationSettings>
 </template>
 
@@ -45,6 +55,10 @@ export default {
 	data() {
 		return {
 			extensions: ['.txt', '.md'],
+			noteModes: [
+				{ value: 'edit', label: t('notes', 'Open in edit mode') },
+				{ value: 'preview', label: t('notes', 'Open in preview mode') },
+			],
 			saving: false,
 		}
 	},

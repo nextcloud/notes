@@ -212,7 +212,7 @@ export default {
 
 			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.preview = false
+			this.preview = store.state.app.settings.noteMode === 'preview'
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
 					if (note.error) {
