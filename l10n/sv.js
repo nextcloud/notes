@@ -33,7 +33,6 @@ OC.L10N.register(
     "Remove from favorites" : "Ta bort från favoriter",
     "Add to favorites" : "Lägg till som favorit",
     "Error during preparing note for deletion." : "Fel vid förberedelse av anteckning för radering.",
-    "The note has been changed in another session. Please choose which content should be saved." : "Anteckningen har modifierats i en annan session. Vänligen välj vilket innehåll som skall sparas.",
     "Use version from server" : "Använd version från servern",
     "Use current version" : "Använd nuvarande version",
     "Empty note" : "Tom anteckning",

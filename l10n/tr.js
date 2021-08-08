@@ -34,7 +34,6 @@ OC.L10N.register(
     "Remove from favorites" : "Sık kullanılanlardan çıkar",
     "Add to favorites" : "Sık kullanılanlara ekle",
     "Error during preparing note for deletion." : "Not silinmeye hazırlanırken sorun çıktı.",
-    "The note has been changed in another session. Please choose which content should be saved." : "Bu not başka bir oturumdan değiştirilmiş. Lütfen hangi içeriğin kaydedilmesi gerektiğini seçin.",
     "Use version from server" : "Sunucudaki sürüm kullanılsın",
     "Use current version" : "Geçerli sürüm kullanılsın",
     "Empty note" : "Not boş",

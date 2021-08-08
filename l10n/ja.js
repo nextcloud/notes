@@ -34,7 +34,6 @@ OC.L10N.register(
     "Remove from favorites" : "お気に入りから削除",
     "Add to favorites" : "お気に入りに追加",
     "Error during preparing note for deletion." : "ノートの削除準備中にエラーが発生しました。",
-    "The note has been changed in another session. Please choose which content should be saved." : "このノートは他のセッションから変更されました。保存する内容を選択してください。",
     "Use version from server" : "サーバーからの版を使用する",
     "Use current version" : "現在の版を使用する",
     "Empty note" : "空白のノート",

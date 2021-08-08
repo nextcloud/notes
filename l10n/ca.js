@@ -34,7 +34,6 @@ OC.L10N.register(
     "Remove from favorites" : "Suprimeix de preferits",
     "Add to favorites" : "Afegeix als preferits",
     "Error during preparing note for deletion." : "S'ha produït un error en preparar la nota per la supressió.",
-    "The note has been changed in another session. Please choose which content should be saved." : "S'ha modificat la nota en una altra sessió. Trieu quin contingut s'ha de desar.",
     "Use version from server" : "Utilitza la versió del servidor",
     "Use current version" : "Utilitza la versió actual",
     "Empty note" : "Nota en blanc",

@@ -34,7 +34,6 @@ OC.L10N.register(
     "Remove from favorites" : "Verwijderen uit favorieten",
     "Add to favorites" : "Toevoegen aan favorieten",
     "Error during preparing note for deletion." : "Fout bij voorbereiden verwijderen notitie.",
-    "The note has been changed in another session. Please choose which content should be saved." : "Het notitie is gewijzigd binnen een andere sessie. Kies welke inhoud moet worden bewaard.",
     "Use version from server" : "Gebruik de versie van de server",
     "Use current version" : "Gebruik de huidige versie",
     "Empty note" : "Lege notitie",

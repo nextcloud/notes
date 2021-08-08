@@ -32,7 +32,6 @@
     "Remove from favorites" : "從最愛中移除",
     "Add to favorites" : "加到我的最愛",
     "Error during preparing note for deletion." : "準備刪除筆記時出錯。",
-    "The note has been changed in another session. Please choose which content should be saved." : "該筆記在另一節中已更改。請選擇應保存的版本。",
     "Use version from server" : "使用伺服器版本",
     "Use current version" : "使用目前版本",
     "Empty note" : "無內容",

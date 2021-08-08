@@ -34,7 +34,6 @@ OC.L10N.register(
     "Remove from favorites" : "Убрать из избранного",
     "Add to favorites" : "Добавить в избранное",
     "Error during preparing note for deletion." : "Не удалось подготовить заметку к удалению,",
-    "The note has been changed in another session. Please choose which content should be saved." : "Заметка была изменена в другом сеансе. Пожалуйста, выберите, какое содержание следует сохранить.",
     "Use version from server" : "Использовать версию с сервера",
     "Use current version" : "Использовать текущую версию",
     "Empty note" : "Пустая заметка",
