@@ -34,6 +34,7 @@ OC.L10N.register(
     "Remove from favorites" : "从收藏夹移除",
     "Add to favorites" : "添加到收藏夹",
     "Error during preparing note for deletion." : "准备删除笔记时出错。",
+    "The note has been changed in another session. Please choose which version should be saved." : "笔记已在另一会话中被更改。请选择要保存的版本。",
     "Use version from server" : "使用服务器版本",
     "Use current version" : "使用当前版本",
     "Empty note" : "空笔记",
