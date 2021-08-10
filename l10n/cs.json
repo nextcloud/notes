@@ -32,6 +32,7 @@
     "Remove from favorites" : "Odebrat z oblíbených",
     "Add to favorites" : "Přidat do oblíbených",
     "Error during preparing note for deletion." : "Chyba při přípravě vymazání poznámky.",
+    "The note has been changed in another session. Please choose which version should be saved." : "Poznámka byla upravena v jiném sezení. Zvolte, která verze má být uložena.",
     "Use version from server" : "Použít verzi ze serveru",
     "Use current version" : "Použít stávající verzi",
     "Empty note" : "Prázdná poznámka",

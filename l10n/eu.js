@@ -34,6 +34,7 @@ OC.L10N.register(
     "Remove from favorites" : "Kendu gogokoetatik",
     "Add to favorites" : "Gehitu gogokoetan",
     "Error during preparing note for deletion." : "Errorea oharra ezabatzeko prestatzean.",
+    "The note has been changed in another session. Please choose which version should be saved." : "Oharra beste saio batean aldatu da. Aukeratu zein bertsio gorde behar den.",
     "Use version from server" : "Erabili zerbitzariaren bertsioa",
     "Use current version" : "Erabili uneko bertsioa",
     "Empty note" : "Ohar hutsa",
