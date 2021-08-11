@@ -34,6 +34,7 @@ OC.L10N.register(
     "Remove from favorites" : "Usuń z ulubionych",
     "Add to favorites" : "Dodaj do ulubionych",
     "Error during preparing note for deletion." : "Błąd podczas przygotowywania notatki do usunięcia.",
+    "The note has been changed in another session. Please choose which version should be saved." : "Notatka została zmieniona w innej sesji. Proszę wybrać, która wersja ma zostać zapisana.",
     "Use version from server" : "Użyj wersji z serwera",
     "Use current version" : "Użyj bieżącej wersji",
     "Empty note" : "Pusta notatka",
