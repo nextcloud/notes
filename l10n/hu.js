@@ -85,6 +85,6 @@ OC.L10N.register(
     "Updating the note's category has failed. Is the target directory writable?" : "A jegyzet kategóriájának frissítése nem sikerült. Írható a célkönyvtár?",
     "Updating the category for note {id} has failed." : "A jegyzet kategóriájának módosítása sikertelen.",
     "Development Mode" : "Fejlesztői Mód",
-    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Úgy tűnik, hogy a Jegyzetek alkalmazást fejlesztői forrásból telepítették. Kérjük, inkább telepítse a hivatalos <a href=\"%1$s\"> Nextcloud App Store-ból </a>. Ha Ön szeretné buildelni a Jegyzetek alkalmazást, kövesse a <a href=\"%2$s\"> fejlesztői utasításokat </a>."
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Úgy tűnik, hogy a Jegyzetek alkalmazást fejlesztői forrásból telepítették. Inkább telepítse a hivatalos <a href=\"%1$s\">Nextcloud alkalmazástárból </a>. Ha Ön szeretné összeállítani a Jegyzetek alkalmazást, akkor kövesse a <a href=\"%2$s\">fejlesztői utasításokat</a>."
 },
 "nplurals=2; plural=(n != 1);");
