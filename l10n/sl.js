@@ -44,6 +44,7 @@ OC.L10N.register(
     "Preview" : "Predogled",
     "Exit full screen" : "Končaj celozaslonski način",
     "Full screen" : "Celozaslonski način",
+    "Note is read-only. You cannot change it." : "Sporočilo je le za branje in ga ni mogoče spreminjati.",
     "Save failed. Click to retry." : "Shranjevanje je spodletelo. Kliknite za ponovni poskus.",
     "Update conflict. Click for resolving manually." : "Zaznan je spor usklajevanja, ki ga je treba razrešiti ročno.",
     "Error from Nextcloud server: {msg}" : "Napaka s strežnika Nextcloud: {msg}",
