@@ -27,7 +27,7 @@ OC.L10N.register(
     "This week" : "Custa chida",
     "Last week" : "Sa chida colada",
     "This month" : "Custu mese",
-    "Last month" : "Su mese coladu ",
+    "Last month" : "Su mese passadu",
     "Rename" : "Torra a numenare",
     "Note's title" : "Tìtulu de sa nota",
     "Delete note" : "Elìmina nota",
