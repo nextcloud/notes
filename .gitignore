@@ -7,7 +7,7 @@ js/
 report
 clover.xml
 composer.lock
-.php_cs.cache
+.php-cs-fixer.cache
 appinfo/info.xsd
 
 # just sane ignores
