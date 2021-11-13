@@ -196,13 +196,11 @@ export default {
 		document.removeEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('keydown', this.onKeyPress)
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
-		store.commit('setSidebarOpen', false)
 		this.onUpdateTitle(null)
 	},
 
 	methods: {
 		fetchData() {
-			store.commit('setSidebarOpen', false)
 			this.etag = null
 			this.stopRefreshTimer()
 
