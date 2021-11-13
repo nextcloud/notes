@@ -13,6 +13,13 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.2.0 - 2021-11-13
+
+- add setting for view mode (#747)
+- keep Sidebar open when open other note (#775)
+- maintenance (#748, #773, #774, #776)
+
+
 ## 4.1.1 - 2021-07-31
 
 - fix error handling if loading notes fails (#740)
