@@ -15,6 +15,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		noteid: {
+			type: String,
+			required: true,
+		}
 	},
 
 	data() {
@@ -22,30 +26,48 @@ export default {
 				linkify: true,
 			});
 
+		return {
+			html: '',
+			md: markdown
+		}
+	},
 
-		// https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
-		// Remember old renderer, if overridden, or proxy to default renderer
-		var defaultRender = markdown.renderer.rules.image || function(tokens, idx, options, env, self) {
-			return self.renderToken(tokens, idx, options);
-		};
+	watch: {
+		value: 'onUpdate',
+	},
 
-		markdown.renderer.rules.image = function (tokens, idx, options, env, self) {
-			// If you are sure other plugins can't add `target` - drop check below
-			var aIndex = tokens[idx].attrIndex('src');
-			var source = tokens[idx].attrs[aIndex][1];
+	created() {
+		this.setImageRule(this.noteid)
+		this.onUpdate()
+	},
 
-			//rewrite dots to ; for url-encoding. See the corresponding API
-			source = source.replace("../", ";;/");
+	methods: {
+		onUpdate() {
+			this.html = this.md.render(this.value)
+		},
+		setImageRule(id) {
+			// https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
+			// Remember old renderer, if overridden, or proxy to default renderer
+			var defaultRender = this.md.renderer.rules.image || function(tokens, idx, options, env, self) {
+				return self.renderToken(tokens, idx, options);
+			};
 
-			var id = "199"
-			if(!source.startsWith("http")) {
-				source = generateUrl('apps/notes') + "/notes/image/" + id + "/" + source;
-			}
+			this.md.renderer.rules.image = function (tokens, idx, options, env, self) {
+				// If you are sure other plugins can't add `target` - drop check below
+				var aIndex = tokens[idx].attrIndex('src');
+				var source = tokens[idx].attrs[aIndex][1];
 
-			tokens[idx].attrs[aIndex][1] = source
-			// pass token to default renderer.
-			return defaultRender(tokens, idx, options, env, self);
-		};
+				//rewrite dots to ; for url-encoding. See the corresponding API
+				source = source.replaceAll("../", ";;/");
+
+				if(!source.startsWith("http")) {
+					source = generateUrl('apps/notes') + "/notes/image/" + id + "/" + source;
+				}
+
+				tokens[idx].attrs[aIndex][1] = source
+				// pass token to default renderer.
+				return defaultRender(tokens, idx, options, env, self);
+			};
 
 		md.use(require('markdown-it-task-checkbox'), {
 			disabled: true,
