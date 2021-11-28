@@ -5,6 +5,7 @@
 <script>
 
 import MarkdownIt from 'markdown-it'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'EditorMarkdownIt',
@@ -36,10 +37,9 @@ export default {
 			//rewrite dots to ; for url-encoding. See the corresponding API
 			source = source.replace("../", ";;/");
 
-			// properly determine main url
-
+			var id = "199"
 			if(!source.startsWith("http")) {
-				source = "http://localhost/index.php/apps/notes/notes/image/199/" + source;
+				source = generateUrl('apps/notes') + "/notes/image/" + id + "/" + source;
 			}
 
 			tokens[idx].attrs[aIndex][1] = source
