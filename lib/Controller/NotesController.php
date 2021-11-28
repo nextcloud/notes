@@ -322,16 +322,12 @@ class NotesController extends Controller {
 			$parentcount = substr_count($path, ';;/');
 			$path = str_replace(";;/", "", $path);
 
-			$imagepath = $notePath . $path;
-			$origin = $this->root->get($imagepath)->getParent();
-			$notenode = $origin;
+			$relativeImageNode = $this->root->get($notePath);
 			for ($i = 0; $i < $parentcount; $i++) {
-				$notenode = $notenode->getParent();
+				$relativeImageNode = $relativeImageNode->getParent();
 			}
 
-			//return new JSONResponse($notenode->getPath()."-".$origin->getPath()."-".$parentcount);
-
-			foreach ($notenode->getDirectoryListing() as $file) {
+			foreach ($relativeImageNode->getDirectoryListing() as $file) {
 				if (str_ends_with($file->getPath(), $path)) {
 					//make sure the file is in the notes folder
 					if (str_starts_with($file->getPath(), $notesFolderPath)) {
