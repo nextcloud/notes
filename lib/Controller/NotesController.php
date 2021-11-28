@@ -333,10 +333,12 @@ class NotesController extends Controller {
 
 			foreach ($notenode->getDirectoryListing() as $file) {
 				if (str_ends_with($file->getPath(), $path)) {
-					return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
+					//make sure the file is in the notes folder
+					if (str_starts_with($file->getPath(), $notesFolderPath)) {
+						return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
+					}
 				}
 			}
-
 		} catch (\Exception $e) {
 			return new JSONResponse($e->getMessage());
 		}
