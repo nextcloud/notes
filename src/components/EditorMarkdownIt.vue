@@ -145,5 +145,12 @@ export default {
 			cursor: default;
 		}
 	}
+
+	& img {
+		width: 75%;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
 }
 </style>
