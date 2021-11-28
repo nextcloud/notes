@@ -136,7 +136,7 @@ class NotesService {
 	 * @param string $userId the user id
 	 * @return Folder
 	 */
-	private function getNotesFolder(string $userId) : Folder {
+	public function getNotesFolder(string $userId) : Folder {
 		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
 		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
 		$folder = $this->noteUtil->getOrCreateFolder($path);

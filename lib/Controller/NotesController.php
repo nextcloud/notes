@@ -9,6 +9,8 @@ use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\FileDisplayResponse;
+use OCP\Files\IRootFolder;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -29,6 +31,8 @@ class NotesController extends Controller {
 	private $settings;
 	/** @var IL10N */
 	private $l10n;
+	/** @var IRootFolder */
+	private $root;
 
 	public function __construct(
 		string $AppName,
@@ -38,7 +42,8 @@ class NotesController extends Controller {
 		SettingsService $settingsService,
 		Helper $helper,
 		IConfig $settings,
-		IL10N $l10n
+		IL10N $l10n,
+		IRootFolder $root
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -47,6 +52,7 @@ class NotesController extends Controller {
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->l10n = $l10n;
+		$this->root = $root;
 	}
 
 	/**
@@ -295,5 +301,44 @@ class NotesController extends Controller {
 			$this->notesService->delete($this->helper->getUID(), $id);
 			return [];
 		});
+	}
+
+	/**
+	 * With help from: https://github.com/nextcloud/cookbook
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @return JSONResponse|FileDisplayResponse
+	 */
+	public function getImage(int $id, string $path) {
+		try {
+			$note = $this->notesService->get($this->helper->getUID(), $id);
+
+
+			$notesFolderPath = $this->notesService->getNotesFolder($this->helper->getUID())->getPath();
+			$notePath = $notesFolderPath . "/" . $note->getCategory() . "/";
+
+
+			//because of how the internet works, ../ cannot work in the url and get's removed. We use ;;/ as a placeholder.
+			$parentcount = substr_count($path, ';;/');
+			$path = str_replace(";;/", "", $path);
+
+			$imagepath = $notePath . $path;
+			$origin = $this->root->get($imagepath)->getParent();
+			$notenode = $origin;
+			for ($i = 0; $i < $parentcount; $i++) {
+				$notenode = $notenode->getParent();
+			}
+
+			//return new JSONResponse($notenode->getPath()."-".$origin->getPath()."-".$parentcount);
+
+			foreach ($notenode->getDirectoryListing() as $file) {
+				if (str_ends_with($file->getPath(), $path)) {
+					return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
+				}
+			}
+
+		} catch (\Exception $e) {
+			return new JSONResponse($e->getMessage());
+		}
 	}
 }

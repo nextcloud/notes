@@ -83,6 +83,14 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 
+	//////////  I M A G E S  //////////
+
+	[
+		'name' => 'notes#getImage',
+		'url' => '/notes/image/{id}/{path}',
+		'verb' => 'GET',
+		'requirements' => ['id' => '\d+', 'path' => '.+'],
+	],
 
 	//////////  S E T T I N G S  //////////
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
@@ -182,5 +190,5 @@ return ['routes' => [
 			'apiVersion' => '(v0.2|v1)',
 			'path' => '.+',
 		],
-	],
+	]
 ]];
