@@ -30,7 +30,7 @@
 				<div v-show="!note.content" class="placeholder">
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
-				<ThePreview v-if="preview" :value="note.content" />
+				<ThePreview v-if="preview" :value="note.content" :noteid="this.noteId" />
 				<TheEditor v-else
 					:value="note.content"
 					:readonly="note.readonly"
