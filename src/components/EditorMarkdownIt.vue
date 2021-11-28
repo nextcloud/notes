@@ -136,6 +136,13 @@ export default {
 		content: '\00a0';
 	}
 
+	& img {
+		width: 75%;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+
 	.task-list-item {
 		list-style-type: none;
 		input {
