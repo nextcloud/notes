@@ -17,10 +17,35 @@ export default {
 	},
 
 	data() {
+		const markdown = new MarkdownIt({
+				linkify: true,
+			});
 
-		const md = new MarkdownIt({
-			linkify: true,
-		})
+
+		// https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
+		// Remember old renderer, if overridden, or proxy to default renderer
+		var defaultRender = markdown.renderer.rules.image || function(tokens, idx, options, env, self) {
+			return self.renderToken(tokens, idx, options);
+		};
+
+		markdown.renderer.rules.image = function (tokens, idx, options, env, self) {
+			// If you are sure other plugins can't add `target` - drop check below
+			var aIndex = tokens[idx].attrIndex('src');
+			var source = tokens[idx].attrs[aIndex][1];
+
+			//rewrite dots to ; for url-encoding. See the corresponding API
+			source = source.replace("../", ";;/");
+
+			// properly determine main url
+
+			if(!source.startsWith("http")) {
+				source = "http://localhost/index.php/apps/notes/notes/image/199/" + source;
+			}
+
+			tokens[idx].attrs[aIndex][1] = source
+			// pass token to default renderer.
+			return defaultRender(tokens, idx, options, env, self);
+		};
 
 		md.use(require('markdown-it-task-checkbox'), {
 			disabled: true,
@@ -29,7 +54,7 @@ export default {
 
 		return {
 			html: '',
-			md,
+			md: markdown
 		}
 	},
 
