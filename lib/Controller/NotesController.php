@@ -339,4 +339,21 @@ class NotesController extends Controller {
 			return new JSONResponse($e->getMessage());
 		}
 	}
+
+	/**
+	* @NoAdminRequired
+	*/
+	public function createImage($id): JSONResponse
+	{
+		$file = $this->request->getUploadedFile('image');
+		$result = $this->notesService->createImage(
+			$this->helper->getUID(),
+			intval($id),
+			$file
+		);
+
+		return new JSONResponse($result);
+	}
+
+
 }

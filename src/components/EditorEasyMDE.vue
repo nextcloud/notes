@@ -1,11 +1,14 @@
 <template>
 	<div class="markdown-editor" @click="onClickEditor">
 		<textarea />
+		<input type="submit" id="123" @click="onClickUpload">
 	</div>
 </template>
 <script>
 
 import EasyMDE from 'easymde'
+import axios from "@nextcloud/axios";
+import {generateUrl} from "@nextcloud/router";
 
 export default {
 	name: 'EditorEasyMDE',
@@ -19,6 +22,10 @@ export default {
 			type: Boolean,
 			required: true,
 		},
+		noteid: {
+			type: String,
+			required: true,
+		}
 	},
 
 	data() {
@@ -58,6 +65,7 @@ export default {
 
 	methods: {
 		initialize() {
+
 			const config = Object.assign({
 				element: this.$el.firstElementChild,
 				initialValue: this.value,
@@ -119,6 +127,35 @@ export default {
 				this.mde.codemirror.setCursor(this.mde.codemirror.lineCount(), 0)
 				this.mde.codemirror.focus()
 			}
+		},
+
+		async onClickUpload() {
+
+			var doc = this.mde.codemirror.getDoc();
+			var cur = this.mde.codemirror.getCursor()
+
+			var id = this.noteid
+
+			var fileSelector = document.createElement('input');
+			fileSelector.setAttribute('type', 'file');
+
+			fileSelector.onchange = async function () {
+				const fd = new FormData();
+				fd.append('image', fileSelector.files[0]);
+				const response = await axios({
+					method: 'POST',
+					url: generateUrl('apps/notes') + '/notes/newimage/' + id,
+					data: fd,
+				})
+
+				var pos = {
+					line: cur.line
+				};
+
+				var name = response.data['filename'];
+				doc.replaceRange("!["+name+"]("+name+")", pos);
+			}
+			fileSelector.click();
 		},
 
 	},

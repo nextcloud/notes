@@ -33,6 +33,7 @@
 				<ThePreview v-if="preview" :value="note.content" :noteid="this.noteId" />
 				<TheEditor v-else
 					:value="note.content"
+					:noteid="this.noteId"
 					:readonly="note.readonly"
 					@input="onEdit"
 				/>
