@@ -91,6 +91,11 @@ return ['routes' => [
 		'verb' => 'GET',
 		'requirements' => ['id' => '\d+', 'path' => '.+'],
 	],
+	[
+		'name' => 'notes#createImage',
+		'url' => '/notes/newimage/{id}',
+		'verb' => 'POST',
+	],
 
 	//////////  S E T T I N G S  //////////
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
