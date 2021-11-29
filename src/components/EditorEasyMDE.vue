@@ -1,7 +1,11 @@
 <template>
-	<div class="markdown-editor" @click="onClickEditor">
-		<textarea />
-		<input type="submit" id="123" @click="onClickUpload">
+	<div>
+		<div class="toolbar">
+			<input type="submit" id="123" @click="onClickUpload" :value="t('notes', 'Upload Image')">
+		</div>
+		<div class="markdown-editor" @click="onClickEditor">
+			<textarea />
+		</div>
 	</div>
 </template>
 <script>
@@ -67,7 +71,7 @@ export default {
 		initialize() {
 
 			const config = Object.assign({
-				element: this.$el.firstElementChild,
+				element: this.$el.lastElementChild.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
 			}, this.config)
@@ -288,5 +292,11 @@ export default {
 .CodeMirror .cm-formatting-task.cm-property + span {
 	opacity: 0.5;
 	text-decoration: line-through;
+}
+
+.toolbar {
+	border-bottom: darkgray 1px solid;
+	padding-left: 30px;
+	padding-bottom: 10px;
 }
 </style>
