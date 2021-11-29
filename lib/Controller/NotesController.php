@@ -341,10 +341,9 @@ class NotesController extends Controller {
 	}
 
 	/**
-	* @NoAdminRequired
-	*/
-	public function createImage($id): JSONResponse
-	{
+	 * @NoAdminRequired
+	 */
+	public function createImage($id): JSONResponse {
 		$file = $this->request->getUploadedFile('image');
 		$result = $this->notesService->createImage(
 			$this->helper->getUID(),
@@ -354,6 +353,4 @@ class NotesController extends Controller {
 
 		return new JSONResponse($result);
 	}
-
-
 }
