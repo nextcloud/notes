@@ -221,8 +221,5 @@ class NotesService {
 		}
 
 		return $result;
-
 	}
-
-
 }

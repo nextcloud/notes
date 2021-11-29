@@ -1,7 +1,12 @@
 <template>
 	<div>
 		<div class="toolbar">
-			<input type="submit" id="123" @click="onClickUpload" :value="t('notes', 'Upload Image')">
+			<input
+				type="submit"
+				id="123"
+				@click="onClickUpload"
+				:value="t('notes', 'Upload Image')"
+			>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -11,8 +16,8 @@
 <script>
 
 import EasyMDE from 'easymde'
-import axios from "@nextcloud/axios";
-import {generateUrl} from "@nextcloud/router";
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'EditorEasyMDE',
@@ -134,34 +139,29 @@ export default {
 		},
 
 		async onClickUpload() {
+			const doc = this.mde.codemirror.getDoc()
+			const cursor = this.mde.codemirror.getCursor()
+			const id = this.noteid
 
-			var doc = this.mde.codemirror.getDoc();
-			var cur = this.mde.codemirror.getCursor()
-
-			var id = this.noteid
-
-			var fileSelector = document.createElement('input');
-			fileSelector.setAttribute('type', 'file');
-
-			fileSelector.onchange = async function () {
-				const fd = new FormData();
-				fd.append('image', fileSelector.files[0]);
+			const temporaryInput = document.createElement('input')
+			temporaryInput.setAttribute('type', 'file')
+			temporaryInput.onchange = async function() {
+				const data = new FormData()
+				data.append('image', temporaryInput.files[0])
 				const response = await axios({
 					method: 'POST',
 					url: generateUrl('apps/notes') + '/notes/newimage/' + id,
-					data: fd,
+					data,
 				})
+				const name = response.data.filename
+				const position = {
+					line: cursor.line
+				}
 
-				var pos = {
-					line: cur.line
-				};
-
-				var name = response.data['filename'];
-				doc.replaceRange("!["+name+"]("+name+")", pos);
+				doc.replaceRange('![' + name + '](' + name + ')', position)
 			}
-			fileSelector.click();
+			temporaryInput.click()
 		},
-
 	},
 }
 </script>
