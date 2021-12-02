@@ -17,11 +17,19 @@ export default {
 	},
 
 	data() {
+
+		const md = new MarkdownIt({
+			linkify: true,
+		})
+
+		md.use(require('markdown-it-task-checkbox'), {
+			disabled: true,
+			liClass: 'task-list-item'
+		})
+
 		return {
 			html: '',
-			md: new MarkdownIt({
-				linkify: true,
-			}),
+			md
 		}
 	},
 
@@ -126,6 +134,13 @@ export default {
 
 	& table td:empty::after {
 		content: '\00a0';
+	}
+
+	.task-list-item {
+		list-style-type: none;
+		input {
+			min-height: initial !important;
+		}
 	}
 }
 </style>
