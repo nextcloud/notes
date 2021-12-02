@@ -24,12 +24,12 @@ export default {
 
 		md.use(require('markdown-it-task-checkbox'), {
 			disabled: true,
-			liClass: 'task-list-item'
+			liClass: 'task-list-item',
 		})
 
 		return {
 			html: '',
-			md
+			md,
 		}
 	},
 
@@ -140,6 +140,9 @@ export default {
 		list-style-type: none;
 		input {
 			min-height: initial !important;
+		}
+		label {
+			cursor: default;
 		}
 	}
 }
