@@ -7,6 +7,12 @@
 				@click="onClickUpload"
 				:value="t('notes', 'Upload Image')"
 			>
+			<input
+				type="submit"
+				id="456"
+				@click="onClickSelect"
+				:value="t('notes', 'Select Image')"
+			>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -136,6 +142,37 @@ export default {
 				this.mde.codemirror.setCursor(this.mde.codemirror.lineCount(), 0)
 				this.mde.codemirror.focus()
 			}
+		},
+
+		async onClickSelect() {
+			//todo: fix those hardcoded paths
+			const apppath = "/Notes"
+			const categories = "/"
+			const base = apppath+categories
+			const doc = this.mde.codemirror.getDoc()
+			const cursor = this.mde.codemirror.getCursor()
+			OC.dialogs.filepicker(
+				t("notes", "Select an image"),
+				(path) => {
+
+					if(!path.startsWith(apppath)){
+						OC.dialogs.alert(t("notes", "You cannot select images outside of your notes folder. Your notes folder is: {folder}",{folder: apppath}), t("notes", "Wrong Image"),)
+						return
+					}
+
+					path = path.replace(base, "")
+					const position = {
+						line: cursor.line
+					}
+
+					doc.replaceRange('![' + path + '](' + path + ')', position)
+				},
+				false,
+				["image/jpeg", "image/png"],
+				true,
+				OC.dialogs.FILEPICKER_TYPE_CHOOSE,
+				"/Notizen"
+			)
 		},
 
 		async onClickUpload() {
