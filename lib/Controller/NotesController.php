@@ -311,32 +311,35 @@ class NotesController extends Controller {
 	 */
 	public function getImage(int $id, string $path) {
 		try {
+			//decode
+			$path = base64_decode($path);
 			$note = $this->notesService->get($this->helper->getUID(), $id);
 
-
 			$notesFolderPath = $this->notesService->getNotesFolder($this->helper->getUID())->getPath();
-			$notePath = $notesFolderPath . "/" . $note->getCategory() . "/";
+			$notePath = $notesFolderPath . "/";
+			if ($note->getCategory() != "") {
+				$notePath .= $note->getCategory() . "/";
+			}
+
+			//check if targetimage contains subdirectory
+			if(str_contains("/", $path)){
+
+			}
 
 
 			//because of how the internet works, ../ cannot work in the url and get's removed. We use ;;/ as a placeholder.
-			$parentcount = substr_count($path, ';;/');
-			$path = str_replace(";;/", "", $path);
+			$parentcount = substr_count($path, '../');
+			$path = str_replace("../", "", $path);
 
 			$relativeImageNode = $this->root->get($notePath);
 			for ($i = 0; $i < $parentcount; $i++) {
 				$relativeImageNode = $relativeImageNode->getParent();
 			}
+			$targetimage = $this->root->get($relativeImageNode->getPath()."/".$path);
+			return new FileDisplayResponse($targetimage, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 
-			foreach ($relativeImageNode->getDirectoryListing() as $file) {
-				if (str_ends_with($file->getPath(), $path)) {
-					//make sure the file is in the notes folder
-					if (str_starts_with($file->getPath(), $notesFolderPath)) {
-						return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
-					}
-				}
-			}
 		} catch (\Exception $e) {
-			return new JSONResponse($e->getMessage());
+			return new JSONResponse(["This image was not found.", $e->getMessage()]);
 		}
 	}
 
