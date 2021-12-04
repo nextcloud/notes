@@ -37,48 +37,57 @@
 					@input="onEdit"
 				/>
 			</div>
-			<span class="action-buttons">
-				<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-					<ActionButton v-show="!sidebarOpen && !fullscreen"
-						icon="icon-details"
-						@click="onToggleSidebar"
+			<div class="action-buttons" :class="sidebarOpen ? 'action-buttons-sidebaropen' : ''">
+				<span>
+					<Button v-show="!sidebarOpen && !fullscreen"
+							class="icon-details"
+							@click="onToggleSidebar"
 					>
-						{{ t('notes', 'Details') }}
-					</ActionButton>
-					<ActionButton
+					</Button>
+					<Button
 						v-tooltip.left="t('notes', 'CTRL + /')"
-						:icon="preview ? 'icon-rename' : 'icon-toggle'"
+						:class="preview ? 'icon-rename' : 'icon-toggle'"
 						@click="onTogglePreview"
 					>
-						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
-					</ActionButton>
-					<ActionButton
-						icon="icon-fullscreen"
-						:class="{ active: fullscreen }"
-						@click="onToggleDistractionFree"
-					>
-						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.readonly">
-					<ActionButton>
-						<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
-						{{ t('notes', 'Note is read-only. You cannot change it.') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.saveError" class="action-error">
-					<ActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
-						{{ t('notes', 'Save failed. Click to retry.') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.conflict" class="action-error">
-					<ActionButton @click="showConflict=true">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
-						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
-					</ActionButton>
-				</Actions>
-			</span>
+					</Button>
+					<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+						<ActionButton v-show="!sidebarOpen && !fullscreen"
+									  icon="icon-details"
+									  @click="onToggleSidebar"
+						>
+							{{ t('notes', 'Details') }}
+						</ActionButton>
+						<ActionButton
+							icon="icon-fullscreen"
+							:class="{ active: fullscreen }"
+							@click="onToggleDistractionFree"
+						>
+							{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
+						</ActionButton>
+					</Actions>
+					<Actions v-if="note.readonly">
+						<ActionButton>
+							<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
+							{{ t('notes', 'Note is read-only. You cannot change it.') }}
+						</ActionButton>
+					</Actions>
+					<Actions v-if="note.saveError" class="action-error">
+						<ActionButton @click="onManualSave">
+							<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+							{{ t('notes', 'Save failed. Click to retry.') }}
+						</ActionButton>
+					</Actions>
+					<Actions v-if="note.conflict" class="action-error">
+						<ActionButton @click="showConflict=true">
+							<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+							{{ t('notes', 'Update conflict. Click for resolving manually.') }}
+						</ActionButton>
+					</Actions>
+				</span>
+				<br>
+				<span class="statustext">{{ this.state }}</span>
+			</div>
+
 		</div>
 	</AppContent>
 </template>
@@ -131,6 +140,9 @@ export default {
 		noteId: {
 			type: String,
 			required: true,
+		},
+		state: {
+			type: String,
 		},
 	},
 
@@ -389,21 +401,34 @@ export default {
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
+		updateNoteState(manual) {
+			if(manual !== ""){
+				this.state = manual
+				return
+			}
+			if(this.loading){
+				this.state = t('notes', 'Loading...')
+				return;
+			}
+			this.state = ""
+		},
 	},
 }
 </script>
 <style scoped>
 .note-container {
 	min-height: 100%;
-	width: 100%;
 	background-color: var(--color-main-background);
 }
 
 .note-editor {
 	max-width: 47em;
 	font-size: 16px;
-	padding: 1em;
-	padding-bottom: 0;
+	padding-top: 1em;
+	padding-bottom: 1em;
+
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* center editor on large screens */
@@ -445,9 +470,15 @@ export default {
 	position: fixed;
 	top: 50px;
 	right: 20px;
-	width: 44px;
+	/*width: 44px;*/
 	margin-top: 1em;
 	z-index: 2000;
+	/*right: 20%;*/
+}
+
+.action-buttons-sidebaropen {
+	right: 27vw !important;
+	transition: right 130ms;
 }
 
 .action-buttons .action-error {
@@ -461,6 +492,8 @@ export default {
 
 .action-buttons button {
 	padding: 15px;
+	margin: 5px;
+	float: left;
 }
 
 /* Conflict Modal */
@@ -470,6 +503,13 @@ export default {
 
 .conflict-header {
 	padding: 1ex 1em;
+}
+
+.statustext{
+	padding: 0.5em;
+	color: #7b7b7b;
+	display: flex;
+	justify-content: center
 }
 
 .conflict-solutions {

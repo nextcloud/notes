@@ -1,6 +1,50 @@
 <template>
-	<div class="markdown-editor" @click="onClickEditor">
-		<textarea />
+	<div>
+		<div class="toolbar">
+			<a class="button" :title="t('notes', 'Undo')" @click="undo">
+				<span class=""></span>
+				<span class="">{{ t('notes', 'u') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Redo')" @click="redo">
+				<span class=""></span>
+				<span class="">{{ t('notes', 'r') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Bold')" @click="makeBold">
+				<span class=""></span>
+				<span class="">{{ t('notes', 'B') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Italic')" @click="makeItalic">
+				<span class=""></span>
+				<span class="">{{ t('notes', 'i') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Strikethrough')" @click="makeStrikethrough">
+				<span class=""></span>
+				<span class="">{{ t('notes', '-S-') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Title')" @click="makeMonospace">
+				<span class=""></span>
+				<span class="">{{ t('notes', 'H1') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Insert Link')" @click="insertLink">
+				<span class="icon-category-organization"></span>
+				<span class="toolbar_label">{{ t('notes', 'Insert Link') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Insert Checkbox')" @click="insertCheckbox">
+				<span class="icon-category-organization"></span>
+				<span class="toolbar_label">{{ t('notes', 'Insert Checkbox') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Monospace')" @click="makeMonospace">
+				<span class=""></span>
+				<span class="">{{ t('notes', '<>') }}</span>
+			</a>
+			<a class="button" @click="onClickUpload" :title="t('notes', 'Upload Image')">
+				<span class="icon-picture"></span>
+				<span></span>
+			</a>
+		</div>
+		<div class="markdown-editor" @click="onClickEditor">
+			<textarea />
+		</div>
 	</div>
 </template>
 <script>
@@ -120,7 +164,45 @@ export default {
 				this.mde.codemirror.focus()
 			}
 		},
-
+		insertText(content) {
+			const doc = this.mde.codemirror.getDoc()
+			const cursor = this.mde.codemirror.getCursor()
+			const position = {
+				line: cursor.line
+			}
+			doc.replaceRange(content, position)
+		},
+		surroundText(content) {
+			const doc = this.mde.codemirror.getDoc()
+			const cursorStart = this.mde.codemirror.getCursor('from')
+			const cursorEnd = this.mde.codemirror.getCursor('to')
+			const originalText = doc.getRange(cursorStart, cursorEnd)
+			doc.replaceRange(content + originalText + content, cursorStart, cursorEnd)
+		},
+		insertLink() {
+			this.insertText('[title](url)')
+		},
+		insertCheckbox() {
+			this.insertText('- [ ] ')
+		},
+		makeBold() {
+			this.surroundText('**')
+		},
+		makeItalic() {
+			this.surroundText('_')
+		},
+		makeMonospace() {
+			this.surroundText('`')
+		},
+		makeStrikethrough() {
+			this.surroundText('~~')
+		},
+		undo() {
+			this.mde.codemirror.undo()
+		},
+		redo() {
+			this.mde.codemirror.redo()
+		}
 	},
 }
 </script>
@@ -130,6 +212,7 @@ export default {
 .markdown-editor {
 	min-height: 100%;
 	padding-bottom: 30vh;
+	padding-top: 1em;
 }
 
 .EasyMDEContainer .CodeMirror {
@@ -251,5 +334,31 @@ export default {
 .CodeMirror .cm-formatting-task.cm-property + span {
 	opacity: 0.5;
 	text-decoration: line-through;
+}
+
+.toolbar {
+	width: 100%;
+	height: 44px;
+	/*border-bottom: darkgray 1px solid;*/
+
+	display:flex;
+	justify-content:center;
+
+}
+
+.button {
+	display: inline-block;
+	height: 34px;
+	padding: 4px 16px !important;
+	border: none !important;
+	background: none !important;
+}
+
+.button:hover{
+	background: var(--color-background-hover) !important;
+}
+
+.toolbar_label {
+	display: none;
 }
 </style>
