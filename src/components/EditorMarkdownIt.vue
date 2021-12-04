@@ -73,7 +73,7 @@ export default {
 				source = source.replaceAll('../', ';;/')
 
 				if (!source.startsWith('http')) {
-					source = generateUrl('apps/notes') + '/notes/image/' + id + '/' + source
+					source = generateUrl('apps/notes') + '/notes/image/' + id + '/' + Buffer.from(source, 'utf8').toString('base64');
 				}
 
 				token.attrs[aIndex][1] = source
