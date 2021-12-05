@@ -181,7 +181,7 @@ class NotesService {
 	private static function getFileById(Folder $folder, int $id) : File {
 		$file = $folder->getById($id);
 
-		if (count($file) <= 0 || !($file[0] instanceof File) || !self::isNote($file[0])) {
+		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !self::isNote($file[0])) {
 			throw new NoteDoesNotExistException();
 		}
 		return $file[0];
