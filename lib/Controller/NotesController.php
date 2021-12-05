@@ -9,6 +9,7 @@ use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\Files\IRootFolder;
 use OCP\IRequest;
@@ -307,7 +308,7 @@ class NotesController extends Controller {
 	 * With help from: https://github.com/nextcloud/cookbook
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @return JSONResponse|FileDisplayResponse
+	 * @return DataResponse|FileDisplayResponse
 	 */
 	public function getAttachment(int $noteid, string $path) {
 		try {
@@ -329,14 +330,14 @@ class NotesController extends Controller {
 			}
 			$targetimage = $this->root->get($relativeImageNode->getPath()."/".$path);
 			return new FileDisplayResponse($targetimage, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
-
 		} catch (\Exception $e) {
-			return new JSONResponse(["This image was not found.", $e->getMessage()]);
+			return new DataResponse([$e], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	/**
 	 * @NoAdminRequired
+	 * @return DataResponse
 	 */
 	public function uploadFile($noteid): JSONResponse {
 		$file = $this->request->getUploadedFile('file');
@@ -345,6 +346,9 @@ class NotesController extends Controller {
 			intval($noteid),
 			$file
 		);
-		return new JSONResponse($result);
+		if ($result['wasUploaded']) {
+			return new DataResponse([], Http::STATUS_OK);
+		}
+		return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 	}
 }
