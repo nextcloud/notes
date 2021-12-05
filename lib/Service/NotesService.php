@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
@@ -192,7 +194,7 @@ class NotesService {
 	 * @param $cardId
 	 * @param $type
 	 * @param $data
-	 * @return array
+	 * @return DataResponse
 	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
 	public function createImage($uid, $noteid, $fileDataArray) {
@@ -200,10 +202,13 @@ class NotesService {
 		$notesFolder = $this->getNotesFolder($uid);
 		$parent = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
 
-
-		// get file name
-		// todo: check if it is truly unique
-		$filename = uniqid("", true) . "." . explode(".", $fileDataArray['name'])[1];
+		// try to generate long id, if not available on system fall back to a shorter one
+		try {
+			$filename = bin2hex(random_bytes(16));
+		} catch (\Exception $e) {
+			$filename = uniqid();
+		}
+		$filename = $filename . "." . explode(".", $fileDataArray['name'])[1];
 
 		// read uploaded file from disk
 		$fp = fopen($fileDataArray['tmp_name'], "r");
@@ -219,7 +224,9 @@ class NotesService {
 		} catch (NotPermittedException $e) {
 			$result['wasUploaded'] = false;
 		}
-
-		return $result;
+		if ($result['wasUploaded']) {
+			return new DataResponse([$result], Http::STATUS_OK);
+		}
+		return new DataResponse([$result], Http::STATUS_INTERNAL_SERVER_ERROR);
 	}
 }

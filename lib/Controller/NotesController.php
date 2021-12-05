@@ -319,8 +319,7 @@ class NotesController extends Controller {
 				$notePath .= $note->getCategory() . "/";
 			}
 
-
-			//because of how the internet works, ../ cannot work in the url and get's removed. We use ;;/ as a placeholder.
+			// calculate how many parentnodes we need to get 'up'
 			$parentcount = substr_count($path, '../');
 			$path = str_replace("../", "", $path);
 
@@ -341,14 +340,10 @@ class NotesController extends Controller {
 	 */
 	public function uploadFile($noteid): DataResponse {
 		$file = $this->request->getUploadedFile('file');
-		$result = $this->notesService->createImage(
+		return $this->notesService->createImage(
 			$this->helper->getUID(),
 			intval($noteid),
 			$file
 		);
-		if ($result['wasUploaded']) {
-			return new DataResponse([$result], Http::STATUS_OK);
-		}
-		return new DataResponse([$result], Http::STATUS_INTERNAL_SERVER_ERROR);
 	}
 }
