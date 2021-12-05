@@ -24,6 +24,7 @@
 import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import store from '../store'
 
 export default {
 	name: 'EditorEasyMDE',
@@ -145,10 +146,10 @@ export default {
 		},
 
 		async onClickSelect() {
-			//todo: fix those hardcoded paths
-			const apppath = "/Notes"
-			const categories = "/"
-			const base = apppath+categories
+			const apppath = "/"+store.state.app.settings.notesPath
+			const categories = store.getters.getCategories()
+			const currentNotePath = apppath+"/"+categories
+
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
 			OC.dialogs.filepicker(
@@ -156,22 +157,23 @@ export default {
 				(path) => {
 
 					if(!path.startsWith(apppath)){
-						OC.dialogs.alert(t("notes", "You cannot select images outside of your notes folder. Your notes folder is: {folder}",{folder: apppath}), t("notes", "Wrong Image"),)
+						OC.dialogs.alert(t("notes", "You cannot select images outside of your notes folder. Your notes folder is: {folder}", {folder: apppath}), t("notes", "Wrong Image"),)
 						return
 					}
-
-					path = path.replace(base, "")
-					const position = {
-						line: cursor.line
+					const noteLevel = ((currentNotePath+"/").split("/").length) -1
+					const imageLevel = (path.split("/").length - 1)
+					const upwardsLevel = noteLevel - imageLevel
+					for (let i = 0; i < upwardsLevel; i++)  {
+						path = "../"+path
 					}
-
-					doc.replaceRange('![' + path + '](' + path + ')', position)
+					path = path.replace(apppath+"/", "")
+					doc.replaceRange('![' + path + '](' + path + ')', { line: cursor.line })
 				},
 				false,
 				["image/jpeg", "image/png"],
 				true,
 				OC.dialogs.FILEPICKER_TYPE_CHOOSE,
-				"/Notizen"
+				currentNotePath
 			)
 		},
 
@@ -194,7 +196,6 @@ export default {
 				const position = {
 					line: cursor.line
 				}
-
 				doc.replaceRange('![' + name + '](' + name + ')', position)
 			}
 			temporaryInput.click()
