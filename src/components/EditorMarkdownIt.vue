@@ -56,16 +56,13 @@ export default {
 				// If you are sure other plugins can't add `target` - drop check below
 				const token = tokens[idx]
 				const aIndex = token.attrIndex('src')
-				let source = token.attrs[aIndex][1]
+				let path = token.attrs[aIndex][1]
 
-				// rewrite dots to ; for url-encoding. See the corresponding API
-				source = source.replaceAll('../', ';;/')
-
-				if (!source.startsWith('http')) {
-					source = generateUrl('apps/notes') + '/notes/image/' + id + '/' + Buffer.from(source, 'utf8').toString('base64');
+				if (!path.startsWith('http')) {
+					path = generateUrl('apps/notes') + '/notes/' + id + '/attachment?path=' + path
 				}
 
-				token.attrs[aIndex][1] = source
+				token.attrs[aIndex][1] = path
 				// pass token to default renderer.
 				return defaultRender(tokens, idx, options, env, self)
 			};

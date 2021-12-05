@@ -309,21 +309,13 @@ class NotesController extends Controller {
 	 * @NoCSRFRequired
 	 * @return JSONResponse|FileDisplayResponse
 	 */
-	public function getImage(int $id, string $path) {
+	public function getAttachment(int $noteid, string $path) {
 		try {
-			//decode
-			$path = base64_decode($path);
-			$note = $this->notesService->get($this->helper->getUID(), $id);
-
+			$note = $this->notesService->get($this->helper->getUID(), $noteid);
 			$notesFolderPath = $this->notesService->getNotesFolder($this->helper->getUID())->getPath();
 			$notePath = $notesFolderPath . "/";
 			if ($note->getCategory() != "") {
 				$notePath .= $note->getCategory() . "/";
-			}
-
-			//check if targetimage contains subdirectory
-			if(str_contains("/", $path)){
-
 			}
 
 
@@ -346,14 +338,13 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function createImage($id): JSONResponse {
-		$file = $this->request->getUploadedFile('image');
+	public function uploadFile($noteid): JSONResponse {
+		$file = $this->request->getUploadedFile('file');
 		$result = $this->notesService->createImage(
 			$this->helper->getUID(),
-			intval($id),
+			intval($noteid),
 			$file
 		);
-
 		return new JSONResponse($result);
 	}
 }
