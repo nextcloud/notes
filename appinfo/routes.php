@@ -83,18 +83,19 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 
-	//////////  I M A G E S  //////////
+	//////////  A T T A C H M E N T S  //////////
 
 	[
-		'name' => 'notes#getImage',
-		'url' => '/notes/image/{id}/{path}',
+		'name' => 'notes#getAttachment',
+		'url' => '/notes/{noteid}/attachment',
 		'verb' => 'GET',
-		'requirements' => ['id' => '\d+', 'path' => '.+'],
+		'requirements' => ['noteid' => '\d+'],
 	],
 	[
-		'name' => 'notes#createImage',
-		'url' => '/notes/newimage/{id}',
+		'name' => 'notes#uploadFile',
+		'url' => '/notes/{noteid}/attachment',
 		'verb' => 'POST',
+		'requirements' => ['noteid' => '\d+'],
 	],
 
 	//////////  S E T T I N G S  //////////

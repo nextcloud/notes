@@ -184,10 +184,10 @@ export default {
 			temporaryInput.setAttribute('type', 'file')
 			temporaryInput.onchange = async function() {
 				const data = new FormData()
-				data.append('image', temporaryInput.files[0])
+				data.append('file', temporaryInput.files[0])
 				const response = await axios({
 					method: 'POST',
-					url: generateUrl('apps/notes') + '/notes/newimage/' + id,
+					url: generateUrl('apps/notes') + '/notes/' + id + "/attachment",
 					data,
 				})
 				const name = response.data.filename
