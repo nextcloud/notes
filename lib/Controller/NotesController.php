@@ -339,7 +339,7 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 * @return DataResponse
 	 */
-	public function uploadFile($noteid): JSONResponse {
+	public function uploadFile($noteid): DataResponse {
 		$file = $this->request->getUploadedFile('file');
 		$result = $this->notesService->createImage(
 			$this->helper->getUID(),
@@ -347,8 +347,8 @@ class NotesController extends Controller {
 			$file
 		);
 		if ($result['wasUploaded']) {
-			return new DataResponse([], Http::STATUS_OK);
+			return new DataResponse([$result], Http::STATUS_OK);
 		}
-		return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+		return new DataResponse([$result], Http::STATUS_INTERNAL_SERVER_ERROR);
 	}
 }

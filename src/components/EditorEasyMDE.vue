@@ -190,7 +190,7 @@ export default {
 					url: generateUrl('apps/notes') + '/notes/' + id + "/attachment",
 					data,
 				})
-				const name = response.data.filename
+				const name = response.data[0].filename
 				const position = {
 					line: cursor.line
 				}
