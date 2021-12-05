@@ -13,7 +13,7 @@
 		"stylelint:fix": "stylelint 'src/**/*.vue' 'css/**/*.scss' --fix"
 	},
 	"dependencies": {
-		"@nextcloud/axios": "^1.7.0",
+		"@nextcloud/axios": "^1.8.0",
 		"@nextcloud/dialogs": "^3.1.2",
 		"@nextcloud/event-bus": "^2.1.1",
 		"@nextcloud/moment": "^1.1.1",
@@ -26,7 +26,7 @@
 		"markdown-it-task-checkbox": "^1.0.6",
 		"vue": "^2.6.14",
 		"vue-fragment": "1.5.1",
-		"vue-material-design-icons": "^4.13.0",
+		"vue-material-design-icons": "^5.0.0",
 		"vue-observe-visibility": "^1.0.0",
 		"vue-router": "^3.5.3",
 		"vuex": "^3.6.2"
@@ -41,8 +41,8 @@
 	"devDependencies": {
 		"@nextcloud/babel-config": "^1.0.0",
 		"@nextcloud/browserslist-config": "^2.2.0",
-		"@nextcloud/eslint-config": "^6.1.0",
-		"@nextcloud/stylelint-config": "^1.0.0-beta.0",
-		"@nextcloud/webpack-vue-config": "^4.1.4"
+		"@nextcloud/eslint-config": "^6.1.1",
+		"@nextcloud/stylelint-config": "^2.0.1",
+		"@nextcloud/webpack-vue-config": "^4.2.0"
 	}
 }

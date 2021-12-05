@@ -31,16 +31,19 @@ class MetaMapper extends QBMapper {
 				$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->eq('file_id', $qb->createNamedParameter($fileId, IQueryBuilder::PARAM_INT))
 			);
+		/* @phan-suppress-next-line PhanTypeMismatchReturnSuperType */
 		return $this->findEntity($qb);
 	}
 
 	public function deleteAll() : void {
 		$qb = $this->db->getQueryBuilder();
+		// TODO NC22: replace execute() with executeStatement()
 		$qb->delete($this->tableName)->execute();
 	}
 
 	public function deleteByNote(int $id) : void {
 		$qb = $this->db->getQueryBuilder();
+		// TODO NC22: replace execute() with executeStatement()
 		$qb->delete($this->tableName)
 			->where(
 				$qb->expr()->eq('file_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
