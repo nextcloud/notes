@@ -132,31 +132,34 @@ export default {
 		},
 
 		async onClickSelect() {
-			const apppath = "/"+store.state.app.settings.notesPath
+			const apppath = '/' + store.state.app.settings.notesPath
 			const categories = store.getters.getCategories()
-			const currentNotePath = apppath+"/"+categories
+			const currentNotePath = apppath + '/' + categories
 
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
 			OC.dialogs.filepicker(
-				t("notes", "Select an image"),
+				t('notes', 'Select an image'),
 				(path) => {
 
-					if(!path.startsWith(apppath)){
-						OC.dialogs.alert(t("notes", "You cannot select images outside of your notes folder. Your notes folder is: {folder}", {folder: apppath}), t("notes", "Wrong Image"),)
+					if (!path.startsWith(apppath)) {
+						OC.dialogs.alert(
+							t('notes', 'You cannot select images outside of your notes folder. Your notes folder is: {folder}', { folder: apppath }),
+							t('notes', 'Wrong Image'),
+						)
 						return
 					}
-					const noteLevel = ((currentNotePath+"/").split("/").length) -1
-					const imageLevel = (path.split("/").length - 1)
+					const noteLevel = ((currentNotePath + '/').split('/').length) - 1
+					const imageLevel = (path.split('/').length - 1)
 					const upwardsLevel = noteLevel - imageLevel
-					for (let i = 0; i < upwardsLevel; i++)  {
-						path = "../"+path
+					for (let i = 0; i < upwardsLevel; i++) {
+						path = '../' + path
 					}
-					path = path.replace(apppath+"/", "")
+					path = path.replace(apppath + '/', '')
 					doc.replaceRange('![' + path + '](' + path + ')', { line: cursor.line })
 				},
 				false,
-				["image/jpeg", "image/png"],
+				['image/jpeg', 'image/png'],
 				true,
 				OC.dialogs.FILEPICKER_TYPE_CHOOSE,
 				currentNotePath
@@ -175,7 +178,7 @@ export default {
 				data.append('file', temporaryInput.files[0])
 				const response = await axios({
 					method: 'POST',
-					url: generateUrl('apps/notes') + '/notes/' + id + "/attachment",
+					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
 					data,
 				})
 				const name = response.data[0].filename
