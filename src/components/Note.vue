@@ -1,6 +1,6 @@
 <template>
 	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
-		<div v-if="!loading && note && !note.error && !note.deleting"
+		<div v-show="!loading && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
@@ -37,57 +37,7 @@
 					@input="onEdit"
 				/>
 			</div>
-			<div class="action-buttons" :class="sidebarOpen ? 'action-buttons-sidebaropen' : ''">
-				<span>
-					<Button v-show="!sidebarOpen && !fullscreen"
-							class="icon-details"
-							@click="onToggleSidebar"
-					>
-					</Button>
-					<Button
-						v-tooltip.left="t('notes', 'CTRL + /')"
-						:class="preview ? 'icon-rename' : 'icon-toggle'"
-						@click="onTogglePreview"
-					>
-					</Button>
-					<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-						<ActionButton v-show="!sidebarOpen && !fullscreen"
-									  icon="icon-details"
-									  @click="onToggleSidebar"
-						>
-							{{ t('notes', 'Details') }}
-						</ActionButton>
-						<ActionButton
-							icon="icon-fullscreen"
-							:class="{ active: fullscreen }"
-							@click="onToggleDistractionFree"
-						>
-							{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
-						</ActionButton>
-					</Actions>
-					<Actions v-if="note.readonly">
-						<ActionButton>
-							<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
-							{{ t('notes', 'Note is read-only. You cannot change it.') }}
-						</ActionButton>
-					</Actions>
-					<Actions v-if="note.saveError" class="action-error">
-						<ActionButton @click="onManualSave">
-							<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
-							{{ t('notes', 'Save failed. Click to retry.') }}
-						</ActionButton>
-					</Actions>
-					<Actions v-if="note.conflict" class="action-error">
-						<ActionButton @click="showConflict=true">
-							<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
-							{{ t('notes', 'Update conflict. Click for resolving manually.') }}
-						</ActionButton>
-					</Actions>
-				</span>
-				<br>
-				<span class="statustext">{{ this.state }}</span>
-			</div>
-
+			<TheSidemenu ref="sidebar" />
 		</div>
 	</AppContent>
 </template>
@@ -112,6 +62,7 @@ import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutio
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
+import TheSidemenu from './Sidemenu'
 import ConflictSolution from './ConflictSolution'
 import store from '../store'
 
@@ -128,6 +79,7 @@ export default {
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
+		TheSidemenu: () => import('./Sidemenu'),
 	},
 
 	directives: {
@@ -158,6 +110,15 @@ export default {
 			etag: null,
 			showConflict: false,
 		}
+	},
+
+	mounted() {
+		//todo fix this.
+		setTimeout(()=>{
+			this.$refs.sidebar.addEntry("test", "icon-notes", this.onTogglePreview, true)
+			this.$refs.sidebar.addEntry("test", "icon-notes", this.onTogglePreview, true)
+			this.$refs.sidebar.addEntry("test", "icon-notes", this.onTogglePreview, true)
+		}, 100);
 	},
 
 	computed: {
@@ -465,37 +426,9 @@ export default {
 	opacity: 0.5;
 }
 
-/* main editor button */
-.action-buttons {
-	position: fixed;
-	top: 50px;
-	right: 20px;
-	/*width: 44px;*/
-	margin-top: 1em;
-	z-index: 2000;
-	/*right: 20%;*/
-}
-
-.action-buttons-sidebaropen {
-	right: 27vw !important;
-	transition: right 130ms;
-}
-
-.action-buttons .action-error {
-	background-color: var(--color-error);
-	margin-top: 1ex;
-}
-
 .note-container.fullscreen .action-buttons {
 	top: 0px;
 }
-
-.action-buttons button {
-	padding: 15px;
-	margin: 5px;
-	float: left;
-}
-
 /* Conflict Modal */
 .conflict-modal {
 	width: 70vw;
@@ -505,12 +438,6 @@ export default {
 	padding: 1ex 1em;
 }
 
-.statustext{
-	padding: 0.5em;
-	color: #7b7b7b;
-	display: flex;
-	justify-content: center
-}
 
 .conflict-solutions {
 	display: flex;
