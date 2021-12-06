@@ -103,7 +103,7 @@ export default {
 	methods: {
 		initialize() {
 			const config = Object.assign({
-				element: this.$el.firstElementChild,
+				element: this.$el.lastElementChild.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
 			}, this.config)
@@ -164,6 +164,7 @@ export default {
 				this.mde.codemirror.focus()
 			}
 		},
+
 		insertText(content) {
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
@@ -172,6 +173,7 @@ export default {
 			}
 			doc.replaceRange(content, position)
 		},
+
 		surroundText(content) {
 			const doc = this.mde.codemirror.getDoc()
 			const cursorStart = this.mde.codemirror.getCursor('from')
@@ -179,27 +181,35 @@ export default {
 			const originalText = doc.getRange(cursorStart, cursorEnd)
 			doc.replaceRange(content + originalText + content, cursorStart, cursorEnd)
 		},
+
 		insertLink() {
 			this.insertText('[title](url)')
 		},
+
 		insertCheckbox() {
 			this.insertText('- [ ] ')
 		},
+
 		makeBold() {
 			this.surroundText('**')
 		},
+
 		makeItalic() {
 			this.surroundText('_')
 		},
+
 		makeMonospace() {
 			this.surroundText('`')
 		},
+
 		makeStrikethrough() {
 			this.surroundText('~~')
 		},
+
 		undo() {
 			this.mde.codemirror.undo()
 		},
+
 		redo() {
 			this.mde.codemirror.redo()
 		}
