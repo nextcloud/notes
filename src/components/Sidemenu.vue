@@ -1,23 +1,56 @@
 <template>
 	<div class="action-buttons" :class="sidebarOpen ? 'action-buttons-sidebaropen' : ''">
-		<Button v-for="item in notOverflowMenu" :key="item.id"
-				:class="item.icon"
-				@click="item.callback"
-		>{{ item.title }}</Button>
-		<Button v-for="item in overflowMenu" :key="item.id"
-				:class="item.icon"
-				@click="item.callback"
-		>{{ item.title }}</Button>
+		<span class="">
+			<Button v-for="item in notOverflowMenu" :key="item.id"
+					:class="item.icon"
+					@click="item.callback"
+			>{{ item.title }}</Button>
+			<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+				<ActionButton v-for="item in overflowMenu" :key="item.id"
+							  :icon="item.icon"
+							  @click="item.callback"
+				>{{ item.title }}
+				</ActionButton>
+			</Actions>
+		</span>
+
 		<br>
 		<span class="statustext">state</span>
 	</div>
 </template>
 
 <script>
+
+import {
+	Actions,
+	ActionButton,
+	AppContent,
+	Modal,
+	Tooltip,
+	isMobile,
+} from '@nextcloud/vue'
+import ConflictSolution from "./ConflictSolution";
+import PencilOffIcon from "vue-material-design-icons/PencilOff";
+import SyncAlertIcon from "vue-material-design-icons/SyncAlert";
+import TheEditor from "./EditorEasyMDE";
+import ThePreview from "./EditorMarkdownIt";
+
 export default {
 	name: "Sidemenu",
+
+	components: {
+		Actions,
+		ActionButton,
+		AppContent,
+		Modal,
+	},
+
+
 	data() {
-		return { items: []}
+		return {
+			items: [],
+			actionsOpen: false
+		}
 	},
 
 	methods: {
@@ -46,7 +79,27 @@ export default {
 				}
 			})
 			return elements
-		}
+		},
+		updateEntry(id, field, value, updateImmediately=true) {
+			for (let index = 0; index < this.items.length; index++) {
+				if(this.items[index].id == id){
+					this.items[index][field]=value
+				}
+			}
+			if(updateImmediately){
+				this.$forceUpdate()
+			}
+		},
+		removeID(id) {
+			const elements=[]
+			this.items.forEach(function(element) {
+				if(element.id != id){
+					elements.push(element)
+				}
+			})
+			this.items = elements
+			this.$forceUpdate()
+		},
 	},
 	computed: {
 		notOverflowMenu: function () {
@@ -84,10 +137,9 @@ export default {
 }
 
 
-.action-buttons button {
-	padding: 15px;
-	margin: 5px;
-	float: left;
+.action-buttons button, button:not(.button-vue){
+	/* width: 20px !important; */
+	padding: 0px !important;
 }
 
 .statustext{

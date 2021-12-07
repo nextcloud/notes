@@ -109,15 +109,26 @@ export default {
 			refreshTimer: null,
 			etag: null,
 			showConflict: false,
+			sidemenuitemkeys: [],
 		}
 	},
 
 	mounted() {
-		//todo fix this.
+		//todo fix this. The timeout is not reliable or a good way to do this.
 		setTimeout(()=>{
-			this.$refs.sidebar.addEntry("test", "icon-notes", this.onTogglePreview, true)
-			this.$refs.sidebar.addEntry("test", "icon-notes", this.onTogglePreview, true)
-			this.$refs.sidebar.addEntry("test", "icon-notes", this.onTogglePreview, true)
+			this.sidemenuitemkeys['details'] = this.$refs.sidebar.addEntry(t('notes', 'Details'), "icon-details", this.onToggleSidebar, true)
+
+			if(this.preview) {
+				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Edit'), "icon-rename", this.onTogglePreview, true)
+			} else {
+				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Preview'), "icon-toggle", this.onTogglePreview, true)
+			}
+
+			if (this.fullscreen) {
+				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Exit full screen'), "icon-fullscreen", this.onToggleDistractionFree, true)
+			} else {
+				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Full screen'), "icon-fullscreen", this.onToggleDistractionFree, true)
+			}
 		}, 100);
 	},
 
@@ -211,6 +222,15 @@ export default {
 		onTogglePreview() {
 			this.preview = !this.preview
 			this.actionsOpen = false
+
+			const menuid = this.sidemenuitemkeys['preview']
+			if(this.preview) {
+				this.$refs.sidebar.updateEntry(menuid, "title", t('notes', 'Preview'), false)
+				this.$refs.sidebar.updateEntry(menuid, "icon", 'icon-toggle')
+			} else {
+				this.$refs.sidebar.updateEntry(menuid, "title", t('notes', 'Edit'), false)
+				this.$refs.sidebar.updateEntry(menuid, "icon", 'icon-rename')
+			}
 		},
 
 		onDetectFullscreen() {
@@ -240,10 +260,13 @@ export default {
 				}
 			}
 
+			const menuid = this.sidemenuitemkeys['fullscreen']
 			if (this.fullscreen) {
 				exitFullscreen()
+				this.$refs.sidebar.updateEntry(menuid, "title", t('notes', 'Full screen'))
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
+				this.$refs.sidebar.updateEntry(menuid, "title", t('notes', 'Exit full screen'))
 			}
 			this.actionsOpen = false
 		},
