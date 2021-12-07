@@ -1,12 +1,12 @@
 <template>
-	<div class="action-buttons" :class="sidebarOpen ? 'action-buttons-sidebaropen' : ''">
+	<div class="action-buttons">
 		<span class="">
-			<Button v-for="item in notOverflowMenu" :key="item.id"
+			<Button v-for="item in notOverflowMenu()" :key="item.id"
 					:class="item.icon"
 					@click="item.callback"
 			>{{ item.title }}</Button>
 			<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-				<ActionButton v-for="item in overflowMenu" :key="item.id"
+				<ActionButton v-for="item in overflowMenu()" :key="item.id"
 							  :icon="item.icon"
 							  @click="item.callback"
 				>{{ item.title }}
@@ -49,12 +49,13 @@ export default {
 	data() {
 		return {
 			items: [],
+			groups: [],
 			actionsOpen: false
 		}
 	},
 
 	methods: {
-		addEntry(name, icon, callbackFunction, hidden) {
+		addEntry(name, icon, callbackFunction, group="default", hidden=true) {
 			const getHighestId = function(array){
 				var id = 0
 				array.forEach(function(element) {
@@ -65,15 +66,32 @@ export default {
 				return id
 			}
 
+			if (typeof this.groups[group] === 'undefined') {
+				this.groups[group]=true;
+			}
+
 			const newid = getHighestId(this.items) + 1
-			const menuitem = { title: name, icon: icon, callback: callbackFunction, hidden: hidden, id: newid }
+			const menuitem = { title: name, icon: icon, callback: callbackFunction, group: group, hidden: hidden, id: newid }
 			this.items.push(menuitem)
 			this.$forceUpdate();
 			return newid
 		},
+		setGroupEnabled(group, enabled) {
+			this.groups[group]=enabled
+			this.$forceUpdate();
+		},
 		getFilteredArray(hidden) {
 			const elements=[]
+			const groupitems=[]
+			const grouparray = this.groups
+
 			this.items.forEach(function(element) {
+				if(grouparray[element.group]){
+					groupitems.push(element)
+				}
+			})
+
+			groupitems.forEach(function(element) {
 				if(element.hidden == hidden){
 					elements.push(element)
 				}
@@ -100,15 +118,16 @@ export default {
 			this.items = elements
 			this.$forceUpdate()
 		},
-	},
-	computed: {
+		forceUpdate() {
+			this.$forceUpdate()
+		},
 		notOverflowMenu: function () {
 			return this.getFilteredArray(false)
 		},
 		overflowMenu: function () {
 			return this.getFilteredArray(true)
-		}
-	}
+		},
+	},
 }
 </script>
 
