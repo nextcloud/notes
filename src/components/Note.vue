@@ -27,7 +27,7 @@
 				</div>
 			</Modal>
 			<div class="note-editor">
-				<div v-show="!note.content" class="placeholder">
+				<div v-show="!note.content" class="placeholder" :class="preview ? '' : 'placeholder-toolbar'">
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
 				<ThePreview v-if="preview" :value="note.content" />
@@ -476,6 +476,10 @@ export default {
 	position: absolute;
 	padding: 1em;
 	opacity: 0.5;
+}
+
+.placeholder-toolbar {
+	padding-top: 4.5em;
 }
 
 .note-container.fullscreen .action-buttons {

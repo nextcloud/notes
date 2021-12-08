@@ -1,6 +1,6 @@
 <template>
 	<div class="action-buttons">
-		<span class="">
+		<span>
 			<Button v-for="item in notOverflowMenu()" :key="item.id"
 					:class="item.icon"
 					@click="item.callback"
