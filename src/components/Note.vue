@@ -36,7 +36,7 @@
 					:value="note.content"
 					:readonly="note.readonly"
 					@input="onEdit"
-					@sidemenu="addMenu"
+					@addMenuItem="addMenuItem"
 				/>
 			</div>
 			<TheSidemenu ref="sidebar" />
@@ -118,6 +118,7 @@ export default {
 
 	mounted() {
 		//todo fix this. The timeout is not reliable or a good way to do this.
+		// it breaks often, VERY often.
 		setTimeout(()=>{
 			this.sidemenuitemkeys['details'] = this.$refs.sidebar.addEntry(t('notes', 'Details'), "icon-details", this.onToggleSidebar)
 
@@ -136,10 +137,10 @@ export default {
 
 			const self = this
 			this.newMenuItems.forEach(function(element) {
-				self.addItem(element, self)
+				self.addMenuItem(element.title, element.icon, element.callback, element.group, self)
 			});
 
-		}, 5000);
+		}, 1000);
 	},
 
 	computed: {
@@ -410,22 +411,18 @@ export default {
 			this.state = ""
 		},
 
-		addItem(element, self=this) {
-			const id = element.title+element.icon+element.group
-			if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
-				self.$refs.sidebar.removeID(self.sidemenuitemkeys[id])
-			}
-			self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(element.title, element.icon, element.callback, element.group)
-		},
-
-		addMenu(title, icon, callback, group) {
+		addMenuItem(title, icon, callback, group, self=this) {
 			// it takes a while for sidebar to be set up.
 			// if it is not yet set up, add it to the queue which gets processed when
 			// the sidemenu was set up properly.
-			if (this.$refs.sidebar) {
-				this.addItem({title: title, icon: icon, callback: callback, group: group})
+			if (self.$refs.sidebar) {
+				const id = title+icon+group
+				if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
+					self.$refs.sidebar.removeID(self.sidemenuitemkeys[id])
+				}
+				self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(title, icon, callback, group)
 			} else {
-				this.newMenuItems.push({title: title, icon: icon, callback: callback, group: group})
+				self.newMenuItems.push({title: title, icon: icon, callback: callback, group: group})
 			}
 		},
 	},
