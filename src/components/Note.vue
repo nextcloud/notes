@@ -36,6 +36,7 @@
 					:value="note.content"
 					:readonly="note.readonly"
 					@input="onEdit"
+					@sidemenu="addMenu"
 				/>
 			</div>
 			<TheSidemenu ref="sidebar" />
@@ -111,13 +112,13 @@ export default {
 			etag: null,
 			showConflict: false,
 			sidemenuitemkeys: [],
+			newMenuItems: [],
 		}
 	},
 
 	mounted() {
 		//todo fix this. The timeout is not reliable or a good way to do this.
 		setTimeout(()=>{
-			this.sidemenuitemkeys['stiff'] = this.$refs.sidebar.addEntry("test", "icon-details", this.onToggleSidebar, "editor")
 			this.sidemenuitemkeys['details'] = this.$refs.sidebar.addEntry(t('notes', 'Details'), "icon-details", this.onToggleSidebar)
 
 			if(this.preview) {
@@ -131,7 +132,14 @@ export default {
 			} else {
 				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Full screen'), "icon-fullscreen", this.onToggleDistractionFree)
 			}
-		}, 100);
+
+
+			const self = this
+			this.newMenuItems.forEach(function(element) {
+				self.addItem(element, self)
+			});
+
+		}, 5000);
 	},
 
 	computed: {
@@ -402,8 +410,23 @@ export default {
 			this.state = ""
 		},
 
-		getSidemenu() {
-			return this.$refs.sidebar
+		addItem(element, self=this) {
+			const id = element.title+element.icon+element.group
+			if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
+				self.$refs.sidebar.removeID(self.sidemenuitemkeys[id])
+			}
+			self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(element.title, element.icon, element.callback, element.group)
+		},
+
+		addMenu(title, icon, callback, group) {
+			// it takes a while for sidebar to be set up.
+			// if it is not yet set up, add it to the queue which gets processed when
+			// the sidemenu was set up properly.
+			if (this.$refs.sidebar) {
+				this.addItem({title: title, icon: icon, callback: callback, group: group})
+			} else {
+				this.newMenuItems.push({title: title, icon: icon, callback: callback, group: group})
+			}
 		},
 	},
 }

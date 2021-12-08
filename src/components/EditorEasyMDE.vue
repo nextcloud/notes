@@ -94,6 +94,7 @@ export default {
 	mounted() {
 		this.initialize()
 		this.mde.codemirror.focus()
+		this.$emit('sidemenu',  t('notes', 'Make Italic'), "icon-note", this.makeItalic, "editor")
 	},
 
 	destroyed() {
