@@ -36,7 +36,7 @@
 					:value="note.content"
 					:readonly="note.readonly"
 					@input="onEdit"
-					@addMenuItem="addMenuItem"
+					@add-mMnu-item="addMenuItem"
 				/>
 			</div>
 			<TheSidemenu ref="sidebar" />
@@ -64,7 +64,6 @@ import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutio
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
-import TheSidemenu from './Sidemenu'
 import ConflictSolution from './ConflictSolution'
 import store from '../store'
 
@@ -117,29 +116,29 @@ export default {
 	},
 
 	mounted() {
-		//todo fix this. The timeout is not reliable or a good way to do this.
+		// todo fix this. The timeout is not reliable or a good way to do this.
 		// it breaks often, VERY often.
-		setTimeout(()=>{
-			this.sidemenuitemkeys['details'] = this.$refs.sidebar.addEntry(t('notes', 'Details'), "icon-details", this.onToggleSidebar)
+		setTimeout(() => {
+			this.sidemenuitemkeys['details'] = this.$refs.sidebar.addEntry(t('notes', 'Details'), 'icon-details', this.onToggleSidebar)
 
-			if(this.preview) {
-				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Edit'), "icon-rename", this.onTogglePreview)
+			if (this.preview) {
+				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Edit'), 'icon-rename', this.onTogglePreview)
 			} else {
-				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Preview'), "icon-toggle", this.onTogglePreview)
+				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Preview'), 'icon-toggle', this.onTogglePreview)
 			}
 
 			if (this.fullscreen) {
-				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Exit full screen'), "icon-fullscreen", this.onToggleDistractionFree)
+				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Exit full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
 			} else {
-				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Full screen'), "icon-fullscreen", this.onToggleDistractionFree)
+				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
 			}
 
 			const self = this
 			this.newMenuItems.forEach(function(element) {
 				self.addMenuItem(element.title, element.icon, element.callback, element.group, element.hidden, self)
-			});
+			})
 
-		}, 1000);
+		}, 1000)
 	},
 
 	computed: {
@@ -234,15 +233,15 @@ export default {
 			this.actionsOpen = false
 
 			const menuid = this.sidemenuitemkeys['preview']
-			const sidebar = this.$refs.sidebar;
-			if(this.preview) {
-				sidebar.setGroupEnabled("editor", false)
-				sidebar.updateEntry(menuid, "title", t('notes', 'Preview'), false)
-				sidebar.updateEntry(menuid, "icon", 'icon-toggle')
+			const sidebar = this.$refs.sidebar
+			if (this.preview) {
+				sidebar.setGroupEnabled('editor', false)
+				sidebar.updateEntry(menuid, 'title', t('notes', 'Preview'), false)
+				sidebar.updateEntry(menuid, 'icon', 'icon-toggle')
 			} else {
-				sidebar.setGroupEnabled("editor", true)
-				sidebar.updateEntry(menuid, "title", t('notes', 'Edit'), false)
-				sidebar.updateEntry(menuid, "icon", 'icon-rename')
+				sidebar.setGroupEnabled('editor', true)
+				sidebar.updateEntry(menuid, 'title', t('notes', 'Edit'), false)
+				sidebar.updateEntry(menuid, 'icon', 'icon-rename')
 			}
 		},
 
@@ -276,10 +275,10 @@ export default {
 			const menuid = this.sidemenuitemkeys['fullscreen']
 			if (this.fullscreen) {
 				exitFullscreen()
-				this.$refs.sidebar.updateEntry(menuid, "title", t('notes', 'Full screen'))
+				this.$refs.sidebar.updateEntry(menuid, 'title', t('notes', 'Full screen'))
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
-				this.$refs.sidebar.updateEntry(menuid, "title", t('notes', 'Exit full screen'))
+				this.$refs.sidebar.updateEntry(menuid, 'title', t('notes', 'Exit full screen'))
 			}
 			this.actionsOpen = false
 		},
@@ -399,29 +398,29 @@ export default {
 			this.showConflict = false
 		},
 		updateNoteState(manual) {
-			if(manual !== ""){
+			if (manual !== '') {
 				this.state = manual
 				return
 			}
-			if(this.loading){
+			if (this.loading) {
 				this.state = t('notes', 'Loading...')
-				return;
+				return
 			}
-			this.state = ""
+			this.state = ''
 		},
 
-		addMenuItem(title, icon, callback, group, hidden=true, self=this) {
+		addMenuItem(title, icon, callback, group, hidden = true, self = this) {
 			// it takes a while for sidebar to be set up.
 			// if it is not yet set up, add it to the queue which gets processed when
 			// the sidemenu was set up properly.
 			if (self.$refs.sidebar) {
-				const id = title+icon+group
+				const id = title + icon + group
 				if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
 					self.$refs.sidebar.removeID(self.sidemenuitemkeys[id])
 				}
 				self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(title, icon, callback, group, hidden)
 			} else {
-				self.newMenuItems.push({title: title, icon: icon, callback: callback, group: group, hidden: hidden})
+				self.newMenuItems.push({ title: title, icon: icon, callback: callback, group: group, hidden: hidden })
 			}
 		},
 	},
@@ -492,7 +491,6 @@ export default {
 .conflict-header {
 	padding: 1ex 1em;
 }
-
 
 .conflict-solutions {
 	display: flex;
