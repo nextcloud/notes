@@ -64,7 +64,17 @@ export default {
 
 				token.attrs[aIndex][1] = path
 				// pass token to default renderer.
-				return defaultRender(tokens, idx, options, env, self)
+				if (path.endsWith("jpg") ||
+					path.endsWith("jpeg") ||
+					path.endsWith("bmp") ||
+					path.endsWith("webp") ||
+					path.endsWith("gif") ||
+					path.endsWith("png")) {
+					return defaultRender(tokens, idx, options, env, self)
+				}else{
+					let dlimgpath = generateUrl('svg/core/actions/download?color=ffffff');
+					return "<div class='download-file'><a href='"+path+"'><div class='download-icon'><img class='download-icon-inner' src='"+dlimgpath+"'>"+token.content+"</div></a></div>"
+				}
 			};
 
 		md.use(require('markdown-it-task-checkbox'), {
@@ -197,5 +207,34 @@ export default {
 			cursor: default;
 		}
 	}
+
+	.download-file {
+		width: 75%;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+		text-align: center;
+	}
+
+	.download-icon {
+		padding: 15px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 75%;
+		border-radius: 10px;
+		background-color: var(--color-background-dark);
+		border: 1px solid transparent; // so that it does not move on hover
+	}
+
+	.download-icon:hover {
+		border: 1px var(--color-primary-element) solid;
+	}
+
+	.download-icon-inner {
+		height: 3em;
+		width: auto;
+		margin-bottom: 5px;
+	}
+
 }
 </style>
