@@ -134,10 +134,9 @@ export default {
 				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Full screen'), "icon-fullscreen", this.onToggleDistractionFree)
 			}
 
-
 			const self = this
 			this.newMenuItems.forEach(function(element) {
-				self.addMenuItem(element.title, element.icon, element.callback, element.group, self)
+				self.addMenuItem(element.title, element.icon, element.callback, element.group, element.hidden, self)
 			});
 
 		}, 1000);
@@ -411,7 +410,7 @@ export default {
 			this.state = ""
 		},
 
-		addMenuItem(title, icon, callback, group, self=this) {
+		addMenuItem(title, icon, callback, group, hidden=true, self=this) {
 			// it takes a while for sidebar to be set up.
 			// if it is not yet set up, add it to the queue which gets processed when
 			// the sidemenu was set up properly.
@@ -420,9 +419,9 @@ export default {
 				if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
 					self.$refs.sidebar.removeID(self.sidemenuitemkeys[id])
 				}
-				self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(title, icon, callback, group)
+				self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(title, icon, callback, group, hidden)
 			} else {
-				self.newMenuItems.push({title: title, icon: icon, callback: callback, group: group})
+				self.newMenuItems.push({title: title, icon: icon, callback: callback, group: group, hidden: hidden})
 			}
 		},
 	},
