@@ -61,6 +61,7 @@ export default {
 				}
 
 				token.attrs[aIndex][1] = path
+				path = path.toLowerCase()
 				// pass token to default renderer.
 				if (path.endsWith("jpg") ||
 					path.endsWith("jpeg") ||
