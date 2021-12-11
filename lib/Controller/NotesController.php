@@ -330,7 +330,7 @@ class NotesController extends Controller {
 			$targetimage = $this->root->get($relativeImageNode->getPath()."/".$path);
 			return new FileDisplayResponse($targetimage, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {
-			return new DataResponse([$e], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new DataResponse([$e], Http::STATUS_NOT_FOUND);
 		}
 	}
 
