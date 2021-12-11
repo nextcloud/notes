@@ -38,7 +38,6 @@ export default {
 
 		return {
 			html: '',
-			md,
 			md: markdown
 		}
 	},
