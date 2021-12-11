@@ -22,13 +22,11 @@ export default {
 	},
 
 	data() {
-		const markdown = new MarkdownIt({
-			linkify: true,
-		})
-
 		return {
 			html: '',
-			md: markdown
+			md: new MarkdownIt({
+				linkify: true,
+			})
 		}
 	},
 

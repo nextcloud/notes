@@ -196,5 +196,5 @@ return ['routes' => [
 			'apiVersion' => '(v0.2|v1)',
 			'path' => '.+',
 		],
-	]
+	],
 ]];
