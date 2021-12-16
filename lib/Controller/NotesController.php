@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
+use Exception;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
@@ -311,6 +312,7 @@ class NotesController extends Controller {
 	 * @return DataResponse|FileDisplayResponse
 	 */
 	public function getAttachment(int $noteid, string $path) {
+		$notfoundMessage = ["File Not Found"];
 		try {
 			$note = $this->notesService->get($this->helper->getUID(), $noteid);
 			$notesFolderPath = $this->notesService->getNotesFolder($this->helper->getUID())->getPath();
@@ -327,10 +329,25 @@ class NotesController extends Controller {
 			for ($i = 0; $i < $parentcount; $i++) {
 				$relativeImageNode = $relativeImageNode->getParent();
 			}
-			$targetimage = $this->root->get($relativeImageNode->getPath()."/".$path);
-			return new FileDisplayResponse($targetimage, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
+
+			try {
+				$targetfile = $relativeImageNode->getPath()."/".$path;
+				// replace duplicate slashes until none are present
+				while (str_contains($targetfile, "//")) {
+					$targetfile = str_replace("//", "/", $targetfile);
+				}
+				$targetimage = $this->root->get($targetfile);
+				if (!str_starts_with($targetimage->getPath(), $notesFolderPath)) {
+					// Do not send 500 as to not expose that a file or user exists. Just send a 404.
+					return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
+				}
+			} catch (Exception $ex) {
+				//this fails rather silently. The exception is not useful aswell. It only occurs when a file does not exist.
+				return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
+			}
+			return new FileDisplayResponse($targetimage, Http::STATUS_OK, ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {
-			return new DataResponse([$e], Http::STATUS_NOT_FOUND);
+			return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
 		}
 	}
 
