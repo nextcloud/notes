@@ -54,7 +54,7 @@ export default {
 
 	data() {
 		return {
-			extensions: ['.txt', '.md'],
+			extensions: ['.txt', '.md', '.org'],
 			noteModes: [
 				{ value: 'edit', label: t('notes', 'Open in edit mode') },
 				{ value: 'preview', label: t('notes', 'Open in preview mode') },
