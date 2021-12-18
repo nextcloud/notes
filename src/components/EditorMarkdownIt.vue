@@ -61,14 +61,14 @@ export default {
 				}
 
 				token.attrs[aIndex][1] = path
-				path = path.toLowerCase()
+				const lowecasePath = path.toLowerCase()
 				// pass token to default renderer.
-				if (path.endsWith("jpg") ||
-					path.endsWith("jpeg") ||
-					path.endsWith("bmp") ||
-					path.endsWith("webp") ||
-					path.endsWith("gif") ||
-					path.endsWith("png")) {
+				if (lowecasePath.endsWith("jpg") ||
+					lowecasePath.endsWith("jpeg") ||
+					lowecasePath.endsWith("bmp") ||
+					lowecasePath.endsWith("webp") ||
+					lowecasePath.endsWith("gif") ||
+					lowecasePath.endsWith("png")) {
 					return defaultRender(tokens, idx, options, env, self)
 				}else{
 					let dlimgpath = generateUrl('svg/core/actions/download?color=ffffff');
