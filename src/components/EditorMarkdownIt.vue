@@ -63,16 +63,16 @@ export default {
 				token.attrs[aIndex][1] = path
 				const lowecasePath = path.toLowerCase()
 				// pass token to default renderer.
-				if (lowecasePath.endsWith("jpg") ||
-					lowecasePath.endsWith("jpeg") ||
-					lowecasePath.endsWith("bmp") ||
-					lowecasePath.endsWith("webp") ||
-					lowecasePath.endsWith("gif") ||
-					lowecasePath.endsWith("png")) {
+				if (lowecasePath.endsWith('jpg')
+					|| lowecasePath.endsWith('jpeg')
+					|| lowecasePath.endsWith('bmp')
+					|| lowecasePath.endsWith('webp')
+					|| lowecasePath.endsWith('gif')
+					|| lowecasePath.endsWith('png')) {
 					return defaultRender(tokens, idx, options, env, self)
-				}else{
-					let dlimgpath = generateUrl('svg/core/actions/download?color=ffffff');
-					return "<div class='download-file'><a href='"+path+"'><div class='download-icon'><img class='download-icon-inner' src='"+dlimgpath+"'>"+token.content+"</div></a></div>"
+				} else {
+					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
+					return '<div class=\'download-file\'><a href=\'' + path + '\'><div class=\'download-icon\'><img class=\'download-icon-inner\' src=\'' + dlimgpath + '\'>' + token.content + '</div></a></div>'
 				}
 			};
 
