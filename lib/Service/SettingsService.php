@@ -27,7 +27,7 @@ class SettingsService {
 		$this->l10n = $l10n;
 		$this->root = $root;
 		$this->attrs = [
-			'fileSuffix' => $this->getListAttrs('.txt', '.md', '.org'),
+			'fileSuffix' => $this->getListAttrs('.txt', '.md'),
 			'notesPath' => [
 				'default' => function (string $uid) {
 					return $this->getDefaultNotesPath($uid);
