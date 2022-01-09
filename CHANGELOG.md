@@ -13,6 +13,12 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.3.0 - 2022-01-09
+
+- checkbox support in preview mode (#787 by @newhinton)
+- maintenance (#789, #800)
+
+
 ## 4.2.0 - 2021-11-13
 
 - add setting for view mode (#747)
