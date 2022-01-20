@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
@@ -191,15 +189,50 @@ class NotesService {
 	}
 
 	/**
-	 * @param $uid
+	 * With help from: https://github.com/nextcloud/cookbook
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @return \OCP\Files\File
+	 */
+	public function getAttachment(string $userId, int $noteid, string $path) {
+		$note = $this->get($userId, $noteid);
+		$notesFolderPath = $this->getNotesFolder($userId)->getPath();
+		$notePath = $notesFolderPath . '/';
+		if ($note->getCategory() !== '') {
+			$notePath .= $note->getCategory() . '/';
+		}
+
+		// calculate how many parentnodes we need to get 'up'
+		$parentcount = substr_count($path, '../');
+		$path = str_replace('../', '', $path);
+
+		$relativeImageNode = $this->noteUtil->getRoot()->get($notePath);
+		for ($i = 0; $i < $parentcount; $i++) {
+			$relativeImageNode = $relativeImageNode->getParent();
+		}
+
+		$targetfile = $relativeImageNode->getPath().'/'.$path;
+		// replace duplicate slashes until none are present
+		while (str_contains($targetfile, '//')) {
+			$targetfile = str_replace('//', '/', $targetfile);
+		}
+		$targetimage = $this->noteUtil->getRoot()->get($targetfile);
+		assert($targetimage instanceof \OCP\Files\File);
+		if (!str_starts_with($targetimage->getPath(), $notesFolderPath)) {
+			throw new \Exception('Requested file is not in notes folder');
+		}
+		return $targetimage;
+	}
+
+	/**
+	 * @param $userId
 	 * @param $noteid
 	 * @param $fileDataArray
-	 * @return DataResponse
 	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
-	public function createImage($uid, $noteid, $fileDataArray) {
-		$note = $this->get($uid, $noteid);
-		$notesFolder = $this->getNotesFolder($uid);
+	public function createImage(string $userId, int $noteid, $fileDataArray) {
+		$note = $this->get($userId, $noteid);
+		$notesFolder = $this->getNotesFolder($userId);
 		$parent = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
 
 		// try to generate long id, if not available on system fall back to a shorter one
@@ -208,26 +241,26 @@ class NotesService {
 		} catch (\Exception $e) {
 			$filename = uniqid();
 		}
-		$filename = $filename . "." . explode(".", $fileDataArray['name'])[1];
+		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
 
 		// read uploaded file from disk
-		$fp = fopen($fileDataArray['tmp_name'], "r");
+		$fp = fopen($fileDataArray['tmp_name'], 'r');
 		$content = fread($fp, $fileDataArray['size']);
 		fclose($fp);
 
 		$result = [];
 		$result['filename'] = $filename;
-		$result['filepath'] = $parent->getPath() . "/" . $filename;
+		$result['filepath'] = $parent->getPath() . '/' . $filename;
 		$result['wasUploaded'] = true;
 
 		try {
-			$this->noteUtil->getRoot()->newFile($parent->getPath() . "/" . $filename, $content);
+			$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
 		} catch (NotPermittedException $e) {
 			$result['wasUploaded'] = false;
 		}
 		if ($result['wasUploaded']) {
-			return new DataResponse([$result], Http::STATUS_OK);
+			return $result;
 		}
-		return new DataResponse([$result], Http::STATUS_INTERNAL_SERVER_ERROR);
+		return null;
 	}
 }

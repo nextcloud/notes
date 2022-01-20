@@ -1,8 +1,6 @@
 <template>
-	<div>
-		<div class="markdown-editor" @click="onClickEditor">
-			<textarea />
-		</div>
+	<div class="markdown-editor" @click="onClickEditor">
+		<textarea />
 	</div>
 </template>
 <script>
@@ -67,9 +65,8 @@ export default {
 
 	methods: {
 		initialize() {
-
 			const config = Object.assign({
-				element: this.$el.lastElementChild.firstElementChild,
+				element: this.$el.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
 			}, this.config)

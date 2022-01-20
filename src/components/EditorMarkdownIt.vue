@@ -32,13 +32,9 @@ export default {
 			liClass: 'task-list-item',
 		})
 
-		const markdown = new MarkdownIt({
-			linkify: true,
-		})
-
 		return {
 			html: '',
-			md: markdown,
+			md,
 		}
 	},
 

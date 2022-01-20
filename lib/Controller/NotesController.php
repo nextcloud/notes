@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
-use Exception;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
@@ -312,44 +311,16 @@ class NotesController extends Controller {
 	 * @return DataResponse|FileDisplayResponse
 	 */
 	public function getAttachment(int $noteid, string $path) {
-		$notfoundMessage = ["File Not Found"];
 		try {
-			$note = $this->notesService->get($this->helper->getUID(), $noteid);
-			$notesFolderPath = $this->notesService->getNotesFolder($this->helper->getUID())->getPath();
-			$notePath = $notesFolderPath . "/";
-			if ($note->getCategory() != "") {
-				$notePath .= $note->getCategory() . "/";
-			}
-
-			// calculate how many parentnodes we need to get 'up'
-			$parentcount = substr_count($path, '../');
-			$path = str_replace("../", "", $path);
-
-			$relativeImageNode = $this->root->get($notePath);
-			for ($i = 0; $i < $parentcount; $i++) {
-				$relativeImageNode = $relativeImageNode->getParent();
-			}
-
-			try {
-				$targetfile = $relativeImageNode->getPath()."/".$path;
-				// replace duplicate slashes until none are present
-				while (str_contains($targetfile, "//")) {
-					$targetfile = str_replace("//", "/", $targetfile);
-				}
-				$targetimage = $this->root->get($targetfile);
-				if (!str_starts_with($targetimage->getPath(), $notesFolderPath)) {
-					// Do not send 500 as to not expose that a file or user exists. Just send a 404.
-					return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
-				}
-			} catch (Exception $ex) {
-				// this fails rather silently. The exception is not useful. It only occurs when a file does not exist.
-				return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
-			}
+			$targetimage = $this->notesService->getAttachment(
+				$this->helper->getUID(),
+				$noteid,
+				$path
+			);
 			$headers = ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800'];
-
 			return new FileDisplayResponse($targetimage, Http::STATUS_OK, $headers);
 		} catch (\Exception $e) {
-			return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -357,12 +328,16 @@ class NotesController extends Controller {
 	 * @NoAdminRequired
 	 * @return DataResponse
 	 */
-	public function uploadFile($noteid): DataResponse {
+	public function uploadFile(int $noteid): DataResponse {
 		$file = $this->request->getUploadedFile('file');
-		return $this->notesService->createImage(
+		$result = $this->notesService->createImage(
 			$this->helper->getUID(),
-			intval($noteid),
+			$noteid,
 			$file
 		);
+		if($result) {
+			return new DataResponse([$result], Http::STATUS_OK);
+		}
+		return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 	}
 }
