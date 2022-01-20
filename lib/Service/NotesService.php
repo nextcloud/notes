@@ -191,9 +191,9 @@ class NotesService {
 	}
 
 	/**
-	 * @param $cardId
-	 * @param $type
-	 * @param $data
+	 * @param $uid
+	 * @param $noteid
+	 * @param $fileDataArray
 	 * @return DataResponse
 	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
@@ -215,6 +215,7 @@ class NotesService {
 		$content = fread($fp, $fileDataArray['size']);
 		fclose($fp);
 
+		$result = [];
 		$result['filename'] = $filename;
 		$result['filepath'] = $parent->getPath() . "/" . $filename;
 		$result['wasUploaded'] = true;

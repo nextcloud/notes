@@ -27,7 +27,7 @@ export default {
 		noteid: {
 			type: String,
 			required: true,
-		}
+		},
 	},
 
 	data() {
@@ -183,7 +183,7 @@ export default {
 				})
 				const name = response.data[0].filename
 				const position = {
-					line: cursor.line
+					line: cursor.line,
 				}
 				doc.replaceRange('![' + name + '](' + name + ')', position)
 			}

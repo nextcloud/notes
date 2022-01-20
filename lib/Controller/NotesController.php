@@ -342,10 +342,12 @@ class NotesController extends Controller {
 					return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
 				}
 			} catch (Exception $ex) {
-				//this fails rather silently. The exception is not useful aswell. It only occurs when a file does not exist.
+				// this fails rather silently. The exception is not useful. It only occurs when a file does not exist.
 				return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
 			}
-			return new FileDisplayResponse($targetimage, Http::STATUS_OK, ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800']);
+			$headers = ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800'];
+
+			return new FileDisplayResponse($targetimage, Http::STATUS_OK, $headers);
 		} catch (\Exception $e) {
 			return new DataResponse($notfoundMessage, Http::STATUS_NOT_FOUND);
 		}

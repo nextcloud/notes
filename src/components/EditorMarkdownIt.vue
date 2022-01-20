@@ -18,7 +18,7 @@ export default {
 		noteid: {
 			type: String,
 			required: true,
-		}
+		},
 	},
 
 	data() {
@@ -38,7 +38,7 @@ export default {
 
 		return {
 			html: '',
-			md: markdown
+			md: markdown,
 		}
 	},
 
