@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
+//include 'ChromePhp.php';
+
 use OCA\Notes\AppInfo\Application;
 
 use OCP\IConfig;
@@ -27,7 +29,7 @@ class SettingsService {
 		$this->l10n = $l10n;
 		$this->root = $root;
 		$this->attrs = [
-			'fileSuffix' => $this->getListAttrs('.txt', '.md'),
+			'fileSuffix' => $this->getListAttrs('.md', '.txt', 'custom'),
 			'notesPath' => [
 				'default' => function (string $uid) {
 					return $this->getDefaultNotesPath($uid);
@@ -47,6 +49,19 @@ class SettingsService {
 				},
 			],
 			'noteMode' => $this->getListAttrs('edit', 'preview'),
+			'suffixValue' => [
+				'default' => function (string $uid) {
+					return "";
+				},
+                'validate' => function ($value) {
+                    $out = "";
+					if (preg_match('/^\.[A-Za-z0-9.-]*$/', $value)) {
+                        $out = strtolower($value);
+                        NotesService::setCustomExtension($out);
+                    }
+                    return $out;
+				},
+			],
 		];
 	}
 

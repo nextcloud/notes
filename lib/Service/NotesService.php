@@ -13,6 +13,8 @@ class NotesService {
 	private $settings;
 	private $noteUtil;
 
+	private static $customExtension = "";
+
 	public function __construct(
 		MetaService $metaService,
 		SettingsService $settings,
@@ -20,7 +22,7 @@ class NotesService {
 	) {
 		$this->metaService = $metaService;
 		$this->settings = $settings;
-		$this->noteUtil = $noteUtil;
+        $this->noteUtil = $noteUtil;
 	}
 
 	public function getAll(string $userId) : array {
@@ -100,9 +102,10 @@ class NotesService {
 		$this->noteUtil->ensureSufficientStorage($folder, 1);
 
 		// get file name
-		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
+        $fileSuffix = $this->settings->get($userId, 'fileSuffix');
+        if ($fileSuffix === "custom")
+            $fileSuffix = $this->settings->get($userId, 'suffixValue');
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
-
 		// create file
 		$file = $folder->newFile($filename);
 
@@ -169,10 +172,21 @@ class NotesService {
 	/**
 	 * test if file is a note
 	 */
-	private static function isNote(FileInfo $file) : bool {
-		static $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
-		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
-		return $file->getType() === 'file' && in_array($ext, $allowedExtensions);
+	public static function isNote(FileInfo $file) : bool {
+		static $allowedExtensions = ["txt", "org", "markdown", "md", "note"];
+        $ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
+		return $file->getType() === 'file' && (in_array($ext,$allowedExtensions) || $ext === self::$ustomExtension);
+	}
+
+	/**
+	 * Update the value of user defined files extension
+	 */
+    public static function setCustomExtension(string $suffix) {
+        self::$customExtension = strtolower(ltrim($suffix, "."));
+	}
+
+    public static function getCustomExtension() : string {
+        return self::$customExtension;
 	}
 
 	/**
