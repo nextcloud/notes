@@ -65,7 +65,7 @@ export default {
 				let path = token.attrs[aIndex][1]
 
 				if (!path.startsWith('http')) {
-					path = generateUrl('apps/notes') + '/notes/' + id + '/attachment?path=' + path
+					path = generateUrl('apps/notes/notes/{id}/attachment?path={path}', { id, path })
 				}
 
 				token.attrs[aIndex][1] = path
@@ -80,7 +80,7 @@ export default {
 					return defaultRender(tokens, idx, options, env, self)
 				} else {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
-					return '<div class=\'download-file\'><a href=\'' + path + '\'><div class=\'download-icon\'><img class=\'download-icon-inner\' src=\'' + dlimgpath + '\'>' + token.content + '</div></a></div>'
+					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" src="' + dlimgpath + '">' + token.content + '</div></a></div>'
 				}
 			}
 		},
