@@ -189,39 +189,26 @@ class NotesService {
 	}
 
 	/**
-	 * With help from: https://github.com/nextcloud/cookbook
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @return \OCP\Files\File
 	 */
-	public function getAttachment(string $userId, int $noteid, string $path) {
+	public function getAttachment(string $userId, int $noteid, string $path) : File {
 		$note = $this->get($userId, $noteid);
-		$notesFolderPath = $this->getNotesFolder($userId)->getPath();
-		$notePath = $notesFolderPath . '/';
-		if ($note->getCategory() !== '') {
-			$notePath .= $note->getCategory() . '/';
+		$notesFolder = $this->getNotesFolder($userId);
+		$path = str_replace('\\', '/', $path); // change windows style path
+		$p = explode('/', $note->getCategory());
+		// process relative target path
+		foreach (explode('/', $path) as $f) {
+			if ($f == '..') {
+				array_pop($p);
+			} elseif ($f !== '') {
+				array_push($p, $f);
+			}
 		}
-
-		// calculate how many parentnodes we need to get 'up'
-		$parentcount = substr_count($path, '../');
-		$path = str_replace('../', '', $path);
-
-		$relativeImageNode = $this->noteUtil->getRoot()->get($notePath);
-		for ($i = 0; $i < $parentcount; $i++) {
-			$relativeImageNode = $relativeImageNode->getParent();
-		}
-
-		$targetfile = $relativeImageNode->getPath().'/'.$path;
-		// replace duplicate slashes until none are present
-		while (str_contains($targetfile, '//')) {
-			$targetfile = str_replace('//', '/', $targetfile);
-		}
-		$targetimage = $this->noteUtil->getRoot()->get($targetfile);
-		assert($targetimage instanceof \OCP\Files\File);
-		if (!str_starts_with($targetimage->getPath(), $notesFolderPath)) {
-			throw new \Exception('Requested file is not in notes folder');
-		}
-		return $targetimage;
+		$targetNode = $notesFolder->get(implode('/', $p));
+		assert($targetNode instanceof \OCP\Files\File);
+		return $targetNode;
 	}
 
 	/**
