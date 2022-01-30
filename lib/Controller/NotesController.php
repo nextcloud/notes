@@ -9,9 +9,7 @@ use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
-use OCP\Files\IRootFolder;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -32,8 +30,6 @@ class NotesController extends Controller {
 	private $settings;
 	/** @var IL10N */
 	private $l10n;
-	/** @var IRootFolder */
-	private $root;
 
 	public function __construct(
 		string $AppName,
@@ -43,8 +39,7 @@ class NotesController extends Controller {
 		SettingsService $settingsService,
 		Helper $helper,
 		IConfig $settings,
-		IL10N $l10n,
-		IRootFolder $root
+		IL10N $l10n
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -53,7 +48,6 @@ class NotesController extends Controller {
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->l10n = $l10n;
-		$this->root = $root;
 	}
 
 	/**
@@ -308,7 +302,7 @@ class NotesController extends Controller {
 	 * With help from: https://github.com/nextcloud/cookbook
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @return DataResponse|FileDisplayResponse
+	 * @return JSONResponse|FileDisplayResponse
 	 */
 	public function getAttachment(int $noteid, string $path) {
 		try {
@@ -320,24 +314,22 @@ class NotesController extends Controller {
 			$headers = ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800'];
 			return new FileDisplayResponse($targetimage, Http::STATUS_OK, $headers);
 		} catch (\Exception $e) {
-			return new DataResponse([], Http::STATUS_NOT_FOUND);
+			$this->helper->logException($e);
+			return $this->helper->createErrorResponse($e, Http::STATUS_NOT_FOUND);
 		}
 	}
 
 	/**
 	 * @NoAdminRequired
-	 * @return DataResponse
 	 */
-	public function uploadFile(int $noteid): DataResponse {
+	public function uploadFile(int $noteid): JSONResponse {
 		$file = $this->request->getUploadedFile('file');
-		$result = $this->notesService->createImage(
-			$this->helper->getUID(),
-			$noteid,
-			$file
-		);
-		if($result) {
-			return new DataResponse([$result], Http::STATUS_OK);
-		}
-		return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+		return $this->helper->handleErrorResponse(function () use ($noteid, $file) {
+			return $this->notesService->createImage(
+				$this->helper->getUID(),
+				$noteid,
+				$file
+			);
+		});
 	}
 }

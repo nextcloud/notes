@@ -137,7 +137,7 @@ class NotesService {
 	 * @param string $userId the user id
 	 * @return Folder
 	 */
-	public function getNotesFolder(string $userId) : Folder {
+	private function getNotesFolder(string $userId) : Folder {
 		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
 		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
 		$folder = $this->noteUtil->getOrCreateFolder($path);
@@ -228,6 +228,7 @@ class NotesService {
 	 * @param $userId
 	 * @param $noteid
 	 * @param $fileDataArray
+	 * @throws NotPermittedException
 	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
 	public function createImage(string $userId, int $noteid, $fileDataArray) {
@@ -253,14 +254,6 @@ class NotesService {
 		$result['filepath'] = $parent->getPath() . '/' . $filename;
 		$result['wasUploaded'] = true;
 
-		try {
-			$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
-		} catch (NotPermittedException $e) {
-			$result['wasUploaded'] = false;
-		}
-		if ($result['wasUploaded']) {
-			return $result;
-		}
-		return null;
+		$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
 	}
 }
