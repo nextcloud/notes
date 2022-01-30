@@ -7,6 +7,7 @@ namespace OCA\Notes\Service;
 use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
+use OCP\Files\NotPermittedException;
 
 class NotesService {
 	private $metaService;
@@ -185,5 +186,61 @@ class NotesService {
 			throw new NoteDoesNotExistException();
 		}
 		return $file[0];
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @return \OCP\Files\File
+	 */
+	public function getAttachment(string $userId, int $noteid, string $path) : File {
+		$note = $this->get($userId, $noteid);
+		$notesFolder = $this->getNotesFolder($userId);
+		$path = str_replace('\\', '/', $path); // change windows style path
+		$p = explode('/', $note->getCategory());
+		// process relative target path
+		foreach (explode('/', $path) as $f) {
+			if ($f == '..') {
+				array_pop($p);
+			} elseif ($f !== '') {
+				array_push($p, $f);
+			}
+		}
+		$targetNode = $notesFolder->get(implode('/', $p));
+		assert($targetNode instanceof \OCP\Files\File);
+		return $targetNode;
+	}
+
+	/**
+	 * @param $userId
+	 * @param $noteid
+	 * @param $fileDataArray
+	 * @throws NotPermittedException
+	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
+	 */
+	public function createImage(string $userId, int $noteid, $fileDataArray) {
+		$note = $this->get($userId, $noteid);
+		$notesFolder = $this->getNotesFolder($userId);
+		$parent = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
+
+		// try to generate long id, if not available on system fall back to a shorter one
+		try {
+			$filename = bin2hex(random_bytes(16));
+		} catch (\Exception $e) {
+			$filename = uniqid();
+		}
+		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
+
+		// read uploaded file from disk
+		$fp = fopen($fileDataArray['tmp_name'], 'r');
+		$content = fread($fp, $fileDataArray['size']);
+		fclose($fp);
+
+		$result = [];
+		$result['filename'] = $filename;
+		$result['filepath'] = $parent->getPath() . '/' . $filename;
+		$result['wasUploaded'] = true;
+
+		$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
 	}
 }

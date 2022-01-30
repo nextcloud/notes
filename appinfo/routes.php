@@ -83,6 +83,20 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 
+	//////////  A T T A C H M E N T S  //////////
+
+	[
+		'name' => 'notes#getAttachment',
+		'url' => '/notes/{noteid}/attachment',
+		'verb' => 'GET',
+		'requirements' => ['noteid' => '\d+'],
+	],
+	[
+		'name' => 'notes#uploadFile',
+		'url' => '/notes/{noteid}/attachment',
+		'verb' => 'POST',
+		'requirements' => ['noteid' => '\d+'],
+	],
 
 	//////////  S E T T I N G S  //////////
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],

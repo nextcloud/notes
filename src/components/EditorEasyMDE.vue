@@ -50,6 +50,9 @@
 <script>
 
 import EasyMDE from 'easymde'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
+import store from '../store'
 
 export default {
 	name: 'EditorEasyMDE',
@@ -61,6 +64,10 @@ export default {
 		},
 		readonly: {
 			type: Boolean,
+			required: true,
+		},
+		noteid: {
+			type: String,
 			required: true,
 		},
 	},
@@ -166,6 +173,64 @@ export default {
 			}
 		},
 
+		async onClickSelect() {
+			const apppath = '/' + store.state.app.settings.notesPath
+			const categories = store.getters.getCategories()
+			const currentNotePath = apppath + '/' + categories
+
+			const doc = this.mde.codemirror.getDoc()
+			const cursor = this.mde.codemirror.getCursor()
+			OC.dialogs.filepicker(
+				t('notes', 'Select an image'),
+				(path) => {
+
+					if (!path.startsWith(apppath)) {
+						OC.dialogs.alert(
+							t('notes', 'You cannot select images outside of your notes folder. Your notes folder is: {folder}', { folder: apppath }),
+							t('notes', 'Wrong Image'),
+						)
+						return
+					}
+					const noteLevel = ((currentNotePath + '/').split('/').length) - 1
+					const imageLevel = (path.split('/').length - 1)
+					const upwardsLevel = noteLevel - imageLevel
+					for (let i = 0; i < upwardsLevel; i++) {
+						path = '../' + path
+					}
+					path = path.replace(apppath + '/', '')
+					doc.replaceRange('![' + path + '](' + path + ')', { line: cursor.line })
+				},
+				false,
+				['image/jpeg', 'image/png'],
+				true,
+				OC.dialogs.FILEPICKER_TYPE_CHOOSE,
+				currentNotePath
+			)
+		},
+
+		async onClickUpload() {
+			const doc = this.mde.codemirror.getDoc()
+			const cursor = this.mde.codemirror.getCursor()
+			const id = this.noteid
+
+			const temporaryInput = document.createElement('input')
+			temporaryInput.setAttribute('type', 'file')
+			temporaryInput.onchange = async function() {
+				const data = new FormData()
+				data.append('file', temporaryInput.files[0])
+				const response = await axios({
+					method: 'POST',
+					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
+					data,
+				})
+				const name = response.data[0].filename
+				const position = {
+					line: cursor.line,
+				}
+				doc.replaceRange('![' + name + '](' + name + ')', position)
+			}
+			temporaryInput.click()
+		},
 		insertText(content) {
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
