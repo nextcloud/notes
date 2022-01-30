@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Нотатки",
     "Error" : "Помилка",
     "New note" : "Нова нотатка",
+    "Please see Nextcloud server log for details." : "Будь ласка, перегляньте журнал сервера Nextcloud для отримання додаткової інформації.",
     "Settings" : "Налаштування",
     "No notes yet" : "Нотатки поки відсутні",
     "All notes" : "Усі нотатки",
