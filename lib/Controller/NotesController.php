@@ -9,6 +9,7 @@ use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -294,6 +295,41 @@ class NotesController extends Controller {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$this->notesService->delete($this->helper->getUID(), $id);
 			return [];
+		});
+	}
+
+	/**
+	 * With help from: https://github.com/nextcloud/cookbook
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @return JSONResponse|FileDisplayResponse
+	 */
+	public function getAttachment(int $noteid, string $path) {
+		try {
+			$targetimage = $this->notesService->getAttachment(
+				$this->helper->getUID(),
+				$noteid,
+				$path
+			);
+			$headers = ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800'];
+			return new FileDisplayResponse($targetimage, Http::STATUS_OK, $headers);
+		} catch (\Exception $e) {
+			$this->helper->logException($e);
+			return $this->helper->createErrorResponse($e, Http::STATUS_NOT_FOUND);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function uploadFile(int $noteid): JSONResponse {
+		$file = $this->request->getUploadedFile('file');
+		return $this->helper->handleErrorResponse(function () use ($noteid, $file) {
+			return $this->notesService->createImage(
+				$this->helper->getUID(),
+				$noteid,
+				$file
+			);
 		});
 	}
 }
