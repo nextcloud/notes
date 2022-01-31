@@ -187,7 +187,7 @@ export default {
 					if (!path.startsWith(apppath)) {
 						OC.dialogs.alert(
 							t('notes', 'You cannot select images outside of your notes folder. Your notes folder is: {folder}', { folder: apppath }),
-							t('notes', 'Wrong Image'),
+							t('notes', 'Wrong image'),
 						)
 						return
 					}
