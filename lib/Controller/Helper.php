@@ -80,7 +80,6 @@ class Helper {
 		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
 		$lastUpdate = $chunkCursor->timeStart ?? new \DateTime();
 		$data = $this->notesService->getAll($userId);
-
 		$metaNotes = $this->metaService->getAll($userId, $data['notes']);
 
 		// if a category is requested, then ignore all other notes

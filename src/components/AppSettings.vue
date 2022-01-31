@@ -103,7 +103,6 @@ export default {
 		},
 	},
 }
-
 </script>
 <style scoped>
 .loading .settings-block {

@@ -113,9 +113,7 @@ class NotesService {
 		// create file
 		$file = $folder->newFile($filename);
 
-		$note = new Note($file, $notesFolder, $this->noteUtil);
-
-		return $note;
+		return new Note($file, $notesFolder, $this->noteUtil);
 	}
 
 
@@ -180,7 +178,7 @@ class NotesService {
 	 * test if file is a note
 	 */
 	public function isNote(FileInfo $file) : bool {
-		static $allowedExtensions = ["txt", "org", "markdown", "md", "note"];
+		static $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
 		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
 		return $file->getType() === 'file' && (in_array($ext, $allowedExtensions) || $ext === $this->customExtension);
 	}
