@@ -13,7 +13,7 @@ class NotesService {
 	private $settings;
 	private $noteUtil;
 
-	private static $customExtension = "";
+	private $customExtension = "";
 
 	public function __construct(
 		MetaService $metaService,
@@ -22,10 +22,11 @@ class NotesService {
 	) {
 		$this->metaService = $metaService;
 		$this->settings = $settings;
-        $this->noteUtil = $noteUtil;
+		$this->noteUtil = $noteUtil;
 	}
 
 	public function getAll(string $userId) : array {
+		$this->setCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
 		$data = $this->gatherNoteFiles($notesFolder);
 		$fileIds = array_keys($data['files']);
@@ -52,6 +53,7 @@ class NotesService {
 	}
 
 	public function get(string $userId, int $id) : Note {
+		$this->setCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
 		$note = new Note($this->getFileById($notesFolder, $id), $notesFolder, $this->noteUtil);
 		$this->metaService->update($userId, $note);
@@ -97,19 +99,23 @@ class NotesService {
 	 */
 	public function create(string $userId, string $title, string $category) : Note {
 		// get folder based on category
+		$this->setCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
 		$folder = $this->noteUtil->getCategoryFolder($notesFolder, $category);
 		$this->noteUtil->ensureSufficientStorage($folder, 1);
 
 		// get file name
-        $fileSuffix = $this->settings->get($userId, 'fileSuffix');
-        if ($fileSuffix === "custom")
-            $fileSuffix = $this->settings->get($userId, 'suffixValue');
+		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
+		if ($fileSuffix === "custom") {
+			$fileSuffix = $this->settings->get($userId, 'suffixValue');
+		}
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
 		// create file
 		$file = $folder->newFile($filename);
 
-		return new Note($file, $notesFolder, $this->noteUtil);
+		$note = new Note($file, $notesFolder, $this->noteUtil);
+
+		return $note;
 	}
 
 
@@ -117,6 +123,7 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not exist
 	 */
 	public function delete(string $userId, int $id) {
+		$this->setCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
 		$file = $this->getFileById($notesFolder, $id);
 		$this->noteUtil->ensureNoteIsWritable($file);
@@ -149,7 +156,7 @@ class NotesService {
 	/**
 	 * gather note files in given directory and all subdirectories
 	 */
-	private static function gatherNoteFiles(Folder $folder, string $categoryPrefix = '') : array {
+	private function gatherNoteFiles(Folder $folder, string $categoryPrefix = '') : array {
 		$data = [
 			'files' => [],
 			'categories' => [],
@@ -159,10 +166,10 @@ class NotesService {
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
-				$data_sub = self::gatherNoteFiles($node, $subCategory . '/');
+				$data_sub = $this->gatherNoteFiles($node, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
 				$data['categories'] = $data['categories'] + $data_sub['categories'];
-			} elseif (self::isNote($node)) {
+			} elseif ($this->isNote($node)) {
 				$data['files'][$node->getId()] = $node;
 			}
 		}
@@ -172,30 +179,27 @@ class NotesService {
 	/**
 	 * test if file is a note
 	 */
-	public static function isNote(FileInfo $file) : bool {
+	public function isNote(FileInfo $file) : bool {
 		static $allowedExtensions = ["txt", "org", "markdown", "md", "note"];
-        $ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
-		return $file->getType() === 'file' && (in_array($ext,$allowedExtensions) || $ext === self::$ustomExtension);
+		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
+		return $file->getType() === 'file' && (in_array($ext, $allowedExtensions) || $ext === $this->customExtension);
 	}
 
 	/**
 	 * Update the value of user defined files extension
 	 */
-    public static function setCustomExtension(string $suffix) {
-        self::$customExtension = strtolower(ltrim($suffix, "."));
-	}
-
-    public static function getCustomExtension() : string {
-        return self::$customExtension;
+	private function setCustomExtension(string $userId) {
+		$suffix = $this->settings->get($userId, 'suffixValue');
+		$this->customExtension = strtolower(ltrim($suffix, "."));
 	}
 
 	/**
 	 * @throws NoteDoesNotExistException
 	 */
-	private static function getFileById(Folder $folder, int $id) : File {
+	private function getFileById(Folder $folder, int $id) : File {
 		$file = $folder->getById($id);
 
-		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !self::isNote($file[0])) {
+		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !$this->isNote($file[0])) {
 			throw new NoteDoesNotExistException();
 		}
 		return $file[0];
