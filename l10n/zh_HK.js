@@ -22,6 +22,8 @@ OC.L10N.register(
     "Open in edit mode" : "以編輯模式開啟",
     "Open in preview mode" : "以預覽模式開啟",
     "No notes yet" : "尚未有筆記",
+    "Select an image" : "選擇圖像",
+    "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "您不能選擇筆記資料夾之外的圖像。 您的筆記資料夾是：{folder}",
     "All notes" : "全部筆記",
     "Categories" : "分類",
     "Loading …" : "正在載入……",
