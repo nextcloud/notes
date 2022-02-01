@@ -22,6 +22,8 @@ OC.L10N.register(
     "Open in edit mode" : "Im Bearbeitungsmodus öffnen",
     "Open in preview mode" : "Im Vorschaumodus öffnen",
     "No notes yet" : "Noch keine Notizen vorhanden",
+    "Select an image" : "Ein Bild auswählen",
+    "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Du kannst keine Bilder außerhalb Deines Notizenordners auswählen. Dein Notizenordner ist: {folder}",
     "All notes" : "Alle Notizen",
     "Categories" : "Kategorien",
     "Loading …" : "Lade …",
