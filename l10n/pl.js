@@ -24,6 +24,7 @@ OC.L10N.register(
     "No notes yet" : "Brak notatek",
     "Select an image" : "Wybierz obraz",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Nie możesz wybrać obrazów poza katalogiem notatek. Twój katalog notatek to: {folder}",
+    "Wrong image" : "Nieprawidłowy obraz",
     "All notes" : "Wszystkie notatki",
     "Categories" : "Kategorie",
     "Loading …" : "Wczytywanie…",
