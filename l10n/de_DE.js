@@ -24,6 +24,7 @@ OC.L10N.register(
     "No notes yet" : "Noch keine Notizen vorhanden",
     "Select an image" : "Ein Bild auswählen",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Sie können keine Bilder außerhalb Ihres Notizenordners auswählen. Ihr Notizenordner ist: {folder}",
+    "Wrong image" : "Falsches Bild",
     "All notes" : "Alle Notizen",
     "Categories" : "Kategorien",
     "Loading …" : "Lade …",
