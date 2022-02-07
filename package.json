@@ -13,7 +13,7 @@
 		"stylelint:fix": "stylelint 'src/**/*.vue' 'css/**/*.scss' --fix"
 	},
 	"dependencies": {
-		"@nextcloud/axios": "^1.8.0",
+		"@nextcloud/axios": "^1.9.0",
 		"@nextcloud/dialogs": "^3.1.2",
 		"@nextcloud/event-bus": "^2.1.1",
 		"@nextcloud/moment": "^1.1.1",
@@ -43,6 +43,6 @@
 		"@nextcloud/browserslist-config": "^2.2.0",
 		"@nextcloud/eslint-config": "^6.1.2",
 		"@nextcloud/stylelint-config": "^2.1.2",
-		"@nextcloud/webpack-vue-config": "^4.3.0"
+		"@nextcloud/webpack-vue-config": "^4.3.2"
 	}
 }
