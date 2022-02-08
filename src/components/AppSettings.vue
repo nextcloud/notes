@@ -24,9 +24,9 @@
 				</option>
 			</select>
 			<input v-show="settings.fileSuffix === 'custom'"
-				id="suffixValue"
-				v-model="settings.suffixValue"
-				name="suffixValue"
+				id="customSuffix"
+				v-model="settings.customSuffix"
+				name="customSuffix"
 				type="text"
 				placeholder=".txt"
 				@change="onChangeSettings"

@@ -47,12 +47,12 @@ class SettingsService {
 				},
 			],
 			'noteMode' => $this->getListAttrs('edit', 'preview'),
-			'suffixValue' => [
+			'customSuffix' => [
 				'default' => "",
 				'validate' => function ($value) {
 					$out = "";
 					if (preg_match('/^\.[A-Za-z0-9.-]*$/', $value)) {
-						$out = strtolower($value);
+						$out = $value;
 					}
 					return $out;
 				},

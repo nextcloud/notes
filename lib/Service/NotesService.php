@@ -107,7 +107,7 @@ class NotesService {
 		// get file name
 		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
 		if ($fileSuffix === "custom") {
-			$fileSuffix = $this->settings->get($userId, 'suffixValue');
+			$fileSuffix = $this->settings->get($userId, 'customSuffix');
 		}
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
 		// create file
@@ -187,8 +187,8 @@ class NotesService {
 	 * Update the value of user defined files extension
 	 */
 	private function setCustomExtension(string $userId) {
-		$suffix = $this->settings->get($userId, 'suffixValue');
-		$this->customExtension = strtolower(ltrim($suffix, "."));
+		$suffix = $this->settings->get($userId, 'customSuffix');
+		$this->customExtension = ltrim($suffix, ".");
 	}
 
 	/**
