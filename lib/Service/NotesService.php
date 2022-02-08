@@ -171,7 +171,7 @@ class NotesService {
 	/**
 	 * test if file is a note
 	 */
-    public function isNote(FileInfo $file, string $userId) : bool {
+	public function isNote(FileInfo $file, string $userId) : bool {
 		static $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
 		$customExtension = $this->getCustomExtension($userId);
 		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
