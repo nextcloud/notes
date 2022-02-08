@@ -24,8 +24,9 @@ class NotesService {
 	}
 
 	public function getAll(string $userId) : array {
+		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
-		$data = $this->gatherNoteFiles($userId, $notesFolder);
+		$data = self::gatherNoteFiles($customExtension, $notesFolder);
 		$fileIds = array_keys($data['files']);
 		// pre-load tags for all notes (performance improvement)
 		$this->noteUtil->getTagService()->loadTags($fileIds);
@@ -50,8 +51,9 @@ class NotesService {
 	}
 
 	public function get(string $userId, int $id) : Note {
+		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
-		$note = new Note($this->getFileById($userId, $notesFolder, $id), $notesFolder, $this->noteUtil);
+		$note = new Note(self::getFileById($customExtension, $notesFolder, $id), $notesFolder, $this->noteUtil);
 		$this->metaService->update($userId, $note);
 		return $note;
 	}
@@ -116,8 +118,9 @@ class NotesService {
 	 * @throws NoteDoesNotExistException if note does not exist
 	 */
 	public function delete(string $userId, int $id) {
+		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
-		$file = $this->getFileById($userId, $notesFolder, $id);
+		$file = self::getFileById($customExtension, $notesFolder, $id);
 		$this->noteUtil->ensureNoteIsWritable($file);
 		$parent = $file->getParent();
 		$file->delete();
@@ -148,7 +151,7 @@ class NotesService {
 	/**
 	 * gather note files in given directory and all subdirectories
 	 */
-	private function gatherNoteFiles(string $userId, Folder $folder, string $categoryPrefix = '') : array {
+	private static function gatherNoteFiles(string $customExtension, Folder $folder, string $categoryPrefix = '') : array {
 		$data = [
 			'files' => [],
 			'categories' => [],
@@ -158,10 +161,10 @@ class NotesService {
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
-				$data_sub = $this->gatherNoteFiles($userId, $node, $subCategory . '/');
+				$data_sub = self::gatherNoteFiles($customExtension, $node, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
 				$data['categories'] = $data['categories'] + $data_sub['categories'];
-			} elseif ($this->isNote($node, $userId)) {
+			} elseif (self::isNote($node, $customExtension)) {
 				$data['files'][$node->getId()] = $node;
 			}
 		}
@@ -171,9 +174,8 @@ class NotesService {
 	/**
 	 * test if file is a note
 	 */
-	public function isNote(FileInfo $file, string $userId) : bool {
+	private static function isNote(FileInfo $file, string $customExtension) : bool {
 		static $allowedExtensions = ['txt', 'org', 'markdown', 'md', 'note'];
-		$customExtension = $this->getCustomExtension($userId);
 		$ext = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
 		return $file->getType() === 'file' && (in_array($ext, $allowedExtensions) || $ext === $customExtension);
 	}
@@ -189,10 +191,10 @@ class NotesService {
 	/**
 	 * @throws NoteDoesNotExistException
 	 */
-	private function getFileById(string $userId, Folder $folder, int $id) : File {
+	private static function getFileById(string $customExtension, Folder $folder, int $id) : File {
 		$file = $folder->getById($id);
 
-		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !$this->isNote($file[0], $userId)) {
+		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !self::isNote($file[0], $customExtension)) {
 			throw new NoteDoesNotExistException();
 		}
 		return $file[0];

@@ -48,13 +48,13 @@ class SettingsService {
 			],
 			'noteMode' => $this->getListAttrs('edit', 'preview'),
 			'customSuffix' => [
-				'default' => "",
+				'default' => '.txt',
 				'validate' => function ($value) {
-					$out = "";
-					if (preg_match('/^\.[A-Za-z0-9.-]*$/', $value)) {
-						$out = $value;
+					$out = ltrim(preg_replace('/[^A-Za-z0-9.-]/', '', $value), '.');
+					if (empty($out)) {
+						$out = 'txt';
 					}
-					return $out;
+					return '.' . $out;
 				},
 			],
 		];
