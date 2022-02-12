@@ -19,10 +19,18 @@
 				<label for="fileSuffix">{{ t('notes', 'File extension for new notes') }}</label>
 			</p>
 			<select id="fileSuffix" v-model="settings.fileSuffix" @change="onChangeSettings">
-				<option v-for="ext in extensions" :key="ext" :value="ext">
-					{{ ext }}
+				<option v-for="extension in extensions" :key="extension.value" :value="extension.value">
+					{{ extension.label }}
 				</option>
 			</select>
+			<input v-show="settings.fileSuffix === 'custom'"
+				id="customSuffix"
+				v-model="settings.customSuffix"
+				name="customSuffix"
+				type="text"
+				placeholder=".txt"
+				@change="onChangeSettings"
+			>
 		</div>
 		<div class="settings-block">
 			<p class="settings-hint">
@@ -54,7 +62,11 @@ export default {
 
 	data() {
 		return {
-			extensions: ['.txt', '.md'],
+			extensions: [
+				{ value: '.txt', label: '.txt' },
+				{ value: '.md', label: '.md' },
+				{ value: 'custom', label: t('notes', 'user defined') },
+			],
 			noteModes: [
 				{ value: 'edit', label: t('notes', 'Open in edit mode') },
 				{ value: 'preview', label: t('notes', 'Open in preview mode') },

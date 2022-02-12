@@ -27,7 +27,7 @@ class SettingsService {
 		$this->l10n = $l10n;
 		$this->root = $root;
 		$this->attrs = [
-			'fileSuffix' => $this->getListAttrs('.txt', '.md'),
+			'fileSuffix' => $this->getListAttrs('.txt', '.md', 'custom'),
 			'notesPath' => [
 				'default' => function (string $uid) {
 					return $this->getDefaultNotesPath($uid);
@@ -47,6 +47,16 @@ class SettingsService {
 				},
 			],
 			'noteMode' => $this->getListAttrs('edit', 'preview'),
+			'customSuffix' => [
+				'default' => '.txt',
+				'validate' => function ($value) {
+					$out = ltrim(preg_replace('/[^A-Za-z0-9.-]/', '', $value), '.');
+					if (empty($out)) {
+						$out = 'txt';
+					}
+					return '.' . $out;
+				},
+			],
 		];
 	}
 
