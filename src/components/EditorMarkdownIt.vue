@@ -25,6 +25,7 @@ export default {
 
 		const md = new MarkdownIt({
 			linkify: true,
+			breaks: true,
 		})
 
 		md.use(require('markdown-it-task-checkbox'), {
