@@ -182,6 +182,9 @@ class APIv1Test extends CommonAPITest {
 			'notesPath' => 'New-Test-Notes-Folder2',
 		], 'Update notesPath with path traversal check');
 		$this->updateSettings($settings, (object)[
+			'notesPath' => '',
+		], (object)[], 'Update notesPath with root directory');
+		$this->updateSettings($settings, (object)[
 			'fileSuffix' => 'illegal value',
 		], (object)[
 			'fileSuffix' => '.txt',

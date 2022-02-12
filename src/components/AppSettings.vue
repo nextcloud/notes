@@ -9,7 +9,7 @@
 					v-model="settings.notesPath"
 					type="text"
 					name="notesPath"
-					:placeholder="t('notes', 'path to notes')"
+					:placeholder="t('notes', 'root directory')"
 					@change="onChangeSettingsReload"
 				><input type="submit" class="icon-confirm" value="">
 			</form>
