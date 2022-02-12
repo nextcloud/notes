@@ -101,7 +101,7 @@ class SettingsService {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
 			if (!array_key_exists($name, $this->attrs)
-				|| empty($value)
+				|| $value === null
 				|| $value === $this->attrs[$name]['default']
 			) {
 				unset($settings[$name]);
@@ -123,7 +123,7 @@ class SettingsService {
 		// use default for empty settings
 		$toBeSaved = false;
 		foreach ($this->attrs as $name => $attr) {
-			if (!property_exists($settings, $name) || empty($settings->{$name})) {
+			if (!property_exists($settings, $name)) {
 				$defaultValue = $attr['default'];
 				if (is_callable($defaultValue)) {
 					$settings->{$name} = $defaultValue($uid);
