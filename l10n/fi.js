@@ -15,7 +15,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Palautettu {number} muistiinpano","Palautettu {number} muistiinpanoa"],
     "Settings" : "Asetukset",
     "Folder to store your notes" : "Kansio johon muistiinpanot tallennetaan",
-    "path to notes" : "polku muistiinpanoihin",
     "File extension for new notes" : "Tiedostopääte uusille muistiinpanoille",
     "Open in edit mode" : "Avaa muokkaustilassa",
     "Open in preview mode" : "Avaa esikatselutilassa",

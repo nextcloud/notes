@@ -15,7 +15,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} nòta restaurada","{number} nòtas restauradas"],
     "Settings" : "Paramètres",
     "Folder to store your notes" : "Dossièr ont gardar vòstras nòtas",
-    "path to notes" : "camin cap a las nòtas",
     "File extension for new notes" : "Extension fichièr per las nòtas novèlas",
     "No notes yet" : "Cap de nòta pel moment",
     "All notes" : "Totas las nòtas",

@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Вратена {number} белешка","Вратени {number} белешки"],
     "Settings" : "Параметри",
     "Folder to store your notes" : "Папка за зачувување на вашите белешки",
-    "path to notes" : "патека до белешките",
     "File extension for new notes" : "Наставка на дадотека за нови белешки",
     "No notes yet" : "Сеуште нема забелешки",
     "All notes" : "Сите белешки",

@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} nota recuperada","{number} notas recuperadas"],
     "Settings" : "Configurações",
     "Folder to store your notes" : "Pasta para armazenar anotações",
-    "path to notes" : "caminho para notas",
     "File extension for new notes" : "Extensão para novas anotações",
     "Display mode for notes" : "Modo de exibição para notas",
     "Open in edit mode" : "Abra no modo de edição",

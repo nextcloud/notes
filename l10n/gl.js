@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Recuperada {number} nota","Recuperadas {number} notas"],
     "Settings" : "Axustes",
     "Folder to store your notes" : "Cartafol para almacenar as súas notas",
-    "path to notes" : "ruta ás notas",
     "File extension for new notes" : "Extensión do ficheiro para notas novas",
     "No notes yet" : "Aínda non hai notas",
     "All notes" : "Todas as notas",

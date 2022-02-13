@@ -14,7 +14,6 @@
     "_Recovered {number} note_::_Recovered {number} notes_" : ["S'ha recuperat {number} nota","S'han recuperat {number} notes"],
     "Settings" : "Paràmetres",
     "Folder to store your notes" : "Carpeta on es desen les notes",
-    "path to notes" : "camí de les notes",
     "File extension for new notes" : "Extensió de fitxer per a les notes noves",
     "No notes yet" : "Encara no hi ha notes",
     "All notes" : "Totes les notes",

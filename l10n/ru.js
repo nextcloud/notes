@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Восстановлена [number] заметка","Восстановлено [number] заметки","Восстановлено [number] заметок","Восстановлено [number] заметок"],
     "Settings" : "Параметры",
     "Folder to store your notes" : "Папка для хранения заметок",
-    "path to notes" : "путь к заметкам",
     "File extension for new notes" : "Расширения файлов новых заметок",
     "Display mode for notes" : "Режим отображения для заметок",
     "Open in edit mode" : "Открыть в режиме редактирования",

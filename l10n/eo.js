@@ -8,7 +8,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Estas nekonservitaj notoj. Foriro el la paĝo perdos ĉiujn ŝanĝojn!",
     "Settings" : "Agordoj",
     "Folder to store your notes" : "Dosiero, en kiu konservi viajn notojn",
-    "path to notes" : "vojo al notoj",
     "File extension for new notes" : "Dosiersufikso por novaj notoj",
     "All notes" : "Ĉiuj notoj",
     "Categories" : "Kategorioj",

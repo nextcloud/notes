@@ -11,7 +11,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Yra neįrašytų užrašų. Išėjus iš šio puslapio, visi pakeitimai bus atmesti!",
     "Settings" : "Nustatymai",
     "Folder to store your notes" : "Aplankas, kuriame saugoti jūsų užrašus",
-    "path to notes" : "kelias į užrašus",
     "File extension for new notes" : "Naujų užrašų failo prievardis",
     "No notes yet" : "Nėra užrašų",
     "All notes" : "Visi užrašai",

@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} Notiz wiederhergestellt","{number} Notizen wiederhergestellt"],
     "Settings" : "Einstellungen",
     "Folder to store your notes" : "Ordner zum Speichern Ihrer Notizen",
-    "path to notes" : "Pfad zu Notizen",
     "File extension for new notes" : "Dateiendung für neue Notizen",
     "Display mode for notes" : "Anzeigemodus für Notizen",
     "Open in edit mode" : "Im Bearbeitungsmodus öffnen",

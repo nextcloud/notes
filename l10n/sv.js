@@ -15,7 +15,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Återskapade {number} anteckning","Återskapade {number} anteckningar"],
     "Settings" : "Inställningar",
     "Folder to store your notes" : "Mapp för att spara dina anteckningar",
-    "path to notes" : "sökväg till anteckningar",
     "File extension for new notes" : "Filtillägg för nya anteckningar",
     "Display mode for notes" : "Visningsläge för anteckningar",
     "Open in edit mode" : "Öppna i redigeringsläge",

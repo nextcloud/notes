@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Obnovena {number} poznámka","Obnoveny {number} poznámky","Obnoveno {number} poznámek","Obnoveny {number} poznámky"],
     "Settings" : "Nastavení",
     "Folder to store your notes" : "Složka pro ukládání vašich poznámek",
-    "path to notes" : "popis umístění poznámek",
     "File extension for new notes" : "Přípona souboru pro nové poznámky",
     "Display mode for notes" : "Režim zobrazení poznámek",
     "Open in edit mode" : "Otevřít v režimu úprav",
