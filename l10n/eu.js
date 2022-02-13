@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} ohar berreskuratuta","{number} ohar berreskuratuta"],
     "Settings" : "Ezarpenak",
     "Folder to store your notes" : "Zure oharrak gordetzeko karpeta",
-    "path to notes" : "oharretara bidea",
     "File extension for new notes" : "Ohar berrien fitxategi-luzapena",
     "Display mode for notes" : "Erakusketa modua oharrentzat",
     "Open in edit mode" : "Ireki edizio moduan",

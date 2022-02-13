@@ -15,7 +15,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["פתק אחד שוחזר","{number} פתקים שוחזרו","{number} פתקים שוחזרו","{number} פתקים שוחזרו"],
     "Settings" : "הגדרות",
     "Folder to store your notes" : "תיקייה לאחסון הפתקיות שלך",
-    "path to notes" : "נתיב לפתקיות",
     "File extension for new notes" : "סיומת קובץ לפתקיות חדשות",
     "No notes yet" : "אין פתקים עדיין",
     "All notes" : "כל הפתקים",

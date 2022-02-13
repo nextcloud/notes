@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Obnovljena je {number} zabeležka.","Obnovljeni sta {number} zabeležki.","Obnovljene so {number} zabeležke.","Obnovljenih je {number} zabeležk."],
     "Settings" : "Nastavitve",
     "Folder to store your notes" : "Mapa za shranjevanje zabeležk",
-    "path to notes" : "pot do mape",
     "File extension for new notes" : "Privzeta pripona datotek za nove zabeležke",
     "Display mode for notes" : "Način prikaza zabeležk",
     "Open in edit mode" : "Zabeležka se odpre v urejevalnem načinu",

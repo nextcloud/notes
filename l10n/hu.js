@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} jegyzet helyreállítva","{number} jegyzet helyreállítva"],
     "Settings" : "Beállítások",
     "Folder to store your notes" : "Jegyzetek tárolási mappája",
-    "path to notes" : "megjegyzések útvonala",
     "File extension for new notes" : "Új jegyzetek fájlkiterjesztése",
     "Display mode for notes" : "Jegyzetek megjelenítési módja",
     "Open in edit mode" : "Megnyitás szerkesztési módban",

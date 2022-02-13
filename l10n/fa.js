@@ -12,7 +12,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "یادداشتهای ذخیره نشده وجود دارد. ترک صفحه باعث می شود همه تغییرات از بین بروند!",
     "Settings" : "تنظیمات",
     "Folder to store your notes" : "پوشه برای ذخیره یادداشت های خود",
-    "path to notes" : "مسیر یادداشت ها",
     "File extension for new notes" : "پسوند پرونده برای یادداشتهای جدید",
     "No notes yet" : "هنوز هیچ یادداشتی وجود ندارد",
     "All notes" : "همه یادداشت ها",

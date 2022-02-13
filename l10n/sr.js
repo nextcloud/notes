@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Опорављено {number} белешка","Опорављено {number} белешке","Опорављено {number} белешки"],
     "Settings" : "Поставке",
     "Folder to store your notes" : "Фасцикла за складиштење белешки",
-    "path to notes" : "путања до белешки",
     "File extension for new notes" : "Екстензија фајлова код нових белешки",
     "No notes yet" : "Још нема белешки",
     "All notes" : "Све белешке",

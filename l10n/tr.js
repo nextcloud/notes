@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} not geri yüklendi","{number} not geri yüklendi"],
     "Settings" : "Ayarlar",
     "Folder to store your notes" : "Notlarınızın kaydedileceği klasör",
-    "path to notes" : "notların yolu",
     "File extension for new notes" : "Yeni notlar için dosya uzantısı",
     "Display mode for notes" : "Notların görüntülenme kipi",
     "Open in edit mode" : "Düzenleme kipinde aç",

@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Oporavljena {number} bilješka","Oporavljene {number} bilješke","Oporavljeno {number} bilješki"],
     "Settings" : "Postavke",
     "Folder to store your notes" : "Mapa za spremanje bilješki",
-    "path to notes" : "put do bilješki",
     "File extension for new notes" : "Ekstenzija datoteke za nove bilješke",
     "Display mode for notes" : "Način prikaza bilješki",
     "Open in edit mode" : "Otvori u načinu uređivanja",

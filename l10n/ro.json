@@ -14,7 +14,6 @@
     "_Recovered {number} note_::_Recovered {number} notes_" : ["A fost recuperat {number} notiţă","Au fost recuperate {number} notiţe","Au fost recuperate {number} de notiţe"],
     "Settings" : "Setări",
     "Folder to store your notes" : "Dosarul pentru a stoca notiţele tale",
-    "path to notes" : "calea spre notiţe",
     "File extension for new notes" : "Extensia fişierului pentru notiţele noi",
     "Display mode for notes" : "Mod afișare notițe",
     "Open in edit mode" : "Deschide în modul editare",

@@ -16,7 +16,6 @@ OC.L10N.register(
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number}のノートを復元しました"],
     "Settings" : "設定",
     "Folder to store your notes" : "ノートを保存するフォルダー",
-    "path to notes" : "ノートへのパス",
     "File extension for new notes" : "新しいノートのファイル拡張子",
     "Display mode for notes" : "ノートの表示モード",
     "Open in edit mode" : "編集モードで開く",

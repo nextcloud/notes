@@ -14,7 +14,6 @@
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Επαναφέρθηκε {number} σημείωση","Επαναφέρθηκαν {number} σημειώσεις"],
     "Settings" : "Ρυθμίσεις",
     "Folder to store your notes" : "Φάκελος αποθήκευσης των σημειώσεών σας",
-    "path to notes" : "διαδρομή στις σημειώσεις",
     "File extension for new notes" : "Πρόσθετο αρχείου για νέες σημειώσεις",
     "No notes yet" : "Δεν υπάρχουν ακόμα σημειώσεις",
     "All notes" : "Όλες οι σημειώσεις",

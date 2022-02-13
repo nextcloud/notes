@@ -14,7 +14,6 @@
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Възстановени {number} бележки","Възстановени {number} бележки"],
     "Settings" : "Настройки",
     "Folder to store your notes" : "Папка за съхранение на бележките",
-    "path to notes" : "път до бележките",
     "File extension for new notes" : "Разширение за файловете",
     "Display mode for notes" : "Режим на показване на бележки",
     "Open in edit mode" : "Отваряне в режим за редактиране",

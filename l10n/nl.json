@@ -14,7 +14,6 @@
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Herstelde {number} notitie","{number} notities hersteld"],
     "Settings" : "Instellingen",
     "Folder to store your notes" : "Map om je notities in op te slaan",
-    "path to notes" : "pad naar notities",
     "File extension for new notes" : "Bestandsextensie voor nieuwe notities",
     "Display mode for notes" : "Weergavemodus voor notities",
     "Open in edit mode" : "Open in bewerkingsmodus",
