@@ -9,7 +9,7 @@
 					v-model="settings.notesPath"
 					type="text"
 					name="notesPath"
-					:placeholder="t('notes', 'root directory')"
+					:placeholder="t('notes', 'Root directory')"
 					@change="onChangeSettingsReload"
 				><input type="submit" class="icon-confirm" value="">
 			</form>
@@ -65,7 +65,7 @@ export default {
 			extensions: [
 				{ value: '.txt', label: '.txt' },
 				{ value: '.md', label: '.md' },
-				{ value: 'custom', label: t('notes', 'user defined') },
+				{ value: 'custom', label: t('notes', 'User defined') },
 			],
 			noteModes: [
 				{ value: 'edit', label: t('notes', 'Open in edit mode') },
