@@ -15,7 +15,7 @@ OC.L10N.register(
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Usunięto {number} notatkę","Usunięto {number} notatki","Usunięto {number} notatek","Usunięto {number} notatek"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Odzyskano {number} notatkę","Odzyskano {number} notatki","Odzyskano {number} notatek","Odzyskano {number} notatek"],
     "Settings" : "Ustawienia",
-    "Folder to store your notes" : "Katalog przechowywania notatek",
+    "Folder to store your notes" : "Katalog do przechowywania notatek",
     "File extension for new notes" : "Rozszerzenie pliku dla nowych notatek",
     "Display mode for notes" : "Tryb wyświetlania notatek",
     "Open in edit mode" : "Otwórz w trybie edycji",
