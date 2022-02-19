@@ -27,6 +27,7 @@
 				</div>
 			</Modal>
 			<div class="note-editor">
+				<TheSidemenu ref="TheSidemenu" />
 				<div v-show="!note.content" class="placeholder" :class="preview ? '' : 'placeholder-toolbar'">
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
@@ -40,7 +41,6 @@
 					@add-mMnu-item="addMenuItem"
 				/>
 			</div>
-			<TheSidemenu ref="sidebar" />
 		</div>
 	</AppContent>
 </template>
@@ -65,6 +65,7 @@ import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutio
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
+import TheSidemenu from './Sidemenu'
 import ConflictSolution from './ConflictSolution'
 import store from '../store'
 
@@ -81,7 +82,7 @@ export default {
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
-		TheSidemenu: () => import('./Sidemenu'),
+		TheSidemenu,
 	},
 
 	directives: {
@@ -120,25 +121,25 @@ export default {
 		// todo fix this. The timeout is not reliable or a good way to do this.
 		// it breaks often, VERY often.
 		setTimeout(() => {
-			this.sidemenuitemkeys['details'] = this.$refs.sidebar.addEntry(t('notes', 'Details'), 'icon-details', this.onToggleSidebar)
+			const sidebar = this.$refs.TheSidemenu;
+			this.sidemenuitemkeys['details'] = sidebar.addEntry(t('notes', 'Details'), 'icon-details', this.onToggleSidebar)
 
 			if (this.preview) {
-				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Edit'), 'icon-rename', this.onTogglePreview)
+				this.sidemenuitemkeys['preview'] = sidebar.addEntry(t('notes', 'Edit'), 'icon-rename', this.onTogglePreview)
 			} else {
-				this.sidemenuitemkeys['preview'] = this.$refs.sidebar.addEntry(t('notes', 'Preview'), 'icon-toggle', this.onTogglePreview)
+				this.sidemenuitemkeys['preview'] = sidebar.addEntry(t('notes', 'Preview'), 'icon-toggle', this.onTogglePreview)
 			}
 
 			if (this.fullscreen) {
-				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Exit full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
+				this.sidemenuitemkeys['fullscreen'] = sidebar.addEntry(t('notes', 'Exit full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
 			} else {
-				this.sidemenuitemkeys['fullscreen'] = this.$refs.sidebar.addEntry(t('notes', 'Full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
+				this.sidemenuitemkeys['fullscreen'] = sidebar.addEntry(t('notes', 'Full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
 			}
 
 			const self = this
 			this.newMenuItems.forEach(function(element) {
 				self.addMenuItem(element.title, element.icon, element.callback, element.group, element.hidden, self)
 			})
-
 		}, 1000)
 	},
 
