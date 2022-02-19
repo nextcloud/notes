@@ -223,7 +223,8 @@ export default {
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
 					data,
 				})
-				const name = response.data[0].filename
+				console.log("ERROR: Response currently does not return filename")
+				console.log(response)
 				const position = {
 					line: cursor.line,
 				}
@@ -231,6 +232,7 @@ export default {
 			}
 			temporaryInput.click()
 		},
+
 		insertText(content) {
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
