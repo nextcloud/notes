@@ -251,9 +251,8 @@ class NotesService {
 
 		$result = [];
 		$result['filename'] = $filename;
-		$result['filepath'] = $parent->getPath() . '/' . $filename;
-		$result['wasUploaded'] = true;
 
 		$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
+		return $result;
 	}
 }
