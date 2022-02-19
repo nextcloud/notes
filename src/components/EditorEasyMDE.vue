@@ -2,27 +2,27 @@
 	<div>
 		<div class="toolbar">
 			<a class="button" :title="t('notes', 'Undo')" @click="undo">
-				<span class=""></span>
+				<span class="" />
 				<span class="">{{ t('notes', 'u') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Redo')" @click="redo">
-				<span class=""></span>
+				<span class="" />
 				<span class="">{{ t('notes', 'r') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Bold')" @click="makeBold">
-				<span class=""></span>
+				<span class="" />
 				<span class="">{{ t('notes', 'B') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Italic')" @click="makeItalic">
-				<span class=""></span>
+				<span class="" />
 				<span class="">{{ t('notes', 'i') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Strikethrough')" @click="makeStrikethrough">
-				<span class=""></span>
+				<span class="" />
 				<span class="">{{ t('notes', '-S-') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Title')" @click="makeMonospace">
-				<span class=""></span>
+				<span class="" />
 				<span class="">{{ t('notes', 'H1') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Insert Link')" @click="insertLink">
@@ -35,11 +35,11 @@
 			</a>
 			<a class="button" :title="t('notes', 'Monospace')" @click="makeMonospace">
 				<span class=""></span>
-				<span class="">{{ t('notes', '<>') }}</span>
+				<span class="">{{ t('notes', '\<\>') }}</span>
 			</a>
-			<a class="button" @click="onClickUpload" :title="t('notes', 'Upload Image')">
-				<span class="icon-picture"></span>
-				<span></span>
+			<a class="button" :title="t('notes', 'Upload Image')" @click="onClickUpload">
+				<span class="icon-picture" />
+				<span />
 			</a>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">

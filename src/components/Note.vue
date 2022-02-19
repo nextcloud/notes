@@ -121,19 +121,19 @@ export default {
 		// todo fix this. The timeout is not reliable or a good way to do this.
 		// it breaks often, VERY often.
 		setTimeout(() => {
-			const sidebar = this.$refs.TheSidemenu;
-			this.sidemenuitemkeys['details'] = sidebar.addEntry(t('notes', 'Details'), 'icon-details', this.onToggleSidebar)
+			const sidemenu = this.$refs.TheSidemenu
+			this.sidemenuitemkeys['details'] = sidemenu.addEntry(t('notes', 'Details'), 'icon-details', this.onToggleSidebar)
 
 			if (this.preview) {
-				this.sidemenuitemkeys['preview'] = sidebar.addEntry(t('notes', 'Edit'), 'icon-rename', this.onTogglePreview)
+				this.sidemenuitemkeys['preview'] = sidemenu.addEntry(t('notes', 'Edit'), 'icon-rename', this.onTogglePreview)
 			} else {
-				this.sidemenuitemkeys['preview'] = sidebar.addEntry(t('notes', 'Preview'), 'icon-toggle', this.onTogglePreview)
+				this.sidemenuitemkeys['preview'] = sidemenu.addEntry(t('notes', 'Preview'), 'icon-toggle', this.onTogglePreview)
 			}
 
 			if (this.fullscreen) {
-				this.sidemenuitemkeys['fullscreen'] = sidebar.addEntry(t('notes', 'Exit full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
+				this.sidemenuitemkeys['fullscreen'] = sidemenu.addEntry(t('notes', 'Exit full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
 			} else {
-				this.sidemenuitemkeys['fullscreen'] = sidebar.addEntry(t('notes', 'Full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
+				this.sidemenuitemkeys['fullscreen'] = sidemenu.addEntry(t('notes', 'Full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
 			}
 
 			const self = this
@@ -235,15 +235,15 @@ export default {
 			this.actionsOpen = false
 
 			const menuid = this.sidemenuitemkeys['preview']
-			const sidebar = this.$refs.sidebar
+			const sidemenu = this.$refs.TheSidemenu
 			if (this.preview) {
-				sidebar.setGroupEnabled('editor', false)
-				sidebar.updateEntry(menuid, 'title', t('notes', 'Preview'), false)
-				sidebar.updateEntry(menuid, 'icon', 'icon-toggle')
+				sidemenu.setGroupEnabled('editor', false)
+				sidemenu.updateEntry(menuid, 'title', t('notes', 'Preview'), false)
+				sidemenu.updateEntry(menuid, 'icon', 'icon-toggle')
 			} else {
-				sidebar.setGroupEnabled('editor', true)
-				sidebar.updateEntry(menuid, 'title', t('notes', 'Edit'), false)
-				sidebar.updateEntry(menuid, 'icon', 'icon-rename')
+				sidemenu.setGroupEnabled('editor', true)
+				sidemenu.updateEntry(menuid, 'title', t('notes', 'Edit'), false)
+				sidemenu.updateEntry(menuid, 'icon', 'icon-rename')
 			}
 		},
 
@@ -277,10 +277,10 @@ export default {
 			const menuid = this.sidemenuitemkeys['fullscreen']
 			if (this.fullscreen) {
 				exitFullscreen()
-				this.$refs.sidebar.updateEntry(menuid, 'title', t('notes', 'Full screen'))
+				this.$refs.TheSidemenu.updateEntry(menuid, 'title', t('notes', 'Full screen'))
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
-				this.$refs.sidebar.updateEntry(menuid, 'title', t('notes', 'Exit full screen'))
+				this.$refs.TheSidemenu.updateEntry(menuid, 'title', t('notes', 'Exit full screen'))
 			}
 			this.actionsOpen = false
 		},
@@ -415,12 +415,13 @@ export default {
 			// it takes a while for sidebar to be set up.
 			// if it is not yet set up, add it to the queue which gets processed when
 			// the sidemenu was set up properly.
-			if (self.$refs.sidebar) {
+			const sidemenu = self.$refs.TheSidemenu
+			if (sidemenu) {
 				const id = title + icon + group
 				if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
-					self.$refs.sidebar.removeID(self.sidemenuitemkeys[id])
+					sidemenu.removeID(self.sidemenuitemkeys[id])
 				}
-				self.sidemenuitemkeys[id] = self.$refs.sidebar.addEntry(title, icon, callback, group, hidden)
+				self.sidemenuitemkeys[id] = sidemenu.addEntry(title, icon, callback, group, hidden)
 			} else {
 				self.newMenuItems.push({ title: title, icon: icon, callback: callback, group: group, hidden: hidden })
 			}

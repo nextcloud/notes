@@ -40,7 +40,7 @@ export default {
 		return {
 			items: [],
 			groups: [],
-			actionsOpen: false
+			actionsOpen: false,
 		}
 	},
 
@@ -111,10 +111,10 @@ export default {
 		forceUpdate() {
 			this.$forceUpdate()
 		},
-		notOverflowMenu: function() {
+		notOverflowMenu() {
 			return this.getFilteredArray(false)
 		},
-		overflowMenu: function() {
+		overflowMenu() {
 			return this.getFilteredArray(true)
 		},
 	},
