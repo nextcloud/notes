@@ -1,7 +1,10 @@
 <template>
-	<div class="markdown-editor" @click="onClickEditor">
-		<textarea />
-	</div>
+	<div>
+		<button class="upload-button" @click="onClickUpload">{{ t('notes', 'Add Attachment') }}</button>
+		<div class="markdown-editor" @click="onClickEditor">
+			<textarea />
+		</div>
+		</div>
 </template>
 <script>
 
@@ -66,7 +69,7 @@ export default {
 	methods: {
 		initialize() {
 			const config = Object.assign({
-				element: this.$el.firstElementChild,
+				element: this.$el.lastElementChild.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
 			}, this.config)
@@ -181,7 +184,7 @@ export default {
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
 					data,
 				})
-				const name = response.data[0].filename
+				const name = response.data.filename
 				const position = {
 					line: cursor.line,
 				}
@@ -319,5 +322,9 @@ export default {
 .CodeMirror .cm-formatting-task.cm-property + span {
 	opacity: 0.5;
 	text-decoration: line-through;
+}
+
+.upload-button {
+	float: right;
 }
 </style>
