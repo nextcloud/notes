@@ -2,44 +2,38 @@
 	<div>
 		<div class="toolbar">
 			<a class="button" :title="t('notes', 'Undo')" @click="undo">
-				<span class="" />
-				<span class="">{{ t('notes', 'u') }}</span>
+				<span class="icon-undo"/>
 			</a>
 			<a class="button" :title="t('notes', 'Redo')" @click="redo">
-				<span class="" />
-				<span class="">{{ t('notes', 'r') }}</span>
+				<span class="icon-redo"/>
 			</a>
 			<a class="button" :title="t('notes', 'Bold')" @click="makeBold">
-				<span class="" />
-				<span class="">{{ t('notes', 'B') }}</span>
+				<span class="icon-bold"/>
 			</a>
 			<a class="button" :title="t('notes', 'Italic')" @click="makeItalic">
-				<span class="" />
-				<span class="">{{ t('notes', 'i') }}</span>
+				<span class="icon-italic"/>
 			</a>
 			<a class="button" :title="t('notes', 'Strikethrough')" @click="makeStrikethrough">
-				<span class="" />
-				<span class="">{{ t('notes', '-S-') }}</span>
+				<span class="icon-strike"/>
 			</a>
 			<a class="button" :title="t('notes', 'Title')" @click="makeMonospace">
-				<span class="" />
-				<span class="">{{ t('notes', 'H1') }}</span>
+				<span class="icon-h1"/>
 			</a>
 			<a class="button" :title="t('notes', 'Insert Link')" @click="insertLink">
-				<span class="icon-category-organization"></span>
+				<span class="icon-link"></span>
 				<span class="toolbar_label">{{ t('notes', 'Insert Link') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Insert Checkbox')" @click="insertCheckbox">
-				<span class="icon-category-organization"></span>
+				<span class="icon-checklist"></span>
 				<span class="toolbar_label">{{ t('notes', 'Insert Checkbox') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Monospace')" @click="makeMonospace">
-				<span class=""></span>
-				<span class="">{{ t('notes', '\<\>') }}</span>
+				<span class="icon-code"></span>
+				<span class="toolbar_label">{{ t('notes', 'Insert Monospace') }}</span>
 			</a>
 			<a class="button" :title="t('notes', 'Upload Image')" @click="onClickUpload">
-				<span class="icon-picture" />
-				<span />
+				<span class="icon-image" />
+				<span class="toolbar_label">{{ t('notes', 'Upload Image') }}</span>
 			</a>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
@@ -444,4 +438,6 @@ export default {
 .toolbar_label {
 	display: none;
 }
+
+
 </style>
