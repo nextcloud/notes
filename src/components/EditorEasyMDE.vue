@@ -1,10 +1,12 @@
 <template>
 	<div>
-		<button class="upload-button" @click="onClickUpload">{{ t('notes', 'Add Attachment') }}</button>
+		<button class="upload-button" @click="onClickUpload">
+			{{ t('notes', 'Add Attachment') }}
+		</button>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
 		</div>
-		</div>
+	</div>
 </template>
 <script>
 
