@@ -1,8 +1,9 @@
 <template>
 	<div>
-		<button class="upload-button" @click="onClickUpload">
-			{{ t('notes', 'Add Attachment') }}
-		</button>
+		<div class="upload-button">
+			<button class="icon-upload" @click="onClickUpload" />
+			<button class="icon-files" @click="onClickSelect" />
+		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
 		</div>
@@ -327,6 +328,13 @@ export default {
 }
 
 .upload-button {
-	float: right;
+	margin-right: 15px;
+	right: 64px;
+	position: fixed;
+	height: 40px;
+}
+.upload-button button {
+	height: 100%;
+	width: 40px;
 }
 </style>
