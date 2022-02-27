@@ -93,6 +93,9 @@ export default {
 			if (this.readonly) {
 				this.mde.codemirror.options.readOnly = true
 			}
+
+			// clear initial empty state in history
+			this.mde.codemirror.clearHistory()
 		},
 
 		onClickCodeElement(event) {
