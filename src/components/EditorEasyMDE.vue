@@ -182,6 +182,7 @@ export default {
 			temporaryInput.onchange = async function() {
 				const data = new FormData()
 				data.append('file', temporaryInput.files[0])
+				const originalFilename = temporaryInput.files[0]['name'];
 				const response = await axios({
 					method: 'POST',
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
@@ -191,7 +192,7 @@ export default {
 				const position = {
 					line: cursor.line,
 				}
-				doc.replaceRange('![' + name + '](' + name + ')', position)
+				doc.replaceRange('![' + originalFilename + '](' + name + ')', position)
 			}
 			temporaryInput.click()
 		},
