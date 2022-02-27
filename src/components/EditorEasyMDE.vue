@@ -15,6 +15,9 @@ import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import store from '../store'
+import { showError } from '@nextcloud/dialogs'
+import '@nextcloud/dialogs/styles/toast.scss'
+
 
 export default {
 	name: 'EditorEasyMDE',
@@ -188,11 +191,17 @@ export default {
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
 					data,
 				})
-				const name = response.data.filename
-				const position = {
-					line: cursor.line,
+
+				if (response.data.error !== undefined){
+					console.error(response.data.error)
+					showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
+				} else {
+					const name = response.data.filename
+					const position = {
+						line: cursor.line,
+					}
+					doc.replaceRange('![' + originalFilename + '](' + name + ')', position)
 				}
-				doc.replaceRange('![' + originalFilename + '](' + name + ')', position)
 			}
 			temporaryInput.click()
 		},

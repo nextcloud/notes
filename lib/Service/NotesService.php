@@ -244,12 +244,17 @@ class NotesService {
 		}
 		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
 
+		$result = [];
+		if ($fileDataArray['tmp_name'] === "") {
+			$result['error'] = "Uploading failed. Is 'upload_max_filesize' set properly?";
+			return $result;
+		}
+
 		// read uploaded file from disk
 		$fp = fopen($fileDataArray['tmp_name'], 'r');
 		$content = fread($fp, $fileDataArray['size']);
 		fclose($fp);
 
-		$result = [];
 		$result['filename'] = $filename;
 
 		$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
