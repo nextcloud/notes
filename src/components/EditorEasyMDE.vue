@@ -18,7 +18,6 @@ import store from '../store'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
-
 export default {
 	name: 'EditorEasyMDE',
 
@@ -182,7 +181,7 @@ export default {
 			temporaryInput.onchange = async function() {
 				const data = new FormData()
 				data.append('file', temporaryInput.files[0])
-				const originalFilename = temporaryInput.files[0]['name'];
+				const originalFilename = temporaryInput.files[0].name
 				const response = await axios({
 					method: 'POST',
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
@@ -190,7 +189,7 @@ export default {
 				})
 
 				if (response.data.error !== undefined){
-					console.error(response.data.error)
+					console.error (response.data.error)
 					showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
 				} else {
 					const name = response.data.filename
