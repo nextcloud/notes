@@ -13,6 +13,11 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.3.1 - 2022-02-27
+
+- add support for PHP 8.1, maintenance (#824)
+
+
 ## 4.3.0 - 2022-01-09
 
 - checkbox support in preview mode (#787 by @newhinton)
