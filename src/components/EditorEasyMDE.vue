@@ -188,8 +188,8 @@ export default {
 					data,
 				})
 
-				if (response.data.error !== undefined){
-					console.error (response.data.error)
+				if (response.data.error !== undefined) {
+					console.error(response.data.error)
 					showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
 				} else {
 					const name = response.data.filename
