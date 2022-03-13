@@ -7,5 +7,10 @@ module.exports = {
 		'vue/html-closing-bracket-newline': ['error', { multiline: 'always' }],
 		// do not require JSDoc comments
 		'jsdoc/require-jsdoc': 'off',
+		// allow first attribute in new line if multiline
+		'vue/first-attribute-linebreak': ['error', {
+			'singleline': 'beside',
+			'multiline': 'ignore',
+		}],
 	},
 }
