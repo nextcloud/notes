@@ -367,5 +367,6 @@ export default {
 	right: 64px;
 	position: fixed;
 	height: 40px;
+	margin-right: 5px;
 }
 </style>
