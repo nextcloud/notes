@@ -191,18 +191,18 @@ export default {
 					const noteLevel = ((currentNotePath + '/').split('/').length) - 1
 					const imageLevel = (path.split('/').length - 1)
 					const upwardsLevel = noteLevel - imageLevel
-					let pathprefix = '';
+					let pathprefix = ''
 					for (let i = 0; i < upwardsLevel; i++) {
 						pathprefix = '../' + pathprefix
 					}
 
 					// normalize image paths to account for levels
-					path = path.replace(apppath+'/', '')
-					if( path.startsWith(categories)) {
-						path = path.replace(categories+'/', '')
+					path = path.replace(apppath + '/', '')
+					if (path.startsWith(categories)) {
+						path = path.replace(categories + '/', '')
 					}
 					path = path.replace(currentNotePath, '')
-					doc.replaceRange('![' + pathprefix+path + '](' + pathprefix+path + ')\n', { line: cursor.line })
+					doc.replaceRange('![' + pathprefix + path + '](' + pathprefix + path + ')\n', { line: cursor.line })
 					this.mde.codemirror.focus()
 				},
 				false,
