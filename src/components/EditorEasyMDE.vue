@@ -1,8 +1,26 @@
 <template>
 	<div>
 		<div class="upload-button">
-			<button class="icon-upload" @click="onClickUpload" />
-			<button class="icon-files" @click="onClickSelect" />
+			<Actions
+				container=".upload-button"
+				default-icon="icon-picture"
+				menu-align="right"
+			>
+				<ActionButton
+					icon="icon-upload"
+					:close-after-click="true"
+					@click="onClickUpload"
+				>
+					{{ t('notes', 'Upload image') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-picture"
+					:close-after-click="true"
+					@click="onClickSelect"
+				>
+					{{ t('notes', 'Insert image') }}
+				</ActionButton>
+			</Actions>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -17,9 +35,18 @@ import { generateUrl } from '@nextcloud/router'
 import store from '../store'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
+import {
+	Actions,
+	ActionButton,
+} from '@nextcloud/vue'
 
 export default {
 	name: 'EditorEasyMDE',
+
+	components: {
+		Actions,
+		ActionButton,
+	},
 
 	props: {
 		value: {
@@ -101,6 +128,9 @@ export default {
 			if (this.readonly) {
 				this.mde.codemirror.options.readOnly = true
 			}
+
+			// clear initial empty state in history
+			this.mde.codemirror.clearHistory()
 		},
 
 		onClickCodeElement(event) {
@@ -334,13 +364,8 @@ export default {
 }
 
 .upload-button {
-	margin-right: 15px;
 	right: 64px;
 	position: fixed;
 	height: 40px;
-}
-.upload-button button {
-	height: 100%;
-	width: 40px;
 }
 </style>
