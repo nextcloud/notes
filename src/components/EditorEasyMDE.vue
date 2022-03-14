@@ -214,6 +214,7 @@ export default {
 		},
 
 		async onClickUpload() {
+			const cm = this.mde.codemirror
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
 			const id = this.noteid
@@ -232,7 +233,7 @@ export default {
 							line: cursor.line,
 						}
 						doc.replaceRange('![' + originalFilename + '](' + name + ')\n', position)
-						this.mde.codemirror.focus()
+						cm.focus()
 					})
 					.catch((error) => {
 						console.error(error)
