@@ -202,7 +202,8 @@ export default {
 						path = path.replace(categories+'/', '')
 					}
 					path = path.replace(currentNotePath, '')
-					doc.replaceRange('![' + pathprefix+path + '](' + pathprefix+path + ')', { line: cursor.line })
+					doc.replaceRange('![' + pathprefix+path + '](' + pathprefix+path + ')\n', { line: cursor.line })
+					this.mde.codemirror.focus()
 				},
 				false,
 				['image/jpeg', 'image/png'],
@@ -230,7 +231,8 @@ export default {
 						const position = {
 							line: cursor.line,
 						}
-						doc.replaceRange('![' + originalFilename + '](' + name + ')', position)
+						doc.replaceRange('![' + originalFilename + '](' + name + ')\n', position)
+						this.mde.codemirror.focus()
 					})
 					.catch((error) => {
 						console.error(error)
