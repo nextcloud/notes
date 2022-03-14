@@ -61,6 +61,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		notecategory: {
+			type: String,
+			required: true,
+		},
 	},
 
 	data() {
@@ -168,7 +172,7 @@ export default {
 
 		async onClickSelect() {
 			const apppath = '/' + store.state.app.settings.notesPath
-			const categories = store.getters.getCategories()
+			const categories = this.notecategory
 			const currentNotePath = apppath + '/' + categories
 
 			const doc = this.mde.codemirror.getDoc()
@@ -187,11 +191,18 @@ export default {
 					const noteLevel = ((currentNotePath + '/').split('/').length) - 1
 					const imageLevel = (path.split('/').length - 1)
 					const upwardsLevel = noteLevel - imageLevel
+					let pathprefix = '';
 					for (let i = 0; i < upwardsLevel; i++) {
-						path = '../' + path
+						pathprefix = '../' + pathprefix
 					}
-					path = path.replace(apppath + '/', '')
-					doc.replaceRange('![' + path + '](' + path + ')', { line: cursor.line })
+
+					// normalize image paths to account for levels
+					path = path.replace(apppath+'/', '')
+					if( path.startsWith(categories)) {
+						path = path.replace(categories+'/', '')
+					}
+					path = path.replace(currentNotePath, '')
+					doc.replaceRange('![' + pathprefix+path + '](' + pathprefix+path + ')', { line: cursor.line })
 				},
 				false,
 				['image/jpeg', 'image/png'],
