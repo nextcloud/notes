@@ -212,22 +212,19 @@ export default {
 				const data = new FormData()
 				data.append('file', temporaryInput.files[0])
 				const originalFilename = temporaryInput.files[0].name
-				const response = await axios({
-					method: 'POST',
-					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
-					data,
-				})
 
-				if (response.data.error !== undefined) {
-					console.error(response.data.error)
-					showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
-				} else {
-					const name = response.data.filename
-					const position = {
-						line: cursor.line,
-					}
-					doc.replaceRange('![' + originalFilename + '](' + name + ')', position)
-				}
+				axios.post(generateUrl('apps/notes') + '/notes/' + id + '/attachment', data)
+					.then((response) => {
+						const name = response.data.filename
+						const position = {
+							line: cursor.line,
+						}
+						doc.replaceRange('![' + originalFilename + '](' + name + ')', position)
+					})
+					.catch((error) => {
+						console.error(error)
+						showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
+					})
 			}
 			temporaryInput.click()
 		},
