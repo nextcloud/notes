@@ -39,6 +39,7 @@ import {
 	Actions,
 	ActionButton,
 } from '@nextcloud/vue'
+import { basename, relative } from 'path'
 
 export default {
 	name: 'EditorEasyMDE',
@@ -171,9 +172,8 @@ export default {
 		},
 
 		async onClickSelect() {
-			const apppath = '/' + store.state.app.settings.notesPath
-			const categories = this.notecategory
-			const currentNotePath = apppath + '/' + categories
+			const apppath = '/' + store.state.app.settings.notesPath + '/'
+			const currentNotePath = apppath + this.notecategory
 
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
@@ -188,21 +188,9 @@ export default {
 						)
 						return
 					}
-					const noteLevel = ((currentNotePath + '/').split('/').length) - 1
-					const imageLevel = (path.split('/').length - 1)
-					const upwardsLevel = noteLevel - imageLevel
-					let pathprefix = ''
-					for (let i = 0; i < upwardsLevel; i++) {
-						pathprefix = '../' + pathprefix
-					}
-
-					// normalize image paths to account for levels
-					path = path.replace(apppath + '/', '')
-					if (path.startsWith(categories)) {
-						path = path.replace(categories + '/', '')
-					}
-					path = path.replace(currentNotePath, '')
-					doc.replaceRange('![' + pathprefix + path + '](' + pathprefix + path + ')\n', { line: cursor.line })
+					const label = basename(path)
+					const relativePath = relative(currentNotePath, path)
+					doc.replaceRange('![' + label + '](' + relativePath + ')\n', { line: cursor.line })
 					this.mde.codemirror.focus()
 				},
 				false,
