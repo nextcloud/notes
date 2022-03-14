@@ -92,7 +92,6 @@ export default {
 <style lang="scss">
 .note-preview {
 	padding: 1em;
-	padding-top: 0;
 	line-height: 1.5em;
 	word-wrap: break-word;
 

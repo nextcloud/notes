@@ -1,6 +1,44 @@
 <template>
-	<div class="markdown-editor" @click="onClickEditor">
-		<textarea />
+	<div>
+		<div class="toolbar">
+			<a class="button" :title="t('notes', 'Undo')" @click="undo">
+				<span class="icon-undo"/>
+			</a>
+			<a class="button" :title="t('notes', 'Redo')" @click="redo">
+				<span class="icon-redo"/>
+			</a>
+			<a class="button" :title="t('notes', 'Bold')" @click="makeBold">
+				<span class="icon-bold"/>
+			</a>
+			<a class="button" :title="t('notes', 'Italic')" @click="makeItalic">
+				<span class="icon-italic"/>
+			</a>
+			<a class="button" :title="t('notes', 'Strikethrough')" @click="makeStrikethrough">
+				<span class="icon-strike"/>
+			</a>
+			<a class="button" :title="t('notes', 'Title')" @click="makeMonospace">
+				<span class="icon-h1"/>
+			</a>
+			<a class="button" :title="t('notes', 'Insert Link')" @click="insertLink">
+				<span class="icon-link"></span>
+				<span class="toolbar_label">{{ t('notes', 'Insert Link') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Insert Checkbox')" @click="insertCheckbox">
+				<span class="icon-checklist"></span>
+				<span class="toolbar_label">{{ t('notes', 'Insert Checkbox') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Monospace')" @click="makeMonospace">
+				<span class="icon-code"></span>
+				<span class="toolbar_label">{{ t('notes', 'Insert Monospace') }}</span>
+			</a>
+			<a class="button" :title="t('notes', 'Upload Image')" @click="onClickUpload">
+				<span class="icon-image" />
+				<span class="toolbar_label">{{ t('notes', 'Upload Image') }}</span>
+			</a>
+		</div>
+		<div class="markdown-editor" @click="onClickEditor">
+			<textarea />
+		</div>
 	</div>
 </template>
 <script>
@@ -57,6 +95,7 @@ export default {
 	mounted() {
 		this.initialize()
 		this.mde.codemirror.focus()
+		this.$emit('add-menu-item', t('notes', 'Make Italic'), 'icon-toggle', this.makeItalic, 'editor', false)
 	},
 
 	destroyed() {
@@ -66,7 +105,7 @@ export default {
 	methods: {
 		initialize() {
 			const config = Object.assign({
-				element: this.$el.firstElementChild,
+				element: this.$el.lastElementChild.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
 			}, this.config)
@@ -181,7 +220,8 @@ export default {
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
 					data,
 				})
-				const name = response.data[0].filename
+				console.log("ERROR: Response currently does not return filename")
+				console.log(response)
 				const position = {
 					line: cursor.line,
 				}
@@ -189,6 +229,60 @@ export default {
 			}
 			temporaryInput.click()
 		},
+
+		insertText(content) {
+			const doc = this.mde.codemirror.getDoc()
+			const cursor = this.mde.codemirror.getCursor()
+			const position = {
+				line: cursor.line
+			}
+			doc.replaceRange(content, position)
+		},
+
+		surroundText(content) {
+			const doc = this.mde.codemirror.getDoc()
+			const cursorStart = this.mde.codemirror.getCursor('from')
+			const cursorEnd = this.mde.codemirror.getCursor('to')
+			const originalText = doc.getRange(cursorStart, cursorEnd)
+			doc.replaceRange(content + originalText + content, cursorStart, cursorEnd)
+		},
+
+		insertLink() {
+			this.insertText('[title](url)')
+		},
+
+		insertCheckbox() {
+			this.insertText('- [ ] ')
+		},
+
+		makeBold() {
+			this.surroundText('**')
+		},
+
+		makeItalic() {
+			this.surroundText('_')
+		},
+
+		makeMonospace() {
+			this.surroundText('`')
+		},
+
+		makeStrikethrough() {
+			this.surroundText('~~')
+		},
+
+		undo() {
+			// the first "undo" is the editor beeing populated. Do not undo that!
+			if(this.mde.codemirror.historySize().undo>1){
+				this.mde.codemirror.undo()
+			}
+		},
+
+		redo() {
+			if(this.mde.codemirror.historySize().redo>0){
+				this.mde.codemirror.redo()
+			}
+		}
 	},
 }
 </script>
@@ -198,6 +292,7 @@ export default {
 .markdown-editor {
 	min-height: 100%;
 	padding-bottom: 30vh;
+	padding-top: 1em;
 }
 
 .EasyMDEContainer .CodeMirror {
@@ -320,4 +415,32 @@ export default {
 	opacity: 0.5;
 	text-decoration: line-through;
 }
+
+.toolbar {
+	width: 100%;
+	height: 44px;
+	/*border-bottom: darkgray 1px solid;*/
+
+	display:flex;
+	justify-content:center;
+
+}
+
+.button {
+	display: inline-block;
+	height: 34px;
+	padding: 4px 16px !important;
+	border: none !important;
+	background: none !important;
+}
+
+.button:hover{
+	background: var(--color-background-hover) !important;
+}
+
+.toolbar_label {
+	display: none;
+}
+
+
 </style>
