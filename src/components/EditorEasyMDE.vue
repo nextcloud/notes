@@ -1,6 +1,30 @@
 <template>
-	<div class="markdown-editor" @click="onClickEditor">
-		<textarea />
+	<div>
+		<div class="upload-button">
+			<Actions
+				container=".upload-button"
+				default-icon="icon-picture"
+				menu-align="right"
+			>
+				<ActionButton
+					icon="icon-upload"
+					:close-after-click="true"
+					@click="onClickUpload"
+				>
+					{{ t('notes', 'Upload image') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-picture"
+					:close-after-click="true"
+					@click="onClickSelect"
+				>
+					{{ t('notes', 'Insert image') }}
+				</ActionButton>
+			</Actions>
+		</div>
+		<div class="markdown-editor" @click="onClickEditor">
+			<textarea />
+		</div>
 	</div>
 </template>
 <script>
@@ -9,9 +33,21 @@ import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import store from '../store'
+import { showError } from '@nextcloud/dialogs'
+import '@nextcloud/dialogs/styles/toast.scss'
+import {
+	Actions,
+	ActionButton,
+} from '@nextcloud/vue'
+import { basename, relative } from 'path'
 
 export default {
 	name: 'EditorEasyMDE',
+
+	components: {
+		Actions,
+		ActionButton,
+	},
 
 	props: {
 		value: {
@@ -23,6 +59,10 @@ export default {
 			required: true,
 		},
 		noteid: {
+			type: String,
+			required: true,
+		},
+		notecategory: {
 			type: String,
 			required: true,
 		},
@@ -66,7 +106,7 @@ export default {
 	methods: {
 		initialize() {
 			const config = Object.assign({
-				element: this.$el.firstElementChild,
+				element: this.$el.lastElementChild.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
 			}, this.config)
@@ -132,9 +172,8 @@ export default {
 		},
 
 		async onClickSelect() {
-			const apppath = '/' + store.state.app.settings.notesPath
-			const categories = store.getters.getCategories()
-			const currentNotePath = apppath + '/' + categories
+			const apppath = '/' + store.state.app.settings.notesPath + '/'
+			const currentNotePath = apppath + this.notecategory
 
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
@@ -149,14 +188,10 @@ export default {
 						)
 						return
 					}
-					const noteLevel = ((currentNotePath + '/').split('/').length) - 1
-					const imageLevel = (path.split('/').length - 1)
-					const upwardsLevel = noteLevel - imageLevel
-					for (let i = 0; i < upwardsLevel; i++) {
-						path = '../' + path
-					}
-					path = path.replace(apppath + '/', '')
-					doc.replaceRange('![' + path + '](' + path + ')', { line: cursor.line })
+					const label = basename(path)
+					const relativePath = relative(currentNotePath, path)
+					doc.replaceRange('![' + label + '](' + relativePath + ')\n', { line: cursor.line })
+					this.mde.codemirror.focus()
 				},
 				false,
 				['image/jpeg', 'image/png'],
@@ -167,6 +202,7 @@ export default {
 		},
 
 		async onClickUpload() {
+			const cm = this.mde.codemirror
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
 			const id = this.noteid
@@ -176,16 +212,21 @@ export default {
 			temporaryInput.onchange = async function() {
 				const data = new FormData()
 				data.append('file', temporaryInput.files[0])
-				const response = await axios({
-					method: 'POST',
-					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
-					data,
-				})
-				const name = response.data[0].filename
-				const position = {
-					line: cursor.line,
-				}
-				doc.replaceRange('![' + name + '](' + name + ')', position)
+				const originalFilename = temporaryInput.files[0].name
+
+				axios.post(generateUrl('apps/notes') + '/notes/' + id + '/attachment', data)
+					.then((response) => {
+						const name = response.data.filename
+						const position = {
+							line: cursor.line,
+						}
+						doc.replaceRange('![' + originalFilename + '](' + name + ')\n', position)
+						cm.focus()
+					})
+					.catch((error) => {
+						console.error(error)
+						showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
+					})
 			}
 			temporaryInput.click()
 		},
@@ -319,5 +360,13 @@ export default {
 .CodeMirror .cm-formatting-task.cm-property + span {
 	opacity: 0.5;
 	text-decoration: line-through;
+}
+
+.upload-button {
+	position: fixed;
+	right: 64px;
+	z-index: 10;
+	height: 40px;
+	margin-right: 5px;
 }
 </style>

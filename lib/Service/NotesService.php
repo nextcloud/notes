@@ -229,6 +229,7 @@ class NotesService {
 	 * @param $noteid
 	 * @param $fileDataArray
 	 * @throws NotPermittedException
+	 * @throws ImageNotWritableException
 	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
 	public function createImage(string $userId, int $noteid, $fileDataArray) {
@@ -244,6 +245,10 @@ class NotesService {
 		}
 		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
 
+		if ($fileDataArray['tmp_name'] === "") {
+			throw new ImageNotWritableException();
+		}
+
 		// read uploaded file from disk
 		$fp = fopen($fileDataArray['tmp_name'], 'r');
 		$content = fread($fp, $fileDataArray['size']);
@@ -251,7 +256,6 @@ class NotesService {
 
 		$result = [];
 		$result['filename'] = $filename;
-
 		$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
 		return $result;
 	}

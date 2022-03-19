@@ -34,6 +34,7 @@
 				<TheEditor v-else
 					:value="note.content"
 					:noteid="noteId"
+					:notecategory="note.category"
 					:readonly="note.readonly"
 					@input="onEdit"
 				/>
