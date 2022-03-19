@@ -37,17 +37,15 @@ class MetaMapper extends QBMapper {
 
 	public function deleteAll() : void {
 		$qb = $this->db->getQueryBuilder();
-		// TODO NC22: replace execute() with executeStatement()
-		$qb->delete($this->tableName)->execute();
+		$qb->delete($this->tableName)->executeStatement();
 	}
 
 	public function deleteByNote(int $id) : void {
 		$qb = $this->db->getQueryBuilder();
-		// TODO NC22: replace execute() with executeStatement()
 		$qb->delete($this->tableName)
 			->where(
 				$qb->expr()->eq('file_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
 			)
-			->execute();
+			->executeStatement();
 	}
 }

@@ -152,7 +152,11 @@ class NotesService {
 	/**
 	 * gather note files in given directory and all subdirectories
 	 */
-	private static function gatherNoteFiles(string $customExtension, Folder $folder, string $categoryPrefix = '') : array {
+	private static function gatherNoteFiles(
+		string $customExtension,
+		Folder $folder,
+		string $categoryPrefix = ''
+	) : array {
 		$data = [
 			'files' => [],
 			'categories' => [],
