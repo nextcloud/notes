@@ -63,25 +63,35 @@ export default {
 				// If you are sure other plugins can't add `target` - drop check below
 				const token = tokens[idx]
 				const aIndex = token.attrIndex('src')
+				let download = false
 				let path = token.attrs[aIndex][1]
 
-				if (!path.startsWith('http')) {
+				if (!path.startsWith('http://')
+					&& !path.startsWith('https://')
+					&& !path.startsWith('data:')
+				) {
+					path = path.split('?').shift()
+					const lowecasePath = path.toLowerCase()
 					path = generateUrl('apps/notes/notes/{id}/attachment?path={path}', { id, path })
+					token.attrs[aIndex][1] = path
+
+					if (!lowecasePath.endsWith('.jpg')
+						&& !lowecasePath.endsWith('.jpeg')
+						&& !lowecasePath.endsWith('.bmp')
+						&& !lowecasePath.endsWith('.webp')
+						&& !lowecasePath.endsWith('.gif')
+						&& !lowecasePath.endsWith('.png')
+					) {
+						download = true
+					}
 				}
 
-				token.attrs[aIndex][1] = path
-				const lowecasePath = path.toLowerCase()
-				// pass token to default renderer.
-				if (lowecasePath.endsWith('jpg')
-					|| lowecasePath.endsWith('jpeg')
-					|| lowecasePath.endsWith('bmp')
-					|| lowecasePath.endsWith('webp')
-					|| lowecasePath.endsWith('gif')
-					|| lowecasePath.endsWith('png')) {
-					return defaultRender(tokens, idx, options, env, self)
-				} else {
+				if (download) {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
 					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" src="' + dlimgpath + '">' + token.content + '</div></a></div>'
+				} else {
+					// pass token to default renderer.
+					return defaultRender(tokens, idx, options, env, self)
 				}
 			}
 		},
