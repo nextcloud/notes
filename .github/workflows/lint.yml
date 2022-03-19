@@ -65,7 +65,7 @@ jobs:
         php-version: ${{ env.PHP_VERSION }}
     - name: Determine minimum Nextcloud API version
       if: matrix.version == 'min'
-      run: echo "NC_API_TAG=$(php tests/nextcloud-version.php --appinfo)" >> $GITHUB_ENV
+      run: echo "NC_API_TAG=^$(php tests/nextcloud-version.php --appinfo)" >> $GITHUB_ENV
     - name: Install Dependencies
       run: |
         composer require --dev christophwurst/nextcloud:$NC_API_TAG
