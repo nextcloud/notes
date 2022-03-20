@@ -73,10 +73,13 @@ jobs:
         php server/occ files:scan --all
     - name: Start Nextcloud server
       working-directory: ../server/
-      run: "php -S localhost:8080 &"
+      run: "php -S localhost:8080 > data/php.log 2>&1 &"
     - name: Test API
       run: make test-api
     - name: Show nextcloud.log
       if: always()
       run: "cat ../server/data/nextcloud.log"
+    - name: Show php.log
+      if: always()
+      run: "cat ../server/data/php.log"
 
