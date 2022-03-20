@@ -190,7 +190,8 @@ export default {
 					}
 					const label = basename(path)
 					const relativePath = relative(currentNotePath, path)
-					doc.replaceRange('![' + label + '](' + relativePath + ')\n', { line: cursor.line })
+					const encodedPath = relativePath.split('/').map(encodeURIComponent).join('/')
+					doc.replaceRange('![' + label + '](' + encodedPath + ')\n', { line: cursor.line })
 					this.mde.codemirror.focus()
 				},
 				false,
