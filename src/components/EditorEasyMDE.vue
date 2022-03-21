@@ -225,7 +225,7 @@ export default {
 					})
 					.catch((error) => {
 						console.error(error)
-						showError(t('notes', 'The file was not uploaded. Check your serverlogs.'),)
+						showError(t('notes', 'The file was not uploaded. Check your server logs.'),)
 					})
 			}
 			temporaryInput.click()
