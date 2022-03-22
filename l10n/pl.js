@@ -23,6 +23,8 @@ OC.L10N.register(
     "Open in edit mode" : "Otwórz w trybie edycji",
     "Open in preview mode" : "Otwórz w trybie podglądu",
     "No notes yet" : "Brak notatek",
+    "Upload image" : "Wyślij obraz",
+    "Insert image" : "Wstaw obraz",
     "Select an image" : "Wybierz obraz",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Nie możesz wybrać obrazów poza katalogiem notatek. Twój katalog notatek to: {folder}",
     "Wrong image" : "Nieprawidłowy obraz",

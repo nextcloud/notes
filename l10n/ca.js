@@ -28,7 +28,6 @@ OC.L10N.register(
     "Select an image" : "Seleccioneu una imatge",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "No podeu seleccionar notes que es trobin fora de la carpeta de notes. La carpeta de notes és: {folder}",
     "Wrong image" : "Imatge incorrecta",
-    "The file was not uploaded. Check your serverlogs." : "No s'ha pujat el fitxer. Consulteu els registres del servidor.",
     "All notes" : "Totes les notes",
     "Categories" : "Categories",
     "Loading …" : "S'està carregant…",

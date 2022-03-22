@@ -28,7 +28,6 @@ OC.L10N.register(
     "Select an image" : "Bir görsel seçin",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Notlar klasörünüzün dışındaki görselleri seçemezsiniz. Notlar klasörünüz: {folder}",
     "Wrong image" : "Yanlış görsel",
-    "The file was not uploaded. Check your serverlogs." : "Dosya yüklenemedi. Sunucu günlüklerine bakın.",
     "All notes" : "Tüm notlar",
     "Categories" : "Kategoriler",
     "Loading …" : "Yükleniyor …",
