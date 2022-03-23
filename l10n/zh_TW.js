@@ -28,6 +28,7 @@ OC.L10N.register(
     "Select an image" : "選取圖片",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "您無法選取您筆記資料夾之外的圖片。您的筆記資料夾為：{folder}",
     "Wrong image" : "錯誤的圖片",
+    "The file was not uploaded. Check your server logs." : "檔案未上傳。請檢查您的伺服器紀錄檔。",
     "All notes" : "全部筆記",
     "Categories" : "分類",
     "Loading …" : "正在載入……",

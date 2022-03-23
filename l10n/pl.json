@@ -26,6 +26,7 @@
     "Select an image" : "Wybierz obraz",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Nie możesz wybrać obrazów poza katalogiem notatek. Twój katalog notatek to: {folder}",
     "Wrong image" : "Nieprawidłowy obraz",
+    "The file was not uploaded. Check your server logs." : "Plik nie został wysłany. Sprawdź logi serwera.",
     "All notes" : "Wszystkie notatki",
     "Categories" : "Kategorie",
     "Loading …" : "Wczytywanie…",

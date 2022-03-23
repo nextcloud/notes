@@ -28,6 +28,7 @@ OC.L10N.register(
     "Select an image" : "Vyberte obrázek",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Není možné vybírat obrázky nacházející se mimo vaši složku s poznámkami. Vaše složka s poznámkami je: {folder}",
     "Wrong image" : "Chybný obrázek",
+    "The file was not uploaded. Check your server logs." : "Soubor nebyl nahrán. Podívejte se do záznamů událostí na serveru.",
     "All notes" : "Všechny poznámky",
     "Categories" : "Kategorie",
     "Loading …" : "Načítání…",
