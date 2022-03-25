@@ -2,8 +2,15 @@
 	<Fragment>
 		<!-- collapsible categories -->
 		<NavigationCategoriesItem
-			v-if="numNotes"
+			v-if="numNotes && showCollapsed"
 			:selected-category="category"
+			@category-selected="$emit('category-selected', $event)"
+		/>
+
+		<NavigationCategoriesList
+			v-if="numNotes && !showCollapsed"
+			:selected-category="category"
+			:show-spacer="true"
 			@category-selected="$emit('category-selected', $event)"
 		/>
 
@@ -45,6 +52,7 @@ import { Fragment } from 'vue-fragment'
 
 import { categoryLabel } from '../Util'
 import NavigationCategoriesItem from './NavigationCategoriesItem'
+import NavigationCategoriesList from './NavigationCategoriesList'
 import NavigationNoteItem from './NavigationNoteItem'
 import store from '../store'
 
@@ -58,6 +66,7 @@ export default {
 		AppNavigationItem,
 		Fragment,
 		NavigationCategoriesItem,
+		NavigationCategoriesList,
 		NavigationNoteItem,
 	},
 
@@ -86,6 +95,10 @@ export default {
 	},
 
 	computed: {
+		showCollapsed() {
+			return store.state.app.settings.categoriesMode === 'collapsed'
+		},
+
 		numNotes() {
 			return store.getters.numNotes()
 		},

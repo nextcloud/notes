@@ -46,6 +46,7 @@ class SettingsService {
 					return implode(DIRECTORY_SEPARATOR, $path);
 				},
 			],
+			'categoriesMode' => $this->getListAttrs('visible', 'collapsed'),
 			'noteMode' => $this->getListAttrs('edit', 'preview'),
 			'customSuffix' => [
 				'default' => '.txt',
