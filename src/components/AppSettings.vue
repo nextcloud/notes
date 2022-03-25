@@ -34,6 +34,16 @@
 		</div>
 		<div class="settings-block">
 			<p class="settings-hint">
+				<label for="categoriesMode">{{ t('notes', 'Display mode for categories') }}</label>
+			</p>
+			<select id="categoriesMode" v-model="settings.categoriesMode" @change="onChangeSettings">
+				<option v-for="mode in categoriesModes" :key="mode.value" :value="mode.value">
+					{{ mode.label }}
+				</option>
+			</select>
+		</div>
+		<div class="settings-block">
+			<p class="settings-hint">
 				<label for="noteMode">{{ t('notes', 'Display mode for notes') }}</label>
 			</p>
 			<select id="noteMode" v-model="settings.noteMode" @change="onChangeSettings">
@@ -66,6 +76,10 @@ export default {
 				{ value: '.txt', label: '.txt' },
 				{ value: '.md', label: '.md' },
 				{ value: 'custom', label: t('notes', 'User defined') },
+			],
+			categoriesModes: [
+				{ value: 'visible', label: t('notes', 'Always show all categories') },
+				{ value: 'collapsed', label: t('notes', 'Collapse categories') },
 			],
 			noteModes: [
 				{ value: 'edit', label: t('notes', 'Open in edit mode') },

@@ -8,46 +8,27 @@
 		:allow-collapse="true"
 		@click.prevent.stop="onToggleCategories"
 	>
-		<AppNavigationItem
-			:title="t('notes', 'All notes')"
-			icon="icon-recent"
-			@click.prevent.stop="onSelectCategory(null)"
-		>
-			<AppNavigationCounter slot="counter">
-				{{ numNotes }}
-			</AppNavigationCounter>
-		</AppNavigationItem>
-
-		<AppNavigationItem v-for="category in categories"
-			:key="category.name"
-			:title="categoryTitle(category.name)"
-			:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
-			@click.prevent.stop="onSelectCategory(category.name)"
-		>
-			<AppNavigationCounter slot="counter">
-				{{ category.count }}
-			</AppNavigationCounter>
-		</AppNavigationItem>
+		<NavigationCategoriesList
+			:selected-category="selectedCategory"
+			@category-selected="onSelectCategory"
+		/>
 	</AppNavigationItem>
 </template>
 
 <script>
 import {
 	AppNavigationItem,
-	AppNavigationCounter,
 } from '@nextcloud/vue'
 
-import { getCategories } from '../NotesService'
 import { categoryLabel } from '../Util'
-
-import store from '../store'
+import NavigationCategoriesList from './NavigationCategoriesList.vue'
 
 export default {
 	name: 'NavigationCategoriesItem',
 
 	components: {
 		AppNavigationItem,
-		AppNavigationCounter,
+		NavigationCategoriesList,
 	},
 
 	props: {
@@ -64,14 +45,6 @@ export default {
 	},
 
 	computed: {
-		numNotes() {
-			return store.getters.numNotes()
-		},
-
-		categories() {
-			return getCategories(1, true)
-		},
-
 		title() {
 			return this.selectedCategory === null ? this.t('notes', 'Categories') : categoryLabel(this.selectedCategory)
 		},
