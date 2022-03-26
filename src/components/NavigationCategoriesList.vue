@@ -23,7 +23,7 @@
 			</AppNavigationCounter>
 		</AppNavigationItem>
 
-		<AppNavigationSpacer v-if="showSpacer" class="separator-above" />
+		<AppNavigationSpacer class="separator-above" />
 	</Fragment>
 </template>
 
@@ -54,10 +54,6 @@ export default {
 		selectedCategory: {
 			type: String,
 			default: null,
-		},
-		showSpacer: {
-			type: Boolean,
-			default: false,
 		},
 	},
 

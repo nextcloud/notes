@@ -20,8 +20,6 @@ OC.L10N.register(
     "File extension for new notes" : "Dateiendung für neue Notizen",
     "Display mode for notes" : "Anzeigemodus für Notizen",
     "User defined" : "Benutzerdefiniert",
-    "Always show all categories" : "Immer alle Kategorien anzeigen",
-    "Collapse categories" : "Kategorien einklappen",
     "Open in edit mode" : "Im Bearbeitungsmodus öffnen",
     "Open in preview mode" : "Im Vorschaumodus öffnen",
     "No notes yet" : "Noch keine Notizen vorhanden",
