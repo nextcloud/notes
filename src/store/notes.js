@@ -5,6 +5,7 @@ const state = {
 	categories: [],
 	notes: [],
 	notesIds: {},
+	selectedCategory: null,
 }
 
 const getters = {
@@ -70,6 +71,39 @@ const getters = {
 		}
 		return result
 	},
+
+	getFilteredNotes: (state) => () => {
+		const notes = state.notes.filter(note => {
+			if (state.selectedCategory !== null
+				&& state.selectedCategory !== note.category
+				&& !note.category.startsWith(state.selectedCategory + '/')) {
+				return false
+			}
+			return true
+		})
+
+		function cmpRecent(a, b) {
+			if (a.favorite && !b.favorite) return -1
+			if (!a.favorite && b.favorite) return 1
+			return b.modified - a.modified
+		}
+
+		function cmpCategory(a, b) {
+			const cmpCat = a.category.localeCompare(b.category)
+			if (cmpCat !== 0) return cmpCat
+			if (a.favorite && !b.favorite) return -1
+			if (!a.favorite && b.favorite) return 1
+			return a.title.localeCompare(b.title)
+		}
+
+		notes.sort(state.selectedCategory === null ? cmpRecent : cmpCategory)
+
+		return notes
+	},
+
+	getSelectedCategory: (state) => () => {
+		return state.selectedCategory
+	},
 }
 
 const mutations = {
@@ -110,6 +144,10 @@ const mutations = {
 
 	setCategories(state, categories) {
 		state.categories = categories
+	},
+
+	setSelectedCategory(state, category) {
+		state.selectedCategory = category
 	},
 }
 

@@ -41,20 +41,13 @@ import { categoryLabel } from '../Util'
 import store from '../store'
 
 export default {
-	name: 'NavigationCategoriesList',
+	name: 'CategoriesList',
 
 	components: {
 		Fragment,
 		AppNavigationItem,
 		AppNavigationCounter,
 		AppNavigationSpacer,
-	},
-
-	props: {
-		selectedCategory: {
-			type: String,
-			default: null,
-		},
 	},
 
 	computed: {
@@ -65,6 +58,10 @@ export default {
 		categories() {
 			return getCategories(1, true)
 		},
+
+		selectedCategory() {
+			return store.getters.getSelectedCategory()
+		}
 	},
 
 	methods: {
@@ -73,7 +70,7 @@ export default {
 		},
 
 		onSelectCategory(category) {
-			this.$emit('category-selected', category)
+			store.commit('setSelectedCategory', category)
 		},
 	},
 }

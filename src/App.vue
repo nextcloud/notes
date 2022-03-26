@@ -10,11 +10,8 @@
 			/>
 
 			<template #list>
-				<NavigationList v-show="!loading.notes"
-					:filtered-notes="filteredNotes"
-					:category="filter.category"
-					@category-selected="onSelectCategory"
-					@note-deleted="onNoteDeleted"
+				<CategoriesList v-show="!loading.notes"
+					v-if="numNotes"
 				/>
 			</template>
 
@@ -30,7 +27,10 @@
 				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
 		</AppContent>
-		<router-view v-else />
+
+		<router-view name="notes" v-if="!error" />
+
+		<router-view v-if="!error" />
 
 		<router-view name="sidebar" />
 	</Content>
@@ -49,7 +49,7 @@ import '@nextcloud/dialogs/styles/toast.scss'
 import { config } from './config'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
 import AppSettings from './components/AppSettings'
-import NavigationList from './components/NavigationList'
+import CategoriesList from './components/CategoriesList.vue'
 import store from './store'
 
 export default {
@@ -61,7 +61,7 @@ export default {
 		AppNavigationNew,
 		AppSettings,
 		Content,
-		NavigationList,
+		CategoriesList,
 	},
 
 	data() {
@@ -82,37 +82,16 @@ export default {
 	},
 
 	computed: {
+		numNotes() {
+			return store.getters.numNotes()
+		},
+
 		notes() {
 			return store.state.notes.notes
 		},
 
 		filteredNotes() {
-			const notes = this.notes.filter(note => {
-				if (this.filter.category !== null
-					&& this.filter.category !== note.category
-					&& !note.category.startsWith(this.filter.category + '/')) {
-					return false
-				}
-				return true
-			})
-
-			function cmpRecent(a, b) {
-				if (a.favorite && !b.favorite) return -1
-				if (!a.favorite && b.favorite) return 1
-				return b.modified - a.modified
-			}
-
-			function cmpCategory(a, b) {
-				const cmpCat = a.category.localeCompare(b.category)
-				if (cmpCat !== 0) return cmpCat
-				if (a.favorite && !b.favorite) return -1
-				if (!a.favorite && b.favorite) return 1
-				return a.title.localeCompare(b.title)
-			}
-
-			notes.sort(this.filter.category === null ? cmpRecent : cmpCategory)
-
-			return notes
+			return store.getters.getFilteredNotes()
 		},
 	},
 
@@ -228,7 +207,7 @@ export default {
 				return
 			}
 			this.loading.create = true
-			createNote(this.filter.category || '')
+			createNote(store.getters.getSelectedCategory() || '')
 				.then(note => {
 					this.routeToNote(note.id, { new: null })
 				})
@@ -237,15 +216,6 @@ export default {
 				.then(() => {
 					this.loading.create = false
 				})
-		},
-
-		onSelectCategory(category) {
-			this.filter.category = category
-
-			const appNavigation = document.querySelector('#app-navigation > ul')
-			if (appNavigation) {
-				appNavigation.scrollTop = 0
-			}
 		},
 
 		onNoteDeleted(note) {

@@ -1,14 +1,7 @@
 <template>
-	<Fragment>
-		<NavigationCategoriesList
-			v-if="numNotes"
-			:selected-category="category"
-			@category-selected="$emit('category-selected', $event)"
-		/>
-
-		<!-- list of notes -->
+	<ul>
 		<template v-for="item in noteItems">
-			<AppNavigationCaption v-if="category!==null && category!==item.category"
+			<!--<AppNavigationCaption v-if="category!==null && category!==item.category"
 				:key="item.category"
 				icon="icon-files"
 				class="app-navigation-noclose"
@@ -24,55 +17,46 @@
 				:note="note"
 				@category-selected="$emit('category-selected', $event)"
 				@note-deleted="$emit('note-deleted', $event)"
+			/>-->
+			<NavigationNoteItem v-for="note in item.notes"
+				:key="note.id"
+				:note="note"
+				@category-selected="$emit('category-selected', $event)"
+				@note-deleted="$emit('note-deleted', $event)"
 			/>
 		</template>
-		<AppNavigationItem
-			v-if="notes.length != filteredNotes.length"
+		<!--<AppNavigationItem
+			v-if="displayedNotes.length != filteredNotes.length"
 			v-observe-visibility="onEndOfNotes"
 			:title="t('notes', 'Loading …')"
 			:loading="true"
-		/>
-	</Fragment>
+		/> !-->
+	</ul>
 </template>
 
 <script>
-import {
-	AppNavigationCaption,
-	AppNavigationItem,
-} from '@nextcloud/vue'
-import { Fragment } from 'vue-fragment'
+// import {
+// AppNavigationCaption,
+// AppNavigationItem,
+// } from '@nextcloud/vue'
 
 import { categoryLabel } from '../Util'
-import NavigationCategoriesList from './NavigationCategoriesList'
 import NavigationNoteItem from './NavigationNoteItem'
 import store from '../store'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
 
 export default {
-	name: 'NavigationList',
+	name: 'NotesList',
 
 	components: {
-		AppNavigationCaption,
-		AppNavigationItem,
-		Fragment,
-		NavigationCategoriesList,
+		// AppNavigationCaption,
+		// AppNavigationItem,
 		NavigationNoteItem,
 	},
 
 	directives: {
 		'observe-visibility': ObserveVisibility,
-	},
-
-	props: {
-		filteredNotes: {
-			type: Array,
-			required: true,
-		},
-		category: {
-			type: String,
-			default: null,
-		},
 	},
 
 	data() {
@@ -85,11 +69,15 @@ export default {
 	},
 
 	computed: {
-		numNotes() {
-			return store.getters.numNotes()
+		category() {
+			return store.getters.getSelectedCategory()
 		},
 
-		notes() {
+		filteredNotes() {
+			return store.getters.getFilteredNotes()
+		},
+
+		displayedNotes() {
 			if (this.filteredNotes.length > 40 && this.showFirstNotesOnly) {
 				return this.filteredNotes.slice(0, 30)
 			} else {
@@ -100,7 +88,7 @@ export default {
 		// group notes by time ("All notes") or by category (if category chosen)
 		groupedNotes() {
 			if (this.category === null) {
-				return this.notes.reduce((g, note) => {
+				return this.displayedNotes.reduce((g, note) => {
 					const timeslot = this.getTimeslotFromNote(note)
 					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
 						g.push({ timeslot, notes: [] })
@@ -109,7 +97,7 @@ export default {
 					return g
 				}, [])
 			} else {
-				return this.notes.reduce((g, note) => {
+				return this.displayedNotes.reduce((g, note) => {
 					if (g.length === 0 || g[g.length - 1].category !== note.category) {
 						g.push({ category: note.category, notes: [] })
 					}

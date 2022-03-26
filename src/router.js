@@ -4,6 +4,7 @@ import { generateUrl } from '@nextcloud/router'
 
 import Loading from './components/Loading'
 import Welcome from './components/Welcome'
+import NotesList from './components/NotesList'
 import Note from './components/Note'
 import Sidebar from './components/Sidebar'
 
@@ -28,10 +29,12 @@ export default new Router({
 			path: '/note/:noteId',
 			name: 'note',
 			components: {
+				notes: NotesList,
 				default: Note,
 				sidebar: Sidebar,
 			},
 			props: {
+				notes: true,
 				default: true,
 				sidebar: true,
 			},
