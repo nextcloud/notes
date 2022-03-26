@@ -63,25 +63,38 @@ export default {
 				// If you are sure other plugins can't add `target` - drop check below
 				const token = tokens[idx]
 				const aIndex = token.attrIndex('src')
+				let download = false
 				let path = token.attrs[aIndex][1]
 
-				if (!path.startsWith('http')) {
-					path = generateUrl('apps/notes/notes/{id}/attachment?path={path}', { id, path })
+				if (!path.startsWith('http://')
+					&& !path.startsWith('https://')
+					&& !path.startsWith('data:')
+				) {
+					path = path.split('?').shift()
+					const lowecasePath = path.toLowerCase()
+					path = generateUrl(
+						'apps/notes/notes/{id}/attachment?path={path}',
+						{ id, path: decodeURIComponent(path) },
+					)
+					token.attrs[aIndex][1] = path
+
+					if (!lowecasePath.endsWith('.jpg')
+						&& !lowecasePath.endsWith('.jpeg')
+						&& !lowecasePath.endsWith('.bmp')
+						&& !lowecasePath.endsWith('.webp')
+						&& !lowecasePath.endsWith('.gif')
+						&& !lowecasePath.endsWith('.png')
+					) {
+						download = true
+					}
 				}
 
-				token.attrs[aIndex][1] = path
-				const lowecasePath = path.toLowerCase()
-				// pass token to default renderer.
-				if (lowecasePath.endsWith('jpg')
-					|| lowecasePath.endsWith('jpeg')
-					|| lowecasePath.endsWith('bmp')
-					|| lowecasePath.endsWith('webp')
-					|| lowecasePath.endsWith('gif')
-					|| lowecasePath.endsWith('png')) {
-					return defaultRender(tokens, idx, options, env, self)
-				} else {
+				if (download) {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
 					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" src="' + dlimgpath + '">' + token.content + '</div></a></div>'
+				} else {
+					// pass token to default renderer.
+					return defaultRender(tokens, idx, options, env, self)
 				}
 			}
 		},
@@ -189,23 +202,17 @@ export default {
 
 	& img {
 		width: 75%;
-		margin-left: auto;
-		margin-right: auto;
 		display: block;
 	}
 
 	.download-file {
 		width: 75%;
-		margin-left: auto;
-		margin-right: auto;
 		display: block;
 		text-align: center;
 	}
 
 	.download-icon {
 		padding: 15px;
-		margin-left: auto;
-		margin-right: auto;
 		width: 75%;
 		border-radius: 10px;
 		background-color: var(--color-background-dark);
@@ -213,12 +220,14 @@ export default {
 	}
 
 	.download-icon:hover {
-		border: 1px var(--color-primary-element) solid;
+		border-color: var(--color-primary-element);
 	}
 
 	.download-icon-inner {
 		height: 3em;
 		width: auto;
+		margin-left: auto;
+		margin-right: auto;
 		margin-bottom: 5px;
 	}
 

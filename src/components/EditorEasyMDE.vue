@@ -9,14 +9,14 @@
 				<ActionButton
 					icon="icon-upload"
 					:close-after-click="true"
-					@click="onClickUpload"
+					@click="onClickUploadImage"
 				>
 					{{ t('notes', 'Upload image') }}
 				</ActionButton>
 				<ActionButton
 					icon="icon-picture"
 					:close-after-click="true"
-					@click="onClickSelect"
+					@click="onClickInsertImage"
 				>
 					{{ t('notes', 'Insert image') }}
 				</ActionButton>
@@ -171,7 +171,7 @@ export default {
 			}
 		},
 
-		async onClickSelect() {
+		async onClickInsertImage() {
 			const apppath = '/' + store.state.app.settings.notesPath + '/'
 			const currentNotePath = apppath + this.notecategory
 
@@ -190,7 +190,8 @@ export default {
 					}
 					const label = basename(path)
 					const relativePath = relative(currentNotePath, path)
-					doc.replaceRange('![' + label + '](' + relativePath + ')\n', { line: cursor.line })
+					const encodedPath = relativePath.split('/').map(encodeURIComponent).join('/')
+					doc.replaceRange('![' + label + '](' + encodedPath + ')\n', { line: cursor.line })
 					this.mde.codemirror.focus()
 				},
 				false,
@@ -201,7 +202,7 @@ export default {
 			)
 		},
 
-		async onClickUpload() {
+		async onClickUploadImage() {
 			const cm = this.mde.codemirror
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
