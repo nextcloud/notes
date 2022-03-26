@@ -202,23 +202,17 @@ export default {
 
 	& img {
 		width: 75%;
-		margin-left: auto;
-		margin-right: auto;
 		display: block;
 	}
 
 	.download-file {
 		width: 75%;
-		margin-left: auto;
-		margin-right: auto;
 		display: block;
 		text-align: center;
 	}
 
 	.download-icon {
 		padding: 15px;
-		margin-left: auto;
-		margin-right: auto;
 		width: 75%;
 		border-radius: 10px;
 		background-color: var(--color-background-dark);
@@ -226,12 +220,14 @@ export default {
 	}
 
 	.download-icon:hover {
-		border: 1px var(--color-primary-element) solid;
+		border-color: var(--color-primary-element);
 	}
 
 	.download-icon-inner {
 		height: 3em;
 		width: auto;
+		margin-left: auto;
+		margin-right: auto;
 		margin-bottom: 5px;
 	}
 
