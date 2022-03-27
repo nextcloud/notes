@@ -5,7 +5,7 @@
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
-			<Breadcrumbs>
+			<Breadcrumbs class="breadcrumbs">
 				<Breadcrumb title="Home" />
 				<Breadcrumb :title="category" :key="category" v-for="category of categories" />
 				<Breadcrumb :title="title" />
@@ -449,6 +449,7 @@ export default {
 	font-size: 16px;
 	padding: 1em;
 	padding-bottom: 0;
+	padding-top: 44px;
 }
 
 /* center editor on large screens */
@@ -528,6 +529,12 @@ export default {
 	.conflict-solutions {
 		flex-direction: column;
 	}
+}
+
+.breadcrumbs {
+	position: fixed;
+	z-index: 1;
+	background-color: var(--color-main-background);
 }
 
 </style>

@@ -1,31 +1,34 @@
 <template>
 	<div class="notes-view">
-		<NotesList v-if="groupedNotes.length === 1"
-			:notes="groupedNotes[0].notes"
-			@note-deleted="$emit('note-deleted', $event)"
-		/>
-		<template v-else v-for="(group, idx) in groupedNotes">
-			<AppNavigationCaption v-if="group.category && category!==group.category"
-				:key="group.category"
-				icon="icon-files"
-				:title="categoryToLabel(group.category)"
-			/>
-			<AppNavigationCaption v-if="group.timeslot"
-				:key="group.timeslot"
-				:title="group.timeslot"
-			/>
-			<NotesList
-				:key=idx
-				:notes="group.notes"
+		<div class="spacer" />
+		<div class="notes-list">
+			<NotesList v-if="groupedNotes.length === 1"
+				:notes="groupedNotes[0].notes"
 				@note-deleted="$emit('note-deleted', $event)"
 			/>
-		</template>
-		<!--<AppNavigationItem
-			v-if="displayedNotes.length != filteredNotes.length"
-			v-observe-visibility="onEndOfNotes"
-			:title="t('notes', 'Loading …')"
-			:loading="true"
-		/> !-->
+			<template v-else v-for="(group, idx) in groupedNotes">
+				<AppNavigationCaption v-if="group.category && category!==group.category"
+					:key="group.category"
+					icon="icon-files"
+					:title="categoryToLabel(group.category)"
+				/>
+				<AppNavigationCaption v-if="group.timeslot"
+					:key="group.timeslot"
+					:title="group.timeslot"
+				/>
+				<NotesList
+					:key=idx
+					:notes="group.notes"
+					@note-deleted="$emit('note-deleted', $event)"
+				/>
+			</template>
+			<!--<AppNavigationItem
+				v-if="displayedNotes.length != filteredNotes.length"
+				v-observe-visibility="onEndOfNotes"
+				:title="t('notes', 'Loading …')"
+				:loading="true"
+			/> !-->
+		</div>
 	</div>
 </template>
 
@@ -160,6 +163,18 @@ export default {
 <style scoped>
 	.notes-view {
 		min-width: 300px;
-		padding-top: 44px;
+		position: sticky;
+		position: -webkit-sticky;
+		height: calc(100vh - 50px);
+		top: 50px;
+		border-right: 1px solid var(--color-border);
+	}
+
+	.spacer{
+		height: 50px;
+	}
+	.notes-list {
+		overflow-y: auto;
+		height: calc(100vh - 100px);
 	}
 </style>
