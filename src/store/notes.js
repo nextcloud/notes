@@ -6,6 +6,7 @@ const state = {
 	notes: [],
 	notesIds: {},
 	selectedCategory: null,
+	selectedNote: null,
 }
 
 const getters = {
@@ -104,6 +105,10 @@ const getters = {
 	getSelectedCategory: (state) => () => {
 		return state.selectedCategory
 	},
+
+	getSelectedNote: (state) => () => {
+		return state.selectedNote
+	}
 }
 
 const mutations = {
@@ -149,6 +154,10 @@ const mutations = {
 	setSelectedCategory(state, category) {
 		state.selectedCategory = category
 	},
+
+	setSelectedNote(state, note) {
+		state.selectedNote = note
+	}
 }
 
 const actions = {

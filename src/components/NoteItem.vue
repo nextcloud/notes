@@ -1,56 +1,51 @@
 <template>
-	<AppNavigationItem
+	<ListItem
 		:title="title"
-		:icon="icon"
-		:menu-open.sync="actionsOpen"
+		:active="isSelected"
+		@click="onNoteSelected(note.id)"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
-		:class="{ actionsOpen }"
-		:loading="loading.note"
-		:editable="!note.readonly"
-		:edit-label="t('notes', 'Rename')"
-		:edit-placeholder="t('notes', 'Note\'s title')"
-		@update:title="onRename"
+		:forceDisplayActions="true"
 	>
 		<template #actions>
-			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
+			<ActionButton
+				:icon="actionFavoriteIcon"
+				:closeAfterClick="true"
+				@click="onToggleFavorite"
+			>
 				{{ actionFavoriteText }}
 			</ActionButton>
-			<ActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
+			<ActionButton
+				:disabled="note.readonly"
+				:icon="actionDeleteIcon"
+				:closeAfterClick="true"
+				@click="onDeleteNote"
+			>
 				{{ t('notes', 'Delete note') }}
 			</ActionButton>
-			<ActionSeparator />
-			<ActionButton icon="icon-files-dark" @click="onCategorySelected">
-				{{ actionCategoryText }}
-			</ActionButton>
 		</template>
-	</AppNavigationItem>
+	</ListItem>
 </template>
 
 <script>
-import {
-	ActionButton,
-	ActionSeparator,
-	AppNavigationItem,
-} from '@nextcloud/vue'
-import { showError } from '@nextcloud/dialogs'
+import { ActionButton, ListItem } from '@nextcloud/vue'
 
+import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService'
-import { categoryLabel, routeIsNewNote } from '../Util'
+import { routeIsNewNote } from '../Util'
 
 export default {
-	name: 'NavigationNoteItem',
+	name: 'NoteItem',
 
 	components: {
 		ActionButton,
-		ActionSeparator,
-		AppNavigationItem,
+		ListItem,
 	},
 
 	props: {
 		note: {
 			type: Object,
 			required: true,
-		},
+		}
 	},
 
 	data() {
@@ -60,11 +55,14 @@ export default {
 				favorite: false,
 				delete: false,
 			},
-			actionsOpen: false,
 		}
 	},
 
 	computed: {
+		isSelected() {
+			return this.$store.getters.getSelectedNote() === this.note.id
+		},
+
 		icon() {
 			let icon = ''
 			if (this.note.error) {
@@ -91,10 +89,6 @@ export default {
 			return icon
 		},
 
-		actionCategoryText() {
-			return categoryLabel(this.note.category)
-		},
-
 		actionDeleteIcon() {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
@@ -108,13 +102,11 @@ export default {
 				})
 				.then(() => {
 					this.loading.favorite = false
-					this.actionsOpen = false
 				})
 		},
 
-		onCategorySelected() {
-			this.actionsOpen = false
-			this.$emit('category-selected', this.note.category)
+		onNoteSelected(noteId) {
+			this.$store.commit('setSelectedNote', noteId)
 		},
 
 		onRename(newTitle) {
@@ -143,12 +135,10 @@ export default {
 				await deleteNote(this.note.id, () => {
 					this.$emit('note-deleted', note)
 					this.loading.delete = false
-					this.actionsOpen = false
 				})
 			} catch (e) {
 				showError(this.t('notes', 'Error during preparing note for deletion.'))
 				this.loading.delete = false
-				this.actionsOpen = false
 			}
 		},
 	},

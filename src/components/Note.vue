@@ -61,6 +61,14 @@
 					>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</ActionButton>
+					<ActionButton
+						:disabled="note.readonly"
+						:icon="actionDeleteIcon"
+						:closeAfterClick="true"
+						@click="onDeleteNote"
+					>
+						{{ t('notes', 'Delete note') }}
+					</ActionButton>
 				</Actions>
 				<Actions v-if="note.readonly">
 					<ActionButton>
@@ -101,7 +109,7 @@ import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
 import PencilOffIcon from 'vue-material-design-icons/PencilOff'
 
 import { config } from '../config'
-import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
+import { fetchNote, refreshNote, deleteNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
@@ -139,6 +147,7 @@ export default {
 	data() {
 		return {
 			loading: false,
+			loadingDelete: false,
 			fullscreen: false,
 			preview: false,
 			actionsOpen: false,
@@ -166,6 +175,9 @@ export default {
 		sidebarOpen() {
 			return store.state.app.sidebarOpen
 		},
+		actionDeleteIcon() {
+			return 'icon-delete' + (this.loadingDelete ? ' loading' : '')
+		},
 	},
 
 	watch: {
@@ -183,6 +195,7 @@ export default {
 	},
 
 	created() {
+		this.$store.commit('setSelectedNote', parseInt(this.noteId))
 		this.fetchData()
 		document.addEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('mozfullscreenchange', this.onDetectFullscreen)
@@ -390,6 +403,23 @@ export default {
 		onUseRemoteVersion() {
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
+		},
+
+		async onDeleteNote() {
+			this.loadingDelete = true
+			try {
+				const note = await fetchNote(this.note.id)
+				if (note.errorType) {
+					throw new Error('Note has errors')
+				}
+				await deleteNote(this.note.id, () => {
+					this.$emit('note-deleted', note)
+					this.loadingDelete = false
+				})
+			} catch (e) {
+				showError(this.t('notes', 'Error during preparing note for deletion.'))
+				this.loadingDelete = false
+			}
 		},
 	},
 }

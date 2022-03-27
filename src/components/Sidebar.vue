@@ -4,7 +4,10 @@
 		:subtitle="subtitle"
 		:star-loading="loading.favorite"
 		:starred="note.favorite"
+		:title-editable.sync="titleEditable"
+		:title-tooltip="titleTooltip"
 		@update:starred="onSetFavorite"
+		@update:title="onRename"
 		@close="onCloseSidebar"
 	>
 		<div class="sidebar-content-wrapper">
@@ -61,7 +64,7 @@ import {
 } from '@nextcloud/vue'
 import moment from '@nextcloud/moment'
 
-import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
+import { getCategories, setFavorite, setTitle, setCategory, saveNoteManually } from '../NotesService'
 import { categoryLabel } from '../Util'
 import store from '../store'
 
@@ -96,8 +99,10 @@ export default {
 			loading: {
 				category: false,
 				favorite: false,
+				title: false, // TODO reflect this state in the UI
 			},
 			categoryInput: null,
+			titleEditableInternal: false,
 		}
 	},
 
@@ -105,11 +110,19 @@ export default {
 		note() {
 			return store.getters.getNote(parseInt(this.noteId))
 		},
+		titleEditable: {
+			get() {
+				return this.titleEditableInternal && !this.note.readonly
+			},
+			set(newValue) {
+				this.titleEditableInternal = newValue
+			}
+		},
 		title() {
-			return this.note ? this.note.title : ''
+			return this.note?.title || ''
 		},
 		category() {
-			return this.note ? this.note.category : ''
+			return this.note?.category || ''
 		},
 		formattedDate() {
 			return moment(this.note.modified * 1000).format('LLL')
@@ -141,6 +154,9 @@ export default {
 		sidebarOpen() {
 			return store.state.app.sidebarOpen
 		},
+		titleTooltip() {
+			return t('notes', 'Click to edit title')
+		}
 	},
 
 	methods: {
@@ -165,6 +181,16 @@ export default {
 				})
 				.then(() => {
 					this.loading.favorite = false
+				})
+		},
+
+		onRename(newTitle) {
+			this.loading.title = true
+			setTitle(this.note.id, newTitle)
+				.catch(() => {
+				})
+				.finally(() => {
+					this.loading.title = false
 				})
 		},
 

@@ -28,9 +28,9 @@
 			</div>
 		</AppContent>
 
-		<router-view name="notes" v-if="!error" />
+		<router-view v-if="!error" name="notes" @note-deleted="onNoteDeleted" />
 
-		<router-view v-if="!error" />
+		<router-view v-if="!error" @note-deleted="onNoteDeleted" />
 
 		<router-view name="sidebar" />
 	</Content>

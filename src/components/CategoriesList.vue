@@ -61,7 +61,7 @@ export default {
 
 		selectedCategory() {
 			return store.getters.getSelectedCategory()
-		}
+		},
 	},
 
 	methods: {
