@@ -189,7 +189,7 @@ export default {
 			return 'icon-delete' + (this.loadingDelete ? ' loading' : '')
 		},
 		categories() {
-			return this.note.category?.split('/') || []
+			return this.note.category ? this.note.category.split('/') : []
 		}
 	},
 
@@ -208,7 +208,6 @@ export default {
 	},
 
 	created() {
-		this.$store.commit('setSelectedNote', parseInt(this.noteId))
 		this.fetchData()
 		document.addEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('mozfullscreenchange', this.onDetectFullscreen)
@@ -229,6 +228,8 @@ export default {
 
 	methods: {
 		fetchData() {
+			this.$store.commit('setSelectedNote', parseInt(this.noteId))
+
 			this.etag = null
 			this.stopRefreshTimer()
 
@@ -238,7 +239,7 @@ export default {
 
 			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.preview = store.state.app.settings.noteMode === 'preview'
+			this.preview = store.state.app.settings.noteMode === 'preview' && !this.isNewNote
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
 					if (note.error) {
