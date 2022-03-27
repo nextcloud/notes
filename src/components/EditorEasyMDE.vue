@@ -364,7 +364,7 @@ export default {
 
 .upload-button {
 	position: fixed;
-	right: 64px;
+	right: 15px;
 	z-index: 10;
 	height: 40px;
 	margin-right: 5px;

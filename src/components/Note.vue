@@ -5,6 +5,12 @@
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
+			<Breadcrumbs>
+				<Breadcrumb title="Home" />
+				<Breadcrumb :title="category" :key="category" v-for="category of categories" />
+				<Breadcrumb :title="title" />
+			</Breadcrumbs>
+
 			<Modal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
@@ -101,6 +107,8 @@ import {
 	Modal,
 	Tooltip,
 	isMobile,
+	Breadcrumbs,
+	Breadcrumb
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
@@ -129,6 +137,8 @@ export default {
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
+		Breadcrumbs,
+		Breadcrumb,
 	},
 
 	directives: {
@@ -164,7 +174,7 @@ export default {
 			return store.getters.getNote(parseInt(this.noteId))
 		},
 		title() {
-			return this.note ? this.note.title : ''
+			return this.note?.title || ''
 		},
 		isNewNote() {
 			return routeIsNewNote(this.$route)
@@ -178,6 +188,9 @@ export default {
 		actionDeleteIcon() {
 			return 'icon-delete' + (this.loadingDelete ? ' loading' : '')
 		},
+		categories() {
+			return this.note.category?.split('/') || []
+		}
 	},
 
 	watch: {
