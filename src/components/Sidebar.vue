@@ -104,7 +104,7 @@ export default {
 			},
 			categoryInput: null,
 			titleEditableInternal: false,
-			newTtitle: '',
+			newTitle: '',
 		}
 	},
 
@@ -117,11 +117,18 @@ export default {
 				return this.titleEditableInternal && !this.note.readonly
 			},
 			set(newValue) {
+				if (newValue) {
+					this.newTitle = this.title
+				}
 				this.titleEditableInternal = newValue
 			}
 		},
 		title() {
-			return this.note?.title || ''
+			if (!this.titleEditable) {
+				return this.note?.title || ''
+			} else {
+				return this.newTitle || ''
+			}
 		},
 		category() {
 			return this.note?.category || ''
@@ -198,10 +205,8 @@ export default {
 					})
 					.finally(() => {
 						this.loading.title = false
-						this.newTitle = this.title
 					})
 			}
-			this.newTitle = this.title
 		},
 
 		onSaveCategory(category) {
