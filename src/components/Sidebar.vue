@@ -7,7 +7,8 @@
 		:title-editable.sync="titleEditable"
 		:title-tooltip="titleTooltip"
 		@update:starred="onSetFavorite"
-		@update:title="onRename"
+		@update:title="onUpdateTitle"
+		@submit-title="onRenameTitle"
 		@close="onCloseSidebar"
 	>
 		<div class="sidebar-content-wrapper">
@@ -103,6 +104,7 @@ export default {
 			},
 			categoryInput: null,
 			titleEditableInternal: false,
+			newTtitle: '',
 		}
 	},
 
@@ -184,14 +186,22 @@ export default {
 				})
 		},
 
-		onRename(newTitle) {
-			this.loading.title = true
-			setTitle(this.note.id, newTitle)
-				.catch(() => {
-				})
-				.finally(() => {
-					this.loading.title = false
-				})
+		onUpdateTitle(newTitle) {
+			this.newTitle = newTitle
+		},
+
+		onRenameTitle(event) {
+			if (event && this.title !== this.newTitle) {
+				this.loading.title = true
+				setTitle(this.note.id, this.newTitle)
+					.catch(() => {
+					})
+					.finally(() => {
+						this.loading.title = false
+						this.newTitle = this.title
+					})
+			}
+			this.newTitle = this.title
 		},
 
 		onSaveCategory(category) {
