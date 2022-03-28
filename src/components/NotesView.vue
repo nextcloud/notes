@@ -4,7 +4,6 @@
 		<div class="notes-list">
 			<NotesList v-if="groupedNotes.length === 1"
 				:notes="groupedNotes[0].notes"
-				@note-deleted="$emit('note-deleted', $event)"
 			/>
 			<template v-for="(group, idx) in groupedNotes" v-else>
 				<AppNavigationCaption v-if="group.category && category!==group.category"
@@ -19,7 +18,6 @@
 				<NotesList
 					:key="idx"
 					:notes="group.notes"
-					@note-deleted="$emit('note-deleted', $event)"
 				/>
 			</template>
 			<!--<AppNavigationItem

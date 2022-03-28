@@ -33,9 +33,9 @@
 				</div>
 			</Modal>
 			<div class="note-editor">
-				<div v-show="!note.content" class="placeholder">
+				<EmptyContent v-if="!note.content" icon="icon-edit">
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
-				</div>
+				</EmptyContent>
 				<ThePreview v-if="preview" :value="note.content" :noteid="noteId" />
 				<TheEditor v-else
 					:value="note.content"
@@ -119,6 +119,7 @@ import {
 	isMobile,
 	Breadcrumbs,
 	Breadcrumb,
+	EmptyContent,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
@@ -149,6 +150,7 @@ export default {
 		ThePreview,
 		Breadcrumbs,
 		Breadcrumb,
+		EmptyContent,
 	},
 
 	directives: {
@@ -508,13 +510,6 @@ export default {
 
 .note-container.fullscreen .note-editor {
 	margin: 0 auto;
-}
-
-/* placeholder */
-.placeholder {
-	position: absolute;
-	padding: 1em;
-	opacity: 0.5;
 }
 
 /* main editor button */

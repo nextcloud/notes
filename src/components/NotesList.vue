@@ -3,7 +3,6 @@
 		<NoteItem v-for="note in notes"
 			:key="note.id"
 			:note="note"
-			@note-deleted="$emit('note-deleted', $event)"
 		/>
 	</ul>
 </template>
