@@ -108,7 +108,7 @@ const getters = {
 
 	getSelectedNote: (state) => () => {
 		return state.selectedNote
-	}
+	},
 }
 
 const mutations = {
@@ -157,7 +157,7 @@ const mutations = {
 
 	setSelectedNote(state, note) {
 		state.selectedNote = note
-	}
+	},
 }
 
 const actions = {

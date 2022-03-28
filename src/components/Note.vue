@@ -1,13 +1,13 @@
 <template>
-	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
-		<div v-if="!loading && note && !note.error && !note.deleting"
+	<AppContent :class="{ loading: loading.note || isManualSave, 'icon-error': !loading.note && (!note || note.error), 'sidebar-open': sidebarOpen }">
+		<div v-if="!loading.note && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
 			<Breadcrumbs class="breadcrumbs">
 				<Breadcrumb title="Home" />
-				<Breadcrumb :title="category" :key="category" v-for="category of categories" />
+				<Breadcrumb v-for="category of categories" :key="category" :title="category" />
 				<Breadcrumb :title="title" />
 			</Breadcrumbs>
 
@@ -46,9 +46,17 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+				<Actions container=".action-buttons" :primary="true">
+					<ActionButton
+						:icon="actionFavoriteIcon"
+						:close-after-click="true"
+						@click="onToggleFavorite"
+					>
+						{{ actionFavoriteText }}
+					</ActionButton>
 					<ActionButton v-show="!sidebarOpen && !fullscreen"
 						icon="icon-details"
+						:close-after-click="true"
 						@click="onToggleSidebar"
 					>
 						{{ t('notes', 'Details') }}
@@ -56,6 +64,7 @@
 					<ActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
 						:icon="preview ? 'icon-rename' : 'icon-toggle'"
+						:close-after-click="true"
 						@click="onTogglePreview"
 					>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
@@ -63,6 +72,7 @@
 					<ActionButton
 						icon="icon-fullscreen"
 						:class="{ active: fullscreen }"
+						:close-after-click="true"
 						@click="onToggleDistractionFree"
 					>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
@@ -70,7 +80,7 @@
 					<ActionButton
 						:disabled="note.readonly"
 						:icon="actionDeleteIcon"
-						:closeAfterClick="true"
+						:close-after-click="true"
 						@click="onDeleteNote"
 					>
 						{{ t('notes', 'Delete note') }}
@@ -108,7 +118,7 @@ import {
 	Tooltip,
 	isMobile,
 	Breadcrumbs,
-	Breadcrumb
+	Breadcrumb,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
@@ -117,7 +127,7 @@ import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
 import PencilOffIcon from 'vue-material-design-icons/PencilOff'
 
 import { config } from '../config'
-import { fetchNote, refreshNote, deleteNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
+import { fetchNote, refreshNote, deleteNote, setFavorite, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
@@ -156,11 +166,13 @@ export default {
 
 	data() {
 		return {
-			loading: false,
-			loadingDelete: false,
+			loading: {
+				note: false,
+				delete: false,
+				favorite: false,
+			},
 			fullscreen: false,
 			preview: false,
-			actionsOpen: false,
 			autosaveTimer: null,
 			autotitleTimer: null,
 			refreshTimer: null,
@@ -186,11 +198,21 @@ export default {
 			return store.state.app.sidebarOpen
 		},
 		actionDeleteIcon() {
-			return 'icon-delete' + (this.loadingDelete ? ' loading' : '')
+			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
 		categories() {
 			return this.note.category ? this.note.category.split('/') : []
-		}
+		},
+		actionFavoriteText() {
+			return this.note.favorite ? this.t('notes', 'Remove from favorites') : this.t('notes', 'Add to favorites')
+		},
+		actionFavoriteIcon() {
+			let icon = this.note.favorite ? 'icon-star-dark' : 'icon-starred'
+			if (this.loading.favorite) {
+				icon += ' loading'
+			}
+			return icon
+		},
 	},
 
 	watch: {
@@ -238,7 +260,7 @@ export default {
 			}
 
 			this.onUpdateTitle(this.title)
-			this.loading = true
+			this.loading.note = true
 			this.preview = store.state.app.settings.noteMode === 'preview' && !this.isNewNote
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
@@ -251,7 +273,7 @@ export default {
 					// note not found
 				})
 				.then(() => {
-					this.loading = false
+					this.loading.note = false
 				})
 		},
 
@@ -266,7 +288,6 @@ export default {
 
 		onTogglePreview() {
 			this.preview = !this.preview
-			this.actionsOpen = false
 		},
 
 		onDetectFullscreen() {
@@ -301,12 +322,10 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
 			}
-			this.actionsOpen = false
 		},
 
 		onToggleSidebar() {
 			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
-			this.actionsOpen = false
 		},
 
 		onVisibilityChange() {
@@ -420,7 +439,7 @@ export default {
 		},
 
 		async onDeleteNote() {
-			this.loadingDelete = true
+			this.loading.delete = true
 			try {
 				const note = await fetchNote(this.note.id)
 				if (note.errorType) {
@@ -428,13 +447,24 @@ export default {
 				}
 				await deleteNote(this.note.id, () => {
 					this.$emit('note-deleted', note)
-					this.loadingDelete = false
+					this.loading.delete = false
 				})
 			} catch (e) {
 				showError(this.t('notes', 'Error during preparing note for deletion.'))
-				this.loadingDelete = false
+				this.loading.delete = false
 			}
 		},
+
+		onToggleFavorite() {
+			this.loading.favorite = true
+			setFavorite(this.note.id, !this.note.favorite)
+				.catch(() => {
+				})
+				.then(() => {
+					this.loading.favorite = false
+				})
+		},
+
 	},
 }
 </script>
@@ -537,5 +567,4 @@ export default {
 	z-index: 1;
 	background-color: var(--color-main-background);
 }
-
 </style>

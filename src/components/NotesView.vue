@@ -6,7 +6,7 @@
 				:notes="groupedNotes[0].notes"
 				@note-deleted="$emit('note-deleted', $event)"
 			/>
-			<template v-else v-for="(group, idx) in groupedNotes">
+			<template v-for="(group, idx) in groupedNotes" v-else>
 				<AppNavigationCaption v-if="group.category && category!==group.category"
 					:key="group.category"
 					icon="icon-files"
@@ -17,7 +17,7 @@
 					:title="group.timeslot"
 				/>
 				<NotesList
-					:key=idx
+					:key="idx"
 					:notes="group.notes"
 					@note-deleted="$emit('note-deleted', $event)"
 				/>
@@ -156,7 +156,7 @@ export default {
 
 		onCategorySelected(category) {
 			store.commit('setSelectedCategory', category)
-		}
+		},
 	},
 }
 </script>
@@ -173,6 +173,7 @@ export default {
 	.spacer{
 		height: 50px;
 	}
+
 	.notes-list {
 		overflow-y: auto;
 		height: calc(100vh - 100px);

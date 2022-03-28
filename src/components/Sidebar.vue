@@ -121,7 +121,7 @@ export default {
 					this.newTitle = this.title
 				}
 				this.titleEditableInternal = newValue
-			}
+			},
 		},
 		title() {
 			if (!this.titleEditable) {
@@ -165,7 +165,7 @@ export default {
 		},
 		titleTooltip() {
 			return t('notes', 'Click to edit title')
-		}
+		},
 	},
 
 	methods: {

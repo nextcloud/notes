@@ -2,14 +2,14 @@
 	<ListItem
 		:title="title"
 		:active="isSelected"
-		@click="onNoteSelected(note.id)"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
-		:forceDisplayActions="true"
+		:force-display-actions="true"
+		@click="onNoteSelected(note.id)"
 	>
 		<template #actions>
 			<ActionButton
 				:icon="actionFavoriteIcon"
-				:closeAfterClick="true"
+				:close-after-click="true"
 				@click="onToggleFavorite"
 			>
 				{{ actionFavoriteText }}
@@ -17,7 +17,7 @@
 			<ActionButton
 				:disabled="note.readonly"
 				:icon="actionDeleteIcon"
-				:closeAfterClick="true"
+				:close-after-click="true"
 				@click="onDeleteNote"
 			>
 				{{ t('notes', 'Delete note') }}
@@ -45,7 +45,7 @@ export default {
 		note: {
 			type: Object,
 			required: true,
-		}
+		},
 	},
 
 	data() {
