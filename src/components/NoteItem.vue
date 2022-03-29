@@ -12,14 +12,14 @@
 			<AlertOctagonIcon v-if="note.error"
 				slot="icon"
 				:size="20"
-				fillColor="#E9322D"
+				fill-color="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
 				slot="icon"
 				:size="20"
 				fill-color="#FC0"
 			/>
-			<NoteTextOutlineIcon v-else
+			<FileDocumentOutlineIcon v-else
 				slot="icon"
 				:size="20"
 				fill-color="var(--color-text-lighter)"
@@ -32,7 +32,7 @@
 import { ListItem } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon'
 import StarIcon from 'vue-material-design-icons/Star'
-import NoteTextOutlineIcon from 'vue-material-design-icons/NoteTextOutline'
+import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline'
 import { categoryLabel } from '../Util'
 
 export default {
@@ -42,7 +42,7 @@ export default {
 		ListItem,
 		AlertOctagonIcon,
 		StarIcon,
-		NoteTextOutlineIcon,
+		FileDocumentOutlineIcon,
 	},
 
 	props: {

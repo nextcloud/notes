@@ -6,12 +6,11 @@
 				:notes="groupedNotes[0].notes"
 			/>
 			<template v-for="(group, idx) in groupedNotes" v-else>
-				<AppNavigationCaption v-if="group.category && category!==group.category"
+				<NotesGroup v-if="group.category && category!==group.category"
 					:key="group.category"
-					icon="icon-files"
 					:title="categoryToLabel(group.category)"
 				/>
-				<AppNavigationCaption v-if="group.timeslot"
+				<NotesGroup v-if="group.timeslot"
 					:key="group.timeslot"
 					:title="group.timeslot"
 				/>
@@ -20,21 +19,22 @@
 					:notes="group.notes"
 				/>
 			</template>
-			<!--<AppNavigationItem
+			<div
 				v-if="displayedNotes.length != filteredNotes.length"
 				v-observe-visibility="onEndOfNotes"
-				:title="t('notes', 'Loading …')"
-				:loading="true"
-			/> !-->
+				class="loading-label"
+			>
+				{{ t('notes', 'Loading …') }}
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-
-import { AppNavigationCaption } from '@nextcloud/vue'
+/* eslint-disable no-console */
 import { categoryLabel } from '../Util'
 import NotesList from './NotesList'
+import NotesGroup from './NotesGroup'
 import store from '../store'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
@@ -43,8 +43,8 @@ export default {
 	name: 'NotesView',
 
 	components: {
-		AppNavigationCaption,
 		NotesList,
+		NotesGroup,
 	},
 
 	directives: {
@@ -175,5 +175,27 @@ export default {
 	.notes-list {
 		overflow-y: auto;
 		height: calc(100vh - 100px);
+	}
+
+	.loading-label {
+		color: var(--color-text-lighter);
+		text-align: center;
+	}
+
+	.loading-label::before {
+		content: ' ';
+		height: 16px;
+		width: 16px;
+		display: inline-block;
+		border-radius: 100%;
+		-webkit-animation: rotate 0.8s infinite linear;
+		animation: rotate 0.8s infinite linear;
+		-webkit-transform-origin: center;
+		-ms-transform-origin: center;
+		transform-origin: center;
+		border: 2px solid var(--color-loading-light);
+		border-top-color: var(--color-loading-dark);
+		vertical-align: top;
+		margin-right: 5px;
 	}
 </style>
