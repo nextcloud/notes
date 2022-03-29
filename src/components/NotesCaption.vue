@@ -6,7 +6,7 @@
 
 <script>
 export default {
-	name: 'NotesGroup',
+	name: 'NotesCaption',
 
 	components: {
 	},
@@ -26,5 +26,8 @@ export default {
 		font-weight: bold;
 		font-size: 1.2em;
 		padding-left: 10px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 </style>

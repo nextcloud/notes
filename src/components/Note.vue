@@ -45,8 +45,8 @@
 					@input="onEdit"
 				/>
 			</div>
-			<span class="action-buttons">
-				<Actions container=".action-buttons" :primary="true">
+			<div class="action-buttons">
+				<Actions :primary="true">
 					<ActionButton
 						:icon="actionFavoriteIcon"
 						:close-after-click="true"
@@ -104,7 +104,7 @@
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
 					</ActionButton>
 				</Actions>
-			</span>
+			</div>
 		</div>
 	</AppContent>
 </template>
@@ -529,10 +529,6 @@ export default {
 
 .note-container.fullscreen .action-buttons {
 	top: 0px;
-}
-
-.action-buttons button {
-	padding: 15px;
 }
 
 /* Conflict Modal */

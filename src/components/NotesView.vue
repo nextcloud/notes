@@ -1,16 +1,23 @@
 <template>
-	<div class="notes-view">
-		<div class="spacer" />
+	<div class="notes-view" :class="{ collapsed: collapsed }">
+		<div class="header">
+			<Actions :class="{ flipped: collapsed }">
+				<ActionButton @click="collapsed=!collapsed">
+					<ArrowLeftThickIcon slot="icon" :size="24" fill-color="var(--color-main-text)" />
+					{{ t('notes', 'Note is read-only. You cannot change it.') }}
+				</ActionButton>
+			</Actions>
+		</div>
 		<div class="notes-list">
 			<NotesList v-if="groupedNotes.length === 1"
 				:notes="groupedNotes[0].notes"
 			/>
 			<template v-for="(group, idx) in groupedNotes" v-else>
-				<NotesGroup v-if="group.category && category!==group.category"
+				<NotesCaption v-if="group.category && category!==group.category"
 					:key="group.category"
 					:title="categoryToLabel(group.category)"
 				/>
-				<NotesGroup v-if="group.timeslot"
+				<NotesCaption v-if="group.timeslot"
 					:key="group.timeslot"
 					:title="group.timeslot"
 				/>
@@ -31,10 +38,15 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
+
+import {
+	Actions,
+	ActionButton,
+} from '@nextcloud/vue'
+import ArrowLeftThickIcon from 'vue-material-design-icons/ArrowLeftThick'
 import { categoryLabel } from '../Util'
 import NotesList from './NotesList'
-import NotesGroup from './NotesGroup'
+import NotesCaption from './NotesCaption'
 import store from '../store'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
@@ -44,7 +56,10 @@ export default {
 
 	components: {
 		NotesList,
-		NotesGroup,
+		NotesCaption,
+		Actions,
+		ActionButton,
+		ArrowLeftThickIcon,
 	},
 
 	directives: {
@@ -57,6 +72,7 @@ export default {
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
 			showFirstNotesOnly: true,
+			collapsed: false,
 		}
 	},
 
@@ -160,16 +176,31 @@ export default {
 </script>
 <style scoped>
 	.notes-view {
-		min-width: 300px;
+		width: 300px;
 		position: sticky;
 		position: -webkit-sticky;
 		height: calc(100vh - 50px);
 		top: 50px;
 		border-right: 1px solid var(--color-border);
+		flex-grow: 0;
+		flex-shrink: 0;
+		transition-duration: var(--animation-quick);
+		transition-property: width;
 	}
 
-	.spacer{
+	.notes-view.collapsed {
+		width: 120px;
+	}
+
+	.header {
 		height: 50px;
+		text-align: right;
+		padding-right: 2px;
+		padding-top: 2px;
+	}
+
+	.flipped {
+		transform: scaleX(-1);
 	}
 
 	.notes-list {
