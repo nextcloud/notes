@@ -2,22 +2,22 @@
 	<div>
 		<div class="toolbar">
 			<a class="button" :title="t('notes', 'Undo')" @click="undo">
-				<span class="icon-undo"/>
+				<span class="icon-undo" />
 			</a>
 			<a class="button" :title="t('notes', 'Redo')" @click="redo">
-				<span class="icon-redo"/>
+				<span class="icon-redo" />
 			</a>
 			<a class="button" :title="t('notes', 'Bold')" @click="makeBold">
-				<span class="icon-bold"/>
+				<span class="icon-bold" />
 			</a>
 			<a class="button" :title="t('notes', 'Italic')" @click="makeItalic">
-				<span class="icon-italic"/>
+				<span class="icon-italic" />
 			</a>
 			<a class="button" :title="t('notes', 'Strikethrough')" @click="makeStrikethrough">
-				<span class="icon-strike"/>
+				<span class="icon-strike" />
 			</a>
 			<a class="button" :title="t('notes', 'Title')" @click="makeMonospace">
-				<span class="icon-h1"/>
+				<span class="icon-h1" />
 			</a>
 			<a class="button" :title="t('notes', 'Insert Link')" @click="insertLink">
 				<span class="icon-link"></span>
@@ -217,7 +217,7 @@ export default {
 					url: generateUrl('apps/notes') + '/notes/' + id + '/attachment',
 					data,
 				})
-				console.log("ERROR: Response currently does not return filename")
+				console.log('ERROR: Response currently does not return filename')
 				console.log(response)
 				const position = {
 					line: cursor.line,
@@ -228,24 +228,24 @@ export default {
 		},
 
 		insertText(content) {
-			this.bracketText("", content)
+			this.bracketText('', content)
 		},
 
 		insertTextInfront(content) {
-			this.bracketText(content, "")
+			this.bracketText(content, '')
 		},
 
 		surroundText(content) {
 			this.bracketText(content, content)
 		},
 
-		bracketText(front, back, ifCenterEmpty="") {
+		bracketText(front, back, ifCenterEmpty = '') {
 			const doc = this.mde.codemirror.getDoc()
 			const cursorStart = this.mde.codemirror.getCursor('from')
 			const cursorEnd = this.mde.codemirror.getCursor('to')
 			let originalText = doc.getRange(cursorStart, cursorEnd)
-			if (originalText === "") {
-				originalText = ifCenterEmpty;
+			if (originalText === '') {
+				originalText = ifCenterEmpty
 			}
 			doc.replaceRange(front + originalText + back, cursorStart, cursorEnd)
 		},
@@ -276,13 +276,13 @@ export default {
 
 		undo() {
 			// the first "undo" is the editor beeing populated. Do not undo that!
-			if(this.mde.codemirror.historySize().undo>1){
+			if (this.mde.codemirror.historySize().undo > 1) {
 				this.mde.codemirror.undo()
 			}
 		},
 
 		redo() {
-			if(this.mde.codemirror.historySize().redo>0){
+			if (this.mde.codemirror.historySize().redo > 0) {
 				this.mde.codemirror.redo()
 			}
 		}
@@ -423,7 +423,6 @@ export default {
 	width: 100%;
 	height: 44px;
 	/*border-bottom: darkgray 1px solid;*/
-
 	display:flex;
 	justify-content:center;
 
@@ -444,6 +443,5 @@ export default {
 .toolbar_label {
 	display: none;
 }
-
 
 </style>

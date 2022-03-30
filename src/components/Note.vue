@@ -1,6 +1,6 @@
 <template>
 	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
-		<div v-show="!loading && note && !note.error && !note.deleting"
+		<div v-if="!loading && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
@@ -27,20 +27,59 @@
 				</div>
 			</Modal>
 			<div class="note-editor">
-				<TheSidemenu ref="TheSidemenu" />
-				<div v-show="!note.content" class="placeholder" :class="preview ? '' : 'placeholder-toolbar'">
+				<div v-show="!note.content" class="placeholder">
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
 				<ThePreview v-if="preview" :value="note.content" :noteid="noteId" />
 				<TheEditor v-else
-					ref="TheEditor"
 					:value="note.content"
 					:noteid="noteId"
 					:readonly="note.readonly"
 					@input="onEdit"
-					@add-mMnu-item="addMenuItem"
 				/>
 			</div>
+			<span class="action-buttons">
+				<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+					<ActionButton v-show="!sidebarOpen && !fullscreen"
+						icon="icon-details"
+						@click="onToggleSidebar"
+					>
+						{{ t('notes', 'Details') }}
+					</ActionButton>
+					<ActionButton
+						v-tooltip.left="t('notes', 'CTRL + /')"
+						:icon="preview ? 'icon-rename' : 'icon-toggle'"
+						@click="onTogglePreview"
+					>
+						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
+					</ActionButton>
+					<ActionButton
+						icon="icon-fullscreen"
+						:class="{ active: fullscreen }"
+						@click="onToggleDistractionFree"
+					>
+						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
+					</ActionButton>
+				</Actions>
+				<Actions v-if="note.readonly">
+					<ActionButton>
+						<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
+						{{ t('notes', 'Note is read-only. You cannot change it.') }}
+					</ActionButton>
+				</Actions>
+				<Actions v-if="note.saveError" class="action-error">
+					<ActionButton @click="onManualSave">
+						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+						{{ t('notes', 'Save failed. Click to retry.') }}
+					</ActionButton>
+				</Actions>
+				<Actions v-if="note.conflict" class="action-error">
+					<ActionButton @click="showConflict=true">
+						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
+					</ActionButton>
+				</Actions>
+			</span>
 		</div>
 	</AppContent>
 </template>
@@ -65,7 +104,6 @@ import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutio
 import { routeIsNewNote } from '../Util'
 import TheEditor from './EditorEasyMDE'
 import ThePreview from './EditorMarkdownIt'
-import TheSidemenu from './Sidemenu'
 import ConflictSolution from './ConflictSolution'
 import store from '../store'
 
@@ -82,7 +120,6 @@ export default {
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
-		TheSidemenu,
 	},
 
 	directives: {
@@ -95,9 +132,6 @@ export default {
 		noteId: {
 			type: String,
 			required: true,
-		},
-		state: {
-			type: String,
 		},
 	},
 
@@ -112,35 +146,7 @@ export default {
 			refreshTimer: null,
 			etag: null,
 			showConflict: false,
-			sidemenuitemkeys: [],
-			newMenuItems: [],
 		}
-	},
-
-	mounted() {
-		// todo fix this. The timeout is not reliable or a good way to do this.
-		// it breaks often, VERY often.
-		setTimeout(() => {
-			const sidemenu = this.$refs.TheSidemenu
-			this.sidemenuitemkeys['details'] = sidemenu.addEntry(t('notes', 'Details'), 'icon-details', this.onToggleSidebar)
-
-			if (this.preview) {
-				this.sidemenuitemkeys['preview'] = sidemenu.addEntry(t('notes', 'Edit'), 'icon-rename', this.onTogglePreview)
-			} else {
-				this.sidemenuitemkeys['preview'] = sidemenu.addEntry(t('notes', 'Preview'), 'icon-toggle', this.onTogglePreview)
-			}
-
-			if (this.fullscreen) {
-				this.sidemenuitemkeys['fullscreen'] = sidemenu.addEntry(t('notes', 'Exit full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
-			} else {
-				this.sidemenuitemkeys['fullscreen'] = sidemenu.addEntry(t('notes', 'Full screen'), 'icon-fullscreen', this.onToggleDistractionFree)
-			}
-
-			const self = this
-			this.newMenuItems.forEach(function(element) {
-				self.addMenuItem(element.title, element.icon, element.callback, element.group, element.hidden, self)
-			})
-		}, 1000)
 	},
 
 	computed: {
@@ -233,18 +239,6 @@ export default {
 		onTogglePreview() {
 			this.preview = !this.preview
 			this.actionsOpen = false
-
-			const menuid = this.sidemenuitemkeys['preview']
-			const sidemenu = this.$refs.TheSidemenu
-			if (this.preview) {
-				sidemenu.setGroupEnabled('editor', false)
-				sidemenu.updateEntry(menuid, 'title', t('notes', 'Preview'), false)
-				sidemenu.updateEntry(menuid, 'icon', 'icon-toggle')
-			} else {
-				sidemenu.setGroupEnabled('editor', true)
-				sidemenu.updateEntry(menuid, 'title', t('notes', 'Edit'), false)
-				sidemenu.updateEntry(menuid, 'icon', 'icon-rename')
-			}
 		},
 
 		onDetectFullscreen() {
@@ -274,13 +268,10 @@ export default {
 				}
 			}
 
-			const menuid = this.sidemenuitemkeys['fullscreen']
 			if (this.fullscreen) {
 				exitFullscreen()
-				this.$refs.TheSidemenu.updateEntry(menuid, 'title', t('notes', 'Full screen'))
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
-				this.$refs.TheSidemenu.updateEntry(menuid, 'title', t('notes', 'Exit full screen'))
 			}
 			this.actionsOpen = false
 		},
@@ -399,50 +390,21 @@ export default {
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
-		updateNoteState(manual) {
-			if (manual !== '') {
-				this.state = manual
-				return
-			}
-			if (this.loading) {
-				this.state = t('notes', 'Loading...')
-				return
-			}
-			this.state = ''
-		},
-
-		addMenuItem(title, icon, callback, group, hidden = true, self = this) {
-			// it takes a while for sidebar to be set up.
-			// if it is not yet set up, add it to the queue which gets processed when
-			// the sidemenu was set up properly.
-			const sidemenu = self.$refs.TheSidemenu
-			if (sidemenu) {
-				const id = title + icon + group
-				if (typeof self.sidemenuitemkeys[id] !== 'undefined') {
-					sidemenu.removeID(self.sidemenuitemkeys[id])
-				}
-				self.sidemenuitemkeys[id] = sidemenu.addEntry(title, icon, callback, group, hidden)
-			} else {
-				self.newMenuItems.push({ title: title, icon: icon, callback: callback, group: group, hidden: hidden })
-			}
-		},
 	},
 }
 </script>
 <style scoped>
 .note-container {
 	min-height: 100%;
+	width: 100%;
 	background-color: var(--color-main-background);
 }
 
 .note-editor {
 	max-width: 47em;
 	font-size: 16px;
-	padding-top: 1em;
-	padding-bottom: 1em;
-
-	margin-left: auto;
-	margin-right: auto;
+	padding: 1em;
+	padding-bottom: 0;
 }
 
 /* center editor on large screens */
@@ -479,13 +441,29 @@ export default {
 	opacity: 0.5;
 }
 
-.placeholder-toolbar {
-	padding-top: 4.5em;
+/* main editor button */
+.action-buttons {
+	position: fixed;
+	top: 50px;
+	right: 20px;
+	width: 44px;
+	margin-top: 1em;
+	z-index: 2000;
+}
+
+.action-buttons .action-error {
+	background-color: var(--color-error);
+	margin-top: 1ex;
 }
 
 .note-container.fullscreen .action-buttons {
 	top: 0px;
 }
+
+.action-buttons button {
+	padding: 15px;
+}
+
 /* Conflict Modal */
 .conflict-modal {
 	width: 70vw;
