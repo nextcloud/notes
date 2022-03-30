@@ -59,6 +59,13 @@
 				>
 					{{ t('notes', 'Monospace') }}
 				</ActionButton>
+				<EmojiPicker @select="select">
+					<ActionButton
+						icon="icon-emoji"
+					>
+						{{ t('notes', 'Emoji') }}
+					</ActionButton>
+				</EmojiPicker>
 				<ActionButton
 					icon="icon-upload"
 					:close-after-click="true"
@@ -90,7 +97,7 @@ import {
 	Actions,
 	ActionButton,
 } from '@nextcloud/vue'
-
+import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 
 export default {
 	name: 'EditorEasyMDE',
@@ -98,6 +105,7 @@ export default {
 	components: {
 		Actions,
 		ActionButton,
+		EmojiPicker,
 	},
 
 	props: {
@@ -274,6 +282,10 @@ export default {
 				doc.replaceRange('![' + name + '](' + name + ')', position)
 			}
 			temporaryInput.click()
+		},
+
+		select(emoji) {
+			this.insertText(emoji)
 		},
 
 		insertText(content) {

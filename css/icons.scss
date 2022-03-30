@@ -1,7 +1,7 @@
 .icon-undo {@include icon-color('undo', 'notes', $color-black);}
 .icon-redo {@include icon-color('redo', 'notes', $color-black);}
 
-.icon-bold {@include icon-color('redo', 'notes', $color-black);}
+.icon-bold {@include icon-color('bold', 'notes', $color-black);}
 .icon-strike {@include icon-color('strike', 'notes', $color-black);}
 .icon-underline {@include icon-color('underline', 'notes', $color-black);}
 .icon-italic {@include icon-color('italic', 'notes', $color-black);}
@@ -13,6 +13,7 @@
 .icon-ul {@include icon-color('ul', 'notes', $color-black);}
 .icon-checklist {@include icon-color('checklist', 'notes', $color-black);}
 .icon-code {@include icon-color('code', 'notes', $color-black);}
+.icon-emoji {@include icon-color('emoji', 'notes', $color-black);}
 
 
 
