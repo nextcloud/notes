@@ -1,40 +1,79 @@
 <template>
 	<div>
 		<div class="toolbar">
-			<a class="button" :title="t('notes', 'Undo')" @click="undo">
-				<span class="icon-undo" />
-			</a>
-			<a class="button" :title="t('notes', 'Redo')" @click="redo">
-				<span class="icon-redo" />
-			</a>
-			<a class="button" :title="t('notes', 'Bold')" @click="makeBold">
-				<span class="icon-bold" />
-			</a>
-			<a class="button" :title="t('notes', 'Italic')" @click="makeItalic">
-				<span class="icon-italic" />
-			</a>
-			<a class="button" :title="t('notes', 'Strikethrough')" @click="makeStrikethrough">
-				<span class="icon-strike" />
-			</a>
-			<a class="button" :title="t('notes', 'Title')" @click="makeMonospace">
-				<span class="icon-h1" />
-			</a>
-			<a class="button" :title="t('notes', 'Insert Link')" @click="insertLink">
-				<span class="icon-link"></span>
-				<span class="toolbar_label">{{ t('notes', 'Insert Link') }}</span>
-			</a>
-			<a class="button" :title="t('notes', 'Insert Checkbox')" @click="insertCheckbox">
-				<span class="icon-checklist"></span>
-				<span class="toolbar_label">{{ t('notes', 'Insert Checkbox') }}</span>
-			</a>
-			<a class="button" :title="t('notes', 'Monospace')" @click="makeMonospace">
-				<span class="icon-code"></span>
-				<span class="toolbar_label">{{ t('notes', 'Insert Monospace') }}</span>
-			</a>
-			<a class="button" :title="t('notes', 'Upload Image')" @click="onClickUpload">
-				<span class="icon-image" />
-				<span class="toolbar_label">{{ t('notes', 'Upload Image') }}</span>
-			</a>
+			<Actions
+				container=".toolbar"
+				menu-align="right"
+			>
+				<ActionButton
+					icon="icon-undo"
+					@click="undo"
+				>
+					{{ t('notes', 'Undo') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-redo"
+					@click="redo"
+				>
+					{{ t('notes', 'Redo') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-bold"
+					@click="makeBold"
+				>
+					{{ t('notes', 'Bold') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-italic"
+					@click="makeItalic"
+				>
+					{{ t('notes', 'Italic') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-strike"
+					@click="makeStrikethrough"
+				>
+					{{ t('notes', 'Strikethrough') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-h1"
+					@click="makeMonospace"
+				>
+					{{ t('notes', 'Title') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-link"
+					@click="insertLink"
+				>
+					{{ t('notes', 'Insert Link') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-checklist"
+					@click="insertCheckbox"
+				>
+					{{ t('notes', 'Insert Checkbox') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-code"
+					@click="makeMonospace"
+				>
+					{{ t('notes', 'Monospace') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-upload"
+					:close-after-click="true"
+					@click="onClickUpload"
+				>
+					{{ t('notes', 'Upload image') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-picture"
+					:close-after-click="true"
+					@click="onClickSelect"
+				>
+					{{ t('notes', 'Insert image') }}
+				</ActionButton>
+			</Actions>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -47,9 +86,19 @@ import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import store from '../store'
+import {
+	Actions,
+	ActionButton,
+} from '@nextcloud/vue'
+
 
 export default {
 	name: 'EditorEasyMDE',
+
+	components: {
+		Actions,
+		ActionButton,
+	},
 
 	props: {
 		value: {
