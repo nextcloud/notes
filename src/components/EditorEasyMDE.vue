@@ -324,11 +324,15 @@ export default {
 		},
 
 		undo() {
-			this.mde.codemirror.undo()
+			if (this.mde.codemirror.historySize().undo > 0) {
+				this.mde.codemirror.undo()
+			}
 		},
 
 		redo() {
-			this.mde.codemirror.redo()
+			if (this.mde.codemirror.historySize().redo > 0) {
+				this.mde.codemirror.redo()
+			}
 		}
 	},
 }
