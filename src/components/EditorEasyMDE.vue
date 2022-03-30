@@ -324,16 +324,11 @@ export default {
 		},
 
 		undo() {
-			// the first "undo" is the editor beeing populated. Do not undo that!
-			if (this.mde.codemirror.historySize().undo > 1) {
-				this.mde.codemirror.undo()
-			}
+			this.mde.codemirror.undo()
 		},
 
 		redo() {
-			if (this.mde.codemirror.historySize().redo > 0) {
-				this.mde.codemirror.redo()
-			}
+			this.mde.codemirror.redo()
 		}
 	},
 }
