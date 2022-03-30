@@ -228,28 +228,34 @@ export default {
 		},
 
 		insertText(content) {
-			const doc = this.mde.codemirror.getDoc()
-			const cursor = this.mde.codemirror.getCursor()
-			const position = {
-				line: cursor.line
-			}
-			doc.replaceRange(content, position)
+			this.bracketText("", content)
+		},
+
+		insertTextInfront(content) {
+			this.bracketText(content, "")
 		},
 
 		surroundText(content) {
+			this.bracketText(content, content)
+		},
+
+		bracketText(front, back, ifCenterEmpty="") {
 			const doc = this.mde.codemirror.getDoc()
 			const cursorStart = this.mde.codemirror.getCursor('from')
 			const cursorEnd = this.mde.codemirror.getCursor('to')
-			const originalText = doc.getRange(cursorStart, cursorEnd)
-			doc.replaceRange(content + originalText + content, cursorStart, cursorEnd)
+			let originalText = doc.getRange(cursorStart, cursorEnd)
+			if (originalText === "") {
+				originalText = ifCenterEmpty;
+			}
+			doc.replaceRange(front + originalText + back, cursorStart, cursorEnd)
 		},
 
 		insertLink() {
-			this.insertText('[title](url)')
+			this.bracketText('[', '](url)', t('notes', 'link-title'))
 		},
 
 		insertCheckbox() {
-			this.insertText('- [ ] ')
+			this.insertTextInfront('- [ ] ')
 		},
 
 		makeBold() {
