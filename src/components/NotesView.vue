@@ -1,7 +1,7 @@
 <template>
 	<div class="notes-view" :class="{ collapsed: collapsed }">
 		<div class="header">
-			<Actions :class="{ flipped: collapsed }">
+			<Actions :class="{ flipped: collapsed }" id="shrinkButton">
 				<ActionButton @click="collapsed=!collapsed">
 					<ArrowLeftThickIcon slot="icon" :size="24" fill-color="var(--color-main-text)" />
 					{{ t('notes', 'Note is read-only. You cannot change it.') }}
@@ -229,4 +229,10 @@ export default {
 		vertical-align: top;
 		margin-right: 5px;
 	}
+
+	@media (min-width: 900px) {
+	#shrinkButton {
+		display: none;
+	}
+}
 </style>

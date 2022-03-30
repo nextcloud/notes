@@ -24,8 +24,9 @@ export default {
 	.title {
 		color: var(--color-primary-light-text);
 		font-weight: bold;
-		font-size: 1.2em;
 		padding-left: 10px;
+		padding-top: 5px;
+		padding-bottom: 5px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
