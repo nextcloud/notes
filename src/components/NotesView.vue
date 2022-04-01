@@ -1,7 +1,7 @@
 <template>
 	<div class="notes-view" :class="{ collapsed: collapsed }">
 		<div class="header">
-			<Actions :class="{ flipped: collapsed }" id="shrinkButton">
+			<Actions id="shrinkButton" :class="{ flipped: collapsed }">
 				<ActionButton @click="collapsed=!collapsed">
 					<ArrowLeftThickIcon slot="icon" :size="24" fill-color="var(--color-main-text)" />
 					{{ t('notes', 'Note is read-only. You cannot change it.') }}
@@ -175,62 +175,62 @@ export default {
 }
 </script>
 <style scoped>
-	.notes-view {
-		width: 300px;
-		position: sticky;
-		position: -webkit-sticky;
-		height: calc(100vh - 50px);
-		top: 50px;
-		border-right: 1px solid var(--color-border);
-		flex-grow: 0;
-		flex-shrink: 0;
-		transition-duration: var(--animation-quick);
-		transition-property: width;
-	}
+.notes-view {
+	width: 300px;
+	position: sticky;
+	position: -webkit-sticky;
+	height: calc(100vh - 50px);
+	top: 50px;
+	border-right: 1px solid var(--color-border);
+	flex-grow: 0;
+	flex-shrink: 0;
+	transition-duration: var(--animation-quick);
+	transition-property: width;
+}
 
-	.notes-view.collapsed {
-		width: 120px;
-	}
+.notes-view.collapsed {
+	width: 120px;
+}
 
-	.header {
-		height: 50px;
-		text-align: right;
-		padding-right: 2px;
-		padding-top: 2px;
-	}
+.header {
+	height: 50px;
+	text-align: right;
+	padding-right: 2px;
+	padding-top: 2px;
+}
 
-	.flipped {
-		transform: scaleX(-1);
-	}
+.flipped {
+	transform: scaleX(-1);
+}
 
-	.notes-list {
-		overflow-y: auto;
-		height: calc(100vh - 100px);
-	}
+.notes-list {
+	overflow-y: auto;
+	height: calc(100vh - 100px);
+}
 
-	.loading-label {
-		color: var(--color-text-lighter);
-		text-align: center;
-	}
+.loading-label {
+	color: var(--color-text-lighter);
+	text-align: center;
+}
 
-	.loading-label::before {
-		content: ' ';
-		height: 16px;
-		width: 16px;
-		display: inline-block;
-		border-radius: 100%;
-		-webkit-animation: rotate 0.8s infinite linear;
-		animation: rotate 0.8s infinite linear;
-		-webkit-transform-origin: center;
-		-ms-transform-origin: center;
-		transform-origin: center;
-		border: 2px solid var(--color-loading-light);
-		border-top-color: var(--color-loading-dark);
-		vertical-align: top;
-		margin-right: 5px;
-	}
+.loading-label::before {
+	content: ' ';
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	border-radius: 100%;
+	-webkit-animation: rotate 0.8s infinite linear;
+	animation: rotate 0.8s infinite linear;
+	-webkit-transform-origin: center;
+	-ms-transform-origin: center;
+	transform-origin: center;
+	border: 2px solid var(--color-loading-light);
+	border-top-color: var(--color-loading-dark);
+	vertical-align: top;
+	margin-right: 5px;
+}
 
-	@media (min-width: 900px) {
+@media (min-width: 900px) {
 	#shrinkButton {
 		display: none;
 	}
