@@ -57,7 +57,7 @@ OC.L10N.register(
     "Full screen" : "Vollbild",
     "Note is read-only. You cannot change it." : "Notiz ist schreibgeschützt. Sie können sie nicht ändern.",
     "Save failed. Click to retry." : "Speichern fehlgeschlagen. Klicken um es erneut zu versuchen.",
-    "Update conflict. Click for resolving manually." : "Aktualisierungskonflickt. Bitte klicken um den Konflikt manuell zu lösen.",
+    "Update conflict. Click for resolving manually." : "Aktualisierungskonflikt. Bitte klicken um den Konflikt manuell zu lösen.",
     "Error from Nextcloud server: {msg}" : "Fehler vom Nextcloud-Server: {msg}",
     "Set category" : "Kategorie ändern",
     "Category" : "Kategorie",
