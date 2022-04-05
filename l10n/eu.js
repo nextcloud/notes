@@ -23,6 +23,7 @@ OC.L10N.register(
     "Open in edit mode" : "Ireki edizio moduan",
     "Open in preview mode" : "Ireki aurrebista moduan",
     "No notes yet" : "Ez dago oharrik",
+    "Upload image" : "Kargatu irudia",
     "Insert image" : "Txertatu irudia",
     "Select an image" : "Hautatu irudi bat",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Ezin duzu hautatu irudirik zure ohar karpetatik kanpo. Zure ohar karpeta hau da: {folder}",

@@ -12,8 +12,6 @@ OC.L10N.register(
     "Undo Delete" : "Annuler la suppression",
     "Note recovered" : "Note restaurée",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Il y a des notes non sauvegardées. Quitter la page perdra toutes les modifications !",
-    "_Deleted {number} note_::_Deleted {number} notes_" : ["{number} note supprimée","{number} notes supprimées"],
-    "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} note restaurée","{number} notes restaurées"],
     "Settings" : "Paramètres",
     "Folder to store your notes" : "Dossier où enregistrer vos notes",
     "File extension for new notes" : "Extension des fichiers pour les nouvelles notes",
@@ -62,8 +60,6 @@ OC.L10N.register(
     "Last modified: {date}" : "Dernière modification : {date}",
     "Note has unsaved changes" : "Note a des changements non sauvegardés",
     "Subcategory" : "Sous-catégorie",
-    "_%n word_::_%n words_" : ["%n mot","%n mots"],
-    "_%n character_::_%n characters_" : ["%n caractère","%n caractères"],
     "Write down your thoughts without any distractions." : "Écrivez vos idées facilement.",
     "Use Markdown markups to style your text." : "Utilisez la syntaxe Markdown pour mettre en forme votre texte.",
     "Organize your notes in categories." : "Organisez vos notes en catégories.",
@@ -93,4 +89,4 @@ OC.L10N.register(
     "Development Mode" : "Mode développeur",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Il semble que l'application Notes a été installée depuis une source de développement. Veuillez plutôt l'installer depuis le <a href=\"%1$s\">Nextcloud App Store</a> officiel. Si vous voulez construire l'application Notes par vous-même, veuillez suivre les <a href=\"%2$s\">instructions pour le développeur</a>."
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n==0 || n==1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
