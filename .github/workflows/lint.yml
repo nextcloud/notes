@@ -6,6 +6,9 @@ on:
       - stable*
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   lint-js:
     runs-on: ubuntu-latest

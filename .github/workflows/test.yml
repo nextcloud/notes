@@ -6,6 +6,9 @@ on:
       - stable*
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test-api:
     runs-on: ubuntu-latest
