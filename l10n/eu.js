@@ -28,6 +28,7 @@ OC.L10N.register(
     "Select an image" : "Hautatu irudi bat",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Ezin duzu hautatu irudirik zure ohar karpetatik kanpo. Zure ohar karpeta hau da: {folder}",
     "Wrong image" : "Okerreko irudia",
+    "The file was not uploaded. Check your server logs." : "Fitxategia ez da kargatu. Egiaztatu zure zerbitzariaren erregistroak.",
     "All notes" : "Ohar guztiak",
     "Categories" : "Kategoriak",
     "Loading …" : "Kargatzen...",
