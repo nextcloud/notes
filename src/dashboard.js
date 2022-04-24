@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard.vue'
 
 Vue.mixin({ methods: { t, n } })
 

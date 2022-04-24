@@ -50,8 +50,8 @@ import {
 	AppNavigationSettings,
 } from '@nextcloud/vue'
 
-import { setSettings } from '../NotesService'
-import store from '../store'
+import { setSettings } from '../NotesService.js'
+import store from '../store.js'
 
 export default {
 	name: 'AppSettings',

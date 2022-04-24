@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { copyNote } from '../Util'
+import { copyNote } from '../Util.js'
 
 const state = {
 	categories: [],

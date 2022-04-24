@@ -37,10 +37,9 @@ import {
 	AppNavigationCounter,
 } from '@nextcloud/vue'
 
-import { getCategories } from '../NotesService'
-import { categoryLabel } from '../Util'
-
-import store from '../store'
+import { getCategories } from '../NotesService.js'
+import { categoryLabel } from '../Util.js'
+import store from '../store.js'
 
 export default {
 	name: 'NavigationCategoriesItem',

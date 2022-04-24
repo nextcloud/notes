@@ -32,7 +32,6 @@
 import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import store from '../store'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 import {
@@ -40,6 +39,8 @@ import {
 	ActionButton,
 } from '@nextcloud/vue'
 import { basename, relative } from 'path'
+
+import store from '../store.js'
 
 export default {
 	name: 'EditorEasyMDE',

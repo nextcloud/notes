@@ -46,11 +46,11 @@ import {
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
-import { config } from './config'
-import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
-import AppSettings from './components/AppSettings'
-import NavigationList from './components/NavigationList'
-import store from './store'
+import { config } from './config.js'
+import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
+import AppSettings from './components/AppSettings.vue'
+import NavigationList from './components/NavigationList.vue'
+import store from './store.js'
 
 export default {
 	name: 'App',
