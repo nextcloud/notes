@@ -225,7 +225,7 @@ class NotesApiController extends ApiController {
 	 */
 	public function setSettings() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
-			$this->settingsService->set($this->helper->getUID(), $this->request->getParams());
+			$this->settingsService->setPublic($this->helper->getUID(), $this->request->getParams());
 			return $this->getSettings();
 		});
 	}
@@ -237,7 +237,7 @@ class NotesApiController extends ApiController {
 	 */
 	public function getSettings() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
-			return $this->settingsService->getAll($this->helper->getUID());
+			return $this->settingsService->getPublic($this->helper->getUID());
 		});
 	}
 	/**

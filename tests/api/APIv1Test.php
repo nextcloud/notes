@@ -185,10 +185,18 @@ class APIv1Test extends CommonAPITest {
 			'notesPath' => '',
 		], (object)[], 'Update notesPath with root directory');
 		$this->updateSettings($settings, (object)[
+			'fileSuffix' => '.customextension',
+		], (object)[], 'Update fileSuffix with custom value');
+		$this->updateSettings($settings, (object)[
 			'fileSuffix' => 'illegal value',
 		], (object)[
-			'fileSuffix' => '.txt',
+			'fileSuffix' => '.illegalvalue',
 		], 'Update fileSuffix with illegal value');
+		$this->updateSettings($settings, (object)[
+			'fileSuffix' => '',
+		], (object)[
+			'fileSuffix' => '.txt',
+		], 'Update fileSuffix with empty value');
 		$this->updateSettings($settings, (object)[
 			'notesPath' => null,
 			'fileSuffix' => null,
