@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
 
-import app from './store/app'
-import notes from './store/notes'
-import sync from './store/sync'
+import app from './store/app.js'
+import notes from './store/notes.js'
+import sync from './store/sync.js'
 
 Vue.use(Vuex)
 

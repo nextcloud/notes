@@ -42,13 +42,12 @@ import {
 	AppNavigationItem,
 } from '@nextcloud/vue'
 import { Fragment } from 'vue-fragment'
-
-import { categoryLabel } from '../Util'
-import NavigationCategoriesItem from './NavigationCategoriesItem'
-import NavigationNoteItem from './NavigationNoteItem'
-import store from '../store'
-
 import { ObserveVisibility } from 'vue-observe-visibility'
+
+import { categoryLabel } from '../Util.js'
+import NavigationCategoriesItem from './NavigationCategoriesItem.vue'
+import NavigationNoteItem from './NavigationNoteItem.vue'
+import store from '../store.js'
 
 export default {
 	name: 'NavigationList',

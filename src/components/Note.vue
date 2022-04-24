@@ -100,13 +100,13 @@ import { emit } from '@nextcloud/event-bus'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
 import PencilOffIcon from 'vue-material-design-icons/PencilOff'
 
-import { config } from '../config'
-import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
-import { routeIsNewNote } from '../Util'
-import TheEditor from './EditorEasyMDE'
-import ThePreview from './EditorMarkdownIt'
-import ConflictSolution from './ConflictSolution'
-import store from '../store'
+import { config } from '../config.js'
+import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
+import { routeIsNewNote } from '../Util.js'
+import TheEditor from './EditorEasyMDE.vue'
+import ThePreview from './EditorMarkdownIt.vue'
+import ConflictSolution from './ConflictSolution.vue'
+import store from '../store.js'
 
 export default {
 	name: 'Note',

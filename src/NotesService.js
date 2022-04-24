@@ -2,8 +2,8 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
-import store from './store'
-import { copyNote } from './Util'
+import store from './store.js'
+import { copyNote } from './Util.js'
 
 function url(url) {
 	url = `apps/notes${url}`

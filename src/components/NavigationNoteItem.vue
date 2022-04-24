@@ -34,8 +34,8 @@ import {
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 
-import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService'
-import { categoryLabel, routeIsNewNote } from '../Util'
+import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
+import { categoryLabel, routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NavigationNoteItem',

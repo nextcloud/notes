@@ -61,9 +61,9 @@ import {
 } from '@nextcloud/vue'
 import moment from '@nextcloud/moment'
 
-import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
-import { categoryLabel } from '../Util'
-import store from '../store'
+import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService.js'
+import { categoryLabel } from '../Util.js'
+import store from '../store.js'
 
 export default {
 	name: 'Sidebar',
