@@ -8,6 +8,7 @@
 			<Modal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
+						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -15,13 +16,13 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@onChooseSolution="onUseRemoteVersion"
+							@on-choose-solution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@onChooseSolution="onUseLocalVersion"
+							@on-choose-solution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
@@ -64,19 +65,19 @@
 				</Actions>
 				<Actions v-if="note.readonly">
 					<ActionButton>
-						<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
+						<PencilOffIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</ActionButton>
 				</Actions>
 				<Actions v-if="note.saveError" class="action-error">
 					<ActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
 						{{ t('notes', 'Save failed. Click to retry.') }}
 					</ActionButton>
 				</Actions>
 				<Actions v-if="note.conflict" class="action-error">
 					<ActionButton @click="showConflict=true">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
 					</ActionButton>
 				</Actions>
@@ -383,11 +384,13 @@ export default {
 		},
 
 		onUseLocalVersion() {
+			console.debug('conflict solution: use local version')
 			conflictSolutionLocal(this.note)
 			this.showConflict = false
 		},
 
 		onUseRemoteVersion() {
+			console.debug('conflict solution: use remote version')
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
@@ -461,13 +464,10 @@ export default {
 	top: 0px;
 }
 
-.action-buttons button {
-	padding: 15px;
-}
-
 /* Conflict Modal */
 .conflict-modal {
 	width: 70vw;
+	margin: auto;
 }
 
 .conflict-header {
