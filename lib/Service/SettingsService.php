@@ -11,12 +11,12 @@ use OCP\IL10N;
 use OCP\Files\IRootFolder;
 
 class SettingsService {
-	private $config;
-	private $l10n;
-	private $root;
+	private IConfig $config;
+	private IL10N $l10n;
+	private IRootFolder $root;
 
 	/* Allowed attributes */
-	private $attrs;
+	private array $attrs;
 
 	public function __construct(
 		IConfig $config,

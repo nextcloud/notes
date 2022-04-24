@@ -8,15 +8,13 @@ use OCP\Capabilities\ICapability;
 use OCP\App\IAppManager;
 
 class Capabilities implements ICapability {
-
-	/** @var IAppManager */
-	private $appManager;
+	private IAppManager $appManager;
 
 	public function __construct(IAppManager $appManager) {
 		$this->appManager = $appManager;
 	}
 
-	public function getCapabilities() {
+	public function getCapabilities(): array {
 		return [
 			Application::APP_ID => [
 				'api_version' => Application::$API_VERSIONS,

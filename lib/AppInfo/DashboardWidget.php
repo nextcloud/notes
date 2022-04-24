@@ -9,11 +9,8 @@ use OCP\IL10N;
 use OCP\IURLGenerator;
 
 class DashboardWidget implements IWidget {
-
-	/** @var IURLGenerator */
-	private $url;
-	/** @var IL10N */
-	private $l10n;
+	private IURLGenerator $url;
+	private IL10N $l10n;
 
 	public function __construct(
 		IURLGenerator $url,

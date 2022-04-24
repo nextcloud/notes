@@ -20,15 +20,10 @@ use OCP\IUserSession;
 use Psr\Log\LoggerInterface;
 
 class Helper {
-
-	/** @var NotesService */
-	private $notesService;
-	/** @var MetaService */
-	private $metaService;
-	/** @var LoggerInterface */
-	public $logger;
-	/** @var IUserSession */
-	private $userSession;
+	private NotesService $notesService;
+	private MetaService $metaService;
+	public LoggerInterface $logger;
+	private IUserSession $userSession;
 
 	public function __construct(
 		NotesService $notesService,

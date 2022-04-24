@@ -10,9 +10,9 @@ use OCP\Files\Folder;
 use OCP\Files\NotPermittedException;
 
 class NotesService {
-	private $metaService;
-	private $settings;
-	private $noteUtil;
+	private MetaService $metaService;
+	private SettingsService $settings;
+	private NoteUtil $noteUtil;
 
 	public function __construct(
 		MetaService $metaService,

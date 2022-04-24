@@ -9,7 +9,7 @@ use OCA\Notes\Service\Note;
 use Exception;
 
 class ETagDoesNotMatchException extends Exception {
-	public $note;
+	public Note $note;
 
 	public function __construct(Note $note) {
 		$this->note = $note;

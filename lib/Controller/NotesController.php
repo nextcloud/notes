@@ -17,19 +17,12 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
 class NotesController extends Controller {
-
-	/** @var NotesService */
-	private $notesService;
-	/** @var MetaService */
-	private $metaService;
-	/** @var SettingsService */
-	private $settingsService;
-	/** @var Helper */
-	private $helper;
-	/** @var IConfig */
-	private $settings;
-	/** @var IL10N */
-	private $l10n;
+	private NotesService $notesService;
+	private MetaService $metaService;
+	private SettingsService $settingsService;
+	private Helper $helper;
+	private IConfig $settings;
+	private IL10N $l10n;
 
 	public function __construct(
 		string $AppName,

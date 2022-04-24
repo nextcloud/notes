@@ -7,12 +7,9 @@ namespace OCA\Notes\Controller;
 use OCA\Notes\Service\MetaNote;
 
 class ChunkCursor {
-	/** @var \DateTime */
-	public $timeStart;
-	/** @var integer */
-	public $noteLastUpdate;
-	/** @var integer */
-	public $noteId;
+	public \DateTime $timeStart;
+	public int $noteLastUpdate;
+	public int $noteId;
 
 	public static function fromString(string $str) : ?ChunkCursor {
 		if (preg_match('/^(\d+)-(\d+)-(\d+)$/', $str, $matches)) {
@@ -30,7 +27,7 @@ class ChunkCursor {
 	public static function fromNote(\DateTime $timeStart, MetaNote $m) : ChunkCursor {
 		$cc = new static();
 		$cc->timeStart = $timeStart;
-		$cc->noteLastUpdate = $m->meta->getLastUpdate();
+		$cc->noteLastUpdate = (int)$m->meta->getLastUpdate();
 		$cc->noteId = $m->note->getId();
 		return $cc;
 	}

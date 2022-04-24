@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OCA\Notes\Tests\API;
 
 abstract class CommonAPITest extends AbstractAPITest {
-	private $requiredAttributes = [
+	private array $requiredAttributes = [
 		'id' => 'integer',
 		'readonly' => 'boolean',
 		'content' => 'string',
@@ -16,7 +16,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		'etag' => 'string',
 	];
 
-	private $autotitle;
+	private bool $autotitle;
 
 	public function __construct(string $apiVersion, bool $autotitle) {
 		parent::__construct($apiVersion);

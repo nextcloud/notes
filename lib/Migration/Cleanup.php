@@ -10,7 +10,7 @@ use OCP\Migration\IRepairStep;
 use OCP\Migration\IOutput;
 
 class Cleanup implements IRepairStep {
-	private $metaMapper;
+	private MetaMapper $metaMapper;
 
 	public function __construct(MetaMapper $metaMapper) {
 		$this->metaMapper = $metaMapper;
@@ -19,14 +19,14 @@ class Cleanup implements IRepairStep {
 	/*
 	 * @inheritdoc
 	 */
-	public function getName() {
+	public function getName(): string {
 		return 'Clean up meta table';
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function run(IOutput $output) {
+	public function run(IOutput $output): void {
 		$this->metaMapper->deleteAll();
 	}
 }
