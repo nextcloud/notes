@@ -15,12 +15,9 @@ use OCP\IURLGenerator;
 use OCP\IUserSession;
 
 class PageController extends Controller {
-	/** @NotesService */
-	private $notesService;
-	/** @var IUserSession */
-	private $userSession;
-	/** @IURLGenerator */
-	private $urlGenerator;
+	private NotesService $notesService;
+	private IUserSession $userSession;
+	private IURLGenerator $urlGenerator;
 
 	public function __construct(
 		string $AppName,

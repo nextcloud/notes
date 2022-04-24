@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OCA\Notes\Tests\API;
 
 class APIv1Test extends CommonAPITest {
-	protected $requiredSettings = [
+	protected array $requiredSettings = [
 		'notesPath' => 'string',
 		'fileSuffix' => 'string',
 	];

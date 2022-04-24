@@ -16,13 +16,9 @@ use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 
 class SearchProvider implements IProvider {
-
-	/** @var Util */
-	private $util;
-	/** @var NotesService */
-	private $notesService;
-	/** @var IURLGenerator */
-	private $url;
+	private Util $util;
+	private NotesService $notesService;
+	private IURLGenerator $url;
 
 	public function __construct(
 		Util $util,

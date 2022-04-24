@@ -8,12 +8,10 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 
 class Note {
-	private $file;
-	private $notesFolder;
-	/** @var NoteUtil */
-	private $noteUtil;
-	/** @var Util */
-	private $util;
+	private File $file;
+	private Folder $notesFolder;
+	private NoteUtil $noteUtil;
+	private Util $util;
 
 	public function __construct(File $file, Folder $notesFolder, NoteUtil $noteUtil) {
 		$this->file = $file;

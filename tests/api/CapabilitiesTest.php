@@ -7,7 +7,7 @@ namespace OCA\Notes\Tests\API;
 use PHPUnit\Framework\TestCase;
 
 class CapabilitiesTest extends TestCase {
-	protected $http;
+	protected \GuzzleHttp\Client $http;
 
 	protected function setUp() : void {
 		$this->http = new \GuzzleHttp\Client([

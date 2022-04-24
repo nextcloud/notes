@@ -49,8 +49,8 @@ use OCA\Notes\Db\MetaMapper;
  * with this approach! :-)
  */
 class MetaService {
-	private $metaMapper;
-	private $util;
+	private MetaMapper $metaMapper;
+	private Util $util;
 
 	public function __construct(MetaMapper $metaMapper, Util $util) {
 		$this->metaMapper = $metaMapper;

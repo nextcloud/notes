@@ -11,12 +11,10 @@ use OCP\IDBConnection;
 
 class NoteUtil {
 	private const MAX_TITLE_LENGTH = 100;
-	/** @var Util */
-	public $util;
-	private $db;
-	private $root;
-	private $tagService;
-	private $cachedTags;
+	public Util $util;
+	private IDBConnection $db;
+	private IRootFolder $root;
+	private TagService $tagService;
 
 	public function __construct(
 		Util $util,

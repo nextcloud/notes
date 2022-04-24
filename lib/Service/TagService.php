@@ -8,9 +8,7 @@ use OCP\ITagManager;
 use OCP\ITags;
 
 class TagService {
-	/** @var ITags */
-	private $tagger;
-	/** @var array */
+	private ?ITags $tagger;
 	private $cachedTags;
 
 	public function __construct(ITagManager $tagManager) {

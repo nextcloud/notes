@@ -12,7 +12,7 @@ use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'notes';
-	public static $API_VERSIONS = [ '0.2', '1.2' ];
+	public static array $API_VERSIONS = [ '0.2', '1.2' ];
 
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
