@@ -20,6 +20,7 @@ OC.L10N.register(
     "Open in edit mode" : "Öppna i redigeringsläge",
     "Open in preview mode" : "Öppna i granskningsläge",
     "No notes yet" : "Inga anteckningar än",
+    "Insert image" : "Infoga bild",
     "All notes" : "Alla anteckningar",
     "Categories" : "Kategorier",
     "Loading …" : "Läser in ...",

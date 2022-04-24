@@ -23,6 +23,7 @@ OC.L10N.register(
     "Open in edit mode" : "Άνοιγμα για επεξεργασία",
     "Open in preview mode" : "Άνοιγμα για προεπισκόπιση",
     "No notes yet" : "Δεν υπάρχουν ακόμα σημειώσεις",
+    "Insert image" : "Εισαγωγή εικόνας",
     "Select an image" : "Επιλέξτε μια εικόνα",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Δεν μπορείτε να επιλέξετε εικόνες εκτός του φακέλου των σημειώσεων σας. Ο φάκελος των σημειώσεων σας είναι: {folder}",
     "Wrong image" : "Λάθος εικόνα",

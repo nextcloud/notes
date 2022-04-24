@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "Open in bewerkingsmodus",
     "Open in preview mode" : "Open in voorbeeldmodus",
     "No notes yet" : "Nog geen notities aanwezig",
+    "Insert image" : "Invoegen afbeelding",
     "All notes" : "Alle notities",
     "Categories" : "Categorieën",
     "Loading …" : "Laden ...",

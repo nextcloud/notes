@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "Zabeležka se odpre v urejevalnem načinu",
     "Open in preview mode" : "Zabeležka se odpre v predogledu",
     "No notes yet" : "Ni še dodane nobene zabeležke.",
+    "Insert image" : "Vstavi sliko",
     "All notes" : "Vse zabeležke",
     "Categories" : "Kategorije",
     "Loading …" : "Poteka nalaganje …",

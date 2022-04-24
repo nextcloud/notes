@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Error" : "Fazi",
     "Settings" : "Arventennoù",
+    "Categories" : "Rummadoù",
     "Loading …" : "O Kargañ ...",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
@@ -10,6 +11,7 @@ OC.L10N.register(
     "Rename" : "Adenvel",
     "Remove from favorites" : "Diverkañañ eus ar pennrolloù",
     "Add to favorites" : "Ouzhpennañ er pennrolloù",
+    "Use current version" : "Implij stumm hiziv",
     "Details" : "Munudoù",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Cheñch",

@@ -1,0 +1,12 @@
+{ "translations": {
+    "Error" : "ýalňyşlyk",
+    "Settings" : "Sazlamalar",
+    "Today" : "Şu gün",
+    "Yesterday" : "Düýn",
+    "This week" : "Bu hepdede",
+    "Rename" : "Adyny üýtgetmek",
+    "Add to favorites" : "Saýlananlara goşuň",
+    "Details" : "Jikme-jiklikler",
+    "Edit" : "Redaktirläň"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

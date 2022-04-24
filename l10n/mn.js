@@ -8,6 +8,7 @@ OC.L10N.register(
     "No notes yet" : "шинэ тэмдэглэл алга",
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",
+    "Loading …" : "Уншиж байна...",
     "Today" : "өнөөдөр",
     "Yesterday" : "өчигдөр",
     "This week" : "7 хоног",

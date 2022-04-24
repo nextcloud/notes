@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "வழு",
     "Settings" : "அமைப்புகள்",
     "Today" : "இன்று",
+    "Yesterday" : "நேற்று",
     "Rename" : "பெயர்மாற்றம்",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

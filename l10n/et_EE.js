@@ -13,6 +13,7 @@ OC.L10N.register(
     "Delete note" : "Kustuta märge",
     "Remove from favorites" : "Eemalda lemmikutest",
     "Add to favorites" : "Lisa lemmikutesse",
+    "Use current version" : "Kasuta praegust versiooni",
     "Details" : "Üksikasjad",
     "Edit" : "Redigeeri",
     "Preview" : "Eelvaade",

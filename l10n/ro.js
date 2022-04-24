@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "Deschide în modul editare",
     "Open in preview mode" : "Deschide în modul de previzualizare ",
     "No notes yet" : "Nu există notițe",
+    "Insert image" : "Introdu imagine",
     "All notes" : "Toate notițele",
     "Categories" : "Categorii",
     "Loading …" : "Se încarcă…",

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "編集モードで開く",
     "Open in preview mode" : "プレビューモードで開く",
     "No notes yet" : "まだノートはありません",
+    "Insert image" : "画像の挿入",
     "All notes" : "すべてのノート",
     "Categories" : "カテゴリ",
     "Loading …" : "読み込み中...",

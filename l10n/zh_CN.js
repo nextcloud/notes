@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "在编辑模式下打开",
     "Open in preview mode" : "在预览模式下打开",
     "No notes yet" : "还没有便签",
+    "Insert image" : "插入图片",
     "All notes" : "所有笔记",
     "Categories" : "分类",
     "Loading …" : "正在加载…",

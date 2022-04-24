@@ -23,6 +23,7 @@ OC.L10N.register(
     "Open in edit mode" : "Otvoriť v režime úprav",
     "Open in preview mode" : "Otvoriť v režime ukážky",
     "No notes yet" : "Zatiaľ nie sú žiadne poznámky",
+    "Insert image" : "Vložiť obrázok",
     "Select an image" : "Vybrať obrázok",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Nemôžete vybrať obrázky mimo priečinka poznámok. Váš priečinok poznámok je: {folder}",
     "Wrong image" : "Chybný obrázok",

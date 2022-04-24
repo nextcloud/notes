@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "Otvori u načinu uređivanja",
     "Open in preview mode" : "Otvori u načinu pregleda",
     "No notes yet" : "Još nema bilješki",
+    "Insert image" : "Umetni sliku",
     "All notes" : "Sve bilješke",
     "Categories" : "Kategorije",
     "Loading …" : "Učitavanje…",

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Open in edit mode" : "Ouvrir en mode édition",
     "Open in preview mode" : "Ouvrir en mode aperçu",
     "No notes yet" : "Aucune note pour l'instant",
+    "Insert image" : "Ajouter image",
     "Select an image" : "Sélectionner une image",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Vous ne pouvez pas sélectionner des images en dehors du dossier de vos notes. Le dossier de vos notes est : {folder}",
     "Wrong image" : "Image erronée",
@@ -91,6 +92,6 @@ OC.L10N.register(
     "Updating the note's category has failed. Is the target directory writable?" : "Impossible de mettre à jour la catégorie de la note. Vérifiez que vous avez le droit d'écriture dans ce dossier.",
     "Updating the category for note {id} has failed." : "La mise à jour de la catégorie pour la note {id} a échoué.",
     "Development Mode" : "Mode développeur",
-    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Il semble que l'application Notes a été installée depuis une source de développement. Veuillez plutôt l'installer depuis le <a href=\"%1$s\">Nextcloud App Store</a> officiel. Si vous voulez construire l'application Notes par vous-même, veuillez suivre les <a href=\"%2$s\">instructions pour le développeur</a>."
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Il semble que l'application Notes a été installée depuis une source de développement. Veuillez plutôt l'installer depuis le <a href=\"%1$s\">magasin d'applications Nextcloud App</a> officiel. Si vous voulez construire l'application Notes par vous-même, veuillez suivre les <a href=\"%2$s\">instructions pour le développeur</a>."
 },
 "nplurals=2; plural=(n > 1);");

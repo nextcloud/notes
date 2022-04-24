@@ -23,6 +23,7 @@ OC.L10N.register(
     "Open in edit mode" : "Apri in modalità modifica",
     "Open in preview mode" : "Apri in modalità anteprima",
     "No notes yet" : "Ancora nessuna nota",
+    "Insert image" : "Inserisci immagine",
     "Select an image" : "Seleziona un'immagine",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Non è possibile selezionare immagini al di fuori della cartella delle note. La tua cartella delle note è: {folder}",
     "Wrong image" : "Immagine errata",
