@@ -308,7 +308,15 @@ export default {
 			if (originalText === '') {
 				originalText = ifCenterEmpty
 			}
-			doc.replaceRange(front + originalText + back, cursorStart, cursorEnd)
+
+			if(originalText.startsWith(front) && originalText.endsWith(back)) {
+				let insertText = originalText.replace(front, "")
+				insertText = this.reverseString(insertText)
+				insertText = insertText.replace(this.reverseString(back), "")
+				doc.replaceSelection(this.reverseString(insertText), "around")
+			} else {
+				doc.replaceSelection(front + originalText + back, "around")
+			}
 		},
 
 		insertLink() {
@@ -345,6 +353,10 @@ export default {
 			if (this.mde.codemirror.historySize().redo > 0) {
 				this.mde.codemirror.redo()
 			}
+		},
+
+		reverseString(string) {
+			return string.split('').reverse().join('')
 		}
 	},
 }
