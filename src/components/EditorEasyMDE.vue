@@ -45,19 +45,19 @@
 					icon="icon-link"
 					@click="insertLink"
 				>
-					{{ t('notes', 'Insert Link') }}
+					{{ t('notes', 'Link') }}
 				</ActionButton>
 				<ActionButton
 					icon="icon-checklist"
 					@click="insertCheckbox"
 				>
-					{{ t('notes', 'Insert Checkbox') }}
+					{{ t('notes', 'Checkbox') }}
 				</ActionButton>
 				<ActionButton
 					icon="icon-code"
 					@click="makeMonospace"
 				>
-					{{ t('notes', 'Monospace') }}
+					{{ t('notes', 'Code') }}
 				</ActionButton>
 				<EmojiPicker @select="select">
 					<ActionButton
