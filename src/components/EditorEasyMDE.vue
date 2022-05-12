@@ -13,7 +13,7 @@
 			<button class="button" @click="makeStrikethrough">
 				<span class="icon-strike"></span>
 			</button>
-			<button class="button" @click="makeMonospace">
+			<button class="button" @click="makeH1">
 				<span class="icon-h1"></span>
 			</button>
 			<button class="button" @click="insertLink">
@@ -53,6 +53,7 @@ import {
 	ActionButton,
 } from '@nextcloud/vue'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
+import * as CodeMirror from "codemirror";
 
 export default {
 	name: 'EditorEasyMDE',
@@ -128,12 +129,14 @@ export default {
 			this.mde.codemirror.addKeyMap({
 				Home: 'goLineLeft',
 				End: 'goLineRight',
+				Enter: this.onEnter,
 			})
 
 			// pass event for changes
 			this.mde.codemirror.on('change', () => {
 				this.$emit('input', this.mde.value())
 			})
+
 
 			// listen for click/touch events in order to toggle checkboxes
 			document.querySelectorAll('.CodeMirror-code').forEach((codeElement) => {
@@ -282,6 +285,11 @@ export default {
 			this.insertTextInfront('- [ ] ')
 		},
 
+
+		makeH1() {
+			this.insertTextInfront('# ')
+		},
+
 		makeBold() {
 			this.surroundText('**')
 		},
@@ -312,6 +320,32 @@ export default {
 
 		reverseString(string) {
 			return string.split('').reverse().join('')
+		},
+
+		onEnter() {
+			const cursor = this.mde.codemirror.getCursor();
+			const text = this.mde.codemirror.getValue().split('\n')[cursor.line].trim()
+
+			if(text.startsWith("- [ ]") && text !== "- [ ]") {
+				this.insertText("\n")
+				this.insertText("- [ ] ")
+				this.mde.codemirror.setCursor(this.mde.codemirror.getCursor())
+				return;
+			}
+			if(text.startsWith("- [x]")) {
+				this.insertText("\n")
+				this.insertText("- [ ] ")
+				this.mde.codemirror.setCursor(this.mde.codemirror.getCursor())
+				return;
+			}
+			if(text.startsWith("-") && text !== "-" && !text.startsWith("- [")) {
+				this.insertText("\n")
+				this.insertText(" - ")
+				this.mde.codemirror.setCursor(this.mde.codemirror.getCursor())
+				return;
+			}
+
+			return CodeMirror.Pass
 		}
 	},
 }
