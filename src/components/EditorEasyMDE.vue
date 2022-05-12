@@ -1,86 +1,41 @@
 <template>
 	<div>
 		<div class="toolbar">
-			<Actions
-				container=".toolbar"
-				menu-align="right"
-			>
-				<ActionButton
-					icon="icon-undo"
-					@click="undo"
-				>
-					{{ t('notes', 'Undo') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-redo"
-					@click="redo"
-				>
-					{{ t('notes', 'Redo') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-bold"
-					@click="makeBold"
-				>
-					{{ t('notes', 'Bold') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-italic"
-					@click="makeItalic"
-				>
-					{{ t('notes', 'Italic') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-strike"
-					@click="makeStrikethrough"
-				>
-					{{ t('notes', 'Strikethrough') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-h1"
-					@click="makeMonospace"
-				>
-					{{ t('notes', 'Title') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-link"
-					@click="insertLink"
-				>
-					{{ t('notes', 'Link') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-checklist"
-					@click="insertCheckbox"
-				>
-					{{ t('notes', 'Checkbox') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-code"
-					@click="makeMonospace"
-				>
-					{{ t('notes', 'Code') }}
-				</ActionButton>
-				<EmojiPicker @select="select">
-					<ActionButton
-						icon="icon-emoji"
-					>
-						{{ t('notes', 'Emoji') }}
-					</ActionButton>
-				</EmojiPicker>
-				<ActionButton
-					icon="icon-upload"
-					:close-after-click="true"
-					@click="onClickUpload"
-				>
-					{{ t('notes', 'Upload image') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-picture"
-					:close-after-click="true"
-					@click="onClickSelect"
-				>
-					{{ t('notes', 'Insert image') }}
-				</ActionButton>
-			</Actions>
+			<button class="button" @click="undo">
+				<span class="icon-undo"></span>
+			</button>
+			<button class="button" @click="redo">
+				<span class="icon-redo"></span>
+			</button>
+			<button class="button" @click="makeBold">
+				<span class="icon-bold"></span>
+			</button>
+			<button class="button" @click="makeStrikethrough">
+				<span class="icon-strike"></span>
+			</button>
+			<button class="button" @click="makeMonospace">
+				<span class="icon-h1"></span>
+			</button>
+			<button class="button" @click="insertLink">
+				<span class="icon-link"></span>
+			</button>
+			<button class="button" @click="insertCheckbox">
+				<span class="icon-checklist"></span>
+			</button>
+			<button class="button" @click="makeMonospace">
+				<span class="icon-code"></span>
+			</button>
+			<EmojiPicker @select="select">
+				<button class="button">
+					<span class="icon-emoji"></span>
+				</button>
+			</EmojiPicker>
+			<button class="button" @click="onClickUpload">
+				<span class="icon-upload"></span>
+			</button>
+			<button class="button" @click="onClickSelect">
+				<span class="icon-picture"></span>
+			</button>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
