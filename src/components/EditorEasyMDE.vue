@@ -480,6 +480,11 @@ export default {
 	text-decoration: line-through;
 }
 
+.CodeMirror .cm-formatting-task.cm-meta::before, .CodeMirror .cm-formatting-task.cm-property::before {
+	border-radius: 4px;
+	top: 2px;
+}
+
 .toolbar {
 	width: 100%;
 	height: 44px;
