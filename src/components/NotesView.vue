@@ -1,53 +1,55 @@
 <template>
-	<div class="notes-view" :class="{ collapsed: collapsed }">
-		<div class="header">
-			<Actions id="shrinkButton" :class="{ flipped: collapsed }">
-				<ActionButton @click="collapsed=!collapsed">
-					<ArrowLeftThickIcon slot="icon" :size="24" fill-color="var(--color-main-text)" />
-					{{ t('notes', 'Note is read-only. You cannot change it.') }}
-				</ActionButton>
-			</Actions>
-		</div>
-		<div class="notes-list">
-			<NotesList v-if="groupedNotes.length === 1"
-				:notes="groupedNotes[0].notes"
-			/>
-			<template v-for="(group, idx) in groupedNotes" v-else>
-				<NotesCaption v-if="group.category && category!==group.category"
-					:key="group.category"
-					:title="categoryToLabel(group.category)"
+	<AppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
+		<template slot="list">
+			<AppContentList>
+				<div class="spacer" />
+				<NotesList v-if="groupedNotes.length === 1"
+					:notes="groupedNotes[0].notes"
+					@note-selected="onNoteSelected"
 				/>
-				<NotesCaption v-if="group.timeslot"
-					:key="group.timeslot"
-					:title="group.timeslot"
-				/>
-				<NotesList
-					:key="idx"
-					:notes="group.notes"
-				/>
-			</template>
-			<div
-				v-if="displayedNotes.length != filteredNotes.length"
-				v-observe-visibility="onEndOfNotes"
-				class="loading-label"
-			>
-				{{ t('notes', 'Loading …') }}
-			</div>
-		</div>
-	</div>
+				<template v-for="(group, idx) in groupedNotes" v-else>
+					<NotesCaption v-if="group.category && category!==group.category"
+						:key="group.category"
+						:title="categoryToLabel(group.category)"
+					/>
+					<NotesCaption v-if="group.timeslot"
+						:key="group.timeslot"
+						:title="group.timeslot"
+					/>
+					<NotesList
+						:key="idx"
+						:notes="group.notes"
+						@note-selected="onNoteSelected"
+					/>
+				</template>
+				<div
+					v-if="displayedNotes.length != filteredNotes.length"
+					v-observe-visibility="onEndOfNotes"
+					class="loading-label"
+				>
+					{{ t('notes', 'Loading …') }}
+				</div>
+			</AppContentList>
+		</template>
+
+		<AppContentDetails>
+			<Note v-if="showNote" :note-id="noteId" @note-deleted="onNoteDeleted" />
+		</AppContentDetails>
+	</AppContent>
 </template>
 
 <script>
 
 import {
-	Actions,
-	ActionButton,
+	AppContent,
+	AppContentList,
+	AppContentDetails,
 } from '@nextcloud/vue'
-import ArrowLeftThickIcon from 'vue-material-design-icons/ArrowLeftThick'
 import { categoryLabel } from '../Util'
 import NotesList from './NotesList'
 import NotesCaption from './NotesCaption'
 import store from '../store'
+import Note from './Note'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
 
@@ -55,15 +57,23 @@ export default {
 	name: 'NotesView',
 
 	components: {
+		AppContent,
+		AppContentList,
+		AppContentDetails,
+		Note,
 		NotesList,
 		NotesCaption,
-		Actions,
-		ActionButton,
-		ArrowLeftThickIcon,
 	},
 
 	directives: {
 		'observe-visibility': ObserveVisibility,
+	},
+
+	props: {
+		noteId: {
+			type: String,
+			required: true,
+		},
 	},
 
 	data() {
@@ -72,7 +82,7 @@ export default {
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
 			showFirstNotesOnly: true,
-			collapsed: false,
+			showNote: true,
 		}
 	},
 
@@ -171,41 +181,24 @@ export default {
 		onCategorySelected(category) {
 			store.commit('setSelectedCategory', category)
 		},
+
+		hideNote() {
+			this.showNote = false
+		},
+
+		onNoteDeleted(note) {
+			this.$emit('note-deleted', note)
+		},
+
+		onNoteSelected(noteId) {
+			this.showNote = true
+		},
 	},
 }
 </script>
 <style scoped>
-.notes-view {
-	width: 300px;
-	position: sticky;
-	position: -webkit-sticky;
-	height: calc(100vh - 50px);
-	top: 50px;
-	border-right: 1px solid var(--color-border);
-	flex-grow: 0;
-	flex-shrink: 0;
-	transition-duration: var(--animation-quick);
-	transition-property: width;
-}
-
-.notes-view.collapsed {
-	width: 120px;
-}
-
-.header {
-	height: 50px;
-	text-align: right;
-	padding-right: 2px;
-	padding-top: 2px;
-}
-
-.flipped {
-	transform: scaleX(-1);
-}
-
-.notes-list {
-	overflow-y: auto;
-	height: calc(100vh - 100px);
+.spacer {
+	padding: 16px;
 }
 
 .loading-label {
@@ -228,11 +221,5 @@ export default {
 	border-top-color: var(--color-loading-dark);
 	vertical-align: top;
 	margin-right: 5px;
-}
-
-@media (min-width: 900px) {
-	#shrinkButton {
-		display: none;
-	}
 }
 </style>

@@ -27,10 +27,7 @@
 				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
 		</AppContent>
-
-		<router-view v-if="!error" name="notes" />
-
-		<router-view v-if="!error" @note-deleted="onNoteDeleted" />
+		<router-view v-else @note-deleted="onNoteDeleted" />
 
 		<router-view name="sidebar" />
 	</Content>

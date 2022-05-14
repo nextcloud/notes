@@ -1,5 +1,5 @@
 <template>
-	<Fragment class="app-navigation-noclose separator-below">
+	<Fragment>
 		<AppNavigationItem
 			:title="t('notes', 'All notes')"
 			icon="icon-recent"
@@ -22,8 +22,6 @@
 				{{ category.count }}
 			</AppNavigationCounter>
 		</AppNavigationItem>
-
-		<AppNavigationSpacer class="separator-above" />
 	</Fragment>
 </template>
 
@@ -31,7 +29,6 @@
 import {
 	AppNavigationItem,
 	AppNavigationCounter,
-	AppNavigationSpacer,
 } from '@nextcloud/vue'
 import { Fragment } from 'vue-fragment'
 
@@ -47,7 +44,6 @@ export default {
 		Fragment,
 		AppNavigationItem,
 		AppNavigationCounter,
-		AppNavigationSpacer,
 	},
 
 	computed: {
@@ -75,8 +71,3 @@ export default {
 	},
 }
 </script>
-<style scoped>
-.separator-above {
-	border-top: 1px solid var(--color-border);
-}
-</style>

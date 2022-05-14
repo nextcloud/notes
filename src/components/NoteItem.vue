@@ -76,7 +76,7 @@ export default {
 
 	methods: {
 		onNoteSelected(noteId) {
-			this.$store.commit('setSelectedNote', noteId)
+			this.$emit('note-selected', noteId)
 		},
 	},
 }

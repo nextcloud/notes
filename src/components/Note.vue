@@ -5,7 +5,7 @@
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
-			<Breadcrumbs class="breadcrumbs">
+			<Breadcrumbs v-if="!isMobile" class="breadcrumbs">
 				<Breadcrumb title="Home" />
 				<Breadcrumb v-for="category of categories" :key="category" :title="category" />
 				<Breadcrumb :title="title" />
