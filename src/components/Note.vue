@@ -4,6 +4,7 @@
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
+			 v-on:dblclick="onDoubleClick"
 		>
 			<Modal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
 				<div class="conflict-modal">
@@ -233,6 +234,13 @@ export default {
 				document.title = title + ' - ' + defaultTitle
 			} else {
 				document.title = defaultTitle
+			}
+		},
+
+		onDoubleClick() {
+			if (this.preview) {
+				this.preview = !this.preview
+				this.actionsOpen = false
 			}
 		},
 
