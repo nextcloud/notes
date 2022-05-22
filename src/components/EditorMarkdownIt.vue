@@ -29,7 +29,7 @@ export default {
 		})
 
 		md.use(require('markdown-it-task-checkbox'), {
-			disabled: true,
+			disabled: false,
 			liClass: 'task-list-item',
 		})
 
@@ -41,6 +41,7 @@ export default {
 
 	watch: {
 		value: 'onUpdate',
+		html: 'onChange'
 	},
 
 	created() {
@@ -52,6 +53,27 @@ export default {
 		onUpdate() {
 			this.html = this.md.render(this.value)
 		},
+
+		onChange() {
+			const items = document.getElementsByClassName('task-list-item');
+			for (let i = 0; i < items.length; ++i) {
+				items[i].addEventListener('click', function() {
+					var wasChecked = !this.children[0].checked;
+					var text = this.children[1].innerHTML;
+					var was = "- [ ] "+text;
+					var shouldBe = "- [x] "+text;
+
+					if (wasChecked) {
+						was = "- [x] "+text;
+						shouldBe = "- [ ] "+text;
+					}
+
+					console.log(was);
+					console.log(shoudbe);
+				})
+			}
+		},
+
 		setImageRule(id) {
 			// https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
 			// Remember old renderer, if overridden, or proxy to default renderer
