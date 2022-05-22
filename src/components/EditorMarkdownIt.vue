@@ -55,23 +55,35 @@ export default {
 		},
 
 		onChange() {
+			const markdown = this.value;
+			const updateFunction = this.updateMarkdown
 			const items = document.getElementsByClassName('task-list-item');
 			for (let i = 0; i < items.length; ++i) {
 				items[i].addEventListener('click', function() {
-					var wasChecked = !this.children[0].checked;
-					var text = this.children[1].innerHTML;
-					var was = "- [ ] "+text;
-					var shouldBe = "- [x] "+text;
+					const wasChecked = !this.children[0].checked;
 
-					if (wasChecked) {
-						was = "- [x] "+text;
-						shouldBe = "- [ ] "+text;
-					}
-
-					console.log(was);
-					console.log(shoudbe);
+					let idOfCheckbox = 0;
+					const markdownLines = markdown.split( '\n');
+					markdownLines.forEach((line, i) => {
+						if(line.trim().startsWith("- [x]") || line.trim().startsWith("- [ ]")){
+							if("cbx_"+idOfCheckbox === this.children[0].id){
+								if(wasChecked) {
+									markdownLines[i] = markdownLines[i].replace("[x]","[ ]")
+								} else {
+									markdownLines[i] = markdownLines[i].replace("[ ]","[x]")
+								}
+							}
+							idOfCheckbox++;
+						}
+					});
+					updateFunction(markdownLines.join('\n'));
 				})
 			}
+		},
+
+		updateMarkdown(newMarkdown) {
+			this.$emit('input', newMarkdown)
+			this.onUpdate()
 		},
 
 		setImageRule(id) {
