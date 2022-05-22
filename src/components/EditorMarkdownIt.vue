@@ -69,6 +69,7 @@ export default {
 							if ('cbx_' + idOfCheckbox === this.children[0].id) {
 								if (wasChecked) {
 									markdownLines[i] = markdownLines[i].replace('[x]', '[ ]')
+									markdownLines[i] = markdownLines[i].replace('[X]', '[ ]')
 								} else {
 									markdownLines[i] = markdownLines[i].replace('[ ]', '[x]')
 								}
