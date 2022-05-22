@@ -4,7 +4,7 @@
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
-			 v-on:dblclick="onDoubleClick"
+			@dblclick="onDoubleClick"
 		>
 			<Modal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
 				<div class="conflict-modal">
