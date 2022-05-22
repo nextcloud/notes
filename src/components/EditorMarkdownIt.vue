@@ -41,7 +41,7 @@ export default {
 
 	watch: {
 		value: 'onUpdate',
-		html: 'onChange'
+		html: 'onChange',
 	},
 
 	created() {
@@ -55,28 +55,28 @@ export default {
 		},
 
 		onChange() {
-			const markdown = this.value;
+			const markdown = this.value
 			const updateFunction = this.updateMarkdown
-			const items = document.getElementsByClassName('task-list-item');
+			const items = document.getElementsByClassName('task-list-item')
 			for (let i = 0; i < items.length; ++i) {
 				items[i].addEventListener('click', function() {
-					const wasChecked = !this.children[0].checked;
+					const wasChecked = !this.children[0].checked
 
-					let idOfCheckbox = 0;
-					const markdownLines = markdown.split( '\n');
+					let idOfCheckbox = 0
+					const markdownLines = markdown.split('\n')
 					markdownLines.forEach((line, i) => {
-						if(line.trim().startsWith("- [x]") || line.trim().startsWith("- [ ]")){
-							if("cbx_"+idOfCheckbox === this.children[0].id){
-								if(wasChecked) {
-									markdownLines[i] = markdownLines[i].replace("[x]","[ ]")
+						if (line.trim().startsWith('- [x]') || line.trim().startsWith('- [ ]')) {
+							if ('cbx_' + idOfCheckbox === this.children[0].id) {
+								if (wasChecked) {
+									markdownLines[i] = markdownLines[i].replace('[x]', '[ ]')
 								} else {
-									markdownLines[i] = markdownLines[i].replace("[ ]","[x]")
+									markdownLines[i] = markdownLines[i].replace('[ ]', '[x]')
 								}
 							}
-							idOfCheckbox++;
+							idOfCheckbox++
 						}
-					});
-					updateFunction(markdownLines.join('\n'));
+					})
+					updateFunction(markdownLines.join('\n'))
 				})
 			}
 		},
