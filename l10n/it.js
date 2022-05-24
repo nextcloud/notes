@@ -12,8 +12,8 @@ OC.L10N.register(
     "Undo Delete" : "Annulla eliminazione",
     "Note recovered" : "Nota ripristinata",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Ci sono note non salvate. Uscita. Se lasci la pagina perderai tutte le modifiche!",
-    "_Deleted {number} note_::_Deleted {number} notes_" : ["Eliminata {number} nota","Eliminate {number} note"],
-    "_Recovered {number} note_::_Recovered {number} notes_" : ["Ripristinata {number} nota","Ripristinate {number} note"],
+    "_Deleted {number} note_::_Deleted {number} notes_" : ["Eliminata {number} nota","Eliminate {number} note","Eliminate {number} note"],
+    "_Recovered {number} note_::_Recovered {number} notes_" : ["Ripristinata {number} nota","Ripristinate {number} note","Ripristinate {number} note"],
     "Settings" : "Impostazioni",
     "Folder to store your notes" : "Cartella in cui memorizzare le tue note",
     "Root directory" : "Cartella principale",
@@ -67,8 +67,8 @@ OC.L10N.register(
     "Last modified: {date}" : "Ultima modifica: {date}",
     "Note has unsaved changes" : "La nota ha modifiche non salvate",
     "Subcategory" : "Sottocategoria",
-    "_%n word_::_%n words_" : ["%n parola","%n parole"],
-    "_%n character_::_%n characters_" : ["%n carattere","%n caratteri"],
+    "_%n word_::_%n words_" : ["%n parola","%n parole","%n parole"],
+    "_%n character_::_%n characters_" : ["%n carattere","%n caratteri","%n caratteri"],
     "Write down your thoughts without any distractions." : "Annota i tuoi pensieri senza alcuna distrazione.",
     "Use Markdown markups to style your text." : "Usa contrassegni Markdown per formattare il tuo testo.",
     "Organize your notes in categories." : "Organizza le tue note in categorie.",
@@ -98,4 +98,4 @@ OC.L10N.register(
     "Development Mode" : "Modalità di sviluppo",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Sembra che l'applicazione delle note sia stata installata da una sorgente di sviluppo. Installala invece dal <a href=\"%1$s\">Negozio delle applicazioni di Nextcloud</a> ufficiale. Se desideri compilare l'applicazione Note in autonomia, segui le <a href=\"%2$s\">istruzioni per sviluppatori</a>"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
