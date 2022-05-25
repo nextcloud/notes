@@ -26,6 +26,7 @@ OC.L10N.register(
     "Preview" : "Vista previa",
     "Category" : "Categoría",
     "Uncategorized" : "Sin categoría",
+    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"],
     "Android app" : "Aplicación android",
     "iOS app" : "Aplicación iOS"
 },

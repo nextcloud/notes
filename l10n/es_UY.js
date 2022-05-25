@@ -24,6 +24,7 @@ OC.L10N.register(
     "Category" : "Categoría",
     "Uncategorized" : "Sin categoría",
     "Saving failed!" : "¡Falla al guardar!",
+    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"],
     "Android app" : "Aplicación android",
     "iOS app" : "Aplicación iOS"
 },
