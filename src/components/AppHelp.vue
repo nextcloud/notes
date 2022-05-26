@@ -143,8 +143,8 @@ export default {
 				{sequence: "*italics*", result: "make italic", visualized: "<em>test</em>"},
 				{sequence: "~~strikethrough~~", result: "strikethrough", visualized: "<s>test</s>"},
 
-				{sequence: "# Big header", result: "Big header", visualized: "<h1>test</h1>"},
-				{sequence: "## Medium header", result: "Medium header", visualized: "<h2>test</h2>"},
+				{sequence: "# Big header", result: "Big header", visualized: "<h2>test</h2>"},
+				{sequence: "## Medium header", result: "Medium header", visualized: "<b><h3>test</h3></b>"},
 				{sequence: "### Small header", result: "Small header", visualized: "<h3>test</h3>"},
 				{sequence: "#### Tiny header", result: "Tiny header", visualized: "<h4>test</h4>"},
 
