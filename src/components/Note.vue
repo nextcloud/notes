@@ -235,6 +235,13 @@ export default {
 						showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: note.errorType }))
 					}
 					this.startRefreshTimer()
+
+					let newContent = this.$route.query.new;
+					if (this.isNewNote && (newContent != "" && newContent != null)) {
+						this.note.content = newContent;
+						console.log(this.note.content)
+						this.onManualSave()
+					}
 				})
 				.catch(() => {
 					// note not found

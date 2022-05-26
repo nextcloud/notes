@@ -5,6 +5,7 @@
 			<div class="feature icon-add">
 				{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
 			</div>
+			<button @click="onNewNote">Create a Sample note with markdown</button>
 			<div class="feature icon-fullscreen">
 				{{ t('notes', 'Write down your thoughts without any distractions.') }}
 			</div>
@@ -29,12 +30,31 @@
 import {
 	NcAppContent,
 } from '@nextcloud/vue'
+import {createNote} from "../NotesService";
+import { getDefaultSampleNote } from '../Util'
+
 
 export default {
 	name: 'Welcome',
 
 	components: {
 		NcAppContent,
+	},
+
+	methods: {
+		onNewNote() {
+			createNote('')
+				.then(note => {
+					let query = { new: getDefaultSampleNote() };
+					this.$router.push({
+						name: 'note',
+						params: { noteId: note.id.toString() },
+						query
+					})
+				})
+				.catch(() => {
+				})
+		},
 	},
 }
 

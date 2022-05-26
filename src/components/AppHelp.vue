@@ -18,6 +18,7 @@
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use Markdown markups to style your text.') }}
 				</div>
+				<button @click="onNewNote">{{ t('notes', 'Create a new Note with markdown samples') }}</button>
 				<table>
 					<tr>
 						<th>{{ t('notes', 'Sequence') }}</th>
@@ -96,7 +97,8 @@ import {
 	AppSettingsDialog,
 	AppSettingsSection,
 } from '@nextcloud/vue'
-import {setSettings} from "../NotesService";
+import {createNote} from "../NotesService";
+import { getDefaultSampleNote } from '../Util'
 
 
 export default {
@@ -160,6 +162,23 @@ export default {
 				{sequence: "`code`", result: "code", visualized: ""},
 				{sequence: "```<br>Multi Line Blockcode<br>```", result: "mlb", visualized: ""},
 			]
+		},
+	},
+
+	methods: {
+		onNewNote() {
+			createNote('')
+				.then(note => {
+					let query = { new: getDefaultSampleNote() };
+					this.$router.push({
+						name: 'note',
+						params: { noteId: note.id.toString() },
+						query
+					})
+				})
+				.catch(() => {
+				})
+			this.settingsOpen = false;
 		},
 	},
 

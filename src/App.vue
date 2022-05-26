@@ -63,6 +63,7 @@ import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
 import AppHelp from './components/AppHelp'
+import store from './store'
 import Vue from 'vue'
 
 export default {
