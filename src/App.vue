@@ -18,9 +18,17 @@
 				/>
 			</template>
 
-			<template #footer>
+			<AppNavigationItem
+				pinned=True
+				:title="t('notes', 'Help')"
+				icon="icon-info"
+				@click="openHelp"
+			/>
+			<AppHelp v-if="helpVisible" settingsOpen="helpVisible" @popupClosed="helpVisible = false" ></AppHelp>
+			<NcNcAppNavigationItem
+				pinned=True>
 				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
-			</template>
+			</NcNcAppNavigationItem>
 		</NcAppNavigation>
 
 		<NcAppContent v-if="error">
@@ -41,6 +49,7 @@ import {
 	NcAppContent,
 	NcAppNavigation,
 	NcAppNavigationNew,
+	NcAppNavigationItem,
 	NcContent,
 } from '@nextcloud/vue'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
@@ -53,16 +62,20 @@ import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesServi
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
+import AppHelp from './components/AppHelp'
+import Vue from 'vue'
 
 export default {
 	name: 'App',
 
 	components: {
+		AppHelp,
 		AppSettings,
 		NavigationList,
 		NcAppContent,
 		NcAppNavigation,
 		NcAppNavigationNew,
+		NcAppNavigationItem,
 		NcContent,
 		PlusIcon,
 	},
@@ -81,6 +94,7 @@ export default {
 			undoTimer: null,
 			deletedNotes: [],
 			refreshTimer: null,
+			helpVisible: false,
 		}
 	},
 
@@ -227,6 +241,10 @@ export default {
 			}
 		},
 
+		openHelp() {
+			this.helpVisible = !this.helpVisible;
+			this.helpVisible = true;
+		},
 		onNewNote() {
 			if (this.loading.create) {
 				return
