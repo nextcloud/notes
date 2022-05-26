@@ -45,6 +45,12 @@
 					</tr>
 				</table>
 			</AppSettingsSection>
+			<AppSettingsSection title="Tips and Tricks">
+			<div class="feature icon-toggle-filelist">
+				{{ t('notes', 'Double Click the text in viewmode to quickly open edit mode!') }}
+			</div>
+
+		</AppSettingsSection>
 			<AppSettingsSection title="Apps">
 				<div class="feature icon-phone">
 					{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
