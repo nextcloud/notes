@@ -68,7 +68,11 @@
 					<div >
 						{{ t('notes', 'iOS app') }}
 						<br>
-						<a target="_blank" href="https://github.com/owncloud/notes-iOS-App">{{ t('notes', 'Only on Github') }}</a>
+						<a target="_blank" href="https://apps.apple.com/app/cloudnotes-owncloud-notes/id813973264">
+							<img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred.png"
+								 alt="Get it on Apple S"
+								 height="80">
+						</a>
 					</div>
 
 
