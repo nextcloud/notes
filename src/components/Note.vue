@@ -205,6 +205,7 @@ export default {
 		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('keydown', this.onKeyPress)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
+
 	},
 
 	destroyed() {
@@ -236,10 +237,9 @@ export default {
 					}
 					this.startRefreshTimer()
 
-					let newContent = this.$route.query.new;
-					if (this.isNewNote && (newContent != "" && newContent != null)) {
-						this.note.content = newContent;
-						console.log(this.note.content)
+					const newContent = this.$route.query.new
+					if (this.isNewNote && (newContent !== '' && newContent != null)) {
+						this.note.content = newContent
 						this.onManualSave()
 					}
 				})

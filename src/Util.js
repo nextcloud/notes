@@ -28,7 +28,6 @@ export const routeIsNewNote = ($route) => {
 	return {}.hasOwnProperty.call($route.query, 'new')
 }
 
-
 export const getDefaultSampleNote = () => {
 	return t('notes', `# My notes
 
