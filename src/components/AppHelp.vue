@@ -183,12 +183,29 @@ export default {
 
 table {
 	width: 70%;
+	border: 1px lightgray solid;
+	border-spacing: 0;
+
+	border-collapse:separate;
+	border-radius:6px;
 }
 
 th {
 	font-style: oblique;
+	font-weight: bold;
+	border-top: none;
 }
+
+th , td {
+	padding: 5px;
+	border-left: 1px lightgray solid;
+}
+
+td:first-child, th:first-child {
+	border-left: none;
+}
+
 tr:nth-child(even) {
-	background-color: #dddddd;
+	background-color: #eeeeee;
 }
 </style>
