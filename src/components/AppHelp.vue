@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<AppSettingsDialog :open.sync="settingsOpen" showNavigation=true>
+			<div class="exit icon-close" @click="settingsOpen = false;"></div>
 			<h2>{{ t('notes', 'Notes Application') }}</h2>
 			<AppSettingsSection title="Basics">
 				<div class="feature icon-add">
@@ -174,6 +175,12 @@ export default {
 </script>
 
 <style scoped>
+
+.exit {
+	width: 15px;
+	float: right;
+}
+
 table {
 	width: 70%;
 }
