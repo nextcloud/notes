@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<AppSettingsDialog :open.sync="settingsOpen" showNavigation=true>
+		<AppSettingsDialog :open.sync="settingsOpen" :showNavigation=true>
 			<div class="exit icon-close" @click="settingsOpen = false;"></div>
 			<h2>{{ t('notes', 'Notes Application') }}</h2>
 			<AppSettingsSection :title="t('notes', 'Basics')">
@@ -108,9 +108,7 @@ export default {
 	},
 
 	data() {
-		return {
-			settingsOpen: true,
-		}
+		return {}
 	},
 
 	computed: {
