@@ -91,7 +91,7 @@ export default {
 </script>
 <style>
 .welcome-content {
-	padding: 2em 3em;
+	padding: 4em 8em;
 }
 
 .welcome-content h2 {
