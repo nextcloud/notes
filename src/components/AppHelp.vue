@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<AppSettingsDialog :open.sync="settingsOpen" :showNavigation=true>
-			<div class="exit icon-close" @click="settingsOpen = false;"></div>
+		<AppSettingsDialog :open.sync="settingsOpen" :showNavigation="true">
+			<div class="exit icon-close" @click="settingsOpen = false; "/>
 			<h2>{{ t('notes', 'Notes Application') }}</h2>
 			<AppSettingsSection :title="t('notes', 'Basics')">
 				<div class="feature icon-add">
@@ -13,22 +13,39 @@
 				<div class="feature icon-files-dark">
 					{{ t('notes', 'Organize your notes in categories.') }}
 				</div>
+				<button class="button-icon-add icon-add" @click="onNewNote">
+					{{ t('notes', 'Create a sample note with markdown') }}
+				</button>
 			</AppSettingsSection>
 			<AppSettingsSection :title="t('notes', 'Markdown')">
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use Markdown markups to style your text.') }}
 				</div>
-				<button @click="onNewNote">{{ t('notes', 'Create a new Note with markdown samples') }}</button>
+				<button @click="onNewNote">
+					{{ t('notes', 'Create a new Note with markdown samples') }}
+				</button>
 				<table>
 					<tr>
-						<th>{{ t('notes', 'Sequence') }}</th>
-						<th>{{ t('notes', 'Result') }}</th>
-						<th>{{ t('notes', 'Visualized') }}</th>
+						<th>
+							{{ t('notes', 'Sequence') }}
+						</th>
+						<th>
+							{{ t('notes', 'Result') }}
+						</th>
+						<th>
+							{{ t('notes', 'Visualized') }}
+						</th>
 					</tr>
 					<tr v-for="item in getMarkdown">
-						<td v-html="item.sequence">{{ item.sequence }}</td>
-						<td>{{ item.result }}</td>
-						<td v-html="item.visualized">{{ item.visualized }}</td>
+						<td v-html="item.sequence">
+							{{ item.sequence }}
+						</td>
+						<td>
+							{{ item.result }}
+						</td>
+						<td v-html="item.visualized">
+							{{ item.visualized }}
+						</td>
 					</tr>
 				</table>
 			</AppSettingsSection>
@@ -48,37 +65,42 @@
 				</table>
 			</AppSettingsSection>
 			<AppSettingsSection :title="t('notes', 'Tips and Tricks')">
-			<div class="feature icon-toggle-filelist">
-				{{ t('notes', 'Double Click the text in viewmode to quickly open edit mode!') }}
-			</div>
-
-		</AppSettingsSection>
+				<div class="feature icon-toggle-filelist">
+					{{ t('notes', 'Double Click the text in viewmode to quickly open edit mode!') }}
+				</div>
+			</AppSettingsSection>
 			<AppSettingsSection :title="t('notes', 'Apps')">
 				<div class="feature icon-phone">
 					{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
-					<br>
-					<div >
-						{{ t('notes', 'Android app') }}
-						<br>
-						<a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">
-							<span class="badge-fdroid"></span>
-						</a>
-
-						<a target="_blank" href="https://f-droid.org/repository/browse/?fdid=it.niedermann.owncloud.notes">
-							<span class="badge-fdroid"></span>
-						</a>
+				</div>
+				<div class="badge-wrapper">
+					<a href="https://github.com/stefan-niedermann/nextcloud-notes">
+						{{ t('notes', 'Android app: Nextcloud Notes by Niedermann IT-Dienstleistungen ') }}
+					</a>
+					<div>
+						<div class="badge">
+							<a target="_blank" href="https://play.google.com/store/apps/details?id=it.niedermann.owncloud.notes">
+								<img :src="getRoute('badge_playstore.svg')" class="appstore-badge badge-playstore-fix">
+							</a>
+						</div>
+						<div class="badge">
+							<a target="_blank" href="https://f-droid.org/repository/browse/?fdid=it.niedermann.owncloud.notes">
+								<img :src="getRoute('badge_fdroid.svg')" class="appstore-badge">
+							</a>
+						</div>
 					</div>
-
-					<div >
-						{{ t('notes', 'iOS app') }}
-						<br>
-						<a target="_blank" href="https://apps.apple.com/app/cloudnotes-owncloud-notes/id813973264">
-							<span class="badge-fdroid"></span>
-						</a>
+				</div>
+				<div class="badge-wrapper">
+					<a href="https://github.com/phedlund/CloudNotes">
+						{{ t('notes', 'iOS app: CloudNotes - Nextcloud Notes by Peter Hedlund') }}
+					</a>
+					<div>
+						<div class="badge">
+							<a target="_blank" href="https://apps.apple.com/app/cloudnotes-owncloud-notes/id813973264">
+								<img :src="getRoute('badge_applestore.svg')" class="appstore-badge badge-playstore-fix">
+							</a>
+						</div>
 					</div>
-					<span class="badge-fdroid"></span>
-					<span class="icon-undo"></span>
-
 				</div>
 			</AppSettingsSection>
 		</AppSettingsDialog>
@@ -87,24 +109,24 @@
 
 <script>
 
-
 import {
 	AppSettingsDialog,
 	AppSettingsSection,
 } from '@nextcloud/vue'
-import { createNote } from '../NotesService';
+import { createNote } from '../NotesService'
 import { getDefaultSampleNote } from '../Util'
+import { generateFilePath } from '@nextcloud/router'
 
 export default {
 	name: 'AppHelp',
 
-	props: {
-		settingsOpen: Boolean
-	},
-
 	components: {
 		AppSettingsDialog,
-		AppSettingsSection,
+			AppSettingsSection,
+	},
+
+	props: {
+		settingsOpen: Boolean,
 	},
 
 	data() {
@@ -143,8 +165,11 @@ export default {
 				{ sequence: '#### ' + t('notes', 'Tiny header'), result: t('notes', 'Tiny header'), visualized: '<h4>' + t('notes', 'Tiny header') + '</h4>' },
 
 				{ sequence: '* ' + t('notes', 'Generic list item'), result: t('notes', 'Generic list'), visualized: '<li>' + t('notes', 'Generic list item') + '</li>' },
-				{ sequence: '1. William Riker<br>2. Deanna Troi<br>3. Beverly Crusher<br>',
-					result: t('notes', 'Numbered list'), visualized: '<ol><li>William Riker</li><li>Deanna Troi</li><li>Beverly Crusher</li></ol>' },
+				{
+					sequence: '1. William Riker<br>2. Deanna Troi<br>3. Beverly Crusher<br>',
+					result: t('notes', 'Numbered list'),
+					visualized: '<ol><li>William Riker</li><li>Deanna Troi</li><li>Beverly Crusher</li></ol>',
+				},
 
 				{ sequence: '[Text to display](http://www.example.com)', result: "'link'", visualized: "<a href='http://www.example.com'>Text to display</a>" },
 				{ sequence: '![Alt Title](http://www.example.com/image.jpg)', result: 'link', visualized: "<img src='http://www.example.com' alt='Alt Title'></img>" },
@@ -153,6 +178,14 @@ export default {
 				{ sequence: '`code`', result: 'code', visualized: '' },
 				{ sequence: '```<br>Multi Line Blockcode<br>```', result: 'mlb', visualized: '' },
 			]
+		},
+	},
+	watch: {
+		settingsOpen: {
+			handler: function() {
+				this.$emit('popupClosedpopupClosed')
+			},
+			deep: true,
 		},
 	},
 
@@ -164,23 +197,18 @@ export default {
 					this.$router.push({
 						name: 'note',
 						params: { noteId: note.id.toString() },
-						query
+						query,
 					})
 				})
 				.catch(() => {
 				})
 			this.settingsOpen = false
 		},
-	},
 
-	watch: {
-		settingsOpen: {
-			handler: function() {
-				this.$emit('popupClosedpopupClosed')
-			},
-			deep: true
-		}
-	}
+		getRoute(file) {
+			return generateFilePath('notes', 'img', file)
+		},
+	},
 }
 </script>
 
@@ -218,4 +246,10 @@ td:first-child, th:first-child {
 tr:nth-child(even) {
 	background-color: #eeeeee;
 }
+
+.badge-playstore-fix {
+	height: 48px;
+	padding: 12px;
+}
+
 </style>
