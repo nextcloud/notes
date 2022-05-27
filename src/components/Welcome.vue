@@ -72,10 +72,15 @@ export default {
 }
 
 .feature {
-	background-position: left top;
+	background-position: left center;
+	width: 100%;
 	min-height: 32px;
+	line-height: 32px;
 	padding-left: 32px;
-	margin-top: 1em;
+	margin-top: 0.3em !important;
+	margin-bottom: 0.3em !important;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .feature ul {
