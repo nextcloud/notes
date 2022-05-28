@@ -11,6 +11,7 @@ OC.L10N.register(
     "No notes yet" : "Aún no hay notas",
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
+    "Loading …" : "Cargando …",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
