@@ -405,6 +405,7 @@ export default {
 	font-size: 16px;
 	padding: 1em;
 	padding-bottom: 0;
+	padding-top: 0;
 }
 
 /* center editor on large screens */

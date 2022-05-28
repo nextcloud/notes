@@ -1,41 +1,43 @@
 <template>
 	<div>
 		<div class="toolbar">
-			<button class="button" @click="undo">
-				<span class="icon-undo"></span>
-			</button>
-			<button class="button" @click="redo">
-				<span class="icon-redo"></span>
-			</button>
-			<button class="button" @click="makeBold">
-				<span class="icon-bold"></span>
-			</button>
-			<button class="button" @click="makeStrikethrough">
-				<span class="icon-strike"></span>
-			</button>
-			<button class="button" @click="makeH1">
-				<span class="icon-h1"></span>
-			</button>
-			<button class="button" @click="insertLink">
-				<span class="icon-link"></span>
-			</button>
-			<button class="button" @click="insertCheckbox">
-				<span class="icon-checklist"></span>
-			</button>
-			<button class="button" @click="makeMonospace">
-				<span class="icon-code"></span>
-			</button>
-			<EmojiPicker @select="select">
-				<button class="button">
-					<span class="icon-emoji"></span>
+			<div class="toolbar-inner">
+				<button class="button" @click="undo">
+					<span class="icon-undo"></span>
 				</button>
-			</EmojiPicker>
-			<button class="button" @click="onClickUpload">
-				<span class="icon-upload"></span>
-			</button>
-			<button class="button" @click="onClickSelect">
-				<span class="icon-picture"></span>
-			</button>
+				<button class="button" @click="redo">
+					<span class="icon-redo"></span>
+				</button>
+				<button class="button" @click="makeBold">
+					<span class="icon-bold"></span>
+				</button>
+				<button class="button" @click="makeStrikethrough">
+					<span class="icon-strike"></span>
+				</button>
+				<button class="button" @click="makeH1">
+					<span class="icon-h1"></span>
+				</button>
+				<button class="button" @click="insertLink">
+					<span class="icon-link"></span>
+				</button>
+				<button class="button" @click="insertCheckbox">
+					<span class="icon-checklist"></span>
+				</button>
+				<button class="button" @click="makeMonospace">
+					<span class="icon-code"></span>
+				</button>
+				<EmojiPicker @select="select">
+					<button class="button">
+						<span class="icon-emoji"></span>
+					</button>
+				</EmojiPicker>
+				<button class="button" @click="onClickUpload">
+					<span class="icon-upload"></span>
+				</button>
+				<button class="button" @click="onClickSelect">
+					<span class="icon-picture"></span>
+				</button>
+			</div>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -494,11 +496,24 @@ export default {
 
 .toolbar {
 	width: 100%;
-	height: 44px;
+	/*
+		Use the same width as defined in Note so that the toolbar has the same wdith
+		Because the editor is padded 1em, we need to subtract two.
+	*/
+	max-width: 45em;
 	/*border-bottom: darkgray 1px solid;*/
 	display:flex;
-	justify-content:center;
+	position: fixed;
+	z-index: 100;
 
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+	background-color: var(--color-main-background);
+}
+
+.toolbar-inner {
+	display: flex;
+	margin: auto;
 }
 
 .button {
