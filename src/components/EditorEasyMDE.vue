@@ -259,9 +259,10 @@ export default {
 		},
 
 		bracketText(front, back, ifCenterEmpty = '') {
-			const doc = this.mde.codemirror.getDoc()
-			const cursorStart = this.mde.codemirror.getCursor('from')
-			const cursorEnd = this.mde.codemirror.getCursor('to')
+			const cm = this.mde.codemirror
+			const doc = cm.getDoc()
+			const cursorStart = cm.getCursor('from')
+			const cursorEnd = cm.getCursor('to')
 			let originalText = doc.getRange(cursorStart, cursorEnd)
 			if (originalText === '') {
 				originalText = ifCenterEmpty
@@ -274,6 +275,12 @@ export default {
 				doc.replaceSelection(this.reverseString(insertText), "around")
 			} else {
 				doc.replaceSelection(front + originalText + back, "around")
+				if (originalText === '' && ifCenterEmpty === '') {
+					cm.focus()
+					const pos = cm.getCursor()
+					pos.ch = pos.ch - back.length
+					cm.setCursor(pos)
+				}
 			}
 		},
 
