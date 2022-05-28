@@ -365,7 +365,7 @@ export default {
 .markdown-editor {
 	min-height: 100%;
 	padding-bottom: 30vh;
-	padding-top: 1em;
+	padding-top: 5em;
 }
 
 .EasyMDEContainer .CodeMirror {
@@ -501,7 +501,7 @@ export default {
 		Because the editor is padded 1em, we need to subtract two.
 	*/
 	max-width: 45em;
-	/*border-bottom: darkgray 1px solid;*/
+	border-bottom: 1px solid var(--color-background-darker);
 	display:flex;
 	position: fixed;
 	z-index: 100;
