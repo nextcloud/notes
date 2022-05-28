@@ -111,8 +111,8 @@ export default {
 				initialValue: this.value,
 				renderingConfig: {},
 				shortcuts: {
-					"toggleSideBySide": null,
-					"togglePreview": null,
+					toggleSideBySide: null,
+					togglePreview: null,
 				},
 			}, this.config)
 
