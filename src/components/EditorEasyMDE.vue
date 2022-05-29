@@ -363,7 +363,7 @@ export default {
 	border-color: var(--color-primary-element);
 }
 
-.CodeMirror .cm-formatting-task.cm-property + span {
+.CodeMirror .cm-formatting-task.cm-property ~ span {
 	opacity: 0.5;
 	text-decoration: line-through;
 }
