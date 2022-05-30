@@ -15,6 +15,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		readonly: {
+			type: Boolean,
+			required: true,
+		},
 		noteid: {
 			type: String,
 			required: true,
@@ -55,6 +59,9 @@ export default {
 		},
 
 		onChange() {
+			if (this.readonly) {
+				return
+			}
 			const markdown = this.value
 			const updateFunction = this.updateMarkdown
 			const items = document.getElementsByClassName('task-list-item')
