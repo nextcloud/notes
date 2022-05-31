@@ -45,7 +45,6 @@ export default {
 
 	watch: {
 		value: 'onUpdate',
-		html: 'onChange',
 	},
 
 	created() {
@@ -58,35 +57,40 @@ export default {
 			this.html = this.md.render(this.value)
 		},
 
-		onChange() {
+		prepareOnChangeListener() {
 			if (this.readonly) {
 				return
 			}
-			const markdown = this.value
-			const updateFunction = this.updateMarkdown
 			const items = document.getElementsByClassName('task-list-item')
 			for (let i = 0; i < items.length; ++i) {
-				items[i].addEventListener('click', function() {
-					const wasChecked = !this.children[0].checked
-
-					let idOfCheckbox = 0
-					const markdownLines = markdown.split('\n')
-					markdownLines.forEach((line, i) => {
-						if (line.trim().startsWith('- [x]') || line.trim().startsWith('- [ ]')) {
-							if ('cbx_' + idOfCheckbox === this.children[0].id) {
-								if (wasChecked) {
-									markdownLines[i] = markdownLines[i].replace('[x]', '[ ]')
-									markdownLines[i] = markdownLines[i].replace('[X]', '[ ]')
-								} else {
-									markdownLines[i] = markdownLines[i].replace('[ ]', '[x]')
-								}
-							}
-							idOfCheckbox++
-						}
-					})
-					updateFunction(markdownLines.join('\n'))
-				})
+				console.log("set listener: ")
+				console.log(items[i])
+				items[i].removeEventListener('click', this.setListener)
+				items[i].addEventListener('click', this.setListener)
 			}
+		},
+
+		setListener(item) {
+			const markdown = this.value
+			const wasChecked = item.target.checked
+
+			let idOfCheckbox = 0
+			const markdownLines = markdown.split('\n')
+			markdownLines.forEach((line, i) => {
+				// Regex Source: https://github.com/linsir/markdown-it-task-checkbox/blob/master/index.js#L121
+				if (/^\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
+					if ('cbx_' + idOfCheckbox === item.target.id) {
+						if (wasChecked) {
+							markdownLines[i] = markdownLines[i].replace('[ ]', '[x]')
+						} else {
+							markdownLines[i] = markdownLines[i].replace('[x]', '[ ]')
+							markdownLines[i] = markdownLines[i].replace('[X]', '[ ]')
+						}
+					}
+					idOfCheckbox++
+				}
+			})
+			this.updateMarkdown(markdownLines.join('\n'))
 		},
 
 		updateMarkdown(newMarkdown) {
