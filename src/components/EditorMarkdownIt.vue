@@ -53,8 +53,9 @@ export default {
 	},
 
 	methods: {
-		onUpdate() {
-			this.html = this.md.render(this.value)
+		onUpdate(markdown = this.value) {
+			this.html = this.md.render(markdown)
+			setTimeout(() => this.prepareOnChangeListener(), 100)
 		},
 
 		prepareOnChangeListener() {
@@ -63,7 +64,6 @@ export default {
 			}
 			const items = document.getElementsByClassName('task-list-item')
 			for (let i = 0; i < items.length; ++i) {
-				console.log("set listener: ")
 				console.log(items[i])
 				items[i].removeEventListener('click', this.setListener)
 				items[i].addEventListener('click', this.setListener)
@@ -71,31 +71,37 @@ export default {
 		},
 
 		setListener(item) {
-			const markdown = this.value
-			const wasChecked = item.target.checked
-
 			let idOfCheckbox = 0
-			const markdownLines = markdown.split('\n')
+			const markdownLines = this.value.split('\n')
 			markdownLines.forEach((line, i) => {
 				// Regex Source: https://github.com/linsir/markdown-it-task-checkbox/blob/master/index.js#L121
-				if (/^\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
-					if ('cbx_' + idOfCheckbox === item.target.id) {
-						if (wasChecked) {
-							markdownLines[i] = markdownLines[i].replace('[ ]', '[x]')
-						} else {
-							markdownLines[i] = markdownLines[i].replace('[x]', '[ ]')
-							markdownLines[i] = markdownLines[i].replace('[X]', '[ ]')
-						}
-					}
+				// plus the '- '-string.
+				if (/^(- )\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
+					markdownLines[i] = this.checkLine(line, i, idOfCheckbox, item.target)
 					idOfCheckbox++
 				}
 			})
 			this.updateMarkdown(markdownLines.join('\n'))
 		},
 
+		checkLine(line, index, id, target) {
+			let returnValue = line;
+			if ('cbx_' + id === target.id) {
+				if (target.checked) {
+					returnValue = returnValue.replace('[ ]', '[x]')
+					returnValue = returnValue.replace('[\u00A0]', '[x]')
+				} else {
+					returnValue = returnValue.replace('[x]', '[ ]')
+					returnValue = returnValue.replace('[X]', '[ ]')
+				}
+			}
+			return returnValue
+		},
+
+
 		updateMarkdown(newMarkdown) {
 			this.$emit('input', newMarkdown)
-			this.onUpdate()
+			this.onUpdate(newMarkdown)
 		},
 
 		setImageRule(id) {
