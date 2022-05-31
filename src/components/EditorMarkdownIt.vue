@@ -53,8 +53,8 @@ export default {
 	},
 
 	methods: {
-		onUpdate(markdown = this.value) {
-			this.html = this.md.render(markdown)
+		onUpdate() {
+			this.html = this.md.render(this.value)
 			setTimeout(() => this.prepareOnChangeListener(), 100)
 		},
 
@@ -81,7 +81,8 @@ export default {
 					idOfCheckbox++
 				}
 			})
-			this.updateMarkdown(markdownLines.join('\n'))
+
+			this.$emit('input', markdownLines.join('\n'))
 		},
 
 		checkLine(line, index, id, target) {
@@ -96,12 +97,6 @@ export default {
 				}
 			}
 			return returnValue
-		},
-
-
-		updateMarkdown(newMarkdown) {
-			this.$emit('input', newMarkdown)
-			this.onUpdate(newMarkdown)
 		},
 
 		setImageRule(id) {
