@@ -64,7 +64,6 @@ export default {
 			}
 			const items = document.getElementsByClassName('task-list-item')
 			for (let i = 0; i < items.length; ++i) {
-				console.log(items[i])
 				items[i].removeEventListener('click', this.setListener)
 				items[i].addEventListener('click', this.setListener)
 			}
@@ -86,7 +85,7 @@ export default {
 		},
 
 		checkLine(line, index, id, target) {
-			let returnValue = line;
+			let returnValue = line
 			if ('cbx_' + id === target.id) {
 				if (target.checked) {
 					returnValue = returnValue.replace('[ ]', '[x]')
