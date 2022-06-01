@@ -20,7 +20,7 @@
 		"@nextcloud/router": "^2.0.0",
 		"@nextcloud/vue": "^5.1.0",
 		"@nextcloud/vue-dashboard": "^2.0.1",
-		"diff": "^5.0.0",
+		"diff": "^5.1.0",
 		"easymde": "^2.16.1",
 		"markdown-it": "^13.0.0",
 		"markdown-it-task-checkbox": "^1.0.6",
