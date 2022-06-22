@@ -74,7 +74,7 @@
     "Android app" : "Android-App",
     "iOS app" : "iOS-App",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Erstelle eine Notiz per Klick auf „{newnote}“ in der App-Navigation.",
-    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Du kannst Unterkategorien erstellen, indem Du „/“ als Trennung zwischen Ober- und Untergategorie verwendest, z.B. „{parent}/{sub}“.",
+    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Du kannst Unterkategorien erstellen, indem Du „/“ als Trennung zwischen Ober- und Untergategorie verwendest, z. B. „{parent}/{sub}“.",
     "Note not found." : "Notiz nicht gefunden.",
     "Note is locked." : "Notiz ist gesperrt.",
     "Insufficient storage." : "Speicherplatz nicht ausreichend.",
