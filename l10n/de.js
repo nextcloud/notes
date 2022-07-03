@@ -48,7 +48,7 @@ OC.L10N.register(
     "Use version from server" : "Version vom Server verwenden",
     "Use current version" : "Verwende die aktuelle Version",
     "Empty note" : "Leere Notiz",
-    "Write …" : "Schreibe …",
+    "Write …" : "Schreiben …",
     "Details" : "Details",
     "CTRL + /" : "STRG + /",
     "Edit" : "Bearbeiten",
@@ -76,7 +76,7 @@ OC.L10N.register(
     "Android app" : "Android-App",
     "iOS app" : "iOS-App",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Erstelle eine Notiz per Klick auf „{newnote}“ in der App-Navigation.",
-    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Du kannst Unterkategorien erstellen, indem Du „/“ als Trennung zwischen Ober- und Untergategorie verwendest, z. B. „{parent}/{sub}“.",
+    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Du kannst Unterkategorien erstellen, indem Du „/“ als Trennung zwischen Ober- und Unterkategorie verwendest, z. B. „{parent}/{sub}“.",
     "Note not found." : "Notiz nicht gefunden.",
     "Note is locked." : "Notiz ist gesperrt.",
     "Insufficient storage." : "Speicherplatz nicht ausreichend.",
@@ -96,6 +96,6 @@ OC.L10N.register(
     "Updating the note's category has failed. Is the target directory writable?" : "Aktualisierung der Notizen-Kategorie ist gescheitert. Bestehen Schreibrechte für das Zielverzeichnis?",
     "Updating the category for note {id} has failed." : "Ändern der Kategorie für Notiz {id} fehlgeschlagen.",
     "Development Mode" : "Entwickler-Modus",
-    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Es scheint, dass die Notizen-App von einer Entwickler-Quelle installiert wurde. Bitte installiere sie stattdessen von dem offiziellen <a href=\"%1$s\">Nextcloud-App-Store</a>. Wenn Du die Notizen-App selbst bauen möchtest, folge bitte den <a href=\"%2$s\">Entwickler-Anleitungen</a>."
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Es scheint, dass die Notizen-App von einer Entwickler-Quelle installiert wurde. Bitte installiere sie stattdessen von dem offiziellen <a href=\"%1$s\">Nextcloud-App-Store</a>. Wenn Du die Notizen-App selbst erstellen möchtest, folge bitte den <a href=\"%2$s\">Entwickler-Anleitungen</a>."
 },
 "nplurals=2; plural=(n != 1);");
