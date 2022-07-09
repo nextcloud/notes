@@ -37,7 +37,7 @@ class NotesService {
 		return [ 'notes' => $notes, 'categories' => $data['categories'] ];
 	}
 
-	public function getTopNotes(string $userId, int $count) : array {
+	public function getTopNotes(string $userId) : array {
 		$notes = $this->getAll($userId)['notes'];
 		usort($notes, function (Note $a, Note $b) {
 			$favA = $a->getFavorite();
@@ -48,7 +48,7 @@ class NotesService {
 				return $favA > $favB ? -1 : 1;
 			}
 		});
-		return array_slice($notes, 0, $count);
+		return $notes;
 	}
 
 	public function get(string $userId, int $id) : Note {
