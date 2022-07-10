@@ -145,7 +145,7 @@ export default {
 
 		onClickCodeElement(event) {
 			const element = event.target.closest('.cm-formatting-task')
-			if (element !== null) {
+			if (element !== null && !this.readonly) {
 				event.preventDefault()
 				event.stopImmediatePropagation()
 				this.toggleCheckbox(event.target)
