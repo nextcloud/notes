@@ -91,8 +91,8 @@ export default {
 					returnValue = returnValue.replace('[ ]', '[x]')
 					returnValue = returnValue.replace('[\u00A0]', '[x]')
 				} else {
-					returnValue = returnValue.replace('[x]', '[ ]')
-					returnValue = returnValue.replace('[X]', '[ ]')
+					// matches [x] or [X], to prevent two occurences of uppercase and lowercase X to be replaced
+					returnValue = returnValue.replace(/\[(x|X)\]/, '[ ]')
 				}
 			}
 			return returnValue
