@@ -33,7 +33,7 @@ export default {
 		})
 
 		md.use(require('markdown-it-task-checkbox'), {
-			disabled: !this.readonly,
+			disabled: this.readonly,
 			liClass: 'task-list-item',
 		})
 
