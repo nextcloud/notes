@@ -13,6 +13,27 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.4.0 - 2022-07-10
+
+### Added
+- Add support for images/attachments (by @newhinton, #785, #823, #834)
+- Allow custom file extensions (#795 by @vincowl)
+- external API for custom file extension (#850)
+
+### Fixed
+- break long words in preview mode (#817)
+- allow empty settings (required for root directory) (#819)
+- don't ignore newlines in preview mode (#820)
+- fix noteservice not returning the final filename (#821 by @newhinton)
+- fix undo deletes note (#825)
+- fix conflict solution (#849)
+- disable some shortcuts in editor mode (#865 by @newhinton)
+- fix checked list item with backslash (#867)
+- fix checkbox editable in read-only mode (#876)
+
+- maintenance (#803, #808, #813, #827, #829, #830, #833, #835, #838, #840, #844, #846, #847, #848, #851, #853, #874, #877)
+
+
 ## 4.3.1 - 2022-02-27
 
 - add support for PHP 8.1, maintenance (#824)
