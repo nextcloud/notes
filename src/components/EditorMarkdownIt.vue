@@ -75,7 +75,7 @@ export default {
 			markdownLines.forEach((line, i) => {
 				// Regex Source: https://github.com/linsir/markdown-it-task-checkbox/blob/master/index.js#L121
 				// plus the '- '-string.
-				if (/^(- )\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
+				if (/^-\s+\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
 					markdownLines[i] = this.checkLine(line, i, idOfCheckbox, item.target)
 					idOfCheckbox++
 				}
