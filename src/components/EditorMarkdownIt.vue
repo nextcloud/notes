@@ -178,18 +178,6 @@ export default {
 		color: var(--color-text-light)
 	}
 
-	& table th {
-		font-weight: bold;
-	}
-
-	& table td, & table th {
-		padding-right: 1.5em;
-	}
-
-	& table td:empty::after {
-		content: '\00a0';
-	}
-
 	.task-list-item {
 		list-style-type: none;
 		input {
@@ -231,5 +219,39 @@ export default {
 		margin-bottom: 5px;
 	}
 
+	.notesapp-table {
+		width: calc(100% - 50px);
+		table-layout: auto;
+		margin-top: 2em;
+		margin-bottom: 2em;
+		border-radius: 7px;
+		border-collapse: collapse;
+		border-style: hidden;
+		box-shadow: 0 0 0 1px var(--color-border);
+	}
+
+	.notesapp-table th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+	}
+
+	.notesapp-table td, .notesapp-table th {
+		padding: 8px;
+		padding-right: 1.5em;
+		border: 1px solid var(--color-border);
+	}
+
+	.notesapp-table tr:hover {
+		background-color: var(--color-primary-element-lighter);
+	}
+
+	& table th {
+		font-weight: bold;
+	}
+
+	& table td:empty::after {
+		content: '\00a0';
+	}
 }
 </style>
