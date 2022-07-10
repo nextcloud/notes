@@ -219,7 +219,7 @@ export default {
 		margin-bottom: 5px;
 	}
 
-	.notesapp-table {
+	& table {
 		width: calc(100% - 50px);
 		table-layout: auto;
 		margin-top: 2em;
@@ -230,19 +230,19 @@ export default {
 		box-shadow: 0 0 0 1px var(--color-border);
 	}
 
-	.notesapp-table th {
+	& table th {
 		padding-top: 12px;
 		padding-bottom: 12px;
 		text-align: left;
 	}
 
-	.notesapp-table td, .notesapp-table th {
+	& table td, & table th {
 		padding: 8px;
 		padding-right: 1.5em;
 		border: 1px solid var(--color-border);
 	}
 
-	.notesapp-table tr:hover {
+	& table tr:hover {
 		background-color: var(--color-primary-element-lighter);
 	}
 
