@@ -230,15 +230,11 @@ export default {
 		box-shadow: 0 0 0 1px var(--color-border);
 	}
 
-	& table th {
+	& table td, & table th {
 		padding-top: 12px;
 		padding-bottom: 12px;
-		text-align: left;
-	}
-
-	& table td, & table th {
-		padding: 8px;
 		padding-right: 1.5em;
+		text-align: left;
 		border: 1px solid var(--color-border);
 	}
 
