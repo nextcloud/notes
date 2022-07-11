@@ -60,6 +60,6 @@ class PageController extends Controller {
 		$note = $this->notesService->create($this->userSession->getUser()->getUID(), '', '');
 		$note->setContent('');
 		$url = $this->urlGenerator->linkToRoute('notes.page.indexnote', [ 'id' => $note->getId() ]);
-		return new RedirectResponse($url);
+		return new RedirectResponse($url . '?new');
 	}
 }
