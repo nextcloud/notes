@@ -1,10 +1,6 @@
 <template>
 	<div>
-		<DashboardWidget
-			:items="items"
-			:loading="loading"
-			:showMoreUrl="showMoreUrl"
-		>
+		<DashboardWidget :items="items" :loading="loading">
 			<template #default="{ item }">
 				<DashboardWidgetItem
 					:target-url="getItemTargetUrl(item)"
@@ -86,7 +82,7 @@ export default {
 		buttonsFooterStyle() {
 			const marginTop = this.items.length > 0 ? 20 + (this.displayedItemsCount - this.items.length) * 60 : 10
 			return { marginTop: `${marginTop}px` }
-		}
+		},
 	},
 
 	created() {
