@@ -117,7 +117,6 @@ class NotesController extends Controller {
 			return [
 				'items' => $items,
 				'hasMoreItems' => $hasMoreNotes,
-				'displayedItemsCount' => $maxItems,
 			];
 		});
 	}

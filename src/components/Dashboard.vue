@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="dashboard-box">
 		<DashboardWidget :items="items" :loading="loading">
 			<template #default="{ item }">
 				<DashboardWidgetItem
@@ -25,9 +25,9 @@
 				</EmptyContent>
 			</template>
 		</DashboardWidget>
-		<div class="buttons-footer" :style="buttonsFooterStyle">
+		<div v-if="!loading" class="buttons-footer">
 			<a :href="createNoteUrl" class="button">
-				{{ t('notes', 'Create a new note') }}
+				{{ t('notes', 'New note') }}
 			</a>
 		</div>
 	</div>
@@ -56,7 +56,6 @@ export default {
 			creating: false,
 			items: [],
 			hasMoreItems: false,
-			displayedItemsCount: 6,
 		}
 	},
 
@@ -78,11 +77,6 @@ export default {
 				return generateUrl(`/apps/notes/note/${note.id}`)
 			}
 		},
-
-		buttonsFooterStyle() {
-			const marginTop = this.items.length > 0 ? 20 + (this.displayedItemsCount - this.items.length) * 60 : 10
-			return { marginTop: `${marginTop}px` }
-		},
 	},
 
 	created() {
@@ -94,7 +88,6 @@ export default {
 			getDashboardData().then(data => {
 				this.items = data.items
 				this.hasMoreItems = data.hasMoreItems
-				this.displayedItemsCount = data.displayedItemsCount
 				this.loading = false
 			})
 		},
@@ -107,6 +100,11 @@ export default {
 </script>
 
 <style scoped>
+.dashboard-box {
+	position: relative;
+	height: 100%;
+}
+
 .note-item-favorite {
 	background: var(--icon-star-dark-FC0, var(--icon-star-dark-fc0));
 }
@@ -130,6 +128,9 @@ export default {
 }
 
 .buttons-footer {
+	position: absolute;
+	bottom: 1em;
+	width: 100%;
 	text-align: center;
 }
 </style>
