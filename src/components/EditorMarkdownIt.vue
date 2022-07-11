@@ -224,16 +224,14 @@ export default {
 		table-layout: auto;
 		margin-top: 2em;
 		margin-bottom: 2em;
-		border-radius: 7px;
+		border-radius: 0.5em;
 		border-collapse: collapse;
 		border-style: hidden;
 		box-shadow: 0 0 0 1px var(--color-border);
 	}
 
 	& table td, & table th {
-		padding-top: 12px;
-		padding-bottom: 12px;
-		padding-right: 1.5em;
+		padding: 0.75em;
 		text-align: left;
 		border: 1px solid var(--color-border);
 	}
