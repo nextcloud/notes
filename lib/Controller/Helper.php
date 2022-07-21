@@ -46,9 +46,10 @@ class Helper {
 		$note = $this->notesService->get($userId, $id);
 		$ifMatch = $request->getHeader('If-Match');
 		if ($ifMatch) {
+			$ifMatch = str_replace('"', '', $ifMatch);
 			$matchEtags = preg_split('/,\s*/', $ifMatch);
 			$meta = $this->metaService->update($userId, $note);
-			if (!in_array('"'.$meta->getEtag().'"', $matchEtags)) {
+			if (!in_array($meta->getEtag(), $matchEtags)) {
 				throw new ETagDoesNotMatchException($note);
 			}
 		}
