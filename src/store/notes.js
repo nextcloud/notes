@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue, { set } from 'vue'
 import { copyNote } from '../Util.js'
 
 const state = {
@@ -81,20 +81,20 @@ const mutations = {
 			if (updated.content !== undefined && updated.etag !== undefined) {
 				note.content = updated.content
 				note.etag = updated.etag
-				Vue.set(note, 'unsaved', updated.unsaved)
-				Vue.set(note, 'error', updated.error)
-				Vue.set(note, 'errorType', updated.errorType)
+				set(note, 'unsaved', updated.unsaved)
+				set(note, 'error', updated.error)
+				set(note, 'errorType', updated.errorType)
 			}
 		} else {
 			state.notes.push(updated)
-			Vue.set(state.notesIds, updated.id, updated)
+			set(state.notesIds, updated.id, updated)
 		}
 	},
 
 	setNoteAttribute(state, params) {
 		const note = state.notesIds[params.noteId]
 		if (note) {
-			Vue.set(note, params.attribute, params.value)
+			set(note, params.attribute, params.value)
 		}
 	},
 
