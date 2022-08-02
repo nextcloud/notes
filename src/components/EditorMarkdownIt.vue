@@ -231,7 +231,7 @@ export default {
 	}
 
 	& table td, & table th {
-		padding: 0.75em;
+		padding: 0.35em 0.5em;
 		text-align: left;
 		border: 1px solid var(--color-border);
 	}
