@@ -213,11 +213,12 @@ export default {
 			}
 		},
 
-		routeToNote(noteId, query) {
-			if (this.$route.name !== 'note' || this.$route.params.noteId !== noteId.toString()) {
+		routeToNote(id, query) {
+			const noteId = id.toString()
+			if (this.$route.name !== 'note' || this.$route.params.noteId !== noteId) {
 				this.$router.push({
 					name: 'note',
-					params: { noteId: noteId.toString() },
+					params: { noteId },
 					query,
 				})
 			}
@@ -228,13 +229,13 @@ export default {
 				return
 			}
 			this.loading.create = true
-			createNote(this.filter.category || '')
+			createNote(this.filter.category)
 				.then(note => {
 					this.routeToNote(note.id, { new: null })
 				})
 				.catch(() => {
 				})
-				.then(() => {
+				.finally(() => {
 					this.loading.create = false
 				})
 		},

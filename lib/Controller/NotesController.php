@@ -95,9 +95,9 @@ class NotesController extends Controller {
 	 */
 	public function dashboard() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
-			$maxItems = 7;
+			$maxItems = 6;
 			$userId = $this->helper->getUID();
-			$notes = $this->notesService->getTopNotes($userId, $maxItems + 1);
+			$notes = $this->notesService->getTopNotes($userId);
 			$hasMoreNotes = count($notes) > $maxItems;
 			$notes = array_slice($notes, 0, $maxItems);
 			$items = array_map(function ($note) {

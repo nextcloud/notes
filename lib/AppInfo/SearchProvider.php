@@ -66,7 +66,7 @@ class SearchProvider implements IProvider {
 					'',
 					$note->getTitle(),
 					$excerpt,
-					$this->url->linkToRouteAbsolute('notes.page.index') . 'note/'.$note->getId(),
+					$this->url->linkToRouteAbsolute('notes.page.indexnote', [ 'id' => $note->getId() ]),
 					'icon-notes-trans'
 				);
 			},

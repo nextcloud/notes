@@ -179,7 +179,7 @@ export const setTitle = (noteId, title) => {
 
 export const createNote = category => {
 	return axios
-		.post(url('/notes'), { category })
+		.post(url('/notes'), { category: category || '' })
 		.then(response => {
 			_updateLocalNote(response.data)
 			return response.data

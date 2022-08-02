@@ -1,38 +1,40 @@
 <template>
-	<DashboardWidget :items="items"
-		:loading="loading"
-	>
-		<template #default="{ item }">
-			<DashboardWidgetItem
-				:target-url="getItemTargetUrl(item)"
-				:main-text="item.title"
-				:sub-text="subtext(item)"
-			>
-				<template #avatar>
-					<div
-						class="note-item"
-						:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
-					/>
-				</template>
-			</DashboardWidgetItem>
-		</template>
-		<template #empty-content>
-			<EmptyContent icon="icon-notes">
-				<template #desc>
-					<p class="notes-empty-content-label">
-						{{ t('notes', 'No notes yet') }}
-					</p>
-					<p>
-						<a :href="createNoteUrl" class="button">{{ t('notes', 'New note') }}</a>
-					</p>
-				</template>
-			</EmptyContent>
-		</template>
-	</DashboardWidget>
+	<div class="dashboard-box">
+		<DashboardWidget :items="items" :loading="loading">
+			<template #default="{ item }">
+				<DashboardWidgetItem
+					:target-url="getItemTargetUrl(item)"
+					:main-text="item.title"
+					:sub-text="subtext(item)"
+				>
+					<template #avatar>
+						<div
+							class="note-item"
+							:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
+						/>
+					</template>
+				</DashboardWidgetItem>
+			</template>
+			<template #empty-content>
+				<EmptyContent icon="icon-notes">
+					<template #desc>
+						<p class="notes-empty-content-label">
+							{{ t('notes', 'No notes yet') }}
+						</p>
+					</template>
+				</EmptyContent>
+			</template>
+		</DashboardWidget>
+		<div v-if="!loading" class="buttons-footer">
+			<a :href="createNoteUrl" class="button">
+				{{ t('notes', 'New note') }}
+			</a>
+		</div>
+	</div>
 </template>
 
 <script>
-import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
+import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard' // TODO: should be refactored with next release of @nextcloud/vue : https://github.com/nextcloud/nextcloud-vue-dashboard/issues/407
 import { EmptyContent } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 
@@ -51,6 +53,7 @@ export default {
 	data() {
 		return {
 			loading: true,
+			creating: false,
 			items: [],
 			hasMoreItems: false,
 		}
@@ -71,7 +74,7 @@ export default {
 
 		getItemTargetUrl() {
 			return (note) => {
-				return generateUrl('/apps/notes/note/' + note.id)
+				return generateUrl(`/apps/notes/note/${note.id}`)
 			}
 		},
 	},
@@ -90,13 +93,18 @@ export default {
 		},
 
 		subtext(item) {
-			return item.excerpt ? item.excerpt : categoryLabel(item.category)
+			return item.excerpt || categoryLabel(item.category)
 		},
 	},
-
 }
 </script>
+
 <style scoped>
+.dashboard-box {
+	position: relative;
+	height: 100%;
+}
+
 .note-item-favorite {
 	background: var(--icon-star-dark-FC0, var(--icon-star-dark-fc0));
 }
@@ -117,5 +125,12 @@ export default {
 
 .notes-empty-content-label {
 	margin-bottom: 20px;
+}
+
+.buttons-footer {
+	position: absolute;
+	bottom: 1em;
+	width: 100%;
+	text-align: center;
 }
 </style>
