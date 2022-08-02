@@ -73,12 +73,12 @@ function isServerBranch($branch) : bool {
 	$response = $http->request('GET', 'https://api.github.com/repos/nextcloud/server/branches/'.$branch);
 	$status = $response->getStatusCode();
 	switch ($status) {
-	case 200:
-		return true;
-	case 404:
-		return false;
-	default:
-		throw new \Exception('HTTP Error while checking branch '.$branch.' for Nextcloud server: '.$status);
+		case 200:
+			return true;
+		case 404:
+			return false;
+		default:
+			throw new \Exception('HTTP Error while checking branch '.$branch.' for Nextcloud server: '.$status);
 	}
 }
 
