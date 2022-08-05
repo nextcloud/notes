@@ -55,13 +55,12 @@ export default {
 	methods: {
 		onUpdate() {
 			this.html = this.md.render(this.value)
-			setTimeout(() => this.prepareOnChangeListener(), 100)
+			if (!this.readonly) {
+				setTimeout(() => this.prepareOnClickListener(), 100)
+			}
 		},
 
-		prepareOnChangeListener() {
-			if (this.readonly) {
-				return
-			}
+		prepareOnClickListener() {
 			const items = document.getElementsByClassName('task-list-item')
 			for (let i = 0; i < items.length; ++i) {
 				items[i].removeEventListener('click', this.onClickListItem)
