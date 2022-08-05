@@ -1,5 +1,5 @@
 <template>
-	<AppNavigationSettings :title="t('notes', 'Settings')" :class="{ loading: saving }">
+	<AppNavigationSettings :title="t('notes', 'Notes settings')" :class="{ loading: saving }">
 		<div class="settings-block">
 			<p class="settings-hint">
 				<label for="notesPath">{{ t('notes', 'Folder to store your notes') }}</label>
