@@ -145,10 +145,10 @@ class NoteUtil {
 	 * @param string $path path to the folder
 	 * @return Folder
 	 */
-	public function getOrCreateFolder(string $path) : Folder {
+	public function getOrCreateFolder(string $path, bool $create = true) : Folder {
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
-		} else {
+		} elseif ($create) {
 			$folder = $this->root->newFolder($path);
 		}
 		if (!($folder instanceof Folder)) {

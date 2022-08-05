@@ -24,16 +24,21 @@ class NotesService {
 		$this->noteUtil = $noteUtil;
 	}
 
-	public function getAll(string $userId) : array {
+	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
 		$customExtension = $this->getCustomExtension($userId);
-		$notesFolder = $this->getNotesFolder($userId);
-		$data = self::gatherNoteFiles($customExtension, $notesFolder);
-		$fileIds = array_keys($data['files']);
-		// pre-load tags for all notes (performance improvement)
-		$this->noteUtil->getTagService()->loadTags($fileIds);
-		$notes = array_map(function (File $file) use ($notesFolder) : Note {
-			return new Note($file, $notesFolder, $this->noteUtil);
-		}, $data['files']);
+		try {
+			$notesFolder = $this->getNotesFolder($userId, $autoCreateNotesFolder);
+			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			$fileIds = array_keys($data['files']);
+			// pre-load tags for all notes (performance improvement)
+			$this->noteUtil->getTagService()->loadTags($fileIds);
+			$notes = array_map(function (File $file) use ($notesFolder) : Note {
+				return new Note($file, $notesFolder, $this->noteUtil);
+			}, $data['files']);
+		} catch (NotesFolderException $e) {
+			$notes = [];
+			$data = [ 'categories' => [] ];
+		}
 		return [ 'notes' => $notes, 'categories' => $data['categories'] ];
 	}
 
@@ -142,10 +147,10 @@ class NotesService {
 	 * @param string $userId the user id
 	 * @return Folder
 	 */
-	private function getNotesFolder(string $userId) : Folder {
+	private function getNotesFolder(string $userId, bool $create = true) : Folder {
 		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
 		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
-		$folder = $this->noteUtil->getOrCreateFolder($path);
+		$folder = $this->noteUtil->getOrCreateFolder($path, $create);
 		return $folder;
 	}
 
