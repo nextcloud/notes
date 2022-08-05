@@ -134,7 +134,7 @@ class SettingsService {
 		return $settings;
 	}
 
-	public function getAll(string $uid) : \stdClass {
+	public function getAll(string $uid, $saveInitial = false) : \stdClass {
 		$settings = $this->getSettingsFromDB($uid);
 		// use default for empty settings
 		$toBeSaved = false;
@@ -143,7 +143,7 @@ class SettingsService {
 				$defaultValue = $attr['default'];
 				if (is_callable($defaultValue)) {
 					$settings->{$name} = $defaultValue($uid);
-					$toBeSaved = true;
+					$toBeSaved = $saveInitial;
 				} else {
 					$settings->{$name} = $defaultValue;
 				}
