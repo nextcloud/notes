@@ -15,6 +15,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		readonly: {
+			type: Boolean,
+			required: true,
+		},
 		noteid: {
 			type: String,
 			required: true,
@@ -29,7 +33,7 @@ export default {
 		})
 
 		md.use(require('markdown-it-task-checkbox'), {
-			disabled: true,
+			disabled: this.readonly,
 			liClass: 'task-list-item',
 		})
 
@@ -51,7 +55,48 @@ export default {
 	methods: {
 		onUpdate() {
 			this.html = this.md.render(this.value)
+			if (!this.readonly) {
+				setTimeout(() => this.prepareOnClickListener(), 100)
+			}
 		},
+
+		prepareOnClickListener() {
+			const items = document.getElementsByClassName('task-list-item')
+			for (let i = 0; i < items.length; ++i) {
+				items[i].removeEventListener('click', this.onClickListItem)
+				items[i].addEventListener('click', this.onClickListItem)
+			}
+		},
+
+		onClickListItem(event) {
+			event.stopPropagation()
+			let idOfCheckbox = 0
+			const markdownLines = this.value.split('\n')
+			markdownLines.forEach((line, i) => {
+				// Regex Source: https://github.com/linsir/markdown-it-task-checkbox/blob/master/index.js#L121
+				// plus the '- '-string.
+				if (/^[-+*]\s+\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
+					markdownLines[i] = this.checkLine(line, i, idOfCheckbox, event.target)
+					idOfCheckbox++
+				}
+			})
+
+			this.$emit('input', markdownLines.join('\n'))
+		},
+
+		checkLine(line, index, id, target) {
+			let returnValue = line
+			if ('cbx_' + id === target.id) {
+				if (target.checked) {
+					returnValue = returnValue.replace(/\[[ \u00A0]\]/, '[x]')
+				} else {
+					// matches [x] or [X], to prevent two occurences of uppercase and lowercase X to be replaced
+					returnValue = returnValue.replace(/\[[xX]\]/, '[ ]')
+				}
+			}
+			return returnValue
+		},
+
 		setImageRule(id) {
 			// https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
 			// Remember old renderer, if overridden, or proxy to default renderer
@@ -182,6 +227,7 @@ export default {
 		list-style-type: none;
 		input {
 			min-height: initial !important;
+			cursor: pointer;
 		}
 		label {
 			cursor: default;
