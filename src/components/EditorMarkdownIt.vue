@@ -64,19 +64,20 @@ export default {
 			}
 			const items = document.getElementsByClassName('task-list-item')
 			for (let i = 0; i < items.length; ++i) {
-				items[i].removeEventListener('click', this.setListener)
-				items[i].addEventListener('click', this.setListener)
+				items[i].removeEventListener('click', this.onClickListItem)
+				items[i].addEventListener('click', this.onClickListItem)
 			}
 		},
 
-		setListener(item) {
+		onClickListItem(event) {
+			event.stopPropagation()
 			let idOfCheckbox = 0
 			const markdownLines = this.value.split('\n')
 			markdownLines.forEach((line, i) => {
 				// Regex Source: https://github.com/linsir/markdown-it-task-checkbox/blob/master/index.js#L121
 				// plus the '- '-string.
-				if (/^-\s+\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
-					markdownLines[i] = this.checkLine(line, i, idOfCheckbox, item.target)
+				if (/^[-+*]\s+\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
+					markdownLines[i] = this.checkLine(line, i, idOfCheckbox, event.target)
 					idOfCheckbox++
 				}
 			})
@@ -88,11 +89,10 @@ export default {
 			let returnValue = line
 			if ('cbx_' + id === target.id) {
 				if (target.checked) {
-					returnValue = returnValue.replace('[ ]', '[x]')
-					returnValue = returnValue.replace('[\u00A0]', '[x]')
+					returnValue = returnValue.replace(/\[[ \u00A0]\]/, '[x]')
 				} else {
 					// matches [x] or [X], to prevent two occurences of uppercase and lowercase X to be replaced
-					returnValue = returnValue.replace(/\[(x|X)\]/, '[ ]')
+					returnValue = returnValue.replace(/\[[xX]\]/, '[ ]')
 				}
 			}
 			return returnValue
