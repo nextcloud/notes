@@ -147,10 +147,10 @@ export default {
 		},
 
 		setSingleCodeRule() {
-			this.md.renderer.rules.code_inline = function (tokens, idx, options, env, self) {
+			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
 				const token = tokens[idx]
-				return '<p class="singleLineCode"><code>'+ token.content + '</code></p>'
-			};
+				return '<p class="singleLineCode"><code>' + token.content + '</code></p>'
+			}
 		},
 	},
 
