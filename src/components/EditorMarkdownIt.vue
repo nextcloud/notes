@@ -293,5 +293,10 @@ export default {
 	& table td:empty::after {
 		content: '\00a0';
 	}
+
+	pre, code {
+		border-radius: 10px !important;
+		padding: 10px !important;
+	}
 }
 </style>
