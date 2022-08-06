@@ -49,6 +49,8 @@ export default {
 
 	created() {
 		this.setImageRule(this.noteid)
+
+		this.setSingleCodeRule()
 		this.onUpdate()
 	},
 
@@ -142,6 +144,13 @@ export default {
 					return defaultRender(tokens, idx, options, env, self)
 				}
 			}
+		},
+
+		setSingleCodeRule() {
+			this.md.renderer.rules.code_inline = function (tokens, idx, options, env, self) {
+				const token = tokens[idx]
+				return '<p class="singleLineCode"><code>'+ token.content + '</code></p>'
+			};
 		},
 	},
 
@@ -294,9 +303,15 @@ export default {
 		content: '\00a0';
 	}
 
-	pre, code {
+	pre {
 		border-radius: 10px !important;
-		padding: 10px !important;
+		padding: 15px !important;
+	}
+
+	.singleLineCode {
+		border-radius: 10px !important;
+		padding: 15px !important;
+		background: var(--color-background-dark);
 	}
 }
 </style>
