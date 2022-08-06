@@ -149,7 +149,7 @@ export default {
 		setSingleCodeRule() {
 			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
 				const token = tokens[idx]
-				return '<p class="singleLineCode"><code>' + token.content + '</code></p>'
+				return '<code class="singleLineCode">' + token.content + '</code>'
 			}
 		},
 	},
@@ -211,12 +211,6 @@ export default {
 
 	& a {
 		color: var(--color-primary-element);
-	}
-
-	& pre, & code {
-		background: var(--color-background-dark);
-		font-size: 90%;
-		white-space: pre-wrap;
 	}
 
 	& pre code {
@@ -305,12 +299,18 @@ export default {
 	pre {
 		border-radius: 10px !important;
 		padding: 15px !important;
+		background: var(--color-background-dark);
+		font-size: 90%;
 	}
 
 	.singleLineCode {
-		border-radius: 10px !important;
-		padding: 15px !important;
+		border-radius: 8px !important;
+		padding: 3px !important;
+		padding-left: 8px !important;
+		padding-right: 8px !important;
 		background: var(--color-background-dark);
+		font-size: 85%;
+		width: fit-content;
 	}
 }
 </style>
