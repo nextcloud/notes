@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Имате незачувана белешка. Со напуштање на стрната нема да се зачуваат промените!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Избришана {number} белешка","Избришани {number} белешки"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Вратена {number} белешка","Вратени {number} белешки"],
-    "Settings" : "Параметри",
     "Folder to store your notes" : "Папка за зачувување на вашите белешки",
     "File extension for new notes" : "Наставка на дадотека за нови белешки",
     "No notes yet" : "Сеуште нема забелешки",

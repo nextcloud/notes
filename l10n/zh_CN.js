@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "有未保存的记录，离开页面将丢弃所有更改！",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["已删除 {number} 条笔记"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["已恢复 {number} 条笔记"],
-    "Settings" : "设置",
     "Folder to store your notes" : "保存您的笔记的文件夹",
     "File extension for new notes" : "新笔记的文件扩展名",
     "Display mode for notes" : "笔记显示模式",

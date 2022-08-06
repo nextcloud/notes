@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Există notiţe nesalvate. Dacă părăsiţi această pagină aceste schimbări vor fi pierdute!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["A fost şters %1$d notiţă","Au fost şterse %1$d notiţe","Au fost şterse %1$d de notiţe"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["A fost recuperat {number} notiţă","Au fost recuperate {number} notiţe","Au fost recuperate {number} de notiţe"],
-    "Settings" : "Setări",
     "Folder to store your notes" : "Dosarul pentru a stoca notiţele tale",
     "Root directory" : "Director rădacină",
     "File extension for new notes" : "Extensia fişierului pentru notiţele noi",

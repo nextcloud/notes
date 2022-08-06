@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Notizen",
     "Error" : "Fehler",
-    "Settings" : "Astellungen",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
     "Rename" : "Ëmbenennen",

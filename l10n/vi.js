@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Ghi chép",
     "Error" : "Lỗi",
     "New note" : "Ghi chú mới",
-    "Settings" : "Thiết lập",
     "Display mode for notes" : "Chế độ hiển thị cho các ghi chú",
     "Open in edit mode" : "Mở trong chế độ chỉnh sửa",
     "Open in preview mode" : "Mở trong chế độ xem trước",

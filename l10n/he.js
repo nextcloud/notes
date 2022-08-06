@@ -13,7 +13,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "ישנן הערות שלא נשמרו. יציאה מהעמוד תעלים את השינויים שערכת!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["פתק אחד נמחק","{number} פתקים נמחקו","{number} פתקים נמחקו","{number} פתקים נמחקו"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["פתק אחד שוחזר","{number} פתקים שוחזרו","{number} פתקים שוחזרו","{number} פתקים שוחזרו"],
-    "Settings" : "הגדרות",
     "Folder to store your notes" : "תיקייה לאחסון הפתקיות שלך",
     "File extension for new notes" : "סיומת קובץ לפתקיות חדשות",
     "Display mode for notes" : "מצב תצוגת פתקים",

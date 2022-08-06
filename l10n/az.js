@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Qeydlər",
     "Error" : "Səhv",
     "New note" : "Yeni qeyd",
-    "Settings" : "Quraşdırmalar",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Rename" : "Adı dəyiş",

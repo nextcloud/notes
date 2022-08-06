@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Märkmed",
     "Error" : "Viga",
     "New note" : "Uus märge",
-    "Settings" : "Seaded",
     "No notes yet" : "Märkmeid veel pole",
     "Categories" : "Kategooriad",
     "Today" : "Täna",

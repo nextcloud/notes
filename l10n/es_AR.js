@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Notas",
     "Error" : "Error",
     "New note" : "Nueva nota",
-    "Settings" : "Ajustes",
     "Display mode for notes" : "Modo de visualización para notas",
     "Open in edit mode" : "Abrir en modo editor",
     "Open in preview mode" : "Abrir en modo de vista previa",

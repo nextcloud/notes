@@ -2,7 +2,6 @@ OC.L10N.register(
     "notes",
     {
     "Error" : "Fazi",
-    "Settings" : "Arventennoù",
     "Categories" : "Rummadoù",
     "Loading …" : "O Kargañ ...",
     "Today" : "Hiziv",

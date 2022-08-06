@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "සටහන්",
     "Error" : "දෝෂය",
     "New note" : "නව සටහන",
-    "Settings" : "සැකසුම්",
     "No notes yet" : "තවම සටහන් නැත",
     "All notes" : "සියලුම සටහන්",
     "Loading …" : "පූරණය වෙමින් …",

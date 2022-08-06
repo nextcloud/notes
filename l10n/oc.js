@@ -13,7 +13,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "I a de nòtas pas enregistradas. Quitar la pagina farà pèrdre las modificacions !",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number} nòta suprimida","{number} nòtas suprimidas"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} nòta restaurada","{number} nòtas restauradas"],
-    "Settings" : "Paramètres",
     "Folder to store your notes" : "Dossièr ont gardar vòstras nòtas",
     "File extension for new notes" : "Extension fichièr per las nòtas novèlas",
     "Display mode for notes" : "Mòde d’afichatge per las nòtas",

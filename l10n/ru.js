@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Есть несохраненные заметки. Если покинуть страницу, все изменения будут утеряны.",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Удалена [number] заметка","Удалено [number] заметки","Удалено [number] заметок","Удалено [number] заметок"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Восстановлена [number] заметка","Восстановлено [number] заметки","Восстановлено [number] заметок","Восстановлено [number] заметок"],
-    "Settings" : "Параметры",
     "Folder to store your notes" : "Папка для хранения заметок",
     "Root directory" : "Корневой каталог",
     "File extension for new notes" : "Расширения файлов новых заметок",

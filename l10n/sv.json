@@ -11,7 +11,6 @@
     "There are unsaved notes. Leaving the page will discard all changes!" : "Det finns osparade anteckningar. Lämnas sidan kommer ändringarna förloras!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Tog bort {number} anteckning","Tog bort {number} anteckningar"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Återskapade {number} anteckning","Återskapade {number} anteckningar"],
-    "Settings" : "Inställningar",
     "Folder to store your notes" : "Mapp för att spara dina anteckningar",
     "File extension for new notes" : "Filtillägg för nya anteckningar",
     "Display mode for notes" : "Visningsläge för anteckningar",

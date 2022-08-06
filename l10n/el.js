@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Υπάρχουν σημειώσεις που δεν έχουν αποθηκευτεί. Φεύγοντας από την σελίδα θα διαγραφούν οι αλλαγές!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Διαγράφηκε {number} σημείωση","Διαγράφηκαν {number} σημειώσεις"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Επαναφέρθηκε {number} σημείωση","Επαναφέρθηκαν {number} σημειώσεις"],
-    "Settings" : "Ρυθμίσεις",
     "Folder to store your notes" : "Φάκελος αποθήκευσης των σημειώσεών σας",
     "Root directory" : "Ριζικός κατάλογος",
     "File extension for new notes" : "Πρόσθετο αρχείου για νέες σημειώσεις",

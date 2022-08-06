@@ -2,7 +2,6 @@ OC.L10N.register(
     "notes",
     {
     "Error" : "ýalňyşlyk",
-    "Settings" : "Sazlamalar",
     "Today" : "Şu gün",
     "Yesterday" : "Düýn",
     "This week" : "Bu hepdede",

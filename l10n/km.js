@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "កំណត់​ចំណាំ",
     "Error" : "កំហុស",
     "New note" : "កំណត់​ចំណាំ​ថ្មី",
-    "Settings" : "ការកំណត់",
     "Today" : "ថ្ងៃ​នេះ",
     "Rename" : "ប្ដូរ​ឈ្មោះ",
     "Delete note" : "លុប​កំណត់​ចំណាំ",

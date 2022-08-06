@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Bi sunt non sarvadas. Essida. Si lassas sa pàgina as a pèrdere totu is modìficas!",
     "_Deleted {number} note_::_Deleted {number} notes_" : [" {number} notas eliminadas","{number} notas eliminadas"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} notas ripristinadas","Notas {number} "],
-    "Settings" : "Impostatziones",
     "Folder to store your notes" : "Cartella ue memorizare is notas tuas",
     "File extension for new notes" : "Estensione de is archìvios pro is notas noas",
     "Display mode for notes" : "Modalidades de visualizatzione de is notas",

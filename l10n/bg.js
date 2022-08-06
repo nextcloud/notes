@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Има незаписани бележки. Напускайте тази страница, направени промени ще бъдат загубени!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Изтрити {number} бележки","Изтрити  {number} бележки"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Възстановени {number} бележки","Възстановени {number} бележки"],
-    "Settings" : "Настройки",
     "Folder to store your notes" : "Папка за съхранение на бележките",
     "Root directory" : "Основна директория",
     "File extension for new notes" : "Разширение за файловете",

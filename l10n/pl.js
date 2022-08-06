@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Masz niezapisane notatki. Opuszczenie strony spowoduje odrzucenie wszystkich zmian!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Usunięto {number} notatkę","Usunięto {number} notatki","Usunięto {number} notatek","Usunięto {number} notatek"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Odzyskano {number} notatkę","Odzyskano {number} notatki","Odzyskano {number} notatek","Odzyskano {number} notatek"],
-    "Settings" : "Ustawienia",
     "Folder to store your notes" : "Katalog do przechowywania notatek",
     "Root directory" : "Katalog główny",
     "File extension for new notes" : "Rozszerzenie pliku dla nowych notatek",

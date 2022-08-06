@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hi ha notes sense desar. Si sortiu de la pàgina, es perdran tots els canvis!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["S'ha suprimit {number} nota","S'han suprimit {number} notes"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["S'ha recuperat {number} nota","S'han recuperat {number} notes"],
-    "Settings" : "Paràmetres",
     "Folder to store your notes" : "Carpeta on es desen les notes",
     "Root directory" : "Carpeta arrel",
     "File extension for new notes" : "Extensió de fitxer per a les notes noves",

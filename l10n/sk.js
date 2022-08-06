@@ -14,7 +14,6 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opustením stránky stratíte všetky zmeny!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Bola odstránená {number} poznámka","Boli odstránené {number} poznámky","Boli odstránené {number} poznámky","Bolo odstránených {number} poznámok"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Bola obnovená {number} poznámka","Boli obnovené {number} poznámky","Boli obnovené {number} poznámky","Bolo obnovených {number} poznámok"],
-    "Settings" : "Nastavenia",
     "Folder to store your notes" : "Priečinok na ukladanie poznámok",
     "Root directory" : "Koreňový adresár",
     "File extension for new notes" : "Prípona súboru pre nové poznámky",

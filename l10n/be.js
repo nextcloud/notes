@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "Памылка",
-    "Settings" : "Налады",
     "Today" : "Today",
     "Yesterday" : "Учора",
     "Rename" : "Rename",

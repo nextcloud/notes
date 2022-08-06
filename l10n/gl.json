@@ -12,7 +12,6 @@
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hai notas sen gardar. Saír da páxina desbotará todos os cambios!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Eliminada {number} nota","Eliminadas {number} notas"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Recuperada {number} nota","Recuperadas {number} notas"],
-    "Settings" : "Axustes",
     "Folder to store your notes" : "Cartafol para almacenar as súas notas",
     "File extension for new notes" : "Extensión do ficheiro para notas novas",
     "Display mode for notes" : "Modo de vista das notas",

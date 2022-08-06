@@ -6,7 +6,6 @@ OC.L10N.register(
     "New note" : "Nýr minnispunktur",
     "Distraction-free notes and writing" : "Augljós ritun og skoðun minnispunkta",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Það eru óvistaðir minnispunktar. Ef farið er af síðunni munu allar breytingar tapast!",
-    "Settings" : "Stillingar",
     "Folder to store your notes" : "Mappa til að geyma minnispunktana þína",
     "File extension for new notes" : "Skráarending fyrir nýja minnispunkta",
     "Display mode for notes" : "Birtingarhamur minnispunkta",

@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "নোট",
     "Error" : "সমস্যা",
     "New note" : "নতুন নোট",
-    "Settings" : "সেটিংস",
     "Today" : "আজ",
     "Yesterday" : "গতকাল",
     "Rename" : "পূনঃনামকরণ",

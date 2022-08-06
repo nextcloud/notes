@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Notes",
     "Error" : "Fallu",
     "New note" : "Nota nueva",
-    "Settings" : "Settings",
     "No notes yet" : "Entá nun hai notes",
     "All notes" : "Toles notes",
     "Categories" : "Estayes",

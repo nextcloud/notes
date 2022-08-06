@@ -6,7 +6,6 @@ OC.L10N.register(
     "New note" : "Nota nueva",
     "Distraction-free notes and writing" : "Notas y escritura libre de distracciones",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin salvar. ¡Al salir de la página perderá todos los cambios!",
-    "Settings" : "Configuraciones ",
     "Open in edit mode" : "Abrir en modo edición",
     "Open in preview mode" : "Abrir en modo previsualización",
     "No notes yet" : "Aún no hay notas",

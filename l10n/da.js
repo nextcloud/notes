@@ -5,7 +5,6 @@ OC.L10N.register(
     "Error" : "Fejl",
     "New note" : "Ny note",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Der er noter der ikke er gemt. Hvis du forlader denne side vil de blive smidt væk!",
-    "Settings" : "Indstillinger",
     "Display mode for notes" : "Visningstilstand for noter",
     "Open in edit mode" : "Åbn i redigeringstilstand",
     "Open in preview mode" : "Åbn forhåndsvisning",

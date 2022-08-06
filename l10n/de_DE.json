@@ -12,7 +12,6 @@
     "There are unsaved notes. Leaving the page will discard all changes!" : "Es existieren nicht-gespeicherte Notizen. Beim Verlassen der Seite gehen alle Änderungen verloren!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number} Notiz gelöscht","{number} Notizen gelöscht"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} Notiz wiederhergestellt","{number} Notizen wiederhergestellt"],
-    "Settings" : "Einstellungen",
     "Folder to store your notes" : "Ordner zum Speichern Ihrer Notizen",
     "Root directory" : "Wurzelverzeichnis",
     "File extension for new notes" : "Dateiendung für neue Notizen",

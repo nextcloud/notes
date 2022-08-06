@@ -12,7 +12,6 @@
     "There are unsaved notes. Leaving the page will discard all changes!" : "Zabeležke še niso shranjene. Če zapustite stran, bodo spremembe izgubljene!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Izbrisana je {number} zabeležka.","Izbrisani sta {number} zabeležki.","Izbrisane so {number} zabeležke.","Izbrisanih je {number} zabeležk."],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Obnovljena je {number} zabeležka.","Obnovljeni sta {number} zabeležki.","Obnovljene so {number} zabeležke.","Obnovljenih je {number} zabeležk."],
-    "Settings" : "Nastavitve",
     "Folder to store your notes" : "Mapa za shranjevanje zabeležk",
     "File extension for new notes" : "Privzeta pripona datotek za nove zabeležke",
     "Display mode for notes" : "Način prikaza zabeležk",

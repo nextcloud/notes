@@ -5,7 +5,6 @@ OC.L10N.register(
     "Error" : "오류",
     "New note" : "새 메모",
     "There are unsaved notes. Leaving the page will discard all changes!" : "저장하지 않은 메모가 있습니다. 이 페이지를 벗어나면 변경 사항이 손실됩니다!",
-    "Settings" : "설정",
     "Display mode for notes" : "노트 표시 모드",
     "Open in edit mode" : "편집 모드로 열기",
     "Open in preview mode" : "미리 보기 모드로 열기",

@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Notat",
     "Error" : "Feil",
     "New note" : "Nytt notat",
-    "Settings" : "Instillingar",
     "Today" : "I dag",
     "Yesterday" : "i går",
     "Rename" : "Gje nytt namn",

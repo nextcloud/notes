@@ -12,7 +12,6 @@
     "There are unsaved notes. Leaving the page will discard all changes!" : "Postoje nespremljene bilješke. Ako napustite stranicu, odbacit ćete sve promjene!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Izbrisana {number} bilješka","Izbrisane {number} bilješke","Izbrisano {number} bilješki"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Oporavljena {number} bilješka","Oporavljene {number} bilješke","Oporavljeno {number} bilješki"],
-    "Settings" : "Postavke",
     "Folder to store your notes" : "Mapa za spremanje bilješki",
     "File extension for new notes" : "Ekstenzija datoteke za nove bilješke",
     "Display mode for notes" : "Način prikaza bilješki",
