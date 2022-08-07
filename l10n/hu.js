@@ -14,6 +14,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "El nem mentett jegyzetek vannak. Az oldal elhagyásával a változások elvesznek!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number} jegyzet törölve","{number} jegyzet törölve"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} jegyzet helyreállítva","{number} jegyzet helyreállítva"],
+    "Notes settings" : "Jegyzetek beállításai",
     "Folder to store your notes" : "Jegyzetek tárolási mappája",
     "Root directory" : "Gyökérkönyvtár",
     "File extension for new notes" : "Új jegyzetek fájlkiterjesztése",

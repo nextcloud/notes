@@ -14,6 +14,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Es existieren nicht-gespeicherte Notizen. Beim Verlassen der Seite gehen alle Änderungen verloren!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number} Notiz gelöscht","{number} Notizen gelöscht"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} Notiz wiederhergestellt","{number} Notizen wiederhergestellt"],
+    "Notes settings" : "Notizen-Einstellungen",
     "Folder to store your notes" : "Ordner zum Speichern deiner Notizen",
     "Root directory" : "Hauptverzeichnis",
     "File extension for new notes" : "Dateiendung für neue Notizen",
