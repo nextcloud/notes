@@ -14,6 +14,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Kaydedilmemiş notlar var. Sayfadan ayrılırsanız tüm değişiklikler silinecek!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number} not silindi","{number} not silindi"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} not geri yüklendi","{number} not geri yüklendi"],
+    "Notes settings" : "Notlar ayarları",
     "Folder to store your notes" : "Notlarınızın kaydedileceği klasör",
     "Root directory" : "Kök klasör",
     "File extension for new notes" : "Yeni notlar için dosya uzantısı",
