@@ -14,6 +14,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Gorde gabeko oharrak daude. Orrialdetik irtetean aldaketa guztiak galduko dira!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{Number} ohar ezabatu dira","{number} ohar ezabatuta"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number} ohar berreskuratuta","{number} ohar berreskuratuta"],
+    "Notes settings" : "Noten ezarpenak",
     "Folder to store your notes" : "Zure oharrak gordetzeko karpeta",
     "Root directory" : "Erro karpeta",
     "File extension for new notes" : "Ohar berrien fitxategi-luzapena",
