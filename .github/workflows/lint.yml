@@ -18,8 +18,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
-        node-version: '14'
-    - run: npm i -g npm@7
+        node-version: '16'
     - name: Set up Stylelint Problem Matcher
       uses: xt0rted/stylelint-problem-matcher@v1
     - name: Install Dependencies
