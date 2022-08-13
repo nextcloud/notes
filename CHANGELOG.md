@@ -13,6 +13,18 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.5.0 - 2022-08-13
+
+- Allow Checkbox to be toggled in viewmode (#861 by @newhinton)
+- Update table style (#878 by @newhinton)
+- Add a button to create a new note to the dashboard (#873 by @salixor)
+- rename settings to Notes settings (#891)
+- auto create notes folder only if app is opened (#890)
+- fix minor API version (#898)
+- fix loading (should fix some error situations) (#897)
+- maintenance (#888, #893, #899)
+
+
 ## 4.4.0 - 2022-07-10
 
 ### Added
