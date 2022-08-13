@@ -103,8 +103,8 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
-import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
-import PencilOffIcon from 'vue-material-design-icons/PencilOff'
+import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
+import PencilOffIcon from 'vue-material-design-icons/PencilOff.vue'
 
 import { config } from '../config.js'
 import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
