@@ -80,7 +80,7 @@
     "Insufficient storage." : "Nedostatečná kapacita úložiště,",
     "See JavaScript console and server log for details." : "Podrobnosti viz konzole JavaScript a záznamy událostí na serveru.",
     "Updating settings has failed." : "Aktualizace nastavení se nezdařila.",
-    "Fetching notes for dashboard has failed." : "Načítání poznámek pro přehled se nezdařilo.",
+    "Fetching notes for dashboard has failed." : "Načítání poznámek pro nástěnku se nezdařilo.",
     "Fetching notes has failed." : "Načítání poznámek se nezdařilo.",
     "Fetching note {id} has failed." : "Načítání poznámky {id} se nezdařilo.",
     "Refreshing note {id} has failed." : "Znovunačtení poznámky {id} se nezdařilo.",
