@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard' // TODO: should be refactored with next release of @nextcloud/vue : https://github.com/nextcloud/nextcloud-vue-dashboard/issues/407
-import { EmptyContent } from '@nextcloud/vue'
+import { DashboardWidget, DashboardWidgetItem, EmptyContent } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 
 import { getDashboardData } from '../NotesService.js'
@@ -53,7 +52,6 @@ export default {
 	data() {
 		return {
 			loading: true,
-			creating: false,
 			items: [],
 			hasMoreItems: false,
 		}

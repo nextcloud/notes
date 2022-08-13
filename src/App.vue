@@ -1,5 +1,5 @@
 <template>
-	<Content app-name="notes" :content-class="{loading: loading.notes}">
+	<ContentVue app-name="notes" :content-class="{loading: loading.notes}">
 		<AppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<AppNavigationNew
 				v-show="!loading.notes && !error"
@@ -33,7 +33,7 @@
 		<router-view v-else />
 
 		<router-view name="sidebar" />
-	</Content>
+	</ContentVue>
 </template>
 
 <script>
@@ -52,6 +52,8 @@ import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
 
+const ContentVue = Content
+
 export default {
 	name: 'App',
 
@@ -60,7 +62,7 @@ export default {
 		AppNavigation,
 		AppNavigationNew,
 		AppSettings,
-		Content,
+		ContentVue,
 		NavigationList,
 	},
 
