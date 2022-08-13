@@ -73,10 +73,10 @@ export const fetchNotes = () => {
 		)
 		.then(response => {
 			store.commit('setSettings', response.data.settings)
-			if (response.data.categries !== null) {
+			if (response.data.categories) {
 				store.commit('setCategories', response.data.categories)
 			}
-			if (response.data.noteIds !== null) {
+			if (response.data.noteIds && response.data.notesData) {
 				store.dispatch('updateNotes', { noteIds: response.data.noteIds, notes: response.data.notesData })
 			}
 			if (response.data.errorMessage) {
