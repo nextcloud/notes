@@ -55,6 +55,10 @@ class NotesApiController extends ApiController {
 			$chunkSize,
 			$chunkCursor
 		) {
+			// initialize settings
+			$userId = $this->helper->getUID();
+			$this->settingsService->getAll($userId, true);
+			// load notes and categories
 			$exclude = explode(',', $exclude);
 			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor);
 			$notesData = $data['notesData'];
