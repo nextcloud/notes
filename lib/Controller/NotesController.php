@@ -49,6 +49,7 @@ class NotesController extends Controller {
 	public function index(int $pruneBefore = 0) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($pruneBefore) {
 			$userId = $this->helper->getUID();
+			// initialize and load settings
 			$settings = $this->settingsService->getAll($userId, true);
 
 			$lastViewedNote = (int) $this->settings->getUserValue(

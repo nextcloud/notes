@@ -168,7 +168,9 @@ class SettingsService {
 	}
 
 	public function getPublic(string $uid) : \stdClass {
-		$settings = $this->getAll($uid);
+		// initialize and load settings
+		$settings = $this->getAll($uid, true);
+		// translate internal settings to public settings
 		if ($settings->fileSuffix === 'custom') {
 			$settings->fileSuffix = $settings->customSuffix;
 		}
