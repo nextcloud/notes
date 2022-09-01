@@ -9,6 +9,7 @@ use OCA\Notes\Service\NotesService;
 use OCP\Dashboard\IAPIWidget;
 use OCP\Dashboard\IButtonWidget;
 use OCP\Dashboard\IWidget;
+use OCP\Dashboard\Model\WidgetButton;
 use OCP\Dashboard\Model\WidgetItem;
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -70,16 +71,14 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget {
 		\OCP\Util::addScript('notes', 'notes-dashboard');
 	}
 
-	public function getButtonUrl(): string {
-		return $this->url->linkToRouteAbsolute('notes.page.create');
-	}
-
-	public function getButtonIconUrl(): ?string {
-		return null;
-	}
-
-	public function getButtonText(): string {
-		return $this->l10n->t('New notes');
+	public function getWidgetButtons(string $userId): array {
+		$buttons = [
+			new WidgetButton(WidgetButton::TYPE_NEW, $this->url->linkToRouteAbsolute('notes.page.create'), $this->l10n->t('Create new note'))
+		];
+		if ($this->notesService->countNotes($userId) > 7) {
+			$buttons[] = new WidgetButton(WidgetButton::TYPE_MORE, $this->url->linkToRouteAbsolute('notes.page.index'), $this->l10n->t('More notes'));
+		}
+		return $buttons;
 	}
 
 	public function getItems(string $userId, ?string $since = null, int $limit = 7): array {

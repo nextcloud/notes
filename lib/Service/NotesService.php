@@ -56,6 +56,17 @@ class NotesService {
 		return $notes;
 	}
 
+	public function countNotes(string $userId) : int {
+		$customExtension = $this->getCustomExtension($userId);
+		try {
+			$notesFolder = $this->getNotesFolder($userId, false);
+			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			return count($data['files']);
+		} catch (NotesFolderException $e) {
+			return 0;
+		}
+	}
+
 	public function get(string $userId, int $id) : Note {
 		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
