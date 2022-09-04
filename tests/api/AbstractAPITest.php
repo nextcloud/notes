@@ -144,7 +144,7 @@ abstract class AbstractAPITest extends TestCase {
 				$this->assertEqualsWithDelta(
 					$refNote->$key,
 					$note->$key,
-					5,
+					10,
 					$messagePrefix.': Property '.$key.' (reference note: '.$refNote->title.')'
 				);
 			} else {
