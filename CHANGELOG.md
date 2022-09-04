@@ -13,6 +13,12 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.5.1 - 2022-09-04
+
+- always use edit mode when creating a new note (#912)
+- maintenance (#911, #913, #914)
+
+
 ## 4.5.0 - 2022-08-13
 
 - Allow Checkbox to be toggled in viewmode (#861 by @newhinton)
