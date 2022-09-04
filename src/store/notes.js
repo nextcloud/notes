@@ -116,6 +116,15 @@ const mutations = {
 const actions = {
 	updateNotes(context, { noteIds, notes }) {
 		// add/update new notes
+		if (!notes || !noteIds) {
+			// TODO remove this block after fixing #886
+			console.error('This should not happen, please see issue #886')
+			console.info(notes)
+			console.info(noteIds)
+			// eslint-disable-next-line no-console
+			console.trace()
+			return
+		}
 		for (const note of notes) {
 			// TODO check for parallel (local) changes!
 			context.commit('updateNote', note)
