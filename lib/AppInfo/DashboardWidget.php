@@ -90,7 +90,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget {
 				$excerpt = $note->getExcerpt();
 			} catch (\Throwable $e) {
 			}
-			$link = $this->url->linkToRouteAbsolute('notes.page.index', ['id' => $note->getId()]);
+			$link = $this->url->linkToRouteAbsolute('notes.page.indexnote', ['id' => $note->getId()]);
 			$icon = $note->getFavorite() ? $this->url->getAbsoluteURL($this->url->imagePath('core', 'actions/starred.svg')) : '';
 			return new WidgetItem($note->getTitle(), $excerpt, $link, $icon, (string)$note->getModified());
 		}, $notes);
