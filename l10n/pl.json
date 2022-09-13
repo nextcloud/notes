@@ -74,7 +74,7 @@
     "Android app" : "Aplikacja Android",
     "iOS app" : "Aplikacja iOS",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Zacznij pisać notatkę, klikając “{newnote}” w nawigacji aplikacji.",
-    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Możesz tworzyć podkategorie, używając „/” jako separatora między kategorią nadrzędną a podkategorią, np. „{parent}/{sub}”.",
+    "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Możesz tworzyć podkategorie, używając \"/\" jako separatora między kategorią nadrzędną a podkategorią, np. \"{parent}/{sub}\".",
     "Note not found." : "Nie znaleziono notatki.",
     "Note is locked." : "Notatka jest zablokowana.",
     "Insufficient storage." : "Niewystarczająca ilość miejsca.",
