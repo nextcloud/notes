@@ -79,7 +79,7 @@ OC.L10N.register(
     "Insufficient storage." : "Nedostatočný úložný priestor.",
     "See JavaScript console and server log for details." : "Podrobnosti nájdete v konzole JavaScriptu a protokole servera.",
     "Updating settings has failed." : "Aktualizácia nastavení zlyhala.",
-    "Fetching notes for dashboard has failed." : "Načítanie poznámok pre informačný panel zlyhalo.",
+    "Fetching notes for dashboard has failed." : "Načítanie poznámok pre infopanel zlyhalo.",
     "Fetching notes has failed." : "Získavanie poznámok zlyhalo.",
     "Fetching note {id} has failed." : "Získavanie poznámky {id} zlyhalo.",
     "Refreshing note {id} has failed." : "Obnovenie poznámky {id} zlyhalo.",
