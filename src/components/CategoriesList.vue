@@ -1,15 +1,9 @@
 <template>
-	<NcAppNavigationItem
-		:title="title"
-		class="app-navigation-noclose separator-below"
-		:class="{ 'category-header': selectedCategory !== null }"
-		:open.sync="open"
-		:allow-collapse="true"
-		@click.prevent.stop="onToggleCategories"
-	>
-		<FolderIcon slot="icon" :size="20" />
+	<Fragment>
 		<NcAppNavigationItem
 			:title="t('notes', 'All notes')"
+			icon="icon-recent"
+			:class="{ active: null === selectedCategory }"
 			@click.prevent.stop="onSelectCategory(null)"
 		>
 			<HistoryIcon slot="icon" :size="20" />
@@ -21,6 +15,8 @@
 		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"
 			:title="categoryTitle(category.name)"
+			:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
+			:class="{ active: category.name === selectedCategory }"
 			@click.prevent.stop="onSelectCategory(category.name)"
 		>
 			<FolderOutlineIcon v-if="category.name === ''" slot="icon" :size="20" />
@@ -29,7 +25,7 @@
 				{{ category.count }}
 			</NcAppNavigationCounter>
 		</NcAppNavigationItem>
-	</NcAppNavigationItem>
+	</Fragment>
 </template>
 
 <script>
@@ -37,6 +33,7 @@ import {
 	NcAppNavigationItem,
 	NcAppNavigationCounter,
 } from '@nextcloud/vue'
+import { Fragment } from 'vue-fragment'
 
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
@@ -47,27 +44,15 @@ import { categoryLabel } from '../Util.js'
 import store from '../store.js'
 
 export default {
-	name: 'NavigationCategoriesItem',
+	name: 'CategoriesList',
 
 	components: {
+		Fragment,
+		NcAppNavigationItem,
+		NcAppNavigationCounter,
 		FolderIcon,
 		FolderOutlineIcon,
 		HistoryIcon,
-		NcAppNavigationItem,
-		NcAppNavigationCounter,
-	},
-
-	props: {
-		selectedCategory: {
-			type: String,
-			default: null,
-		},
-	},
-
-	data() {
-		return {
-			open: false,
-		}
 	},
 
 	computed: {
@@ -79,8 +64,8 @@ export default {
 			return getCategories(1, true)
 		},
 
-		title() {
-			return this.selectedCategory === null ? this.t('notes', 'Categories') : categoryLabel(this.selectedCategory)
+		selectedCategory() {
+			return store.getters.getSelectedCategory()
 		},
 	},
 
@@ -89,19 +74,9 @@ export default {
 			return categoryLabel(category)
 		},
 
-		onToggleCategories() {
-			this.open = !this.open
-		},
-
 		onSelectCategory(category) {
-			this.open = false
-			this.$emit('category-selected', category)
+			store.commit('setSelectedCategory', category)
 		},
 	},
 }
 </script>
-<style scoped>
-.separator-below {
-	border-bottom: 1px solid var(--color-border);
-}
-</style>
