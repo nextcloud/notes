@@ -374,5 +374,6 @@ export default {
 	z-index: 10;
 	height: 40px;
 	margin-right: 5px;
+	top: 65px;
 }
 </style>

@@ -4,7 +4,7 @@ import { generateUrl } from '@nextcloud/router'
 
 import Loading from './components/Loading.vue'
 import Welcome from './components/Welcome.vue'
-import Note from './components/Note.vue'
+import NotesView from './components/NotesView.vue'
 import Sidebar from './components/Sidebar.vue'
 
 Vue.use(Router)
@@ -28,7 +28,7 @@ export default new Router({
 			path: '/note/:noteId',
 			name: 'note',
 			components: {
-				default: Note,
+				default: NotesView,
 				sidebar: Sidebar,
 			},
 			props: {

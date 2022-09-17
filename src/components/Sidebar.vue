@@ -4,7 +4,11 @@
 		:subtitle="subtitle"
 		:star-loading="loading.favorite"
 		:starred="note.favorite"
+		:title-editable.sync="titleEditable"
+		:title-tooltip="titleTooltip"
 		@update:starred="onSetFavorite"
+		@update:title="onUpdateTitle"
+		@submit-title="onRenameTitle"
 		@close="onCloseSidebar"
 	>
 		<div class="sidebar-content-wrapper">
@@ -62,7 +66,7 @@ import moment from '@nextcloud/moment'
 
 import InfoIcon from 'vue-material-design-icons/Information.vue'
 
-import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService.js'
+import { getCategories, setFavorite, setTitle, setCategory, saveNoteManually } from '../NotesService.js'
 import { categoryLabel } from '../Util.js'
 import store from '../store.js'
 
@@ -98,8 +102,11 @@ export default {
 			loading: {
 				category: false,
 				favorite: false,
+				title: false, // TODO reflect this state in the UI
 			},
 			categoryInput: null,
+			titleEditableInternal: false,
+			newTitle: '',
 		}
 	},
 
@@ -107,11 +114,26 @@ export default {
 		note() {
 			return store.getters.getNote(parseInt(this.noteId))
 		},
+		titleEditable: {
+			get() {
+				return this.titleEditableInternal && !this.note.readonly
+			},
+			set(newValue) {
+				if (newValue) {
+					this.newTitle = this.title
+				}
+				this.titleEditableInternal = newValue
+			},
+		},
 		title() {
-			return this.note ? this.note.title : ''
+			if (!this.titleEditable) {
+				return this.note?.title || ''
+			} else {
+				return this.newTitle || ''
+			}
 		},
 		category() {
-			return this.note ? this.note.category : ''
+			return this.note?.category || ''
 		},
 		formattedDate() {
 			return moment(this.note.modified * 1000).format('LLL')
@@ -143,6 +165,9 @@ export default {
 		sidebarOpen() {
 			return store.state.app.sidebarOpen
 		},
+		titleTooltip() {
+			return t('notes', 'Click to edit title')
+		},
 	},
 
 	methods: {
@@ -168,6 +193,22 @@ export default {
 				.then(() => {
 					this.loading.favorite = false
 				})
+		},
+
+		onUpdateTitle(newTitle) {
+			this.newTitle = newTitle
+		},
+
+		onRenameTitle(event) {
+			if (event && this.title !== this.newTitle) {
+				this.loading.title = true
+				setTitle(this.note.id, this.newTitle)
+					.catch(() => {
+					})
+					.finally(() => {
+						this.loading.title = false
+					})
+			}
 		},
 
 		onSaveCategory(category) {

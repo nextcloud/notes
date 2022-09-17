@@ -1,62 +1,68 @@
 <template>
-	<Fragment>
-		<!-- collapsible categories -->
-		<NavigationCategoriesItem
-			v-if="numNotes"
-			:selected-category="category"
-			@category-selected="$emit('category-selected', $event)"
-		/>
-
-		<!-- list of notes -->
-		<template v-for="item in noteItems">
-			<NcAppNavigationCaption v-if="category!==null && category!==item.category"
-				:key="item.category"
-				class="app-navigation-noclose"
-				:title="categoryToLabel(item.category)"
-				@click.native="$emit('category-selected', item.category)"
-			/>
-			<NcAppNavigationCaption v-if="category===null && item.timeslot"
-				:key="item.timeslot"
-				:title="item.timeslot"
-			/>
-			<NavigationNoteItem v-for="note in item.notes"
-				:key="note.id"
-				:note="note"
-				@category-selected="$emit('category-selected', $event)"
-				@note-deleted="$emit('note-deleted', $event)"
-			/>
+	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
+		<template slot="list">
+			<NcAppContentList>
+				<div class="spacer" />
+				<NotesList v-if="groupedNotes.length === 1"
+					:notes="groupedNotes[0].notes"
+					@note-selected="onNoteSelected"
+				/>
+				<template v-for="(group, idx) in groupedNotes" v-else>
+					<NotesCaption v-if="group.category && category!==group.category"
+						:key="group.category"
+						:title="categoryToLabel(group.category)"
+					/>
+					<NotesCaption v-if="group.timeslot"
+						:key="group.timeslot"
+						:title="group.timeslot"
+					/>
+					<NotesList
+						:key="idx"
+						:notes="group.notes"
+						@note-selected="onNoteSelected"
+					/>
+				</template>
+				<div
+					v-if="displayedNotes.length != filteredNotes.length"
+					v-observe-visibility="onEndOfNotes"
+					class="loading-label"
+				>
+					{{ t('notes', 'Loading …') }}
+				</div>
+			</NcAppContentList>
 		</template>
-		<NcAppNavigationItem
-			v-if="notes.length != filteredNotes.length"
-			v-observe-visibility="onEndOfNotes"
-			:title="t('notes', 'Loading …')"
-			:loading="true"
-		/>
-	</Fragment>
+
+		<NcAppContentDetails>
+			<Note v-if="showNote" :note-id="noteId" @note-deleted="onNoteDeleted" />
+		</NcAppContentDetails>
+	</NcAppContent>
 </template>
 
 <script>
+
 import {
-	NcAppNavigationCaption,
-	NcAppNavigationItem,
+	NcAppContent,
+	NcAppContentList,
+	NcAppContentDetails,
 } from '@nextcloud/vue'
-import { Fragment } from 'vue-fragment'
+import { categoryLabel } from '../Util.js'
+import NotesList from './NotesList.vue'
+import NotesCaption from './NotesCaption.vue'
+import store from '../store.js'
+import Note from './Note.vue'
+
 import { ObserveVisibility } from 'vue-observe-visibility'
 
-import { categoryLabel } from '../Util.js'
-import NavigationCategoriesItem from './NavigationCategoriesItem.vue'
-import NavigationNoteItem from './NavigationNoteItem.vue'
-import store from '../store.js'
-
 export default {
-	name: 'NavigationList',
+	name: 'NotesView',
 
 	components: {
-		Fragment,
-		NavigationCategoriesItem,
-		NavigationNoteItem,
-		NcAppNavigationCaption,
-		NcAppNavigationItem,
+		NcAppContent,
+		NcAppContentList,
+		NcAppContentDetails,
+		Note,
+		NotesList,
+		NotesCaption,
 	},
 
 	directives: {
@@ -64,13 +70,9 @@ export default {
 	},
 
 	props: {
-		filteredNotes: {
-			type: Array,
-			required: true,
-		},
-		category: {
+		noteId: {
 			type: String,
-			default: null,
+			required: true,
 		},
 	},
 
@@ -80,15 +82,20 @@ export default {
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
 			showFirstNotesOnly: true,
+			showNote: true,
 		}
 	},
 
 	computed: {
-		numNotes() {
-			return store.getters.numNotes()
+		category() {
+			return store.getters.getSelectedCategory()
 		},
 
-		notes() {
+		filteredNotes() {
+			return store.getters.getFilteredNotes()
+		},
+
+		displayedNotes() {
 			if (this.filteredNotes.length > 40 && this.showFirstNotesOnly) {
 				return this.filteredNotes.slice(0, 30)
 			} else {
@@ -99,7 +106,7 @@ export default {
 		// group notes by time ("All notes") or by category (if category chosen)
 		groupedNotes() {
 			if (this.category === null) {
-				return this.notes.reduce((g, note) => {
+				return this.displayedNotes.reduce((g, note) => {
 					const timeslot = this.getTimeslotFromNote(note)
 					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
 						g.push({ timeslot, notes: [] })
@@ -108,7 +115,7 @@ export default {
 					return g
 				}, [])
 			} else {
-				return this.notes.reduce((g, note) => {
+				return this.displayedNotes.reduce((g, note) => {
 					if (g.length === 0 || g[g.length - 1].category !== note.category) {
 						g.push({ category: note.category, notes: [] })
 					}
@@ -116,10 +123,6 @@ export default {
 					return g
 				}, [])
 			}
-		},
-
-		noteItems() {
-			return this.groupedNotes
 		},
 	},
 
@@ -174,6 +177,49 @@ export default {
 				this.showFirstNotesOnly = false
 			}
 		},
+
+		onCategorySelected(category) {
+			store.commit('setSelectedCategory', category)
+		},
+
+		hideNote() {
+			this.showNote = false
+		},
+
+		onNoteDeleted(note) {
+			this.$emit('note-deleted', note)
+		},
+
+		onNoteSelected(noteId) {
+			this.showNote = true
+		},
 	},
 }
 </script>
+<style scoped>
+.spacer {
+	padding: 16px;
+}
+
+.loading-label {
+	color: var(--color-text-lighter);
+	text-align: center;
+}
+
+.loading-label::before {
+	content: ' ';
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	border-radius: 100%;
+	-webkit-animation: rotate 0.8s infinite linear;
+	animation: rotate 0.8s infinite linear;
+	-webkit-transform-origin: center;
+	-ms-transform-origin: center;
+	transform-origin: center;
+	border: 2px solid var(--color-loading-light);
+	border-top-color: var(--color-loading-dark);
+	vertical-align: top;
+	margin-right: 5px;
+}
+</style>
