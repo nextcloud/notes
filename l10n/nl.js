@@ -15,6 +15,7 @@ OC.L10N.register(
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Verwijderde {number} notitie","{number} notities verwijderd"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Herstelde {number} notitie","{number} notities hersteld"],
     "Folder to store your notes" : "Map om je notities in op te slaan",
+    "Root directory" : "Root directory",
     "File extension for new notes" : "Bestandsextensie voor nieuwe notities",
     "Display mode for notes" : "Weergavemodus voor notities",
     "Open in edit mode" : "Open in bewerkingsmodus",
