@@ -2,9 +2,20 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "메모",
+    "Reading notes from filesystem has failed." : "파일시스템에서 메모를 불러오기 실패",
     "Error" : "오류",
     "New note" : "새 메모",
+    "Please see Nextcloud server log for details." : "Nextcloud 서버 로그에서 자세한 사항을 확인하십시오.",
+    "Deleted {title}" : "{title} 삭제함",
+    "Undo Delete" : "삭제 취소",
+    "Note recovered" : "메모 복원됨",
     "There are unsaved notes. Leaving the page will discard all changes!" : "저장하지 않은 메모가 있습니다. 이 페이지를 벗어나면 변경 사항이 손실됩니다!",
+    "_Deleted {number} note_::_Deleted {number} notes_" : ["{number}개의 메모를 삭제함"],
+    "_Recovered {number} note_::_Recovered {number} notes_" : ["{number}개의 메모를 복구함"],
+    "Notes settings" : "메모 설정",
+    "Folder to store your notes" : "메모를 저장할 폴더",
+    "Root directory" : "루트 디렉터리",
+    "File extension for new notes" : "새 메모에 대한 파일 확장자",
     "Display mode for notes" : "노트 표시 모드",
     "Open in edit mode" : "편집 모드로 열기",
     "Open in preview mode" : "미리 보기 모드로 열기",
@@ -31,6 +42,7 @@ OC.L10N.register(
     "Saving failed!" : "저장할 수 없습니다!",
     "_%n word_::_%n words_" : ["단어 %n개"],
     "Android app" : "Android 앱",
-    "iOS app" : "iOS 앱"
+    "iOS app" : "iOS 앱",
+    "Development Mode" : "개발자 모드"
 },
 "nplurals=1; plural=0;");
