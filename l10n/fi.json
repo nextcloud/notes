@@ -11,6 +11,7 @@
     "There are unsaved notes. Leaving the page will discard all changes!" : "Havaittiin tallentamattomia muistiinpanoja. Sivulta poistuminen hylkää kaikki muutokset!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Poistettu {number} muistiinpano","Poistettu {number} muistiinpanoa"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Palautettu {number} muistiinpano","Palautettu {number} muistiinpanoa"],
+    "Notes settings" : "Muistiinpanojen asetukset",
     "Folder to store your notes" : "Kansio johon muistiinpanot tallennetaan",
     "Root directory" : "Juurihakemisto",
     "File extension for new notes" : "Tiedostopääte uusille muistiinpanoille",
