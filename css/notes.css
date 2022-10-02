@@ -1,3 +1,10 @@
+/* workaround for https://github.com/nextcloud/nextcloud-vue/issues/1384 */
+body {
+	min-height: 100%;
+	height: auto;
+}
+
+/* App Navigation fixes */
 .app-navigation-entry.category-header:not(.app-navigation-entry--opened) .app-navigation-entry__title {
 	font-weight: bold;
 }
@@ -5,23 +12,6 @@
 #app-navigation > ul > li.app-navigation-caption.caption-item {
 	padding: 0;
 	pointer-events: inherit;
-}
-
-#app-navigation > ul > li.app-navigation-caption.timeslot {
-	color: var(--color-text-maxcontrast);
-}
-
-/* icons for sidebar */
-.icon-files {
-	@include icon-color('folder', 'notes', $color-black);
-}
-
-.icon-emptyfolder {
-	@include icon-color('folder-empty', 'notes', $color-black);
-}
-
-.icon-recent {
-	@include icon-color('recent', 'notes', $color-black);
 }
 
 .app-navigation-entry__utils .action-item {
@@ -36,3 +26,27 @@ li:focus  .app-navigation-entry__utils .action-item {
 	visibility: visible;
 }
 
+@media print {
+	#header,
+	.app-navigation,
+	#note-container .action-buttons,
+	#note-container .upload-button {
+		display: none !important;
+	}
+
+	.content {
+		display: block;
+		padding: 0;
+		color: #000;
+	}
+
+	#note-container .note-editor,
+	#note-container .note-preview {
+		padding: 0 !important;
+		font-size: 10pt !important;
+	}
+
+	.app-content {
+		margin-left: 0 !important;
+	}
+}

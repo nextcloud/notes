@@ -11,7 +11,6 @@
 		<template v-for="item in noteItems">
 			<AppNavigationCaption v-if="category!==null && category!==item.category"
 				:key="item.category"
-				icon="icon-files"
 				class="app-navigation-noclose"
 				:title="categoryToLabel(item.category)"
 				@click.native="$emit('category-selected', item.category)"
