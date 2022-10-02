@@ -70,7 +70,7 @@ jobs:
       run: echo "NC_API_TAG=^$(php tests/nextcloud-version.php --appinfo)" >> $GITHUB_ENV
     - name: Install Dependencies
       run: |
-        composer require --dev christophwurst/nextcloud:$NC_API_TAG
+        composer require --dev nextcloud/ocp:$NC_API_TAG
         composer install --prefer-dist
     - name: Load problem matcher for php -l
       uses: korelstar/phplint-problem-matcher@master

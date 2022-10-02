@@ -37,7 +37,7 @@ jobs:
         tools: ${{ env.PHPUNIT }}
     - name: Install latest dev Nextcloud PHP API (max only)
       if: matrix.version == 'max'
-      run: composer require --prefer-dist --dev christophwurst/nextcloud:dev-master
+      run: composer require --prefer-dist --dev nextcloud/ocp:dev-master
     - name: Install Dependencies
       run: composer install --prefer-dist
     - name: Prepare MySQL database
