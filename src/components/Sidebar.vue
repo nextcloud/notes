@@ -8,8 +8,15 @@
 		@close="onCloseSidebar"
 	>
 		<div class="sidebar-content-wrapper">
-			<div v-if="!note.readonly" class="note-category" :title="t('notes', 'Set category')">
-				<h4>{{ t('notes', 'Category') }} <span v-tooltip="categoriesInfo" class="icon-info svg" /></h4>
+			<div v-if="!note.readonly" class="note-category">
+				<h4>
+					{{ t('notes', 'Category') }}
+					<InfoIcon v-tooltip="categoriesInfo"
+						:size="20"
+						fill-color="var(--color-main-text)"
+						style="display: inline-block; margin-left: 1ex;"
+					/>
+				</h4>
 				<form class="category" @submit.prevent.stop="">
 					<Multiselect id="category"
 						:value="category"
@@ -20,6 +27,7 @@
 						:show-no-results="false"
 						:taggable="true"
 						:preserve-search="true"
+						:title="t('notes', 'Set category')"
 						@input="onSaveCategory"
 						@close="onFinishEditCategory"
 						@search-change="onEditCategory"
@@ -61,6 +69,8 @@ import {
 } from '@nextcloud/vue'
 import moment from '@nextcloud/moment'
 
+import InfoIcon from 'vue-material-design-icons/Information.vue'
+
 import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService.js'
 import { categoryLabel } from '../Util.js'
 import store from '../store.js'
@@ -70,6 +80,7 @@ export default {
 
 	components: {
 		AppSidebar,
+		InfoIcon,
 		Multiselect,
 	},
 

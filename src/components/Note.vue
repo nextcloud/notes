@@ -51,26 +51,36 @@
 						icon="icon-details"
 						@click="onToggleSidebar"
 					>
+						<SidebarIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
 						{{ t('notes', 'Details') }}
 					</ActionButton>
 					<ActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
-						:icon="preview ? 'icon-rename' : 'icon-toggle'"
 						@click="onTogglePreview"
 					>
+						<EditIcon v-if="preview"
+							slot="icon"
+							:size="20"
+							fill-color="var(--color-main-text)"
+						/>
+						<EyeIcon v-else
+							slot="icon"
+							:size="20"
+							fill-color="var(--color-main-text)"
+						/>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</ActionButton>
 					<ActionButton
-						icon="icon-fullscreen"
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
+						<FullscreenIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</ActionButton>
 				</Actions>
 				<Actions v-if="note.readonly">
 					<ActionButton>
-						<PencilOffIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
+						<NoEditIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</ActionButton>
 				</Actions>
@@ -103,8 +113,12 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
+import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
+import EyeIcon from 'vue-material-design-icons/Eye.vue'
+import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
+import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
+import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
-import PencilOffIcon from 'vue-material-design-icons/PencilOff.vue'
 
 import { config } from '../config.js'
 import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
@@ -122,8 +136,12 @@ export default {
 		ActionButton,
 		AppContent,
 		ConflictSolution,
+		EditIcon,
+		EyeIcon,
+		FullscreenIcon,
 		Modal,
-		PencilOffIcon,
+		NoEditIcon,
+		SidebarIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
