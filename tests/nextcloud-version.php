@@ -13,7 +13,7 @@ function getNCVersionFromComposer($path) {
 		throw new Exception('Composer file does not contain valid JSON');
 	}
 	$dev = getValidProperty($json, 'require-dev');
-	$v = getValidProperty($dev, 'christophwurst/nextcloud');
+	$v = getValidProperty($dev, 'nextcloud/ocp');
 	if (substr($v, 0, 1) == '^') {
 		$v = substr($v, 1);
 	}
@@ -126,7 +126,7 @@ echo 'Testing Nextcloud version ';
 try {
 	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
 	if ($vComposer === 'dev-master') {
-		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/christophwurst/nextcloud/composer.json');
+		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/nextcloud/ocp/composer.json');
 		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'max');
 		$type = 'max';
 	} else {
