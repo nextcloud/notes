@@ -301,16 +301,14 @@ export default {
 		padding: 15px !important;
 		background: var(--color-background-dark);
 		font-size: 90%;
+		white-space: pre-wrap;
 	}
 
 	.inline-code {
-		border-radius: 8px !important;
-		padding: 3px !important;
-		padding-left: 8px !important;
-		padding-right: 8px !important;
+		border-radius: 8px;
+		padding: 3px 8px;
 		background: var(--color-background-dark);
 		font-size: 85%;
-		width: fit-content;
 	}
 }
 </style>
