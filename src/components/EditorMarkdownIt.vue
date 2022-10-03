@@ -49,6 +49,8 @@ export default {
 
 	created() {
 		this.setImageRule(this.noteid)
+
+		this.setInlineCodeRule()
 		this.onUpdate()
 	},
 
@@ -143,6 +145,13 @@ export default {
 				}
 			}
 		},
+
+		setInlineCodeRule() {
+			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
+				const token = tokens[idx]
+				return '<code class="inline-code">' + token.content + '</code>'
+			}
+		},
 	},
 
 }
@@ -202,13 +211,6 @@ export default {
 
 	& a {
 		color: var(--color-primary-element);
-	}
-
-	& pre, & code {
-		background: var(--color-background-dark);
-		font-size: 90%;
-		padding: 0.2ex 0.5ex;
-		white-space: pre-wrap;
 	}
 
 	& pre code {
@@ -293,6 +295,21 @@ export default {
 
 	& table td:empty::after {
 		content: '\00a0';
+	}
+
+	pre {
+		border-radius: 10px;
+		padding: 15px;
+		background: var(--color-background-dark);
+		font-size: 90%;
+		white-space: pre-wrap;
+	}
+
+	.inline-code {
+		border-radius: 8px;
+		padding: 3px 8px;
+		background: var(--color-background-dark);
+		font-size: 85%;
 	}
 }
 </style>
