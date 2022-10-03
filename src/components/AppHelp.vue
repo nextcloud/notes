@@ -21,9 +21,6 @@
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use Markdown markups to style your text.') }}
 				</div>
-				<button class="button-icon-add icon-add" @click="onNewNote">
-					{{ t('notes', 'Create a new Note with markdown samples') }}
-				</button>
 				<table>
 					<tr>
 						<th>
@@ -142,8 +139,8 @@ export default {
 				{ shortcut: t('notes', 'CTRL+H'), action: t('notes', 'Toggle heading for current line') },
 				{ shortcut: t('notes', 'CTRL+ALT+C'), action: t('notes', 'The selection will be turned into monospace') },
 				{ shortcut: t('notes', 'CTRL+ALT+I'), action: t('notes', 'Insert image at the cursor') },
-				{ shortcut: t('notes', 'CTRL+ALT+L'), action: t('notes', 'kes the current line a list element with a number') },
-				{ shortcut: t('notes', 'SHIFT+CTRL+H'), action: t('notes', 'toggleHeadingBigger') },
+				{ shortcut: t('notes', 'CTRL+ALT+L'), action: t('notes', 'Makes the current line a list element with a number') },
+				{ shortcut: t('notes', 'SHIFT+CTRL+H'), action: t('notes', 'Set the current line as a big Heading') },
 				{ shortcut: t('notes', 'CTRL+I'), action: t('notes', 'Make the selection italic') },
 				{ shortcut: t('notes', 'CTRL+K'), action: t('notes', 'Insert link at cursor') },
 				{ shortcut: t('notes', 'CTRL+L'), action: t('notes', 'Makes the current line a list element') },
