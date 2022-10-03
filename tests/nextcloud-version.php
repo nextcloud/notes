@@ -16,9 +16,10 @@ function getNCVersionFromComposer($path) {
 	$v = getValidProperty($dev, 'nextcloud/ocp');
 	if (substr($v, 0, 1) == '^') {
 		$v = substr($v, 1);
-	}
-	if (substr($v, 0, 2) == '>=') {
+	} elseif (substr($v, 0, 2) == '>=') {
 		$v = substr($v, 2);
+	} elseif (substr($v, 0, 10) == 'dev-stable') {
+		$v = substr($v, 10);
 	}
 	return $v;
 }
@@ -127,12 +128,11 @@ try {
 	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
 	if ($vComposer === 'dev-master') {
 		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/nextcloud/ocp/composer.json');
-		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'max');
 		$type = 'max';
 	} else {
-		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');
 		$type = 'min';
 	}
+	$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', $type);
 	echo $type.': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
 	if (versionCompare($vComposer, $vAppInfo, $type)) {
 		echo 'OK'.PHP_EOL;
