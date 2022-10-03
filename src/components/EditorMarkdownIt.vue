@@ -297,8 +297,8 @@ export default {
 	}
 
 	pre {
-		border-radius: 10px !important;
-		padding: 15px !important;
+		border-radius: 10px;
+		padding: 15px;
 		background: var(--color-background-dark);
 		font-size: 90%;
 		white-space: pre-wrap;
