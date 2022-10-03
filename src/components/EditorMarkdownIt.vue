@@ -227,6 +227,7 @@ export default {
 		list-style-type: none;
 		input {
 			min-height: initial !important;
+			height: auto !important;
 			cursor: pointer;
 		}
 		label {

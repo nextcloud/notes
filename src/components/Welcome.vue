@@ -1,5 +1,5 @@
 <template>
-	<AppContent>
+	<NcAppContent>
 		<div class="welcome-content">
 			<h2>{{ t('notes', 'Notes') }}</h2>
 			<div class="feature icon-add">
@@ -22,19 +22,19 @@
 				</ul>
 			</div>
 		</div>
-	</AppContent>
+	</NcAppContent>
 </template>
 <script>
 
 import {
-	AppContent,
+	NcAppContent,
 } from '@nextcloud/vue'
 
 export default {
 	name: 'Welcome',
 
 	components: {
-		AppContent,
+		NcAppContent,
 	},
 }
 

@@ -9,13 +9,13 @@
 
 		<!-- list of notes -->
 		<template v-for="item in noteItems">
-			<AppNavigationCaption v-if="category!==null && category!==item.category"
+			<NcAppNavigationCaption v-if="category!==null && category!==item.category"
 				:key="item.category"
 				class="app-navigation-noclose"
 				:title="categoryToLabel(item.category)"
 				@click.native="$emit('category-selected', item.category)"
 			/>
-			<AppNavigationCaption v-if="category===null && item.timeslot"
+			<NcAppNavigationCaption v-if="category===null && item.timeslot"
 				:key="item.timeslot"
 				:title="item.timeslot"
 			/>
@@ -26,7 +26,7 @@
 				@note-deleted="$emit('note-deleted', $event)"
 			/>
 		</template>
-		<AppNavigationItem
+		<NcAppNavigationItem
 			v-if="notes.length != filteredNotes.length"
 			v-observe-visibility="onEndOfNotes"
 			:title="t('notes', 'Loading …')"
@@ -37,8 +37,8 @@
 
 <script>
 import {
-	AppNavigationCaption,
-	AppNavigationItem,
+	NcAppNavigationCaption,
+	NcAppNavigationItem,
 } from '@nextcloud/vue'
 import { Fragment } from 'vue-fragment'
 import { ObserveVisibility } from 'vue-observe-visibility'
@@ -52,11 +52,11 @@ export default {
 	name: 'NavigationList',
 
 	components: {
-		AppNavigationCaption,
-		AppNavigationItem,
 		Fragment,
 		NavigationCategoriesItem,
 		NavigationNoteItem,
+		NcAppNavigationCaption,
+		NcAppNavigationItem,
 	},
 
 	directives: {

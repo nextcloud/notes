@@ -1,5 +1,5 @@
 <template>
-	<AppSidebar v-if="sidebarOpen"
+	<NcAppSidebar v-if="sidebarOpen"
 		:title="title"
 		:subtitle="subtitle"
 		:star-loading="loading.favorite"
@@ -18,7 +18,7 @@
 					/>
 				</h4>
 				<form class="category" @submit.prevent.stop="">
-					<Multiselect id="category"
+					<NcMultiselect id="category"
 						:value="category"
 						:options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
@@ -35,7 +35,7 @@
 						<template #option="{ option }">
 							<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
 						</template>
-					</Multiselect>
+					</NcMultiselect>
 					<input
 						type="text"
 						style="display: none"
@@ -58,13 +58,13 @@
 				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
 			</div>
 		</div>
-	</AppSidebar>
+	</NcAppSidebar>
 </template>
 <script>
 
 import {
-	AppSidebar,
-	Multiselect,
+	NcAppSidebar,
+	NcMultiselect,
 	Tooltip,
 } from '@nextcloud/vue'
 import moment from '@nextcloud/moment'
@@ -79,9 +79,9 @@ export default {
 	name: 'Sidebar',
 
 	components: {
-		AppSidebar,
 		InfoIcon,
-		Multiselect,
+		NcAppSidebar,
+		NcMultiselect,
 	},
 
 	directives: {

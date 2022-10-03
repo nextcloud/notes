@@ -1,5 +1,5 @@
 <template>
-	<AppNavigationItem
+	<NcAppNavigationItem
 		:title="title"
 		class="app-navigation-noclose separator-below"
 		:class="{ 'category-header': selectedCategory !== null }"
@@ -7,43 +7,35 @@
 		:allow-collapse="true"
 		@click.prevent.stop="onToggleCategories"
 	>
-		<FolderIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
-		<AppNavigationItem
+		<FolderIcon slot="icon" :size="20" />
+		<NcAppNavigationItem
 			:title="t('notes', 'All notes')"
 			@click.prevent.stop="onSelectCategory(null)"
 		>
-			<HistoryIcon slot="icon" :size="20" fill-color="var(--color-main-text)" />
-			<AppNavigationCounter slot="counter">
+			<HistoryIcon slot="icon" :size="20" />
+			<NcAppNavigationCounter slot="counter">
 				{{ numNotes }}
-			</AppNavigationCounter>
-		</AppNavigationItem>
+			</NcAppNavigationCounter>
+		</NcAppNavigationItem>
 
-		<AppNavigationItem v-for="category in categories"
+		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"
 			:title="categoryTitle(category.name)"
 			@click.prevent.stop="onSelectCategory(category.name)"
 		>
-			<FolderOutlineIcon v-if="category.name === ''"
-				slot="icon"
-				:size="20"
-				fill-color="var(--color-main-text)"
-			/>
-			<FolderIcon v-else
-				slot="icon"
-				:size="20"
-				fill-color="var(--color-main-text)"
-			/>
-			<AppNavigationCounter slot="counter">
+			<FolderOutlineIcon v-if="category.name === ''" slot="icon" :size="20" />
+			<FolderIcon v-else slot="icon" :size="20" />
+			<NcAppNavigationCounter slot="counter">
 				{{ category.count }}
-			</AppNavigationCounter>
-		</AppNavigationItem>
-	</AppNavigationItem>
+			</NcAppNavigationCounter>
+		</NcAppNavigationItem>
+	</NcAppNavigationItem>
 </template>
 
 <script>
 import {
-	AppNavigationItem,
-	AppNavigationCounter,
+	NcAppNavigationItem,
+	NcAppNavigationCounter,
 } from '@nextcloud/vue'
 
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
@@ -58,11 +50,11 @@ export default {
 	name: 'NavigationCategoriesItem',
 
 	components: {
-		AppNavigationItem,
-		AppNavigationCounter,
 		FolderIcon,
 		FolderOutlineIcon,
 		HistoryIcon,
+		NcAppNavigationItem,
+		NcAppNavigationCounter,
 	},
 
 	props: {
