@@ -21,7 +21,7 @@
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use Markdown markups to style your text.') }}
 				</div>
-				<button @click="onNewNote">
+				<button class="button-icon-add icon-add" @click="onNewNote">
 					{{ t('notes', 'Create a new Note with markdown samples') }}
 				</button>
 				<table>
@@ -65,7 +65,7 @@
 				</table>
 			</AppSettingsSection>
 			<AppSettingsSection :title="t('notes', 'Tips and Tricks')">
-				<div class="feature icon-toggle-filelist">
+				><div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Double Click the text in viewmode to quickly open edit mode!') }}
 				</div>
 			</AppSettingsSection>
@@ -74,8 +74,8 @@
 					{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 				</div>
 				<div class="badge-wrapper">
-					<a href="https://github.com/stefan-niedermann/nextcloud-notes">
-						{{ t('notes', 'Android app: Nextcloud Notes by Niedermann IT-Dienstleistungen ') }}
+					<a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">
+						{{ t('notes', 'Android app: {notes} by {company}', {notes: 'Nextcloud Notes', company: 'Niedermann IT-Dienstleistungen'}) }}
 					</a>
 					<div>
 						<div class="badge">
@@ -91,8 +91,8 @@
 					</div>
 				</div>
 				<div class="badge-wrapper">
-					<a href="https://github.com/phedlund/CloudNotes">
-						{{ t('notes', 'iOS app: CloudNotes - Nextcloud Notes by Peter Hedlund') }}
+					<a target="_blank" href="https://github.com/phedlund/CloudNotes">
+						{{ t('notes', 'iOS app: {notes} by {company}', {notes: 'CloudNotes - Nextcloud Notes', company: 'Peter Hedlund'}) }}
 					</a>
 					<div>
 						<div class="badge">
@@ -136,19 +136,17 @@ export default {
 	computed: {
 		getShortcuts() {
 			return [
-				{ shortcut: t('notes', 'CTRL+\''), action: t('notes', 'Make the selection a quote') },
+				{ shortcut: t('notes', 'CTRL+\''), action: t('notes', 'Wrap the selection in Quotes') },
 				{ shortcut: t('notes', 'CTRL+B'), action: t('notes', 'Make the selection bold') },
-				{ shortcut: t('notes', 'CTRL+E'), action: t('notes', 'cleanBlock') },
-				{ shortcut: t('notes', 'CTRL+H'), action: t('notes', 'toggleHeadingSmaller') },
+				{ shortcut: t('notes', 'CTRL+E'), action: t('notes', 'Remove any styles from the selected text') },
+				{ shortcut: t('notes', 'CTRL+H'), action: t('notes', 'Toggle heading for current line') },
+				{ shortcut: t('notes', 'CTRL+ALT+C'), action: t('notes', 'The selection will be turned into monospace') },
+				{ shortcut: t('notes', 'CTRL+ALT+I'), action: t('notes', 'Insert image at the cursor') },
+				{ shortcut: t('notes', 'CTRL+ALT+L'), action: t('notes', 'kes the current line a list element with a number') },
+				{ shortcut: t('notes', 'SHIFT+CTRL+H'), action: t('notes', 'toggleHeadingBigger') },
 				{ shortcut: t('notes', 'CTRL+I'), action: t('notes', 'Make the selection italic') },
 				{ shortcut: t('notes', 'CTRL+K'), action: t('notes', 'Insert link at cursor') },
 				{ shortcut: t('notes', 'CTRL+L'), action: t('notes', 'Makes the current line a list element') },
-				{ shortcut: t('notes', 'CTRL+P'), action: t('notes', 'Toggle between preview') },
-				{ shortcut: t('notes', 'CTRL+Alt+C'), action: t('notes', 'The selection will be turned into monospace') },
-				{ shortcut: t('notes', 'CTRL+Alt+I'), action: t('notes', 'Insert image at the cursor') },
-				{ shortcut: t('notes', 'CTRL+Alt+L'), action: t('notes', 'kes the current line a list element with a number') },
-				{ shortcut: t('notes', 'SHIFT+CTRL+H'), action: t('notes', 'toggleHeadingBigger') },
-				{ shortcut: t('notes', 'F9'), action: t('notes', 'toggleSideBySide') },
 				{ shortcut: t('notes', 'F11'), action: t('notes', 'Make the note fullscreen') },
 				{ shortcut: t('notes', 'CTRL+/'), action: t('notes', 'Switch between Editor and Viewer') },
 			]
@@ -165,6 +163,8 @@ export default {
 				{ sequence: '#### ' + t('notes', 'Tiny header'), result: t('notes', 'Tiny header'), visualized: '<h4>' + t('notes', 'Tiny header') + '</h4>' },
 
 				{ sequence: '* ' + t('notes', 'Generic list item'), result: t('notes', 'Generic list'), visualized: '<li>' + t('notes', 'Generic list item') + '</li>' },
+				{ sequence: '- ' + t('notes', 'Generic list item'), result: t('notes', 'Generic list'), visualized: '<li>' + t('notes', 'Generic list item') + '</li>' },
+
 				{
 					sequence: '1. William Riker<br>2. Deanna Troi<br>3. Beverly Crusher<br>',
 					result: t('notes', 'Numbered list'),

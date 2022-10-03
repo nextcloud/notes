@@ -21,8 +21,8 @@
 				{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 			</div>
 			<div class="badge-wrapper">
-				<a href="https://github.com/stefan-niedermann/nextcloud-notes">
-					{{ t('notes', 'Android app: Nextcloud Notes by Niedermann IT-Dienstleistungen ') }}
+				<a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">
+					{{ t('notes', 'Android app: {notes} by {company}', {notes: 'Nextcloud Notes', company: 'Niedermann IT-Dienstleistungen'}) }}
 				</a>
 				<div>
 					<div class="badge">
@@ -38,8 +38,8 @@
 				</div>
 			</div>
 			<div class="badge-wrapper">
-				<a href="https://github.com/phedlund/CloudNotes">
-					{{ t('notes', 'iOS app: CloudNotes - Nextcloud Notes by Peter Hedlund') }}
+				<a target="_blank" href="https://github.com/phedlund/CloudNotes">
+					{{ t('notes', 'iOS app: {notes} by {company}', {notes: 'CloudNotes - Nextcloud Notes', company: 'Peter Hedlund'}) }}
 				</a>
 				<div>
 					<div class="badge">
