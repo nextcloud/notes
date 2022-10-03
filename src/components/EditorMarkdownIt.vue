@@ -50,7 +50,7 @@ export default {
 	created() {
 		this.setImageRule(this.noteid)
 
-		this.setSingleCodeRule()
+		this.setInlineCodeRule()
 		this.onUpdate()
 	},
 
@@ -146,10 +146,10 @@ export default {
 			}
 		},
 
-		setSingleCodeRule() {
+		setInlineCodeRule() {
 			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
 				const token = tokens[idx]
-				return '<code class="singleLineCode">' + token.content + '</code>'
+				return '<code class="inline-code">' + token.content + '</code>'
 			}
 		},
 	},
@@ -303,7 +303,7 @@ export default {
 		font-size: 90%;
 	}
 
-	.singleLineCode {
+	.inline-code {
 		border-radius: 8px !important;
 		padding: 3px !important;
 		padding-left: 8px !important;
