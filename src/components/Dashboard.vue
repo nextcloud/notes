@@ -1,41 +1,38 @@
 <template>
 	<div class="dashboard-box">
-		<DashboardWidget :items="items" :loading="loading">
+		<NcDashboardWidget
+			empty-content-icon="icon-notes"
+			:empty-content-message="t('notes', 'No notes yet')"
+			:items="items"
+			:loading="loading"
+		>
 			<template #default="{ item }">
-				<DashboardWidgetItem
+				<NcDashboardWidgetItem
 					:target-url="getItemTargetUrl(item)"
 					:main-text="item.title"
 					:sub-text="subtext(item)"
 				>
-					<template #avatar>
-						<div
-							class="note-item"
-							:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
-						/>
-					</template>
-				</DashboardWidgetItem>
+					<div slot="avatar"
+						class="note-item"
+						:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
+					/>
+				</NcDashboardWidgetItem>
 			</template>
-			<template #empty-content>
-				<EmptyContent icon="icon-notes">
-					<template #desc>
-						<p class="notes-empty-content-label">
-							{{ t('notes', 'No notes yet') }}
-						</p>
-					</template>
-				</EmptyContent>
-			</template>
-		</DashboardWidget>
+		</NcDashboardWidget>
 		<div v-if="!loading" class="buttons-footer">
-			<a :href="createNoteUrl" class="button">
+			<NcButton :href="createNoteUrl">
+				<PlusIcon slot="icon" :size="20" />
 				{{ t('notes', 'New note') }}
-			</a>
+			</NcButton>
 		</div>
 	</div>
 </template>
 
 <script>
-import { DashboardWidget, DashboardWidgetItem, EmptyContent } from '@nextcloud/vue'
+import { NcButton, NcDashboardWidget, NcDashboardWidgetItem } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
+
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
 import { getDashboardData } from '../NotesService.js'
 import { categoryLabel } from '../Util.js'
@@ -44,9 +41,10 @@ export default {
 	name: 'Dashboard',
 
 	components: {
-		DashboardWidget,
-		DashboardWidgetItem,
-		EmptyContent,
+		NcButton,
+		NcDashboardWidget,
+		NcDashboardWidgetItem,
+		PlusIcon,
 	},
 
 	data() {
@@ -104,7 +102,7 @@ export default {
 }
 
 .note-item-favorite {
-	background: var(--icon-starred-yellow, var(--icon-star-dark-FC0, var(--icon-star-dark-fc0)));
+	background: var(--icon-starred-yellow);
 }
 
 .note-item {
@@ -126,9 +124,9 @@ export default {
 }
 
 .buttons-footer {
-	position: absolute;
-	bottom: 1em;
-	width: 100%;
-	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
 }
 </style>

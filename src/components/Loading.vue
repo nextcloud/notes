@@ -1,17 +1,17 @@
 <template>
-	<AppContent class="loading" />
+	<NcAppContent class="loading" />
 </template>
 <script>
 
 import {
-	AppContent,
+	NcAppContent,
 } from '@nextcloud/vue'
 
 export default {
 	name: 'Loading',
 
 	components: {
-		AppContent,
+		NcAppContent,
 	},
 }
 

@@ -1,26 +1,26 @@
 <template>
 	<div>
 		<div class="upload-button">
-			<Actions
+			<NcActions
 				container=".upload-button"
 				default-icon="icon-picture"
 				menu-align="right"
 			>
-				<ActionButton
+				<NcActionButton
 					icon="icon-upload"
 					:close-after-click="true"
 					@click="onClickUploadImage"
 				>
 					{{ t('notes', 'Upload image') }}
-				</ActionButton>
-				<ActionButton
+				</NcActionButton>
+				<NcActionButton
 					icon="icon-picture"
 					:close-after-click="true"
 					@click="onClickInsertImage"
 				>
 					{{ t('notes', 'Insert image') }}
-				</ActionButton>
-			</Actions>
+				</NcActionButton>
+			</NcActions>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -35,8 +35,8 @@ import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 import {
-	Actions,
-	ActionButton,
+	NcActions,
+	NcActionButton,
 } from '@nextcloud/vue'
 import { basename, relative } from 'path'
 
@@ -46,8 +46,8 @@ export default {
 	name: 'EditorEasyMDE',
 
 	components: {
-		Actions,
-		ActionButton,
+		NcActions,
+		NcActionButton,
 	},
 
 	props: {
@@ -351,14 +351,14 @@ export default {
 	position: absolute;
 	background-color: var(--color-main-background);
 	border: 1px solid #878787;
-	border-radius: 1px;
+	border-radius: var(--border-radius);
 	background-position: center;
-	margin-top: 3px;
+	margin-top: 5px;
 	margin-left: 2px;
 }
 
 .CodeMirror .cm-formatting-task.cm-property::before {
-	background-image: var(--icon-checkmark-fff);
+	background-image: var(--icon-checkmark-white);
 	background-color: var(--color-primary-element);
 	border-color: var(--color-primary-element);
 }

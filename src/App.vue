@@ -1,13 +1,13 @@
 <template>
-	<ContentVue app-name="notes" :content-class="{loading: loading.notes}">
-		<AppNavigation :class="{loading: loading.notes, 'icon-error': error}">
-			<AppNavigationNew
+	<NcContent app-name="notes" :content-class="{loading: loading.notes}">
+		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
+			<NcAppNavigationNew
 				v-show="!loading.notes && !error"
 				:text="t('notes', 'New note')"
-				button-id="notes_new_note"
-				:button-class="['icon-add', { loading: loading.create }]"
 				@click="onNewNote"
-			/>
+			>
+				<PlusIcon slot="icon" :size="20" />
+			</NcAppNavigationNew>
 
 			<template #list>
 				<NavigationList v-show="!loading.notes"
@@ -21,30 +21,32 @@
 			<template #footer>
 				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
 			</template>
-		</AppNavigation>
+		</NcAppNavigation>
 
-		<AppContent v-if="error">
+		<NcAppContent v-if="error">
 			<div style="margin: 2em;">
 				<h2>{{ t('notes', 'Error') }}</h2>
 				<p>{{ error }}</p>
 				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
-		</AppContent>
+		</NcAppContent>
 		<router-view v-else />
 
 		<router-view name="sidebar" />
-	</ContentVue>
+	</NcContent>
 </template>
 
 <script>
 import {
-	AppContent,
-	AppNavigation,
-	AppNavigationNew,
-	Content,
+	NcAppContent,
+	NcAppNavigation,
+	NcAppNavigationNew,
+	NcContent,
 } from '@nextcloud/vue'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
+
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
 import { config } from './config.js'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
@@ -52,18 +54,17 @@ import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
 
-const ContentVue = Content
-
 export default {
 	name: 'App',
 
 	components: {
-		AppContent,
-		AppNavigation,
-		AppNavigationNew,
 		AppSettings,
-		ContentVue,
 		NavigationList,
+		NcAppContent,
+		NcAppNavigation,
+		NcAppNavigationNew,
+		NcContent,
+		PlusIcon,
 	},
 
 	data() {
