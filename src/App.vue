@@ -20,6 +20,7 @@
 
 			<template #footer>
 				<NcAppNavigationItem
+					style="padding: calc(var(--default-grid-baseline, 4px)*2);"
 					:title=" t('notes', 'Help') "
 					icon="icon-info"
 					@click="openHelp"
