@@ -179,7 +179,7 @@ export default {
 	watch: {
 		settingsOpen: {
 			handler: function() {
-				this.$emit('popupClosedpopupClosed')
+				this.$emit('popupClosed')
 			},
 			deep: true,
 		},

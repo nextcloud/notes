@@ -25,7 +25,7 @@
 					icon="icon-info"
 					@click="openHelp"
 				/>
-				<AppHelp v-if="helpVisible" :settingsOpen="helpVisible" @popupClosed="helpVisible = false"></AppHelp>
+				<AppHelp v-if="helpVisible" :settingsOpen="helpVisible" @popupClosed="closeHelp"></AppHelp>
 				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
@@ -239,10 +239,14 @@ export default {
 			}
 		},
 
+		closeHelp() {
+			this.helpVisible = false
+		},
+
 		openHelp() {
-			this.helpVisible = !this.helpVisible
 			this.helpVisible = true
 		},
+
 		onNewNote() {
 			if (this.loading.create) {
 				return
