@@ -12,9 +12,10 @@
 				<div class="feature icon-files-dark">
 					{{ t('notes', 'Organize your notes in categories.') }}
 				</div>
-				<button class="button-icon-add icon-add" @click="onNewNote">
+				<NcButton @click="onNewNote" type="secondary">
+					<PlusIcon slot="icon" :size="20" />
 					{{ t('notes', 'Create a sample note with markdown') }}
-				</button>
+				</NcButton>
 			</NcAppSettingsSection>
 			<NcAppSettingsSection :title="t('notes', 'Markdown')" id="help-markdown">
 				<div class="feature icon-toggle-filelist">
@@ -60,11 +61,6 @@
 					</tr>
 				</table>
 			</NcAppSettingsSection>
-			<NcAppSettingsSection :title="t('notes', 'Tips and Tricks')" id="help-tips">
-				><div class="feature icon-toggle-filelist">
-					{{ t('notes', 'Double Click the text in viewmode to quickly open edit mode!') }}
-				</div>
-			</NcAppSettingsSection>
 			<NcAppSettingsSection :title="t('notes', 'Apps')" id="help-apps">
 				<div class="feature icon-phone">
 					{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
@@ -108,10 +104,12 @@
 import {
 	NcAppSettingsDialog,
 	NcAppSettingsSection,
+	NcButton,
 } from '@nextcloud/vue'
 import { createNote } from '../NotesService'
 import { getDefaultSampleNote } from '../Util'
 import { generateFilePath } from '@nextcloud/router'
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
 export default {
 	name: 'AppHelp',
@@ -119,6 +117,8 @@ export default {
 	components: {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
+		NcButton,
+		PlusIcon,
 	},
 
 	props: {
