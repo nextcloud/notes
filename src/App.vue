@@ -18,17 +18,15 @@
 				/>
 			</template>
 
-			<AppNavigationItem
-				:pinned="true"
-				:title=" t('notes', 'Help') "
-				icon="icon-info"
-				@click="openHelp"
-			/>
-			<AppHelp v-if="helpVisible" settingsOpen="helpVisible" @popupClosed="helpVisible = false" ></AppHelp>
-			<NcAppNavigationItem
-				pinned=True>
+			<template #footer>
+				<NcAppNavigationItem
+					:title=" t('notes', 'Help') "
+					icon="icon-info"
+					@click="openHelp"
+				/>
+				<AppHelp v-if="helpVisible" :settingsOpen="helpVisible" @popupClosed="helpVisible = false"></AppHelp>
 				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
-			</NcAppNavigationItem>
+			</template>
 		</NcAppNavigation>
 
 		<NcAppContent v-if="error">
@@ -63,8 +61,6 @@ import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
 import AppHelp from './components/AppHelp'
-import store from './store'
-import Vue from 'vue'
 
 export default {
 	name: 'App',

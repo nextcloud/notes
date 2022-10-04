@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<AppSettingsDialog :open.sync="settingsOpen" :showNavigation="true">
+		<NcAppSettingsDialog :open.sync="settingsOpen" :showNavigation="true">
 			<div class="exit icon-close" @click="settingsOpen = false; "/>
 			<h2>{{ t('notes', 'Notes Application') }}</h2>
-			<AppSettingsSection :title="t('notes', 'Basics')">
+			<NcAppSettingsSection :title="t('notes', 'Basics')" id="help-basics">
 				<div class="feature icon-add">
 					{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
 				</div>
@@ -16,8 +16,8 @@
 				<button class="button-icon-add icon-add" @click="onNewNote">
 					{{ t('notes', 'Create a sample note with markdown') }}
 				</button>
-			</AppSettingsSection>
-			<AppSettingsSection :title="t('notes', 'Markdown')">
+			</NcAppSettingsSection>
+			<NcAppSettingsSection :title="t('notes', 'Markdown')" id="help-markdown">
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use Markdown markups to style your text.') }}
 				</div>
@@ -45,8 +45,8 @@
 						</td>
 					</tr>
 				</table>
-			</AppSettingsSection>
-			<AppSettingsSection :title="t('notes', 'Shortcuts')">
+			</NcAppSettingsSection>
+			<NcAppSettingsSection :title="t('notes', 'Shortcuts')" id="help-shortcuts">
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use shortcuts to quickly navigate this app.') }}
 				</div>
@@ -60,13 +60,13 @@
 						<td>{{ item.action }}</td>
 					</tr>
 				</table>
-			</AppSettingsSection>
-			<AppSettingsSection :title="t('notes', 'Tips and Tricks')">
+			</NcAppSettingsSection>
+			<NcAppSettingsSection :title="t('notes', 'Tips and Tricks')" id="help-tips">
 				><div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Double Click the text in viewmode to quickly open edit mode!') }}
 				</div>
-			</AppSettingsSection>
-			<AppSettingsSection :title="t('notes', 'Apps')">
+			</NcAppSettingsSection>
+			<NcAppSettingsSection :title="t('notes', 'Apps')" id="help-apps">
 				<div class="feature icon-phone">
 					{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 				</div>
@@ -99,16 +99,16 @@
 						</div>
 					</div>
 				</div>
-			</AppSettingsSection>
-		</AppSettingsDialog>
+			</NcAppSettingsSection>
+		</NcAppSettingsDialog>
 	</div>
 </template>
 
 <script>
 
 import {
-	AppSettingsDialog,
-	AppSettingsSection,
+	NcAppSettingsDialog,
+	NcAppSettingsSection,
 } from '@nextcloud/vue'
 import { createNote } from '../NotesService'
 import { getDefaultSampleNote } from '../Util'
@@ -118,8 +118,8 @@ export default {
 	name: 'AppHelp',
 
 	components: {
-		AppSettingsDialog,
-			AppSettingsSection,
+		NcAppSettingsDialog,
+		NcAppSettingsSection,
 	},
 
 	props: {
