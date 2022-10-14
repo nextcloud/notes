@@ -36,15 +36,6 @@
 							<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
 						</template>
 					</NcMultiselect>
-					<input
-						type="text"
-						style="display: none"
-					><input
-						type="submit"
-						value=""
-						class="icon-confirm loading"
-						:disabled="loading.category"
-					>
 				</form>
 			</div>
 			<div class="modified"
