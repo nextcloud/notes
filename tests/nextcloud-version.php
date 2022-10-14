@@ -20,6 +20,9 @@ function getNCVersionFromComposer($path) {
 		$v = substr($v, 2);
 	} elseif (substr($v, 0, 10) == 'dev-stable') {
 		$v = substr($v, 10);
+		if (substr($v, -4) == '@dev') {
+			$v = substr($v, 0, -4);
+		}
 	}
 	return $v;
 }
