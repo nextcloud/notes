@@ -13,6 +13,13 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.6.0 - 2022-10-14
+
+- Compatibility with Nextcloud 25 (#927, #928)
+- make code-blocks nicer (#892 by @newhinton)
+- maintenance (#926, #929)
+
+
 ## 4.5.1 - 2022-09-04
 
 - always use edit mode when creating a new note (#912)
