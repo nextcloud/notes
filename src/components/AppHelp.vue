@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<NcAppSettingsDialog :open.sync="settingsOpen" :showNavigation="true">
-			<h2>{{ t('notes', 'Notes Application') }}</h2>
+		<NcAppSettingsDialog :open.sync="settingsOpen" :showNavigation="true" :title="t('notes', 'Help')">
 			<NcAppSettingsSection :title="t('notes', 'Basics')" id="help-basics">
 				<div class="feature icon-add">
 					{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
