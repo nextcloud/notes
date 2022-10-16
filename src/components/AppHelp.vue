@@ -1,7 +1,12 @@
 <template>
 	<div>
-		<NcAppSettingsDialog :open.sync="helpOpen" :showNavigation="true" :title="t('notes', 'Help')" @update:open="emitOpen($event)">
-			<NcAppSettingsSection :title="t('notes', 'Basics')" id="help-basics">
+		<NcAppSettingsDialog
+			:title="t('notes', 'Help')"
+			:show-navigation="true"
+			:open.sync="helpOpen"
+			@update:open="emitOpen($event)"
+		>
+			<NcAppSettingsSection id="help-basics" :title="t('notes', 'Basics')">
 				<div class="feature icon-add">
 					{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
 				</div>
@@ -11,12 +16,12 @@
 				<div class="feature icon-files-dark">
 					{{ t('notes', 'Organize your notes in categories.') }}
 				</div>
-				<NcButton @click="onNewNote" type="secondary">
+				<NcButton type="secondary" @click="onNewNote">
 					<PlusIcon slot="icon" :size="20" />
 					{{ t('notes', 'Create a sample note with markdown') }}
 				</NcButton>
 			</NcAppSettingsSection>
-			<NcAppSettingsSection :title="t('notes', 'Markdown')" id="help-markdown">
+			<NcAppSettingsSection id="help-markdown" :title="t('notes', 'Markdown')">
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use Markdown markups to style your text.') }}
 				</div>
@@ -32,20 +37,18 @@
 							{{ t('notes', 'Visualized') }}
 						</th>
 					</tr>
-					<tr v-for="item in getMarkdown">
-						<td v-html="item.sequence">
-							{{ item.sequence }}
-						</td>
+					<tr v-for="(item, index) in getMarkdown" :key="index">
+						<!-- eslint-disable-next-line vue/no-v-html -->
+						<td v-html="item.sequence" />
 						<td>
 							{{ item.result }}
 						</td>
-						<td v-html="item.visualized">
-							{{ item.visualized }}
-						</td>
+						<!-- eslint-disable-next-line vue/no-v-html -->
+						<td v-html="item.visualized" />
 					</tr>
 				</table>
 			</NcAppSettingsSection>
-			<NcAppSettingsSection :title="t('notes', 'Shortcuts')" id="help-shortcuts">
+			<NcAppSettingsSection id="help-shortcuts" :title="t('notes', 'Shortcuts')">
 				<div class="feature icon-toggle-filelist">
 					{{ t('notes', 'Use shortcuts to quickly navigate this app.') }}
 				</div>
@@ -54,13 +57,13 @@
 						<th>{{ t('notes', 'Shortcut') }}</th>
 						<th>{{ t('notes', 'Action') }}</th>
 					</tr>
-					<tr v-for="item in getShortcuts">
+					<tr v-for="(item, index) in getShortcuts" :key="index">
 						<td>{{ item.shortcut }}</td>
 						<td>{{ item.action }}</td>
 					</tr>
 				</table>
 			</NcAppSettingsSection>
-			<NcAppSettingsSection :title="t('notes', 'Apps')" id="help-apps">
+			<NcAppSettingsSection id="help-apps" :title="t('notes', 'Mobile apps')">
 				<div class="feature icon-phone">
 					{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 				</div>
@@ -105,8 +108,8 @@ import {
 	NcAppSettingsSection,
 	NcButton,
 } from '@nextcloud/vue'
-import { createNote } from '../NotesService'
-import { getDefaultSampleNote } from '../Util'
+import { createNote } from '../NotesService.js'
+import { getDefaultSampleNote } from '../Util.js'
 import { generateFilePath } from '@nextcloud/router'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
@@ -179,7 +182,7 @@ export default {
 	},
 
 	watch: {
-		open: function(newValue) {
+		open(newValue) {
 			this.helpOpen = newValue
 		},
 	},

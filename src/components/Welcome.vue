@@ -2,7 +2,7 @@
 	<NcAppContent>
 		<div class="welcome-content">
 			<h2>{{ t('notes', 'Notes') }}</h2>
-			<NcButton @click="onNewNote" type="secondary">
+			<NcButton type="secondary" @click="onNewNote">
 				<PlusIcon slot="icon" :size="20" />
 				{{ t('notes', 'Create a sample note with markdown') }}
 			</NcButton>
@@ -59,8 +59,8 @@ import {
 	NcAppContent,
 	NcButton,
 } from '@nextcloud/vue'
-import { createNote } from '../NotesService'
-import { getDefaultSampleNote } from '../Util'
+import { createNote } from '../NotesService.js'
+import { getDefaultSampleNote } from '../Util.js'
 import { generateFilePath } from '@nextcloud/router'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 

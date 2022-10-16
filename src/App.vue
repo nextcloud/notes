@@ -23,7 +23,7 @@
 				>
 					<InfoIcon slot="icon" :size="20" />
 				</NcAppNavigationItem>
-				<AppHelp :open.sync="helpVisible"></AppHelp>
+				<AppHelp :open.sync="helpVisible" />
 			</template>
 
 			<template #footer>
@@ -63,7 +63,7 @@ import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesServi
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
-import AppHelp from './components/AppHelp'
+import AppHelp from './components/AppHelp.vue'
 
 export default {
 	name: 'App',
