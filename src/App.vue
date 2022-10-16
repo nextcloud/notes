@@ -16,16 +16,16 @@
 					@category-selected="onSelectCategory"
 					@note-deleted="onNoteDeleted"
 				/>
-			</template>
-
-			<template #footer>
 				<NcAppNavigationItem
-					style="padding: calc(var(--default-grid-baseline, 4px)*2);"
-					:title=" t('notes', 'Help') "
+					:title="t('notes', 'Help')"
+					:pinned="true"
 					icon="icon-info"
 					@click="openHelp"
 				/>
 				<AppHelp v-if="helpVisible" :settingsOpen="helpVisible" @popupClosed="closeHelp"></AppHelp>
+			</template>
+
+			<template #footer>
 				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
