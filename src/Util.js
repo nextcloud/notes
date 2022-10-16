@@ -29,7 +29,7 @@ export const routeIsNewNote = ($route) => {
 }
 
 export const getDefaultSampleNoteTitle = () => {
-	return t('notes', 'Demo note')
+	return t('notes', 'Sample note')
 }
 
 export const getDefaultSampleNote = () => {
