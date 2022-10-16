@@ -23,7 +23,7 @@
 				>
 					<InfoIcon slot="icon" :size="20" />
 				</NcAppNavigationItem>
-				<AppHelp v-if="helpVisible" :settingsOpen="helpVisible" @popupClosed="closeHelp"></AppHelp>
+				<AppHelp :open.sync="helpVisible"></AppHelp>
 			</template>
 
 			<template #footer>
@@ -240,10 +240,6 @@ export default {
 					query,
 				})
 			}
-		},
-
-		closeHelp() {
-			this.helpVisible = false
 		},
 
 		openHelp() {

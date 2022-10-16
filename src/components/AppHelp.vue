@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<NcAppSettingsDialog :open.sync="settingsOpen" :showNavigation="true" :title="t('notes', 'Help')">
+		<NcAppSettingsDialog :open.sync="helpOpen" :showNavigation="true" :title="t('notes', 'Help')" @update:open="emitOpen($event)">
 			<NcAppSettingsSection :title="t('notes', 'Basics')" id="help-basics">
 				<div class="feature icon-add">
 					{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
@@ -121,11 +121,13 @@ export default {
 	},
 
 	props: {
-		settingsOpen: Boolean,
+		open: Boolean,
 	},
 
 	data() {
-		return {}
+		return {
+			helpOpen: this.open,
+		}
 	},
 
 	computed: {
@@ -175,17 +177,21 @@ export default {
 			]
 		},
 	},
+
 	watch: {
-		settingsOpen: {
-			handler: function() {
-				this.$emit('popupClosed')
-			},
-			deep: true,
+		open: function(newValue) {
+			this.helpOpen = newValue
 		},
 	},
 
 	methods: {
+		emitOpen(newValue) {
+			this.$emit('update:open', this.helpOpen)
+		},
+
 		onNewNote() {
+			this.helpOpen = false
+			this.emitOpen(this.helpOpen)
 			createNote('')
 				.then(note => {
 					const query = { new: getDefaultSampleNote() }
@@ -197,7 +203,6 @@ export default {
 				})
 				.catch(() => {
 				})
-			this.settingsOpen = false
 		},
 
 		getRoute(file) {
