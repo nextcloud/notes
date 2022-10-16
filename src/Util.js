@@ -29,31 +29,31 @@ export const routeIsNewNote = ($route) => {
 }
 
 export const getDefaultSampleNote = () => {
-	return t('notes', `# My notes
+	return '# ' + t('notes', 'My notes') + `
 
-* 📅 15 January 2021, via Nextcloud Notes
-* 👥 Me, you, and all our friends!
+* 📅 ` + t('notes', '15 January 2021, via Nextcloud Notes') + `
+* 👥 ` + t('notes', 'Me, you, and all our friends!') + `
 
-## Tasks ✅
+## ` + t('notes', 'Tasks') + ` ✅
 
-* [ ] Write nice todo lists
-* [ ] Buy Fries
+* [ ] ` + t('notes', 'Write nice todo lists') + `
+* [ ] ` + t('notes', 'Buy Fries') + `
 * [ ] …
 
-## Birthdays
+## ` + t('notes', 'Birthdays') + `
 
-* Jen, in three days!
-* Moss, 21.03.1973
-* Roy, 1979
+* ` + t('notes', 'Jen, in three days!') + `
+* ` + t('notes', 'Moss, 21.03.1973') + `
+* ` + t('notes', 'Roy, 1979') + `
 
-## Review Steps 🔁
+## ` + t('notes', 'Review Steps') + ` 🔁
 
-1. Turn PC off
-2. Turn PC on
-3. Then call IT
+1. ` + t('notes', 'Turn PC off') + `
+2. ` + t('notes', 'Turn PC on') + `
+3. ` + t('notes', 'Then call IT') + `
 
-## Quotes 💬
+## ` + t('notes', 'Quotes') + ` 💬
 
->Dear Sir stroke Madam, I am writing to inform you of a fire which has broken out on the premises of… no, that’s too formal. Dear Sir stroke Madam. Fire…exclamation mark. Fire…exclamation mark. Help me…exclamation mark. 123 Carrendon Road. Looking forward to hearing from you. All the best, Maurice Moss.
-`)
+> ` + t('notes', 'Nextcloud, a safe home for all your data') + `
+`
 }
