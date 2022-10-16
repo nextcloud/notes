@@ -19,9 +19,10 @@
 				<NcAppNavigationItem
 					:title="t('notes', 'Help')"
 					:pinned="true"
-					icon="icon-info"
 					@click="openHelp"
-				/>
+				>
+					<InfoIcon slot="icon" :size="20" />
+				</NcAppNavigationItem>
 				<AppHelp v-if="helpVisible" :settingsOpen="helpVisible" @popupClosed="closeHelp"></AppHelp>
 			</template>
 
@@ -54,6 +55,7 @@ import {
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
+import InfoIcon from 'vue-material-design-icons/Information.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
 import { config } from './config.js'
@@ -69,6 +71,7 @@ export default {
 	components: {
 		AppHelp,
 		AppSettings,
+		InfoIcon,
 		NavigationList,
 		NcAppContent,
 		NcAppNavigation,
