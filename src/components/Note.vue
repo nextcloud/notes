@@ -205,7 +205,6 @@ export default {
 		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('keydown', this.onKeyPress)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
-
 	},
 
 	destroyed() {
@@ -236,12 +235,6 @@ export default {
 						showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: note.errorType }))
 					}
 					this.startRefreshTimer()
-
-					const newContent = this.$route.query.new
-					if (this.isNewNote && (newContent !== '' && newContent != null)) {
-						this.note.content = newContent
-						this.onManualSave()
-					}
 				})
 				.catch(() => {
 					// note not found

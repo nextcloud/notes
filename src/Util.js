@@ -28,8 +28,12 @@ export const routeIsNewNote = ($route) => {
 	return {}.hasOwnProperty.call($route.query, 'new')
 }
 
+export const getDefaultSampleNoteTitle = () => {
+	return t('notes', 'Demo note')
+}
+
 export const getDefaultSampleNote = () => {
-	return '# ' + t('notes', 'My notes') + `
+	return '# ' + getDefaultSampleNoteTitle() + `
 
 * 📅 ` + t('notes', '15 January 2021, via Nextcloud Notes') + `
 * 👥 ` + t('notes', 'Me, you, and all our friends!') + `

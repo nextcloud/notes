@@ -59,10 +59,12 @@ import {
 	NcAppContent,
 	NcButton,
 } from '@nextcloud/vue'
-import { createNote } from '../NotesService.js'
-import { getDefaultSampleNote } from '../Util.js'
 import { generateFilePath } from '@nextcloud/router'
+
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
+
+import { createNote } from '../NotesService.js'
+import { getDefaultSampleNote, getDefaultSampleNoteTitle } from '../Util.js'
 
 export default {
 	name: 'Welcome',
@@ -75,16 +77,12 @@ export default {
 
 	methods: {
 		onNewNote() {
-			createNote('')
+			createNote('', getDefaultSampleNoteTitle(), getDefaultSampleNote())
 				.then(note => {
-					const query = { new: getDefaultSampleNote() }
 					this.$router.push({
 						name: 'note',
 						params: { noteId: note.id.toString() },
-						query,
 					})
-				})
-				.catch(() => {
 				})
 		},
 		getRoute(file) {
