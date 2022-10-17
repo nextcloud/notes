@@ -58,12 +58,13 @@ import '@nextcloud/dialogs/styles/toast.scss'
 import InfoIcon from 'vue-material-design-icons/Information.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
-import { config } from './config.js'
-import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
-import store from './store.js'
 import AppHelp from './components/AppHelp.vue'
+
+import { config } from './config.js'
+import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
+import store from './store.js'
 
 export default {
 	name: 'App',
