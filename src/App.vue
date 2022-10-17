@@ -19,7 +19,7 @@
 				<NcAppNavigationItem
 					:title="t('notes', 'Help')"
 					:pinned="true"
-					@click="openHelp"
+					@click.prevent="openHelp"
 				>
 					<InfoIcon slot="icon" :size="20" />
 				</NcAppNavigationItem>
