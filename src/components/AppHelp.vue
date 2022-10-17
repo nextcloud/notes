@@ -191,7 +191,7 @@ export default {
 
 	methods: {
 		emitOpen(newValue) {
-			this.$emit('update:open', this.helpOpen)
+			this.$emit('update:open', newValue)
 		},
 
 		onNewNote() {
