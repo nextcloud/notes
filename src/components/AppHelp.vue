@@ -103,24 +103,23 @@ export default {
 	computed: {
 		getShortcuts() {
 			return [
-				{ shortcut: t('notes', 'CTRL') + '+\'', action: t('notes', 'Wrap the selection in Quotes') },
 				{ shortcut: t('notes', 'CTRL') + '+B', action: t('notes', 'Make the selection bold') },
-				{ shortcut: t('notes', 'CTRL') + '+E', action: t('notes', 'Remove any styles from the selected text') },
-				{ shortcut: t('notes', 'CTRL') + '+H', action: t('notes', 'Toggle heading for current line') },
-				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+C', action: t('notes', 'The selection will be turned into monospace') },
-				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+I', action: t('notes', 'Insert image at the cursor') },
-				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+L', action: t('notes', 'Makes the current line a list element with a number') },
-				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'SHIFT') + '+H', action: t('notes', 'Set the current line as a big Heading') },
 				{ shortcut: t('notes', 'CTRL') + '+I', action: t('notes', 'Make the selection italic') },
-				{ shortcut: t('notes', 'CTRL') + '+K', action: t('notes', 'Insert link at cursor') },
+				{ shortcut: t('notes', 'CTRL') + '+\'', action: t('notes', 'Wrap the selection in quotes') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+C', action: t('notes', 'The selection will be turned into monospace') },
+				{ shortcut: t('notes', 'CTRL') + '+E', action: t('notes', 'Remove any styles from the selected text') },
 				{ shortcut: t('notes', 'CTRL') + '+L', action: t('notes', 'Makes the current line a list element') },
-				{ shortcut: 'F11', action: t('notes', 'Make the note fullscreen') },
-				{ shortcut: t('notes', 'CTRL') + '+/', action: t('notes', 'Switch between Editor and Viewer') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+L', action: t('notes', 'Makes the current line a list element with a number') },
+				{ shortcut: t('notes', 'CTRL') + '+H', action: t('notes', 'Toggle heading for current line') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'SHIFT') + '+H', action: t('notes', 'Set the current line as a big heading') },
+				{ shortcut: t('notes', 'CTRL') + '+K', action: t('notes', 'Insert link') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+I', action: t('notes', 'Insert image') },
+				{ shortcut: t('notes', 'CTRL') + '+/', action: t('notes', 'Switch between editor and viewer') },
 			]
 		},
 		getMarkdown() {
 			return [
-				{ sequence: '**' + t('notes', 'bolding') + '**', result: t('notes', 'bolding'), visualized: '<b>' + t('notes', 'bolding') + '</b>' },
+				{ sequence: '**' + t('notes', 'bold') + '**', result: t('notes', 'bold'), visualized: '<b>' + t('notes', 'bold') + '</b>' },
 				{ sequence: '*' + t('notes', 'italic') + '*', result: t('notes', 'italic'), visualized: '<em>' + t('notes', 'italic') + '</em>' },
 				{ sequence: '~~' + t('notes', 'strikethrough') + '~~', result: t('notes', 'strikethrough'), visualized: '<s>' + t('notes', 'strikethrough') + '</s>' },
 
