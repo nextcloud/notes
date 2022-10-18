@@ -37,7 +37,7 @@
 							{{ t('notes', 'Visualized') }}
 						</th>
 					</tr>
-					<tr v-for="(item, index) in getMarkdown" :key="index">
+					<tr v-for="(item, index) in formatting" :key="index">
 						<!-- eslint-disable-next-line vue/no-v-html -->
 						<td v-html="item.sequence" />
 						<td>
@@ -57,7 +57,7 @@
 						<th>{{ t('notes', 'Shortcut') }}</th>
 						<th>{{ t('notes', 'Action') }}</th>
 					</tr>
-					<tr v-for="(item, index) in getShortcuts" :key="index">
+					<tr v-for="(item, index) in shortcuts" :key="index">
 						<td>{{ item.shortcut }}</td>
 						<td>{{ item.action }}</td>
 					</tr>
@@ -97,12 +97,7 @@ export default {
 	data() {
 		return {
 			helpOpen: this.open,
-		}
-	},
-
-	computed: {
-		getShortcuts() {
-			return [
+			shortcuts: [
 				{ shortcut: t('notes', 'CTRL') + '+B', action: t('notes', 'Make the selection bold') },
 				{ shortcut: t('notes', 'CTRL') + '+I', action: t('notes', 'Make the selection italic') },
 				{ shortcut: t('notes', 'CTRL') + '+\'', action: t('notes', 'Wrap the selection in quotes') },
@@ -115,10 +110,8 @@ export default {
 				{ shortcut: t('notes', 'CTRL') + '+K', action: t('notes', 'Insert link') },
 				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+I', action: t('notes', 'Insert image') },
 				{ shortcut: t('notes', 'CTRL') + '+/', action: t('notes', 'Switch between editor and viewer') },
-			]
-		},
-		getMarkdown() {
-			return [
+			],
+			formatting: [
 				{ sequence: '**' + t('notes', 'bold') + '**', result: t('notes', 'bold'), visualized: '<b>' + t('notes', 'bold') + '</b>' },
 				{ sequence: '*' + t('notes', 'italic') + '*', result: t('notes', 'italic'), visualized: '<em>' + t('notes', 'italic') + '</em>' },
 				{ sequence: '~~' + t('notes', 'strikethrough') + '~~', result: t('notes', 'strikethrough'), visualized: '<s>' + t('notes', 'strikethrough') + '</s>' },
@@ -143,8 +136,8 @@ export default {
 
 				{ sequence: '`' + t('notes', 'code') + '`', result: t('notes', 'code'), visualized: '<code>' + t('notes', 'code') + '</code>' },
 				{ sequence: '```<br>' + t('notes', 'Multi line block code') + '<br>```', result: t('notes', 'Multi line block code'), visualized: '<pre>' + t('notes', 'Multi line block code') + '</pre>' },
-			]
-		},
+			],
+		}
 	},
 
 	watch: {
