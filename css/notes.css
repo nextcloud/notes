@@ -26,6 +26,25 @@ li:focus  .app-navigation-entry__utils .action-item {
 	visibility: visible;
 }
 
+/* Welcome / Help */
+.feature {
+	background-position: left center;
+	width: 100%;
+	min-height: 32px;
+	line-height: 32px;
+	padding-left: 32px;
+	margin-top: 0.3em !important;
+	margin-bottom: 0.3em !important;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.feature ul {
+	list-style: circle outside;
+	padding-left: 2em;
+}
+
+
 @media print {
 	#header,
 	.app-navigation,

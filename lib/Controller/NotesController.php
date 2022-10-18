@@ -149,9 +149,12 @@ class NotesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $category) : JSONResponse {
-		return $this->helper->handleErrorResponse(function () use ($category) {
-			$note = $this->notesService->create($this->helper->getUID(), '', $category);
+	public function create(string $category = '', string $content = '', string $title = '') : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($category, $content, $title) {
+			$note = $this->notesService->create($this->helper->getUID(), $title, $category);
+			if ($content) {
+				$note->setContent($content);
+			}
 			return $this->helper->getNoteData($note);
 		});
 	}

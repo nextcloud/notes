@@ -5,22 +5,25 @@
 			<div class="feature icon-add">
 				{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
 			</div>
+			<div class="feature">
+				<NcButton type="secondary" @click="onNewNote">
+					<PlusIcon slot="icon" :size="20" />
+					{{ t('notes', 'New note') }}
+				</NcButton>
+			</div>
 			<div class="feature icon-fullscreen">
 				{{ t('notes', 'Write down your thoughts without any distractions.') }}
 			</div>
 			<div class="feature icon-toggle-filelist">
 				{{ t('notes', 'Use Markdown markups to style your text.') }}
 			</div>
+			<div class="feature">
+				<CreateSampleButton />
+			</div>
 			<div class="feature icon-files-dark">
 				{{ t('notes', 'Organize your notes in categories.') }}
 			</div>
-			<div class="feature icon-phone">
-				{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
-				<ul>
-					<li><a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">{{ t('notes', 'Android app') }}</a></li>
-					<li><a target="_blank" href="https://github.com/owncloud/notes-iOS-App">{{ t('notes', 'iOS app') }}</a></li>
-				</ul>
-			</div>
+			<HelpMobile />
 		</div>
 	</NcAppContent>
 </template>
@@ -28,20 +31,44 @@
 
 import {
 	NcAppContent,
+	NcButton,
 } from '@nextcloud/vue'
+
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
+
+import CreateSampleButton from './CreateSampleButton.vue'
+import HelpMobile from './HelpMobile.vue'
+
+import { createNote } from '../NotesService.js'
 
 export default {
 	name: 'Welcome',
 
 	components: {
+		CreateSampleButton,
+		HelpMobile,
 		NcAppContent,
+		NcButton,
+		PlusIcon,
+	},
+
+	methods: {
+		onNewNote() {
+			createNote()
+				.then(note => {
+					this.$router.push({
+						name: 'note',
+						params: { noteId: note.id.toString() },
+					})
+				})
+		},
 	},
 }
 
 </script>
-<style>
+<style scoped>
 .welcome-content {
-	padding: 2em 3em;
+	padding: 4em 8em;
 }
 
 .welcome-content h2 {
@@ -52,15 +79,4 @@ export default {
 	color: var(--color-primary-element);
 }
 
-.feature {
-	background-position: left top;
-	min-height: 32px;
-	padding-left: 32px;
-	margin-top: 1em;
-}
-
-.feature ul {
-	list-style: circle outside;
-	padding-left: 2em;
-}
 </style>

@@ -16,6 +16,14 @@
 					@category-selected="onSelectCategory"
 					@note-deleted="onNoteDeleted"
 				/>
+				<NcAppNavigationItem
+					:title="t('notes', 'Help')"
+					:pinned="true"
+					@click.prevent="openHelp"
+				>
+					<InfoIcon slot="icon" :size="20" />
+				</NcAppNavigationItem>
+				<AppHelp :open.sync="helpVisible" />
 			</template>
 
 			<template #footer>
@@ -41,28 +49,35 @@ import {
 	NcAppContent,
 	NcAppNavigation,
 	NcAppNavigationNew,
+	NcAppNavigationItem,
 	NcContent,
 } from '@nextcloud/vue'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
+import InfoIcon from 'vue-material-design-icons/Information.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
+
+import AppSettings from './components/AppSettings.vue'
+import NavigationList from './components/NavigationList.vue'
+import AppHelp from './components/AppHelp.vue'
 
 import { config } from './config.js'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
-import AppSettings from './components/AppSettings.vue'
-import NavigationList from './components/NavigationList.vue'
 import store from './store.js'
 
 export default {
 	name: 'App',
 
 	components: {
+		AppHelp,
 		AppSettings,
+		InfoIcon,
 		NavigationList,
 		NcAppContent,
 		NcAppNavigation,
 		NcAppNavigationNew,
+		NcAppNavigationItem,
 		NcContent,
 		PlusIcon,
 	},
@@ -81,6 +96,7 @@ export default {
 			undoTimer: null,
 			deletedNotes: [],
 			refreshTimer: null,
+			helpVisible: false,
 		}
 	},
 
@@ -225,6 +241,10 @@ export default {
 					query,
 				})
 			}
+		},
+
+		openHelp() {
+			this.helpVisible = true
 		},
 
 		onNewNote() {
