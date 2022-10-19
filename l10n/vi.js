@@ -4,11 +4,12 @@ OC.L10N.register(
     "Notes" : "Ghi chép",
     "Error" : "Lỗi",
     "New note" : "Ghi chú mới",
+    "Help" : "Trợ giúp",
+    "Insert image" : "Chèn ảnh",
     "Display mode for notes" : "Chế độ hiển thị cho các ghi chú",
     "Open in edit mode" : "Mở trong chế độ chỉnh sửa",
     "Open in preview mode" : "Mở trong chế độ xem trước",
     "No notes yet" : "Chưa có ghi chú",
-    "Insert image" : "Chèn ảnh",
     "All notes" : "Tất cả ghi chú",
     "Categories" : "Các hạng mục",
     "Loading …" : "Đang tải...",
@@ -27,7 +28,6 @@ OC.L10N.register(
     "Preview" : "Xem trước",
     "Category" : "Hạng mục",
     "Uncategorized" : "Chưa phân loại",
-    "Android app" : "Ứng dụng Android",
-    "iOS app" : "Ứng dụng IOS"
+    "Tasks" : "Nhiệm vụ"
 },
 "nplurals=1; plural=0;");

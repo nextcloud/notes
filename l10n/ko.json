@@ -3,6 +3,7 @@
     "Reading notes from filesystem has failed." : "파일시스템에서 메모를 불러오기 실패",
     "Error" : "오류",
     "New note" : "새 메모",
+    "Help" : "도움말",
     "Please see Nextcloud server log for details." : "Nextcloud 서버 로그에서 자세한 사항을 확인하십시오.",
     "Deleted {title}" : "{title} 삭제함",
     "Undo Delete" : "삭제 취소",
@@ -39,8 +40,6 @@
     "Uncategorized" : "분류되지 않음",
     "Saving failed!" : "저장할 수 없습니다!",
     "_%n word_::_%n words_" : ["단어 %n개"],
-    "Android app" : "Android 앱",
-    "iOS app" : "iOS 앱",
     "Development Mode" : "개발자 모드"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

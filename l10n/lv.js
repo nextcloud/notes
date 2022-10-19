@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Piezīmes",
     "Error" : "Kļūda",
     "New note" : "Jauna piezīme",
+    "Help" : "Palīdzība",
     "No notes yet" : "Nav nevienas piezīmes",
     "All notes" : "Visas piezīmes",
     "Categories" : "Kategorijas",
@@ -21,7 +22,6 @@ OC.L10N.register(
     "Category" : "Kategorija",
     "Uncategorized" : "Bez kategorijas",
     "_%n word_::_%n words_" : ["%n words","%n vārdi","%n vārdi"],
-    "Android app" : "Android lietotne",
-    "iOS app" : "iOS lietotne"
+    "Tasks" : "Uzdevumi"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

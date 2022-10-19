@@ -1,10 +1,12 @@
 { "translations": {
     "Notes" : "ئىزاھاتلار",
     "Error" : "خاتالىق",
+    "Help" : "ياردەم",
     "Today" : "بۈگۈن",
     "Rename" : "ئات ئۆزگەرت",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Edit" : "تەھرىر"
+    "Edit" : "تەھرىر",
+    "Tasks" : "ۋەزىپەلەر"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

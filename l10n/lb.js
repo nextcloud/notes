@@ -3,14 +3,13 @@ OC.L10N.register(
     {
     "Notes" : "Notizen",
     "Error" : "Fehler",
+    "Help" : "Hëllef",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
     "Rename" : "Ëmbenennen",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Detailer",
-    "Edit" : "Änneren",
-    "Android app" : "Android-App",
-    "iOS app" : "iOS-App"
+    "Edit" : "Änneren"
 },
 "nplurals=2; plural=(n != 1);");

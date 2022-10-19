@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Nota",
     "Error" : "Ralat",
     "New note" : "Note baharu",
+    "Help" : "Bantuan",
     "Today" : "Hari ini",
     "Yesterday" : "Semalam",
     "Rename" : "Namakan",

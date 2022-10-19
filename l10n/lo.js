@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Error" : "ຜິດພາດ",
+    "Help" : "ການຊ່ວຍເຫຼືອ",
     "Loading …" : "ກຳລັງໂຫຼດ",
     "Today" : "ມື້ນີ້",
     "Yesterday" : "ມື້ວານນີ້",

@@ -20,8 +20,6 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Preview" : "Previsualizar",
     "Category" : "Estaya",
-    "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"],
-    "Android app" : "Aplicación p'Android",
-    "iOS app" : "Aplicación pa iOS"
+    "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"]
 },
 "nplurals=2; plural=(n != 1);");

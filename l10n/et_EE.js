@@ -17,8 +17,6 @@ OC.L10N.register(
     "Edit" : "Redigeeri",
     "Preview" : "Eelvaade",
     "Category" : "Kategooria",
-    "_%n word_::_%n words_" : ["%n sõna","%n sõna"],
-    "Android app" : "Androidi rakendus",
-    "iOS app" : "iOS-i rakendus"
+    "_%n word_::_%n words_" : ["%n sõna","%n sõna"]
 },
 "nplurals=2; plural=(n != 1);");

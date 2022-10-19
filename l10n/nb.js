@@ -4,12 +4,13 @@ OC.L10N.register(
     "Notes" : "Notater",
     "Error" : "Feil",
     "New note" : "Nytt notat",
+    "Help" : "Hjelp",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Det finnes ulagrede notater. Å forlate siden vil forkaste alle endringer!",
+    "Insert image" : "Sett inn bilde",
     "Display mode for notes" : "Visningsmodus for notater",
     "Open in edit mode" : "Åpne i redigeringsmodus",
     "Open in preview mode" : "Åpne i forhåndsvisningsmodus",
     "No notes yet" : "Ingen notater enda",
-    "Insert image" : "Sett inn bilde",
     "All notes" : "Alle notater",
     "Categories" : "Kategorier",
     "Loading …" : "Laster...",
@@ -31,7 +32,6 @@ OC.L10N.register(
     "Uncategorized" : "Ukategorisert",
     "Saving failed!" : "Lagring mislyktes!",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
-    "Android app" : "Android-app",
-    "iOS app" : "iOS-app"
+    "Tasks" : "Oppgaver"
 },
 "nplurals=2; plural=(n != 1);");

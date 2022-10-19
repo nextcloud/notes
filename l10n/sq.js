@@ -4,6 +4,8 @@ OC.L10N.register(
     "Notes" : "Shënime",
     "Error" : "Error",
     "New note" : "Shënim i ri",
+    "Help" : "Ndihmë",
+    "Result" : "Rezultatet",
     "Open in edit mode" : "Hapur në modalitetin e redaktimit",
     "Open in preview mode" : "Hape në parapamje",
     "No notes yet" : "Nuk ka shënime",
@@ -24,7 +26,6 @@ OC.L10N.register(
     "Category" : "Kategori",
     "Uncategorized" : "Të pakategorizuara",
     "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"],
-    "Android app" : "Aplikacion Android",
-    "iOS app" : "Aplikacion iOS"
+    "Tasks" : "Detyra"
 },
 "nplurals=2; plural=(n != 1);");

@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Notat",
     "Error" : "Feil",
     "New note" : "Nytt notat",
+    "Help" : "Hjelp",
     "Today" : "I dag",
     "Yesterday" : "i går",
     "Rename" : "Gje nytt namn",
@@ -12,6 +13,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Details" : "Detaljar",
     "Edit" : "Endra",
-    "Category" : "Kategori"
+    "Category" : "Kategori",
+    "Tasks" : "Oppgåver"
 },
 "nplurals=2; plural=(n != 1);");

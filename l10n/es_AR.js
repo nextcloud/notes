@@ -26,8 +26,6 @@ OC.L10N.register(
     "Preview" : "Vista previa",
     "Category" : "Categoría",
     "Uncategorized" : "Sin categoría",
-    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"],
-    "Android app" : "Aplicación android",
-    "iOS app" : "Aplicación iOS"
+    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"]
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

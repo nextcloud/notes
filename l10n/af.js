@@ -5,8 +5,8 @@ OC.L10N.register(
     "Error" : "Fout",
     "New note" : "Nuwe nota",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Daar is ongestoorde veranderinge. Indien die bladsy gesluit word sal alle veranderinge geskrap word!",
-    "File extension for new notes" : "Lêeruitbreiding vir nuwe notas",
     "Insert image" : "Voer beeld in",
+    "File extension for new notes" : "Lêeruitbreiding vir nuwe notas",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
     "Loading …" : "Laai …",
@@ -24,8 +24,6 @@ OC.L10N.register(
     "Category" : "Kategorie",
     "Uncategorized" : "Ongekategorieseer",
     "Saving failed!" : "Stoor het misluk!",
-    "_%n word_::_%n words_" : ["%n woord","%n woorde"],
-    "Android app" : "Android-toep",
-    "iOS app" : "iOS-toep"
+    "_%n word_::_%n words_" : ["%n woord","%n woorde"]
 },
 "nplurals=2; plural=(n != 1);");

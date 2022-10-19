@@ -11,8 +11,6 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Detallar",
-    "Edit" : "Dəyişiklik et",
-    "Android app" : "Android proqramı",
-    "iOS app" : "iOS proqramı"
+    "Edit" : "Dəyişiklik et"
 },
 "nplurals=2; plural=(n != 1);");

@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Notes",
     "Error" : "Greška",
     "New note" : "Nova beleška",
+    "Help" : "Pomoć",
     "Display mode for notes" : "Režim prikaza beleški",
     "Open in edit mode" : "Otvori u režimu uređivanja",
     "Open in preview mode" : "Otvori u režimu pregleda",

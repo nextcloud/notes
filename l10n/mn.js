@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Тэмдэглэл",
     "Error" : "Алдаа",
     "New note" : "Шинэ тэмдэглэл",
+    "Help" : "Туслах",
     "No notes yet" : "шинэ тэмдэглэл алга",
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",

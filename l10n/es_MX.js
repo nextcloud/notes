@@ -6,10 +6,10 @@ OC.L10N.register(
     "New note" : "Nota nueva",
     "Distraction-free notes and writing" : "Notas y escritura libre de distracciones",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin salvar. ¡Al salir de la página perderá todos los cambios!",
+    "Insert image" : "Añadir imagen",
     "Open in edit mode" : "Abrir en modo edición",
     "Open in preview mode" : "Abrir en modo previsualización",
     "No notes yet" : "Aún no hay notas",
-    "Insert image" : "Añadir imagen",
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
     "Today" : "Hoy",
@@ -27,8 +27,6 @@ OC.L10N.register(
     "Category" : "Categoría",
     "Uncategorized" : "Sin categoría",
     "Saving failed!" : "¡Falla al guardar!",
-    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"],
-    "Android app" : "Aplicación Android",
-    "iOS app" : "Aplicación iOS"
+    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"]
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

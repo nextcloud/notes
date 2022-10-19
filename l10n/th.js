@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "บันทึกย่อ",
     "Error" : "ข้อผิดพลาด",
     "New note" : "สร้างบันทึกใหม่",
+    "Help" : "ช่วยเหลือ",
     "Display mode for notes" : "โหมดแสดงผลสำหรับโน้ต",
     "Open in edit mode" : "เปิดในโหมดแก้ไข",
     "Open in preview mode" : "เปิดในโหมดแสดงตัวอย่าง",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "Category" : "หมวดหมู่",
     "Uncategorized" : "ไม่ได้จัดหมวดหมู่",
     "_%n word_::_%n words_" : ["%n คำ"],
-    "Android app" : "แอพฯ แอนดรอยด์",
-    "iOS app" : "แอพฯ IOS"
+    "Tasks" : "งาน"
 },
 "nplurals=1; plural=0;");

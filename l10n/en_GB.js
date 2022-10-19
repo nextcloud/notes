@@ -29,8 +29,6 @@ OC.L10N.register(
     "Uncategorized" : "Uncategorised",
     "Saving failed!" : "Saving failed!",
     "_%n word_::_%n words_" : ["%n word","%n words"],
-    "Android app" : "Android app",
-    "iOS app" : "iOS app",
     "Toggling favorite for note {id} has failed." : "Toggling favourite for note {id} has failed."
 },
 "nplurals=2; plural=(n != 1);");
