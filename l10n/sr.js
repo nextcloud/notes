@@ -19,6 +19,7 @@ OC.L10N.register(
     "Organize your notes in categories." : "Организујте белешке у категорије.",
     "Use Markdown markups to style your text." : "Користите Markdown језик да стилизујете текст.",
     "Result" : "Резултат",
+    "Action" : "Радња",
     "Insert image" : "Убаци слику",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Крените да пишете белешке кликајући „{newnote}“ из навигације апликације.",
     "Folder to store your notes" : "Фасцикла за складиштење белешки",

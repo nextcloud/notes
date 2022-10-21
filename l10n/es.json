@@ -5,6 +5,7 @@
     "New note" : "Nueva nota",
     "Distraction-free notes and writing" : "Escritura de notas sin distracciones",
     "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "La app de Notas es una aplicación de escritura de notas sin distracciones para [Nextcloud](https://www.nextcloud.com/). Ofrece categorías para mejorar la organización y soporta el formato mediante [Markdown](https://en.wikipedia.org/wiki/Markdown). Las notas se guardan como archivos en tu Nextcloud, por lo que puedes verlas y editarlas con cada cliente de Nextcloud. Además, una [API REST](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) separada permite una integración sencilla con apps de terceras partes (actualmente hay apps de notas para [Android](https://github.com/stefan-niedermann/nextcloud-notes) y [iOS](https://github.com/owncloud/notes-iOS-App) y la [consola](https://git.danielmoch.com/nncli/about) que permiten un acceso cómodo a tus notas de Nextcloud). Otras características incluyen el marcar notas como favoritas.",
+    "Help" : "Ayuda",
     "Please see Nextcloud server log for details." : "Por favor, revisa el registro del servidor de Nextcloud para ver los detalles.",
     "Deleted {title}" : "Borrado {title}",
     "Undo Delete" : "Deshacer Borrado",
@@ -15,6 +16,9 @@
     "Write down your thoughts without any distractions." : "Escribe tus pensamientos sin distracciones.",
     "Organize your notes in categories." : "Organice sus notas en categorías.",
     "Use Markdown markups to style your text." : "Utilice etiquetado Markdown para dar estilo a su texto.",
+    "Result" : "Resultado",
+    "Shortcuts" : "Atajos",
+    "Action" : "Acción",
     "Insert image" : "Insertar imagen",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Comience a escribir una nota haciendo clic sobre “{newnote}” en la navegación de la App.",
     "Notes settings" : "Configuración de Notes",
@@ -91,6 +95,8 @@
     "Toggling favorite for note {id} has failed." : "Fallo al marcar la nota {id} como favorita",
     "Updating the note's category has failed. Is the target directory writable?" : "Fallo al actualizar la categoría de la nota. ¿El directorio destino es escribible?",
     "Updating the category for note {id} has failed." : "Fallo al actualizar la categoría de la nota {id}",
+    "Tasks" : "Tareas",
+    "Quotes" : "Presupuestos",
     "Development Mode" : "Modo de Desarrollo",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Parece que la aplicación de notas ha sido instalada desde una fuente de desarrollo. Por favor instálela desde la <a href=\"%1$s\">AppStore de Nextcloud</a> oficial. Si quieres hacer la aplicación de Notas por ti mismo, por favor sigue las <a href=\"%2$s\">instrucciones para desarrolladores</a>."
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

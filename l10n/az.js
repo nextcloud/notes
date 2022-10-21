@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Qeydlər",
     "Error" : "Səhv",
     "New note" : "Yeni qeyd",
+    "Help" : "Kömək",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Rename" : "Adı dəyiş",
@@ -11,6 +12,7 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "Detallar",
-    "Edit" : "Dəyişiklik et"
+    "Edit" : "Dəyişiklik et",
+    "Tasks" : "Tapşırıqlar"
 },
 "nplurals=2; plural=(n != 1);");

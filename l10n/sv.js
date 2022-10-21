@@ -18,6 +18,8 @@ OC.L10N.register(
     "Organize your notes in categories." : "Organisera dina anteckningar i kategorier.",
     "Use Markdown markups to style your text." : "Använd Markdown för att formatera din text.",
     "Result" : "Resultat",
+    "Shortcuts" : "Genvägar",
+    "Action" : "Action",
     "Insert image" : "Infoga bild",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Böja skriva en anteckning genom att klicka på “{newnote}” i menyn.",
     "Folder to store your notes" : "Mapp för att spara dina anteckningar",

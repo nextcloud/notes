@@ -18,6 +18,9 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Annota i tuoi pensieri senza alcuna distrazione.",
     "Organize your notes in categories." : "Organizza le tue note in categorie.",
     "Use Markdown markups to style your text." : "Usa contrassegni Markdown per formattare il tuo testo.",
+    "Result" : "Risultato",
+    "Shortcuts" : "Scorciatoie",
+    "Action" : "Azione",
     "Insert image" : "Inserisci immagine",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Inizia a scrivere una nota facendo clic su \"{newnote}\" nell'applicazione.",
     "Folder to store your notes" : "Cartella in cui memorizzare le tue note",
@@ -93,6 +96,7 @@ OC.L10N.register(
     "Toggling favorite for note {id} has failed." : "L'attivazione come preferito della nota {id} non è riuscita",
     "Updating the note's category has failed. Is the target directory writable?" : "L'aggiornamento della categoria delle note non è riuscito. La cartella di destinazione è scrivibile?",
     "Updating the category for note {id} has failed." : "Aggiornamento della categoria per la nota {id} non riuscito.",
+    "Tasks" : "Compiti",
     "Quotes" : "Preventivi",
     "Development Mode" : "Modalità di sviluppo",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Sembra che l'applicazione delle note sia stata installata da una sorgente di sviluppo. Installala invece dal <a href=\"%1$s\">Negozio delle applicazioni di Nextcloud</a> ufficiale. Se desideri compilare l'applicazione Note in autonomia, segui le <a href=\"%2$s\">istruzioni per sviluppatori</a>"

@@ -4,6 +4,9 @@ OC.L10N.register(
     "Notes" : "Notes",
     "Error" : "Fallu",
     "New note" : "Nota nueva",
+    "Help" : "Help",
+    "Result" : "Resultáu",
+    "Action" : "Aición",
     "No notes yet" : "Entá nun hai notes",
     "All notes" : "Toles notes",
     "Categories" : "Estayes",
@@ -20,6 +23,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Preview" : "Previsualizar",
     "Category" : "Estaya",
-    "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"]
+    "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"],
+    "Tasks" : "Xeres"
 },
 "nplurals=2; plural=(n != 1);");

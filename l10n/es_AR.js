@@ -4,6 +4,9 @@ OC.L10N.register(
     "Notes" : "Notas",
     "Error" : "Error",
     "New note" : "Nueva nota",
+    "Help" : "Ayuda",
+    "Result" : "Resultado",
+    "Action" : "Acción",
     "Display mode for notes" : "Modo de visualización para notas",
     "Open in edit mode" : "Abrir en modo editor",
     "Open in preview mode" : "Abrir en modo de vista previa",
@@ -26,6 +29,7 @@ OC.L10N.register(
     "Preview" : "Vista previa",
     "Category" : "Categoría",
     "Uncategorized" : "Sin categoría",
-    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"]
+    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"],
+    "Tasks" : "Tareas"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

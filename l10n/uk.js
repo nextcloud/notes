@@ -19,6 +19,7 @@ OC.L10N.register(
     "Organize your notes in categories." : "Упорядкуйте свої нотатки за категоріями.",
     "Use Markdown markups to style your text." : "Використовуйте розмітку Markdown, щоб стилізувати текст.",
     "Result" : "Результат",
+    "Action" : "Дія ",
     "Insert image" : "Додати зображення",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Почніть писати нотатку, натиснувши «{newnote}» ​​у навігаційній панелі програми.",
     "Notes settings" : "Налаштування",

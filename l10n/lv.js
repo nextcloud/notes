@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "Kļūda",
     "New note" : "Jauna piezīme",
     "Help" : "Palīdzība",
+    "Action" : "Darbība",
     "No notes yet" : "Nav nevienas piezīmes",
     "All notes" : "Visas piezīmes",
     "Categories" : "Kategorijas",

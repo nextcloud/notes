@@ -19,6 +19,8 @@ OC.L10N.register(
     "Organize your notes in categories." : "Organizujte si poznámky do kategórií.",
     "Use Markdown markups to style your text." : "Použite formát Markdown na formátovanie vášho textu.",
     "Result" : "Výsledok",
+    "Shortcuts" : "Skratky",
+    "Action" : "Akcia",
     "Insert image" : "Vložiť obrázok",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Začnite písať poznámku kliknutím na “{newnote}” v menu aplikácie.",
     "Notes settings" : "Nastavenia Poznámok",

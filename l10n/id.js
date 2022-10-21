@@ -20,6 +20,7 @@ OC.L10N.register(
     "Edit" : "Sunting",
     "Preview" : "Pratinjau",
     "Category" : "Kategori",
-    "_%n word_::_%n words_" : ["%n kata"]
+    "_%n word_::_%n words_" : ["%n kata"],
+    "Tasks" : "Tugas"
 },
 "nplurals=1; plural=0;");

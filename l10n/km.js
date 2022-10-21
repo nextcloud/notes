@@ -11,6 +11,7 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "ព័ត៌មាន​លម្អិត",
-    "Edit" : "កែប្រែ"
+    "Edit" : "កែប្រែ",
+    "Tasks" : "ភារកិច្ច"
 },
 "nplurals=1; plural=0;");

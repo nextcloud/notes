@@ -6,6 +6,7 @@ OC.L10N.register(
     "New note" : "Shënim i ri",
     "Help" : "Ndihmë",
     "Result" : "Rezultatet",
+    "Action" : "Veprim",
     "Open in edit mode" : "Hapur në modalitetin e redaktimit",
     "Open in preview mode" : "Hape në parapamje",
     "No notes yet" : "Nuk ka shënime",

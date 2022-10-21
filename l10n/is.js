@@ -7,6 +7,8 @@ OC.L10N.register(
     "Distraction-free notes and writing" : "Augljós ritun og skoðun minnispunkta",
     "Help" : "Hjálp",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Það eru óvistaðir minnispunktar. Ef farið er af síðunni munu allar breytingar tapast!",
+    "Result" : "Niðurstöður",
+    "Action" : "Aðgerð",
     "Insert image" : "Setja inn mynd",
     "Folder to store your notes" : "Mappa til að geyma minnispunktana þína",
     "File extension for new notes" : "Skráarending fyrir nýja minnispunkta",
@@ -34,6 +36,7 @@ OC.L10N.register(
     "Saving failed!" : "Vistun mistókst!",
     "Subcategory" : "Undirflokkur",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
-    "Updating the note's category has failed. Is the target directory writable?" : "Uppfærsla á flokki minnispunkts mistókst. Er móttökumappan skrifanleg?"
+    "Updating the note's category has failed. Is the target directory writable?" : "Uppfærsla á flokki minnispunkts mistókst. Er móttökumappan skrifanleg?",
+    "Tasks" : "Verkefni"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

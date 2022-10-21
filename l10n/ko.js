@@ -13,6 +13,9 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "저장하지 않은 메모가 있습니다. 이 페이지를 벗어나면 변경 사항이 손실됩니다!",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number}개의 메모를 삭제함"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["{number}개의 메모를 복구함"],
+    "Result" : "결과",
+    "Shortcuts" : "단축키",
+    "Action" : "동작",
     "Notes settings" : "메모 설정",
     "Folder to store your notes" : "메모를 저장할 폴더",
     "Root directory" : "루트 디렉터리",
@@ -42,6 +45,7 @@ OC.L10N.register(
     "Uncategorized" : "분류되지 않음",
     "Saving failed!" : "저장할 수 없습니다!",
     "_%n word_::_%n words_" : ["단어 %n개"],
+    "Tasks" : "작업",
     "Development Mode" : "개발자 모드"
 },
 "nplurals=1; plural=0;");

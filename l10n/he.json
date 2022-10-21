@@ -4,6 +4,7 @@
     "Error" : "שגיאה",
     "New note" : "פתק חדש",
     "Distraction-free notes and writing" : "פתקים וכתיבה ללא הסחות דעת",
+    "Help" : "עזרה",
     "Please see Nextcloud server log for details." : "נא לעיין ביומן השרת של Nextcloud לפרטים נוספים.",
     "Deleted {title}" : "{title} נמחק",
     "Undo Delete" : "ביטול מחיקה",
@@ -14,6 +15,9 @@
     "Write down your thoughts without any distractions." : "כתיבת המחשבות שלך ללא הסחות.",
     "Organize your notes in categories." : "ארגון הפתקים שלך בקטגוריות.",
     "Use Markdown markups to style your text." : "תמיכה בסימון מסוג Markdown כדי לסגנן את הטקסט שלך.",
+    "Result" : "תוצאה",
+    "Shortcuts" : "קיצורי דרך",
+    "Action" : "פעולה",
     "Insert image" : "הוספת תמונה",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "ניתן להתחיל לכתוב פתק על ידי לחיצה על „{newnote}” בניווט של היישומון.",
     "Folder to store your notes" : "תיקייה לאחסון הפתקיות שלך",
@@ -77,6 +81,7 @@
     "Toggling favorite for note {id} has failed." : "החלפת מצב העדפה לפתק {id} נכשלה.",
     "Updating the note's category has failed. Is the target directory writable?" : "עדכון קטגוריית הפתק נכשלה. האם תיקיית היעד נגישה לכתיבה?",
     "Updating the category for note {id} has failed." : "עדכון הקטגוריה של הפתק {id} נכשלה.",
+    "Tasks" : "משימות",
     "Development Mode" : "מצב פיתוח"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

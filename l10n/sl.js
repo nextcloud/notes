@@ -19,6 +19,8 @@ OC.L10N.register(
     "Organize your notes in categories." : "Beležke je mogoče razvrstiti v kategorije.",
     "Use Markdown markups to style your text." : "Za oblikovanje besedila je mogoče uporabiti jezik Markdown.",
     "Result" : "Rezultat",
+    "Shortcuts" : "Bližnjice",
+    "Action" : "Dejanje",
     "Insert image" : "Vstavi sliko",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Novo beležko je mogoče začeti s klikom na »{newnote}«.",
     "Notes settings" : "Nastavitve beležk",

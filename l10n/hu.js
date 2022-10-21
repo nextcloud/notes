@@ -18,6 +18,9 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Írd le a gondolatait, zavaró tényezők nélkül.",
     "Organize your notes in categories." : "Rendezze kategóriákba a jegyzeteit.",
     "Use Markdown markups to style your text." : "Használjon Markdown leírást a szövege formázásához.",
+    "Result" : "Eredmény",
+    "Shortcuts" : "Gyorsbillentyűk",
+    "Action" : "Művelet",
     "Insert image" : "Kép beszúrása",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Kezdjen el egy jegyzetet írni a „{newnote}” gombra kattintva a főmenüben.",
     "Notes settings" : "Jegyzetek beállításai",
@@ -94,6 +97,7 @@ OC.L10N.register(
     "Toggling favorite for note {id} has failed." : "A(z) {id} jegyzet hozzáadása a kedvencekhez sikertelen.",
     "Updating the note's category has failed. Is the target directory writable?" : "A jegyzet kategóriájának frissítése sikertelen. Írható a célkönyvtár?",
     "Updating the category for note {id} has failed." : "A jegyzet kategóriájának módosítása sikertelen.",
+    "Tasks" : "Feladatok",
     "Quotes" : "Árajánlatok",
     "Development Mode" : "Fejlesztői mód",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Úgy tűnik, hogy a Jegyzetek alkalmazást fejlesztői forrásból telepítették. Inkább telepítse a hivatalos <a href=\"%1$s\">Nextcloud alkalmazástárból </a>. Ha Ön szeretné összeállítani a Jegyzetek alkalmazást, akkor kövesse a <a href=\"%2$s\">fejlesztői utasításokat</a>."

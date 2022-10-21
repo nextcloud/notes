@@ -19,6 +19,8 @@ OC.L10N.register(
     "Organize your notes in categories." : "Kategorileri kullanarak notlarınızı gruplayabilirsiniz.",
     "Use Markdown markups to style your text." : "Metni biçimlendirmek için markdown kod imlerini kullanın.",
     "Result" : "Sonuç",
+    "Shortcuts" : "Kısa yollar",
+    "Action" : "İşlem",
     "Insert image" : "Görsel ekle",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Uygulama menüsünden “{newnote}” üzerine tıklayarak bir not yazmaya başlayın.",
     "Notes settings" : "Notlar ayarları",

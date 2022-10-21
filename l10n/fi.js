@@ -6,6 +6,7 @@ OC.L10N.register(
     "Error" : "Virhe",
     "New note" : "Uusi muistiinpano",
     "Distraction-free notes and writing" : "Häiriötöntä muistiinpanojen ottamista ja kirjoittamista",
+    "Help" : "Ohje",
     "Please see Nextcloud server log for details." : "Katso lisätietoja Nextcloud-palvelimen lokista.",
     "Deleted {title}" : "Poistettu {title}",
     "Undo Delete" : "Kumoa poistaminen",
@@ -16,6 +17,8 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Kirjaa ajatuksesi ilman häiriötekijöitä.",
     "Organize your notes in categories." : "Organisoi muistiinpanosi luokkiin.",
     "Use Markdown markups to style your text." : "Käytä Markdown-merkintää tekstille.",
+    "Result" : "Tulos",
+    "Action" : "Toiminto",
     "Insert image" : "Lisää kuva",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Aloita muistiinpanon kirjoittaminen napauttamalla \"{newnote}\" navigoinnissa.",
     "Notes settings" : "Muistiinpanojen asetukset",
@@ -91,6 +94,7 @@ OC.L10N.register(
     "Deleting note {id} has failed." : "Muistiinpanon {id} poistaminen epäonnistui.",
     "Updating the note's category has failed. Is the target directory writable?" : "Muistiinpanon kategorian vaihtaminen epäonnistui. Onko kohdehakemistoon kirjoitusoikeuksia?",
     "Updating the category for note {id} has failed." : "Muistiinpanon {id} kategorian vaihtaminen on epäonnistunut.",
+    "Tasks" : "Tehtävät",
     "Development Mode" : "Kehitystila"
 },
 "nplurals=2; plural=(n != 1);");

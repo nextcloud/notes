@@ -16,6 +16,7 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Užsirašykite savo mintis be jokio blaškymosi.",
     "Organize your notes in categories." : "Skirstykite užrašus po kategorijas.",
     "Use Markdown markups to style your text." : "Naudokite „Markdown“ ženklinimo kalbą, kad taisytumėte teksto stilių.",
+    "Action" : "Veiksmas",
     "Insert image" : "Įterpti paveikslą",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Pradėkite rašyti užrašus, spusteldami ant mygtuko „{newnote}“.",
     "Notes settings" : "Užrašų nustatymai",
@@ -70,6 +71,7 @@ OC.L10N.register(
     "Note is locked." : "Užrašai užrakinti.",
     "Updating settings has failed." : "Nepavyko atnaujinti nustatymų.",
     "Updating the note's category has failed. Is the target directory writable?" : "Nepavyko atnaujinti užrašų kategorijos. Ar paskirties katalogas yra skirtas rašymui?",
+    "Tasks" : "Užduotys",
     "Development Mode" : "Plėtotojo veiksena"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

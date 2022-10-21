@@ -6,6 +6,8 @@ OC.L10N.register(
     "New note" : "ახალი ჩანაწერი",
     "Help" : "დახმარება",
     "There are unsaved notes. Leaving the page will discard all changes!" : "არსებობს შეუნახავი ჩანაწერები. გვერდის დატოვება ყველა ცვლილებას უარყოფს!",
+    "Result" : "შედეგი",
+    "Action" : "ქმედება",
     "Open in edit mode" : "გახსენით ცვლილების რეჟიმში",
     "Open in preview mode" : "გახსენით წინასწარი ჩვენების რეჟიმში",
     "No notes yet" : "ჯერ ჩანაწერები არაა",
@@ -24,6 +26,7 @@ OC.L10N.register(
     "Category" : "კატეგორია",
     "Uncategorized" : "არაკატეგორიზირებული",
     "Saving failed!" : "შენახვა ვერ მოხერხდა!",
-    "_%n word_::_%n words_" : ["%n სიტყვა","%n სიტყვა"]
+    "_%n word_::_%n words_" : ["%n სიტყვა","%n სიტყვა"],
+    "Tasks" : "დავალებები"
 },
 "nplurals=2; plural=(n!=1);");

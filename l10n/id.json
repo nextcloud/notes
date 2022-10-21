@@ -18,6 +18,7 @@
     "Edit" : "Sunting",
     "Preview" : "Pratinjau",
     "Category" : "Kategori",
-    "_%n word_::_%n words_" : ["%n kata"]
+    "_%n word_::_%n words_" : ["%n kata"],
+    "Tasks" : "Tugas"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

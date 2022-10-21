@@ -4,7 +4,10 @@ OC.L10N.register(
     "Notes" : "Noter",
     "Error" : "Fejl",
     "New note" : "Ny note",
+    "Help" : "Hjælp",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Der er noter der ikke er gemt. Hvis du forlader denne side vil de blive smidt væk!",
+    "Result" : "Resultat",
+    "Action" : "Handling",
     "Insert image" : "Indsæt billede",
     "Display mode for notes" : "Visningstilstand for noter",
     "Open in edit mode" : "Åbn i redigeringstilstand",
@@ -30,6 +33,7 @@ OC.L10N.register(
     "Category" : "Katergori",
     "Uncategorized" : "Udenfor kategori",
     "Saving failed!" : "Kunne ikke gemme!",
-    "_%n word_::_%n words_" : ["%n ord","%n ord"]
+    "_%n word_::_%n words_" : ["%n ord","%n ord"],
+    "Tasks" : "Opgaver"
 },
 "nplurals=2; plural=(n != 1);");

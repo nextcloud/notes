@@ -18,6 +18,8 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "気を散らすことなくあなたの考えを書き留めてください。",
     "Organize your notes in categories." : "ノートをカテゴリ別に整理します",
     "Use Markdown markups to style your text." : "マークダウン・マークアップを使用してテキストを整えます",
+    "Result" : "結果",
+    "Action" : "アクション",
     "Insert image" : "画像の挿入",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "アプリのナビゲーションで「{newnote}」をクリックしてノートを書き始めます",
     "Folder to store your notes" : "ノートを保存するフォルダー",
@@ -93,6 +95,7 @@ OC.L10N.register(
     "Toggling favorite for note {id} has failed." : "お気に入りノート {id} を切り替えできませんでした。",
     "Updating the note's category has failed. Is the target directory writable?" : "ノートのカテゴリを更新できませんでした。 ターゲットディレクトリは書き込み可能ですか？",
     "Updating the category for note {id} has failed." : "ノート{id}のカテゴリを更新できませんでした。",
+    "Tasks" : "タスク",
     "Development Mode" : "開発モード",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "ノートアプリが開発ソースからインストールされたようです。公式の <a href=\"%1$s\">Nextcloud App Store</a> からインストールしてください。Notesアプリを自分で作成する場合は、 <a href=\"%2$s\">開発者の指示</a>に従ってください。"
 },

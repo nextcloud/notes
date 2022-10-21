@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Märkmed",
     "Error" : "Viga",
     "New note" : "Uus märge",
+    "Help" : "Abiinfo",
     "No notes yet" : "Märkmeid veel pole",
     "Categories" : "Kategooriad",
     "Today" : "Täna",
@@ -17,6 +18,7 @@ OC.L10N.register(
     "Edit" : "Redigeeri",
     "Preview" : "Eelvaade",
     "Category" : "Kategooria",
-    "_%n word_::_%n words_" : ["%n sõna","%n sõna"]
+    "_%n word_::_%n words_" : ["%n sõna","%n sõna"],
+    "Tasks" : "Ülesanded"
 },
 "nplurals=2; plural=(n != 1);");
