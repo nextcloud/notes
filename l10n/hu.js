@@ -107,7 +107,7 @@ OC.L10N.register(
     "Toggling favorite for note {id} has failed." : "A(z) {id} jegyzet hozzáadása a kedvencekhez sikertelen.",
     "Updating the note's category has failed. Is the target directory writable?" : "A jegyzet kategóriájának frissítése sikertelen. Írható a célkönyvtár?",
     "Updating the category for note {id} has failed." : "A jegyzet kategóriájának módosítása sikertelen.",
-    "Sample note" : "Minta jegyzet",
+    "Sample note" : "Mintajegyzet",
     "Tasks" : "Feladatok",
     "Birthdays" : "Születésnapok",
     "Turn PC off" : "Számítógép kikapcsolása",
