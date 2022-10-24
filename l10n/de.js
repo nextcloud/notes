@@ -61,6 +61,7 @@ OC.L10N.register(
     "This is a quote." : "Dies ist ein Zitat.",
     "quote" : "Zitat",
     "code" : "Quelltext",
+    "Multi line block code" : "Mehrzeiliger Blockcode",
     "Notes settings" : "Notizen-Einstellungen",
     "Folder to store your notes" : "Ordner zum Speichern deiner Notizen",
     "Root directory" : "Hauptverzeichnis",
@@ -152,7 +153,7 @@ OC.L10N.register(
     "Turn PC off" : "PC ausschalten",
     "Turn PC on" : "PC einschalten",
     "Then call IT" : "Dann rufe die IT an",
-    "Quotes" : "Angebote",
+    "Quotes" : "Zitate",
     "Nextcloud, a safe home for all your data" : "Nextcloud, ein sicherer Ort für all deine Daten",
     "Development Mode" : "Entwickler-Modus",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Es scheint, dass die Notizen-App von einer Entwickler-Quelle installiert wurde. Bitte installiere sie stattdessen von dem offiziellen <a href=\"%1$s\">Nextcloud-App-Store</a>. Wenn du die Notizen-App selbst erstellen möchtest, folge bitte den <a href=\"%2$s\">Entwickler-Anleitungen</a>."

@@ -38,7 +38,7 @@ OC.L10N.register(
     "Makes the current line a list element" : "Macht aus der aktuellen Zeile ein Listenelement",
     "Makes the current line a list element with a number" : "Macht aus der aktuellen Zeile ein nummeriertes Listenelement",
     "Toggle heading for current line" : "Überschrift für die aktuelle Zeile umschalten",
-    "SHIFT" : "Hochstelltaste (SHIFT)",
+    "SHIFT" : "Umschalttaste",
     "Set the current line as a big heading" : "Legen Sie die aktuelle Zeile als große Überschrift fest",
     "Insert link" : "Link einfügen",
     "Insert image" : "Bild einfügen",
@@ -153,7 +153,7 @@ OC.L10N.register(
     "Turn PC off" : "PC ausschalten",
     "Turn PC on" : "PC einschalten",
     "Then call IT" : "Dann rufen Sie die IT an",
-    "Quotes" : "Angebote",
+    "Quotes" : "Zitate",
     "Nextcloud, a safe home for all your data" : "Nextcloud, ein sicherer Ort für all Ihre Daten",
     "Development Mode" : "Entwickler-Modus",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Es scheint, dass die Notizen-App von einer Entwickler-Quelle installiert wurde. Bitte stattdessen von dem offiziellen <a href=\"%1$s\">Nextcloud-App-Store</a> installieren. Wenn Sie die Notizen-App selbst bauen möchten, folgen Sie bitte den <a href=\"%2$s\">Entwickler-Anleitungen</a>."

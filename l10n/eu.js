@@ -23,7 +23,7 @@ OC.L10N.register(
     "Action" : "Ekintza",
     "Insert image" : "Txertatu irudia",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Hasi ohar bat idazten aplikazioaren nabigazioko “{newnote}” aukeran klik eginez.",
-    "Notes settings" : "Noten ezarpenak",
+    "Notes settings" : "Oharren ezarpenak",
     "Folder to store your notes" : "Zure oharrak gordetzeko karpeta",
     "Root directory" : "Erro karpeta",
     "File extension for new notes" : "Ohar berrien fitxategi-luzapena",
