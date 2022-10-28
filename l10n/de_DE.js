@@ -23,7 +23,7 @@ OC.L10N.register(
     "Sequence" : "Reihenfolge",
     "Result" : "Ergebnis",
     "Visualized" : "Visualisiert",
-    "Shortcuts" : "Schnellzugriffe",
+    "Shortcuts" : "Tastaturkürzel",
     "Use shortcuts to quickly navigate this app." : "Verwenden Sie Tastaturkürzel, um schnell durch diese App zu navigieren.",
     "Shortcut" : "Tastaturkürzel",
     "Action" : "Aktion",
