@@ -21,6 +21,7 @@ OC.L10N.register(
     "Result" : "Emaitza",
     "Shortcuts" : "Lasterbideak",
     "Action" : "Ekintza",
+    "Insert link" : "Txertatu esteka",
     "Insert image" : "Txertatu irudia",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Hasi ohar bat idazten aplikazioaren nabigazioko “{newnote}” aukeran klik eginez.",
     "Notes settings" : "Oharren ezarpenak",
