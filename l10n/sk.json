@@ -19,6 +19,9 @@
     "Result" : "Výsledok",
     "Shortcuts" : "Skratky",
     "Action" : "Akcia",
+    "CTRL" : "CTRL",
+    "ALT" : "ALT",
+    "SHIFT" : "SHIFT",
     "Insert image" : "Vložiť obrázok",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Začnite písať poznámku kliknutím na “{newnote}” v menu aplikácie.",
     "Notes settings" : "Nastavenia Poznámok",
@@ -96,6 +99,7 @@
     "Updating the note's category has failed. Is the target directory writable?" : "Aktualizácia kategórie poznámky zlyhalo. Je možné do cieľového priečinka zapisovať?",
     "Updating the category for note {id} has failed." : "Aktualizácia kategórie pre poznámku {id} zlyhala.",
     "Tasks" : "Úlohy",
+    "Birthdays" : "Narodeniny",
     "Quotes" : "Ponuky",
     "Development Mode" : "Režim pre vývojárov",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Zdá sa, že apka Poznámky bola nainštalovaná zo zdroja pre vývojárov. Nainštalujte ju prosím z oficiálneho <a href=\"%1$s\">Nextcloud katalógu apiek</a>. Ak si chcete zostaviť (skompilovať) aplikáciu Poznámky sami, nasledujte <a href=\"%2$s\">pokyny pre vývojárov</a>."
