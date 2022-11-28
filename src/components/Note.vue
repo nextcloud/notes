@@ -463,7 +463,7 @@ export default {
 /* main editor button */
 .action-buttons {
 	position: fixed;
-	top: 50px;
+	top: 38px;
 	right: 20px;
 	width: 44px;
 	margin-top: 1em;

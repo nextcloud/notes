@@ -243,6 +243,7 @@ export default {
 @import '~easymde/dist/easymde.min.css';
 
 .markdown-editor {
+	padding-top: 26px;
 	min-height: 100%;
 	padding-bottom: 30vh;
 }
@@ -371,6 +372,7 @@ export default {
 .upload-button {
 	position: fixed;
 	right: 64px;
+	top: 52px;
 	z-index: 10;
 	height: 40px;
 	margin-right: 5px;
