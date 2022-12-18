@@ -37,7 +37,7 @@ OC.L10N.register(
     "Remove any styles from the selected text" : "Remova todos os estilos do texto selecionado",
     "Makes the current line a list element" : "Torna a linha atual um elemento de lista",
     "Makes the current line a list element with a number" : "Torna a linha atual um elemento de lista com um número",
-    "Toggle heading for current line" : "Alternar título para a linha atual",
+    "Toggle heading for current line" : "Alternar o título para a linha atual",
     "SHIFT" : "SHIFT",
     "Set the current line as a big heading" : "Defina a linha atual como um título grande",
     "Insert link" : "Inserir link",
