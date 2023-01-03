@@ -8,13 +8,14 @@ use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
 use OCP\Dashboard\IAPIWidget;
 use OCP\Dashboard\IButtonWidget;
+use OCP\Dashboard\IIconWidget;
 use OCP\Dashboard\IWidget;
 use OCP\Dashboard\Model\WidgetButton;
 use OCP\Dashboard\Model\WidgetItem;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 
-class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget {
+class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget {
 	private IURLGenerator $url;
 	private IL10N $l10n;
 	private NotesService $notesService;
@@ -91,8 +92,16 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget {
 			} catch (\Throwable $e) {
 			}
 			$link = $this->url->linkToRouteAbsolute('notes.page.indexnote', ['id' => $note->getId()]);
-			$icon = $note->getFavorite() ? $this->url->getAbsoluteURL($this->url->imagePath('core', 'actions/starred.svg')) : '';
+			$icon = $this->url->getAbsoluteURL(
+				$note->getFavorite()
+					? $this->url->getAbsoluteURL($this->url->imagePath('core', 'actions/starred.svg'))
+					: $this->getIconUrl()
+			);
 			return new WidgetItem($note->getTitle(), $excerpt, $link, $icon, (string)$note->getModified());
 		}, $notes);
+	}
+
+	public function getIconUrl(): string {
+		return $this->url->getAbsoluteURL($this->url->imagePath('notes', 'notes-dark.svg'));
 	}
 }
