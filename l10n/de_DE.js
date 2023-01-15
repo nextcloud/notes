@@ -152,7 +152,7 @@ OC.L10N.register(
     "Review Steps" : "Überprüfungsschritte",
     "Turn PC off" : "PC ausschalten",
     "Turn PC on" : "PC einschalten",
-    "Then call IT" : "Dann rufen Sie die IT an",
+    "Then call IT" : "Dann die IT anrufen",
     "Quotes" : "Zitate",
     "Nextcloud, a safe home for all your data" : "Nextcloud, ein sicherer Ort für all Ihre Daten",
     "Development Mode" : "Entwickler-Modus",
