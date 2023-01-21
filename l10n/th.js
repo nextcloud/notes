@@ -9,6 +9,7 @@ OC.L10N.register(
     "Open in edit mode" : "เปิดในโหมดแก้ไข",
     "Open in preview mode" : "เปิดในโหมดแสดงตัวอย่าง",
     "All notes" : "โน้ตทั้งหมด",
+    "Loading …" : "กำลังโหลด …",
     "Today" : "วันนี้",
     "Yesterday" : "เมื่อวานนี้",
     "This week" : "สัปดาห์นี้",
