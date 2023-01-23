@@ -1,7 +1,7 @@
 { "translations": {
-    "Notes" : "บันทึกย่อ",
+    "Notes" : "โน้ต",
     "Error" : "ข้อผิดพลาด",
-    "New note" : "สร้างบันทึกใหม่",
+    "New note" : "โน้ตใหม่",
     "Help" : "ช่วยเหลือ",
     "Display mode for notes" : "โหมดแสดงผลสำหรับโน้ต",
     "Open in edit mode" : "เปิดในโหมดแก้ไข",
@@ -15,7 +15,7 @@
     "This month" : "เดือนนี้",
     "Last month" : "เดือนที่แล้ว",
     "Rename" : "เปลี่ยนชื่อ",
-    "Delete note" : "ลบบันทึกย่อ",
+    "Delete note" : "ลบโน้ต",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "รายละเอียด",
