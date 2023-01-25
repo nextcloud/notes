@@ -76,6 +76,7 @@ OC.L10N.register(
     "Wrong image" : "Okerreko irudia",
     "The file was not uploaded. Check your server logs." : "Fitxategia ez da kargatu. Egiaztatu zure zerbitzariaren erregistroak.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Instalatu mugikorrerako aplikazioa zure oharrak edonondik atzitzeko.",
+    "iOS app: {notes} by {company}" : "iOS aplikazioa: {company}-(r)en {notes}",
     "All notes" : "Ohar guztiak",
     "Categories" : "Kategoriak",
     "Loading …" : "Kargatzen...",
