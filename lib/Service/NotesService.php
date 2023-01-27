@@ -10,9 +10,9 @@ use OCP\Files\Folder;
 use OCP\Files\NotPermittedException;
 
 class NotesService {
-	private $metaService;
-	private $settings;
-	private $noteUtil;
+	private MetaService $metaService;
+	private SettingsService $settings;
+	private NoteUtil $noteUtil;
 
 	public function __construct(
 		MetaService $metaService,
@@ -24,20 +24,25 @@ class NotesService {
 		$this->noteUtil = $noteUtil;
 	}
 
-	public function getAll(string $userId) : array {
+	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
 		$customExtension = $this->getCustomExtension($userId);
-		$notesFolder = $this->getNotesFolder($userId);
-		$data = self::gatherNoteFiles($customExtension, $notesFolder);
-		$fileIds = array_keys($data['files']);
-		// pre-load tags for all notes (performance improvement)
-		$this->noteUtil->getTagService()->loadTags($fileIds);
-		$notes = array_map(function (File $file) use ($notesFolder) : Note {
-			return new Note($file, $notesFolder, $this->noteUtil);
-		}, $data['files']);
+		try {
+			$notesFolder = $this->getNotesFolder($userId, $autoCreateNotesFolder);
+			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			$fileIds = array_keys($data['files']);
+			// pre-load tags for all notes (performance improvement)
+			$this->noteUtil->getTagService()->loadTags($fileIds);
+			$notes = array_map(function (File $file) use ($notesFolder) : Note {
+				return new Note($file, $notesFolder, $this->noteUtil);
+			}, $data['files']);
+		} catch (NotesFolderException $e) {
+			$notes = [];
+			$data = [ 'categories' => [] ];
+		}
 		return [ 'notes' => $notes, 'categories' => $data['categories'] ];
 	}
 
-	public function getTopNotes(string $userId, int $count) : array {
+	public function getTopNotes(string $userId) : array {
 		$notes = $this->getAll($userId)['notes'];
 		usort($notes, function (Note $a, Note $b) {
 			$favA = $a->getFavorite();
@@ -48,7 +53,7 @@ class NotesService {
 				return $favA > $favB ? -1 : 1;
 			}
 		});
-		return array_slice($notes, 0, $count);
+		return $notes;
 	}
 
 	public function get(string $userId, int $id) : Note {
@@ -142,10 +147,10 @@ class NotesService {
 	 * @param string $userId the user id
 	 * @return Folder
 	 */
-	private function getNotesFolder(string $userId) : Folder {
+	private function getNotesFolder(string $userId, bool $create = true) : Folder {
 		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
 		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
-		$folder = $this->noteUtil->getOrCreateFolder($path);
+		$folder = $this->noteUtil->getOrCreateFolder($path, $create);
 		return $folder;
 	}
 

@@ -1,5 +1,5 @@
 <template>
-	<AppNavigationSettings :title="t('notes', 'Settings')" :class="{ loading: saving }">
+	<NcAppNavigationSettings :title="t('notes', 'Notes settings')" :class="{ loading: saving }">
 		<div class="settings-block">
 			<p class="settings-hint">
 				<label for="notesPath">{{ t('notes', 'Folder to store your notes') }}</label>
@@ -42,22 +42,22 @@
 				</option>
 			</select>
 		</div>
-	</AppNavigationSettings>
+	</NcAppNavigationSettings>
 </template>
 
 <script>
 import {
-	AppNavigationSettings,
+	NcAppNavigationSettings,
 } from '@nextcloud/vue'
 
-import { setSettings } from '../NotesService'
-import store from '../store'
+import { setSettings } from '../NotesService.js'
+import store from '../store.js'
 
 export default {
 	name: 'AppSettings',
 
 	components: {
-		AppNavigationSettings,
+		NcAppNavigationSettings,
 	},
 
 	data() {

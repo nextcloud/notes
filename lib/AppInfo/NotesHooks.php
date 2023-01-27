@@ -12,9 +12,9 @@ use OCP\Files\Node;
 use Psr\Log\LoggerInterface;
 
 class NotesHooks {
-	private $logger;
-	private $rootFolder;
-	private $metaService;
+	private LoggerInterface $logger;
+	private IRootFolder $rootFolder;
+	private MetaService $metaService;
 
 	public function __construct(
 		LoggerInterface $logger,

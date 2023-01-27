@@ -4,7 +4,7 @@ OC.L10N.register(
     "Notes" : "Նոթեր",
     "Error" : "Սխալ",
     "New note" : "Նոր նոթ",
-    "Settings" : "կարգավորումներ",
+    "Help" : "Օգնություն",
     "No notes yet" : "առայժմ գրառում չկա",
     "Today" : "այսօր",
     "Yesterday" : "երեկ",

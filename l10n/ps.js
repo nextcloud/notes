@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "شسیب",
     "Error" : "شسیب",
-    "Settings" : "سمونې",
+    "Help" : "مرسته",
     "Today" : "نن",
     "Yesterday" : "پرون",
     "Rename" : "نوم بدلول",

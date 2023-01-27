@@ -1,19 +1,20 @@
 <template>
-	<AppContent :class="{ loading: loading.note || isManualSave, 'icon-error': !loading.note && (!note || note.error), 'sidebar-open': sidebarOpen }">
+	<NcAppContent :class="{ loading: loading.note || isManualSave, 'icon-error': !loading.note && (!note || note.error), 'sidebar-open': sidebarOpen }">
 		<div v-if="!loading.note && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
-			<Breadcrumbs v-if="!isMobile" class="breadcrumbs">
-				<Breadcrumb title="Home" />
-				<Breadcrumb v-for="category of categories" :key="category" :title="category" />
-				<Breadcrumb :title="title" />
-			</Breadcrumbs>
+			<NcBreadcrumbs v-if="!isMobile" class="breadcrumbs">
+				<NcBreadcrumb title="Home" />
+				<NcBreadcrumb v-for="category of categories" :key="category" :title="category" />
+				<NcBreadcrumb :title="title" />
+			</NcBreadcrumbs>
 
-			<Modal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
+			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
+						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -21,22 +22,29 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@onChooseSolution="onUseRemoteVersion"
+							@on-choose-solution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@onChooseSolution="onUseLocalVersion"
+							@on-choose-solution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
-			</Modal>
+			</NcModal>
 			<div class="note-editor">
-				<EmptyContent v-if="!note.content" icon="icon-edit">
-					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
-				</EmptyContent>
-				<ThePreview v-if="preview" :value="note.content" :noteid="noteId" />
+				<NcEmptyContent v-if="!note.content" icon="icon-edit" :title="preview ? t('notes', 'Empty note') : t('notes', 'Write …')">
+					<template #icon>
+						<EditIcon />
+					</template>
+				</NcEmptyContent>
+				<ThePreview v-if="preview"
+					:value="note.content"
+					:noteid="noteId"
+					:readonly="note.readonly"
+					@input="onEdit"
+				/>
 				<TheEditor v-else
 					:value="note.content"
 					:noteid="noteId"
@@ -46,111 +54,121 @@
 				/>
 			</div>
 			<div class="action-buttons">
-				<Actions :primary="true">
-					<ActionButton
+				<NcActions :primary="true">
+					<NcActionButton
 						:icon="actionFavoriteIcon"
 						:close-after-click="true"
 						@click="onToggleFavorite"
 					>
 						{{ actionFavoriteText }}
-					</ActionButton>
-					<ActionButton v-show="!sidebarOpen && !fullscreen"
+					</NcActionButton>
+					<NcActionButton v-show="!sidebarOpen && !fullscreen"
 						icon="icon-details"
 						:close-after-click="true"
 						@click="onToggleSidebar"
 					>
+						<SidebarIcon slot="icon" :size="20" />
 						{{ t('notes', 'Details') }}
-					</ActionButton>
-					<ActionButton
+					</NcActionButton>
+					<NcActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
-						:icon="preview ? 'icon-rename' : 'icon-toggle'"
 						:close-after-click="true"
 						@click="onTogglePreview"
 					>
+						<EditIcon v-if="preview" slot="icon" :size="20" />
+						<EyeIcon v-else slot="icon" :size="20" />
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
-					</ActionButton>
-					<ActionButton
-						icon="icon-fullscreen"
+					</NcActionButton>
+					<NcActionButton
 						:class="{ active: fullscreen }"
 						:close-after-click="true"
 						@click="onToggleDistractionFree"
 					>
+						<FullscreenIcon slot="icon" :size="20" />
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
-					</ActionButton>
-					<ActionButton
+					</NcActionButton>
+					<NcActionButton
 						:disabled="note.readonly"
 						:icon="actionDeleteIcon"
 						:close-after-click="true"
 						@click="onDeleteNote"
 					>
 						{{ t('notes', 'Delete note') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.readonly">
-					<ActionButton>
-						<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
+					</NcActionButton>
+				</NcActions>
+				<NcActions v-if="note.readonly">
+					<NcActionButton>
+						<NoEditIcon slot="icon" :size="20" />
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.saveError" class="action-error">
-					<ActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+					</NcActionButton>
+				</NcActions>
+				<NcActions v-if="note.saveError" class="action-error">
+					<NcActionButton @click="onManualSave">
+						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
 						{{ t('notes', 'Save failed. Click to retry.') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.conflict" class="action-error">
-					<ActionButton @click="showConflict=true">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+					</NcActionButton>
+				</NcActions>
+				<NcActions v-if="note.conflict" class="action-error">
+					<NcActionButton @click="showConflict=true">
+						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
-					</ActionButton>
-				</Actions>
+					</NcActionButton>
+				</NcActions>
 			</div>
 		</div>
-	</AppContent>
+	</NcAppContent>
 </template>
 <script>
 
 import {
-	Actions,
-	ActionButton,
-	AppContent,
-	Modal,
+	NcActions,
+	NcActionButton,
+	NcAppContent,
+	NcModal,
 	Tooltip,
 	isMobile,
-	Breadcrumbs,
-	Breadcrumb,
-	EmptyContent,
+	NcBreadcrumbs,
+	NcBreadcrumb,
+	NcEmptyContent,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
-import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
-import PencilOffIcon from 'vue-material-design-icons/PencilOff'
+import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
+import EyeIcon from 'vue-material-design-icons/Eye.vue'
+import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
+import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
+import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
+import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
-import { config } from '../config'
-import { fetchNote, refreshNote, deleteNote, setFavorite, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
-import { routeIsNewNote } from '../Util'
-import TheEditor from './EditorEasyMDE'
-import ThePreview from './EditorMarkdownIt'
-import ConflictSolution from './ConflictSolution'
-import store from '../store'
+import { config } from '../config.js'
+import { fetchNote, refreshNote, deleteNote, setFavorite, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
+import { routeIsNewNote } from '../Util.js'
+import TheEditor from './EditorEasyMDE.vue'
+import ThePreview from './EditorMarkdownIt.vue'
+import ConflictSolution from './ConflictSolution.vue'
+import store from '../store.js'
 
 export default {
 	name: 'Note',
 
 	components: {
-		Actions,
-		ActionButton,
-		AppContent,
 		ConflictSolution,
-		Modal,
-		PencilOffIcon,
+		EditIcon,
+		EyeIcon,
+		FullscreenIcon,
+		NcActions,
+		NcActionButton,
+		NcAppContent,
+		NcModal,
+		NoEditIcon,
+		SidebarIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
-		Breadcrumbs,
-		Breadcrumb,
-		EmptyContent,
+		NcBreadcrumbs,
+		NcBreadcrumb,
+		NcEmptyContent,
 	},
 
 	directives: {
@@ -431,11 +449,13 @@ export default {
 		},
 
 		onUseLocalVersion() {
+			console.debug('conflict solution: use local version')
 			conflictSolutionLocal(this.note)
 			this.showConflict = false
 		},
 
 		onUseRemoteVersion() {
+			console.debug('conflict solution: use remote version')
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
@@ -534,6 +554,7 @@ export default {
 /* Conflict Modal */
 .conflict-modal {
 	width: 70vw;
+	margin: auto;
 }
 
 .conflict-header {

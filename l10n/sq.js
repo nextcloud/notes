@@ -4,7 +4,11 @@ OC.L10N.register(
     "Notes" : "Shënime",
     "Error" : "Error",
     "New note" : "Shënim i ri",
-    "Settings" : "Rregullimet",
+    "Help" : "Ndihmë",
+    "Result" : "Rezultatet",
+    "Action" : "Veprim",
+    "Open in edit mode" : "Hapur në modalitetin e redaktimit",
+    "Open in preview mode" : "Hape në parapamje",
     "No notes yet" : "Nuk ka shënime",
     "All notes" : "Të gjitha shënimet",
     "Categories" : "Kategoritë",
@@ -16,13 +20,13 @@ OC.L10N.register(
     "Delete note" : "Fshije shënimin",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Shtoje tek të parapëlqyerat",
+    "Use current version" : "Përdor versionin aktual",
     "Details" : "Detajet",
     "Edit" : "Përpuno",
     "Preview" : "Parapamje ",
     "Category" : "Kategori",
     "Uncategorized" : "Të pakategorizuara",
     "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"],
-    "Android app" : "Aplikacion Android",
-    "iOS app" : "Aplikacion iOS"
+    "Tasks" : "Detyra"
 },
 "nplurals=2; plural=(n != 1);");

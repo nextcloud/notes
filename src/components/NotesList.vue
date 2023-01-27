@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import NoteItem from './NoteItem'
+import NoteItem from './NoteItem.vue'
 
 export default {
 	name: 'NotesList',

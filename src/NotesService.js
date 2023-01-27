@@ -2,8 +2,8 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
-import store from './store'
-import { copyNote } from './Util'
+import store from './store.js'
+import { copyNote } from './Util.js'
 
 function url(url) {
 	url = `apps/notes${url}`
@@ -73,10 +73,10 @@ export const fetchNotes = () => {
 		)
 		.then(response => {
 			store.commit('setSettings', response.data.settings)
-			if (response.data.categries !== null) {
+			if (response.data.categories) {
 				store.commit('setCategories', response.data.categories)
 			}
-			if (response.data.noteIds !== null) {
+			if (response.data.noteIds && response.data.notesData) {
 				store.dispatch('updateNotes', { noteIds: response.data.noteIds, notes: response.data.notesData })
 			}
 			if (response.data.errorMessage) {
@@ -177,9 +177,13 @@ export const setTitle = (noteId, title) => {
 		})
 }
 
-export const createNote = category => {
+export const createNote = (category, title, content) => {
 	return axios
-		.post(url('/notes'), { category })
+		.post(url('/notes'), {
+			category: category || '',
+			content: content || '',
+			title: title || '',
+		})
 		.then(response => {
 			_updateLocalNote(response.data)
 			return response.data

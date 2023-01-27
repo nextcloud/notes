@@ -1,7 +1,7 @@
 <template>
-	<AppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
+	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
 		<template slot="list">
-			<AppContentList>
+			<NcAppContentList>
 				<div class="spacer" />
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
@@ -29,27 +29,27 @@
 				>
 					{{ t('notes', 'Loading …') }}
 				</div>
-			</AppContentList>
+			</NcAppContentList>
 		</template>
 
-		<AppContentDetails>
+		<NcAppContentDetails>
 			<Note v-if="showNote" :note-id="noteId" @note-deleted="onNoteDeleted" />
-		</AppContentDetails>
-	</AppContent>
+		</NcAppContentDetails>
+	</NcAppContent>
 </template>
 
 <script>
 
 import {
-	AppContent,
-	AppContentList,
-	AppContentDetails,
+	NcAppContent,
+	NcAppContentList,
+	NcAppContentDetails,
 } from '@nextcloud/vue'
-import { categoryLabel } from '../Util'
-import NotesList from './NotesList'
-import NotesCaption from './NotesCaption'
-import store from '../store'
-import Note from './Note'
+import { categoryLabel } from '../Util.js'
+import NotesList from './NotesList.vue'
+import NotesCaption from './NotesCaption.vue'
+import store from '../store.js'
+import Note from './Note.vue'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
 
@@ -57,9 +57,9 @@ export default {
 	name: 'NotesView',
 
 	components: {
-		AppContent,
-		AppContentList,
-		AppContentDetails,
+		NcAppContent,
+		NcAppContentList,
+		NcAppContentDetails,
 		Note,
 		NotesList,
 		NotesCaption,

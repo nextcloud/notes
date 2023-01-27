@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { generateUrl } from '@nextcloud/router'
 
-import Loading from './components/Loading'
-import Welcome from './components/Welcome'
-import NotesView from './components/NotesView'
-import Sidebar from './components/Sidebar'
+import Loading from './components/Loading.vue'
+import Welcome from './components/Welcome.vue'
+import NotesView from './components/NotesView.vue'
+import Sidebar from './components/Sidebar.vue'
 
 Vue.use(Router)
 

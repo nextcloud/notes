@@ -13,12 +13,16 @@ function getNCVersionFromComposer($path) {
 		throw new Exception('Composer file does not contain valid JSON');
 	}
 	$dev = getValidProperty($json, 'require-dev');
-	$v = getValidProperty($dev, 'christophwurst/nextcloud');
+	$v = getValidProperty($dev, 'nextcloud/ocp');
 	if (substr($v, 0, 1) == '^') {
 		$v = substr($v, 1);
-	}
-	if (substr($v, 0, 2) == '>=') {
+	} elseif (substr($v, 0, 2) == '>=') {
 		$v = substr($v, 2);
+	} elseif (substr($v, 0, 10) == 'dev-stable') {
+		$v = substr($v, 10);
+		if (substr($v, -4) == '@dev') {
+			$v = substr($v, 0, -4);
+		}
 	}
 	return $v;
 }
@@ -73,12 +77,12 @@ function isServerBranch($branch) : bool {
 	$response = $http->request('GET', 'https://api.github.com/repos/nextcloud/server/branches/'.$branch);
 	$status = $response->getStatusCode();
 	switch ($status) {
-	case 200:
-		return true;
-	case 404:
-		return false;
-	default:
-		throw new \Exception('HTTP Error while checking branch '.$branch.' for Nextcloud server: '.$status);
+		case 200:
+			return true;
+		case 404:
+			return false;
+		default:
+			throw new \Exception('HTTP Error while checking branch '.$branch.' for Nextcloud server: '.$status);
 	}
 }
 
@@ -126,13 +130,12 @@ echo 'Testing Nextcloud version ';
 try {
 	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
 	if ($vComposer === 'dev-master') {
-		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/christophwurst/nextcloud/composer.json');
-		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'max');
+		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/nextcloud/ocp/composer.json');
 		$type = 'max';
 	} else {
-		$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');
 		$type = 'min';
 	}
+	$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', $type);
 	echo $type.': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
 	if (versionCompare($vComposer, $vAppInfo, $type)) {
 		echo 'OK'.PHP_EOL;

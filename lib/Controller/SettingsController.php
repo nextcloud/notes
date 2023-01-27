@@ -12,8 +12,8 @@ use OCP\IRequest;
 use OCP\IUserSession;
 
 class SettingsController extends Controller {
-	private $service;
-	private $userSession;
+	private SettingsService $service;
+	private IUserSession $userSession;
 
 	public function __construct(
 		string $appName,
@@ -26,7 +26,7 @@ class SettingsController extends Controller {
 		$this->userSession = $userSession;
 	}
 
-	private function getUID() {
+	private function getUID(): string {
 		return $this->userSession->getUser()->getUID();
 	}
 
@@ -34,7 +34,7 @@ class SettingsController extends Controller {
 	 * @NoAdminRequired
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function set() {
+	public function set(): JSONResponse {
 		$this->service->set(
 			$this->getUID(),
 			$this->request->getParams()
@@ -45,7 +45,7 @@ class SettingsController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function get() {
+	public function get(): JSONResponse {
 		return new JSONResponse($this->service->getAll($this->getUID()));
 	}
 }

@@ -1,5 +1,5 @@
 <template>
-	<ListItem
+	<NcListItem
 		:title="title"
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
@@ -25,21 +25,21 @@
 				fill-color="var(--color-text-lighter)"
 			/>
 		</template>
-	</ListItem>
+	</NcListItem>
 </template>
 
 <script>
-import { ListItem } from '@nextcloud/vue'
-import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon'
-import StarIcon from 'vue-material-design-icons/Star'
-import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline'
-import { categoryLabel } from '../Util'
+import { NcListItem } from '@nextcloud/vue'
+import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
+import StarIcon from 'vue-material-design-icons/Star.vue'
+import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
+import { categoryLabel } from '../Util.js'
 
 export default {
 	name: 'NoteItem',
 
 	components: {
-		ListItem,
+		NcListItem,
 		AlertOctagonIcon,
 		StarIcon,
 		FileDocumentOutlineIcon,

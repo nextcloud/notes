@@ -1,50 +1,50 @@
 <template>
-	<DashboardWidget :items="items"
-		:loading="loading"
-	>
-		<template #default="{ item }">
-			<DashboardWidgetItem
-				:target-url="getItemTargetUrl(item)"
-				:main-text="item.title"
-				:sub-text="subtext(item)"
-			>
-				<template #avatar>
-					<div
+	<div class="dashboard-box">
+		<NcDashboardWidget
+			empty-content-icon="icon-notes"
+			:empty-content-message="t('notes', 'No notes yet')"
+			:items="items"
+			:loading="loading"
+		>
+			<template #default="{ item }">
+				<NcDashboardWidgetItem
+					:target-url="getItemTargetUrl(item)"
+					:main-text="item.title"
+					:sub-text="subtext(item)"
+				>
+					<div slot="avatar"
 						class="note-item"
 						:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
 					/>
-				</template>
-			</DashboardWidgetItem>
-		</template>
-		<template #empty-content>
-			<EmptyContent icon="icon-notes">
-				<template #desc>
-					<p class="notes-empty-content-label">
-						{{ t('notes', 'No notes yet') }}
-					</p>
-					<p>
-						<a :href="createNoteUrl" class="button">{{ t('notes', 'New note') }}</a>
-					</p>
-				</template>
-			</EmptyContent>
-		</template>
-	</DashboardWidget>
+				</NcDashboardWidgetItem>
+			</template>
+		</NcDashboardWidget>
+		<div v-if="!loading" class="buttons-footer">
+			<NcButton :href="createNoteUrl">
+				<PlusIcon slot="icon" :size="20" />
+				{{ t('notes', 'New note') }}
+			</NcButton>
+		</div>
+	</div>
 </template>
 
 <script>
-import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
-import { EmptyContent } from '@nextcloud/vue'
+import { NcButton, NcDashboardWidget, NcDashboardWidgetItem } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
-import { getDashboardData } from '../NotesService'
-import { categoryLabel } from '../Util'
+
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
+
+import { getDashboardData } from '../NotesService.js'
+import { categoryLabel } from '../Util.js'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
-		DashboardWidget,
-		DashboardWidgetItem,
-		EmptyContent,
+		NcButton,
+		NcDashboardWidget,
+		NcDashboardWidgetItem,
+		PlusIcon,
 	},
 
 	data() {
@@ -70,7 +70,7 @@ export default {
 
 		getItemTargetUrl() {
 			return (note) => {
-				return generateUrl('/apps/notes/note/' + note.id)
+				return generateUrl(`/apps/notes/note/${note.id}`)
 			}
 		},
 	},
@@ -89,15 +89,20 @@ export default {
 		},
 
 		subtext(item) {
-			return item.excerpt ? item.excerpt : categoryLabel(item.category)
+			return item.excerpt || categoryLabel(item.category)
 		},
 	},
-
 }
 </script>
+
 <style scoped>
+.dashboard-box {
+	position: relative;
+	height: 100%;
+}
+
 .note-item-favorite {
-	background: var(--icon-star-dark-FC0, var(--icon-star-dark-fc0));
+	background: var(--icon-starred-yellow);
 }
 
 .note-item {
@@ -116,5 +121,12 @@ export default {
 
 .notes-empty-content-label {
 	margin-bottom: 20px;
+}
+
+.buttons-footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
 }
 </style>

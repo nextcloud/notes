@@ -1,63 +1,81 @@
 <template>
-	<Content app-name="notes" :content-class="{loading: loading.notes}">
-		<AppNavigation :class="{loading: loading.notes, 'icon-error': error}">
-			<AppNavigationNew
+	<NcContent app-name="notes" :content-class="{loading: loading.notes}">
+		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
+			<NcAppNavigationNew
 				v-show="!loading.notes && !error"
 				:text="t('notes', 'New note')"
-				button-id="notes_new_note"
-				:button-class="['icon-add', { loading: loading.create }]"
 				@click="onNewNote"
-			/>
+			>
+				<PlusIcon slot="icon" :size="20" />
+			</NcAppNavigationNew>
 
 			<template #list>
 				<CategoriesList v-show="!loading.notes"
 					v-if="numNotes"
 				/>
+				<NcAppNavigationItem
+					:title="t('notes', 'Help')"
+					:pinned="true"
+					@click.prevent="openHelp"
+				>
+					<InfoIcon slot="icon" :size="20" />
+				</NcAppNavigationItem>
+				<AppHelp :open.sync="helpVisible" />
 			</template>
 
 			<template #footer>
 				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
 			</template>
-		</AppNavigation>
+		</NcAppNavigation>
 
-		<AppContent v-if="error">
+		<NcAppContent v-if="error">
 			<div style="margin: 2em;">
 				<h2>{{ t('notes', 'Error') }}</h2>
 				<p>{{ error }}</p>
 				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
-		</AppContent>
+		</NcAppContent>
 		<router-view v-else @note-deleted="onNoteDeleted" />
 
 		<router-view name="sidebar" />
-	</Content>
+	</NcContent>
 </template>
 
 <script>
 import {
-	AppContent,
-	AppNavigation,
-	AppNavigationNew,
-	Content,
+	NcAppContent,
+	NcAppNavigation,
+	NcAppNavigationNew,
+	NcAppNavigationItem,
+	NcContent,
 } from '@nextcloud/vue'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
-import { config } from './config'
-import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService'
-import AppSettings from './components/AppSettings'
+import InfoIcon from 'vue-material-design-icons/Information.vue'
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
+
+import AppSettings from './components/AppSettings.vue'
+import AppHelp from './components/AppHelp.vue'
 import CategoriesList from './components/CategoriesList.vue'
-import store from './store'
+
+import { config } from './config.js'
+import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
+import store from './store.js'
 
 export default {
 	name: 'App',
 
 	components: {
-		AppContent,
-		AppNavigation,
-		AppNavigationNew,
+		AppHelp,
 		AppSettings,
-		Content,
+		InfoIcon,
+		NcAppContent,
+		NcAppNavigation,
+		NcAppNavigationNew,
+		NcAppNavigationItem,
+		NcContent,
+		PlusIcon,
 		CategoriesList,
 	},
 
@@ -75,6 +93,7 @@ export default {
 			undoTimer: null,
 			deletedNotes: [],
 			refreshTimer: null,
+			helpVisible: false,
 		}
 	},
 
@@ -189,14 +208,19 @@ export default {
 			}
 		},
 
-		routeToNote(noteId, query) {
-			if (this.$route.name !== 'note' || this.$route.params.noteId !== noteId.toString()) {
+		routeToNote(id, query) {
+			const noteId = id.toString()
+			if (this.$route.name !== 'note' || this.$route.params.noteId !== noteId) {
 				this.$router.push({
 					name: 'note',
-					params: { noteId: noteId.toString() },
+					params: { noteId },
 					query,
 				})
 			}
+		},
+
+		openHelp() {
+			this.helpVisible = true
 		},
 
 		onNewNote() {
@@ -204,13 +228,13 @@ export default {
 				return
 			}
 			this.loading.create = true
-			createNote(store.getters.getSelectedCategory() || '')
+			createNote(store.getters.getSelectedCategory())
 				.then(note => {
 					this.routeToNote(note.id, { new: null })
 				})
 				.catch(() => {
 				})
-				.then(() => {
+				.finally(() => {
 					this.loading.create = false
 				})
 		},

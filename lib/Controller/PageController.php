@@ -15,12 +15,9 @@ use OCP\IURLGenerator;
 use OCP\IUserSession;
 
 class PageController extends Controller {
-	/** @NotesService */
-	private $notesService;
-	/** @var IUserSession */
-	private $userSession;
-	/** @IURLGenerator */
-	private $urlGenerator;
+	private NotesService $notesService;
+	private IUserSession $userSession;
+	private IURLGenerator $urlGenerator;
 
 	public function __construct(
 		string $AppName,
@@ -62,7 +59,7 @@ class PageController extends Controller {
 	public function create() : RedirectResponse {
 		$note = $this->notesService->create($this->userSession->getUser()->getUID(), '', '');
 		$note->setContent('');
-		$url = $this->urlGenerator->linkToRoute('notes.page.index', [ 'id' => $note->getId() ]);
-		return new RedirectResponse($url);
+		$url = $this->urlGenerator->linkToRoute('notes.page.indexnote', [ 'id' => $note->getId() ]);
+		return new RedirectResponse($url . '?new');
 	}
 }
