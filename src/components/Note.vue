@@ -579,4 +579,13 @@ export default {
 	z-index: 1;
 	background-color: var(--color-main-background);
 }
+
+/deep/ .breadcrumbs a:hover {
+	background: none !important;
+}
+
+/deep/ .breadcrumbs *{
+	cursor: default !important;
+}
+
 </style>
