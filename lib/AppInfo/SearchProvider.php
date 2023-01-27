@@ -16,13 +16,9 @@ use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 
 class SearchProvider implements IProvider {
-
-	/** @var Util */
-	private $util;
-	/** @var NotesService */
-	private $notesService;
-	/** @var IURLGenerator */
-	private $url;
+	private Util $util;
+	private NotesService $notesService;
+	private IURLGenerator $url;
 
 	public function __construct(
 		Util $util,
@@ -70,7 +66,7 @@ class SearchProvider implements IProvider {
 					'',
 					$note->getTitle(),
 					$excerpt,
-					$this->url->linkToRouteAbsolute('notes.page.index') . 'note/'.$note->getId(),
+					$this->url->linkToRouteAbsolute('notes.page.indexnote', [ 'id' => $note->getId() ]),
 					'icon-notes-trans'
 				);
 			},

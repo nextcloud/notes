@@ -6,6 +6,9 @@ on:
       - stable*
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test-api:
     runs-on: ubuntu-latest
@@ -34,7 +37,7 @@ jobs:
         tools: ${{ env.PHPUNIT }}
     - name: Install latest dev Nextcloud PHP API (max only)
       if: matrix.version == 'max'
-      run: composer require --prefer-dist --dev christophwurst/nextcloud:dev-master
+      run: composer require --prefer-dist --dev nextcloud/ocp:dev-master
     - name: Install Dependencies
       run: composer install --prefer-dist
     - name: Prepare MySQL database
@@ -73,10 +76,13 @@ jobs:
         php server/occ files:scan --all
     - name: Start Nextcloud server
       working-directory: ../server/
-      run: "php -S localhost:8080 &"
+      run: "php -S localhost:8080 > data/php.log 2>&1 &"
     - name: Test API
       run: make test-api
     - name: Show nextcloud.log
       if: always()
       run: "cat ../server/data/nextcloud.log"
+    - name: Show php.log
+      if: always()
+      run: "cat ../server/data/php.log"
 

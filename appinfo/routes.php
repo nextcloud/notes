@@ -17,7 +17,6 @@ return ['routes' => [
 		'name' => 'page#create',
 		'url' => '/new',
 		'verb' => 'GET',
-		'postfix' => 'new',
 	],
 	[
 		'name' => 'page#index',

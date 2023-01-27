@@ -4,7 +4,9 @@ OC.L10N.register(
     "Notes" : "Notes",
     "Error" : "Fallu",
     "New note" : "Nota nueva",
-    "Settings" : "Settings",
+    "Help" : "Help",
+    "Result" : "Resultáu",
+    "Action" : "Aición",
     "No notes yet" : "Entá nun hai notes",
     "All notes" : "Toles notes",
     "Categories" : "Estayes",
@@ -22,7 +24,6 @@ OC.L10N.register(
     "Preview" : "Previsualizar",
     "Category" : "Estaya",
     "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"],
-    "Android app" : "Aplicación p'Android",
-    "iOS app" : "Aplicación pa iOS"
+    "Tasks" : "Xeres"
 },
 "nplurals=2; plural=(n != 1);");

@@ -6,6 +6,9 @@ on:
       - stable*
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   lint-js:
     runs-on: ubuntu-latest
@@ -15,8 +18,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
-        node-version: '14'
-    - run: npm i -g npm@7
+        node-version-file: 'package.json'
     - name: Set up Stylelint Problem Matcher
       uses: xt0rted/stylelint-problem-matcher@v1
     - name: Install Dependencies
@@ -65,10 +67,10 @@ jobs:
         php-version: ${{ env.PHP_VERSION }}
     - name: Determine minimum Nextcloud API version
       if: matrix.version == 'min'
-      run: echo "NC_API_TAG=^$(php tests/nextcloud-version.php --appinfo)" >> $GITHUB_ENV
+      run: echo "NC_API_TAG=dev-stable$(php tests/nextcloud-version.php --appinfo)" >> $GITHUB_ENV
     - name: Install Dependencies
       run: |
-        composer require --dev christophwurst/nextcloud:$NC_API_TAG
+        composer require --dev nextcloud/ocp:$NC_API_TAG
         composer install --prefer-dist
     - name: Load problem matcher for php -l
       uses: korelstar/phplint-problem-matcher@master

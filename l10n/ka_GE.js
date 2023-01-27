@@ -4,8 +4,12 @@ OC.L10N.register(
     "Notes" : "ჩანაწერები",
     "Error" : "შეცდომა",
     "New note" : "ახალი ჩანაწერი",
+    "Help" : "დახმარება",
     "There are unsaved notes. Leaving the page will discard all changes!" : "არსებობს შეუნახავი ჩანაწერები. გვერდის დატოვება ყველა ცვლილებას უარყოფს!",
-    "Settings" : "პარამეტრები",
+    "Result" : "შედეგი",
+    "Action" : "ქმედება",
+    "Open in edit mode" : "გახსენით ცვლილების რეჟიმში",
+    "Open in preview mode" : "გახსენით წინასწარი ჩვენების რეჟიმში",
     "No notes yet" : "ჯერ ჩანაწერები არაა",
     "Categories" : "კატეგორიები",
     "Today" : "დღეს",
@@ -23,7 +27,6 @@ OC.L10N.register(
     "Uncategorized" : "არაკატეგორიზირებული",
     "Saving failed!" : "შენახვა ვერ მოხერხდა!",
     "_%n word_::_%n words_" : ["%n სიტყვა","%n სიტყვა"],
-    "Android app" : "Android აპლიკაცია",
-    "iOS app" : "iOS აპლიკაცია"
+    "Tasks" : "დავალებები"
 },
 "nplurals=2; plural=(n!=1);");

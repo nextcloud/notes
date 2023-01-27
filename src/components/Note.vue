@@ -1,13 +1,14 @@
 <template>
-	<AppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
+	<NcAppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
 		<div v-if="!loading && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
-			<Modal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
+			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
+						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -15,22 +16,27 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@onChooseSolution="onUseRemoteVersion"
+							@on-choose-solution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@onChooseSolution="onUseLocalVersion"
+							@on-choose-solution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
-			</Modal>
+			</NcModal>
 			<div class="note-editor">
 				<div v-show="!note.content" class="placeholder">
 					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
-				<ThePreview v-if="preview" :value="note.content" :noteid="noteId" />
+				<ThePreview v-if="preview"
+					:value="note.content"
+					:noteid="noteId"
+					:readonly="note.readonly"
+					@input="onEdit"
+				/>
 				<TheEditor v-else
 					:value="note.content"
 					:noteid="noteId"
@@ -40,84 +46,94 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<Actions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-					<ActionButton v-show="!sidebarOpen && !fullscreen"
+				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+					<NcActionButton v-show="!sidebarOpen && !fullscreen"
 						icon="icon-details"
 						@click="onToggleSidebar"
 					>
+						<SidebarIcon slot="icon" :size="20" />
 						{{ t('notes', 'Details') }}
-					</ActionButton>
-					<ActionButton
+					</NcActionButton>
+					<NcActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
-						:icon="preview ? 'icon-rename' : 'icon-toggle'"
 						@click="onTogglePreview"
 					>
+						<EditIcon v-if="preview" slot="icon" :size="20" />
+						<EyeIcon v-else slot="icon" :size="20" />
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
-					</ActionButton>
-					<ActionButton
-						icon="icon-fullscreen"
+					</NcActionButton>
+					<NcActionButton
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
+						<FullscreenIcon slot="icon" :size="20" />
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.readonly">
-					<ActionButton>
-						<PencilOffIcon slot="icon" :size="18" fill-color="var(--color-main-text)" />
+					</NcActionButton>
+				</NcActions>
+				<NcActions v-if="note.readonly">
+					<NcActionButton>
+						<NoEditIcon slot="icon" :size="20" />
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.saveError" class="action-error">
-					<ActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+					</NcActionButton>
+				</NcActions>
+				<NcActions v-if="note.saveError" class="action-error">
+					<NcActionButton @click="onManualSave">
+						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
 						{{ t('notes', 'Save failed. Click to retry.') }}
-					</ActionButton>
-				</Actions>
-				<Actions v-if="note.conflict" class="action-error">
-					<ActionButton @click="showConflict=true">
-						<SyncAlertIcon slot="icon" :size="18" fill-color="var(--color-text)" />
+					</NcActionButton>
+				</NcActions>
+				<NcActions v-if="note.conflict" class="action-error">
+					<NcActionButton @click="showConflict=true">
+						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
-					</ActionButton>
-				</Actions>
+					</NcActionButton>
+				</NcActions>
 			</span>
 		</div>
-	</AppContent>
+	</NcAppContent>
 </template>
 <script>
 
 import {
-	Actions,
-	ActionButton,
-	AppContent,
-	Modal,
+	NcActions,
+	NcActionButton,
+	NcAppContent,
+	NcModal,
 	Tooltip,
 	isMobile,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 
-import SyncAlertIcon from 'vue-material-design-icons/SyncAlert'
-import PencilOffIcon from 'vue-material-design-icons/PencilOff'
+import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
+import EyeIcon from 'vue-material-design-icons/Eye.vue'
+import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
+import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
+import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
+import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
-import { config } from '../config'
-import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService'
-import { routeIsNewNote } from '../Util'
-import TheEditor from './EditorEasyMDE'
-import ThePreview from './EditorMarkdownIt'
-import ConflictSolution from './ConflictSolution'
-import store from '../store'
+import { config } from '../config.js'
+import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
+import { routeIsNewNote } from '../Util.js'
+import TheEditor from './EditorEasyMDE.vue'
+import ThePreview from './EditorMarkdownIt.vue'
+import ConflictSolution from './ConflictSolution.vue'
+import store from '../store.js'
 
 export default {
 	name: 'Note',
 
 	components: {
-		Actions,
-		ActionButton,
-		AppContent,
 		ConflictSolution,
-		Modal,
-		PencilOffIcon,
+		EditIcon,
+		EyeIcon,
+		FullscreenIcon,
+		NcActions,
+		NcActionButton,
+		NcAppContent,
+		NcModal,
+		NoEditIcon,
+		SidebarIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
@@ -212,7 +228,7 @@ export default {
 
 			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.preview = store.state.app.settings.noteMode === 'preview'
+			this.preview = store.state.app.settings.noteMode === 'preview' && !this.isNewNote
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
 					if (note.error) {
@@ -383,11 +399,13 @@ export default {
 		},
 
 		onUseLocalVersion() {
+			console.debug('conflict solution: use local version')
 			conflictSolutionLocal(this.note)
 			this.showConflict = false
 		},
 
 		onUseRemoteVersion() {
+			console.debug('conflict solution: use remote version')
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
@@ -461,13 +479,10 @@ export default {
 	top: 0px;
 }
 
-.action-buttons button {
-	padding: 15px;
-}
-
 /* Conflict Modal */
 .conflict-modal {
 	width: 70vw;
+	margin: auto;
 }
 
 .conflict-header {

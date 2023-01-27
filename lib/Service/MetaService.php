@@ -49,8 +49,8 @@ use OCA\Notes\Db\MetaMapper;
  * with this approach! :-)
  */
 class MetaService {
-	private $metaMapper;
-	private $util;
+	private MetaMapper $metaMapper;
+	private Util $util;
 
 	public function __construct(MetaMapper $metaMapper, Util $util) {
 		$this->metaMapper = $metaMapper;
@@ -75,11 +75,14 @@ class MetaService {
 			}
 		}
 
+		$insertErrorCount = 0;
 		// insert/update changes
 		foreach ($notes as $id => $note) {
 			if (!array_key_exists($id, $metas)) {
 				// INSERT new notes
-				$meta = $this->createMeta($userId, $note);
+				$meta = $this->createMeta($userId, $note, function () use (&$insertErrorCount) {
+					$insertErrorCount++;
+				});
 			} else {
 				// UPDATE changed notes
 				$meta = $metas[$id];
@@ -88,6 +91,18 @@ class MetaService {
 				}
 			}
 			$result[$id] = new MetaNote($note, $meta);
+		}
+		if ($insertErrorCount) {
+			if ($insertErrorCount == count($notes)) {
+				$this->util->logger->warning(
+					'Database failed inserting Meta objects for all '.$insertErrorCount.' notes. '.
+					'If this happens consistently, there is a problem with your database.',
+				);
+			} else {
+				$this->util->logger->warning(
+					'Database failed inserting Meta objects for '.$insertErrorCount.' times.',
+				);
+			}
 		}
 		return $result;
 	}
@@ -116,7 +131,7 @@ class MetaService {
 		return $result;
 	}
 
-	private function createMeta(string $userId, Note $note) : Meta {
+	private function createMeta(string $userId, Note $note, callable $onError = null) : Meta {
 		$meta = new Meta();
 		$meta->setUserId($userId);
 		$meta->setFileId($note->getId());
@@ -129,7 +144,12 @@ class MetaService {
 			// We can ignore this, since the result should be the same.
 			// But we log it for being able to detect other problems.
 			// (If this happens often, this may cause performance problems.)
-			$this->util->logger->warning(
+			$loglevel = 'warning';
+			if ($onError) {
+				$onError();
+				$loglevel = 'debug';
+			}
+			$this->util->logger->$loglevel(
 				'Could not insert meta data for note '.$note->getId(),
 				[ 'exception' => $e ]
 			);

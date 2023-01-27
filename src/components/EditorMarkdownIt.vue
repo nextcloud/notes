@@ -15,6 +15,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		readonly: {
+			type: Boolean,
+			required: true,
+		},
 		noteid: {
 			type: String,
 			required: true,
@@ -29,7 +33,7 @@ export default {
 		})
 
 		md.use(require('markdown-it-task-checkbox'), {
-			disabled: true,
+			disabled: this.readonly,
 			liClass: 'task-list-item',
 		})
 
@@ -45,13 +49,56 @@ export default {
 
 	created() {
 		this.setImageRule(this.noteid)
+
+		this.setInlineCodeRule()
 		this.onUpdate()
 	},
 
 	methods: {
 		onUpdate() {
 			this.html = this.md.render(this.value)
+			if (!this.readonly) {
+				setTimeout(() => this.prepareOnClickListener(), 100)
+			}
 		},
+
+		prepareOnClickListener() {
+			const items = document.getElementsByClassName('task-list-item')
+			for (let i = 0; i < items.length; ++i) {
+				items[i].removeEventListener('click', this.onClickListItem)
+				items[i].addEventListener('click', this.onClickListItem)
+			}
+		},
+
+		onClickListItem(event) {
+			event.stopPropagation()
+			let idOfCheckbox = 0
+			const markdownLines = this.value.split('\n')
+			markdownLines.forEach((line, i) => {
+				// Regex Source: https://github.com/linsir/markdown-it-task-checkbox/blob/master/index.js#L121
+				// plus the '- '-string.
+				if (/^[-+*]\s+\[[xX \u00A0]\][ \u00A0]/.test(line.trim())) {
+					markdownLines[i] = this.checkLine(line, i, idOfCheckbox, event.target)
+					idOfCheckbox++
+				}
+			})
+
+			this.$emit('input', markdownLines.join('\n'))
+		},
+
+		checkLine(line, index, id, target) {
+			let returnValue = line
+			if ('cbx_' + id === target.id) {
+				if (target.checked) {
+					returnValue = returnValue.replace(/\[[ \u00A0]\]/, '[x]')
+				} else {
+					// matches [x] or [X], to prevent two occurences of uppercase and lowercase X to be replaced
+					returnValue = returnValue.replace(/\[[xX]\]/, '[ ]')
+				}
+			}
+			return returnValue
+		},
+
 		setImageRule(id) {
 			// https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
 			// Remember old renderer, if overridden, or proxy to default renderer
@@ -63,26 +110,46 @@ export default {
 				// If you are sure other plugins can't add `target` - drop check below
 				const token = tokens[idx]
 				const aIndex = token.attrIndex('src')
+				let download = false
 				let path = token.attrs[aIndex][1]
 
-				if (!path.startsWith('http')) {
-					path = generateUrl('apps/notes/notes/{id}/attachment?path={path}', { id, path })
+				if (!path.startsWith('http://')
+					&& !path.startsWith('https://')
+					&& !path.startsWith('data:')
+				) {
+					path = path.split('?').shift()
+					const lowecasePath = path.toLowerCase()
+					path = generateUrl(
+						'apps/notes/notes/{id}/attachment?path={path}',
+						{ id, path: decodeURIComponent(path) },
+					)
+					token.attrs[aIndex][1] = path
+
+					if (!lowecasePath.endsWith('.jpg')
+						&& !lowecasePath.endsWith('.jpeg')
+						&& !lowecasePath.endsWith('.bmp')
+						&& !lowecasePath.endsWith('.webp')
+						&& !lowecasePath.endsWith('.gif')
+						&& !lowecasePath.endsWith('.png')
+					) {
+						download = true
+					}
 				}
 
-				token.attrs[aIndex][1] = path
-				const lowecasePath = path.toLowerCase()
-				// pass token to default renderer.
-				if (lowecasePath.endsWith('jpg')
-					|| lowecasePath.endsWith('jpeg')
-					|| lowecasePath.endsWith('bmp')
-					|| lowecasePath.endsWith('webp')
-					|| lowecasePath.endsWith('gif')
-					|| lowecasePath.endsWith('png')) {
-					return defaultRender(tokens, idx, options, env, self)
-				} else {
+				if (download) {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
 					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" src="' + dlimgpath + '">' + token.content + '</div></a></div>'
+				} else {
+					// pass token to default renderer.
+					return defaultRender(tokens, idx, options, env, self)
 				}
+			}
+		},
+
+		setInlineCodeRule() {
+			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
+				const token = tokens[idx]
+				return '<code class="inline-code">' + token.content + '</code>'
 			}
 		},
 	},
@@ -146,13 +213,6 @@ export default {
 		color: var(--color-primary-element);
 	}
 
-	& pre, & code {
-		background: var(--color-background-dark);
-		font-size: 90%;
-		padding: 0.2ex 0.5ex;
-		white-space: pre-wrap;
-	}
-
 	& pre code {
 		font-size: inherit;
 		padding: 0;
@@ -165,22 +225,12 @@ export default {
 		color: var(--color-text-light)
 	}
 
-	& table th {
-		font-weight: bold;
-	}
-
-	& table td, & table th {
-		padding-right: 1.5em;
-	}
-
-	& table td:empty::after {
-		content: '\00a0';
-	}
-
 	.task-list-item {
 		list-style-type: none;
 		input {
 			min-height: initial !important;
+			height: auto !important;
+			cursor: pointer;
 		}
 		label {
 			cursor: default;
@@ -189,23 +239,17 @@ export default {
 
 	& img {
 		width: 75%;
-		margin-left: auto;
-		margin-right: auto;
 		display: block;
 	}
 
 	.download-file {
 		width: 75%;
-		margin-left: auto;
-		margin-right: auto;
 		display: block;
 		text-align: center;
 	}
 
 	.download-icon {
 		padding: 15px;
-		margin-left: auto;
-		margin-right: auto;
 		width: 75%;
 		border-radius: 10px;
 		background-color: var(--color-background-dark);
@@ -213,14 +257,59 @@ export default {
 	}
 
 	.download-icon:hover {
-		border: 1px var(--color-primary-element) solid;
+		border-color: var(--color-primary-element);
 	}
 
 	.download-icon-inner {
 		height: 3em;
 		width: auto;
+		margin-left: auto;
+		margin-right: auto;
 		margin-bottom: 5px;
 	}
 
+	& table {
+		width: calc(100% - 50px);
+		table-layout: auto;
+		margin-top: 2em;
+		margin-bottom: 2em;
+		border-radius: 0.5em;
+		border-collapse: collapse;
+		border-style: hidden;
+		box-shadow: 0 0 0 1px var(--color-border);
+	}
+
+	& table td, & table th {
+		padding: 0.35em 0.5em;
+		text-align: left;
+		border: 1px solid var(--color-border);
+	}
+
+	& table tr:hover {
+		background-color: var(--color-primary-element-lighter);
+	}
+
+	& table th {
+		font-weight: bold;
+	}
+
+	& table td:empty::after {
+		content: '\00a0';
+	}
+
+	pre {
+		border-radius: 10px;
+		padding: 15px;
+		background: var(--color-background-dark);
+		font-size: 90%;
+		white-space: pre-wrap;
+	}
+
+	.inline-code {
+		border-radius: 8px;
+		padding: 3px 8px;
+		background: var(--color-background-dark);
+		font-size: 85%;
+	}
 }
 </style>

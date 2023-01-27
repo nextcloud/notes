@@ -1,5 +1,5 @@
 <template>
-	<AppNavigationItem
+	<NcAppNavigationItem
 		:title="title"
 		:icon="icon"
 		:menu-open.sync="actionsOpen"
@@ -12,38 +12,38 @@
 		@update:title="onRename"
 	>
 		<template #actions>
-			<ActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
+			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
-			</ActionButton>
-			<ActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
+			</NcActionButton>
+			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
-			</ActionButton>
-			<ActionSeparator />
-			<ActionButton icon="icon-files-dark" @click="onCategorySelected">
+			</NcActionButton>
+			<NcActionSeparator />
+			<NcActionButton icon="icon-files-dark" @click="onCategorySelected">
 				{{ actionCategoryText }}
-			</ActionButton>
+			</NcActionButton>
 		</template>
-	</AppNavigationItem>
+	</NcAppNavigationItem>
 </template>
 
 <script>
 import {
-	ActionButton,
-	ActionSeparator,
-	AppNavigationItem,
+	NcActionButton,
+	NcActionSeparator,
+	NcAppNavigationItem,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 
-import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService'
-import { categoryLabel, routeIsNewNote } from '../Util'
+import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
+import { categoryLabel, routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NavigationNoteItem',
 
 	components: {
-		ActionButton,
-		ActionSeparator,
-		AppNavigationItem,
+		NcActionButton,
+		NcActionSeparator,
+		NcAppNavigationItem,
 	},
 
 	props: {

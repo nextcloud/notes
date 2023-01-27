@@ -4,7 +4,7 @@ OC.L10N.register(
     "Notes" : "নোট",
     "Error" : "সমস্যা",
     "New note" : "নতুন নোট",
-    "Settings" : "সেটিংস",
+    "Help" : "সহায়িকা",
     "Today" : "আজ",
     "Yesterday" : "গতকাল",
     "Rename" : "পূনঃনামকরণ",
@@ -12,6 +12,7 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Details" : "বিসতারিত",
-    "Edit" : "সম্পাদনা"
+    "Edit" : "সম্পাদনা",
+    "Tasks" : "কর্ম"
 },
 "nplurals=2; plural=(n != 1);");

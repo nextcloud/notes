@@ -11,12 +11,10 @@ use OCP\IDBConnection;
 
 class NoteUtil {
 	private const MAX_TITLE_LENGTH = 100;
-	/** @var Util */
-	public $util;
-	private $db;
-	private $root;
-	private $tagService;
-	private $cachedTags;
+	public Util $util;
+	private IDBConnection $db;
+	private IRootFolder $root;
+	private TagService $tagService;
 
 	public function __construct(
 		Util $util,
@@ -147,10 +145,10 @@ class NoteUtil {
 	 * @param string $path path to the folder
 	 * @return Folder
 	 */
-	public function getOrCreateFolder(string $path) : Folder {
+	public function getOrCreateFolder(string $path, bool $create = true) : Folder {
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
-		} else {
+		} elseif ($create) {
 			$folder = $this->root->newFolder($path);
 		}
 		if (!($folder instanceof Folder)) {

@@ -1,5 +1,5 @@
 <template>
-	<AppSidebar v-if="sidebarOpen"
+	<NcAppSidebar v-if="sidebarOpen"
 		:title="title"
 		:subtitle="subtitle"
 		:star-loading="loading.favorite"
@@ -8,10 +8,17 @@
 		@close="onCloseSidebar"
 	>
 		<div class="sidebar-content-wrapper">
-			<div v-if="!note.readonly" class="note-category" :title="t('notes', 'Set category')">
-				<h4>{{ t('notes', 'Category') }} <span v-tooltip="categoriesInfo" class="icon-info svg" /></h4>
+			<div v-if="!note.readonly" class="note-category">
+				<h4>
+					{{ t('notes', 'Category') }}
+					<InfoIcon v-tooltip="categoriesInfo"
+						:size="20"
+						fill-color="var(--color-main-text)"
+						style="display: inline-block; margin-left: 1ex;"
+					/>
+				</h4>
 				<form class="category" @submit.prevent.stop="">
-					<Multiselect id="category"
+					<NcMultiselect id="category"
 						:value="category"
 						:options="categories"
 						:placeholder="t('notes', 'Uncategorized')"
@@ -20,6 +27,7 @@
 						:show-no-results="false"
 						:taggable="true"
 						:preserve-search="true"
+						:title="t('notes', 'Set category')"
 						@input="onSaveCategory"
 						@close="onFinishEditCategory"
 						@search-change="onEditCategory"
@@ -27,16 +35,7 @@
 						<template #option="{ option }">
 							<span :class="{ gray: option==='' }">{{ option | categoryOptionLabel }}</span>
 						</template>
-					</Multiselect>
-					<input
-						type="text"
-						style="display: none"
-					><input
-						type="submit"
-						value=""
-						class="icon-confirm loading"
-						:disabled="loading.category"
-					>
+					</NcMultiselect>
 				</form>
 			</div>
 			<div class="modified"
@@ -50,27 +49,30 @@
 				<span v-show="note.unsaved" :title="t('notes', 'Note has unsaved changes')"> * </span>
 			</div>
 		</div>
-	</AppSidebar>
+	</NcAppSidebar>
 </template>
 <script>
 
 import {
-	AppSidebar,
-	Multiselect,
+	NcAppSidebar,
+	NcMultiselect,
 	Tooltip,
 } from '@nextcloud/vue'
 import moment from '@nextcloud/moment'
 
-import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService'
-import { categoryLabel } from '../Util'
-import store from '../store'
+import InfoIcon from 'vue-material-design-icons/Information.vue'
+
+import { getCategories, setFavorite, setCategory, saveNoteManually } from '../NotesService.js'
+import { categoryLabel } from '../Util.js'
+import store from '../store.js'
 
 export default {
 	name: 'Sidebar',
 
 	components: {
-		AppSidebar,
-		Multiselect,
+		InfoIcon,
+		NcAppSidebar,
+		NcMultiselect,
 	},
 
 	directives: {

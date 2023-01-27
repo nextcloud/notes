@@ -1,53 +1,60 @@
 <template>
-	<AppNavigationItem
+	<NcAppNavigationItem
 		:title="title"
-		icon="icon-files"
 		class="app-navigation-noclose separator-below"
 		:class="{ 'category-header': selectedCategory !== null }"
 		:open.sync="open"
 		:allow-collapse="true"
 		@click.prevent.stop="onToggleCategories"
 	>
-		<AppNavigationItem
+		<FolderIcon slot="icon" :size="20" />
+		<NcAppNavigationItem
 			:title="t('notes', 'All notes')"
-			icon="icon-recent"
 			@click.prevent.stop="onSelectCategory(null)"
 		>
-			<AppNavigationCounter slot="counter">
+			<HistoryIcon slot="icon" :size="20" />
+			<NcAppNavigationCounter slot="counter">
 				{{ numNotes }}
-			</AppNavigationCounter>
-		</AppNavigationItem>
+			</NcAppNavigationCounter>
+		</NcAppNavigationItem>
 
-		<AppNavigationItem v-for="category in categories"
+		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"
 			:title="categoryTitle(category.name)"
-			:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
 			@click.prevent.stop="onSelectCategory(category.name)"
 		>
-			<AppNavigationCounter slot="counter">
+			<FolderOutlineIcon v-if="category.name === ''" slot="icon" :size="20" />
+			<FolderIcon v-else slot="icon" :size="20" />
+			<NcAppNavigationCounter slot="counter">
 				{{ category.count }}
-			</AppNavigationCounter>
-		</AppNavigationItem>
-	</AppNavigationItem>
+			</NcAppNavigationCounter>
+		</NcAppNavigationItem>
+	</NcAppNavigationItem>
 </template>
 
 <script>
 import {
-	AppNavigationItem,
-	AppNavigationCounter,
+	NcAppNavigationItem,
+	NcAppNavigationCounter,
 } from '@nextcloud/vue'
 
-import { getCategories } from '../NotesService'
-import { categoryLabel } from '../Util'
+import FolderIcon from 'vue-material-design-icons/Folder.vue'
+import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import HistoryIcon from 'vue-material-design-icons/History.vue'
 
-import store from '../store'
+import { getCategories } from '../NotesService.js'
+import { categoryLabel } from '../Util.js'
+import store from '../store.js'
 
 export default {
 	name: 'NavigationCategoriesItem',
 
 	components: {
-		AppNavigationItem,
-		AppNavigationCounter,
+		FolderIcon,
+		FolderOutlineIcon,
+		HistoryIcon,
+		NcAppNavigationItem,
+		NcAppNavigationCounter,
 	},
 
 	props: {

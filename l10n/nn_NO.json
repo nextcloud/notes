@@ -2,7 +2,7 @@
     "Notes" : "Notat",
     "Error" : "Feil",
     "New note" : "Nytt notat",
-    "Settings" : "Instillingar",
+    "Help" : "Hjelp",
     "Today" : "I dag",
     "Yesterday" : "i går",
     "Rename" : "Gje nytt namn",
@@ -11,6 +11,7 @@
     "Add to favorites" : "Add to favorites",
     "Details" : "Detaljar",
     "Edit" : "Endra",
-    "Category" : "Kategori"
+    "Category" : "Kategori",
+    "Tasks" : "Oppgåver"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

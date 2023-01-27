@@ -9,10 +9,8 @@ use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
 class Util {
-	/** @var IL10N */
-	public $l10n;
-	/** @var LoggerInterface */
-	public $logger;
+	public IL10N $l10n;
+	public LoggerInterface $logger;
 
 	public function __construct(
 		IL10N $l10n,

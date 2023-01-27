@@ -5,8 +5,9 @@ OC.L10N.register(
     "Error" : "Eraro",
     "New note" : "Nova noto",
     "Distraction-free notes and writing" : "Sendistraj notoj kaj skribado",
+    "Help" : "Helpo",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Estas nekonservitaj notoj. Foriro el la paĝo perdos ĉiujn ŝanĝojn!",
-    "Settings" : "Agordoj",
+    "Insert image" : "Enmeti bildon",
     "Folder to store your notes" : "Dosiero, en kiu konservi viajn notojn",
     "File extension for new notes" : "Dosiersufikso por novaj notoj",
     "All notes" : "Ĉiuj notoj",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Delete note" : "Forigi noton",
     "Remove from favorites" : "Forigi el pliŝataĵoj",
     "Add to favorites" : "Aldoni al pliŝataĵoj",
+    "Use current version" : "Uzi nunan version",
     "Details" : "Detaloj",
     "Edit" : "Modifi",
     "Preview" : "Antaŭvidi",
@@ -25,8 +27,7 @@ OC.L10N.register(
     "Uncategorized" : "Senkategoria",
     "Saving failed!" : "Konservado malsukcesis!",
     "_%n word_::_%n words_" : ["%n vorto","%n vortoj"],
-    "Android app" : "Android-aplikaĵo",
-    "iOS app" : "iOS-aplikaĵo",
-    "Updating the note's category has failed. Is the target directory writable?" : "Ĝisdaztigo de la nota kategorio malsukcesis. Ĉu la celdosierujo skribeblas?"
+    "Updating the note's category has failed. Is the target directory writable?" : "Ĝisdaztigo de la nota kategorio malsukcesis. Ĉu la celdosierujo skribeblas?",
+    "Tasks" : "Taskoj"
 },
 "nplurals=2; plural=(n != 1);");

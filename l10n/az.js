@@ -4,7 +4,7 @@ OC.L10N.register(
     "Notes" : "Qeydlər",
     "Error" : "Səhv",
     "New note" : "Yeni qeyd",
-    "Settings" : "Quraşdırmalar",
+    "Help" : "Kömək",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Rename" : "Adı dəyiş",
@@ -13,7 +13,6 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Details" : "Detallar",
     "Edit" : "Dəyişiklik et",
-    "Android app" : "Android proqramı",
-    "iOS app" : "iOS proqramı"
+    "Tasks" : "Tapşırıqlar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -20,15 +20,10 @@ use OCP\IUserSession;
 use Psr\Log\LoggerInterface;
 
 class Helper {
-
-	/** @var NotesService */
-	private $notesService;
-	/** @var MetaService */
-	private $metaService;
-	/** @var LoggerInterface */
-	public $logger;
-	/** @var IUserSession */
-	private $userSession;
+	private NotesService $notesService;
+	private MetaService $metaService;
+	public LoggerInterface $logger;
+	private IUserSession $userSession;
 
 	public function __construct(
 		NotesService $notesService,
@@ -79,7 +74,7 @@ class Helper {
 		$userId = $this->getUID();
 		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
 		$lastUpdate = $chunkCursor->timeStart ?? new \DateTime();
-		$data = $this->notesService->getAll($userId);
+		$data = $this->notesService->getAll($userId, true); // auto-create notes folder if not exists
 		$metaNotes = $this->metaService->getAll($userId, $data['notes']);
 
 		// if a category is requested, then ignore all other notes

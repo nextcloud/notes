@@ -1,26 +1,26 @@
 <template>
 	<div>
 		<div class="upload-button">
-			<Actions
+			<NcActions
 				container=".upload-button"
 				default-icon="icon-picture"
 				menu-align="right"
 			>
-				<ActionButton
+				<NcActionButton
 					icon="icon-upload"
 					:close-after-click="true"
-					@click="onClickUpload"
+					@click="onClickUploadImage"
 				>
 					{{ t('notes', 'Upload image') }}
-				</ActionButton>
-				<ActionButton
+				</NcActionButton>
+				<NcActionButton
 					icon="icon-picture"
 					:close-after-click="true"
-					@click="onClickSelect"
+					@click="onClickInsertImage"
 				>
 					{{ t('notes', 'Insert image') }}
-				</ActionButton>
-			</Actions>
+				</NcActionButton>
+			</NcActions>
 		</div>
 		<div class="markdown-editor" @click="onClickEditor">
 			<textarea />
@@ -32,21 +32,22 @@
 import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import store from '../store'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 import {
-	Actions,
-	ActionButton,
+	NcActions,
+	NcActionButton,
 } from '@nextcloud/vue'
 import { basename, relative } from 'path'
+
+import store from '../store.js'
 
 export default {
 	name: 'EditorEasyMDE',
 
 	components: {
-		Actions,
-		ActionButton,
+		NcActions,
+		NcActionButton,
 	},
 
 	props: {
@@ -109,6 +110,10 @@ export default {
 				element: this.$el.lastElementChild.firstElementChild,
 				initialValue: this.value,
 				renderingConfig: {},
+				shortcuts: {
+					toggleSideBySide: null,
+					togglePreview: null,
+				},
 			}, this.config)
 
 			this.mde = new EasyMDE(config)
@@ -140,7 +145,7 @@ export default {
 
 		onClickCodeElement(event) {
 			const element = event.target.closest('.cm-formatting-task')
-			if (element !== null) {
+			if (element !== null && !this.readonly) {
 				event.preventDefault()
 				event.stopImmediatePropagation()
 				this.toggleCheckbox(event.target)
@@ -171,7 +176,7 @@ export default {
 			}
 		},
 
-		async onClickSelect() {
+		async onClickInsertImage() {
 			const apppath = '/' + store.state.app.settings.notesPath + '/'
 			const currentNotePath = apppath + this.notecategory
 
@@ -190,7 +195,8 @@ export default {
 					}
 					const label = basename(path)
 					const relativePath = relative(currentNotePath, path)
-					doc.replaceRange('![' + label + '](' + relativePath + ')\n', { line: cursor.line })
+					const encodedPath = relativePath.split('/').map(encodeURIComponent).join('/')
+					doc.replaceRange('![' + label + '](' + encodedPath + ')\n', { line: cursor.line })
 					this.mde.codemirror.focus()
 				},
 				false,
@@ -201,7 +207,7 @@ export default {
 			)
 		},
 
-		async onClickUpload() {
+		async onClickUploadImage() {
 			const cm = this.mde.codemirror
 			const doc = this.mde.codemirror.getDoc()
 			const cursor = this.mde.codemirror.getCursor()
@@ -345,19 +351,19 @@ export default {
 	position: absolute;
 	background-color: var(--color-main-background);
 	border: 1px solid #878787;
-	border-radius: 1px;
+	border-radius: var(--border-radius);
 	background-position: center;
-	margin-top: 3px;
+	margin-top: 5px;
 	margin-left: 2px;
 }
 
 .CodeMirror .cm-formatting-task.cm-property::before {
-	background-image: var(--icon-checkmark-fff);
+	background-image: var(--icon-checkmark-white);
 	background-color: var(--color-primary-element);
 	border-color: var(--color-primary-element);
 }
 
-.CodeMirror .cm-formatting-task.cm-property + span {
+.CodeMirror .cm-formatting-task.cm-property ~ span {
 	opacity: 0.5;
 	text-decoration: line-through;
 }

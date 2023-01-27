@@ -11,12 +11,14 @@ use OCP\IL10N;
 use OCP\Files\IRootFolder;
 
 class SettingsService {
-	private $config;
-	private $l10n;
-	private $root;
+	private IConfig $config;
+	private IL10N $l10n;
+	private IRootFolder $root;
 
 	/* Allowed attributes */
-	private $attrs;
+	private array $attrs;
+
+	private $defaultSuffixes = [ '.txt', '.md' ];
 
 	public function __construct(
 		IConfig $config,
@@ -27,7 +29,7 @@ class SettingsService {
 		$this->l10n = $l10n;
 		$this->root = $root;
 		$this->attrs = [
-			'fileSuffix' => $this->getListAttrs('.txt', '.md', 'custom'),
+			'fileSuffix' => $this->getListAttrs(...[...$this->defaultSuffixes, 'custom']),
 			'notesPath' => [
 				'default' => function (string $uid) {
 					return $this->getDefaultNotesPath($uid);
@@ -48,11 +50,11 @@ class SettingsService {
 			],
 			'noteMode' => $this->getListAttrs('edit', 'preview'),
 			'customSuffix' => [
-				'default' => '.txt',
+				'default' => $this->defaultSuffixes[0],
 				'validate' => function ($value) {
 					$out = ltrim(preg_replace('/[^A-Za-z0-9.-]/', '', $value), '.');
 					if (empty($out)) {
-						$out = 'txt';
+						$out = substr($this->defaultSuffixes[0], 1);
 					}
 					return '.' . $out;
 				},
@@ -110,6 +112,20 @@ class SettingsService {
 		$this->config->setUserValue($uid, Application::APP_ID, 'settings', json_encode($settings));
 	}
 
+	/**
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	public function setPublic(string $uid, array $settings) : void {
+		if (array_key_exists('fileSuffix', $settings)
+			&& $settings['fileSuffix'] !== null
+			&& !in_array($settings['fileSuffix'], $this->defaultSuffixes)
+		) {
+			$settings['customSuffix'] = $settings['fileSuffix'];
+			$settings['fileSuffix'] = 'custom';
+		}
+		$this->set($uid, $settings);
+	}
+
 	private function getSettingsFromDB(string $uid) : \stdClass {
 		$settings = json_decode($this->config->getUserValue($uid, Application::APP_ID, 'settings'));
 		if (!is_object($settings)) {
@@ -118,7 +134,7 @@ class SettingsService {
 		return $settings;
 	}
 
-	public function getAll(string $uid) : \stdClass {
+	public function getAll(string $uid, $saveInitial = false) : \stdClass {
 		$settings = $this->getSettingsFromDB($uid);
 		// use default for empty settings
 		$toBeSaved = false;
@@ -127,7 +143,7 @@ class SettingsService {
 				$defaultValue = $attr['default'];
 				if (is_callable($defaultValue)) {
 					$settings->{$name} = $defaultValue($uid);
-					$toBeSaved = true;
+					$toBeSaved = $saveInitial;
 				} else {
 					$settings->{$name} = $defaultValue;
 				}
@@ -149,5 +165,16 @@ class SettingsService {
 		} else {
 			throw new \OCP\PreConditionNotMetException('Setting '.$name.' not found for user '.$uid.'.');
 		}
+	}
+
+	public function getPublic(string $uid) : \stdClass {
+		// initialize and load settings
+		$settings = $this->getAll($uid, true);
+		// translate internal settings to public settings
+		if ($settings->fileSuffix === 'custom') {
+			$settings->fileSuffix = $settings->customSuffix;
+		}
+		unset($settings->customSuffix);
+		return $settings;
 	}
 }

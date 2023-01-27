@@ -2,7 +2,7 @@
     "Notes" : "Qeydlər",
     "Error" : "Səhv",
     "New note" : "Yeni qeyd",
-    "Settings" : "Quraşdırmalar",
+    "Help" : "Kömək",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Rename" : "Adı dəyiş",
@@ -11,7 +11,6 @@
     "Add to favorites" : "Add to favorites",
     "Details" : "Detallar",
     "Edit" : "Dəyişiklik et",
-    "Android app" : "Android proqramı",
-    "iOS app" : "iOS proqramı"
+    "Tasks" : "Tapşırıqlar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

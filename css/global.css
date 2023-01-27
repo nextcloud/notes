@@ -1,0 +1,10 @@
+.icon-notes {
+	background-image: url(../img/notes-dark.svg);
+	filter: var(--background-invert-if-dark);
+}
+
+.icon-notes-trans {
+	background-image: url(../img/notes-trans.svg);
+	filter: var(--background-invert-if-dark);
+}
+

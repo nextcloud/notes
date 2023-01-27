@@ -13,6 +13,52 @@ Types of changes:
 - *Security* in case of vulnerabilities. 
 
 
+## 4.6.0 - 2022-10-14
+
+- Compatibility with Nextcloud 25 (#927, #928)
+- make code-blocks nicer (#892 by @newhinton)
+- maintenance (#926, #929)
+
+
+## 4.5.1 - 2022-09-04
+
+- always use edit mode when creating a new note (#912)
+- maintenance (#911, #913, #914)
+
+
+## 4.5.0 - 2022-08-13
+
+- Allow Checkbox to be toggled in viewmode (#861 by @newhinton)
+- Update table style (#878 by @newhinton)
+- Add a button to create a new note to the dashboard (#873 by @salixor)
+- rename settings to Notes settings (#891)
+- auto create notes folder only if app is opened (#890)
+- fix minor API version (#898)
+- fix loading (should fix some error situations) (#897)
+- maintenance (#888, #893, #899)
+
+
+## 4.4.0 - 2022-07-10
+
+### Added
+- Add support for images/attachments (by @newhinton, #785, #823, #834)
+- Allow custom file extensions (#795 by @vincowl)
+- external API for custom file extension (#850)
+
+### Fixed
+- break long words in preview mode (#817)
+- allow empty settings (required for root directory) (#819)
+- don't ignore newlines in preview mode (#820)
+- fix noteservice not returning the final filename (#821 by @newhinton)
+- fix undo deletes note (#825)
+- fix conflict solution (#849)
+- disable some shortcuts in editor mode (#865 by @newhinton)
+- fix checked list item with backslash (#867)
+- fix checkbox editable in read-only mode (#876)
+
+- maintenance (#803, #808, #813, #827, #829, #830, #833, #835, #838, #840, #844, #846, #847, #848, #851, #853, #874, #877)
+
+
 ## 4.3.1 - 2022-02-27
 
 - add support for PHP 8.1, maintenance (#824)

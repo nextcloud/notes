@@ -4,7 +4,7 @@ OC.L10N.register(
     "Notes" : "Catatan",
     "Error" : "Kesalahan",
     "New note" : "Catatan baru",
-    "Settings" : "Setelan",
+    "Help" : "Bantuan",
     "No notes yet" : "Belum ada catatan",
     "All notes" : "Semua catatan",
     "Categories" : "Kategori",
@@ -21,7 +21,6 @@ OC.L10N.register(
     "Preview" : "Pratinjau",
     "Category" : "Kategori",
     "_%n word_::_%n words_" : ["%n kata"],
-    "Android app" : "Aplikasi Android",
-    "iOS app" : "Aplikasi iOS"
+    "Tasks" : "Tugas"
 },
 "nplurals=1; plural=0;");

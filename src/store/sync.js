@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { set } from 'vue'
 
 const state = {
 	queue: {},
@@ -15,7 +15,7 @@ const mutations = {
 	addToQueue(state, { noteId, type }) {
 		const cmd = { noteId, type }
 		const key = noteId + '-' + type
-		Vue.set(state.queue, key, cmd)
+		set(state.queue, key, cmd)
 	},
 
 	clearQueue(state) {

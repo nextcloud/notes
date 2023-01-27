@@ -4,7 +4,8 @@ OC.L10N.register(
     "Notes" : "සටහන්",
     "Error" : "දෝෂය",
     "New note" : "නව සටහන",
-    "Settings" : "සැකසුම්",
+    "Help" : "උපකාර",
+    "No notes yet" : "තවම සටහන් නැත",
     "All notes" : "සියලුම සටහන්",
     "Loading …" : "පූරණය වෙමින් …",
     "Today" : "අද",
@@ -15,6 +16,9 @@ OC.L10N.register(
     "Last month" : "පසුගිය මාසය",
     "Rename" : "නැවත නම් කරන්න",
     "Details" : "විස්තර",
-    "Edit" : "සංස්කරණය"
+    "Edit" : "සංස්කරණය",
+    "Preview" : "පෙරදසුන",
+    "Category" : "ප්‍රවර්ගය",
+    "Tasks" : "කාර්යයන්"
 },
 "nplurals=2; plural=(n != 1);");

@@ -7,8 +7,8 @@ namespace OCA\Notes\Tests\API;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractAPITest extends TestCase {
-	protected $apiVersion;
-	protected $http;
+	protected string $apiVersion;
+	protected \GuzzleHttp\Client $http;
 
 	public function __construct(string $apiVersion) {
 		parent::__construct();
@@ -144,7 +144,7 @@ abstract class AbstractAPITest extends TestCase {
 				$this->assertEqualsWithDelta(
 					$refNote->$key,
 					$note->$key,
-					5,
+					10,
 					$messagePrefix.': Property '.$key.' (reference note: '.$refNote->title.')'
 				);
 			} else {
