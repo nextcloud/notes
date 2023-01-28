@@ -6,10 +6,12 @@ namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\NotesService;
 
+use OCA\Text\Event\LoadEditor;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Http\RedirectResponse;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
@@ -18,18 +20,21 @@ class PageController extends Controller {
 	private NotesService $notesService;
 	private IUserSession $userSession;
 	private IURLGenerator $urlGenerator;
+	private IEventDispatcher $eventDispatcher;
 
 	public function __construct(
 		string $AppName,
 		IRequest $request,
 		NotesService $notesService,
 		IUserSession $userSession,
-		IURLGenerator $urlGenerator
+		IURLGenerator $urlGenerator,
+		IEventDispatcher $eventDispatcher
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
 		$this->userSession = $userSession;
 		$this->urlGenerator = $urlGenerator;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 
@@ -44,6 +49,10 @@ class PageController extends Controller {
 			$devMode ? 'dev-mode' : 'main',
 			[ ]
 		);
+
+		if (class_exists(LoadEditor::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadEditor());
+		}
 
 		$csp = new ContentSecurityPolicy();
 		$csp->addAllowedImageDomain('*');
