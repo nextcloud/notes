@@ -29,7 +29,7 @@ class SettingsService {
 		$this->l10n = $l10n;
 		$this->root = $root;
 		$this->attrs = [
-			'fileSuffix' => $this->getListAttrs(...[...$this->defaultSuffixes, 'custom']),
+			'fileSuffix' => $this->getListAttrs('fileSuffix', [...$this->defaultSuffixes, 'custom']),
 			'notesPath' => [
 				'default' => function (string $uid) {
 					return $this->getDefaultNotesPath($uid);
@@ -48,7 +48,7 @@ class SettingsService {
 					return implode(DIRECTORY_SEPARATOR, $path);
 				},
 			],
-			'noteMode' => $this->getListAttrs('edit', 'preview'),
+			'noteMode' => $this->getListAttrs('noteMode', ['edit', 'preview']),
 			'customSuffix' => [
 				'default' => $this->defaultSuffixes[0],
 				'validate' => function ($value) {
@@ -62,22 +62,23 @@ class SettingsService {
 		];
 	}
 
-	private function getListAttrs(...$values) : array {
-		$first = $values[0];
+	private function getListAttrs(string $attributeName, array $values) : array {
+		$default = $this->config->getAppValue(Application::APP_ID, $attributeName, $values[0]);
+
 		return [
-			'default' => $first,
-			'validate' => function ($value) use ($values, $first) {
+			'default' => $default,
+			'validate' => function ($value) use ($values, $default) {
 				if (in_array($value, $values)) {
 					return $value;
 				} else {
-					return $first;
+					return $default;
 				}
 			},
 		];
 	}
 
 	private function getDefaultNotesPath(string $uid) : string {
-		$defaultFolder = 'Notes';
+		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
 		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
 		if ($defaultExists) {
 			return $defaultFolder;

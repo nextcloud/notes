@@ -43,3 +43,20 @@ Before reporting bugs:
 ### REST API for third-party apps
 
 The notes app provides a JSON-API for third-party apps. Please have a look at our **[API documentation](docs/api/README.md)**.
+
+
+### Admin configuration
+
+It is possible to specify different defaults for the notes settings of new users using `occ` commands like these:
+
+```
+occ config:app:set notes noteMode --value="preview"
+occ config:app:set notes fileSuffix --value=".md"
+occ config:app:set notes defaultFolder --value="Shared notes"
+```
+
+| Setting | Property name | Default | Other available option(s) |
+|---------|---------------|---------|---------------------------|
+| Display mode for notes | noteMode | .edit | .preview |
+| File extension for new notes | fileSuffix | .txt | .md |
+| Folder to store your notes | defaultFolder | Notes | _Custom_ |
