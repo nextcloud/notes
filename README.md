@@ -57,6 +57,6 @@ occ config:app:set notes defaultFolder --value="Shared notes"
 
 | Setting | Property name | Default | Other available option(s) |
 |---------|---------------|---------|---------------------------|
-| Display mode for notes | noteMode | .edit | .preview |
+| Display mode for notes | noteMode | edit | preview |
 | File extension for new notes | fileSuffix | .txt | .md |
 | Folder to store your notes | defaultFolder | Notes | _Custom_ |
