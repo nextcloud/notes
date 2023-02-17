@@ -23,6 +23,7 @@ OC.L10N.register(
     "Action" : "Acción",
     "Insert image" : "Inserir unha imaxe",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Comece a escribir unha nota premendo en «{newnote}» na navegación da aplicación.",
+    "Notes settings" : "Configuración de notas",
     "Folder to store your notes" : "Cartafol para almacenar as súas notas",
     "File extension for new notes" : "Extensión do ficheiro para notas novas",
     "Display mode for notes" : "Modo de vista das notas",
