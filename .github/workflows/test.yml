@@ -18,7 +18,6 @@ jobs:
       fail-fast: false
     env:
       SERVER_BRANCH: master
-      PHPUNIT: phpunit
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -26,15 +25,12 @@ jobs:
       env:
         VERSION_MINMAX: ${{ matrix.version }}
       run: echo "PHP_VERSION=$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)" >> $GITHUB_ENV
-    - name: Use compatible PHPUNIT version for old PHP
-      if: env.PHP_VERSION == '7.2'
-      run: echo "PHPUNIT=phpunit:8.5.14" >> $GITHUB_ENV
     - name: Set up PHP ${{ env.PHP_VERSION }}
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
         extensions: pdo_mysql, zip, gd
-        tools: ${{ env.PHPUNIT }}
+        tools: phpunit:9
     - name: Install latest dev Nextcloud PHP API (max only)
       if: matrix.version == 'max'
       run: composer require --prefer-dist --dev nextcloud/ocp:dev-master
