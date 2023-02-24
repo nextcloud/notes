@@ -63,11 +63,12 @@ export default {
 	data() {
 		return {
 			extensions: [
-				{ value: '.txt', label: '.txt' },
 				{ value: '.md', label: '.md' },
+				{ value: '.txt', label: '.txt' },
 				{ value: 'custom', label: t('notes', 'User defined') },
 			],
 			noteModes: [
+				{ value: 'rich', label: t('notes', 'Open in rich text mode') },
 				{ value: 'edit', label: t('notes', 'Open in edit mode') },
 				{ value: 'preview', label: t('notes', 'Open in preview mode') },
 			],

@@ -195,14 +195,14 @@ class APIv1Test extends CommonAPITest {
 		$this->updateSettings($settings, (object)[
 			'fileSuffix' => '',
 		], (object)[
-			'fileSuffix' => '.txt',
+			'fileSuffix' => '.md',
 		], 'Update fileSuffix with empty value');
 		$this->updateSettings($settings, (object)[
 			'notesPath' => null,
 			'fileSuffix' => null,
 		], (object)[
 			'notesPath' => 'Notes',
-			'fileSuffix' => '.txt',
+			'fileSuffix' => '.md',
 		], 'Update settings with default values');
 		$this->updateSettings($settings, (object)[
 			'notesPath' => $originalPath,
