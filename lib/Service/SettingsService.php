@@ -18,7 +18,7 @@ class SettingsService {
 	/* Allowed attributes */
 	private array $attrs;
 
-	private $defaultSuffixes = [ '.txt', '.md' ];
+	private $defaultSuffixes = [ '.md', '.txt' ];
 
 	public function __construct(
 		IConfig $config,
@@ -48,7 +48,7 @@ class SettingsService {
 					return implode(DIRECTORY_SEPARATOR, $path);
 				},
 			],
-			'noteMode' => $this->getListAttrs('noteMode', ['edit', 'preview']),
+			'noteMode' => $this->getListAttrs('noteMode', ['rich', 'edit', 'preview']),
 			'customSuffix' => [
 				'default' => $this->defaultSuffixes[0],
 				'validate' => function ($value) {
