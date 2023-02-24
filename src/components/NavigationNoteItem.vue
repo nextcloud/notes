@@ -15,6 +15,10 @@
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</NcActionButton>
+			<NcActionButton icon="icon-details" @click="onToggleSidebar">
+				<SidebarIcon slot="icon" :size="20" />
+				{{ t('notes', 'Details') }}
+			</NcActionButton>
 			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
@@ -32,7 +36,9 @@ import {
 	NcActionSeparator,
 	NcAppNavigationItem,
 } from '@nextcloud/vue'
+import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import { showError } from '@nextcloud/dialogs'
+import store from '../store.js'
 
 import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
@@ -44,6 +50,7 @@ export default {
 		NcActionButton,
 		NcActionSeparator,
 		NcAppNavigationItem,
+		SidebarIcon,
 	},
 
 	props: {
@@ -115,6 +122,11 @@ export default {
 		onCategorySelected() {
 			this.actionsOpen = false
 			this.$emit('category-selected', this.note.category)
+		},
+
+		onToggleSidebar() {
+			this.actionsOpen = false
+			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 		},
 
 		onRename(newTitle) {
