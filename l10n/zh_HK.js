@@ -2,6 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "筆記",
+    "Create new note" : "建立新筆記",
+    "More notes" : "更多筆記",
     "Reading notes from filesystem has failed." : "從檔案系統讀取筆記失敗。",
     "Error" : "錯誤",
     "New note" : "新筆記",

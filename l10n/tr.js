@@ -2,6 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notlar",
+    "Create new note" : "Not ekle",
+    "More notes" : "Diğer notlar",
     "Reading notes from filesystem has failed." : "Notlar dosya sisteminden okunamadı.",
     "Error" : "Hata",
     "New note" : "Not ekle",

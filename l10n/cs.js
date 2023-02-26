@@ -2,6 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Poznámky",
+    "Create new note" : "Vytvořit novou poznámku",
+    "More notes" : "Další poznámky",
     "Reading notes from filesystem has failed." : "Načítání poznámek ze souborového systému se nezdařilo.",
     "Error" : "Chyba",
     "New note" : "Nová poznámka",

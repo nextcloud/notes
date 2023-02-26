@@ -2,6 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notizen",
+    "Create new note" : "Neue Notiz erstellen",
+    "More notes" : "Weitere Notizen",
     "Reading notes from filesystem has failed." : "Laden der Notizen vom Dateisystem ist fehlgeschlagen.",
     "Error" : "Fehler",
     "New note" : "Neue Notiz",
