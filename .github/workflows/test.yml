@@ -31,6 +31,8 @@ jobs:
         php-version: ${{ env.PHP_VERSION }}
         extensions: pdo_mysql, zip, gd
         tools: phpunit:9
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Install latest dev Nextcloud PHP API (max only)
       if: matrix.version == 'max'
       run: composer require --prefer-dist --dev nextcloud/ocp:dev-master
