@@ -2,11 +2,12 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Бележки",
+    "Create new note" : "Създаване на нова бележка",
+    "More notes" : "Още бележки",
     "Reading notes from filesystem has failed." : "Четенето на бележки от файлова система е неуспешно.",
     "Error" : "Грешка",
     "New note" : "Нова бележка",
     "Distraction-free notes and writing" : "Бележки и писане без разсейване ",
-    "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Приложението Notes е приложение за водене на бележки без разсейване за [Nextcloud] (https://www.nextcloud.com/). То предоставя категории за по-добра организация и поддържа форматиране, използвайки синтаксиса [Markdown] (https://en.wikipedia.org/wiki/Markdown). Бележките се записват като файлове във вашия Nextcloud, така че можете да ги преглеждате и редактирате с всеки клиент на Nextcloud. Освен това, отделен [REST API] (https://github.com/nextcloud/notes/blob/master/docs/api/README.md) позволява лесна интеграция в приложения на трети страни (в момента има приложения за бележки за [Android] (https://github.com/stefan-niedermann/nextcloud-notes), [iOS] (https://github.com/owncloud/notes-iOS-App) и [конзолата] (https: //git.danielmoch.com/nncli/about), които позволяват удобен достъп до вашите бележки на Nextcloud). Допълнителните функции включват маркиране на бележки като любими.",
     "Help" : "Помощ",
     "Please see Nextcloud server log for details." : "За подробности вижте дневника на сървъра Nextcloud.",
     "Deleted {title}" : "Изтрито {title}",

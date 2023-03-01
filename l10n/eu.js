@@ -2,11 +2,12 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Oharrak",
+    "Create new note" : "Sortu ohar berria",
+    "More notes" : "Ohar gehiago",
     "Reading notes from filesystem has failed." : "Fitxategi-sistemaren ohar-irakurketak huts egin du.",
     "Error" : "Errorea",
     "New note" : "Ohar berria",
     "Distraction-free notes and writing" : "Distrakziorik gabeko oharrak eta idazkiak",
-    "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "Oharrak aplikazioa distrakziorik gabe oharrak hartzeko [Nextcloud](https://www.nextcloud.com/)-erako aplikazio bat da. Hobeto antolatzeko kategoriak eskaintzen ditu eta [Markdown](https://eu.wikipedia.org/wiki/Markdown) sintaxia erabiliz formatua ematea onartzen du. Oharrak fitxategi bezala gordetzen direnez zure Nextcloudean, edozein Nextcloud bezero erabiliz ikusi eta editatu ditzakezu. Gainera, hirugarrenen aplikazioekin integrazioa errazten duen [REST API](docs/api/README.md) berezi bat ere badago (une honetan, zure Nextcloud oharretara sarbide erraza eskaintzen duten oharrak hartzeko aplikazioak daude [Android](https://github.com/stefan-niedermann/nextcloud-notes), [iOS](https://github.com/owncloud/notes-iOS-App) eta [kontsolarako](https://git.danielmoch.com/nncli/about)). Ezaugarri gehigarrien artean dago oharrak gogoko bezala markatzeko aukera.",
     "Help" : "Laguntza",
     "Please see Nextcloud server log for details." : "Ikus Nextcloud zerbitzari-egunkaria xehetasunak eskuratzeko.",
     "Deleted {title}" : "{title} ezabatuta",
