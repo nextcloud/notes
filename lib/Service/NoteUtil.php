@@ -146,6 +146,7 @@ class NoteUtil {
 	 * @return Folder
 	 */
 	public function getOrCreateFolder(string $path, bool $create = true) : Folder {
+		$folder = null;
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
 		} elseif ($create) {
