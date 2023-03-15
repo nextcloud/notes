@@ -100,6 +100,7 @@ return ['routes' => [
 	//////////  S E T T I N G S  //////////
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
 	['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
+	['name' => 'settings#migrate', 'url' => '/settings/migrate', 'verb' => 'POST'],
 
 
 	//////////  A P I  //////////

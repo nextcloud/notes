@@ -1,3 +1,5 @@
+import { set } from 'vue'
+
 const state = {
 	settings: {},
 	isSaving: false,
@@ -12,6 +14,10 @@ const getters = {
 const mutations = {
 	setSettings(state, settings) {
 		state.settings = settings
+	},
+
+	setNoteMode(state, mode) {
+		set(state.settings, 'noteMode', mode)
 	},
 
 	setSaving(state, isSaving) {

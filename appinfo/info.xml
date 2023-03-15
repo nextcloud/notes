@@ -28,6 +28,7 @@ The Notes app is a distraction free notes taking app for [Nextcloud](https://www
 	<repair-steps>
 		<post-migration>
 			<step>OCA\Notes\Migration\Cleanup</step>
+			<step>OCA\Notes\Migration\EditorHint</step>
 		</post-migration>
 	</repair-steps>
 

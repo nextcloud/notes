@@ -1,5 +1,6 @@
 <template>
-	<NcContent app-name="notes" :content-class="{loading: loading.notes}">
+	<EditorHint v-if="editorHint" @close="editorHint=false" />
+	<NcContent v-else app-name="notes" :content-class="{loading: loading.notes}">
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<NcAppNavigationNew
 				v-show="!loading.notes && !error"
@@ -52,6 +53,7 @@ import {
 	NcAppNavigationItem,
 	NcContent,
 } from '@nextcloud/vue'
+import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 
@@ -61,6 +63,7 @@ import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
 import AppHelp from './components/AppHelp.vue'
+import EditorHint from './components/Modal/EditorHint.vue'
 
 import { config } from './config.js'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
@@ -72,6 +75,7 @@ export default {
 	components: {
 		AppHelp,
 		AppSettings,
+		EditorHint,
 		InfoIcon,
 		NavigationList,
 		NcAppContent,
@@ -97,6 +101,7 @@ export default {
 			deletedNotes: [],
 			refreshTimer: null,
 			helpVisible: false,
+			editorHint: loadState('notes', 'editorHint', '') === 'yes' && window.oc_appswebroots.text,
 		}
 	},
 
