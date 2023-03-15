@@ -24,7 +24,7 @@ export default {
 
 	computed: {
 		rich() {
-			return store.state.app.settings.noteMode === 'rich'
+			return window.oc_appswebroots.text && store.state.app.settings.noteMode === 'rich'
 		},
 	},
 }

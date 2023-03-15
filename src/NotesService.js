@@ -46,6 +46,15 @@ export const setSettings = settings => {
 		})
 }
 
+export const deleteEditorMode = () => {
+	return axios
+		.post(url('/settings/migrate'))
+		.catch(err => {
+			console.error(err)
+			throw err
+		})
+}
+
 export const getDashboardData = () => {
 	return axios
 		.get(url('/notes/dashboard'))

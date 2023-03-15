@@ -168,6 +168,10 @@ class SettingsService {
 		}
 	}
 
+	public function delete(string $uid, string $name): void {
+		$this->config->deleteUserValue($uid, Application::APP_ID, $name);
+	}
+
 	public function getPublic(string $uid) : \stdClass {
 		// initialize and load settings
 		$settings = $this->getAll($uid, true);
