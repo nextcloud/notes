@@ -21,6 +21,7 @@ OC.L10N.register(
     "Preview" : "Pratinjau",
     "Category" : "Kategori",
     "_%n word_::_%n words_" : ["%n kata"],
-    "Tasks" : "Tugas"
+    "Tasks" : "Tugas",
+    "Nextcloud, a safe home for all your data" : "Nextcloud, rumah yang aman untuk semua data Anda"
 },
 "nplurals=1; plural=0;");
