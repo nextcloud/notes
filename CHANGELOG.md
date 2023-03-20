@@ -12,6 +12,12 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
+## 4.7.0 - 2023-03-20
+
+- Compatiblity with Nextcloud 26
+- Integration Nextcloud Text editor
+- Support dashboard API for mobile clients
+
 
 ## 4.6.0 - 2022-10-14
 
