@@ -7,9 +7,9 @@ OC.L10N.register(
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
     "Rename" : "Ëmbenennen",
+    "Details" : "Detailer",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Details" : "Detailer",
     "Edit" : "Änneren",
     "Tasks" : "Tâchen"
 },

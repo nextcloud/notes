@@ -7,9 +7,9 @@ OC.L10N.register(
     "Today" : "இன்று",
     "Yesterday" : "நேற்று",
     "Rename" : "பெயர்மாற்றம்",
+    "Details" : "விவரங்கள்",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Details" : "விவரங்கள்",
     "Edit" : "தொகுக்க",
     "Tasks" : "கடமைகள்"
 },

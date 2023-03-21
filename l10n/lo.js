@@ -8,9 +8,9 @@ OC.L10N.register(
     "Yesterday" : "ມື້ວານນີ້",
     "This week" : "ທິດນີ້",
     "Rename" : "ປ່ຽນຊື່",
+    "Details" : "ລາຍລະອຽດ",
     "Remove from favorites" : "ຍ້າຍຈາກລາຍການທີ່ມັກ",
     "Add to favorites" : "ເພີ່ມລາຍການທີ່ມັກ",
-    "Details" : "ລາຍລະອຽດ",
     "Edit" : "ແກ້ໄຂ"
 },
 "nplurals=1; plural=0;");

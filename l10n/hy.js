@@ -11,10 +11,10 @@ OC.L10N.register(
     "This week" : "այս շաբաթ",
     "This month" : "այս ամիս",
     "Rename" : "Վերանվանել",
+    "Details" : "Մանրամասներ",
     "Delete note" : "Ջնջել նոթը",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Details" : "Մանրամասներ",
     "Edit" : "մշակել",
     "_%n word_::_%n words_" : ["%n բառ","%n բառ"]
 },

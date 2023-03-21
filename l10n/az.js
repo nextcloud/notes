@@ -8,10 +8,10 @@ OC.L10N.register(
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Rename" : "Adı dəyiş",
+    "Details" : "Detallar",
     "Delete note" : "Qeydi sil",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Details" : "Detallar",
     "Edit" : "Dəyişiklik et",
     "Tasks" : "Tapşırıqlar"
 },

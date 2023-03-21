@@ -8,10 +8,10 @@ OC.L10N.register(
     "Today" : "আজ",
     "Yesterday" : "গতকাল",
     "Rename" : "পূনঃনামকরণ",
+    "Details" : "বিসতারিত",
     "Delete note" : "নোট মোছ",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Details" : "বিসতারিত",
     "Edit" : "সম্পাদনা",
     "Tasks" : "কর্ম"
 },

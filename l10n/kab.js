@@ -7,8 +7,8 @@ OC.L10N.register(
     "Yesterday" : "Iḍelli",
     "This week" : "Dduṛt agi",
     "Rename" : "Beddel isem",
-    "Add to favorites" : "Rnu ismal",
     "Details" : "Talqayt",
+    "Add to favorites" : "Rnu ismal",
     "Edit" : "Ẓreg"
 },
 "nplurals=2; plural=(n != 1);");

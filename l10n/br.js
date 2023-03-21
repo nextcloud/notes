@@ -9,10 +9,10 @@ OC.L10N.register(
     "Yesterday" : "Dec'h",
     "This week" : "Er sizhun-mañ",
     "Rename" : "Adenvel",
+    "Details" : "Munudoù",
     "Remove from favorites" : "Diverkañañ eus ar pennrolloù",
     "Add to favorites" : "Ouzhpennañ er pennrolloù",
     "Use current version" : "Implij stumm hiziv",
-    "Details" : "Munudoù",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Cheñch",
     "Preview" : "Ragwell"

@@ -7,8 +7,8 @@ OC.L10N.register(
     "Yesterday" : "Düýn",
     "This week" : "Bu hepdede",
     "Rename" : "Adyny üýtgetmek",
-    "Add to favorites" : "Saýlananlara goşuň",
     "Details" : "Jikme-jiklikler",
+    "Add to favorites" : "Saýlananlara goşuň",
     "Edit" : "Redaktirläň"
 },
 "nplurals=2; plural=(n != 1);");
