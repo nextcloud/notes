@@ -83,6 +83,9 @@ export default {
 	},
 
 	created() {
+		if (!window.OCA.Text?.createEditor) {
+			this.noteModes.splice(0, 1)
+		}
 	},
 
 	methods: {

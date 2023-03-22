@@ -101,7 +101,7 @@ export default {
 			deletedNotes: [],
 			refreshTimer: null,
 			helpVisible: false,
-			editorHint: loadState('notes', 'editorHint', '') === 'yes' && window.oc_appswebroots.text,
+			editorHint: loadState('notes', 'editorHint', '') === 'yes' && window.OCA.Text?.createEditor,
 		}
 	},
 

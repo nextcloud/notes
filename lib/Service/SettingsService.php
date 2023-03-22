@@ -6,6 +6,7 @@ namespace OCA\Notes\Service;
 
 use OCA\Notes\AppInfo\Application;
 
+use OCP\App\IAppManager;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
@@ -14,6 +15,7 @@ class SettingsService {
 	private IConfig $config;
 	private IL10N $l10n;
 	private IRootFolder $root;
+	private IAppManager $appManager;
 
 	/* Allowed attributes */
 	private array $attrs;
@@ -23,11 +25,13 @@ class SettingsService {
 	public function __construct(
 		IConfig $config,
 		IL10N $l10n,
-		IRootFolder $root
+		IRootFolder $root,
+		IAppManager $appManager
 	) {
 		$this->config = $config;
 		$this->l10n = $l10n;
 		$this->root = $root;
+		$this->appManager = $appManager;
 		$this->attrs = [
 			'fileSuffix' => $this->getListAttrs('fileSuffix', [...$this->defaultSuffixes, 'custom']),
 			'notesPath' => [
@@ -48,7 +52,7 @@ class SettingsService {
 					return implode(DIRECTORY_SEPARATOR, $path);
 				},
 			],
-			'noteMode' => $this->getListAttrs('noteMode', ['rich', 'edit', 'preview']),
+			'noteMode' => $this->getListAttrs('noteMode', $this->getAvailableEditorModes()),
 			'customSuffix' => [
 				'default' => $this->defaultSuffixes[0],
 				'validate' => function ($value) {
@@ -181,5 +185,11 @@ class SettingsService {
 		}
 		unset($settings->customSuffix);
 		return $settings;
+	}
+
+	private function getAvailableEditorModes(): array {
+		return \OCP\Util::getVersion()[0] >= 26 && $this->appManager->isEnabledForUser('text')
+			? ['rich', 'edit', 'preview']
+			: ['edit', 'preview'];
 	}
 }
