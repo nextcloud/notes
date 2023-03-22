@@ -12,6 +12,13 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
+
+## 4.7.2 - 2023-03-22
+
+### Fixed
+
+- fix: Allow migration endpoint to be called by non-admins @juliushaertl [#986](https://github.com/nextcloud/notes/pull/986)
+
 ## 4.7.1 - 2023-03-22
 
 ### Fixed
