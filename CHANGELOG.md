@@ -12,6 +12,12 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
+## 4.7.1 - 2023-03-22
+
+### Fixed
+
+- fix: Ensure to fallback to old editor properly on 25 [#984](https://github.com/nextcloud/notes/pull/984)
+
 ## 4.7.0 - 2023-03-20
 
 - Compatiblity with Nextcloud 26
