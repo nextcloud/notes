@@ -68,7 +68,7 @@ class PageController extends Controller {
 
 		$this->initialState->provideInitialState(
 			'config',
-			\OCP\Server::get(SettingsService::class)->getPublic($this->userSession->getUser()->getUID())
+			(array)\OCP\Server::get(SettingsService::class)->getPublic($this->userSession->getUser()->getUID())
 		);
 
 		$this->initialState->provideInitialState(
