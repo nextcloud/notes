@@ -49,6 +49,9 @@ class SettingsController extends Controller {
 		return new JSONResponse($this->service->getAll($this->getUID()));
 	}
 
+	/**
+	 * @NoAdminRequired
+	 */
 	public function migrate(): JSONResponse {
 		$this->service->delete($this->getUID(), 'editorHint');
 		return new JSONResponse();
