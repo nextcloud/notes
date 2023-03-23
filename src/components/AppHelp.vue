@@ -182,7 +182,7 @@ table.notes-help td:first-child, table.notes-help th:first-child {
 }
 
 table.notes-help tr:nth-child(even) {
-	background-color: #eeeeee;
+	background-color: var(--color-background-dark);
 }
 
 </style>
