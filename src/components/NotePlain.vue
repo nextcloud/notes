@@ -1,5 +1,5 @@
 <template>
-	<NcAppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
+	<NcAppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error)}">
 		<div v-if="!loading && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
@@ -47,13 +47,6 @@
 			</div>
 			<span class="action-buttons">
 				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-					<NcActionButton v-show="!sidebarOpen && !fullscreen"
-						icon="icon-details"
-						@click="onToggleSidebar"
-					>
-						<SidebarIcon slot="icon" :size="20" />
-						{{ t('notes', 'Details') }}
-					</NcActionButton>
 					<NcActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
@@ -109,7 +102,6 @@ import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
 import EyeIcon from 'vue-material-design-icons/Eye.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
-import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
 import { config } from '../config.js'
@@ -133,7 +125,6 @@ export default {
 		NcAppContent,
 		NcModal,
 		NoEditIcon,
-		SidebarIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
@@ -178,9 +169,6 @@ export default {
 		},
 		isManualSave() {
 			return store.state.app.isManualSave
-		},
-		sidebarOpen() {
-			return store.state.app.sidebarOpen
 		},
 	},
 
@@ -290,11 +278,6 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
 			}
-			this.actionsOpen = false
-		},
-
-		onToggleSidebar() {
-			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 			this.actionsOpen = false
 		},
 
@@ -435,9 +418,6 @@ export default {
 		padding-right: 250px;
 		transition-duration: var(--animation-quick);
 		transition-property: padding-right;
-	}
-	.sidebar-open .note-container {
-		padding-right: 0px;
 	}
 }
 

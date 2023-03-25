@@ -29,10 +29,6 @@
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</NcActionButton>
-			<NcActionButton @click="onToggleSidebar">
-				<SidebarIcon slot="icon" :size="20" />
-				{{ t('notes', 'Details') }}
-			</NcActionButton>
 			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
@@ -45,14 +41,12 @@
 </template>
 
 <script>
-import { NcListItem, NcActionButton } from '@nextcloud/vue'
+import { NcListItem, NcActionButton, NcActionSeparator } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
-import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
-import store from '../store.js'
 import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
 
 export default {
@@ -63,8 +57,8 @@ export default {
 		FileDocumentOutlineIcon,
 		NcActionButton,
 		NcListItem,
-		SidebarIcon,
 		StarIcon,
+		NcActionSeparator,
 	},
 
 	props: {
@@ -130,10 +124,6 @@ export default {
 		onCategorySelected() {
 			this.actionsOpen = false
 			this.$emit('category-selected', this.note.category)
-		},
-		onToggleSidebar() {
-			this.actionsOpen = false
-			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 		},
 		onRename(newTitle) {
 			this.loading.note = true
