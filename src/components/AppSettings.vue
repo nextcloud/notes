@@ -1,8 +1,14 @@
 <template>
-	<NcAppNavigationSettings :title="t('notes', 'Notes settings')" :class="{ loading: saving }">
-		<div class="settings-block">
-			<p class="settings-hint">
-				<label for="notesPath">{{ t('notes', 'Folder to store your notes') }}</label>
+	<NcAppSettingsDialog
+		:title="t('notes', 'Notes settings')"
+		:class="{ loading: saving }"
+		:show-navigation="true"
+		:open="settingsOpen"
+		@update:open="setSettingsOpen($event)"
+	>
+		<NcAppSettingsSection id="notes-path-section" :title="t('notes', 'Notes path')">
+			<p class="app-settings-section__desc">
+				{{ t('notes', 'Folder to store your notes') }}
 			</p>
 			<form @submit.prevent="onChangeSettingsReload">
 				<input id="notesPath"
@@ -13,10 +19,10 @@
 					@change="onChangeSettingsReload"
 				><input type="submit" class="icon-confirm" value="">
 			</form>
-		</div>
-		<div class="settings-block">
-			<p class="settings-hint">
-				<label for="fileSuffix">{{ t('notes', 'File extension for new notes') }}</label>
+		</NcAppSettingsSection>
+		<NcAppSettingsSection id="file-suffix-section" :title="t('notes', 'File extension')">
+			<p class="app-settings-section__desc">
+				{{ t('notes', 'File extension for new notes') }}
 			</p>
 			<select id="fileSuffix" v-model="settings.fileSuffix" @change="onChangeSettings">
 				<option v-for="extension in extensions" :key="extension.value" :value="extension.value">
@@ -31,23 +37,24 @@
 				placeholder=".txt"
 				@change="onChangeSettings"
 			>
-		</div>
-		<div class="settings-block">
-			<p class="settings-hint">
-				<label for="noteMode">{{ t('notes', 'Display mode for notes') }}</label>
+		</NcAppSettingsSection>
+		<NcAppSettingsSection id="note-mode-section" :title="t('notes', 'Display mode')">
+			<p class="app-settings-section__desc">
+				{{ t('notes', 'Display mode for notes') }}
 			</p>
 			<select id="noteMode" v-model="settings.noteMode" @change="onChangeSettings">
 				<option v-for="mode in noteModes" :key="mode.value" :value="mode.value">
 					{{ mode.label }}
 				</option>
 			</select>
-		</div>
-	</NcAppNavigationSettings>
+		</NcAppSettingsSection>
+	</NcAppSettingsDialog>
 </template>
 
 <script>
 import {
-	NcAppNavigationSettings,
+	NcAppSettingsDialog,
+	NcAppSettingsSection,
 } from '@nextcloud/vue'
 
 import { setSettings } from '../NotesService.js'
@@ -57,7 +64,12 @@ export default {
 	name: 'AppSettings',
 
 	components: {
-		NcAppNavigationSettings,
+		NcAppSettingsDialog,
+		NcAppSettingsSection,
+	},
+
+	props: {
+		open: Boolean,
 	},
 
 	data() {
@@ -73,12 +85,19 @@ export default {
 				{ value: 'preview', label: t('notes', 'Open in preview mode') },
 			],
 			saving: false,
+			settingsOpen: this.open,
 		}
 	},
 
 	computed: {
 		settings() {
 			return store.state.app.settings
+		},
+	},
+
+	watch: {
+		open(newValue) {
+			this.settingsOpen = newValue
 		},
 	},
 
@@ -104,6 +123,11 @@ export default {
 				.then(() => {
 					this.$emit('reload')
 				})
+		},
+
+		setSettingsOpen(newValue) {
+			this.settingsOpen = newValue
+			this.$emit('update:open', newValue)
 		},
 	},
 }

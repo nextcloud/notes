@@ -28,7 +28,15 @@
 			</template>
 
 			<template #footer>
-				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
+				<ul class="app-navigation-entry__settings">
+					<NcAppNavigationItem
+						:title="t('notes', 'Notes settings')"
+						@click.prevent="openSettings"
+					>
+						<CogIcon slot="icon" :size="20" />
+					</NcAppNavigationItem>
+				</ul>
+				<AppSettings v-if="!loading.notes && error !== true" :open.sync="settingsVisible" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
 
@@ -59,6 +67,7 @@ import '@nextcloud/dialogs/dist/index.css'
 
 import InfoIcon from 'vue-material-design-icons/Information.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import CogIcon from 'vue-material-design-icons/Cog.vue'
 
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
@@ -83,6 +92,7 @@ export default {
 		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
+		CogIcon,
 		PlusIcon,
 	},
 
@@ -102,6 +112,7 @@ export default {
 			refreshTimer: null,
 			helpVisible: false,
 			editorHint: loadState('notes', 'editorHint', '') === 'yes' && window.OCA.Text?.createEditor,
+			settingsVisible: false,
 		}
 	},
 
@@ -252,6 +263,10 @@ export default {
 			this.helpVisible = true
 		},
 
+		openSettings() {
+			this.settingsVisible = true
+		},
+
 		onNewNote() {
 			if (this.loading.create) {
 				return
@@ -345,3 +360,14 @@ export default {
 	},
 }
 </script>
+
+<style scoped lang="scss">
+// Source for footer fix: https://github.com/nextcloud/server/blob/master/apps/files/src/views/Navigation.vue
+.app-navigation-entry__settings {
+	height: auto !important;
+	overflow: hidden !important;
+	padding-top: 0 !important;
+	// Prevent shrinking or growing
+	flex: 0 0 auto;
+}
+</style>
