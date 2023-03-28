@@ -2,6 +2,8 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notatki",
+    "Create new note" : "Utwórz nową notatkę",
+    "More notes" : "Więcej notatek",
     "Reading notes from filesystem has failed." : "Odczytanie notatek z systemu plików nie powiodło się.",
     "Error" : "Błąd",
     "New note" : "Nowa notatka",
@@ -79,6 +81,7 @@ OC.L10N.register(
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Zainstaluj aplikację na swój telefon komórkowy, aby uzyskać dostęp do notatek z dowolnego miejsca.",
     "Android app: {notes} by {company}" : "Aplikacja na Androida: {notes} od {company}",
     "iOS app: {notes} by {company}" : "Aplikacja na iOS: {notes} od {company}",
+    "This option can also be changed later on in the Notes app settings." : "Ta opcja może zostać zmieniona później w ustawieniach aplikacji Notatki.",
     "All notes" : "Wszystkie notatki",
     "Categories" : "Kategorie",
     "Loading …" : "Wczytywanie…",
