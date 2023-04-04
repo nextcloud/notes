@@ -77,7 +77,7 @@
     "Wrong image" : "Okerreko irudia",
     "The file was not uploaded. Check your server logs." : "Fitxategia ez da kargatu. Egiaztatu zure zerbitzariaren erregistroak.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Instalatu mugikorrerako aplikazioa zure oharrak edonondik atzitzeko.",
-    "Android app: {notes} by {company}" : "Android aplikazioa: {enpresa}ren {oharrak}",
+    "Android app: {notes} by {company}" : "Android aplikazioa: {company}ren {notes}",
     "iOS app: {notes} by {company}" : "iOS aplikazioa: {company}-(r)en {notes}",
     "All notes" : "Ohar guztiak",
     "Categories" : "Kategoriak",
