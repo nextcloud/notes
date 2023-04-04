@@ -3,13 +3,13 @@
 		<div class="editor-hint-modal">
 			<h2>{{ t('notes', 'Rich text editor') }}</h2>
 
-			<p>{{ t('notes', 'You can now switch to use the easy to use and distraction free rich text editor. It allows you to edit notes without seeing any markdown marks.') }}</p>
+			<p>{{ t('notes', 'You can now switch to use the easy to use and distraction free rich text editor. It allows you to edit notes without seeing any Markdown marks.') }}</p>
 
 			<p>{{ t('notes', 'This option can also be changed later on in the Notes app settings.') }}</p>
 
 			<div class="submit-buttons">
 				<NcButton type="secondary" :disabled="loading" @click="useOld">
-					{{ t('notes', 'Keep plain markdown editor') }}
+					{{ t('notes', 'Keep plain Markdown editor') }}
 				</NcButton>
 				<NcButton type="primary" :disabled="loading" @click="useNew">
 					{{ t('notes', 'Use rich editor') }}
