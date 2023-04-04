@@ -1,7 +1,7 @@
 <template>
 	<NcButton type="secondary" @click="onNewNote">
 		<PlusIcon slot="icon" :size="20" />
-		{{ t('notes', 'Create a sample note with markdown') }}
+		{{ t('notes', 'Create a sample note with Markdown') }}
 	</NcButton>
 </template>
 <script>
