@@ -7,7 +7,17 @@ assignees: ''
 
 ---
 
-Please make a clear and concise description of what the bug is. Please note, that issues with the Android app have to be reported under https://github.com/stefan-niedermann/nextcloud-notes/issues and issues with Nextcloud's Text app have to be reported under https://github.com/nextcloud/text/issues .
+Please make a clear and concise description of what the bug is.
+
+<!--
+
+Please note, that
+
+- issues with the Android app have to be reported under https://github.com/nextcloud/notes-android/issues/new/choose
+- issues with thr iOS app have to he reported under https://github.com/nextcloud/notes-ios/issues/new and
+- issues with Nextcloud's Text app have to be reported under https://github.com/nextcloud/text/issues
+
+-->
 
 ## Steps to reproduce
 1.
