@@ -72,7 +72,6 @@ OC.L10N.register(
     "User defined" : "Uporabniško določeno",
     "Open in edit mode" : "Zabeležka se odpre v urejevalnem načinu",
     "Open in preview mode" : "Zabeležka se odpre v predogledu",
-    "Create a sample note with markdown" : "Ustvari enostavno zabeležko z oblikovanim besedilom",
     "No notes yet" : "Ni še dodane nobene zabeležke.",
     "Upload image" : "Pošlji sliko",
     "Select an image" : "Izbor slike",

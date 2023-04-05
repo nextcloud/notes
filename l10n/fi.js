@@ -69,7 +69,6 @@ OC.L10N.register(
     "User defined" : "Käyttäjän määrittelemä",
     "Open in edit mode" : "Avaa muokkaustilassa",
     "Open in preview mode" : "Avaa esikatselutilassa",
-    "Create a sample note with markdown" : "Luo muistiinpanoesimerkki markdownilla",
     "No notes yet" : "Ei muistiinpanoja",
     "Upload image" : "Lataa kuva",
     "Select an image" : "Valitse kuva",

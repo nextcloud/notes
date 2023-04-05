@@ -31,7 +31,6 @@ OC.L10N.register(
     "No notes yet" : "Inga anteckningar än",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Installera appen för din mobiltelefon för att få åtkomst till dina anteckningar överallt.",
     "Rich text editor" : "Rich text-editor",
-    "Keep plain markdown editor" : "Använd en enkel markdown-editor",
     "Use rich editor" : "Använd rich text-editor",
     "All notes" : "Alla anteckningar",
     "Categories" : "Kategorier",

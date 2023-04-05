@@ -71,7 +71,6 @@ OC.L10N.register(
     "User defined" : "Erabiltzaile definitua",
     "Open in edit mode" : "Ireki edizio moduan",
     "Open in preview mode" : "Ireki aurrebista moduan",
-    "Create a sample note with markdown" : "Sortu lagin-ohar bat markdown batekin",
     "No notes yet" : "Ez dago oharrik",
     "Upload image" : "Kargatu irudia",
     "Select an image" : "Hautatu irudi bat",

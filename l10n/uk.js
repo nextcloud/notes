@@ -66,7 +66,6 @@ OC.L10N.register(
     "User defined" : "Визначений користувачем",
     "Open in edit mode" : "Відкривати у режимі редагування",
     "Open in preview mode" : "Відкривати у режимі перегляду",
-    "Create a sample note with markdown" : "Створити типову нотатку з розміткою",
     "No notes yet" : "Нотатки поки відсутні",
     "Upload image" : "Завантажити зображення",
     "Select an image" : "Виберіть зображення",
