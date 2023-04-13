@@ -4,43 +4,43 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
-use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\StreamResponse;
+use OCP\Files\IMimeTypeDetector;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 
 class NotesController extends Controller {
 	private NotesService $notesService;
-	private MetaService $metaService;
 	private SettingsService $settingsService;
 	private Helper $helper;
 	private IConfig $settings;
 	private IL10N $l10n;
+	private IMimeTypeDetector $mimeTypeDetector;
 
 	public function __construct(
 		string $AppName,
 		IRequest $request,
 		NotesService $notesService,
-		MetaService $metaService,
 		SettingsService $settingsService,
 		Helper $helper,
 		IConfig $settings,
-		IL10N $l10n
+		IL10N $l10n,
+		IMimeTypeDetector $mimeTypeDetector
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
-		$this->metaService = $metaService;
 		$this->settingsService = $settingsService;
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->l10n = $l10n;
+		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
 
 	/**
@@ -299,17 +299,20 @@ class NotesController extends Controller {
 	 * With help from: https://github.com/nextcloud/cookbook
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @return JSONResponse|FileDisplayResponse
+	 * @return JSONResponse|StreamResponse
 	 */
-	public function getAttachment(int $noteid, string $path) {
+	public function getAttachment(int $noteid, string $path): Http\Response {
 		try {
 			$targetimage = $this->notesService->getAttachment(
 				$this->helper->getUID(),
 				$noteid,
 				$path
 			);
-			$headers = ['Content-Type' => $targetimage->getMimetype(), 'Cache-Control' => 'public, max-age=604800'];
-			return new FileDisplayResponse($targetimage, Http::STATUS_OK, $headers);
+			$response = new StreamResponse($targetimage->fopen('rb'));
+			$response->addHeader('Content-Disposition', 'attachment; filename="' . rawurldecode($targetimage->getName()) . '"');
+			$response->addHeader('Content-Type', $this->mimeTypeDetector->getSecureMimeType($targetimage->getMimeType()));
+			$response->addHeader('Cache-Control', 'public, max-age=604800');
+			return $response;
 		} catch (\Exception $e) {
 			$this->helper->logException($e);
 			return $this->helper->createErrorResponse($e, Http::STATUS_NOT_FOUND);
