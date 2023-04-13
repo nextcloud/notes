@@ -25,24 +25,46 @@
 				fill-color="var(--color-text-lighter)"
 			/>
 		</template>
+		<template #actions>
+			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
+				{{ actionFavoriteText }}
+			</NcActionButton>
+			<NcActionButton @click="onToggleSidebar">
+				<SidebarIcon slot="icon" :size="20" />
+				{{ t('notes', 'Details') }}
+			</NcActionButton>
+			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
+				{{ t('notes', 'Delete note') }}
+			</NcActionButton>
+			<NcActionSeparator />
+			<NcActionButton icon="icon-files-dark" @click="onCategorySelected">
+				{{ actionCategoryText }}
+			</NcActionButton>
+		</template>
 	</NcListItem>
 </template>
 
 <script>
-import { NcListItem } from '@nextcloud/vue'
+import { NcListItem, NcActionButton } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
-import { categoryLabel } from '../Util.js'
+import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
+import { categoryLabel, routeIsNewNote } from '../Util.js'
+import { showError } from '@nextcloud/dialogs'
+import store from '../store.js'
+import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
 
 export default {
 	name: 'NoteItem',
 
 	components: {
+		NcActionButton,
 		NcListItem,
 		AlertOctagonIcon,
 		StarIcon,
 		FileDocumentOutlineIcon,
+		SidebarIcon,
 	},
 
 	props: {
@@ -72,12 +94,86 @@ export default {
 		categoryTitle() {
 			return categoryLabel(this.note.category)
 		},
+
+		actionFavoriteText() {
+			return this.note.favorite ? this.t('notes', 'Remove from favorites') : this.t('notes', 'Add to favorites')
+		},
+		actionFavoriteIcon() {
+			let icon = this.note.favorite ? 'icon-star-dark' : 'icon-starred'
+			if (this.loading.favorite) {
+				icon += ' loading'
+			}
+			return icon
+		},
+		actionCategoryText() {
+			return categoryLabel(this.note.category)
+		},
+		actionDeleteIcon() {
+			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
+		},
 	},
 
 	methods: {
 		onNoteSelected(noteId) {
+			console.error('select note', noteId)
 			this.$emit('note-selected', noteId)
+		},
+		onToggleFavorite() {
+			this.loading.favorite = true
+			setFavorite(this.note.id, !this.note.favorite)
+				.catch(() => {
+				})
+				.then(() => {
+					this.loading.favorite = false
+					this.actionsOpen = false
+				})
+		},
+		onCategorySelected() {
+			this.actionsOpen = false
+			this.$emit('category-selected', this.note.category)
+		},
+		onToggleSidebar() {
+			this.actionsOpen = false
+			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
+		},
+		onRename(newTitle) {
+			this.loading.note = true
+			setTitle(this.note.id, newTitle)
+				.catch(() => {
+				})
+				.finally(() => {
+					this.loading.note = false
+				})
+			if (routeIsNewNote(this.$route)) {
+				this.$router.replace({
+					name: 'note',
+					params: { noteId: this.note.id.toString() },
+				})
+			}
+		},
+		async onDeleteNote() {
+			this.loading.delete = true
+			try {
+				const note = await fetchNote(this.note.id)
+				if (note.errorType) {
+					throw new Error('Note has errors')
+				}
+				await deleteNote(this.note.id, () => {
+					this.$emit('note-deleted', note)
+					this.loading.delete = false
+					this.actionsOpen = false
+				})
+			} catch (e) {
+				showError(this.t('notes', 'Error during preparing note for deletion.'))
+				this.loading.delete = false
+				this.actionsOpen = false
+			}
 		},
 	},
 }
 </script>
+<style scoped>
+.material-design-icon {
+	width: 44px;
+}
+</style>

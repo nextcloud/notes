@@ -1,7 +1,7 @@
 <template>
 	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
 		<template slot="list">
-			<NcAppContentList>
+			<NcAppContentList class="content-list">
 				<div class="spacer" />
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
@@ -197,8 +197,12 @@ export default {
 }
 </script>
 <style scoped>
+.content-list {
+	padding: 0 4px;
+}
+
 .spacer {
-	padding: 16px;
+	height: 44px;
 }
 
 .loading-label {
