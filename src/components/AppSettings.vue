@@ -6,6 +6,17 @@
 		:open="settingsOpen"
 		@update:open="setSettingsOpen($event)"
 	>
+		<NcAppSettingsSection id="help-basics" :title="t('notes', 'Basics')">
+				<div class="feature icon-add">
+					{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
+				</div>
+				<div class="feature icon-fullscreen">
+					{{ t('notes', 'Write down your thoughts without any distractions.') }}
+				</div>
+				<div class="feature icon-files-dark">
+					{{ t('notes', 'Organize your notes in categories.') }}
+				</div>
+		</NcAppSettingsSection>
 		<NcAppSettingsSection id="notes-path-section" :title="t('notes', 'Notes path')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'Folder to store your notes') }}
@@ -48,6 +59,24 @@
 				</option>
 			</select>
 		</NcAppSettingsSection>
+		<NcAppSettingsSection id="help-shortcuts" :title="t('notes', 'Shortcuts')">
+			<div class="feature icon-toggle-filelist">
+				{{ t('notes', 'Use shortcuts to quickly navigate this app.') }}
+			</div>
+			<table class="notes-help">
+				<tr>
+					<th>{{ t('notes', 'Shortcut') }}</th>
+					<th>{{ t('notes', 'Action') }}</th>
+				</tr>
+				<tr v-for="(item, index) in shortcuts" :key="index">
+					<td>{{ item.shortcut }}</td>
+					<td>{{ item.action }}</td>
+				</tr>
+			</table>
+		</NcAppSettingsSection>
+		<NcAppSettingsSection id="help-apps" :title="t('notes', 'Mobile apps')">
+			<HelpMobile />
+		</NcAppSettingsSection>
 	</NcAppSettingsDialog>
 </template>
 
@@ -59,6 +88,7 @@ import {
 
 import { setSettings } from '../NotesService.js'
 import store from '../store.js'
+import HelpMobile from './HelpMobile.vue'
 
 export default {
 	name: 'AppSettings',
@@ -66,6 +96,7 @@ export default {
 	components: {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
+		HelpMobile,
 	},
 
 	props: {
@@ -86,6 +117,20 @@ export default {
 			],
 			saving: false,
 			settingsOpen: this.open,
+			shortcuts: [
+				{ shortcut: t('notes', 'CTRL') + '+B', action: t('notes', 'Make the selection bold') },
+				{ shortcut: t('notes', 'CTRL') + '+I', action: t('notes', 'Make the selection italic') },
+				{ shortcut: t('notes', 'CTRL') + '+\'', action: t('notes', 'Wrap the selection in quotes') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+C', action: t('notes', 'The selection will be turned into monospace') },
+				{ shortcut: t('notes', 'CTRL') + '+E', action: t('notes', 'Remove any styles from the selected text') },
+				{ shortcut: t('notes', 'CTRL') + '+L', action: t('notes', 'Makes the current line a list element') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+L', action: t('notes', 'Makes the current line a list element with a number') },
+				{ shortcut: t('notes', 'CTRL') + '+H', action: t('notes', 'Toggle heading for current line') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'SHIFT') + '+H', action: t('notes', 'Set the current line as a big heading') },
+				{ shortcut: t('notes', 'CTRL') + '+K', action: t('notes', 'Insert link') },
+				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+I', action: t('notes', 'Insert image') },
+				{ shortcut: t('notes', 'CTRL') + '+/', action: t('notes', 'Switch between editor and viewer') },
+			],
 		}
 	},
 

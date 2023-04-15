@@ -17,14 +17,6 @@
 					@category-selected="onSelectCategory"
 					@note-deleted="onNoteDeleted"
 				/>
-				<NcAppNavigationItem
-					:title="t('notes', 'Help')"
-					:pinned="true"
-					@click.prevent="openHelp"
-				>
-					<InfoIcon slot="icon" :size="20" />
-				</NcAppNavigationItem>
-				<AppHelp :open.sync="helpVisible" />
 			</template>
 
 			<template #footer>
@@ -71,7 +63,6 @@ import CogIcon from 'vue-material-design-icons/Cog.vue'
 
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
-import AppHelp from './components/AppHelp.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
 
 import { config } from './config.js'
@@ -82,7 +73,6 @@ export default {
 	name: 'App',
 
 	components: {
-		AppHelp,
 		AppSettings,
 		EditorHint,
 		InfoIcon,
@@ -110,7 +100,6 @@ export default {
 			undoTimer: null,
 			deletedNotes: [],
 			refreshTimer: null,
-			helpVisible: false,
 			editorHint: loadState('notes', 'editorHint', '') === 'yes' && window.OCA.Text?.createEditor,
 			settingsVisible: false,
 		}
@@ -257,10 +246,6 @@ export default {
 					query,
 				})
 			}
-		},
-
-		openHelp() {
-			this.helpVisible = true
 		},
 
 		openSettings() {
