@@ -57,7 +57,6 @@ import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/dist/index.css'
 
-import InfoIcon from 'vue-material-design-icons/Information.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
 
@@ -75,7 +74,6 @@ export default {
 	components: {
 		AppSettings,
 		EditorHint,
-		InfoIcon,
 		NavigationList,
 		NcAppContent,
 		NcAppNavigation,

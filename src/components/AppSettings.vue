@@ -7,29 +7,27 @@
 		@update:open="setSettingsOpen($event)"
 	>
 		<NcAppSettingsSection id="help-basics" :title="t('notes', 'Basics')">
-				<div class="feature icon-add">
-					{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
-				</div>
-				<div class="feature icon-fullscreen">
-					{{ t('notes', 'Write down your thoughts without any distractions.') }}
-				</div>
-				<div class="feature icon-files-dark">
-					{{ t('notes', 'Organize your notes in categories.') }}
-				</div>
+			<div class="feature icon-add">
+				{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
+			</div>
+			<div class="feature icon-fullscreen">
+				{{ t('notes', 'Write down your thoughts without any distractions.') }}
+			</div>
+			<div class="feature icon-files-dark">
+				{{ t('notes', 'Organize your notes in categories.') }}
+			</div>
 		</NcAppSettingsSection>
 		<NcAppSettingsSection id="notes-path-section" :title="t('notes', 'Notes path')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'Folder to store your notes') }}
 			</p>
-			<form @submit.prevent="onChangeSettingsReload">
-				<input id="notesPath"
-					v-model="settings.notesPath"
-					type="text"
-					name="notesPath"
-					:placeholder="t('notes', 'Root directory')"
-					@change="onChangeSettingsReload"
-				><input type="submit" class="icon-confirm" value="">
-			</form>
+			<input id="notesPath"
+				v-model="settings.notesPath"
+				type="text"
+				name="notesPath"
+				:placeholder="t('notes', 'Root directory')"
+				@click="onChangeNotePath"
+			>
 		</NcAppSettingsSection>
 		<NcAppSettingsSection id="file-suffix-section" :title="t('notes', 'File extension')">
 			<p class="app-settings-section__desc">
@@ -85,6 +83,8 @@ import {
 	NcAppSettingsDialog,
 	NcAppSettingsSection,
 } from '@nextcloud/vue'
+
+import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
 
 import { setSettings } from '../NotesService.js'
 import store from '../store.js'
@@ -153,6 +153,25 @@ export default {
 	},
 
 	methods: {
+		onChangeNotePath(event) {
+			// Code Example from: https://github.com/nextcloud/text/blob/main/src/components/Menu/ActionInsertLink.vue#L130-L155
+			const filePicker = new FilePicker(
+				t('text', 'Select folder to link to'),
+				false, // multiselect
+				['text/directory'], // mime filter
+				true, // modal
+				FilePickerType.Choose, // type
+				true, // directories
+				event.target.value === '' ? '/' : event.target.value // path
+			)
+			filePicker.pick().then((file) => {
+				const client = OC.Files.getClient()
+				client.getFileInfo(file).then((_status, fileInfo) => {
+					this.settings.notesPath = fileInfo.path === '/' ? `/${fileInfo.name}` : `${fileInfo.path}/${fileInfo.name}`
+					this.onChangeSettingsReload()
+				})
+			})
+		},
 		onChangeSettings() {
 			this.saving = true
 			return setSettings(this.settings)
