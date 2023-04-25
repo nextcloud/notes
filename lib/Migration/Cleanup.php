@@ -6,8 +6,8 @@ namespace OCA\Notes\Migration;
 
 use OCA\Notes\Db\MetaMapper;
 
-use OCP\Migration\IRepairStep;
 use OCP\Migration\IOutput;
+use OCP\Migration\IRepairStep;
 
 class Cleanup implements IRepairStep {
 	private MetaMapper $metaMapper;

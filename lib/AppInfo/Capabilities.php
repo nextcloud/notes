@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OCA\Notes\AppInfo;
 
-use OCP\Capabilities\ICapability;
 use OCP\App\IAppManager;
+use OCP\Capabilities\ICapability;
 
 class Capabilities implements ICapability {
 	private IAppManager $appManager;

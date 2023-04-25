@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
-use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaService;
+use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\FileDisplayResponse;
-use OCP\IRequest;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\JSONResponse;
+use OCP\IRequest;
 
 class NotesController extends Controller {
 	private NotesService $notesService;

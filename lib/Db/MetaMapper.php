@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Db;
 
-use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IDBConnection;
 
 class MetaMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {

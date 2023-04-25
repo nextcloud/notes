@@ -8,8 +8,8 @@ use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\Util;
 
-use OCP\IUser;
 use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;

@@ -6,10 +6,10 @@ namespace OCA\Notes\Controller;
 
 use OCA\Notes\AppInfo\Application;
 use OCA\Notes\Db\Meta;
-use OCA\Notes\Service\Note;
-use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaNote;
 use OCA\Notes\Service\MetaService;
+use OCA\Notes\Service\Note;
+use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\Util;
 
 use OCP\AppFramework\Http;

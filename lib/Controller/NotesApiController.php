@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
-use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\MetaNote;
 use OCA\Notes\Service\MetaService;
+use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\ApiController;

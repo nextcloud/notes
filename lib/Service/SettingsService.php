@@ -7,9 +7,9 @@ namespace OCA\Notes\Service;
 use OCA\Notes\AppInfo\Application;
 
 use OCP\App\IAppManager;
+use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\Files\IRootFolder;
 
 class SettingsService {
 	private IConfig $config;
