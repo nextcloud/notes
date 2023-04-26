@@ -17,18 +17,18 @@
 					@category-selected="onSelectCategory"
 					@note-deleted="onNoteDeleted"
 				/>
-				<NcAppNavigationItem
-					:title="t('notes', 'Help')"
-					:pinned="true"
-					@click.prevent="openHelp"
-				>
-					<InfoIcon slot="icon" :size="20" />
-				</NcAppNavigationItem>
-				<AppHelp :open.sync="helpVisible" />
 			</template>
 
 			<template #footer>
-				<AppSettings v-if="!loading.notes && error !== true" @reload="reloadNotes" />
+				<ul class="app-navigation-entry__settings">
+					<NcAppNavigationItem
+						:title="t('notes', 'Notes settings')"
+						@click.prevent="openSettings"
+					>
+						<CogIcon slot="icon" :size="20" />
+					</NcAppNavigationItem>
+				</ul>
+				<AppSettings v-if="!loading.notes && error !== true" :open.sync="settingsVisible" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
 
@@ -57,12 +57,11 @@ import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/dist/index.css'
 
-import InfoIcon from 'vue-material-design-icons/Information.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import CogIcon from 'vue-material-design-icons/Cog.vue'
 
 import AppSettings from './components/AppSettings.vue'
 import NavigationList from './components/NavigationList.vue'
-import AppHelp from './components/AppHelp.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
 
 import { config } from './config.js'
@@ -73,16 +72,15 @@ export default {
 	name: 'App',
 
 	components: {
-		AppHelp,
 		AppSettings,
 		EditorHint,
-		InfoIcon,
 		NavigationList,
 		NcAppContent,
 		NcAppNavigation,
 		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
+		CogIcon,
 		PlusIcon,
 	},
 
@@ -100,8 +98,8 @@ export default {
 			undoTimer: null,
 			deletedNotes: [],
 			refreshTimer: null,
-			helpVisible: false,
 			editorHint: loadState('notes', 'editorHint', '') === 'yes' && window.OCA.Text?.createEditor,
+			settingsVisible: false,
 		}
 	},
 
@@ -248,8 +246,8 @@ export default {
 			}
 		},
 
-		openHelp() {
-			this.helpVisible = true
+		openSettings() {
+			this.settingsVisible = true
 		},
 
 		onNewNote() {
@@ -345,3 +343,14 @@ export default {
 	},
 }
 </script>
+
+<style scoped lang="scss">
+// Source for footer fix: https://github.com/nextcloud/server/blob/master/apps/files/src/views/Navigation.vue
+.app-navigation-entry__settings {
+	height: auto !important;
+	overflow: hidden !important;
+	padding-top: 0 !important;
+	// Prevent shrinking or growing
+	flex: 0 0 auto;
+}
+</style>
