@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "โน้ต",
     "Error" : "ข้อผิดพลาด",
     "New note" : "โน้ตใหม่",
-    "Help" : "ช่วยเหลือ",
     "Display mode for notes" : "โหมดแสดงผลสำหรับโน้ต",
     "Open in edit mode" : "เปิดในโหมดแก้ไข",
     "Open in preview mode" : "เปิดในโหมดแสดงตัวอย่าง",

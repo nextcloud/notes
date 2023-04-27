@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "Greška",
-    "Help" : "Pomoć",
     "Today" : "Danas",
     "Yesterday" : "Jučer",
     "Rename" : "Preimenuj",

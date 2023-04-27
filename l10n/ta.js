@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "குறிப்புகள்",
     "Error" : "வழு",
-    "Help" : "உதவி",
     "Today" : "இன்று",
     "Yesterday" : "நேற்று",
     "Rename" : "பெயர்மாற்றம்",

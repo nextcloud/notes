@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "ئىزاھاتلار",
     "Error" : "خاتالىق",
-    "Help" : "ياردەم",
     "Today" : "بۈگۈن",
     "Rename" : "ئات ئۆزگەرت",
     "Remove from favorites" : "Remove from favorites",

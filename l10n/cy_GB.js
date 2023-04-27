@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Nodiadau",
     "Error" : "Gwall",
     "New note" : "Nodyn newydd",
-    "Help" : "Cymorth",
     "Display mode for notes" : "Modd arddangos nodiadau",
     "Open in edit mode" : "Agor yn y modd golygu",
     "Open in preview mode" : "Agor yn y modd rhagolwg",

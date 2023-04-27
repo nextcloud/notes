@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Nòtaichean",
     "Error" : "Mearachd",
     "New note" : "Nòta ùr",
-    "Help" : "Cobhair",
     "Display mode for notes" : "Modh sealladh nan nòtaichean",
     "All notes" : "A h-uile nòta",
     "Today" : "An-diugh",

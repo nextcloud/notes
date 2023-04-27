@@ -4,7 +4,6 @@ OC.L10N.register(
     "Notes" : "Catatan",
     "Error" : "Kesalahan",
     "New note" : "Catatan baru",
-    "Help" : "Bantuan",
     "No notes yet" : "Belum ada catatan",
     "All notes" : "Semua catatan",
     "Categories" : "Kategori",

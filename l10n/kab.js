@@ -2,7 +2,6 @@ OC.L10N.register(
     "notes",
     {
     "Error" : "Erreur",
-    "Help" : "Tallalt",
     "Today" : "Ass-a",
     "Yesterday" : "Iḍelli",
     "This week" : "Dduṛt agi",

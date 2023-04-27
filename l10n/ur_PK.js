@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "ایرر",
-    "Help" : "مدد",
     "Today" : "آج",
     "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
