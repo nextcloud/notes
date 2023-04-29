@@ -2,7 +2,6 @@
 	<Fragment>
 		<NcAppNavigationItem
 			:title="t('notes', 'All notes')"
-			icon="icon-recent"
 			:class="{ active: null === selectedCategory }"
 			@click.prevent.stop="onSelectCategory(null)"
 		>
