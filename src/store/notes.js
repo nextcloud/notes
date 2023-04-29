@@ -7,6 +7,7 @@ const state = {
 	notesIds: {},
 	selectedCategory: null,
 	selectedNote: null,
+	filterString: '',
 }
 
 const getters = {
@@ -73,13 +74,19 @@ const getters = {
 		return result
 	},
 
-	getFilteredNotes: (state) => () => {
+	getFilteredNotes: (state, getters, rootState, rootGetters) => () => {
+		const searchText = rootState.app.searchText.toLowerCase()
 		const notes = state.notes.filter(note => {
 			if (state.selectedCategory !== null
 				&& state.selectedCategory !== note.category
 				&& !note.category.startsWith(state.selectedCategory + '/')) {
 				return false
 			}
+
+			if (searchText !== '' && note.title.toLowerCase().indexOf(searchText) === -1) {
+				return false
+			}
+
 			return true
 		})
 
@@ -100,6 +107,27 @@ const getters = {
 		notes.sort(state.selectedCategory === null ? cmpRecent : cmpCategory)
 
 		return notes
+	},
+
+	getFilteredTotalCount: (state, getters, rootState, rootGetters) => () => {
+		const searchText = rootState.app.searchText.toLowerCase()
+
+		if (state.selectedCategory === null || searchText === '') {
+			return 0
+		}
+
+		const notes = state.notes.filter(note => {
+			if (state.selectedCategory === note.category || note.category.startsWith(state.selectedCategory + '/')) {
+				return false
+			}
+
+			if (note.title.toLowerCase().indexOf(searchText) === -1) {
+				return false
+			}
+
+			return true
+		})
+		return notes.length
 	},
 
 	getSelectedCategory: (state) => () => {

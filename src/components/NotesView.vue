@@ -2,7 +2,10 @@
 	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
 		<template slot="list">
 			<NcAppContentList class="content-list">
-				<div class="spacer" />
+				<div class="content-list__search">
+					<input type="search" :placeholder="t('notes', 'Search for notes')" @input="event => searchText = event.target.value">
+				</div>
+
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
 					@note-selected="onNoteSelected"
@@ -29,6 +32,11 @@
 				>
 					{{ t('notes', 'Loading …') }}
 				</div>
+				<div v-if="getFilteredTotalCount > 0" class="content-list__search-more">
+					<NcButton @click="onCategorySelected(null)">
+						{{ t('notes', 'Find in all categories') }}
+					</NcButton>
+				</div>
 			</NcAppContentList>
 		</template>
 
@@ -44,6 +52,7 @@ import {
 	NcAppContent,
 	NcAppContentList,
 	NcAppContentDetails,
+	NcButton,
 } from '@nextcloud/vue'
 import { categoryLabel } from '../Util.js'
 import NotesList from './NotesList.vue'
@@ -60,6 +69,7 @@ export default {
 		NcAppContent,
 		NcAppContentList,
 		NcAppContentDetails,
+		NcButton,
 		Note,
 		NotesList,
 		NotesCaption,
@@ -87,6 +97,10 @@ export default {
 	},
 
 	computed: {
+		getFilteredTotalCount() {
+			return store.getters.getFilteredTotalCount()
+		},
+
 		category() {
 			return store.getters.getSelectedCategory()
 		},
@@ -123,6 +137,14 @@ export default {
 					return g
 				}, [])
 			}
+		},
+		searchText: {
+			get() {
+				return store.state.searchText
+			},
+			set(value) {
+				store.commit('updateSearchText', value)
+			},
 		},
 	},
 
@@ -196,13 +218,27 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .content-list {
 	padding: 0 4px;
 }
 
-.spacer {
-	height: 44px;
+.content-list__search {
+	padding: 4px;
+	padding-left: 50px;
+	position: sticky;
+    top: 0;
+    background-color: var(--color-main-background-translucent);
+    z-index: 1;
+
+	input {
+		width: 100%;
+	}
+}
+.content-list__search-more {
+	.button {
+		margin: auto;
+	}
 }
 
 .loading-label {
