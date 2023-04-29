@@ -241,6 +241,10 @@ export default {
 	}
 }
 
+.app-content-details {
+	height: 100%;
+}
+
 .loading-label {
 	color: var(--color-text-lighter);
 	text-align: center;

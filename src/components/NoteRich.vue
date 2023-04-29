@@ -1,12 +1,11 @@
 <template>
-	<NcAppContent :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen, 'is-mobile': isMobile }">
+	<div class="text-editor-wrapper" :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen, 'is-mobile': isMobile }">
 		<div v-show="!loading" ref="editor" class="text-editor" />
-	</NcAppContent>
+	</div>
 </template>
 <script>
 
 import {
-	NcAppContent,
 	isMobile,
 } from '@nextcloud/vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -17,10 +16,6 @@ import store from '../store.js'
 
 export default {
 	name: 'NoteRich',
-
-	components: {
-		NcAppContent,
-	},
 
 	mixins: [isMobile],
 
@@ -120,6 +115,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.text-editor-wrapper {
+	height: 100%;
+}
 .text-editor {
 	height: 100%;
 }
