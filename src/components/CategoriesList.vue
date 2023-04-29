@@ -80,3 +80,8 @@ export default {
 	},
 }
 </script>
+<style scoped>
+.app-navigation-entry-wrapper.active:deep(.app-navigation-entry) {
+	background-color: var(--color-primary-light) !important;
+}
+</style>
