@@ -11,6 +11,8 @@
 			</NcAppNavigationCounter>
 		</NcAppNavigationItem>
 
+		<NcAppNavigationCaption :title="t('notes', 'Categories')" />
+
 		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"
 			:title="categoryTitle(category.name)"
@@ -30,6 +32,7 @@
 <script>
 import {
 	NcAppNavigationItem,
+	NcAppNavigationCaption,
 	NcAppNavigationCounter,
 } from '@nextcloud/vue'
 import { Fragment } from 'vue-fragment'
@@ -48,6 +51,7 @@ export default {
 	components: {
 		Fragment,
 		NcAppNavigationItem,
+		NcAppNavigationCaption,
 		NcAppNavigationCounter,
 		FolderIcon,
 		FolderOutlineIcon,

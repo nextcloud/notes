@@ -4,8 +4,8 @@
 			{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 		</div>
 		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/stefan-niedermann/nextcloud-notes">
-				{{ t('notes', 'Android app: {notes} by {company}', {notes: 'Nextcloud Notes', company: 'Niedermann IT-Dienstleistungen'}) }}
+			<a target="_blank" href="https://github.com/nextcloud/nextcloud-notes">
+				{{ t('notes', 'Android app: {notes}', {notes: 'Nextcloud Notes'}) }}
 			</a>
 			<div>
 				<div class="badge">
@@ -22,11 +22,11 @@
 		</div>
 		<div class="badge-wrapper">
 			<a target="_blank" href="https://github.com/phedlund/CloudNotes">
-				{{ t('notes', 'iOS app: {notes} by {company}', {notes: 'CloudNotes - Nextcloud Notes', company: 'Peter Hedlund'}) }}
+				{{ t('notes', 'iOS app: {notes}', {notes: 'Nextcloud Notes'}) }}
 			</a>
 			<div>
 				<div class="badge">
-					<a target="_blank" href="https://apps.apple.com/app/cloudnotes-owncloud-notes/id813973264">
+					<a target="_blank" href="https://apps.apple.com/app/nextcloud-notes/id813973264">
 						<img :src="getRoute('badge_applestore.svg')" class="appstore-badge badge-playstore-fix">
 					</a>
 				</div>
