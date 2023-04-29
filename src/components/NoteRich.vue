@@ -118,6 +118,7 @@ export default {
 .text-editor-wrapper {
 	height: 100%;
 }
+
 .text-editor {
 	height: 100%;
 }

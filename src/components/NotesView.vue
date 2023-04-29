@@ -227,14 +227,15 @@ export default {
 	padding: 4px;
 	padding-left: 50px;
 	position: sticky;
-    top: 0;
-    background-color: var(--color-main-background-translucent);
-    z-index: 1;
+	top: 0;
+	background-color: var(--color-main-background-translucent);
+	z-index: 1;
 
 	input {
 		width: 100%;
 	}
 }
+
 .content-list__search-more {
 	.button {
 		margin: auto;
