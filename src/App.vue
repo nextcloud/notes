@@ -58,8 +58,8 @@ import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
 
 import AppSettings from './components/AppSettings.vue'
-import EditorHint from './components/Modal/EditorHint.vue'
 import CategoriesList from './components/CategoriesList.vue'
+import EditorHint from './components/Modal/EditorHint.vue'
 
 import { config } from './config.js'
 import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
@@ -70,15 +70,15 @@ export default {
 
 	components: {
 		AppSettings,
+		CategoriesList,
+		CogIcon,
 		EditorHint,
 		NcAppContent,
 		NcAppNavigation,
 		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
-		CogIcon,
 		PlusIcon,
-		CategoriesList,
 	},
 
 	data() {

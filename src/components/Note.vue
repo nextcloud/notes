@@ -1,6 +1,6 @@
 <template>
-	<NoteRich v-if="ready && rich" :note-id="noteId" />
-	<NotePlain v-else-if="ready" :note-id="noteId" />
+	<NoteRich v-if="isRichMode" :note-id="noteId" />
+	<NotePlain v-else-if="isPlainMode" :note-id="noteId" />
 </template>
 <script>
 import NoteRich from './NoteRich.vue'
@@ -23,11 +23,11 @@ export default {
 	},
 
 	computed: {
-		rich() {
+		isRichMode() {
 			return window.oc_appswebroots.text && store.state.app.settings.noteMode === 'rich'
 		},
-		ready() {
-			return store.state.app.settings.noteMode !== null
+		isPlainMode() {
+			return store.state.app.settings.noteMode !== null && store.state.app.settings.noteMode !== 'rich'
 		},
 	},
 }

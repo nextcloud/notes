@@ -47,8 +47,8 @@
 <script>
 import { NcListItem, NcActionButton } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
-import StarIcon from 'vue-material-design-icons/Star.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
+import StarIcon from 'vue-material-design-icons/Star.vue'
 import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
@@ -59,12 +59,12 @@ export default {
 	name: 'NoteItem',
 
 	components: {
+		AlertOctagonIcon,
+		FileDocumentOutlineIcon,
 		NcActionButton,
 		NcListItem,
-		AlertOctagonIcon,
-		StarIcon,
-		FileDocumentOutlineIcon,
 		SidebarIcon,
+		StarIcon,
 	},
 
 	props: {
@@ -115,7 +115,6 @@ export default {
 
 	methods: {
 		onNoteSelected(noteId) {
-			console.error('select note', noteId)
 			this.$emit('note-selected', noteId)
 		},
 		onToggleFavorite() {

@@ -2,7 +2,7 @@
 	<Fragment>
 		<NcAppNavigationItem
 			:title="t('notes', 'All notes')"
-			:class="{ active: null === selectedCategory }"
+			:class="{ active: selectedCategory === null }"
 			@click.prevent.stop="onSelectCategory(null)"
 		>
 			<HistoryIcon slot="icon" :size="20" />

@@ -199,8 +199,8 @@ export default {
 			this.newTitle = newTitle
 		},
 
-		onRenameTitle(event) {
-			if (event && this.title !== this.newTitle) {
+		onRenameTitle() {
+			if (this.title !== this.newTitle) {
 				this.loading.title = true
 				setTitle(this.note.id, this.newTitle)
 					.catch(() => {
