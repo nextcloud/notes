@@ -22,6 +22,7 @@ OC.L10N.register(
     "Organize your notes in categories." : "Antolatu zure oharrak kategoriatan.",
     "Folder to store your notes" : "Zure oharrak gordetzeko karpeta",
     "Root directory" : "Erro karpeta",
+    "File extension" : "Fitxategi-luzapena",
     "File extension for new notes" : "Ohar berrien fitxategi-luzapena",
     "Display mode for notes" : "Erakusketa modua oharrentzat",
     "Shortcuts" : "Lasterbideak",
