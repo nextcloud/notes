@@ -12,6 +12,21 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
+## 4.8.0-beta.1 - 2023-05-05
+
+### Added
+
+- Three column layout @joachimeichborn [#1021](https://github.com/nextcloud/notes/pull/1021)
+- Settings: Move Settings to NcAppSettingsDialog, NotePath FilePicker and merge AppHelp @JonnyTischbein [#1003](https://github.com/nextcloud/notes/pull/1003)
+
+### Fixed
+
+- Fix help table on dark mode @eckelon [#1000](https://github.com/nextcloud/notes/pull/1000)
+- fix: Proper response for attachment endpoint @juliushaertl [#1031](https://github.com/nextcloud/notes/pull/1031)
+
+### Other
+
+- Dependency updates
 
 ## 4.7.2 - 2023-03-22
 
