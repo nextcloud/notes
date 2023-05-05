@@ -6,6 +6,7 @@ const state = {
 	isManualSave: false,
 	documentTitle: null,
 	sidebarOpen: false,
+	searchText: '',
 }
 
 const getters = {
@@ -34,6 +35,10 @@ const mutations = {
 
 	setSidebarOpen(state, open) {
 		state.sidebarOpen = open
+	},
+
+	updateSearchText(state, searchText) {
+		state.searchText = searchText
 	},
 }
 

@@ -5,6 +5,9 @@ const state = {
 	categories: [],
 	notes: [],
 	notesIds: {},
+	selectedCategory: null,
+	selectedNote: null,
+	filterString: '',
 }
 
 const getters = {
@@ -70,6 +73,70 @@ const getters = {
 		}
 		return result
 	},
+
+	getFilteredNotes: (state, getters, rootState, rootGetters) => () => {
+		const searchText = rootState.app.searchText.toLowerCase()
+		const notes = state.notes.filter(note => {
+			if (state.selectedCategory !== null
+				&& state.selectedCategory !== note.category
+				&& !note.category.startsWith(state.selectedCategory + '/')) {
+				return false
+			}
+
+			if (searchText !== '' && note.title.toLowerCase().indexOf(searchText) === -1) {
+				return false
+			}
+
+			return true
+		})
+
+		function cmpRecent(a, b) {
+			if (a.favorite && !b.favorite) return -1
+			if (!a.favorite && b.favorite) return 1
+			return b.modified - a.modified
+		}
+
+		function cmpCategory(a, b) {
+			const cmpCat = a.category.localeCompare(b.category)
+			if (cmpCat !== 0) return cmpCat
+			if (a.favorite && !b.favorite) return -1
+			if (!a.favorite && b.favorite) return 1
+			return a.title.localeCompare(b.title)
+		}
+
+		notes.sort(state.selectedCategory === null ? cmpRecent : cmpCategory)
+
+		return notes
+	},
+
+	getFilteredTotalCount: (state, getters, rootState, rootGetters) => () => {
+		const searchText = rootState.app.searchText.toLowerCase()
+
+		if (state.selectedCategory === null || searchText === '') {
+			return 0
+		}
+
+		const notes = state.notes.filter(note => {
+			if (state.selectedCategory === note.category || note.category.startsWith(state.selectedCategory + '/')) {
+				return false
+			}
+
+			if (note.title.toLowerCase().indexOf(searchText) === -1) {
+				return false
+			}
+
+			return true
+		})
+		return notes.length
+	},
+
+	getSelectedCategory: (state) => () => {
+		return state.selectedCategory
+	},
+
+	getSelectedNote: (state) => () => {
+		return state.selectedNote
+	},
 }
 
 const mutations = {
@@ -110,6 +177,14 @@ const mutations = {
 
 	setCategories(state, categories) {
 		state.categories = categories
+	},
+
+	setSelectedCategory(state, category) {
+		state.selectedCategory = category
+	},
+
+	setSelectedNote(state, note) {
+		state.selectedNote = note
 	},
 }
 

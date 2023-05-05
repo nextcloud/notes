@@ -1,21 +1,35 @@
 <template>
-	<NcAppNavigationItem
+	<NcListItem
 		:title="title"
-		:icon="icon"
-		:menu-open.sync="actionsOpen"
+		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
-		:class="{ actionsOpen }"
-		:loading="loading.note"
-		:editable="!note.readonly"
-		:edit-label="t('notes', 'Rename')"
-		:edit-placeholder="t('notes', 'Note\'s title')"
-		@update:title="onRename"
+		@click="onNoteSelected(note.id)"
 	>
+		<template #subtitle>
+			{{ categoryTitle }}
+		</template>
+		<template #icon>
+			<AlertOctagonIcon v-if="note.error"
+				slot="icon"
+				:size="20"
+				fill-color="#E9322D"
+			/>
+			<StarIcon v-else-if="note.favorite"
+				slot="icon"
+				:size="20"
+				fill-color="#FC0"
+			/>
+			<FileDocumentOutlineIcon v-else
+				slot="icon"
+				:size="20"
+				fill-color="var(--color-text-lighter)"
+			/>
+		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</NcActionButton>
-			<NcActionButton icon="icon-details" @click="onToggleSidebar">
+			<NcActionButton @click="onToggleSidebar">
 				<SidebarIcon slot="icon" :size="20" />
 				{{ t('notes', 'Details') }}
 			</NcActionButton>
@@ -27,30 +41,30 @@
 				{{ actionCategoryText }}
 			</NcActionButton>
 		</template>
-	</NcAppNavigationItem>
+	</NcListItem>
 </template>
 
 <script>
-import {
-	NcActionButton,
-	NcActionSeparator,
-	NcAppNavigationItem,
-} from '@nextcloud/vue'
+import { NcListItem, NcActionButton } from '@nextcloud/vue'
+import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
+import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
+import StarIcon from 'vue-material-design-icons/Star.vue'
 import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
+import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
 import store from '../store.js'
-
 import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
-import { categoryLabel, routeIsNewNote } from '../Util.js'
 
 export default {
-	name: 'NavigationNoteItem',
+	name: 'NoteItem',
 
 	components: {
+		AlertOctagonIcon,
+		FileDocumentOutlineIcon,
 		NcActionButton,
-		NcActionSeparator,
-		NcAppNavigationItem,
+		NcListItem,
 		SidebarIcon,
+		StarIcon,
 	},
 
 	props: {
@@ -64,32 +78,26 @@ export default {
 		return {
 			loading: {
 				note: false,
-				favorite: false,
-				delete: false,
 			},
-			actionsOpen: false,
 		}
 	},
 
 	computed: {
-		icon() {
-			let icon = ''
-			if (this.note.error) {
-				icon = 'nav-icon icon-error-color'
-			} else if (this.note.favorite) {
-				icon = 'nav-icon icon-starred'
-			}
-			return icon
+		isSelected() {
+			return this.$store.getters.getSelectedNote() === this.note.id
 		},
 
 		title() {
 			return this.note.title + (this.note.unsaved ? ' *' : '')
 		},
 
+		categoryTitle() {
+			return categoryLabel(this.note.category)
+		},
+
 		actionFavoriteText() {
 			return this.note.favorite ? this.t('notes', 'Remove from favorites') : this.t('notes', 'Add to favorites')
 		},
-
 		actionFavoriteIcon() {
 			let icon = this.note.favorite ? 'icon-star-dark' : 'icon-starred'
 			if (this.loading.favorite) {
@@ -97,17 +105,18 @@ export default {
 			}
 			return icon
 		},
-
 		actionCategoryText() {
 			return categoryLabel(this.note.category)
 		},
-
 		actionDeleteIcon() {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
 	},
 
 	methods: {
+		onNoteSelected(noteId) {
+			this.$emit('note-selected', noteId)
+		},
 		onToggleFavorite() {
 			this.loading.favorite = true
 			setFavorite(this.note.id, !this.note.favorite)
@@ -118,17 +127,14 @@ export default {
 					this.actionsOpen = false
 				})
 		},
-
 		onCategorySelected() {
 			this.actionsOpen = false
 			this.$emit('category-selected', this.note.category)
 		},
-
 		onToggleSidebar() {
 			this.actionsOpen = false
 			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 		},
-
 		onRename(newTitle) {
 			this.loading.note = true
 			setTitle(this.note.id, newTitle)
@@ -144,7 +150,6 @@ export default {
 				})
 			}
 		},
-
 		async onDeleteNote() {
 			this.loading.delete = true
 			try {
@@ -166,3 +171,8 @@ export default {
 	},
 }
 </script>
+<style scoped>
+.material-design-icon {
+	width: 44px;
+}
+</style>
