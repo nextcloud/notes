@@ -1,13 +1,12 @@
 { "translations": {
     "Notes" : "Notizen",
     "Error" : "Fehler",
-    "Today" : "Haut",
-    "Yesterday" : "Gëschter",
-    "Rename" : "Ëmbenennen",
     "Details" : "Detailer",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Edit" : "Änneren",
+    "Today" : "Haut",
+    "Yesterday" : "Gëschter",
     "Tasks" : "Tâchen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -3,11 +3,10 @@ OC.L10N.register(
     {
     "Notes" : "شسیب",
     "Error" : "شسیب",
-    "Today" : "نن",
-    "Yesterday" : "پرون",
-    "Rename" : "نوم بدلول",
     "Details" : "معلومات",
     "Remove from favorites" : "له نښو ويستل",
-    "Add to favorites" : "په نښه کول"
+    "Add to favorites" : "په نښه کول",
+    "Today" : "نن",
+    "Yesterday" : "پرون"
 },
 "nplurals=2; plural=(n != 1);");
