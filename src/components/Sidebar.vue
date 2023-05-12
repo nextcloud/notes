@@ -239,7 +239,7 @@ export default {
 
 .note-error {
 	background-color: var(--color-error);
-	color: var(--color-primary-text);
+	color: var(--color-primary-element-text);
 	border-radius: 0.5ex;
 	padding: 0.5ex 1ex;
 }

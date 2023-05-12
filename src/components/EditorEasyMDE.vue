@@ -269,7 +269,7 @@ export default {
 /* text selection */
 .CodeMirror .CodeMirror-selectedtext {
 	background-color: var(--color-primary-element) !important;
-	color: var(--color-primary-text) !important;
+	color: var(--color-primary-element-text) !important;
 	opacity: 1 !important;
 }
 
