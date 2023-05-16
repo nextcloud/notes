@@ -1,0 +1,26 @@
+{ "translations": {
+    "Notes" : "Notes",
+    "More notes" : "Más notes",
+    "Error" : "Error",
+    "Write down your thoughts without any distractions." : "Escribi cualesquier pensamientu ensin nenguna distraición.",
+    "Organize your notes in categories." : "Organiza les notes per categoríes.",
+    "Shortcuts" : "Atayos",
+    "Shortcut" : "Atayos",
+    "Action" : "Aición",
+    "CTRL" : "CTRL",
+    "ALT" : "ALT",
+    "SHIFT" : "MAYÚS",
+    "All notes" : "Toles notes",
+    "Categories" : "Categories",
+    "Loading …" : "Cargando…",
+    "Today" : "Güei",
+    "Yesterday" : "Ayeri",
+    "This week" : "Esta selmana",
+    "Last week" : "La selmana pasada",
+    "This month" : "Esti mes",
+    "Last month" : "El mes pasáu",
+    "Category" : "Categoría",
+    "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"],
+    "_%n character_::_%n characters_" : ["%n caráuter","%n caráuteres"]
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
