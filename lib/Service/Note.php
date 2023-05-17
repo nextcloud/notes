@@ -179,4 +179,8 @@ class Note {
 			$this->noteUtil->getTagService()->setFavorite($this->getId(), $favorite);
 		}
 	}
+
+	public function getFile(): File {
+		return $this->file;
+	}
 }
