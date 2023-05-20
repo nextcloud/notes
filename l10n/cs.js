@@ -20,6 +20,7 @@ OC.L10N.register(
     "Basics" : "Základní",
     "Write down your thoughts without any distractions." : "Zapište si své myšlenky, aniž byste u toho byli rozptylováni.",
     "Organize your notes in categories." : "Uspořádávejte své poznámky do kategorií.",
+    "Notes path" : "Popis umístění poznámek",
     "Folder to store your notes" : "Složka pro ukládání vašich poznámek",
     "Root directory" : "Kořenová složka",
     "File extension" : "Přípona souboru",
