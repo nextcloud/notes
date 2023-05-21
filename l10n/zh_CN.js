@@ -84,7 +84,7 @@ OC.L10N.register(
     "Updating title for note {id} has failed." : "更新笔记 {id} 的标题失败。",
     "Undo delete has failed for note {title}." : "笔记 {title} 的撤消删除失败。",
     "Deleting note {id} has failed." : "删除笔记 {id} 失败。",
-    "Toggling favorite for note {id} has failed." : "将笔记 {id} 设为收藏失败。",
+    "Toggling favorite for note {id} has failed." : "将笔记{id}设为收藏失败。",
     "Updating the note's category has failed. Is the target directory writable?" : "无法更新存储笔记的文件夹。请检查目标文件夹是否可写。",
     "Updating the category for note {id} has failed." : "更新笔记 {id} 的分类失败。",
     "Tasks" : "任务",
