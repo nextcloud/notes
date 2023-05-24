@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
+use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
 
@@ -12,6 +13,9 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\StreamResponse;
 use OCP\Files\IMimeTypeDetector;
+use OCP\Files\Lock\ILock;
+use OCP\Files\Lock\ILockManager;
+use OCP\Files\Lock\LockContext;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -19,28 +23,34 @@ use OCP\IRequest;
 class NotesController extends Controller {
 	private NotesService $notesService;
 	private SettingsService $settingsService;
+	private ILockManager $lockManager;
 	private Helper $helper;
 	private IConfig $settings;
 	private IL10N $l10n;
 	private IMimeTypeDetector $mimeTypeDetector;
+	private string $userId;
 
 	public function __construct(
 		string $AppName,
 		IRequest $request,
 		NotesService $notesService,
+		ILockManager $lockManager,
 		SettingsService $settingsService,
 		Helper $helper,
 		IConfig $settings,
 		IL10N $l10n,
-		IMimeTypeDetector $mimeTypeDetector
+		IMimeTypeDetector $mimeTypeDetector,
+		string $userId
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
 		$this->settingsService = $settingsService;
+		$this->lockManager = $lockManager;
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->l10n = $l10n;
 		$this->mimeTypeDetector = $mimeTypeDetector;
+		$this->userId = $userId;
 	}
 
 	/**
@@ -208,7 +218,9 @@ class NotesController extends Controller {
 			$oldTitle = $note->getTitle();
 			$newTitle = $this->notesService->getTitleFromContent($note->getContent());
 			if ($oldTitle !== $newTitle) {
-				$note->setTitle($newTitle);
+				$this->inLockScope($note, function () use ($note, $newTitle) {
+					$note->setTitle($newTitle);
+				});
 			}
 			return $note->getTitle();
 		});
@@ -258,14 +270,18 @@ class NotesController extends Controller {
 
 				case 'title':
 					if ($title !== null) {
-						$note->setTitle($title);
+						$this->inLockScope($note, function () use ($note, $title) {
+							$note->setTitle($title);
+						});
 					}
 					$result = $note->getTitle();
 					break;
 
 				case 'category':
 					if ($category !== null) {
-						$note->setCategory($category);
+						$this->inLockScope($note, function () use ($note, $category) {
+							$note->setCategory($category);
+						});
 					}
 					$result = $note->getCategory();
 					break;
@@ -330,6 +346,18 @@ class NotesController extends Controller {
 				$noteid,
 				$file
 			);
+		});
+	}
+
+	private function inLockScope(Note $note, callable $callback) {
+		$isRichText = $this->settingsService->get($this->userId, 'noteMode') === 'rich';
+		$lockContext = new LockContext(
+			$note->getFile(),
+			$isRichText ? ILock::TYPE_APP : ILock::TYPE_USER,
+			$isRichText ? 'text' : $this->userId
+		);
+		$this->lockManager->runInScope($lockContext, function () use ($callback) {
+			$callback();
 		});
 	}
 }
