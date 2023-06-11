@@ -66,6 +66,7 @@ OC.L10N.register(
     "Updating the note's category has failed. Is the target directory writable?" : "به روزرسانی دسته یادداشت انجام نشد. آیا فهرست مسیر قابل نوشتن است؟",
     "Updating the category for note {id} has failed." : "به روزرسانی دسته برای یادداشت {id} انجام نشد.",
     "Tasks" : "وظایف",
+    "Nextcloud, a safe home for all your data" : "نکست‌کلود، خانه‌ای امن برای تمامی داده‌هایتان",
     "Development Mode" : "حالت توسعه",
     "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "به نظر می رسد که برنامه یادداشت ها از یک منبع توسعه نصب شده است. لطفاً آن را از طریق رسمی  نصب کنید <a href=\"%1$s\">فروشگاه برنامه نکست کلود</a>بجای.اگر می خواهید برنامه Notes توسط خودتان بسازید ، لطفاً دنبال کنید <a href=\"%2$s\">دستورالعمل های توسعه دهنده</a>."
 },
