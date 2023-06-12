@@ -12,16 +12,7 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
-## 4.8.0-beta.2
-
-### Fixed
-
-- Use the color-primary-element* variables @szaimen [#1043](https://github.com/nextcloud/notes/pull/1043)
-- fix: setting button spacing @luka-nextcloud [#1048](https://github.com/nextcloud/notes/pull/1048)
-- fix: Wrap renaming of notes through autotile in locking context @juliushaertl [#1047](https://github.com/nextcloud/notes/pull/1047)
-- Dependency updates
-
-## 4.8.0-beta.1 - 2023-05-05
+## 4.8.0
 
 ### Added
 
@@ -30,6 +21,9 @@ Types of changes:
 
 ### Fixed
 
+- Use the color-primary-element* variables @szaimen [#1043](https://github.com/nextcloud/notes/pull/1043)
+- fix: setting button spacing @luka-nextcloud [#1048](https://github.com/nextcloud/notes/pull/1048)
+- fix: Wrap renaming of notes through autotile in locking context @juliushaertl [#1047](https://github.com/nextcloud/notes/pull/1047)
 - Fix help table on dark mode @eckelon [#1000](https://github.com/nextcloud/notes/pull/1000)
 - fix: Proper response for attachment endpoint @juliushaertl [#1031](https://github.com/nextcloud/notes/pull/1031)
 
