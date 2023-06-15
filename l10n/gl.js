@@ -44,7 +44,7 @@ OC.L10N.register(
     "Makes the current line a list element with a number" : "Fai da liña actual un elemento de lista cun número",
     "Toggle heading for current line" : "Alterna o título para a liña actual",
     "SHIFT" : "SHIFT",
-    "Set the current line as a big heading" : "Establece a liña actual como un título grande",
+    "Set the current line as a big heading" : "Estabelecer a liña actual como un encabezamento  grande",
     "Insert link" : "Inserir ligazón",
     "Insert image" : "Inserir unha imaxe",
     "Switch between editor and viewer" : "Cambia entre editor e visor",
