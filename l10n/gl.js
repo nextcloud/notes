@@ -50,7 +50,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Cambia entre editor e visor",
     "All notes" : "Todas as notas",
     "Categories" : "Categorías",
-    "Create a sample note with Markdown" : "Crea unha nota de mostra con Markdown",
+    "Create a sample note with Markdown" : "Crear unha nota de mostra con Markdown",
     "No notes yet" : "Aínda non hai notas",
     "Upload image" : "Cargar imaxe",
     "Select an image" : "Seleccione unha imaxe",
