@@ -74,7 +74,7 @@ OC.L10N.register(
     "Add to favorites" : "Додати зірочку",
     "Error during preparing note for deletion." : "Помилка під час підготовки нотатки до вилучення.",
     "The note has been changed in another session. Please choose which version should be saved." : "Нотатку було змінено в іншому сеансі. Будь ласка, виберіть, яку версію потрібно зберегти.",
-    "Use version from server" : "Використовуйте версію з сервера",
+    "Use version from server" : "Використовуйте віддалену версію",
     "Use current version" : "Використовувати поточну версію",
     "Empty note" : "Порожня записка",
     "Write …" : "Напишіть…",
