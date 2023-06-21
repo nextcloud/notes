@@ -125,7 +125,7 @@ OC.L10N.register(
     "Me, you, and all our friends!" : "Eu, ti e todos os nosos amigos!",
     "Tasks" : "Tarefas",
     "Write nice todo lists" : "Escribe listas de tarefas agradables",
-    "Buy Fries" : "Comprar Patacas Fritas",
+    "Buy Fries" : "Mercar patacas frixidas",
     "Birthdays" : "Aniversarios",
     "Jen, in three days!" : "Xiana, en tres días!",
     "Moss, 21.03.1973" : "Brais, 21.03.1973",
