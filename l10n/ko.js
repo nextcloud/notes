@@ -5,6 +5,7 @@ OC.L10N.register(
     "Reading notes from filesystem has failed." : "파일시스템에서 메모를 불러오기 실패",
     "Error" : "오류",
     "New note" : "새 메모",
+    "Distraction-free notes and writing" : "방해 없는 무료 메모 작성 앱",
     "Notes settings" : "메모 설정",
     "Please see Nextcloud server log for details." : "Nextcloud 서버 로그에서 자세한 사항을 확인하십시오.",
     "Deleted {title}" : "{title} 삭제함",
