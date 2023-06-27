@@ -105,7 +105,7 @@
     "Subcategory" : "子类别",
     "Click to edit title" : "点击以编辑标题",
     "_%n word_::_%n words_" : ["%n 个字"],
-    "_%n character_::_%n characters_" : ["%n个字符"],
+    "_%n character_::_%n characters_" : ["%n 个字符"],
     "Use Markdown markups to style your text." : "使用 Markdown 标注来格式化您的文本。",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "在应用导航栏中点击 “{newnote}” 开始做笔记",
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "您可以创建子类别，在父类别和子类别之间使用 “/” 作为分隔符，例如 “{parent}/{sub}”。",
