@@ -2,6 +2,7 @@
     "Notes" : "الملاحظات",
     "Error" : "خطأ",
     "New note" : "ملاحظة جديدة ",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "هناك ملاحظات غير محفوظة. مغادرة الصفحة سيؤدي إلى تجاهل كل التغييرات!",
     "Display mode for notes" : "وضع العرض للملاحظات",
     "Open in edit mode" : "فتح في وضع التحرير",
     "Open in preview mode" : "فتح في وضع المعاينة",
