@@ -111,7 +111,7 @@
     "You can create subcategories by using “/” as delimiter between parent category and subcategory, e.g. “{parent}/{sub}”." : "Pode crear subcategorías empregando «/» como delimitador entre a categoría principal e a subcategoría, por exemplo «{parent}/{sub}».",
     "Note not found." : "Non se atopou ningunha nota.",
     "Note is locked." : "A nota está bloqueada.",
-    "Insufficient storage." : "Non ten espazo de almacenamento abondo.",
+    "Insufficient storage." : "Non hai espazo de almacenamento abondo.",
     "See JavaScript console and server log for details." : "Vexa a consola de JavaScript e o rexistro do servidor para os detalles.",
     "Updating settings has failed." : "Produciuse un fallo ao actualizar os axustes.",
     "Fetching notes for dashboard has failed." : "Fallou a obtención de notas para o taboleiro.",
