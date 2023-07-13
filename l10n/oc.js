@@ -17,6 +17,7 @@ OC.L10N.register(
     "Folder to store your notes" : "Dossièr ont gardar vòstras nòtas",
     "File extension for new notes" : "Extension fichièr per las nòtas novèlas",
     "Display mode for notes" : "Mòde d’afichatge per las nòtas",
+    "Insert link" : "Inserir un ligam",
     "Insert image" : "Inserir imatge",
     "All notes" : "Totas las nòtas",
     "Categories" : "Categorias",
