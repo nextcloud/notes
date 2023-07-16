@@ -49,6 +49,7 @@ export default {
 	watch: {
 		$route(to, from) {
 			if (to.name !== from.name || to.params.noteId !== from.params.noteId) {
+				this.onClose(from.params.noteId)
 				this.fetchData()
 			}
 		},
@@ -96,7 +97,7 @@ export default {
 							const title = this.getTitle(markdown)
 							this.shouldAutotitle = this.isNewNote || (title !== '' && title === this.note.title)
 						}
-						this.onEdit({ content: markdown, unsaved: unsaved})
+						this.onEdit({ content: markdown, unsaved })
 					}
 				},
 			}))
@@ -109,6 +110,14 @@ export default {
 			store.commit('updateNote', {
 				...this.note,
 				...noteData,
+			})
+		},
+
+		onClose(noteId) {
+			const note = store.getters.getNote(parseInt(noteId))
+			store.commit('updateNote', {
+				...note,
+				unsaved: false,
 			})
 		},
 
