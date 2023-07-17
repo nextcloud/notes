@@ -46,7 +46,7 @@ class EditorHint implements IRepairStep {
 	}
 
 	public function run(IOutput $output) {
-		$appVersion = $this->config->getAppValue('text', 'installed_version');
+		$appVersion = $this->config->getAppValue('notes', 'installed_version');
 
 		if (!$appVersion || version_compare($appVersion, '4.7.0') !== -1) {
 			return;
