@@ -12,6 +12,15 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities. 
 
+## 4.8.1
+
+### Fixed
+
+- fix: Check for the notes app version for editor hint @juliushaertl [#1077](https://github.com/nextcloud/notes/pull/1077)
+- Fix autotitle and save status @juliushaertl [#1078](https://github.com/nextcloud/notes/pull/1078)
+- Update depenencies
+
+
 ## 4.8.0
 
 ### Added
