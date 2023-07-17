@@ -30,6 +30,7 @@ export default {
 		return {
 			loading: false,
 			editor: null,
+			shouldAutotitle: true,
 		}
 	},
 
@@ -48,6 +49,7 @@ export default {
 	watch: {
 		$route(to, from) {
 			if (to.name !== from.name || to.params.noteId !== from.params.noteId) {
+				this.onClose(from.params.noteId)
 				this.fetchData()
 			}
 		},
@@ -83,13 +85,19 @@ export default {
 			}
 			this?.editor?.destroy()
 			this.loading = true
+			this.shouldAutotitle = undefined
 			this.editor = (await window.OCA.Text.createEditor({
 				el: this.$refs.editor,
 				fileId: parseInt(this.noteId),
 				readOnly: false,
 				onUpdate: ({ markdown }) => {
 					if (this.note) {
-						this.onEdit({ content: markdown, unsaved: true })
+						const unsaved = !!(this.note?.content && this.note.content !== markdown)
+						if (this.shouldAutotitle === undefined) {
+							const title = this.getTitle(markdown)
+							this.shouldAutotitle = this.isNewNote || (title !== '' && title === this.note.title)
+						}
+						this.onEdit({ content: markdown, unsaved })
 					}
 				},
 			}))
@@ -105,11 +113,36 @@ export default {
 			})
 		},
 
+		onClose(noteId) {
+			const note = store.getters.getNote(parseInt(noteId))
+			store.commit('updateNote', {
+				...note,
+				unsaved: false,
+			})
+		},
+
 		fileUpdated({ fileid }) {
 			if (this.note.id === fileid) {
 				this.onEdit({ unsaved: false })
-				queueCommand(fileid, 'autotitle')
+				if (this.shouldAutotitle) {
+					queueCommand(fileid, 'autotitle')
+				}
 			}
+		},
+
+		getTitle(content) {
+			const firstLine = content.split('\n')[0] ?? ''
+			const title = firstLine
+				// See NoteUtil::sanitisePath
+				.replaceAll(/^\s*[*+-]\s+/gmu, '')
+				.replaceAll(/^[.\s]+/gmu, '')
+				.replaceAll(/\*|\||\/|\\|:|"|'|<|>|\?/gmu, '')
+				// See NoteUtil::stripMarkdown
+				.replaceAll(/^#+\s+(.*?)\s*#*$/gmu, '$1')
+				.replaceAll(/^(=+|-+)$/gmu, '')
+				.replaceAll(/(\*+|_+)(.*?)\\1/gmu, '$2')
+				.replaceAll(/\s/gmu, ' ')
+			return title.length > 0 ? title : t('notes', 'New note')
 		},
 	},
 }
