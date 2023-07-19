@@ -17,6 +17,7 @@ OC.L10N.register(
     "Add to favorites" : "Agregar a tus favoritos",
     "Edit" : "Editar",
     "Preview" : "Previsualizar",
+    "Loading …" : "Cargando...",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
