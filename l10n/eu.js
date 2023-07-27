@@ -88,7 +88,7 @@ OC.L10N.register(
     "Save failed. Click to retry." : "Huts egin du gordetzean. Egin klik berriro saiatzeko.",
     "Update conflict. Click for resolving manually." : "Eguneraketa gatazka. Egin klik eskuz ebazteko.",
     "Error from Nextcloud server: {msg}" : "Nextcloud zerbitzariaren errorea: {msg}",
-    "Search for notes" : "Bilatu notak",
+    "Search for notes" : "Bilatu oharrak",
     "Loading …" : "Kargatzen...",
     "Find in all categories" : "Bilatu kategoria guztietan",
     "Today" : "Gaur",
