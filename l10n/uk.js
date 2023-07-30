@@ -79,7 +79,7 @@ OC.L10N.register(
     "Empty note" : "Порожня записка",
     "Write …" : "Напишіть…",
     "CTRL + /" : "CTRL + /",
-    "Edit" : "Редашувати",
+    "Edit" : "Редагувати",
     "Preview" : "Перегляд",
     "Exit full screen" : "Вийти з повноекранного режиму",
     "Full screen" : "Повноекранний режим",
