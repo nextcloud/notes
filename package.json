@@ -25,7 +25,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-task-checkbox": "^1.0.6",
     "vue": "^2.7.14",
-    "vue-fragment": "1.5.1",
+    "vue-fragment": "1.6.0",
     "vue-material-design-icons": "^5.2.0",
     "vue-observe-visibility": "^1.0.0",
     "vue-router": "^3.5.3",
