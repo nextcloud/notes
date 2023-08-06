@@ -14,6 +14,7 @@ OC.L10N.register(
     "SHIFT" : "MAYÚS",
     "All notes" : "Toles notes",
     "Categories" : "Categories",
+    "Edit" : "Editar",
     "Loading …" : "Cargando…",
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
@@ -23,6 +24,7 @@ OC.L10N.register(
     "Last month" : "El mes pasáu",
     "Category" : "Categoría",
     "_%n word_::_%n words_" : ["%n pallabra","%n pallabres"],
-    "_%n character_::_%n characters_" : ["%n caráuter","%n caráuteres"]
+    "_%n character_::_%n characters_" : ["%n caráuter","%n caráuteres"],
+    "Nextcloud, a safe home for all your data" : "Nexcloud, un llugar seguru pa los datos personales"
 },
 "nplurals=2; plural=(n != 1);");
