@@ -32,7 +32,7 @@ OC.L10N.register(
     "Shortcut" : "捷徑",
     "Action" : "操作",
     "Mobile apps" : "流動應用程式",
-    "User defined" : "使用者定義",
+    "User defined" : "用戶定義",
     "Open in rich text mode" : "以富文字模式打開",
     "Open in edit mode" : "以編輯模式開啟",
     "Open in preview mode" : "以預覽模式開啟",
