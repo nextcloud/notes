@@ -85,7 +85,7 @@ OC.L10N.register(
     "Full screen" : "Повноекранний режим",
     "Note is read-only. You cannot change it." : "Примітка доступна лише для читання. Ви не можете це змінити.",
     "Save failed. Click to retry." : "Не вдалося зберегти. Натисніть, щоб повторити спробу.",
-    "Update conflict. Click for resolving manually." : "Конфлікт оновлень. Натисніть, щоб вирішити вручну.",
+    "Update conflict. Click for resolving manually." : "Конфлікт оновлень. Натисніть, щоб прийняти рішення вручну.",
     "Error from Nextcloud server: {msg}" : "Помилка сервера Nextcloud: {msg}",
     "Search for notes" : "Пошук нотаток",
     "Loading …" : "Завантаження...",
