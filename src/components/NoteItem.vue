@@ -10,51 +10,73 @@
 		</template>
 		<template #icon>
 			<AlertOctagonIcon v-if="note.error"
-				slot="icon"
-				:size="20"
-				fill-color="#E9322D"
+							  slot="icon"
+							  :size="20"
+							  fill-color="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
-				slot="icon"
-				:size="20"
-				fill-color="#FC0"
+					  slot="icon"
+					  :size="20"
+					  fill-color="#FC0"
 			/>
 			<FileDocumentOutlineIcon v-else
-				slot="icon"
-				:size="20"
-				fill-color="var(--color-text-lighter)"
+									 slot="icon"
+									 :size="20"
+									 fill-color="var(--color-text-lighter)"
 			/>
+
 		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</NcActionButton>
+
+			<NcActionButton v-if="!renaming" @click="startRenaming">
+				<MarkdownPencil slot="icon" :size="20"/>
+				{{ t('notes', 'Rename') }}
+			</NcActionButton>
+			<NcActionInput
+				v-else
+				v-model.trim="newTitle"
+				@input="onInputChange($event)"
+				@submit="onRename"
+				:disabled="!renaming"
+				:placeholder="t('notes', 'Rename note')"
+				:show-trailing-button="true"
+			>
+				<MarkdownPencil slot="icon" :size="20"/>
+			</NcActionInput>
+
 			<NcActionButton @click="onToggleSidebar">
-				<SidebarIcon slot="icon" :size="20" />
+				<SidebarIcon slot="icon" :size="20"/>
 				{{ t('notes', 'Details') }}
 			</NcActionButton>
+
 			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
-			<NcActionSeparator />
+
+			<NcActionSeparator/>
+
 			<NcActionButton icon="icon-files-dark" @click="onCategorySelected">
 				{{ actionCategoryText }}
 			</NcActionButton>
+
 		</template>
 	</NcListItem>
 </template>
 
 <script>
-import { NcListItem, NcActionButton } from '@nextcloud/vue'
+import {NcListItem, NcActionButton, NcActionInput} from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
 import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
-import { categoryLabel, routeIsNewNote } from '../Util.js'
-import { showError } from '@nextcloud/dialogs'
+import {categoryLabel, routeIsNewNote} from '../Util.js'
+import {showError} from '@nextcloud/dialogs'
 import store from '../store.js'
-import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
-
+import {setFavorite, setTitle, fetchNote, deleteNote} from '../NotesService.js'
+import MarkdownPencil from "./Icons/MarkdownPencil.vue";
 export default {
 	name: 'NoteItem',
 
@@ -65,6 +87,9 @@ export default {
 		NcListItem,
 		SidebarIcon,
 		StarIcon,
+		NcActionInput,
+		MarkdownPencil,
+
 	},
 
 	props: {
@@ -72,6 +97,7 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 	},
 
 	data() {
@@ -79,6 +105,8 @@ export default {
 			loading: {
 				note: false,
 			},
+			newTitle: "",
+			renaming: false,
 		}
 	},
 
@@ -112,7 +140,6 @@ export default {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
 	},
-
 	methods: {
 		onNoteSelected(noteId) {
 			this.$emit('note-selected', noteId)
@@ -135,21 +162,44 @@ export default {
 			this.actionsOpen = false
 			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 		},
+		startRenaming() {
+			this.renaming = true;
+			this.$emit('start-renaming', this.note.id);
+		},
+		onInputChange(event) {
+			this.newTitle = event.target.value.toString();
+		},
 		onRename(newTitle) {
-			this.loading.note = true
+			newTitle = this.newTitle.toString();
+			if (!newTitle) {
+				return;
+			}
+			this.loading.note = true;
 			setTitle(this.note.id, newTitle)
+				.then(() => {
+					this.note.title = newTitle;
+					this.newTitle = "";
+				})
 				.catch(() => {
+					console.log('error')
+					showError(this.t('notes', 'Error while renaming note.'));
 				})
 				.finally(() => {
-					this.loading.note = false
-				})
+					this.loading.note = false;
+					this.renaming = false;
+				});
+
 			if (routeIsNewNote(this.$route)) {
 				this.$router.replace({
 					name: 'note',
-					params: { noteId: this.note.id.toString() },
-				})
+					params: {noteId: this.note.id.toString()},
+				});
 			}
+			this.renaming = false;
+
 		},
+
+
 		async onDeleteNote() {
 			this.loading.delete = true
 			try {
