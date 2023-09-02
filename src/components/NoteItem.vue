@@ -9,20 +9,17 @@
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
-			<AlertOctagonIcon
-				v-if="note.error"
+			<AlertOctagonIcon v-if="note.error"
 				slot="icon"
 				:size="20"
 				fill-color="#E9322D"
 			/>
-			<StarIcon
-				v-else-if="note.favorite"
+			<StarIcon v-else-if="note.favorite"
 				slot="icon"
 				:size="20"
 				fill-color="#FC0"
 			/>
-			<FileDocumentOutlineIcon
-				v-else
+			<FileDocumentOutlineIcon v-else
 				slot="icon"
 				:size="20"
 				fill-color="var(--color-text-lighter)"
@@ -38,8 +35,7 @@
 				<MarkdownPencil slot="icon" :size="20"/>
 				{{ t('notes', 'Rename') }}
 			</NcActionButton>
-			<NcActionInput
-				v-else
+			<NcActionInput v-else
 				v-model.trim="newTitle"
 				@input="onInputChange($event)"
 				@submit="onRename"
@@ -201,8 +197,6 @@ export default {
 			this.renaming = false;
 
 		},
-
-
 		async onDeleteNote() {
 			this.loading.delete = true
 			try {
