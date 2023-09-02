@@ -1,11 +1,12 @@
 <template>
 	<ul>
-		<NoteItem v-for="note in notes"
-				  :key="note.id"
-				  :note="note"
-				  @note-selected="onNoteSelected"
-				  :renaming="isRenaming(note.id)"
-				  @start-renaming="onStartRenaming"
+		<NoteItem
+			v-for="note in notes"
+			:key="note.id"
+			:note="note"
+			@note-selected="onNoteSelected"
+			:renaming="isRenaming(note.id)"
+			@start-renaming="onStartRenaming"
 		/>
 	</ul>
 </template>

@@ -9,20 +9,23 @@
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
-			<AlertOctagonIcon v-if="note.error"
-							  slot="icon"
-							  :size="20"
-							  fill-color="#E9322D"
+			<AlertOctagonIcon
+				v-if="note.error"
+				slot="icon"
+				:size="20"
+				fill-color="#E9322D"
 			/>
-			<StarIcon v-else-if="note.favorite"
-					  slot="icon"
-					  :size="20"
-					  fill-color="#FC0"
+			<StarIcon
+				v-else-if="note.favorite"
+				slot="icon"
+				:size="20"
+				fill-color="#FC0"
 			/>
-			<FileDocumentOutlineIcon v-else
-									 slot="icon"
-									 :size="20"
-									 fill-color="var(--color-text-lighter)"
+			<FileDocumentOutlineIcon
+				v-else
+				slot="icon"
+				:size="20"
+				fill-color="var(--color-text-lighter)"
 			/>
 
 		</template>
