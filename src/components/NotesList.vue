@@ -1,7 +1,6 @@
 <template>
 	<ul>
-		<NoteItem
-			v-for="note in notes"
+		<NoteItem v-for="note in notes"
 			:key="note.id"
 			:note="note"
 			@note-selected="onNoteSelected"
