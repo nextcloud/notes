@@ -29,10 +29,28 @@
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</NcActionButton>
+
+			<NcActionButton v-if="!renaming" @click="startRenaming">
+				<PencilIcon slot="icon" :size="20" />
+				{{ t('notes', 'Rename') }}
+			</NcActionButton>
+			<NcActionInput v-else
+				v-model.trim="newTitle"
+				:disabled="!renaming"
+				:placeholder="t('notes', 'Rename note')"
+				:show-trailing-button="true"
+				@input="onInputChange($event)"
+				@submit="onRename"
+			>
+				<PencilIcon slot="icon" :size="20" />
+			</NcActionInput>
+
 			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
 				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
+
 			<NcActionSeparator />
+
 			<NcActionButton icon="icon-files-dark" @click="onCategorySelected">
 				{{ actionCategoryText }}
 			</NcActionButton>
@@ -41,9 +59,10 @@
 </template>
 
 <script>
-import { NcListItem, NcActionButton, NcActionSeparator } from '@nextcloud/vue'
+import { NcListItem, NcActionButton, NcActionSeparator, NcActionInput } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
@@ -59,6 +78,8 @@ export default {
 		NcListItem,
 		StarIcon,
 		NcActionSeparator,
+		NcActionInput,
+		PencilIcon,
 	},
 
 	props: {
@@ -73,6 +94,8 @@ export default {
 			loading: {
 				note: false,
 			},
+			newTitle: '',
+			renaming: false,
 		}
 	},
 
@@ -106,7 +129,6 @@ export default {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
 	},
-
 	methods: {
 		onNoteSelected(noteId) {
 			this.$emit('note-selected', noteId)
@@ -125,20 +147,41 @@ export default {
 			this.actionsOpen = false
 			this.$emit('category-selected', this.note.category)
 		},
-		onRename(newTitle) {
+		startRenaming() {
+			this.renaming = true
+			this.newTitle = this.note.title
+			this.$emit('start-renaming', this.note.id)
+		},
+		onInputChange(event) {
+			this.newTitle = event.target.value.toString()
+		},
+		async onRename() {
+			const newTitle = this.newTitle.toString()
+			if (!newTitle) {
+				return
+			}
 			this.loading.note = true
 			setTitle(this.note.id, newTitle)
-				.catch(() => {
+				.then(() => {
+					this.newTitle = ''
+				})
+				.catch((e) => {
+					console.error('Failed to rename note', e)
+					showError(this.t('notes', 'Error while renaming note.'))
 				})
 				.finally(() => {
 					this.loading.note = false
+					this.renaming = false
 				})
+
 			if (routeIsNewNote(this.$route)) {
 				this.$router.replace({
 					name: 'note',
 					params: { noteId: this.note.id.toString() },
 				})
 			}
+			this.renaming = false
+
 		},
 		async onDeleteNote() {
 			this.loading.delete = true
