@@ -28,7 +28,6 @@ class NotesController extends Controller {
 	private IConfig $settings;
 	private IL10N $l10n;
 	private IMimeTypeDetector $mimeTypeDetector;
-	private string $userId;
 
 	public function __construct(
 		string $AppName,
@@ -39,8 +38,7 @@ class NotesController extends Controller {
 		Helper $helper,
 		IConfig $settings,
 		IL10N $l10n,
-		IMimeTypeDetector $mimeTypeDetector,
-		string $userId
+		IMimeTypeDetector $mimeTypeDetector
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -50,7 +48,6 @@ class NotesController extends Controller {
 		$this->settings = $settings;
 		$this->l10n = $l10n;
 		$this->mimeTypeDetector = $mimeTypeDetector;
-		$this->userId = $userId;
 	}
 
 	/**
@@ -350,11 +347,11 @@ class NotesController extends Controller {
 	}
 
 	private function inLockScope(Note $note, callable $callback) {
-		$isRichText = $this->settingsService->get($this->userId, 'noteMode') === 'rich';
+		$isRichText = $this->settingsService->get($this->helper->getUID(), 'noteMode') === 'rich';
 		$lockContext = new LockContext(
 			$note->getFile(),
 			$isRichText ? ILock::TYPE_APP : ILock::TYPE_USER,
-			$isRichText ? 'text' : $this->userId
+			$isRichText ? 'text' : $this->helper->getUID()
 		);
 		$this->lockManager->runInScope($lockContext, function () use ($callback) {
 			$callback();
