@@ -21,7 +21,7 @@ use OCP\Share\Events\BeforeShareCreatedEvent;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'notes';
-	public static array $API_VERSIONS = [ '0.2', '1.3' ];
+	public static array $API_VERSIONS = [ '0.2', '1.3', '1.4' ];
 
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
