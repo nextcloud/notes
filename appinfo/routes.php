@@ -177,7 +177,7 @@ return ['routes' => [
 		'url' => '/api/{apiVersion}/settings',
 		'verb' => 'GET',
 		'requirements' => [
-			'apiVersion' => '(v1)',
+			'apiVersion' => '(v1|v1.4)',
 		],
 	],
 	[
@@ -195,6 +195,24 @@ return ['routes' => [
 		'requirements' => [
 			'apiVersion' => '(v0.2|v1)',
 			'path' => '.+',
+		],
+	],
+	[
+		'name' => 'notes_api#getAttachment',
+		'url' => '/api/{apiVersion}/attachment/{noteid}',
+		'verb' => 'GET',
+		'requirements' => [
+			'apiVersion' => '(v1.4)',
+			'noteid' => '\d+'
+		],
+	],
+	[
+		'name' => 'notes_api#uploadFile',
+		'url' => '/api/{apiVersion}/attachment/{noteid}',
+		'verb' => 'POST',
+		'requirements' => [
+			'apiVersion' => '(v1.4)',
+			'noteid' => '\d+'
 		],
 	],
 ]];
