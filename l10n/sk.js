@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Poznámky",
+    "Create new note" : "Vytvoriť novú poznámku",
     "Reading notes from filesystem has failed." : "Čítanie poznámok zo súborového systému zlyhalo.",
     "Error" : "Chyba",
     "New note" : "Nová poznámka",
@@ -22,7 +23,7 @@ OC.L10N.register(
     "Display mode for notes" : "Režim zobrazovania poznámok",
     "Shortcuts" : "Skratky",
     "Action" : "Akcia",
-    "User defined" : "Definované uživateľom",
+    "User defined" : "Definované používateľo",
     "Open in edit mode" : "Otvoriť v režime úprav",
     "Open in preview mode" : "Otvoriť v režime ukážky",
     "CTRL" : "CTRL",
