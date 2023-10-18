@@ -18,7 +18,7 @@
     "@nextcloud/event-bus": "^3.1.0",
     "@nextcloud/initial-state": "^2.1.0",
     "@nextcloud/moment": "^1.2.1",
-    "@nextcloud/router": "^2.1.2",
+    "@nextcloud/router": "^2.2.0",
     "@nextcloud/vue": "^7.12.6",
     "diff": "^5.1.0",
     "easymde": "^2.18.0",
