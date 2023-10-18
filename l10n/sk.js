@@ -58,6 +58,7 @@ OC.L10N.register(
     "Save failed. Click to retry." : "Uloženie zlyhalo. Ťuknutím zopakujete.",
     "Update conflict. Click for resolving manually." : "Konflikt pri aktualizácii. Kliknite pre ručné riešenie problému.",
     "Error from Nextcloud server: {msg}" : "Chyba Nextcloud servera: {msg}",
+    "Search for notes" : "Vyhľadať poznámky",
     "Loading …" : "Načítava sa...",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
