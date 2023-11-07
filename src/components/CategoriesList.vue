@@ -1,37 +1,5 @@
 <template>
 	<Fragment>
-
-	<NcAppNavigationItem
-		:title="title"
-		class="app-navigation-noclose separator-below"
-		:class="{ 'category-header': selectedCategory !== null }"
-		:open.sync="open"
-		:menu-open.sync="menuOpen"
-		:allow-collapse="true"
-		@click.prevent.stop="onToggleCategories"
-	>
-		<template #menu-icon>
-			<AddIcon :size="20" @click="onToggleNewCategory" />
-		</template>
-		<template #actions>
-			<NcActionText>
-				<template #icon>
-					<ErrorIcon v-if="createCategoryError" :size="20" />
-					<AddIcon v-else-if="!createCategoryError" :size="20" />
-				</template>
-				{{ createCategoryError ? createCategoryError : t('notes', 'Create a new category') }}
-			</NcActionText>
-			<NcActionInput
-				icon=""
-				:value="t('notes', 'Category name')"
-				@submit.prevent.stop="createNewCategory"
-			>
-				<template #icon>
-					<FolderIcon :size="20" />
-				</template>
-			</NcActionInput>
-		</template>
-
 		<FolderIcon slot="icon" :size="20" />
 		<NcAppNavigationItem
 			:title="t('notes', 'All notes')"
@@ -44,7 +12,29 @@
 			</NcAppNavigationCounter>
 		</NcAppNavigationItem>
 
-		<NcAppNavigationCaption :title="t('notes', 'Categories')" />
+		<NcAppNavigationCaption :title="t('notes', 'Categories')">
+			<template #actionsTriggerIcon>
+				<AddIcon slot="icon" :size="20" />
+			</template>
+			<template #actions>
+				<NcActionText>
+					<template #icon>
+						<ErrorIcon v-if="createCategoryError" :size="20" />
+						<AddIcon v-else-if="!createCategoryError" :size="20" />
+					</template>
+					{{ createCategoryError ? createCategoryError : t('notes', 'Create a new category') }}
+				</NcActionText>
+				<NcActionInput
+					icon=""
+					:value="t('notes', 'Category name')"
+					@submit.prevent.stop="createNewCategory"
+				>
+					<template #icon>
+						<FolderIcon :size="20" />
+					</template>
+				</NcActionInput>
+			</template>
+		</NcAppNavigationCaption>
 
 		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"

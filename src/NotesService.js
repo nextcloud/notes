@@ -341,7 +341,7 @@ export const setFavorite = (noteId, favorite) => {
 
 export const findCategory = (categoryName) => {
 	return axios
-		.get(generateRemoteUrl(`dav/files/${getCurrentUser().uid}/${store.state.app.settings.notesPath}${categoryName}`))
+		.get(generateRemoteUrl(`dav/files/${getCurrentUser().uid}/${store.state.app.settings.notesPath}/${categoryName}`))
 		.then(response => {
 			return categoryName
 		})
@@ -360,10 +360,11 @@ export const createCategory = (categoryName) => {
 	// Axios MKCOL workaround: https://github.com/axios/axios/issues/2220
 	return axios
 		.request({
-			url: generateRemoteUrl(`dav/files/${getCurrentUser().uid}/${store.state.app.settings.notesPath}${categoryName}`),
+			url: generateRemoteUrl(`dav/files/${getCurrentUser().uid}/${store.state.app.settings.notesPath}/${categoryName}`),
 			method: 'MKCOL',
 		})
 		.then(response => {
+			store.commit('addCategory', categoryName)
 			return categoryName
 		})
 		.catch(err => {
