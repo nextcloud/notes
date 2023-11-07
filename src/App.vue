@@ -37,8 +37,6 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @note-deleted="onNoteDeleted" />
-
-		<router-view name="sidebar" />
 	</NcContent>
 </template>
 

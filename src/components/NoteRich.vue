@@ -1,5 +1,5 @@
 <template>
-	<div class="text-editor-wrapper" :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen, 'is-mobile': isMobile }">
+	<div class="text-editor-wrapper" :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'is-mobile': isMobile }">
 		<div v-show="!loading" ref="editor" class="text-editor" />
 	</div>
 </template>
@@ -40,9 +40,6 @@ export default {
 		},
 		isNewNote() {
 			return routeIsNewNote(this.$route)
-		},
-		sidebarOpen() {
-			return store.state.app.sidebarOpen
 		},
 	},
 

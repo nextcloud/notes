@@ -5,7 +5,6 @@ const state = {
 	isSaving: false,
 	isManualSave: false,
 	documentTitle: null,
-	sidebarOpen: false,
 	searchText: '',
 }
 
@@ -31,10 +30,6 @@ const mutations = {
 
 	setDocumentTitle(state, title) {
 		state.documentTitle = title
-	},
-
-	setSidebarOpen(state, open) {
-		state.sidebarOpen = open
 	},
 
 	updateSearchText(state, searchText) {
