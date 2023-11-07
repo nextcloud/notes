@@ -3,6 +3,7 @@
 		:title="title"
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
+		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
 	>
 		<template #subtitle>
@@ -30,6 +31,31 @@
 				{{ actionFavoriteText }}
 			</NcActionButton>
 
+			<NcActionButton v-if="!showCategorySelect" @click="showCategorySelect = true">
+				<template #icon>
+					<FolderIcon :size="20" />
+				</template>
+				{{ categoryTitle }}
+			</NcActionButton>
+			<NcActionInput
+				v-else
+				:value="note.category"
+				type="multiselect"
+				label="label"
+				track-by="id"
+				:multiple="false"
+				:options="categories"
+				:disabled="loading.category"
+				:taggable="true"
+				@input="onCategoryChange"
+				@search-change="onCategoryChange"
+			>
+				<template #icon>
+					<FolderIcon :size="20" />
+				</template>
+				{{ t('notes', 'Change category') }}
+			</NcActionInput>
+
 			<NcActionButton v-if="!renaming" @click="startRenaming">
 				<PencilIcon slot="icon" :size="20" />
 				{{ t('notes', 'Rename') }}
@@ -45,14 +71,10 @@
 				<PencilIcon slot="icon" :size="20" />
 			</NcActionInput>
 
-			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
-				{{ t('notes', 'Delete note') }}
-			</NcActionButton>
-
 			<NcActionSeparator />
 
-			<NcActionButton icon="icon-files-dark" @click="onCategorySelected">
-				{{ actionCategoryText }}
+			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
+				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
 		</template>
 	</NcListItem>
@@ -62,11 +84,12 @@
 import { NcListItem, NcActionButton, NcActionSeparator, NcActionInput } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
+import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
-import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
+import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
 
 export default {
 	name: 'NoteItem',
@@ -74,6 +97,7 @@ export default {
 	components: {
 		AlertOctagonIcon,
 		FileDocumentOutlineIcon,
+		FolderIcon,
 		NcActionButton,
 		NcListItem,
 		StarIcon,
@@ -93,9 +117,11 @@ export default {
 		return {
 			loading: {
 				note: false,
+				category: false,
 			},
 			newTitle: '',
 			renaming: false,
+			showCategorySelect: false,
 		}
 	},
 
@@ -128,8 +154,24 @@ export default {
 		actionDeleteIcon() {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
+		categories() {
+			return [
+				{
+					id: '',
+					label: categoryLabel(''),
+				},
+				...this.$store.getters.getCategories(0, false).map((category) => ({
+					id: category,
+					label: categoryLabel(category),
+				})),
+			]
+		},
 	},
 	methods: {
+		onMenuChange(state) {
+			this.actionsOpen = state
+			this.showCategorySelect = false
+		},
 		onNoteSelected(noteId) {
 			this.$emit('note-selected', noteId)
 		},
@@ -155,6 +197,15 @@ export default {
 		onInputChange(event) {
 			this.newTitle = event.target.value.toString()
 		},
+		async onCategoryChange(result) {
+			this.showCategorySelect = false
+			const category = result?.id ?? result?.label ?? null
+			if (category !== null && this.note.category !== category) {
+				this.loading.category = true
+				await setCategory(this.note.id, category)
+				this.loading.category = false
+			}
+		},
 		async onRename() {
 			const newTitle = this.newTitle.toString()
 			if (!newTitle) {
@@ -171,7 +222,6 @@ export default {
 				})
 				.finally(() => {
 					this.loading.note = false
-					this.renaming = false
 				})
 
 			if (routeIsNewNote(this.$route)) {

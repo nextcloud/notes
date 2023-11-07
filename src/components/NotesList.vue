@@ -3,8 +3,8 @@
 		<NoteItem v-for="note in notes"
 			:key="note.id"
 			:note="note"
-			@note-selected="onNoteSelected"
 			:renaming="isRenaming(note.id)"
+			@note-selected="onNoteSelected"
 			@start-renaming="onStartRenaming"
 		/>
 	</ul>
@@ -29,17 +29,17 @@ export default {
 	data() {
 		return {
 			renamingNotes: [],
-		};
+		}
 	},
 	methods: {
 		onNoteSelected(noteId) {
 			this.$emit('note-selected', noteId)
 		},
 		onStartRenaming(noteId) {
-			this.renamingNotes.push(noteId);
+			this.renamingNotes.push(noteId)
 		},
 		isRenaming(noteId) {
-			return this.renamingNotes.includes(noteId);
+			return this.renamingNotes.includes(noteId)
 		},
 
 	},
