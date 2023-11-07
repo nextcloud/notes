@@ -144,7 +144,7 @@ export default {
 				const wordCount = value.split(/\s+/).filter(
 					// only count words containing
 					// at least one alphanumeric character
-					value => value.search(/[A-Za-z0-9]/) !== -1
+					value => value.search(/[A-Za-z0-9]/) !== -1,
 				).length
 				const charCount = Array.from(value).length
 				return n('notes', '%n word', '%n words', wordCount)

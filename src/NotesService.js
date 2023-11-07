@@ -78,7 +78,7 @@ export const fetchNotes = () => {
 	return axios
 		.get(
 			url('/notes' + (lastModified ? '?pruneBefore=' + lastModified : '')),
-			{ headers }
+			{ headers },
 		)
 		.then(response => {
 			store.commit('setSettings', response.data.settings)
@@ -142,7 +142,7 @@ export const refreshNote = (noteId, lastETag) => {
 	return axios
 		.get(
 			url('/notes/' + noteId),
-			{ headers }
+			{ headers },
 		)
 		.then(response => {
 			if (note.conflict) {
@@ -224,14 +224,14 @@ function _updateNote(note) {
 				// everything is fine
 				// => update note with remote data
 				_updateLocalNote(
-					{ ...updated, unsaved: false }
+					{ ...updated, unsaved: false },
 				)
 			} else {
 				// content has changed locally in the meanwhile
 				// => merge note, but exclude content
 				_updateLocalNote(
 					copyNote(updated, note, ['content']),
-					copyNote(updated, {})
+					copyNote(updated, {}),
 				)
 			}
 		})
@@ -246,14 +246,14 @@ function _updateNote(note) {
 					// content is already up-to-date
 					// => update note with remote data
 					_updateLocalNote(
-						{ ...remote, unsaved: false }
+						{ ...remote, unsaved: false },
 					)
 				} else if (remote.content === reference.content) {
 					// remote content has not changed
 					// => use all other attributes and sync again
 					_updateLocalNote(
 						copyNote(remote, note, ['content']),
-						copyNote(remote, {})
+						copyNote(remote, {}),
 					)
 					queueCommand(note.id, 'content')
 				} else {
@@ -272,7 +272,7 @@ export const conflictSolutionLocal = note => {
 	note.etag = note.conflict.etag
 	_updateLocalNote(
 		copyNote(note.conflict, note, ['content']),
-		copyNote(note.conflict, {})
+		copyNote(note.conflict, {}),
 	)
 	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
 	queueCommand(note.id, 'content')
@@ -280,7 +280,7 @@ export const conflictSolutionLocal = note => {
 
 export const conflictSolutionRemote = note => {
 	_updateLocalNote(
-		{ ...note.conflict, unsaved: false }
+		{ ...note.conflict, unsaved: false },
 	)
 	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
 }

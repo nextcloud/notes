@@ -163,7 +163,7 @@ export default {
 			// + 1 for some reason... not sure why
 			doc.replaceRange(newvalue,
 				{ line: index, ch: line.text.indexOf('[') },
-				{ line: index, ch: line.text.indexOf(']') + 1 }
+				{ line: index, ch: line.text.indexOf(']') + 1 },
 			)
 		},
 
@@ -203,7 +203,7 @@ export default {
 				['image/jpeg', 'image/png'],
 				true,
 				OC.dialogs.FILEPICKER_TYPE_CHOOSE,
-				currentNotePath
+				currentNotePath,
 			)
 		},
 
@@ -231,7 +231,7 @@ export default {
 					})
 					.catch((error) => {
 						console.error(error)
-						showError(t('notes', 'The file was not uploaded. Check your server logs.'),)
+						showError(t('notes', 'The file was not uploaded. Check your server logs.'))
 					})
 			}
 			temporaryInput.click()
