@@ -10,7 +10,20 @@ Types of changes:
 - *Deprecated* for soon-to-be removed features.
 - *Removed* for now removed features.
 - *Fixed* for any bug fixes.
-- *Security* in case of vulnerabilities. 
+- *Security* in case of vulnerabilities.
+
+## 4.9.0-beta.1
+
+### Added
+
+- Note sharing and file sidebar integration @luka-nextcloud [#1146](https://github.com/nextcloud/notes/pull/1146)
+- Replace sidebar with rename and category options in the note list @JonnyTischbein [#1004](https://github.com/nextcloud/notes/pull/1004)
+
+### Fixed
+
+- fix: fix note controller user id param @juliushaertl [#1106](https://github.com/nextcloud/notes/pull/1106)
+- Fix dashboard icons @provokateurin [#1124](https://github.com/nextcloud/notes/pull/1124)
+- fixing typos @modernNeo [#1129](https://github.com/nextcloud/notes/pull/1129)
 
 ## 4.8.1
 
