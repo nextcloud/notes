@@ -26,9 +26,19 @@
 				fill-color="var(--color-text-lighter)"
 			/>
 		</template>
+		<template v-if="isShared" #indicator>
+			<ShareVariantIcon :size="16" fill-color="#0082c9" />
+		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
+			</NcActionButton>
+
+			<NcActionButton @click="onToggleSharing">
+				<template #icon>
+					<ShareVariantIcon :size="20" />
+				</template>
+				{{ t('notes', 'Share') }}
 			</NcActionButton>
 
 			<NcActionButton v-if="!showCategorySelect" @click="showCategorySelect = true">
@@ -90,6 +100,8 @@ import StarIcon from 'vue-material-design-icons/Star.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
+import ShareVariantIcon from 'vue-material-design-icons/ShareVariant.vue'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default {
 	name: 'NoteItem',
@@ -104,6 +116,7 @@ export default {
 		NcActionSeparator,
 		NcActionInput,
 		PencilIcon,
+		ShareVariantIcon,
 	},
 
 	props: {
@@ -122,12 +135,16 @@ export default {
 			newTitle: '',
 			renaming: false,
 			showCategorySelect: false,
+			isShareCreated: false,
 		}
 	},
 
 	computed: {
 		isSelected() {
 			return this.$store.getters.getSelectedNote() === this.note.id
+		},
+		isShared() {
+			return this.note.isShared || this.isShareCreated
 		},
 
 		title() {
@@ -167,6 +184,15 @@ export default {
 			]
 		},
 	},
+
+	mounted() {
+		subscribe('files_sharing:share:created', this.onShareCreated)
+	},
+
+	destroyed() {
+		unsubscribe('files_sharing:share:created', this.onShareCreated)
+	},
+
 	methods: {
 		onMenuChange(state) {
 			this.actionsOpen = state
@@ -249,6 +275,23 @@ export default {
 				showError(this.t('notes', 'Error during preparing note for deletion.'))
 				this.loading.delete = false
 				this.actionsOpen = false
+			}
+		},
+		onToggleSharing() {
+			if (window?.OCA?.Files?.Sidebar?.setActiveTab) {
+				emit('toggle-navigation', { open: false })
+				setTimeout(() => {
+					window.dispatchEvent(new Event('resize'))
+				}, 200)
+				window.OCA.Files.Sidebar.setActiveTab('sharing')
+				window.OCA.Files.Sidebar.open(this.note.internalPath)
+			}
+		},
+		async onShareCreated(event) {
+			const { share } = event
+
+			if (share.fileSource === this.note.id) {
+				this.isShareCreated = true
 			}
 		},
 	},

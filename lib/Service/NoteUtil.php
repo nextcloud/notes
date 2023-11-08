@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Service;
 
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\IDBConnection;
+use OCP\IUserSession;
+use OCP\Share\IManager;
+use OCP\Share\IShare;
 
 class NoteUtil {
 	private const MAX_TITLE_LENGTH = 100;
@@ -15,21 +19,32 @@ class NoteUtil {
 	private IDBConnection $db;
 	private IRootFolder $root;
 	private TagService $tagService;
+	private IManager $shareManager;
+	private IUserSession $userSession;
 
 	public function __construct(
 		Util $util,
 		IRootFolder $root,
 		IDBConnection $db,
-		TagService $tagService
+		TagService $tagService,
+		IManager $shareManager,
+		IUserSession $userSession
 	) {
 		$this->util = $util;
 		$this->root = $root;
 		$this->db = $db;
 		$this->tagService = $tagService;
+		$this->shareManager = $shareManager;
+		$this->userSession = $userSession;
 	}
 
 	public function getRoot() : IRootFolder {
 		return $this->root;
+	}
+
+	public function getPathForUser(File $file) {
+		$userFolder = $this->root->getUserFolder($this->userSession->getUser()->getUID());
+		return $userFolder->getRelativePath($file->getPath());
 	}
 
 	public function getTagService() : TagService {
@@ -202,5 +217,30 @@ class NoteUtil {
 		if (!$node->isUpdateable()) {
 			throw new NoteNotWritableException();
 		}
+	}
+
+	public function getShareTypes(File $file): array {
+		$userId = $file->getOwner()->getUID();
+		$requestedShareTypes = [
+			IShare::TYPE_USER,
+			IShare::TYPE_GROUP,
+			IShare::TYPE_LINK,
+			IShare::TYPE_REMOTE,
+			IShare::TYPE_EMAIL,
+			IShare::TYPE_ROOM,
+			IShare::TYPE_DECK,
+			IShare::TYPE_SCIENCEMESH,
+		];
+		$shareTypes = [];
+
+		foreach ($requestedShareTypes as $shareType) {
+			$shares = $this->shareManager->getSharesBy($userId, $shareType, $file, false, 1, 0);
+
+			if (count($shares)) {
+				$shareTypes[] = $shareType;
+			}
+		}
+
+		return $shareTypes;
 	}
 }

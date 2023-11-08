@@ -96,7 +96,7 @@ import {
 	isMobile,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
-import { emit } from '@nextcloud/event-bus'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
 import EyeIcon from 'vue-material-design-icons/Eye.vue'
@@ -193,6 +193,8 @@ export default {
 		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('keydown', this.onKeyPress)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
+		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	destroyed() {
@@ -203,6 +205,8 @@ export default {
 		document.removeEventListener('keydown', this.onKeyPress)
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
 		this.onUpdateTitle(null)
+		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		unsubscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	methods: {
@@ -391,6 +395,25 @@ export default {
 			console.debug('conflict solution: use remote version')
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
+		},
+
+		async onFileRestoreRequested(event) {
+			const { fileInfo } = event
+
+			if (fileInfo.id !== this.note.id) {
+				return
+			}
+
+			this.loading = true
+		},
+
+		async onFileRestored(version) {
+			if (version.fileId !== this.note.id) {
+				return
+			}
+
+			this.refreshNote()
+			this.loading = false
 		},
 	},
 }
