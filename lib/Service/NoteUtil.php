@@ -28,7 +28,7 @@ class NoteUtil {
 		IDBConnection $db,
 		TagService $tagService,
 		IManager $shareManager,
-		IUserSession $userSession,
+		IUserSession $userSession
 	) {
 		$this->util = $util;
 		$this->root = $root;

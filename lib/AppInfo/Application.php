@@ -30,20 +30,21 @@ class Application extends App implements IBootstrap {
 			BeforeTemplateRenderedEvent::class,
 			BeforeTemplateRenderedListener::class
 		);
-		if (\OCA\OpenProject\Service\class_exists(BeforeShareCreatedEvent::class)) {
+		if (\class_exists(BeforeShareCreatedEvent::class)) {
 			$context->registerEventListener(
 				BeforeShareCreatedEvent::class,
 				BeforeShareCreatedListener::class
 			);
-		}
-		// FIXME: Remove once Nextcloud 28 is the minimum supported version
-		\OCP\Server::get(IEventDispatcher::class)->addListener('OCP\Share::preShare', function (GenericEvent $event) {
-			/** @var IShare $share */
-			$share = $event->getSubject();
+		} else {
+			// FIXME: Remove once Nextcloud 28 is the minimum supported version
+			\OCP\Server::get(IEventDispatcher::class)->addListener('OCP\Share::preShare', function (GenericEvent $event) {
+				/** @var IShare $share */
+				$share = $event->getSubject();
 
-			$modernListener = \OCP\Server::get(BeforeShareCreatedListener::class);
-			$modernListener->overwriteShareTarget($share);
-		}, 1000);
+				$modernListener = \OCP\Server::get(BeforeShareCreatedListener::class);
+				$modernListener->overwriteShareTarget($share);
+			}, 1000);
+		}
 	}
 
 	public function boot(IBootContext $context): void {
