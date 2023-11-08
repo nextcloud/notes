@@ -10,7 +10,7 @@ import {
 } from '@nextcloud/vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
-import { queueCommand } from '../NotesService.js'
+import { queueCommand, refreshNote } from '../NotesService.js'
 import { routeIsNewNote } from '../Util.js'
 import store from '../store.js'
 
@@ -55,12 +55,15 @@ export default {
 	created() {
 		this.fetchData()
 		subscribe('files:file:updated', this.fileUpdated)
-
+		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	destroyed() {
 		this?.editor?.destroy()
 		unsubscribe('files:file:updated', this.fileUpdated)
+		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		unsubscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	methods: {
@@ -140,6 +143,38 @@ export default {
 				.replaceAll(/(\*+|_+)(.*?)\\1/gmu, '$2')
 				.replaceAll(/\s/gmu, ' ')
 			return title.length > 0 ? title : t('notes', 'New note')
+		},
+
+		async onFileRestoreRequested(event) {
+			const { fileInfo } = event
+
+			if (fileInfo.id !== this.note.id) {
+				return
+			}
+
+			this.loading = true
+		},
+
+		async onFileRestored(version) {
+			if (version.fileId !== this.note.id) {
+				return
+			}
+
+			const etag = await refreshNote(parseInt(this.noteId), this.etag)
+
+			if (etag) {
+				this.etag = etag
+			}
+
+			const autoResolve = setInterval(() => {
+				const el = document.querySelector('[data-cy="resolveServerVersion"]')
+
+				if (el) {
+					el.click()
+					clearInterval(autoResolve)
+				}
+			}, 200)
+			this.loading = false
 		},
 	},
 }

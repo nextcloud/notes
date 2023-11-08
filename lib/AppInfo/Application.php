@@ -9,6 +9,10 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
+use OCP\EventDispatcher\GenericEvent;
+use OCP\EventDispatcher\IEventDispatcher;
+use OCP\Share\Events\BeforeShareCreatedEvent;
+use OCP\Share\IShare;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'notes';
@@ -26,6 +30,20 @@ class Application extends App implements IBootstrap {
 			BeforeTemplateRenderedEvent::class,
 			BeforeTemplateRenderedListener::class
 		);
+		if (\OCA\OpenProject\Service\class_exists(BeforeShareCreatedEvent::class)) {
+			$context->registerEventListener(
+				BeforeShareCreatedEvent::class,
+				BeforeShareCreatedListener::class
+			);
+		}
+		// FIXME: Remove once Nextcloud 28 is the minimum supported version
+		\OCP\Server::get(IEventDispatcher::class)->addListener('OCP\Share::preShare', function (GenericEvent $event) {
+			/** @var IShare $share */
+			$share = $event->getSubject();
+
+			$modernListener = \OCP\Server::get(BeforeShareCreatedListener::class);
+			$modernListener->overwriteShareTarget($share);
+		}, 1000);
 	}
 
 	public function boot(IBootContext $context): void {

@@ -105,6 +105,9 @@ class Note {
 		if (!in_array('readonly', $exclude)) {
 			$data['readonly'] = $this->getReadOnly();
 		}
+		$data['internalPath'] = $this->noteUtil->getPathForUser($this->file);
+		$data['shareTypes'] = $this->noteUtil->getShareTypes($this->file);
+		$data['isShared'] = (bool) count($data['shareTypes']);
 		$data['error'] = false;
 		$data['errorType'] = '';
 		if (!in_array('content', $exclude)) {

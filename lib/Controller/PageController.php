@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace OCA\Notes\Controller;
 
+use OCA\Files\Event\LoadSidebar;
 use OCA\Notes\AppInfo\Application;
 use OCA\Notes\Service\NotesService;
 
 use OCA\Notes\Service\SettingsService;
 use OCA\Text\Event\LoadEditor;
+use OCA\Viewer\Event\LoadViewer;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
@@ -64,6 +66,14 @@ class PageController extends Controller {
 
 		if (\OCP\Server::get(IAppManager::class)->isEnabledForUser('text') && class_exists(LoadEditor::class)) {
 			$this->eventDispatcher->dispatchTyped(new LoadEditor());
+		}
+
+		if (class_exists(LoadSidebar::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadSidebar());
+		}
+
+		if (\OCP\Server::get(IAppManager::class)->isEnabledForUser('viewer') && class_exists(LoadViewer::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadViewer());
 		}
 
 		$this->initialState->provideInitialState(

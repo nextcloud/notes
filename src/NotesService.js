@@ -150,6 +150,7 @@ export const refreshNote = (noteId, lastETag) => {
 				return response.headers.etag
 			}
 			const currentContent = store.getters.getNote(noteId).content
+			store.commit('setNoteAttribute', { noteId, attribute: 'internalPath', value: response.data.internalPath })
 			// only update if local content has not changed
 			if (oldContent === currentContent) {
 				_updateLocalNote(response.data)
@@ -290,6 +291,7 @@ export const autotitleNote = noteId => {
 		.put(url('/notes/' + noteId + '/autotitle'))
 		.then((response) => {
 			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data })
+			refreshNote(noteId)
 		})
 		.catch(err => {
 			console.error(err)
