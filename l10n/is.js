@@ -16,7 +16,6 @@ OC.L10N.register(
     "All notes" : "Allir minnispunktar",
     "Categories" : "Flokkar",
     "No notes yet" : "Engir minnispunktar ennþá",
-    "Details" : "Details",
     "Delete note" : "Eyða minnispunkti",
     "Remove from favorites" : "Fjarlægja úr eftirlætum",
     "Add to favorites" : "Bæta í eftirlæti",
@@ -28,12 +27,8 @@ OC.L10N.register(
     "Yesterday" : "Yesterday",
     "This week" : "Í þessari viku",
     "This month" : "Í þessum mánuði",
-    "Category" : "Flokkur",
-    "Uncategorized" : "Óflokkað",
-    "Saving failed!" : "Vistun mistókst!",
-    "Subcategory" : "Undirflokkur",
-    "_%n word_::_%n words_" : ["%n orð","%n orð"],
     "Updating the note's category has failed. Is the target directory writable?" : "Uppfærsla á flokki minnispunkts mistókst. Er móttökumappan skrifanleg?",
+    "Uncategorized" : "Óflokkað",
     "Tasks" : "Verkefni"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

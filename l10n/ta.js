@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Notes" : "குறிப்புகள்",
     "Error" : "வழு",
-    "Details" : "விவரங்கள்",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Edit" : "தொகுக்க",

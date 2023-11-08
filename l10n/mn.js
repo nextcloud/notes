@@ -7,7 +7,7 @@ OC.L10N.register(
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",
     "No notes yet" : "шинэ тэмдэглэл алга",
-    "Details" : "Дэлгэрэнгүй",
+    "Rename" : "Нэр солих",
     "Delete note" : "Тэмдэглэл устгах",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
@@ -17,7 +17,6 @@ OC.L10N.register(
     "Today" : "өнөөдөр",
     "Yesterday" : "өчигдөр",
     "This week" : "7 хоног",
-    "This month" : "1 сар",
-    "Category" : "Ангилал"
+    "This month" : "1 сар"
 },
 "nplurals=2; plural=(n != 1);");

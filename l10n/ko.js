@@ -25,7 +25,6 @@ OC.L10N.register(
     "All notes" : "모든 메모",
     "Categories" : "분류",
     "No notes yet" : "아직 메모 없음",
-    "Details" : "세부사항",
     "Delete note" : "메모 삭제",
     "Remove from favorites" : "즐겨찾기에서 제거",
     "Add to favorites" : "즐겨찾기에 추가",
@@ -39,10 +38,7 @@ OC.L10N.register(
     "Last week" : "저번 주",
     "This month" : "이번 달",
     "Last month" : "저번 달",
-    "Category" : "분류",
     "Uncategorized" : "분류되지 않음",
-    "Saving failed!" : "저장할 수 없습니다!",
-    "_%n word_::_%n words_" : ["단어 %n개"],
     "Tasks" : "작업",
     "Development Mode" : "개발자 모드"
 },

@@ -9,7 +9,6 @@ OC.L10N.register(
     "Insert image" : "Voer beeld in",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
-    "Details" : "Besonderhede",
     "Delete note" : "Skrap nota",
     "Remove from favorites" : "Verwyder uit gunstelinge",
     "Add to favorites" : "Voeg by gunstelinge",
@@ -20,10 +19,7 @@ OC.L10N.register(
     "Today" : "Vandag",
     "Yesterday" : "Gister",
     "This week" : "Vandeesweek",
-    "Category" : "Kategorie",
     "Uncategorized" : "Ongekategorieseer",
-    "Saving failed!" : "Stoor het misluk!",
-    "_%n word_::_%n words_" : ["%n woord","%n woorde"],
     "Tasks" : "Take"
 },
 "nplurals=2; plural=(n != 1);");

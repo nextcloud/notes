@@ -11,7 +11,7 @@ OC.L10N.register(
     "All notes" : "Tất cả ghi chú",
     "Categories" : "Các hạng mục",
     "No notes yet" : "Chưa có ghi chú",
-    "Details" : "Thông tin",
+    "Rename" : "Rename",
     "Remove from favorites" : "Xóa khỏi ưa thích",
     "Add to favorites" : "Thêm vào ưa thích",
     "Use current version" : "Sử dụng phiên bản hiện tại",
@@ -24,7 +24,6 @@ OC.L10N.register(
     "Last week" : "Tuần trước",
     "This month" : "Tháng này",
     "Last month" : "Tháng trước",
-    "Category" : "Hạng mục",
     "Uncategorized" : "Chưa phân loại",
     "Tasks" : "Nhiệm vụ"
 },

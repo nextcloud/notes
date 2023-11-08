@@ -8,7 +8,7 @@ OC.L10N.register(
     "Open in edit mode" : "เปิดในโหมดแก้ไข",
     "Open in preview mode" : "เปิดในโหมดแสดงตัวอย่าง",
     "All notes" : "โน้ตทั้งหมด",
-    "Details" : "รายละเอียด",
+    "Rename" : "Rename",
     "Delete note" : "ลบโน้ต",
     "Remove from favorites" : "เอาออกจากรายการโปรด",
     "Add to favorites" : "เพิ่มในรายการโปรด",
@@ -21,9 +21,7 @@ OC.L10N.register(
     "Last week" : "สัปดาห์ที่แล้ว",
     "This month" : "เดือนนี้",
     "Last month" : "เดือนที่แล้ว",
-    "Category" : "หมวดหมู่",
     "Uncategorized" : "ไม่ได้จัดหมวดหมู่",
-    "_%n word_::_%n words_" : ["%n คำ"],
     "Tasks" : "งาน"
 },
 "nplurals=1; plural=0;");

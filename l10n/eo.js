@@ -11,7 +11,7 @@ OC.L10N.register(
     "Insert image" : "Enmeti bildon",
     "All notes" : "Ĉiuj notoj",
     "Categories" : "Kategorioj",
-    "Details" : "Detaloj",
+    "Rename" : "Rename",
     "Delete note" : "Forigi noton",
     "Remove from favorites" : "Forigi el pliŝataĵoj",
     "Add to favorites" : "Aldoni al pliŝataĵoj",
@@ -21,11 +21,8 @@ OC.L10N.register(
     "Loading …" : "Ŝargado...",
     "Today" : "Hodiaŭ",
     "Yesterday" : "Hieraŭ",
-    "Category" : "Kategorio",
-    "Uncategorized" : "Senkategoria",
-    "Saving failed!" : "Konservado malsukcesis!",
-    "_%n word_::_%n words_" : ["%n vorto","%n vortoj"],
     "Updating the note's category has failed. Is the target directory writable?" : "Ĝisdaztigo de la nota kategorio malsukcesis. Ĉu la celdosierujo skribeblas?",
+    "Uncategorized" : "Senkategoria",
     "Tasks" : "Taskoj"
 },
 "nplurals=2; plural=(n != 1);");

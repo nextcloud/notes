@@ -14,7 +14,7 @@ OC.L10N.register(
     "All notes" : "Alle noter",
     "Categories" : "Kategorier",
     "No notes yet" : "Ingen noter endnu",
-    "Details" : "Detaljer",
+    "Rename" : "Rename",
     "Delete note" : "Slet note",
     "Remove from favorites" : "Fjernet fra favoritter",
     "Add to favorites" : "Føj til favoritter",
@@ -28,10 +28,7 @@ OC.L10N.register(
     "Last week" : "Sidste uge",
     "This month" : "Denne måned",
     "Last month" : "Seneste måned",
-    "Category" : "Katergori",
     "Uncategorized" : "Udenfor kategori",
-    "Saving failed!" : "Kunne ikke gemme!",
-    "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "Tasks" : "Opgaver"
 },
 "nplurals=2; plural=(n != 1);");

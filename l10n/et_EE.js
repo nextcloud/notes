@@ -6,7 +6,7 @@ OC.L10N.register(
     "New note" : "Uus märge",
     "Categories" : "Kategooriad",
     "No notes yet" : "Märkmeid veel pole",
-    "Details" : "Üksikasjad",
+    "Rename" : "Rename",
     "Delete note" : "Kustuta märge",
     "Remove from favorites" : "Eemalda lemmikutest",
     "Add to favorites" : "Lisa lemmikutesse",
@@ -15,8 +15,6 @@ OC.L10N.register(
     "Preview" : "Eelvaade",
     "Today" : "Täna",
     "Yesterday" : "Eile",
-    "Category" : "Kategooria",
-    "_%n word_::_%n words_" : ["%n sõna","%n sõna"],
     "Tasks" : "Ülesanded"
 },
 "nplurals=2; plural=(n != 1);");

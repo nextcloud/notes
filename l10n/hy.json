@@ -3,7 +3,7 @@
     "Error" : "Սխալ",
     "New note" : "Նոր նոթ",
     "No notes yet" : "առայժմ գրառում չկա",
-    "Details" : "Մանրամասներ",
+    "Rename" : "Rename",
     "Delete note" : "Ջնջել նոթը",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
@@ -11,7 +11,6 @@
     "Today" : "այսօր",
     "Yesterday" : "երեկ",
     "This week" : "այս շաբաթ",
-    "This month" : "այս ամիս",
-    "_%n word_::_%n words_" : ["%n բառ","%n բառ"]
+    "This month" : "այս ամիս"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

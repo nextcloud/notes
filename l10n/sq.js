@@ -10,7 +10,7 @@ OC.L10N.register(
     "All notes" : "Të gjitha shënimet",
     "Categories" : "Kategoritë",
     "No notes yet" : "Nuk ka shënime",
-    "Details" : "Detajet",
+    "Rename" : "Rename",
     "Delete note" : "Fshije shënimin",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Shtoje tek të parapëlqyerat",
@@ -21,9 +21,7 @@ OC.L10N.register(
     "Yesterday" : "Dje",
     "This week" : "Këtë javë",
     "This month" : "Këtë muaj",
-    "Category" : "Kategori",
     "Uncategorized" : "Të pakategorizuara",
-    "_%n word_::_%n words_" : ["%n fjalë","%n fjalë"],
     "Tasks" : "Detyra"
 },
 "nplurals=2; plural=(n != 1);");

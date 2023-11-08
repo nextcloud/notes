@@ -10,7 +10,7 @@ OC.L10N.register(
     "Open in preview mode" : "გახსენით წინასწარი ჩვენების რეჟიმში",
     "Categories" : "კატეგორიები",
     "No notes yet" : "ჯერ ჩანაწერები არაა",
-    "Details" : "დეტალები",
+    "Rename" : "Rename",
     "Delete note" : "ჩანაწერის გაუქმება",
     "Remove from favorites" : "რჩეულებიდან ამოშლა",
     "Add to favorites" : "რჩეულებში დამატება",
@@ -20,10 +20,7 @@ OC.L10N.register(
     "Yesterday" : "გუშინ",
     "This week" : "ამ კვირაში",
     "This month" : "ამ თვეში",
-    "Category" : "კატეგორია",
     "Uncategorized" : "არაკატეგორიზირებული",
-    "Saving failed!" : "შენახვა ვერ მოხერხდა!",
-    "_%n word_::_%n words_" : ["%n სიტყვა","%n სიტყვა"],
     "Tasks" : "დავალებები"
 },
 "nplurals=2; plural=(n!=1);");

@@ -11,7 +11,7 @@ OC.L10N.register(
     "All notes" : "Todas la notas",
     "Categories" : "Categoría",
     "No notes yet" : "Aún no hay notas",
-    "Details" : "Detalles",
+    "Rename" : "Rename",
     "Delete note" : "Borrar nota",
     "Remove from favorites" : "Eliminado de favoritos",
     "Add to favorites" : "Agregar a favoritos",
@@ -24,9 +24,7 @@ OC.L10N.register(
     "Last week" : "Semana pasada",
     "This month" : "Este mes",
     "Last month" : "Mes pasado",
-    "Category" : "Categoría",
     "Uncategorized" : "Sin categoría",
-    "_%n word_::_%n words_" : ["%n palabra","%n palabras","%n palabras"],
     "Tasks" : "Tareas"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -9,7 +9,7 @@ OC.L10N.register(
     "Open in preview mode" : "Otvori u režimu pregleda",
     "All notes" : "Sve beleške",
     "No notes yet" : "Još nema beleški",
-    "Details" : "Detalji",
+    "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Edit" : "Uredi",
@@ -20,7 +20,6 @@ OC.L10N.register(
     "Last week" : "Prošle nedelje",
     "This month" : "Ovog meseca",
     "Last month" : "Prošlog meseca",
-    "Category" : "Kategorija",
     "Uncategorized" : "Nekategorizovano"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

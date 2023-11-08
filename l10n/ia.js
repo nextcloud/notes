@@ -5,7 +5,7 @@ OC.L10N.register(
     "Error" : "Error",
     "New note" : "Nove nota",
     "No notes yet" : "Nulle notas ancora",
-    "Details" : "Detalios",
+    "Rename" : "Rename",
     "Delete note" : "Dele nota",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
@@ -14,8 +14,6 @@ OC.L10N.register(
     "Today" : "Hodie",
     "Yesterday" : "Heri",
     "This week" : "Iste septimana",
-    "This month" : "Iste mense",
-    "Category" : "Categoria",
-    "_%n word_::_%n words_" : ["%n parola","%n parolas"]
+    "This month" : "Iste mense"
 },
 "nplurals=2; plural=(n != 1);");

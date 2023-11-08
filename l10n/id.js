@@ -7,7 +7,6 @@ OC.L10N.register(
     "All notes" : "Semua catatan",
     "Categories" : "Kategori",
     "No notes yet" : "Belum ada catatan",
-    "Details" : "Detil",
     "Delete note" : "Hapus catatan",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Tambah ke favorit",
@@ -17,8 +16,6 @@ OC.L10N.register(
     "Yesterday" : "Kemarin",
     "This week" : "Pekan ini",
     "This month" : "Bulan ini",
-    "Category" : "Kategori",
-    "_%n word_::_%n words_" : ["%n kata"],
     "Tasks" : "Tugas",
     "Nextcloud, a safe home for all your data" : "Nextcloud, rumah yang aman untuk semua data Anda"
 },

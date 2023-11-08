@@ -9,7 +9,7 @@ OC.L10N.register(
     "Open in preview mode" : "Agor yn y modd rhagolwg",
     "All notes" : "Pob nodyn",
     "No notes yet" : "Dim nodiadau eto",
-    "Details" : "Manylion",
+    "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Edit" : "Golygu",
@@ -19,7 +19,6 @@ OC.L10N.register(
     "Yesterday" : "Ddoe",
     "This week" : "Wythnos yma",
     "This month" : "Mis yma",
-    "Category" : "Categori",
     "Uncategorized" : "Dim categori"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");
