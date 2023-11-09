@@ -26,6 +26,7 @@ OC.L10N.register(
     "Categories" : "Categories",
     "No notes yet" : "Nun hai nenguna nota",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Instala l'aplicación nel móvil pa acceder a les notes en cualesquier llugar.",
+    "Rename" : "Rename",
     "Delete note" : "Desaniciar la nota",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Editar",

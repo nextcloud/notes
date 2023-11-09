@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Qeydlər",
     "Error" : "Səhv",
     "New note" : "Yeni qeyd",
+    "Rename" : "Rename",
     "Delete note" : "Qeydi sil",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

@@ -67,6 +67,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Тази опция може да бъде променена и по-късно в настройките на приложението Notes /бележки/.",
     "Keep plain Markdown editor" : "Запазване на обикновения Мarkdown редактор",
     "Use rich editor" : "Използване на редактор RTF формат",
+    "Rename" : "Rename",
     "Delete note" : "Изтрий бележката",
     "Remove from favorites" : "Премахни от любимите",
     "Add to favorites" : "Добави към любимите",
