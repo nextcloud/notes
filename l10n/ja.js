@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "このオプションは、後からノートアプリの設定で変更することもできます。",
     "Keep plain Markdown editor" : "プレーンなMarkdownエディタを維持する",
     "Use rich editor" : "リッチテキストエディターを使用する",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "ノートを削除",
     "Remove from favorites" : "お気に入りから削除",

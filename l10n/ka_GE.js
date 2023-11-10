@@ -10,6 +10,7 @@ OC.L10N.register(
     "Open in preview mode" : "გახსენით წინასწარი ჩვენების რეჟიმში",
     "Categories" : "კატეგორიები",
     "No notes yet" : "ჯერ ჩანაწერები არაა",
+    "Share" : "გაზიარება",
     "Rename" : "Rename",
     "Delete note" : "ჩანაწერის გაუქმება",
     "Remove from favorites" : "რჩეულებიდან ამოშლა",

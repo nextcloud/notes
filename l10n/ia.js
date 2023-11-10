@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "Error",
     "New note" : "Nove nota",
     "No notes yet" : "Nulle notas ancora",
+    "Share" : "Compartir",
     "Rename" : "Rename",
     "Delete note" : "Dele nota",
     "Remove from favorites" : "Remove from favorites",

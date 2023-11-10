@@ -11,6 +11,7 @@ OC.L10N.register(
     "All notes" : "Tất cả ghi chú",
     "Categories" : "Các hạng mục",
     "No notes yet" : "Chưa có ghi chú",
+    "Share" : "Chia sẻ",
     "Rename" : "Rename",
     "Remove from favorites" : "Xóa khỏi ưa thích",
     "Add to favorites" : "Thêm vào ưa thích",

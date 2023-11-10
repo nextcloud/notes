@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "Памылка",
+    "Share" : "Падзяліцца",
     "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

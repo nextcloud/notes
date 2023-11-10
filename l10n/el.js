@@ -35,6 +35,7 @@ OC.L10N.register(
     "Wrong image" : "Λάθος εικόνα",
     "The file was not uploaded. Check your server logs." : "Το αρχείο δεν μεταφορτώθηκε. Ελέγξτε τα αρχεία καταγραφής του διακομιστή σας.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Εγκαταστήστε την εφαρμογή στο κινητό σας για πρόσβαση από οπουδήποτε.",
+    "Share" : "Κοινή χρήση",
     "Rename" : "Rename",
     "Delete note" : "Διαγραφή σημείωσης",
     "Remove from favorites" : "Αφαίρεση από τα αγαπημένα",

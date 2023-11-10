@@ -9,6 +9,7 @@ OC.L10N.register(
     "Insert image" : "Voer beeld in",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
+    "Share" : "Deel",
     "Rename" : "Hernoem",
     "Delete note" : "Skrap nota",
     "Remove from favorites" : "Verwyder uit gunstelinge",

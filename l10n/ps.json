@@ -1,0 +1,10 @@
+{ "translations": {
+    "Notes" : "شسیب",
+    "Error" : "شسیب",
+    "Share" : "شریکول",
+    "Remove from favorites" : "له نښو ويستل",
+    "Add to favorites" : "په نښه کول",
+    "Today" : "نن",
+    "Yesterday" : "پرون"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

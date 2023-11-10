@@ -7,6 +7,7 @@ OC.L10N.register(
     "All notes" : "Semua catatan",
     "Categories" : "Kategori",
     "No notes yet" : "Belum ada catatan",
+    "Share" : "Bagikan",
     "Delete note" : "Hapus catatan",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Tambah ke favorit",

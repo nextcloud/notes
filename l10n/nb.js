@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Dette alternativet kan også endres senere i Notes-appens innstillinger.",
     "Keep plain Markdown editor" : "Behold vanlig Markdown-editor",
     "Use rich editor" : "Bruk rich editor",
+    "Share" : "Del",
     "Delete note" : "Slett notat",
     "Remove from favorites" : "Fjern fra favoritter",
     "Add to favorites" : "Legg til i favoritter",

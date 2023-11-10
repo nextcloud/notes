@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Ова опција такође може и касније да се промени у подешавањима апликације Белешке.",
     "Keep plain Markdown editor" : "Задржи прости Markdown едитор",
     "Use rich editor" : "Користи едитор форматираног текста",
+    "Share" : "Подели",
     "Change category" : "Промените категорију",
     "Rename" : "Rename",
     "Rename note" : "Промени назив белешке",

@@ -6,6 +6,7 @@ OC.L10N.register(
     "New note" : "Uus märge",
     "Categories" : "Kategooriad",
     "No notes yet" : "Märkmeid veel pole",
+    "Share" : "Jaga",
     "Rename" : "Rename",
     "Delete note" : "Kustuta märge",
     "Remove from favorites" : "Eemalda lemmikutest",

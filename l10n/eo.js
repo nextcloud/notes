@@ -11,6 +11,7 @@ OC.L10N.register(
     "Insert image" : "Enmeti bildon",
     "All notes" : "Ĉiuj notoj",
     "Categories" : "Kategorioj",
+    "Share" : "Kunhavigi",
     "Rename" : "Rename",
     "Delete note" : "Forigi noton",
     "Remove from favorites" : "Forigi el pliŝataĵoj",

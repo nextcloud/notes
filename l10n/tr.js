@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Bu seçenek daha sonra Notlar uygulaması ayarlarından da değiştirilebilir.",
     "Keep plain Markdown editor" : "Düz Markdown düzenleyici kullanılsın",
     "Use rich editor" : "Zengin metin düzenleyici kullanılsın",
+    "Share" : "Share",
     "Change category" : "Kategoriyi değiştir",
     "Rename" : "Yeniden adlandır",
     "Rename note" : "Notu yeniden adlandır",

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Error" : "Fazi",
     "Categories" : "Rummadoù",
+    "Share" : "Rannan",
     "Remove from favorites" : "Diverkañañ eus ar pennrolloù",
     "Add to favorites" : "Ouzhpennañ er pennrolloù",
     "Use current version" : "Implij stumm hiziv",

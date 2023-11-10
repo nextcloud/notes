@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "កំណត់​ចំណាំ",
     "Error" : "កំហុស",
     "New note" : "កំណត់​ចំណាំ​ថ្មី",
+    "Share" : "ចែក​រំលែក",
     "Rename" : "Rename",
     "Delete note" : "លុប​កំណត់​ចំណាំ",
     "Remove from favorites" : "Remove from favorites",

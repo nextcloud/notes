@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "Սխալ",
     "New note" : "Նոր նոթ",
     "No notes yet" : "առայժմ գրառում չկա",
+    "Share" : "Կիսվել",
     "Rename" : "Rename",
     "Delete note" : "Ջնջել նոթը",
     "Remove from favorites" : "Remove from favorites",

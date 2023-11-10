@@ -14,6 +14,7 @@ OC.L10N.register(
     "All notes" : "Alle noter",
     "Categories" : "Kategorier",
     "No notes yet" : "Ingen noter endnu",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "Slet note",
     "Remove from favorites" : "Fjernet fra favoritter",

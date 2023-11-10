@@ -8,6 +8,7 @@ OC.L10N.register(
     "All notes" : "Visas piezīmes",
     "Categories" : "Kategorijas",
     "No notes yet" : "Nav nevienas piezīmes",
+    "Share" : "Koplietot",
     "Delete note" : "Dzēst piezīmi",
     "Remove from favorites" : "Noņemt no izlases",
     "Add to favorites" : "Pievienot izlasei",

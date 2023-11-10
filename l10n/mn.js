@@ -7,6 +7,7 @@ OC.L10N.register(
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",
     "No notes yet" : "шинэ тэмдэглэл алга",
+    "Share" : "Түгээх",
     "Rename" : "Нэр солих",
     "Delete note" : "Тэмдэглэл устгах",
     "Remove from favorites" : "Remove from favorites",

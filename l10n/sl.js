@@ -56,6 +56,7 @@ OC.L10N.register(
     "Wrong image" : "Napačna slika",
     "The file was not uploaded. Check your server logs." : "Datoteka ni poslana. Več podrobnosti je zapisanih v dnevniškem zapisu strežnika.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Za dostop do beležk je na voljo tudi program za mobilne naprave.",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "Izbriši beležko",
     "Remove from favorites" : "Odstrani iz priljubljenih",

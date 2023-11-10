@@ -16,6 +16,7 @@ OC.L10N.register(
     "All notes" : "Allir minnispunktar",
     "Categories" : "Flokkar",
     "No notes yet" : "Engir minnispunktar ennþá",
+    "Share" : "Deila",
     "Delete note" : "Eyða minnispunkti",
     "Remove from favorites" : "Fjarlægja úr eftirlætum",
     "Add to favorites" : "Bæta í eftirlæti",

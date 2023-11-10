@@ -9,6 +9,7 @@ OC.L10N.register(
     "All notes" : "Todas as notas",
     "Categories" : "Categorias",
     "No notes yet" : "Sem notas ainda",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "Apagar nota",
     "Remove from favorites" : "Remover de favoritos",

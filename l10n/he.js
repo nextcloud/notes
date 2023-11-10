@@ -27,6 +27,7 @@ OC.L10N.register(
     "Categories" : "קטגוריות",
     "No notes yet" : "אין פתקים עדיין",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "יש להתקין את היישומון לטלפון הנייד שלך כדי לגשת לפתקים שלך מכל מקום.",
+    "Share" : "Share",
     "Rename" : "שנה שם",
     "Delete note" : "מחיקת פתק",
     "Remove from favorites" : "הסרה מהמועדפים",

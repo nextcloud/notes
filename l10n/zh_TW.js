@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "稍後也可以在筆記應用程式設定中變更此選項。",
     "Keep plain Markdown editor" : "維持普通的 Markdown 編輯器",
     "Use rich editor" : "使用格式化編輯器",
+    "Share" : "Share",
     "Change category" : "變更分類",
     "Rename" : "Rename",
     "Rename note" : "重新命名筆記",

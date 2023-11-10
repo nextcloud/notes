@@ -23,6 +23,7 @@ OC.L10N.register(
     "Categories" : "Categorias",
     "No notes yet" : "Cap de nòta pel moment",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Installatz l’aplicacion per mobil per accedir a vòstras nòtas de pertot.",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "Suprimir la nòta",
     "Remove from favorites" : "Remove from favorites",

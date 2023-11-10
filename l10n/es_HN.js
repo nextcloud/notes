@@ -10,6 +10,7 @@ OC.L10N.register(
     "Open in preview mode" : "Abrir en modo previsualización",
     "Categories" : "Categorías",
     "No notes yet" : "Aún no hay notas",
+    "Share" : "Compartir",
     "Delete note" : "Borrar nota",
     "Remove from favorites" : "Eliminar de favoritos",
     "Add to favorites" : "Agregar a tus favoritos",

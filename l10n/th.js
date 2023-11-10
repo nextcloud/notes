@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open in edit mode" : "เปิดในโหมดแก้ไข",
     "Open in preview mode" : "เปิดในโหมดแสดงตัวอย่าง",
     "All notes" : "โน้ตทั้งหมด",
+    "Share" : "แชร์",
     "Rename" : "Rename",
     "Delete note" : "ลบโน้ต",
     "Remove from favorites" : "เอาออกจากรายการโปรด",

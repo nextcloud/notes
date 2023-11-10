@@ -9,6 +9,7 @@ OC.L10N.register(
     "Open in preview mode" : "Otvori u režimu pregleda",
     "All notes" : "Sve beleške",
     "No notes yet" : "Još nema beleški",
+    "Share" : "Podeli",
     "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

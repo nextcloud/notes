@@ -25,6 +25,7 @@ OC.L10N.register(
     "All notes" : "모든 메모",
     "Categories" : "분류",
     "No notes yet" : "아직 메모 없음",
+    "Share" : "공유",
     "Delete note" : "메모 삭제",
     "Remove from favorites" : "즐겨찾기에서 제거",
     "Add to favorites" : "즐겨찾기에 추가",

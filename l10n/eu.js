@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Aukera hau geroago ere alda daiteke Oharrak aplikazioaren ezarpenetan.",
     "Keep plain Markdown editor" : "Mantendu Markdown editore arrunta",
     "Use rich editor" : "Erabili editore aberastua",
+    "Share" : "Share",
     "Rename" : "Izena aldatu",
     "Delete note" : "Ezabatu oharra",
     "Remove from favorites" : "Kendu gogokoetatik",

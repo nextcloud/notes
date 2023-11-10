@@ -10,6 +10,7 @@ OC.L10N.register(
     "All notes" : "Të gjitha shënimet",
     "Categories" : "Kategoritë",
     "No notes yet" : "Nuk ka shënime",
+    "Share" : "Shpërndaje",
     "Rename" : "Rename",
     "Delete note" : "Fshije shënimin",
     "Remove from favorites" : "Remove from favorites",

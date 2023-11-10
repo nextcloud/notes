@@ -9,6 +9,7 @@ OC.L10N.register(
     "Open in preview mode" : "Agor yn y modd rhagolwg",
     "All notes" : "Pob nodyn",
     "No notes yet" : "Dim nodiadau eto",
+    "Share" : "Rhannu",
     "Rename" : "Rename",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

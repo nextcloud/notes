@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Error" : "ຜິດພາດ",
+    "Share" : "ເເບ່ງປັນ",
     "Rename" : "ປ່ຽນຊື່",
     "Remove from favorites" : "ຍ້າຍຈາກລາຍການທີ່ມັກ",
     "Add to favorites" : "ເພີ່ມລາຍການທີ່ມັກ",

@@ -69,6 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "This option can also be changed later on in the Notes app settings.",
     "Keep plain Markdown editor" : "Keep plain Markdown editor",
     "Use rich editor" : "Use rich editor",
+    "Share" : "Share",
     "Delete note" : "Delete note",
     "Remove from favorites" : "Remove from favourites",
     "Add to favorites" : "Add to favourites",

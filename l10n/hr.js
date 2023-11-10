@@ -27,6 +27,7 @@ OC.L10N.register(
     "Categories" : "Kategorije",
     "No notes yet" : "Još nema bilješki",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Instalirajte aplikaciju na svoj mobilni telefon kako biste s bilo kojeg mjesta mogli pristupiti svojim bilješkama.",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "Izbriši bilješku",
     "Remove from favorites" : "Ukloni iz favorita",

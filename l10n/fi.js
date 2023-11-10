@@ -53,6 +53,7 @@ OC.L10N.register(
     "Wrong image" : "Väärä kuva",
     "The file was not uploaded. Check your server logs." : "Tiedostoa ei ladattu. Tarkista palvelimen lokitiedot.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Asenna sovellus puhelimeesi käyttääksesi muistiinpanoja missä tahansa.",
+    "Share" : "Share",
     "Rename" : "Rename",
     "Delete note" : "Poista muistiinpano",
     "Remove from favorites" : "Poista suosikeista",
