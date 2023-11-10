@@ -12,6 +12,16 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.0-beta.2
+
+### Fixed
+
+- Avoid throwing on other share types than user @juliushaertl [#1153](https://github.com/nextcloud/notes/pull/1153)
+
+### Dependencies
+
+- Chore(deps): Bump @nextcloud/dialogs from 4.2.1 to 4.2.2 @dependabot[bot] [#1151](https://github.com/nextcloud/notes/pull/1151)
+
 ## 4.9.0-beta.1
 
 ### Added
