@@ -37,7 +37,11 @@ class Application extends App implements IBootstrap {
 			);
 		} else {
 			// FIXME: Remove once Nextcloud 28 is the minimum supported version
-			\OCP\Server::get(IEventDispatcher::class)->addListener('OCP\Share::preShare', function (GenericEvent $event) {
+			\OCP\Server::get(IEventDispatcher::class)->addListener('OCP\Share::preShare', function ($event) {
+				if (!$event instanceof GenericEvent) {
+					return;
+				}
+
 				/** @var IShare $share */
 				$share = $event->getSubject();
 
