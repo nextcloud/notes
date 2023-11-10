@@ -31,6 +31,11 @@ class BeforeShareCreatedListener implements IEventListener {
 
 	public function overwriteShareTarget(IShare $share): void {
 		$itemType = $share->getNode() instanceof File ? 'file' : 'folder';
+
+		if ($share->getShareType() !== IShare::TYPE_USER) {
+			return;
+		}
+
 		$fileSourcePath = $share->getNode()->getPath();
 		$itemTarget = $share->getTarget();
 		$uidOwner = $share->getSharedBy();
