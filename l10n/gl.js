@@ -69,7 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Esta opción tamén se pode cambiar máis tarde nos axustes da aplicación Notas.",
     "Keep plain Markdown editor" : "Manter o editor de Markdown sinxelo",
     "Use rich editor" : "Usar un editor mellorado",
-    "Share" : "Share",
+    "Share" : "Compartir",
     "Change category" : "Cambiar a categoría",
     "Rename" : "Cambiar o nome",
     "Rename note" : "Cambiar o nome da nota",
