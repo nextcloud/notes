@@ -69,7 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Tuto volbu je také možné změnit později v nastavení aplikace Poznámky.",
     "Keep plain Markdown editor" : "Ponechat editor holého Markdown",
     "Use rich editor" : "Použít editor formátovaného",
-    "Share" : "Share",
+    "Share" : "Sdílet",
     "Change category" : "Změnit kategorii",
     "Rename" : "Přejmenovat",
     "Rename note" : "Přejmenovat poznámku",
