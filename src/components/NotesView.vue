@@ -221,6 +221,8 @@ export default {
 <style lang="scss" scoped>
 .content-list {
 	padding: 0 4px;
+	height: 100%;
+	overflow-y: auto;
 }
 
 .content-list__search {
@@ -244,6 +246,7 @@ export default {
 
 .app-content-details {
 	height: 100%;
+	overflow: auto;
 }
 
 .loading-label {
