@@ -12,6 +12,16 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.0-beta.3
+
+### Fixed
+
+- fix: Scrolling on mobile and proper alignment of the back button/menubar @juliushaertl [#1164](https://github.com/nextcloud/notes/pull/1164)
+
+### Dependencies
+
+- Chore(deps): Bump axios from 1.4.0 to 1.6.1 @dependabot[bot] [#1156](https://github.com/nextcloud/notes/pull/1156)
+
 ## 4.9.0-beta.2
 
 ### Fixed
