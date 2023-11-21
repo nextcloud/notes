@@ -22,6 +22,7 @@ OC.L10N.register(
     "File extension for new notes" : "Prípona súboru pre nové poznámky",
     "Display mode for notes" : "Režim zobrazovania poznámok",
     "Shortcuts" : "Skratky",
+    "Shortcut" : "Skratka",
     "Action" : "Akcia",
     "User defined" : "Definované používateľo",
     "Open in edit mode" : "Otvoriť v režime úprav",
