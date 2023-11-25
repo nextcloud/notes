@@ -71,7 +71,7 @@ OC.L10N.register(
     "Use rich editor" : "Rich-Text Editor benutzen",
     "Share" : "Teilen",
     "Change category" : "Kategorie ändern",
-    "Rename" : "Umbennen",
+    "Rename" : "Umbenennen",
     "Rename note" : "Notiz umbenennen",
     "Delete note" : "Notiz löschen",
     "Remove from favorites" : "Von Favoriten entfernen",
