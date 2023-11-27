@@ -12,7 +12,7 @@
     "Undo Delete" : "Anulează ștergerea",
     "Note recovered" : "Notiţa a fost recuperată",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Există notiţe nesalvate. Dacă părăsiţi această pagină aceste schimbări vor fi pierdute!",
-    "_Deleted {number} note_::_Deleted {number} notes_" : ["A fost şters %1$d notiţă","Au fost şterse %1$d notiţe","Au fost şterse %1$d de notiţe"],
+    "_Deleted {number} note_::_Deleted {number} notes_" : ["A fost ștearsă {number} notă","Au fost șterse {number} note","Au fost șterse {number} note"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["A fost recuperat {number} notiţă","Au fost recuperate {number} notiţe","Au fost recuperate {number} de notiţe"],
     "Basics" : "Introducere",
     "Write down your thoughts without any distractions." : "Scrie-ţi gândurile fără orice altă distracţie.",
