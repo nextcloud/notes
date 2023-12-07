@@ -12,6 +12,21 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.0
+
+### Added
+
+- Note sharing and file sidebar integration @luka-nextcloud [#1146](https://github.com/nextcloud/notes/pull/1146)
+- Replace sidebar with rename and category options in the note list @JonnyTischbein [#1004](https://github.com/nextcloud/notes/pull/1004)
+
+### Fixed
+
+- fix: Scrolling on mobile and proper alignment of the back button/menubar @juliushaertl [#1164](https://github.com/nextcloud/notes/pull/1164)
+- Avoid throwing on other share types than user @juliushaertl [#1153](https://github.com/nextcloud/notes/pull/1153)
+- fix: fix note controller user id param @juliushaertl [#1106](https://github.com/nextcloud/notes/pull/1106)
+- Fix dashboard icons @provokateurin [#1124](https://github.com/nextcloud/notes/pull/1124)
+- fixing typos @modernNeo [#1129](https://github.com/nextcloud/notes/pull/1129)
+
 ## 4.9.0-beta.3
 
 ### Fixed
