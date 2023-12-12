@@ -55,7 +55,7 @@ OC.L10N.register(
     "All notes" : "Todas as notas",
     "Categories" : "Categorías",
     "Create a sample note with Markdown" : "Crear unha nota de mostra con Markdown",
-    "No notes yet" : "Aínda non hai notas",
+    "No notes yet" : "Aínda non hai ningunha nota",
     "Upload image" : "Enviar imaxe",
     "Select an image" : "Seleccione unha imaxe",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Non pode seleccionar imaxes fóra do cartafol de notas. O seu cartafol de notas é: {folder}",
