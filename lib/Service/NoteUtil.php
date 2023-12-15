@@ -229,7 +229,8 @@ class NoteUtil {
 			IShare::TYPE_EMAIL,
 			IShare::TYPE_ROOM,
 			IShare::TYPE_DECK,
-			IShare::TYPE_SCIENCEMESH,
+			// FIXME: Move to constant once Nextcloud 26 is the minimum supported version
+			15, // IShare::TYPE_SCIENCEMESH,
 		];
 		$shareTypes = [];
 
