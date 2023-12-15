@@ -12,6 +12,13 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.1
+
+### Fixed
+
+- fix: Resolve file list dependency of the sidebar on Nextcloud <= 27 @juliushaertl [#1174](https://github.com/nextcloud/notes/pull/1174)
+- fix: Avoid using constant that is not available on 25 @juliushaertl [#1182](https://github.com/nextcloud/notes/pull/1182)
+
 ## 4.9.0
 
 ### Added
