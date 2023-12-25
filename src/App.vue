@@ -317,9 +317,9 @@ export default {
 	padding-top: 0 !important;
 	// Prevent shrinking or growing
 	flex: 0 0 auto;
-	padding-right: 3px;
+	padding-inline-end: 3px;
 	padding-bottom: 3px;
-	padding-left: 3px;
+	padding-inline-start: 3px;
 	margin: 0 3px;
 }
 </style>

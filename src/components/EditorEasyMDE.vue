@@ -354,7 +354,7 @@ export default {
 	border-radius: var(--border-radius);
 	background-position: center;
 	margin-top: 5px;
-	margin-left: 2px;
+	margin-inline-start: 2px;
 }
 
 .CodeMirror .cm-formatting-task.cm-property::before {
@@ -370,10 +370,10 @@ export default {
 
 .upload-button {
 	position: fixed;
-	right: 64px;
+	inset-inline-end: 64px;
 	z-index: 10;
 	height: 40px;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 	top: 65px;
 }
 </style>

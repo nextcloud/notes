@@ -56,13 +56,17 @@ export default {
 <style scoped>
 .badge-wrapper {
 	margin-top: 2em;
-	margin-left: 2em;
+	margin-inline-start: 2em;
 	width: 100%;
 	clear:both;
 }
 
-.badge {
+body[dir='ltr'] .badge {
 	float: left;
+}
+
+body[dir='rtl'] .badge {
+	float: right;
 }
 
 .appstore-badge {

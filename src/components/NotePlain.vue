@@ -438,9 +438,9 @@ export default {
 		margin: 0 auto;
 	}
 	.note-container {
-		padding-right: 250px;
+		padding-inline-end: 250px;
 		transition-duration: var(--animation-quick);
-		transition-property: padding-right;
+		transition-property: padding-inline-end;
 	}
 }
 
@@ -467,7 +467,7 @@ export default {
 .action-buttons {
 	position: fixed;
 	top: 50px;
-	right: 20px;
+	inset-inline-end: 20px;
 	width: 44px;
 	margin-top: 1em;
 	z-index: 2000;

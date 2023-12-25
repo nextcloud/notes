@@ -196,7 +196,7 @@ export default {
 
 .is-mobile:deep(.text-menubar) {
 	// Avoid overlapping the navigation toggle
-	margin-left: 44px;
+	margin-inline-start: 44px;
 	z-index: 1;
 }
 </style>

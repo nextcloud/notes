@@ -66,7 +66,7 @@ export default {
 	margin-top: 24px;
 
 	button {
-		margin-left: 12px;
+		margin-inline-start: 12px;
 	}
 }
 </style>
