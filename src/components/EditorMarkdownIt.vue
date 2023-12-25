@@ -37,6 +37,8 @@ export default {
 			liClass: 'task-list-item',
 		})
 
+		md.use(require('markdown-it-bidi'))
+
 		return {
 			html: '',
 			md,
