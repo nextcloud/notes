@@ -322,8 +322,14 @@ class NotesController extends Controller {
 				$path
 			);
 			$response = new StreamResponse($targetimage->fopen('rb'));
-			$response->addHeader('Content-Disposition', 'attachment; filename="' . rawurldecode($targetimage->getName()) . '"');
-			$response->addHeader('Content-Type', $this->mimeTypeDetector->getSecureMimeType($targetimage->getMimeType()));
+			$response->addHeader(
+				'Content-Disposition',
+				'attachment; filename="' . rawurldecode($targetimage->getName()) . '"'
+			);
+			$response->addHeader(
+				'Content-Type',
+				$this->mimeTypeDetector->getSecureMimeType($targetimage->getMimeType())
+			);
 			$response->addHeader('Cache-Control', 'public, max-age=604800');
 			return $response;
 		} catch (\Exception $e) {

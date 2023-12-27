@@ -74,10 +74,18 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 
 	public function getWidgetButtons(string $userId): array {
 		$buttons = [
-			new WidgetButton(WidgetButton::TYPE_NEW, $this->url->linkToRouteAbsolute('notes.page.create'), $this->l10n->t('Create new note'))
+			new WidgetButton(
+				WidgetButton::TYPE_NEW,
+				$this->url->linkToRouteAbsolute('notes.page.create'),
+				$this->l10n->t('Create new note')
+			)
 		];
 		if ($this->notesService->countNotes($userId) > 7) {
-			$buttons[] = new WidgetButton(WidgetButton::TYPE_MORE, $this->url->linkToRouteAbsolute('notes.page.index'), $this->l10n->t('More notes'));
+			$buttons[] = new WidgetButton(
+				WidgetButton::TYPE_MORE,
+				$this->url->linkToRouteAbsolute('notes.page.index'),
+				$this->l10n->t('More notes')
+			);
 		}
 		return $buttons;
 	}

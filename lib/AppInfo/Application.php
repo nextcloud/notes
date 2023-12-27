@@ -12,6 +12,7 @@ use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 use OCP\EventDispatcher\GenericEvent;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Share\Events\BeforeShareCreatedEvent;
+/** @phan-suppress-next-line PhanUnreferencedUseNormal */
 use OCP\Share\IShare;
 
 class Application extends App implements IBootstrap {
@@ -43,6 +44,7 @@ class Application extends App implements IBootstrap {
 				}
 
 				/** @var IShare $share */
+				/** @phan-suppress-next-line PhanDeprecatedFunction */
 				$share = $event->getSubject();
 
 				$modernListener = \OCP\Server::get(BeforeShareCreatedListener::class);
