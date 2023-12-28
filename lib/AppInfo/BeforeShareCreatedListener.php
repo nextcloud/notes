@@ -16,6 +16,7 @@ use Psr\Log\LoggerInterface;
 class BeforeShareCreatedListener implements IEventListener {
 	private SettingsService $settings;
 	private NoteUtil $noteUtil;
+	private LoggerInterface $logger;
 
 	public function __construct(SettingsService $settings, NoteUtil $noteUtil, LoggerInterface $logger) {
 		$this->settings = $settings;

@@ -21,7 +21,7 @@ The Notes app is a distraction free notes taking app for [Nextcloud](https://www
 	<repository type="git">https://github.com/nextcloud/notes.git</repository>
 	<screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes-thumbnail.jpg">https://raw.githubusercontent.com/nextcloud/screenshots/master/apps/Notes/notes.png</screenshot>
 	<dependencies>
-		<php min-version="7.4" max-version="8.2"/>
+		<php min-version="7.4" max-version="8.3"/>
 		<nextcloud min-version="25" max-version="29"/>
 	</dependencies>
 	<repair-steps>
