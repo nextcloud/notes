@@ -227,7 +227,7 @@ export default {
 
 .content-list__search {
 	padding: 4px;
-	padding-left: 50px;
+	padding-inline-start: 50px;
 	position: sticky;
 	top: 0;
 	background-color: var(--color-main-background-translucent);
@@ -268,6 +268,6 @@ export default {
 	border: 2px solid var(--color-loading-light);
 	border-top-color: var(--color-loading-dark);
 	vertical-align: top;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 }
 </style>
