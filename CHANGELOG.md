@@ -12,6 +12,17 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.2
+
+### Added
+
+- Add bidi support @ahangarha [#1191](https://github.com/nextcloud/notes/pull/1191)
+
+### Fixed
+
+- chore: Bump max-version of PHP to 8.3 @juliushaertl [#1194](https://github.com/nextcloud/notes/pull/1194)
+
+
 ## 4.9.1
 
 ### Fixed
