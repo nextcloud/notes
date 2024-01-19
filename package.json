@@ -41,7 +41,7 @@
   },
   "engines": {
     "node": "^20.0.0",
-    "npm": "^9.0.0"
+    "npm": "^10.0.0"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
