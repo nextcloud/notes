@@ -69,7 +69,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Det här alternativet kan också ändras senare i Notes-appens inställningar.",
     "Keep plain Markdown editor" : "Behåll vanlig Markdown-redigerare",
     "Use rich editor" : "Använd rich text-editor",
-    "Share" : "Share",
+    "Share" : "Dela",
     "Change category" : "Ändra kategori",
     "Rename" : "Byt namn",
     "Rename note" : "Byt namn på anteckningen",
