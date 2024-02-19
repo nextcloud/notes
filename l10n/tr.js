@@ -45,7 +45,7 @@ OC.L10N.register(
     "Remove any styles from the selected text" : "Seçilmiş metindeki tüm biçemleri kaldır",
     "Makes the current line a list element" : "Geçerli satırı bir liste ögesi yapar",
     "Makes the current line a list element with a number" : "Geçerli satırı bir sıralı liste ögesi yapar",
-    "Toggle heading for current line" : "Geçerli satırı başlık/normal yapar",
+    "Toggle heading for current line" : "Geçerli satırı başlık/normal yap",
     "SHIFT" : "SHIFT",
     "Set the current line as a big heading" : "Geçerli satırı büyük başlık yapar",
     "Insert link" : "Bağlantı ekle",
