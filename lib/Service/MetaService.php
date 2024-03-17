@@ -131,7 +131,7 @@ class MetaService {
 		return $result;
 	}
 
-	private function createMeta(string $userId, Note $note, callable $onError = null) : Meta {
+	private function createMeta(string $userId, Note $note, ?callable $onError = null) : Meta {
 		$meta = new Meta();
 		$meta->setUserId($userId);
 		$meta->setFileId($note->getId());
