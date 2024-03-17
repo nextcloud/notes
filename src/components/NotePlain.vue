@@ -9,7 +9,9 @@
 				<div class="conflict-modal">
 					<div class="conflict-header">
 						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
-						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
+						{{
+							t('notes', 'The note has been changed in another session. Please choose which version should be saved.')
+						}}
 					</div>
 					<div class="conflict-solutions">
 						<ConflictSolution
@@ -46,20 +48,24 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-					<NcActionButton
-						v-tooltip.left="t('notes', 'CTRL + /')"
-						@click="onTogglePreview"
-					>
-						<EditIcon v-if="preview" slot="icon" :size="20" />
-						<EyeIcon v-else slot="icon" :size="20" />
+				<NcActions menu-align="right" container=".action-buttons">
+					<NcActionButton v-tooltip.left="t('notes', 'CTRL + /')" @click="onTogglePreview">
+						<template #icon>
+							<EditIcon v-if="preview" :size="20" />
+							<EyeIcon v-else :size="20" />
+						</template>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>
+				</NcActions>
+
+				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
 					<NcActionButton
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
-						<FullscreenIcon slot="icon" :size="20" />
+						<template #icon>
+							<FullscreenIcon :size="20" />
+						</template>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</NcActionButton>
 				</NcActions>
@@ -105,7 +111,14 @@ import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
 import { config } from '../config.js'
-import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
+import {
+	fetchNote,
+	refreshNote,
+	saveNoteManually,
+	queueCommand,
+	conflictSolutionLocal,
+	conflictSolutionRemote,
+} from '../NotesService.js'
 import { routeIsNewNote } from '../Util.js'
 import TheEditor from './EditorEasyMDE.vue'
 import ThePreview from './EditorMarkdownIt.vue'
@@ -437,6 +450,7 @@ export default {
 	.note-editor {
 		margin: 0 auto;
 	}
+
 	.note-container {
 		padding-inline-end: 250px;
 		transition-duration: var(--animation-quick);
@@ -468,7 +482,7 @@ export default {
 	position: fixed;
 	top: 50px;
 	inset-inline-end: 20px;
-	width: 44px;
+	width: 94px;
 	margin-top: 1em;
 	z-index: 2000;
 }
