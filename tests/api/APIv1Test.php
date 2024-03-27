@@ -74,7 +74,7 @@ class APIv1Test extends CommonAPITest {
 		array $indexedRefNotes,
 		int $chunkSize,
 		string $messagePrefix,
-		string $chunkCursor = null,
+		?string $chunkCursor = null,
 		array $collectedNotes = []
 	) : array {
 		$requestCount = 0;

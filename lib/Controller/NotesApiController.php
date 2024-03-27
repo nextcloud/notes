@@ -46,7 +46,7 @@ class NotesApiController extends ApiController {
 		string $exclude = '',
 		int $pruneBefore = 0,
 		int $chunkSize = 0,
-		string $chunkCursor = null
+		?string $chunkCursor = null
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$category,

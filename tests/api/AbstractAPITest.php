@@ -69,7 +69,7 @@ abstract class AbstractAPITest extends TestCase {
 		string $message,
 		?string $param = '',
 		array $expectExclude = [],
-		array $expectedFullNotes = null
+		?array $expectedFullNotes = null
 	) : void {
 		$messagePrefix = 'Check reference notes '.$message;
 		$response = $this->http->request('GET', 'notes' . $param);
@@ -83,7 +83,7 @@ abstract class AbstractAPITest extends TestCase {
 		array $notes,
 		string $messagePrefix,
 		array $expectExclude = [],
-		array $expectedFullNotes = null
+		?array $expectedFullNotes = null
 	) : void {
 		$this->assertIsArray($notes, $messagePrefix);
 		$notesMap = $this->getNotesIdMap($notes, $messagePrefix);
@@ -204,7 +204,7 @@ abstract class AbstractAPITest extends TestCase {
 		\stdClass &$note,
 		\stdClass $request,
 		\stdClass $expected,
-		string $etag = null,
+		?string $etag = null,
 		int $statusExp = 200
 	) {
 		$requestOptions = [ 'json' => $request ];
