@@ -55,7 +55,7 @@ class Helper {
 		return $note;
 	}
 
-	public function getNoteData(Note $note, array $exclude = [], Meta $meta = null) : array {
+	public function getNoteData(Note $note, array $exclude = [], ?Meta $meta = null) : array {
 		if ($meta === null) {
 			$meta = $this->metaService->update($this->getUID(), $note);
 		}
@@ -67,9 +67,9 @@ class Helper {
 	public function getNotesAndCategories(
 		int $pruneBefore,
 		array $exclude,
-		string $category = null,
+		?string $category = null,
 		int $chunkSize = 0,
-		string $chunkCursorStr = null
+		?string $chunkCursorStr = null
 	) : array {
 		$userId = $this->getUID();
 		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
