@@ -12,6 +12,16 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.3
+
+### Fixed
+
+- fix: Avoid conflicts on notes folder creation @juliushaertl [#1260](https://github.com/nextcloud/notes/pull/1260)
+
+### Other
+
+- chore: Fix php-cs-fixer @juliushaertl [#1261](https://github.com/nextcloud/notes/pull/1261)
+
 ## 4.9.2
 
 ### Added
