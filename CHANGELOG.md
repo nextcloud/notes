@@ -12,6 +12,12 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.9.4
+
+### Fixed
+
+- fix: Shared folder check @provokateurin [#1263](https://github.com/nextcloud/notes/pull/1263)
+
 ## 4.9.3
 
 ### Fixed
