@@ -179,6 +179,10 @@ const mutations = {
 		state.categories = categories
 	},
 
+	addCategory(state, category) {
+		state.categories.push(category)
+	},
+
 	setSelectedCategory(state, category) {
 		state.selectedCategory = category
 	},
