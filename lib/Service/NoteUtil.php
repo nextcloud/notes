@@ -168,14 +168,15 @@ class NoteUtil {
 			$folder = $this->root->newFolder($path);
 		}
 
+		if (!($folder instanceof Folder)) {
+			throw new NotesFolderException($path.' is not a folder');
+		}
+
 		if ($folder->isShared()) {
 			$folderName = $this->root->getNonExistingName($path);
 			$folder = $this->root->newFolder($folderName);
 		}
 
-		if (!($folder instanceof Folder)) {
-			throw new NotesFolderException($path.' is not a folder');
-		}
 		return $folder;
 	}
 
