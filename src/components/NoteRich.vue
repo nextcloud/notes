@@ -52,7 +52,7 @@ export default {
 		},
 	},
 
-	created() {
+	mounted() {
 		this.fetchData()
 		subscribe('files:file:updated', this.fileUpdated)
 		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
