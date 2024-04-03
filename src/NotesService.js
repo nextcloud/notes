@@ -1,5 +1,6 @@
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { getCurrentUser } from '@nextcloud/auth'
+import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
 import store from './store.js'
@@ -336,6 +337,41 @@ export const setFavorite = (noteId, favorite) => {
 		.catch(err => {
 			console.error(err)
 			handleSyncError(t('notes', 'Toggling favorite for note {id} has failed.', { id: noteId }), err)
+			throw err
+		})
+}
+
+export const findCategory = (categoryName) => {
+	return axios
+		.get(generateRemoteUrl(`dav/files/${getCurrentUser().uid}/${store.state.app.settings.notesPath}/${categoryName}`))
+		.then(response => {
+			return categoryName
+		})
+		.catch(err => {
+			if (err?.response?.status === 404) {
+				return false
+			} else {
+				console.error(err)
+				handleSyncError(t('notes', 'Fetching category {name} has failed.', { name: categoryName }), err)
+				throw err
+			}
+		})
+}
+
+export const createCategory = (categoryName) => {
+	// Axios MKCOL workaround: https://github.com/axios/axios/issues/2220
+	return axios
+		.request({
+			url: generateRemoteUrl(`dav/files/${getCurrentUser().uid}/${store.state.app.settings.notesPath}/${categoryName}`),
+			method: 'MKCOL',
+		})
+		.then(response => {
+			store.commit('addCategory', categoryName)
+			return categoryName
+		})
+		.catch(err => {
+			console.error(err)
+			handleSyncError(t('notes', 'Creating new category {name} has failed.', { name: categoryName }), err)
 			throw err
 		})
 }
