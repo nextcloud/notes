@@ -14,7 +14,7 @@ OC.L10N.register(
     "Undo Delete" : "Повернути вилучення",
     "Note recovered" : "Примітку відновлено",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Є незбережені нотатки. Якщо залишити сторінку, усі зміни буде скасовано!",
-    "_Deleted {number} note_::_Deleted {number} notes_" : ["Видалено {number} примітка","Видалено {number} приміток","Видалено {number} приміток","Вилучено {number} нотаток"],
+    "_Deleted {number} note_::_Deleted {number} notes_" : ["Вилучено {number} нотатку","Вилучено {number} нотатки","Вилучено {number} нотаток","Вилучено {number} нотаток"],
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Відновлено {number} нотатку","Відновлено {number} нотаток","Відновлено {number} нотаток","Відновлено {number} нотаток"],
     "Basics" : "Простий",
     "Write down your thoughts without any distractions." : "Занотовуйте свої думки, не відволікаючись.",
