@@ -12,6 +12,16 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.10.0
+
+### Added
+
+- Compatibility with Nextcloud 29
+
+### Fixed
+
+- Fix "TypeError: t is undefined" @HolgerHees [#1264](https://github.com/nextcloud/notes/pull/1264)
+
 ## 4.9.4
 
 ### Fixed
