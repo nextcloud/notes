@@ -2,6 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notes",
+    "Create new note" : "Crear un rol",
     "More notes" : "Más notes",
     "Error" : "Error",
     "New note" : "Nota nueva",
@@ -30,6 +31,8 @@ OC.L10N.register(
     "Delete note" : "Desaniciar la nota",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Editar",
+    "Exit full screen" : "Colar de la pantalla completa",
+    "Full screen" : "Pantalla completa",
     "Search for notes" : "Buscar notes",
     "Loading …" : "Cargando…",
     "Today" : "Güei",
@@ -39,8 +42,11 @@ OC.L10N.register(
     "This month" : "Esti mes",
     "Last month" : "El mes pasáu",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Comienza a escribir notes al calcar en «{newnote}» na navegación de l'aplicación.",
+    "Note not found." : "Nun s'atopó la nota",
+    "Note is locked." : "La nota ta bloquiada",
     "Uncategorized" : "Ensin categoría",
     "Tasks" : "Xeres",
-    "Nextcloud, a safe home for all your data" : "Nexcloud, un llugar seguru pa los datos personales"
+    "Nextcloud, a safe home for all your data" : "Nexcloud, un llugar seguru pa los datos personales",
+    "Development Mode" : "Mou de desendocu"
 },
 "nplurals=2; plural=(n != 1);");
