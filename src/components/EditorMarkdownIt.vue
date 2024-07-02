@@ -148,10 +148,19 @@ export default {
 			}
 		},
 
+		escapeHTML(string) {
+			// Replace anything is not ASCII Digit, Latin Alphabet Uppercase & lowercase
+			// https://en.wikipedia.org/wiki/List_of_Unicode_characters
+			return string.replace(/[^\u0030-\u0039\u0041-\u005A\u0061-\u007A]/g, function(char) {
+				return `&#${char.charCodeAt()}`
+			})
+		},
+
 		setInlineCodeRule() {
+			const editorInstance = this
 			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
 				const token = tokens[idx]
-				return '<code class="inline-code">' + token.content + '</code>'
+				return '<code class="inline-code">' + editorInstance.escapeHTML(token.content) + '</code>'
 			}
 		},
 	},
