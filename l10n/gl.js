@@ -112,7 +112,7 @@ OC.L10N.register(
     "Fetching notes has failed." : "Produciuse un fallo ao recuperar as notas.",
     "Fetching note {id} has failed." : "Produciuse un fallo ao recuperar a nota {id}.",
     "Refreshing note {id} has failed." : "Produciuse un fallo ao actualizar a nota {id}.",
-    "Renaming note {id} has failed." : "Produciuse un fallo ao renomear a nota {id}.",
+    "Renaming note {id} has failed." : "Produciuse un fallo ao cambiarlle o nome a nota {id}.",
     "Creating new note has failed." : "Produciuse un fallo ao crear a nova nota.",
     "Saving note {id} has failed." : "Produciuse un fallo ao gardar a nota {id}.",
     "Updating title for note {id} has failed." : "Produciuse un fallo ao actualizar o titulo da nota {id}.",
