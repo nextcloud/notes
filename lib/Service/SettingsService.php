@@ -94,7 +94,7 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function set(string $uid, array $settings) : void {
+	public function set(string $uid, array $settings, bool $writeDefaults = false) : void {
 		// load existing values for missing attributes
 		$oldSettings = $this->getSettingsFromDB($uid);
 		foreach ($oldSettings as $name => $value) {
@@ -108,10 +108,10 @@ class SettingsService {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
 			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
-			if (!array_key_exists($name, $this->attrs)
+			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
 				|| $value === null
 				|| $value === $default
-			) {
+			)) {
 				unset($settings[$name]);
 			}
 		}
