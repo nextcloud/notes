@@ -204,7 +204,7 @@ class NoteUtil {
 		if ($updateNotesPath) {
 			$this->settingsService->set($userId, [
 				'notesPath' => $notesPath,
-			]);
+			], true);
 		}
 
 		return $folder;
