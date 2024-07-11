@@ -107,9 +107,10 @@ class SettingsService {
 			if ($value !== null && array_key_exists($name, $this->attrs)) {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
+			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
 			if (!array_key_exists($name, $this->attrs)
 				|| $value === null
-				|| $value === $this->attrs[$name]['default']
+				|| $value === $default
 			) {
 				unset($settings[$name]);
 			}
