@@ -49,8 +49,7 @@ class BeforeShareCreatedListener implements IEventListener {
 			$receiver = $share->getSharedWith();
 			$receiverPath = $this->noteUtil->getRoot()->getUserFolder($receiver)->getPath();
 			$receiverNotesInternalPath = $this->settings->get($receiver, 'notesPath');
-			$receiverNotesPath = $receiverPath . '/' . $receiverNotesInternalPath;
-			$this->noteUtil->getOrCreateFolder($receiverNotesPath);
+			$this->noteUtil->getOrCreateNotesFolder($receiver);
 
 			if ($itemType !== 'file' || strpos($fileSourcePath, $ownerNotesPath) !== 0) {
 				return;

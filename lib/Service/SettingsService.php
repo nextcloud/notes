@@ -81,7 +81,7 @@ class SettingsService {
 		];
 	}
 
-	private function getDefaultNotesPath(string $uid) : string {
+	public function getDefaultNotesPath(string $uid) : string {
 		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
 		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
 		if ($defaultExists) {
