@@ -35,7 +35,7 @@ import {
 	NcAppNavigationCaption,
 	NcAppNavigationCounter,
 } from '@nextcloud/vue'
-import { Fragment } from 'vue-fragment'
+import { Fragment } from 'vue-frag'
 
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'

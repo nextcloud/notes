@@ -38,7 +38,7 @@
 
 import { generateFilePath } from '@nextcloud/router'
 
-import { Fragment } from 'vue-fragment'
+import { Fragment } from 'vue-frag'
 
 export default {
 	components: {
