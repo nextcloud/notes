@@ -28,7 +28,7 @@ li:focus  .app-navigation-entry__utils .action-item {
 
 /* Welcome / Help */
 .feature {
-	background-position-y: center;
+	background-position: 0 center;
 	width: 100%;
 	min-height: 32px;
 	line-height: 32px;
