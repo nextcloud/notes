@@ -19,7 +19,7 @@
 			<template #footer>
 				<ul class="app-navigation-entry__settings">
 					<NcAppNavigationItem
-						:title="t('notes', 'Notes settings')"
+						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
 					>
 						<CogIcon slot="icon" :size="20" />
@@ -50,7 +50,7 @@ import {
 } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/dist/index.css'
+import '@nextcloud/dialogs/style.css'
 
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import CogIcon from 'vue-material-design-icons/Cog.vue'

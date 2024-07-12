@@ -1,6 +1,6 @@
 <template>
-	<h3 class="title">
-		{{ title }}
+	<h3 class="name">
+		{{ name }}
 	</h3>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 	},
 
 	props: {
-		title: {
+		name: {
 			type: String,
 			required: true,
 		},
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-	.title {
+	.name {
 		font-weight: bold;
 		color: var(--color-primary-element);
 		font-size: var(--default-font-size);

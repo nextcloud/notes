@@ -1,6 +1,6 @@
 <template>
 	<NcListItem
-		:title="title"
+		:name="title"
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		@update:menuOpen="onMenuChange"
@@ -23,7 +23,6 @@
 			<FileDocumentOutlineIcon v-else
 				slot="icon"
 				:size="20"
-				fill-color="var(--color-text-lighter)"
 			/>
 		</template>
 		<template v-if="isShared" #indicator>
@@ -297,8 +296,11 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .material-design-icon {
-	width: 44px;
+	width: var(--default-clickable-area);
+	.list-item__wrapper--active & {
+		color: var(--color-primary-element-text) !important;
+	}
 }
 </style>
