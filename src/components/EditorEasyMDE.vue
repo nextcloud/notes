@@ -370,7 +370,7 @@ export default {
 
 .upload-button {
 	position: fixed;
-	inset-inline-end: 64px;
+	inset-inline-end: 112px;
 	z-index: 10;
 	height: 40px;
 	margin-inline-end: 5px;
