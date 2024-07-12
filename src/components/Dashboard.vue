@@ -106,9 +106,9 @@ export default {
 }
 
 .note-item {
-	width: 44px;
-	height: 44px;
-	line-height: 44px;
+	width: var(--default-clickable-area);
+	height: var(--default-clickable-area);
+	line-height: var(--default-clickable-area);
 	flex-shrink: 0;
 	background-size: 50%;
 	background-repeat: no-repeat;

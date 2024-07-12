@@ -25,7 +25,7 @@ export default {
 		font-weight: bold;
 		color: var(--color-primary-element);
 		font-size: var(--default-font-size);
-		line-height: 44px;
+		line-height: var(--default-clickable-area);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
