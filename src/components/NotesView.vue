@@ -13,11 +13,11 @@
 				<template v-for="(group, idx) in groupedNotes" v-else>
 					<NotesCaption v-if="group.category && category!==group.category"
 						:key="group.category"
-						:title="categoryToLabel(group.category)"
+						:name="categoryToLabel(group.category)"
 					/>
 					<NotesCaption v-if="group.timeslot"
 						:key="group.timeslot"
-						:title="group.timeslot"
+						:name="group.timeslot"
 					/>
 					<NotesList
 						:key="idx"
