@@ -82,7 +82,11 @@
 
 			<NcActionSeparator />
 
-			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
+			<NcActionButton v-if="!note.readonly"
+				:icon="actionDeleteIcon"
+				:close-after-click="true"
+				@click="onDeleteNote"
+			>
 				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
 		</template>
