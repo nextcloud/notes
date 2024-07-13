@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Inserir unha ligazón",
     "Insert image" : "Inserir unha imaxe",
     "Switch between editor and viewer" : "Cambiar entre editor e visor",
-    "Select folder to link to" : "Seleccione o cartafol ao que ligar",
     "All notes" : "Todas as notas",
     "Categories" : "Categorías",
     "Create a sample note with Markdown" : "Crear unha nota de mostra con Markdown",

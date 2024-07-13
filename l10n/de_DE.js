@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Link einfügen",
     "Insert image" : "Bild einfügen",
     "Switch between editor and viewer" : "Zwischen Editor und Viewer wechseln",
-    "Select folder to link to" : "Wählen Sie den zu verknüpfenden Ordner aus",
     "All notes" : "Alle Notizen",
     "Categories" : "Kategorien",
     "Create a sample note with Markdown" : "Eine Beispielnotiz mit Markdown erstellen",

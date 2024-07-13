@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "أدخِل رابطاً",
     "Insert image" : "أدخِل صورةً",
     "Switch between editor and viewer" : "التبديل ما بين المحرر editor و العارض viewer",
-    "Select folder to link to" : "إختر مُجلّداً للربط معه",
     "All notes" : "جميع الملاحظات",
     "Categories" : "التصنيفات",
     "Create a sample note with Markdown" : "أنشِيء ملاحظة تجريبية بنَسَق ماركداون Markdown",

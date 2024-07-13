@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Hivatkozás beszúrása",
     "Insert image" : "Kép beszúrása",
     "Switch between editor and viewer" : "Váltás a szerkesztő és a megjelenítő között",
-    "Select folder to link to" : "Válassza ki a hivatkozandó mappát",
     "All notes" : "Összes jegyzet",
     "Categories" : "Kategóriák",
     "Create a sample note with Markdown" : "Új példajegyzet létrehozása Markdownnal",

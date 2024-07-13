@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "插入链接",
     "Insert image" : "插入图片",
     "Switch between editor and viewer" : "在编辑器和检查器间切换",
-    "Select folder to link to" : "选择要链接的文件夹",
     "All notes" : "所有笔记",
     "Categories" : "分类",
     "Create a sample note with Markdown" : "使用 Markdown 创建示例笔记",

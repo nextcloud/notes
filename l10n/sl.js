@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Vstavi povezavo",
     "Insert image" : "Vstavi sliko",
     "Switch between editor and viewer" : "Preklopi med urejevalnikom in pregledovalnikom",
-    "Select folder to link to" : "Izbor mape za povezovanje",
     "All notes" : "Vse zabeležke",
     "Categories" : "Kategorije",
     "Create a sample note with Markdown" : "Ustvari enostavno zabeležko z oblikovanim jezikom Markdown",

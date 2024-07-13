@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Вмъкване на връзка",
     "Insert image" : "Вмъкване на изображение",
     "Switch between editor and viewer" : "Превключване между редактиране и преглед",
-    "Select folder to link to" : "Избор на папка, към която да поставите връзка",
     "All notes" : "Всички бележки",
     "Categories" : "Категории",
     "Create a sample note with Markdown" : "Създаване на примерна бележка с Мarkdown",

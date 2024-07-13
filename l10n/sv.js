@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Infoga länk",
     "Insert image" : "Infoga bild",
     "Switch between editor and viewer" : "Växla mellan redigerare och visare",
-    "Select folder to link to" : "Välj mapp att länka till",
     "All notes" : "Alla anteckningar",
     "Categories" : "Kategorier",
     "Create a sample note with Markdown" : "Skapa en exempelanteckning med Markdown",

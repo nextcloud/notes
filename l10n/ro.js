@@ -47,7 +47,6 @@ OC.L10N.register(
     "Insert link" : "Inserează link",
     "Insert image" : "Introdu imagine",
     "Switch between editor and viewer" : "Comută între editare și vizualizare",
-    "Select folder to link to" : "Selectați folderul pentru link",
     "All notes" : "Toate notițele",
     "Categories" : "Categorii",
     "Create a sample note with Markdown" : "Creați o notă demo cu Markdown",

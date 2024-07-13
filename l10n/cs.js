@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Vložit odkaz",
     "Insert image" : "Vložit obrázek",
     "Switch between editor and viewer" : "Přepnout mezi editorem a prohlížečem",
-    "Select folder to link to" : "Vyberte složku na který odkázat",
     "All notes" : "Všechny poznámky",
     "Categories" : "Kategorie",
     "Create a sample note with Markdown" : "Vytvořit ukázkovou poznámku využívající Markdown značky",

@@ -51,7 +51,6 @@ OC.L10N.register(
     "Insert link" : "Уметни линк",
     "Insert image" : "Убаци слику",
     "Switch between editor and viewer" : "Пребаци се између едитора и прегледача",
-    "Select folder to link to" : "Изаберите фајл или фолдер на који показује линк",
     "All notes" : "Све белешке",
     "Categories" : "Категорије",
     "Create a sample note with Markdown" : "Креирај белешку за пример са Markdown",

@@ -46,7 +46,6 @@ OC.L10N.register(
     "Insert link" : "Вставить ссылку",
     "Insert image" : "Вставить изображение",
     "Switch between editor and viewer" : "Переключиться между редактированием и просмотром",
-    "Select folder to link to" : "Выберите папку для создания ссылки",
     "All notes" : "Все заметки",
     "Categories" : "Категории",
     "No notes yet" : "Нет ни одной заметки",
