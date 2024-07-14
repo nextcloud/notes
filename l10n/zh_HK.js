@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "插入連結",
     "Insert image" : "插入圖像",
     "Switch between editor and viewer" : "在編輯器與檢視器間切換",
+    "Pick a notes folder" : "選擇一個備註資料夾",
+    "Set notes folder" : "設置備註資料夾",
     "All notes" : "全部筆記",
     "Categories" : "分類",
     "Create a sample note with Markdown" : "使用 Markdown 建立範例筆記",
