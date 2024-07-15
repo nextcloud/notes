@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "Ionsáigh nasc",
     "Insert image" : "Ionsáigh íomhá",
     "Switch between editor and viewer" : "Athraigh idir eagarthóir agus breathnóir",
+    "Pick a notes folder" : "Roghnaigh fillteán nótaí",
+    "Set notes folder" : "Socraigh fillteán nótaí",
     "All notes" : "Gach nótaí",
     "Categories" : "Catagóirí",
     "Create a sample note with Markdown" : "Cruthaigh nóta samplach le Markdown",
