@@ -468,7 +468,7 @@ export default {
 	position: fixed;
 	top: 50px;
 	inset-inline-end: 20px;
-	width: 44px;
+	width: var(--default-clickable-area);
 	margin-top: 1em;
 	z-index: 2000;
 }
