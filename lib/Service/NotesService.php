@@ -149,20 +149,8 @@ class NotesService {
 		return $this->noteUtil->getSafeTitle($content);
 	}
 
-
-
-
-
-
-	/**
-	 * @param string $userId the user id
-	 * @return Folder
-	 */
 	private function getNotesFolder(string $userId, bool $create = true) : Folder {
-		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
-		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
-		$folder = $this->noteUtil->getOrCreateFolder($path, $create);
-		return $folder;
+		return $this->noteUtil->getOrCreateNotesFolder($userId, $create);
 	}
 
 	/**

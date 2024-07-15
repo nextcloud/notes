@@ -21,6 +21,7 @@ class NoteUtil {
 	private TagService $tagService;
 	private IManager $shareManager;
 	private IUserSession $userSession;
+	private SettingsService $settingsService;
 
 	public function __construct(
 		Util $util,
@@ -28,7 +29,8 @@ class NoteUtil {
 		IDBConnection $db,
 		TagService $tagService,
 		IManager $shareManager,
-		IUserSession $userSession
+		IUserSession $userSession,
+		SettingsService $settingsService
 	) {
 		$this->util = $util;
 		$this->root = $root;
@@ -36,6 +38,7 @@ class NoteUtil {
 		$this->tagService = $tagService;
 		$this->shareManager = $shareManager;
 		$this->userSession = $userSession;
+		$this->settingsService = $settingsService;
 	}
 
 	public function getRoot() : IRootFolder {
@@ -172,9 +175,36 @@ class NoteUtil {
 			throw new NotesFolderException($path.' is not a folder');
 		}
 
-		if ($folder->isShared()) {
-			$folderName = $this->root->getNonExistingName($path);
-			$folder = $this->root->newFolder($folderName);
+		return $folder;
+	}
+
+	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
+		$userFolder = $this->getRoot()->getUserFolder($userId);
+		$notesPath = $this->settingsService->get($userId, 'notesPath');
+		$allowShared = $notesPath !== $this->settingsService->getDefaultNotesPath($userId);
+
+		$folder = null;
+		$updateNotesPath = false;
+		if ($userFolder->nodeExists($notesPath)) {
+			$folder = $userFolder->get($notesPath);
+			if (!$allowShared && $folder->isShared()) {
+				$notesPath = $userFolder->getNonExistingName($notesPath);
+				$folder = $userFolder->newFolder($notesPath);
+				$updateNotesPath = true;
+			}
+		} elseif ($create) {
+			$folder = $userFolder->newFolder($notesPath);
+			$updateNotesPath = true;
+		}
+
+		if (!($folder instanceof Folder)) {
+			throw new NotesFolderException($notesPath . ' is not a folder');
+		}
+
+		if ($updateNotesPath) {
+			$this->settingsService->set($userId, [
+				'notesPath' => $notesPath,
+			], true);
 		}
 
 		return $folder;
