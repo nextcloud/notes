@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "Sett inn lenke",
     "Insert image" : "Sett inn bilde",
     "Switch between editor and viewer" : "Bytt mellom redaktør og seer",
+    "Pick a notes folder" : "Velg en mappe for notater",
+    "Set notes folder" : "Angi mappe for notater",
     "All notes" : "Alle notater",
     "Categories" : "Kategorier",
     "Create a sample note with Markdown" : "Lag et eksempelnotat med Markdown",
