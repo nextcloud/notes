@@ -81,7 +81,7 @@ class SettingsService {
 		];
 	}
 
-	private function getDefaultNotesPath(string $uid) : string {
+	public function getDefaultNotesPath(string $uid) : string {
 		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
 		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
 		if ($defaultExists) {
@@ -94,7 +94,7 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function set(string $uid, array $settings) : void {
+	public function set(string $uid, array $settings, bool $writeDefaults = false) : void {
 		// load existing values for missing attributes
 		$oldSettings = $this->getSettingsFromDB($uid);
 		foreach ($oldSettings as $name => $value) {
@@ -107,10 +107,11 @@ class SettingsService {
 			if ($value !== null && array_key_exists($name, $this->attrs)) {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
-			if (!array_key_exists($name, $this->attrs)
+			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
+			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
 				|| $value === null
-				|| $value === $this->attrs[$name]['default']
-			) {
+				|| $value === $default
+			)) {
 				unset($settings[$name]);
 			}
 		}
