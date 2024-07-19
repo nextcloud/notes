@@ -12,6 +12,13 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.10.1
+
+### Fixed
+
+- fix: Bring back shared notes folder if a user manually selected it [#1327](https://github.com/nextcloud/notes/pull/1327)
+- fix: Switch to vue-frag instead of vue-fragment to avoid errors during delete [#1326](https://github.com/nextcloud/notes/pull/1326)
+
 ## 4.10.0
 
 ### Added
