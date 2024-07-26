@@ -23,6 +23,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Preview" : "Previsualizar",
     "Exit full screen" : "Salir de pantalla completa",
+    "Loading …" : "Cargando …",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
