@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error" : "Error",
     "New note" : "Nota nueva",
     "Distraction-free notes and writing" : "Notas y escritura libre de distracciones",
+    "Undo Delete" : "Restaurar Eliminado",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin salvar. ¡Al salir de la página perderá todos los cambios!",
     "Action" : "Acción",
     "Open in edit mode" : "Abrir en modo edición",
@@ -28,6 +29,7 @@ OC.L10N.register(
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
     "This month" : "Este mes",
+    "Undo delete has failed for note {title}." : "Error al restaurar la nota{title}",
     "Uncategorized" : "Sin categoría",
     "Tasks" : "Tareas"
 },
