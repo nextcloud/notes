@@ -50,6 +50,8 @@ OC.L10N.register(
     "Insert link" : "Вставити посилання",
     "Insert image" : "Додати зображення",
     "Switch between editor and viewer" : "Перемкнути редактор та переглядач",
+    "Pick a notes folder" : "Виберіть каталог для нотаток",
+    "Set notes folder" : "Встановити каталог для нотаток",
     "All notes" : "Усі нотатки",
     "Categories" : "Категорії",
     "Create a sample note with Markdown" : "Створіть зразок примітки з використанням текстової розмітки",
