@@ -162,7 +162,7 @@ export default {
 				true, // modal
 				FilePickerType.Choose, // type
 				true, // directories
-				event.target.value === '' ? '/' : event.target.value, // path
+				event.target.value === '' ? '/' : `/${event.target.value}`, // path
 			)
 			filePicker.pick().then((file) => {
 				const client = OC.Files.getClient()
