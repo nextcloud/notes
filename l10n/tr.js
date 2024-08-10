@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "Bağlantı ekle",
     "Insert image" : "Görsel ekle",
     "Switch between editor and viewer" : "Düzenleyici ve görüntüleyici arasında geçiş yapar",
+    "Pick a notes folder" : "Notlar klasörünü seçin",
+    "Set notes folder" : "Notlar klasörünü ayarla",
     "All notes" : "Tüm notlar",
     "Categories" : "Kategoriler",
     "Create a sample note with Markdown" : "Markdown ile bir örnek not oluştur",
