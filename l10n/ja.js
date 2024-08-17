@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "リンクを挿入",
     "Insert image" : "画像の挿入",
     "Switch between editor and viewer" : "エディターとビューアーを切り替える",
+    "Pick a notes folder" : "メモフォルダーを選択する",
+    "Set notes folder" : "メモフォルダーを設定する",
     "All notes" : "すべてのノート",
     "Categories" : "カテゴリ",
     "Create a sample note with Markdown" : "Markdownでサンプルノートを作成する",
