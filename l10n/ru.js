@@ -48,6 +48,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Переключиться между редактированием и просмотром",
     "All notes" : "Все заметки",
     "Categories" : "Категории",
+    "Create a sample note with Markdown" : "Создайте образец заметки с помощью Markdown",
     "No notes yet" : "Нет ни одной заметки",
     "Upload image" : "Загрузить изображение",
     "Select an image" : "Выберите изображение",
