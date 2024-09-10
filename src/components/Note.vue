@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NoteRich v-if="isRichMode" :note-id="noteId" />
 	<NotePlain v-else-if="isPlainMode" :note-id="noteId" />
