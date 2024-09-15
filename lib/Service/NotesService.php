@@ -73,6 +73,9 @@ class NotesService {
 		}
 	}
 
+	/**
+	 * @throws NoteDoesNotExistException
+	 */
 	public function get(string $userId, int $id) : Note {
 		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
