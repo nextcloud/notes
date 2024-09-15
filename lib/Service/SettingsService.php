@@ -156,7 +156,7 @@ class SettingsService {
 			}
 		}
 		if ($toBeSaved) {
-			$this->set($uid, (array) $settings);
+			$this->set($uid, (array)$settings);
 		}
 		return $settings;
 	}

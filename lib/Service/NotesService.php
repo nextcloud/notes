@@ -120,7 +120,7 @@ class NotesService {
 
 		// get file name
 		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
-		if ($fileSuffix === "custom") {
+		if ($fileSuffix === 'custom') {
 			$fileSuffix = $this->settings->get($userId, 'customSuffix');
 		}
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
@@ -194,7 +194,7 @@ class NotesService {
 	 */
 	private function getCustomExtension(string $userId) {
 		$suffix = $this->settings->get($userId, 'customSuffix');
-		return ltrim($suffix, ".");
+		return ltrim($suffix, '.');
 	}
 
 	/**
@@ -238,7 +238,7 @@ class NotesService {
 	 * @param $fileDataArray
 	 * @throws NotPermittedException
 	 * @throws ImageNotWritableException
-	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
+	 *                                   https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
 	public function createImage(string $userId, int $noteid, $fileDataArray) {
 		$note = $this->get($userId, $noteid);
@@ -253,7 +253,7 @@ class NotesService {
 		}
 		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
 
-		if ($fileDataArray['tmp_name'] === "") {
+		if ($fileDataArray['tmp_name'] === '') {
 			throw new ImageNotWritableException();
 		}
 
