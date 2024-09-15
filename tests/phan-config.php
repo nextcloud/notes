@@ -11,7 +11,7 @@ if (getenv('NC_API_TAG') === 'dev-stable25') {
 
 return [
 	'directory_list' => $testDirs,
-	"exclude_analysis_directory_list" => [
+	'exclude_analysis_directory_list' => [
 		'vendor/',
 	],
 ];

@@ -74,10 +74,10 @@ class NoteUtil {
 	 * @param string $title the filename which should be used
 	 * @param string $suffix the suffix (incl. dot) which should be used
 	 * @param int $id the id of the note for which the title should be generated
-	 * used to see if the file itself has the title and not a different file for
-	 * checking for filename collisions
+	 *                used to see if the file itself has the title and not a different file for
+	 *                checking for filename collisions
 	 * @return string the resolved filename to prevent overwriting different
-	 * files with the same title
+	 *                files with the same title
 	 */
 	public function generateFileName(Folder $folder, string $title, string $suffix, int $id) : string {
 		$title = $this->getSafeTitle($title);
@@ -91,7 +91,7 @@ class NoteUtil {
 			// increments name (2) to name (3)
 			$match = preg_match('/\s\((?P<id>\d+)\)$/u', $title, $matches);
 			if ($match) {
-				$newId = ((int) $matches['id']) + 1;
+				$newId = ((int)$matches['id']) + 1;
 				$baseTitle = preg_replace('/\s\(\d+\)$/u', '', $title);
 				$idSuffix = ' (' . $newId . ')';
 			} else {
@@ -100,7 +100,7 @@ class NoteUtil {
 			}
 			// make sure there's enough room for the ID suffix before appending or it will be
 			// trimmed by getSafeTitle() and could cause infinite recursion
-			$newTitle = mb_substr($baseTitle, 0, self::MAX_TITLE_LENGTH - mb_strlen($idSuffix), "UTF-8") . $idSuffix;
+			$newTitle = mb_substr($baseTitle, 0, self::MAX_TITLE_LENGTH - mb_strlen($idSuffix), 'UTF-8') . $idSuffix;
 			return $this->generateFileName($folder, $newTitle, $suffix, $id);
 		}
 	}
@@ -117,7 +117,7 @@ class NoteUtil {
 		$title = preg_replace('/\s/u', ' ', $title);
 
 		// using a maximum of 100 chars should be enough
-		$title = mb_substr($title, 0, self::MAX_TITLE_LENGTH, "UTF-8");
+		$title = mb_substr($title, 0, self::MAX_TITLE_LENGTH, 'UTF-8');
 
 		// ensure that title is not empty
 		if (empty($title)) {
@@ -151,10 +151,10 @@ class NoteUtil {
 
 	public function stripMarkdown(string $str) : string {
 		// prepare content: remove markdown characters and empty spaces
-		$str = preg_replace("/^\s*[*+-]\s+/mu", "", $str); // list item
-		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $str); // headline
-		$str = preg_replace("/^(=+|-+)$/mu", "", $str); // separate line for headline
-		$str = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $str); // emphasis
+		$str = preg_replace("/^\s*[*+-]\s+/mu", '', $str); // list item
+		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", '$1', $str); // headline
+		$str = preg_replace('/^(=+|-+)$/mu', '', $str); // separate line for headline
+		$str = preg_replace("/(\*+|_+)(.*?)\\1/mu", '$2', $str); // emphasis
 		return $str;
 	}
 

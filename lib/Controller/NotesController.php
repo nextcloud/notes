@@ -59,7 +59,7 @@ class NotesController extends Controller {
 			// initialize and load settings
 			$settings = $this->settingsService->getAll($userId, true);
 
-			$lastViewedNote = (int) $this->settings->getUserValue(
+			$lastViewedNote = (int)$this->settings->getUserValue(
 				$userId,
 				$this->appName,
 				'notesLastViewedNote'
