@@ -12,6 +12,42 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.11.0
+
+### Fixed
+
+- fix: Switch to vue-frag instead of vue-fragment to avoid errors during delete @juliushaertl [#1322](https://github.com/nextcloud/notes/pull/1322)
+- fix: apply css variable --default-clickable-area @luka-nextcloud [#1323](https://github.com/nextcloud/notes/pull/1323)
+- fix/shared notes @juliushaertl [#1320](https://github.com/nextcloud/notes/pull/1320)
+- Fix CI @juliushaertl[#1364](https://github.com/nextcloud/notes/pull/1364)
+- ci: Update workflows @nickvergessen [#1359](https://github.com/nextcloud/notes/pull/1359)
+
+### Dependencies
+
+- Chore(deps): Bump @nextcloud/vue from 7.12.7 to 8.14.0 @dependabot [#1318](https://github.com/nextcloud/notes/pull/1318)
+- Chore(deps): Bump skjnldsv/read-package-engines-version-actions from 2.2 to 3 @dependabot [#1272](https://github.com/nextcloud/notes/pull/1272)
+- Chore(deps): Bump skjnldsv/block-fixup-merge-action from 1 to 2 @dependabot [#1292](https://github.com/nextcloud/notes/pull/1292)
+- Chore(deps-dev): Bump @nextcloud/stylelint-config from 2.4.0 to 3.0.1 @dependabot [#1294](https://github.com/nextcloud/notes/pull/1294)
+- Updating dependabot-approve-merge.yml workflow from template @nextcloud-command [#1281](https://github.com/nextcloud/notes/pull/1281)
+- chore: Bump minimum supported versions to 28 @juliushaertl [#1321](https://github.com/nextcloud/notes/pull/1321)
+- chore: update workflows from templates @skjnldsv [#1324](https://github.com/nextcloud/notes/pull/1324)
+- Chore(deps): Bump markdown-it from 13.0.2 to 14.1.0 @dependabot [#1252](https://github.com/nextcloud/notes/pull/1252)
+- Chore(deps-dev): Update php-cs-fixer/shim requirement from 3.54.0 to 3.59.3 @dependabot [#1316](https://github.com/nextcloud/notes/pull/1316)
+- Chore(deps): Bump @nextcloud/vue from 8.14.0 to 8.15.0 @dependabot [#1329](https://github.com/nextcloud/notes/pull/1329)
+- Chore(deps): Bump fast-xml-parser from 4.2.5 to 4.4.1 @dependabot [#1331](https://github.com/nextcloud/notes/pull/1331)
+- Chore(deps): Bump @nextcloud/vue from 8.15.0 to 8.15.1 @dependabot [#1332](https://github.com/nextcloud/notes/pull/1332)
+- Chore(deps-dev): Update php-cs-fixer/shim requirement from 3.59.3 to 3.61.1 @dependabot [#1334](https://github.com/nextcloud/notes/pull/1334)
+- Chore(deps): Bump @nextcloud/vue from 8.15.1 to 8.16.0 @dependabot [#1338](https://github.com/nextcloud/notes/pull/1338)
+- chore: update workflows from templates @nextcloud-command [#1348](https://github.com/nextcloud/notes/pull/1348)
+- Chore(deps-dev): Bump webpack from 5.88.2 to 5.94.0 @dependabot [#1354](https://github.com/nextcloud/notes/pull/1354)
+- Chore(deps): Bump markdown-it-bidi from 0.1.0 to 0.2.0 @dependabot [#1352](https://github.com/nextcloud/notes/pull/1352)
+- Chore(deps): Bump axios from 1.6.8 to 1.7.7 @dependabot [#1369](https://github.com/nextcloud/notes/pull/1369)
+- Chore(deps): Bump @nextcloud/dialogs from 5.3.5 to 5.3.7 @dependabot [#1347](https://github.com/nextcloud/notes/pull/1347)
+- Chore(deps): Bump diff from 5.2.0 to 7.0.0 @dependabot [#1358](https://github.com/nextcloud/notes/pull/1358)
+- Chore(deps-dev): Bump express from 4.19.2 to 4.21.0 @dependabot [#1368](https://github.com/nextcloud/notes/pull/1368)
+- Chore(deps-dev): Bump elliptic from 6.5.4 to 6.5.7 @dependabot [#1351](https://github.com/nextcloud/notes/pull/1351)
+- Chore(deps): Bump @nextcloud/vue from 8.16.0 to 8.18.0 @JuliaKirschenheuter [#1370](https://github.com/nextcloud/notes/pull/1370)
+
 ## 4.10.0
 
 ### Added
