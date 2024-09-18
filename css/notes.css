@@ -1,3 +1,9 @@
+/**
+ * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: Jan-Christoph Borchardt http://jancborchardt.net
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 /* workaround for https://github.com/nextcloud/nextcloud-vue/issues/1384 */
 body {
 	min-height: 100%;

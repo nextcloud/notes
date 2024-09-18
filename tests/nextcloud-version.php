@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 function getNCVersionFromComposer($path) {
 	if (!file_exists($path)) {
 		throw new Exception('Composer file does not exists: '.$path);

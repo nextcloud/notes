@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-FileCopyrightText: 2013 Bernhard Posselt <nukewhale@gmail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 app_name=notes
 project_dir=$(CURDIR)/../$(app_name)
 build_dir=$(CURDIR)/build/artifacts

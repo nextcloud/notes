@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+version = 1
+SPDX-PackageName = "notes"
+SPDX-PackageSupplier = "Nextcloud <info@nextcloud.com>"
+SPDX-PackageDownloadLocation = "https://github.com/nextcloud/notes"
+
+[[annotations]]
+path = [".gitattributes", ".editorconfig", "babel.config.js", ".php-cs-fixer.dist.php", "package-lock.json", "package.json", "composer.json", "composer.lock", "webpack.js", "stylelint.config.js", ".eslintrc.js", "cypress/.eslintrc.json", ".gitignore", ".jshintrc", ".l10nignore", "action/.gitignore", "action/package.json", "action/package-lock.json", "action/dist/index.js", "tests/**", "psalm.xml", "vendor-bin/**/composer.json", "vendor-bin/**/composer.lock", ".tx/config", "webpack.config.js", "js/vendor.LICENSE.txt", ".github/CODEOWNERS", "vite.config.js", "stylelint.config.cjs", "composer/**.php", "composer/composer.**", "tsconfig.json", "jsconfig.json", "krankerl.toml", "renovate.json", ".github/ISSUE_TEMPLATE/**", ".nextcloudignore", "CHANGELOG.md", ".tsconfig.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "none"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["l10n/**.js", "l10n/**.json", "js/**.mjs.map", "js/**.mjs", "css/**.css"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2019-2024 Nextcloud GmbH and Nextcloud contributors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = ["lib/composer/**", "apps/**/composer/autoload.php", "apps/**/composer/composer/**.php", "apps/files_external/3rdparty/autoload.php", "composer/composer/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Nils Adermann, Jordi Boggiano"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = ["img/notes.svg", "img/notes-dark.svg", "img/notes-trans.svg", "img/favicon.ico", "img/favicon.png", "img/favicon.svg", "img/favicon-mask.svg", "img/favicon-touch.png", "img/favicon-touch.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2019-2024 Nextcloud GmbH and Nextcloud contributors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = ["img/badge_applestore.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 Apple Inc."
+SPDX-License-Identifier = "LicenseRef-AppleAppStoreBadge"
+
+[[annotations]]
+path = ["img/badge_fdroid.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2016 Andrew Nayenko <relan@airpost.net>"
+SPDX-License-Identifier = "CC-BY-SA-3.0 OR GPL-3.0-or-later"
+
+[[annotations]]
+path = ["img/badge_playstore.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 Google LLC."
+SPDX-License-Identifier = "LicenseRef-GooglePlayBadge"
