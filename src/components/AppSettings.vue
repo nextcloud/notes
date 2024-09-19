@@ -161,7 +161,7 @@ export default {
 		async onChangeNotePath(event) {
 			const filePicker = getFilePickerBuilder(t('notes', 'Pick a notes folder'))
 				.allowDirectories(true)
-				.startAt(event.target.value === '' ? '/' : event.target.value)
+				.startAt(event.target.value === '' ? '/' : `/${event.target.value}`)
 				.addButton({
 					label: t('notes', 'Set notes folder'),
 					callback: (nodes) => {
