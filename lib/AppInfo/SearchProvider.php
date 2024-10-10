@@ -28,7 +28,7 @@ class SearchProvider implements IProvider {
 	public function __construct(
 		Util $util,
 		NotesService $notesService,
-		IURLGenerator $url
+		IURLGenerator $url,
 	) {
 		$this->util = $util;
 		$this->notesService = $notesService;

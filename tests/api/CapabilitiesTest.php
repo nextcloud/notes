@@ -50,16 +50,16 @@ class CapabilitiesTest extends TestCase {
 		foreach ($apiVersions as $apiVersion) {
 			$this->assertStringMatchesFormat('%d.%d', $apiVersion, 'API Version format');
 			$v = $apiVersion === '0.2' ? '02' : intval($apiVersion);
-			$path = dirname(__FILE__).'/APIv'.$v.'Test.php';
-			$this->assertFileExists($path, 'Test for API v'.$apiVersion.' exists');
+			$path = dirname(__FILE__) . '/APIv' . $v . 'Test.php';
+			$this->assertFileExists($path, 'Test for API v' . $apiVersion . ' exists');
 		}
 	}
 
 	public function testInvalidVersion() {
 		$v = 7;
-		$response1 = $this->http->request('GET', 'index.php/apps/notes/api/v'.$v.'/notes');
+		$response1 = $this->http->request('GET', 'index.php/apps/notes/api/v' . $v . '/notes');
 		$this->assertEquals(400, $response1->getStatusCode(), 'First response status code');
-		$response2 = $this->http->request('GET', 'index.php/apps/notes/api/v'.$v.'/notes/1');
+		$response2 = $this->http->request('GET', 'index.php/apps/notes/api/v' . $v . '/notes/1');
 		$this->assertEquals(400, $response2->getStatusCode(), 'Second response status code');
 	}
 }

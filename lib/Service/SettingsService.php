@@ -31,7 +31,7 @@ class SettingsService {
 		IConfig $config,
 		IL10N $l10n,
 		IRootFolder $root,
-		IAppManager $appManager
+		IAppManager $appManager,
 	) {
 		$this->config = $config;
 		$this->l10n = $l10n;
@@ -174,7 +174,7 @@ class SettingsService {
 		if (property_exists($settings, $name)) {
 			return $settings->{$name};
 		} else {
-			throw new \OCP\PreConditionNotMetException('Setting '.$name.' not found for user '.$uid.'.');
+			throw new \OCP\PreConditionNotMetException('Setting ' . $name . ' not found for user ' . $uid . '.');
 		}
 	}
 

@@ -23,7 +23,7 @@ class NotesService {
 	public function __construct(
 		MetaService $metaService,
 		SettingsService $settings,
-		NoteUtil $noteUtil
+		NoteUtil $noteUtil,
 	) {
 		$this->metaService = $metaService;
 		$this->settings = $settings;
@@ -165,7 +165,7 @@ class NotesService {
 	private static function gatherNoteFiles(
 		string $customExtension,
 		Folder $folder,
-		string $categoryPrefix = ''
+		string $categoryPrefix = '',
 	) : array {
 		$data = [
 			'files' => [],

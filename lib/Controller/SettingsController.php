@@ -24,7 +24,7 @@ class SettingsController extends Controller {
 		string $appName,
 		IRequest $request,
 		SettingsService $service,
-		IUserSession $userSession
+		IUserSession $userSession,
 	) {
 		parent::__construct($appName, $request);
 		$this->service = $service;
