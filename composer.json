@@ -1,6 +1,6 @@
 {
 	"require-dev": {
-		"nextcloud/ocp": "dev-stable25@dev",
+		"nextcloud/ocp": "dev-stable28",
 		"nextcloud/coding-standard": "^1.0",
 		"squizlabs/php_codesniffer": "^3",
 		"phan/phan": "^5",
@@ -21,6 +21,8 @@
 		"test:unit": "./vendor/bin/phpunit -c tests/unit/phpunit.xml",
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
-		"cs:fix": "php-cs-fixer fix"
+		"cs:fix": "php-cs-fixer fix",
+		"psalm": "psalm",
+		"phan": "phan"
 	}
 }
