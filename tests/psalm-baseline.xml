@@ -121,6 +121,9 @@
     </MoreSpecificReturnType>
   </file>
   <file src="lib/Migration/EditorHint.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getAppValue]]></code>
+    </DeprecatedMethod>
     <MissingReturnType>
       <code><![CDATA[run]]></code>
     </MissingReturnType>
@@ -189,6 +192,11 @@
     </MissingReturnType>
   </file>
   <file src="lib/Service/SettingsService.php">
+    <DeprecatedMethod>
+      <code><![CDATA[\OCP\Util::getVersion()]]></code>
+      <code><![CDATA[getAppValue]]></code>
+      <code><![CDATA[getAppValue]]></code>
+    </DeprecatedMethod>
     <InvalidOperand>
       <code><![CDATA[$this->defaultSuffixes]]></code>
     </InvalidOperand>

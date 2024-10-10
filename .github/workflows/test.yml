@@ -42,7 +42,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Install Dependencies
-      run: composer install --no-dev
+      run: composer install --prefer-dist
     - name: Prepare MySQL database
       run: |
         sudo systemctl start mysql
