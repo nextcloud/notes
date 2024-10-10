@@ -41,11 +41,8 @@ jobs:
         tools: phpunit:9
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Install latest dev Nextcloud PHP API (max only)
-      if: matrix.version == 'max'
-      run: composer require --prefer-dist --dev nextcloud/ocp:dev-master
     - name: Install Dependencies
-      run: composer install --prefer-dist
+      run: composer install --no-dev
     - name: Prepare MySQL database
       run: |
         sudo systemctl start mysql
