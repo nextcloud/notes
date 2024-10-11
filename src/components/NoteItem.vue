@@ -8,6 +8,7 @@
 		:name="title"
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
+		one-line
 		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
 	>
