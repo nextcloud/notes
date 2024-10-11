@@ -59,14 +59,14 @@ export default {
 
 	mounted() {
 		this.fetchData()
-		subscribe('files:file:updated', this.fileUpdated)
+		subscribe('files:node:updated', this.fileUpdated)
 		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	destroyed() {
 		this?.editor?.destroy()
-		unsubscribe('files:file:updated', this.fileUpdated)
+		unsubscribe('files:node:updated', this.fileUpdated)
 		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		unsubscribe('files_versions:restore:restored', this.onFileRestored)
 	},
