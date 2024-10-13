@@ -2,7 +2,7 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "الملاحظات",
-    "Create new note" : "أنشِيء ملاحظةً جديدةً",
+    "Create new note" : "إنشاء ملاحظة جديدة",
     "More notes" : "مزيد من الملاحظات",
     "Reading notes from filesystem has failed." : "تعذّرت قراءة الملاحظات من نظام الملفات",
     "Error" : "خطأ",
@@ -55,7 +55,7 @@ OC.L10N.register(
     "Set notes folder" : "عيِّن مجلد الملاحظات",
     "All notes" : "جميع الملاحظات",
     "Categories" : "التصنيفات",
-    "Create a sample note with Markdown" : "أنشِيء ملاحظة تجريبية بنَسَق ماركداون Markdown",
+    "Create a sample note with Markdown" : "إنشاء ملاحظة تجريبية بتسنيق  Markdown",
     "No notes yet" : "لا ملاحظاتٍ حتى الآن",
     "Upload image" : "إرفَع صورةً",
     "Select an image" : "إختَر صورةً",
