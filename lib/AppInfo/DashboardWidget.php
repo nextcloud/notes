@@ -28,7 +28,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	public function __construct(
 		IURLGenerator $url,
 		IL10N $l10n,
-		NotesService $notesService
+		NotesService $notesService,
 	) {
 		$this->url = $url;
 		$this->l10n = $l10n;

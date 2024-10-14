@@ -6,7 +6,6 @@ js/
 .rvm
 report
 clover.xml
-composer.lock
 .php-cs-fixer.cache
 appinfo/info.xsd
 

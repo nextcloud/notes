@@ -45,7 +45,7 @@ class PageController extends Controller {
 		IUserSession $userSession,
 		IURLGenerator $urlGenerator,
 		IEventDispatcher $eventDispatcher,
-		IInitialState $initialState
+		IInitialState $initialState,
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -63,7 +63,7 @@ class PageController extends Controller {
 	 * @suppress PhanUndeclaredClassReference, PhanTypeMismatchArgument, PhanUndeclaredClassMethod
 	 */
 	public function index() : TemplateResponse {
-		$devMode = !is_file(dirname(__FILE__).'/../../js/notes-main.js');
+		$devMode = !is_file(dirname(__FILE__) . '/../../js/notes-main.js');
 		$response = new TemplateResponse(
 			$this->appName,
 			$devMode ? 'dev-mode' : 'main',

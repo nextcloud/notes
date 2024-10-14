@@ -24,7 +24,7 @@ class NotesHooks {
 	public function __construct(
 		LoggerInterface $logger,
 		IRootFolder $rootFolder,
-		MetaService $metaService
+		MetaService $metaService,
 	) {
 		$this->logger = $logger;
 		$this->rootFolder = $rootFolder;

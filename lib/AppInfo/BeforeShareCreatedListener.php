@@ -18,6 +18,7 @@ use OCP\Share\Events\BeforeShareCreatedEvent;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
+/** @template-implements IEventListener<BeforeShareCreatedEvent|Event> */
 class BeforeShareCreatedListener implements IEventListener {
 	private SettingsService $settings;
 	private NoteUtil $noteUtil;

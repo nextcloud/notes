@@ -34,7 +34,7 @@ class Helper {
 		NotesService $notesService,
 		MetaService $metaService,
 		IUserSession $userSession,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->notesService = $notesService;
 		$this->metaService = $metaService;
@@ -53,7 +53,7 @@ class Helper {
 		if ($ifMatch) {
 			$matchEtags = preg_split('/,\s*/', $ifMatch);
 			$meta = $this->metaService->update($userId, $note);
-			if (!in_array('"'.$meta->getEtag().'"', $matchEtags)) {
+			if (!in_array('"' . $meta->getEtag() . '"', $matchEtags)) {
 				throw new ETagDoesNotMatchException($note);
 			}
 		}
@@ -74,7 +74,7 @@ class Helper {
 		array $exclude,
 		?string $category = null,
 		int $chunkSize = 0,
-		?string $chunkCursorStr = null
+		?string $chunkCursorStr = null,
 	) : array {
 		$userId = $this->getUID();
 		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
@@ -130,7 +130,7 @@ class Helper {
 	}
 
 	public function logException(\Throwable $e) : void {
-		$this->logger->error('Controller failed with '.get_class($e), [ 'exception' => $e ]);
+		$this->logger->error('Controller failed with ' . get_class($e), [ 'exception' => $e ]);
 	}
 
 	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {

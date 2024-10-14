@@ -7,10 +7,10 @@
 
 function getNCVersionFromComposer($path) {
 	if (!file_exists($path)) {
-		throw new Exception('Composer file does not exists: '.$path);
+		throw new Exception('Composer file does not exists: ' . $path);
 	}
 	if (!is_readable($path)) {
-		throw new Exception('Composer file is not readable: '.$path);
+		throw new Exception('Composer file is not readable: ' . $path);
 	}
 	$content = file_get_contents($path);
 	$json = json_decode($content);
@@ -35,10 +35,10 @@ function getNCVersionFromComposer($path) {
 
 function getNCVersionFromComposerBranchAlias($path) {
 	if (!file_exists($path)) {
-		throw new Exception('Composer file does not exists: '.$path);
+		throw new Exception('Composer file does not exists: ' . $path);
 	}
 	if (!is_readable($path)) {
-		throw new Exception('Composer file is not readable: '.$path);
+		throw new Exception('Composer file is not readable: ' . $path);
 	}
 	$content = file_get_contents($path);
 	$json = json_decode($content);
@@ -57,29 +57,29 @@ function getNCVersionFromComposerBranchAlias($path) {
 
 function getValidProperty($json, $prop) {
 	if (!property_exists($json, $prop)) {
-		throw new Exception('Composer file has no "'.$prop.'" section');
+		throw new Exception('Composer file has no "' . $prop . '" section');
 	}
 	return $json->{$prop};
 }
 
 function getDependencyVersionFromAppInfo($path, $type = 'nextcloud', $minmax = 'min') {
 	if (!file_exists($path)) {
-		throw new Exception('AppInfo does not exists: '.$path);
+		throw new Exception('AppInfo does not exists: ' . $path);
 	}
 	if (!is_readable($path)) {
-		throw new Exception('AppInfo is not readable: '.$path);
+		throw new Exception('AppInfo is not readable: ' . $path);
 	}
 	$content = file_get_contents($path);
 	$info = new SimpleXMLElement($content);
 	$nc = $info->dependencies->$type;
-	$v = (string)$nc->attributes()->{$minmax.'-version'};
+	$v = (string)$nc->attributes()->{$minmax . '-version'};
 	return $v;
 }
 
 function isServerBranch($branch) : bool {
-	require_once dirname(__FILE__).'/../vendor/autoload.php';
+	require_once dirname(__FILE__) . '/../vendor/autoload.php';
 	$http = new \GuzzleHttp\Client(['http_errors' => false]);
-	$response = $http->request('GET', 'https://api.github.com/repos/nextcloud/server/branches/'.$branch);
+	$response = $http->request('GET', 'https://api.github.com/repos/nextcloud/server/branches/' . $branch);
 	$status = $response->getStatusCode();
 	switch ($status) {
 		case 200:
@@ -87,7 +87,7 @@ function isServerBranch($branch) : bool {
 		case 404:
 			return false;
 		default:
-			throw new \Exception('HTTP Error while checking branch '.$branch.' for Nextcloud server: '.$status);
+			throw new \Exception('HTTP Error while checking branch ' . $branch . ' for Nextcloud server: ' . $status);
 	}
 }
 
@@ -106,7 +106,7 @@ function versionCompare($sv1, $sv2, $type) {
 	return true;
 }
 
-$pathAppInfo = __DIR__.'/../appinfo/info.xml';
+$pathAppInfo = __DIR__ . '/../appinfo/info.xml';
 
 
 if (in_array('--appinfo', $argv)) {
@@ -133,22 +133,22 @@ if (in_array('--php-max', $argv)) {
 
 echo 'Testing Nextcloud version ';
 try {
-	$vComposer = getNCVersionFromComposer(__DIR__.'/../composer.json');
+	$vComposer = getNCVersionFromComposer(__DIR__ . '/../composer.json');
 	if ($vComposer === 'dev-master') {
-		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__.'/../vendor/nextcloud/ocp/composer.json');
+		$vComposer = getNCVersionFromComposerBranchAlias(__DIR__ . '/../vendor/nextcloud/ocp/composer.json');
 		$type = 'max';
 	} else {
 		$type = 'min';
 	}
 	$vAppInfo = getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', $type);
-	echo $type.': '.$vAppInfo.' (AppInfo) vs. '.$vComposer.' (Composer) => ';
+	echo $type . ': ' . $vAppInfo . ' (AppInfo) vs. ' . $vComposer . ' (Composer) => ';
 	if (versionCompare($vComposer, $vAppInfo, $type)) {
-		echo 'OK'.PHP_EOL;
+		echo 'OK' . PHP_EOL;
 	} else {
-		echo 'FAILED'.PHP_EOL;
+		echo 'FAILED' . PHP_EOL;
 		exit(1);
 	}
 } catch (Exception $e) {
-	echo $e->getMessage().PHP_EOL;
+	echo $e->getMessage() . PHP_EOL;
 	exit(1);
 }

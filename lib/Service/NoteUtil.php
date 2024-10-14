@@ -35,7 +35,7 @@ class NoteUtil {
 		TagService $tagService,
 		IManager $shareManager,
 		IUserSession $userSession,
-		SettingsService $settingsService
+		SettingsService $settingsService,
 	) {
 		$this->util = $util;
 		$this->root = $root;
@@ -67,7 +67,7 @@ class NoteUtil {
 		$cats = array_filter($cats, function ($str) {
 			return $str !== '';
 		});
-		$path .= '/'.implode('/', $cats);
+		$path .= '/' . implode('/', $cats);
 		return $this->getOrCreateFolder($path);
 	}
 
@@ -177,7 +177,7 @@ class NoteUtil {
 		}
 
 		if (!($folder instanceof Folder)) {
-			throw new NotesFolderException($path.' is not a folder');
+			throw new NotesFolderException($path . ' is not a folder');
 		}
 
 		return $folder;
@@ -225,7 +225,7 @@ class NoteUtil {
 		$isEmpty = !count($content);
 		$isNotesFolder = $folder->getPath() === $notesFolder->getPath();
 		if ($isEmpty && !$isNotesFolder) {
-			$this->util->logger->debug('Deleting empty category folder '.$folder->getPath());
+			$this->util->logger->debug('Deleting empty category folder ' . $folder->getPath());
 			$parent = $folder->getParent();
 			$folder->delete();
 			$this->deleteEmptyFolder($parent, $notesFolder);
@@ -242,11 +242,11 @@ class NoteUtil {
 		$availableBytes = $folder->getFreeSpace();
 		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
 			$this->util->logger->error(
-				'Insufficient storage in '.$folder->getPath().': '.
-				'available are '.$availableBytes.'; '.
-				'required are '.$requiredBytes
+				'Insufficient storage in ' . $folder->getPath() . ': ' .
+				'available are ' . $availableBytes . '; ' .
+				'required are ' . $requiredBytes
 			);
-			throw new InsufficientStorageException($requiredBytes.' are required in '.$folder->getPath());
+			throw new InsufficientStorageException($requiredBytes . ' are required in ' . $folder->getPath());
 		}
 	}
 
