@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "Inserisci collegamento",
     "Insert image" : "Inserisci immagine",
     "Switch between editor and viewer" : "Passa da editor a visualizzatore",
+    "Pick a notes folder" : "Seleziona una cartella di note",
+    "Set notes folder" : "Imposta cartella note",
     "All notes" : "Tutte le note",
     "Categories" : "Categorie",
     "Create a sample note with Markdown" : "Creare una nota di esempio con Markdown",
