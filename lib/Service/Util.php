@@ -19,7 +19,7 @@ class Util {
 
 	public function __construct(
 		IL10N $l10n,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->l10n = $l10n;
 		$this->logger = $logger;

@@ -14,11 +14,9 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
-use OCP\EventDispatcher\GenericEvent;
-use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Share\Events\BeforeShareCreatedEvent;
+
 /** @phan-suppress-next-line PhanUnreferencedUseNormal */
-use OCP\Share\IShare;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'notes';
@@ -36,29 +34,15 @@ class Application extends App implements IBootstrap {
 			BeforeTemplateRenderedEvent::class,
 			BeforeTemplateRenderedListener::class
 		);
-		if (\class_exists(BeforeShareCreatedEvent::class)) {
-			$context->registerEventListener(
-				BeforeShareCreatedEvent::class,
-				BeforeShareCreatedListener::class
-			);
-		} else {
-			// FIXME: Remove once Nextcloud 28 is the minimum supported version
-			\OCP\Server::get(IEventDispatcher::class)->addListener('OCP\Share::preShare', function ($event) {
-				if (!$event instanceof GenericEvent) {
-					return;
-				}
-
-				/** @var IShare $share */
-				/** @phan-suppress-next-line PhanDeprecatedFunction */
-				$share = $event->getSubject();
-
-				$modernListener = \OCP\Server::get(BeforeShareCreatedListener::class);
-				$modernListener->overwriteShareTarget($share);
-			}, 1000);
-		}
+		$context->registerEventListener(
+			BeforeShareCreatedEvent::class,
+			BeforeShareCreatedListener::class
+		);
 	}
 
 	public function boot(IBootContext $context): void {
-		$context->getAppContainer()->get(NotesHooks::class)->register();
+		$context->injectFn(function (NotesHooks $notesHooks) {
+			$notesHooks->register();
+		});
 	}
 }
