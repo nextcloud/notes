@@ -50,7 +50,7 @@ OC.L10N.register(
     "Set the current line as a big heading" : "إجعل السطر الحالي عنواناً كبيراً",
     "Insert link" : "أدخِل رابطاً",
     "Insert image" : "أدخِل صورةً",
-    "Switch between editor and viewer" : "التبديل ما بين المحرر editor و العارض viewer",
+    "Switch between editor and viewer" : "التبديل ما بين المحرر و العارض",
     "Pick a notes folder" : "إختَر مجلداً للملاحظات",
     "Set notes folder" : "عيِّن مجلد الملاحظات",
     "All notes" : "جميع الملاحظات",
