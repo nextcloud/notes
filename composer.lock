@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27d8a43049fa062d160b3cde313e45b4",
+    "content-hash": "412f47c268a2eb4c0f536d87ef51b38a",
     "packages": [],
     "packages-dev": [
         {
@@ -960,16 +960,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.61.1",
+            "version": "v3.64.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "3ac8e446863e313b51a9466915c9b578409eef9e"
+                "reference": "81ccfd24baf3a10810dab1152c403981a790b837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/3ac8e446863e313b51a9466915c9b578409eef9e",
-                "reference": "3ac8e446863e313b51a9466915c9b578409eef9e",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/81ccfd24baf3a10810dab1152c403981a790b837",
+                "reference": "81ccfd24baf3a10810dab1152c403981a790b837",
                 "shasum": ""
             },
             "require": {
@@ -1006,9 +1006,9 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/shim/issues",
-                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.61.1"
+                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.64.0"
             },
-            "time": "2024-07-31T14:33:55+00:00"
+            "time": "2024-08-30T23:10:11+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2378,8 +2378,8 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.0"
     },
