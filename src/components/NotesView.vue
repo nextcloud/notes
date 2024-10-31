@@ -8,7 +8,14 @@
 		<template slot="list">
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
-					<input type="search" :placeholder="t('notes', 'Search for notes')" @input="event => searchText = event.target.value">
+					<NcTextField
+						:value.sync="searchText"
+						:label="t('notes', 'Search for notes')"
+						:show-trailing-button="searchText !== ''"
+						trailing-button-icon="close"
+						:trailing-button-label="t('Clear search')"
+						@trailing-button-click="searchText=''"
+					/>
 				</div>
 
 				<NotesList v-if="groupedNotes.length === 1"
@@ -58,6 +65,7 @@ import {
 	NcAppContentList,
 	NcAppContentDetails,
 	NcButton,
+	NcTextField,
 } from '@nextcloud/vue'
 import { categoryLabel } from '../Util.js'
 import NotesList from './NotesList.vue'
@@ -75,6 +83,7 @@ export default {
 		NcAppContentList,
 		NcAppContentDetails,
 		NcButton,
+		NcTextField,
 		Note,
 		NotesList,
 		NotesCaption,
@@ -98,6 +107,7 @@ export default {
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
 			showFirstNotesOnly: true,
 			showNote: true,
+			searchText: '',
 		}
 	},
 
@@ -143,18 +153,11 @@ export default {
 				}, [])
 			}
 		},
-		searchText: {
-			get() {
-				return store.state.searchText
-			},
-			set(value) {
-				store.commit('updateSearchText', value)
-			},
-		},
 	},
 
 	watch: {
 		category() { this.showFirstNotesOnly = true },
+		searchText(value) { store.commit('updateSearchText', value) },
 	},
 
 	created() {
