@@ -17,6 +17,7 @@ OC.L10N.register(
     "Use current version" : "Izmantot pašreizējo versiju",
     "Edit" : "Labot",
     "Preview" : "Priekšskatīt",
+    "Loading …" : "Notiek ielāde ...",
     "Today" : "Šodien",
     "Yesterday" : "Vakar",
     "This week" : "Šonedēļ",
