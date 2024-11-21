@@ -28,6 +28,7 @@ OC.L10N.register(
     "Categories" : "Categorias",
     "No notes yet" : "Peruna nota ancora",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Installa s'aplicatzione pro su telefoneddu tuo pro intrare a is notas tuas dae totue.",
+    "Android app: {notes}" : "Aplicatzione pro Android: {notes}",
     "Rename" : "Torra a numenare",
     "Delete note" : "Elìmina nota",
     "Remove from favorites" : "Boga·nche dae preferidos",
