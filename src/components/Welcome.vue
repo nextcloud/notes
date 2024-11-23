@@ -76,6 +76,14 @@ export default {
 	padding: 4em 8em;
 }
 
+@media (max-width: 60em) {
+	.welcome-content {
+		margin: auto;
+		max-width: 40em;
+		padding: 2em 2em 1em 1em;
+	}
+}
+
 .welcome-content h2 {
 	margin-bottom: 1em;
 }
