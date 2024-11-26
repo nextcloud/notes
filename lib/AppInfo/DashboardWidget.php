@@ -98,7 +98,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	public function getItems(string $userId, ?string $since = null, int $limit = 7): array {
 		$notes = $this->notesService->getTopNotes($userId);
 		$notes = array_slice($notes, 0, $limit);
-		return array_map(function (Note $note) {
+		return array_values(array_map(function (Note $note): WidgetItem {
 			$excerpt = '';
 			try {
 				$excerpt = $note->getExcerpt();
@@ -109,7 +109,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 				? $this->url->getAbsoluteURL($this->url->imagePath('core', 'actions/starred.svg'))
 				: $this->getIconUrl();
 			return new WidgetItem($note->getTitle(), $excerpt, $link, $icon, (string)$note->getModified());
-		}, $notes);
+		}, $notes));
 	}
 
 	public function getIconUrl(): string {

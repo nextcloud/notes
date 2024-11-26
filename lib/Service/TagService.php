@@ -20,6 +20,10 @@ class TagService {
 		$this->tagger = $tagManager->load('files');
 	}
 
+	/**
+	 * @param list<int> $fileIds
+	 * @return void
+	 */
 	public function loadTags(array $fileIds) : void {
 		$this->cachedTags = $this->tagger->getTagsForObjects($fileIds);
 	}
