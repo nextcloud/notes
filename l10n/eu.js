@@ -51,6 +51,8 @@ OC.L10N.register(
     "Insert link" : "Txertatu esteka",
     "Insert image" : "Txertatu irudia",
     "Switch between editor and viewer" : "Aldatu editore eta ikustailearen artean",
+    "Pick a notes folder" : "Aukeratu ohar karpeta bat",
+    "Set notes folder" : "Ezarri oharren karpeta",
     "All notes" : "Ohar guztiak",
     "Categories" : "Kategoriak",
     "Create a sample note with Markdown" : "Sortu lagin-ohar bat Markdown-ekin",
