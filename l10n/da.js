@@ -6,6 +6,7 @@ OC.L10N.register(
     "New note" : "Ny note",
     "Undo Delete" : "Annullér Slet",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Der er noter der ikke er gemt. Hvis du forlader denne side vil de blive smidt væk!",
+    "File extension" : "Filendelse",
     "Display mode for notes" : "Visningstilstand for noter",
     "Action" : "Handling",
     "Open in edit mode" : "Åbn i redigeringstilstand",
