@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\Notes\AppInfo;
 
+use OCA\Notes\Reference\NoteReferenceProvider;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -38,6 +39,7 @@ class Application extends App implements IBootstrap {
 			BeforeShareCreatedEvent::class,
 			BeforeShareCreatedListener::class
 		);
+		$context->registerReferenceProvider(NoteReferenceProvider::class);
 	}
 
 	public function boot(IBootContext $context): void {
