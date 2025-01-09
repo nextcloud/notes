@@ -28,7 +28,6 @@ export default {
 <style scoped>
 	.name {
 		font-weight: bold;
-		color: var(--color-primary-element);
 		font-size: var(--default-font-size);
 		line-height: var(--default-clickable-area);
 		white-space: nowrap;
