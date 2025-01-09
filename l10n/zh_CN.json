@@ -6,7 +6,6 @@
     "Error" : "错误",
     "New note" : "新建笔记",
     "Distraction-free notes and writing" : "无干扰的笔记和写作",
-    "The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) allows for an easy integration into third-party apps (currently, there are notes apps for [Android](https://github.com/nextcloud/notes-android), [iOS](https://github.com/nextcloud/notes-ios) and the [console](https://git.danielmoch.com/nncli/about) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites." : "笔记是用于 [Nextcloud](https://www.nextcloud.com/) 的无干扰记录笔记的应用程序。它提供了易于组织的分类，并支持使用 [Markdown](https://en.wikipedia.org/wiki/Markdown) 语法进行格式化。笔记将在您的 Nextcloud 中保存为文件，因此您可以使用每个 Nextcloud 客户端查看和编辑它们。此外，单独的 [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) 允许其轻松集成到第三方应用程序（当前，适用于 [Android](https://github.com/nextcloud/notes-android), [iOS](https://github.com/nextcloud/notes-ios) 和 [console](https://git.danielmoch.com/nncli/about) 的笔记应用可用于方便地访问您的 Nextcloud 笔记）。其他功能包括将注释标记为收藏。",
     "Notes settings" : "笔记设置",
     "Please see Nextcloud server log for details." : "有关详情请参阅 Nextcloud 服务器日志。",
     "Deleted {title}" : "已删除 {title}",
