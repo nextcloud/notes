@@ -183,6 +183,12 @@ class NoteUtil {
 		return $folder;
 	}
 
+	public function getNotesFolderUserPath(string $userId): string {
+		$userFolder = $this->getRoot()->getUserFolder($userId);
+		$nodesFolder = $this->getOrCreateNotesFolder($userId, false);
+		return $userFolder->getRelativePath($nodesFolder->getPath());
+	}
+
 	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
 		$userFolder = $this->getRoot()->getUserFolder($userId);
 		$notesPath = $this->settingsService->get($userId, 'notesPath');
