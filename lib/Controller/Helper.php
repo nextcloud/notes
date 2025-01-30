@@ -133,6 +133,7 @@ class Helper {
 		$this->logger->error('Controller failed with ' . get_class($e), [ 'exception' => $e ]);
 	}
 
+	/** @param 200|201|400|403|404|423|500|507 $statusCode */
 	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {
 		$response = [
 			'errorType' => get_class($e)
