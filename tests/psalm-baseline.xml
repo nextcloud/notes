@@ -253,6 +253,9 @@
     </MissingReturnType>
   </file>
   <file src="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$data->getData()]]></code>
+    </ArgumentTypeCoercion>
     <MissingClosureParamType>
       <code><![CDATA[$data]]></code>
     </MissingClosureParamType>
