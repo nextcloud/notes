@@ -103,7 +103,7 @@ OC.L10N.register(
     "This month" : "Dieser Monat",
     "Last month" : "Letzter Monat",
     "Use Markdown markups to style your text." : "Verwenden Sie Markdown um Ihren Text zu gestalten.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Erstellen Sie eine Notiz per Klick auf „{newnote}“ in der App-Navigation.",
+    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Erstellen Sie eine Notiz per Klick auf \"{newnote}\" in der App-Navigation.",
     "Note not found." : "Notiz nicht gefunden.",
     "Note is locked." : "Notiz ist gesperrt.",
     "Insufficient storage." : "Speicherplatz nicht ausreichend.",
