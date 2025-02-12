@@ -61,7 +61,7 @@ OC.L10N.register(
     "Select an image" : "Seleccione unha imaxe",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Non pode seleccionar imaxes fóra do cartafol de notas. O seu cartafol de notas é: {folder}",
     "Wrong image" : "Imaxe errónea",
-    "The file was not uploaded. Check your server logs." : "Non se enviou o ficheiro. Comprobe os rexistros do servidor.",
+    "The file was not uploaded. Check your server logs." : "Non se enviou o ficheiro. Consulte os ficheiros de rexistro do servidor.",
     "Install the app for your mobile phone in order to access your notes from everywhere." : "Instale a aplicación para o seu teléfono móbil para poder acceder ás súas notas en calquera lugar.",
     "Android app: {notes}" : "Aplicación de Android: {notes}",
     "iOS app: {notes}" : "Aplicación de iOS: {notes}",
