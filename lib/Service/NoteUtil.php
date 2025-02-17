@@ -184,6 +184,7 @@ class NoteUtil {
 	}
 
 	public function getNotesFolderUserPath(string $userId): string {
+		/** @psalm-suppress MissingDependency */
 		$userFolder = $this->getRoot()->getUserFolder($userId);
 		$nodesFolder = $this->getOrCreateNotesFolder($userId, false);
 		return $userFolder->getRelativePath($nodesFolder->getPath());
