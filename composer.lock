@@ -840,12 +840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "d1399b589aa6c0393b4f62bd7022315a711d8c09"
+                "reference": "67a04be4d17608fadde7616e7c6ab0c12f3a5215"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/d1399b589aa6c0393b4f62bd7022315a711d8c09",
-                "reference": "d1399b589aa6c0393b4f62bd7022315a711d8c09",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/67a04be4d17608fadde7616e7c6ab0c12f3a5215",
+                "reference": "67a04be4d17608fadde7616e7c6ab0c12f3a5215",
                 "shasum": ""
             },
             "require": {
@@ -876,7 +876,7 @@
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/stable28"
             },
-            "time": "2025-01-08T00:43:56+00:00"
+            "time": "2025-02-14T00:43:32+00:00"
         },
         {
             "name": "phan/phan",
