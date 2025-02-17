@@ -2,7 +2,7 @@
 	"require-dev": {
 		"guzzlehttp/guzzle": "^7",
 		"nextcloud/coding-standard": "^1.0",
-		"nextcloud/ocp": "dev-master",
+		"nextcloud/ocp": "dev-stable28",
 		"phan/phan": "^5",
 		"php-cs-fixer/shim": "3.66.0",
 		"psalm/phar": "^5.26",
