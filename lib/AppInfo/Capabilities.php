@@ -9,16 +9,14 @@ declare(strict_types=1);
 
 namespace OCA\Notes\AppInfo;
 
-use OCA\Notes\Service\NoteUtil;
 use OCP\App\IAppManager;
 use OCP\Capabilities\ICapability;
 
 class Capabilities implements ICapability {
-	public function __construct(
-		private IAppManager $appManager,
-		private NoteUtil $noteUtil,
-		private ?string $userId,
-	) {
+	private IAppManager $appManager;
+
+	public function __construct(IAppManager $appManager) {
+		$this->appManager = $appManager;
 	}
 
 	public function getCapabilities(): array {
@@ -26,7 +24,6 @@ class Capabilities implements ICapability {
 			Application::APP_ID => [
 				'api_version' => Application::$API_VERSIONS,
 				'version' => $this->appManager->getAppVersion(Application::APP_ID),
-				'notes_path' => $this->userId !== null && $this->userId !== ' ' ? $this->noteUtil->getNotesFolderUserPath($this->userId) : null,
 			],
 		];
 	}
