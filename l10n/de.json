@@ -105,7 +105,7 @@
     "Note not found." : "Notiz nicht gefunden.",
     "Note is locked." : "Notiz ist gesperrt.",
     "Insufficient storage." : "Speicherplatz nicht ausreichend.",
-    "See JavaScript console and server log for details." : "Siehe JavaScript-Konsole und Server-Protokoll für Details.",
+    "See JavaScript console and server log for details." : "Siehe JavaScript-Konsole und Serverprotokoll für Details.",
     "Updating settings has failed." : "Aktualisierung der Einstellungen fehlgeschlagen.",
     "Fetching notes for dashboard has failed." : "Laden der Notizen für das Dashboard ist fehlgeschlagen.",
     "Fetching notes has failed." : "Laden der Notizen fehlgeschlagen.",
