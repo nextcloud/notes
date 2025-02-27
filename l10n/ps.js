@@ -3,9 +3,9 @@ OC.L10N.register(
     {
     "Notes" : "شسیب",
     "Error" : "شسیب",
-    "Share" : "شریکول",
     "Remove from favorites" : "له نښو ويستل",
     "Add to favorites" : "په نښه کول",
+    "Share" : "شریکول",
     "Today" : "نن",
     "Yesterday" : "پرون"
 },

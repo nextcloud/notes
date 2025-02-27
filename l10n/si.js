@@ -9,13 +9,13 @@ OC.L10N.register(
     "Rename" : "නැවත නම් කරන්න",
     "Edit" : "සංස්කරණය",
     "Preview" : "පෙරදසුන",
-    "Loading …" : "පූරණය වෙමින් …",
     "Today" : "අද",
     "Yesterday" : "ඊයේ",
     "This week" : "මෙම සතිය",
     "Last week" : "පසුගිය සතිය",
     "This month" : "මෙම මාසය",
     "Last month" : "පසුගිය මාසය",
+    "Loading …" : "පූරණය වෙමින් …",
     "Tasks" : "කාර්යයන්"
 },
 "nplurals=2; plural=(n != 1);");
