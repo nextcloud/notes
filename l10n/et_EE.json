@@ -14,6 +14,7 @@
     "Preview" : "Eelvaade",
     "Today" : "Täna",
     "Yesterday" : "Eile",
+    "Loading …" : "Laadimisel...",
     "Tasks" : "Ülesanded"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

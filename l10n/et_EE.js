@@ -16,6 +16,7 @@ OC.L10N.register(
     "Preview" : "Eelvaade",
     "Today" : "Täna",
     "Yesterday" : "Eile",
+    "Loading …" : "Laadimisel...",
     "Tasks" : "Ülesanded"
 },
 "nplurals=2; plural=(n != 1);");
