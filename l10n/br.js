@@ -1,6 +1,7 @@
 OC.L10N.register(
     "notes",
     {
+    "Notes" : "Notennoù",
     "Error" : "Fazi",
     "Categories" : "Rummadoù",
     "Remove from favorites" : "Diverkañañ eus ar pennrolloù",
