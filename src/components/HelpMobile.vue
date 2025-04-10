@@ -9,7 +9,7 @@
 			{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 		</div>
 		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/nextcloud/nextcloud-notes">
+			<a target="_blank" href="https://github.com/nextcloud/notes-android">
 				{{ t('notes', 'Android app: {notes}', {notes: 'Nextcloud Notes'}) }}
 			</a>
 			<div>
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/phedlund/CloudNotes">
+			<a target="_blank" href="https://github.com/nextcloud/notes-ios">
 				{{ t('notes', 'iOS app: {notes}', {notes: 'Nextcloud Notes'}) }}
 			</a>
 			<div>
