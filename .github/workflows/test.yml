@@ -1,3 +1,11 @@
+# This workflow is provided via the organization template repository
+#
+# https://github.com/nextcloud/.github
+# https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization
+#
+# SPDX-FileCopyrightText: 2020-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: MIT
+
 name: Test
 on:
   push:
@@ -20,7 +28,7 @@ jobs:
       SERVER_BRANCH: master
     steps:
     - name: Checkout
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
     - name: Determine PHP version
       env:
         VERSION_MINMAX: ${{ matrix.version }}
@@ -33,9 +41,6 @@ jobs:
         tools: phpunit:9
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Install latest dev Nextcloud PHP API (max only)
-      if: matrix.version == 'max'
-      run: composer require --prefer-dist --dev nextcloud/ocp:dev-master
     - name: Install Dependencies
       run: composer install --prefer-dist
     - name: Prepare MySQL database

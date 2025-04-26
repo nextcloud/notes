@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
 use OCP\IL10N;
@@ -14,7 +19,7 @@ class Util {
 
 	public function __construct(
 		IL10N $l10n,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->l10n = $l10n;
 		$this->logger = $logger;

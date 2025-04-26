@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<!-- eslint-disable-next-line vue/no-v-html -->
 	<div class="note-preview" v-html="html" />
@@ -36,6 +41,8 @@ export default {
 			disabled: this.readonly,
 			liClass: 'task-list-item',
 		})
+
+		md.use(require('markdown-it-bidi'))
 
 		return {
 			html: '',
@@ -196,7 +203,7 @@ export default {
 	}
 
 	& ul, & ol {
-		margin-left: 3ex;
+		margin-inline-start: 3ex;
 	}
 
 	& li > p, & li > ul, & li > ol {
@@ -220,8 +227,8 @@ export default {
 
 	& blockquote {
 		font-style: italic;
-		border-left: 4px solid var(--color-border);
-		padding-left: 2ex;
+		border-inline-start: 4px solid var(--color-border);
+		padding-inline-start: 2ex;
 		color: var(--color-text-light)
 	}
 
@@ -263,8 +270,8 @@ export default {
 	.download-icon-inner {
 		height: 3em;
 		width: auto;
-		margin-left: auto;
-		margin-right: auto;
+		margin-inline-start: auto;
+		margin-inline-end: auto;
 		margin-bottom: 5px;
 	}
 
@@ -281,7 +288,7 @@ export default {
 
 	& table td, & table th {
 		padding: 0.35em 0.5em;
-		text-align: left;
+		text-align: start;
 		border: 1px solid var(--color-border);
 	}
 

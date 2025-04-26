@@ -1,3 +1,7 @@
+<!--
+  - SPDX-FileCopyrightText: 2020-2024 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 # Rest API documentation of Nextcloud Notes
 
 The notes app comes with a REST-based API.

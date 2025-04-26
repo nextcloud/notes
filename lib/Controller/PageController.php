@@ -2,13 +2,21 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2013 Bernhard Posselt <nukeawhale@gmail.com>
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Controller;
 
+use OCA\Files\Event\LoadSidebar;
 use OCA\Notes\AppInfo\Application;
 use OCA\Notes\Service\NotesService;
 
 use OCA\Notes\Service\SettingsService;
 use OCA\Text\Event\LoadEditor;
+use OCA\Viewer\Event\LoadViewer;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
@@ -37,7 +45,7 @@ class PageController extends Controller {
 		IUserSession $userSession,
 		IURLGenerator $urlGenerator,
 		IEventDispatcher $eventDispatcher,
-		IInitialState $initialState
+		IInitialState $initialState,
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -55,7 +63,7 @@ class PageController extends Controller {
 	 * @suppress PhanUndeclaredClassReference, PhanTypeMismatchArgument, PhanUndeclaredClassMethod
 	 */
 	public function index() : TemplateResponse {
-		$devMode = !is_file(dirname(__FILE__).'/../../js/notes-main.js');
+		$devMode = !is_file(dirname(__FILE__) . '/../../js/notes-main.js');
 		$response = new TemplateResponse(
 			$this->appName,
 			$devMode ? 'dev-mode' : 'main',
@@ -64,6 +72,14 @@ class PageController extends Controller {
 
 		if (\OCP\Server::get(IAppManager::class)->isEnabledForUser('text') && class_exists(LoadEditor::class)) {
 			$this->eventDispatcher->dispatchTyped(new LoadEditor());
+		}
+
+		if (class_exists(LoadSidebar::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadSidebar());
+		}
+
+		if (\OCP\Server::get(IAppManager::class)->isEnabledForUser('viewer') && class_exists(LoadViewer::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadViewer());
 		}
 
 		$this->initialState->provideInitialState(

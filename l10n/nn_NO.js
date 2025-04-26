@@ -4,14 +4,14 @@ OC.L10N.register(
     "Notes" : "Notat",
     "Error" : "Feil",
     "New note" : "Nytt notat",
-    "Details" : "Detaljar",
-    "Delete note" : "Slett notat",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
+    "Share" : "Del",
+    "Rename" : "Gje nytt namn",
+    "Delete note" : "Slett notat",
     "Edit" : "Endra",
     "Today" : "I dag",
     "Yesterday" : "i går",
-    "Category" : "Kategori",
     "Tasks" : "Oppgåver"
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\AppInfo;
 
 use OCA\Notes\Service\MetaService;
@@ -19,7 +24,7 @@ class NotesHooks {
 	public function __construct(
 		LoggerInterface $logger,
 		IRootFolder $rootFolder,
-		MetaService $metaService
+		MetaService $metaService,
 	) {
 		$this->logger = $logger;
 		$this->rootFolder = $rootFolder;

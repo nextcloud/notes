@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+  <file src="lib/AppInfo/BeforeShareCreatedListener.php">
+    <MissingDependency>
+      <code><![CDATA[$this->noteUtil->getRoot()]]></code>
+      <code><![CDATA[$this->noteUtil->getRoot()]]></code>
+    </MissingDependency>
+  </file>
+  <file src="lib/AppInfo/NotesHooks.php">
+    <MissingDependency>
+      <code><![CDATA[IRootFolder]]></code>
+      <code><![CDATA[IRootFolder]]></code>
+    </MissingDependency>
+    <MissingParamType>
+      <code><![CDATA[$service]]></code>
+    </MissingParamType>
+  </file>
+  <file src="lib/Controller/ChunkCursor.php">
+    <MissingConstructor>
+      <code><![CDATA[$noteId]]></code>
+      <code><![CDATA[$noteLastUpdate]]></code>
+      <code><![CDATA[$timeStart]]></code>
+    </MissingConstructor>
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(int)$m->meta->getLastUpdate()]]></code>
+    </RedundantCastGivenDocblockType>
+    <UnsafeInstantiation>
+      <code><![CDATA[new static()]]></code>
+      <code><![CDATA[new static()]]></code>
+    </UnsafeInstantiation>
+  </file>
+  <file src="lib/Controller/Helper.php">
+    <InvalidTemplateParam>
+      <code><![CDATA[$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS))]]></code>
+    </InvalidTemplateParam>
+    <PossiblyNullReference>
+      <code><![CDATA[getUID]]></code>
+    </PossiblyNullReference>
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(int)$m->meta->getLastUpdate()]]></code>
+    </RedundantCastGivenDocblockType>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[$chunkCursorStr]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="lib/Controller/NotesController.php">
+    <MissingClosureReturnType>
+      <code><![CDATA[function () use ($noteid, $file) {]]></code>
+    </MissingClosureReturnType>
+    <MissingReturnType>
+      <code><![CDATA[inLockScope]]></code>
+    </MissingReturnType>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$targetimage->fopen('rb')]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyNullArgument>
+      <code><![CDATA[$nac['lastUpdate'] ?? null]]></code>
+    </PossiblyNullArgument>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[$nac]]></code>
+      <code><![CDATA[$nac]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="lib/Controller/PageController.php">
+    <PossiblyNullReference>
+      <code><![CDATA[getUID]]></code>
+      <code><![CDATA[getUID]]></code>
+      <code><![CDATA[getUID]]></code>
+    </PossiblyNullReference>
+    <UndefinedClass>
+      <code><![CDATA[LoadEditor]]></code>
+      <code><![CDATA[LoadViewer]]></code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/SettingsController.php">
+    <PossiblyNullReference>
+      <code><![CDATA[getUID]]></code>
+    </PossiblyNullReference>
+  </file>
+  <file src="lib/Db/Meta.php">
+    <MissingPropertyType>
+      <code><![CDATA[$contentEtag]]></code>
+      <code><![CDATA[$etag]]></code>
+      <code><![CDATA[$fileEtag]]></code>
+      <code><![CDATA[$fileId]]></code>
+      <code><![CDATA[$lastUpdate]]></code>
+      <code><![CDATA[$userId]]></code>
+    </MissingPropertyType>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[Meta]]></code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="lib/Db/MetaMapper.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$this->findEntity($qb)]]></code>
+    </LessSpecificReturnStatement>
+    <MissingParamType>
+      <code><![CDATA[$userId]]></code>
+    </MissingParamType>
+    <MissingTemplateParam>
+      <code><![CDATA[MetaMapper]]></code>
+    </MissingTemplateParam>
+    <MoreSpecificReturnType>
+      <code><![CDATA[Meta]]></code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="lib/Migration/EditorHint.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getAppValue]]></code>
+    </DeprecatedMethod>
+    <MissingReturnType>
+      <code><![CDATA[run]]></code>
+    </MissingReturnType>
+  </file>
+  <file src="lib/Migration/Version3005Date20200528204430.php">
+    <MissingReturnType>
+      <code><![CDATA[postSchemaChange]]></code>
+      <code><![CDATA[preSchemaChange]]></code>
+    </MissingReturnType>
+  </file>
+  <file src="lib/Migration/Version3005Date20200528204431.php">
+    <MissingReturnType>
+      <code><![CDATA[postSchemaChange]]></code>
+      <code><![CDATA[preSchemaChange]]></code>
+    </MissingReturnType>
+  </file>
+  <file src="lib/Service/MetaService.php">
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[$onError]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="lib/Service/Note.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[$content === false]]></code>
+      <code><![CDATA[$subdir === false]]></code>
+      <code><![CDATA[is_string($content)]]></code>
+    </DocblockTypeContradiction>
+    <MissingDependency>
+      <code><![CDATA[$this->noteUtil->getRoot()]]></code>
+    </MissingDependency>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[$subdir]]></code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="lib/Service/NoteUtil.php">
+    <MissingDependency>
+      <code><![CDATA[$this->getRoot()]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[IRootFolder]]></code>
+      <code><![CDATA[IRootFolder]]></code>
+      <code><![CDATA[IRootFolder]]></code>
+    </MissingDependency>
+    <MissingReturnType>
+      <code><![CDATA[getCategoryFolder]]></code>
+      <code><![CDATA[getPathForUser]]></code>
+    </MissingReturnType>
+    <PossiblyNullReference>
+      <code><![CDATA[getUID]]></code>
+      <code><![CDATA[getUID]]></code>
+    </PossiblyNullReference>
+  </file>
+  <file src="lib/Service/NotesService.php">
+    <MissingDependency>
+      <code><![CDATA[$this->noteUtil->getRoot()]]></code>
+    </MissingDependency>
+    <MissingParamType>
+      <code><![CDATA[$fileDataArray]]></code>
+    </MissingParamType>
+    <MissingReturnType>
+      <code><![CDATA[createImage]]></code>
+      <code><![CDATA[delete]]></code>
+      <code><![CDATA[getCustomExtension]]></code>
+    </MissingReturnType>
+  </file>
+  <file src="lib/Service/SettingsService.php">
+    <DeprecatedMethod>
+      <code><![CDATA[\OCP\Util::getVersion()]]></code>
+      <code><![CDATA[getAppValue]]></code>
+      <code><![CDATA[getAppValue]]></code>
+    </DeprecatedMethod>
+    <InvalidOperand>
+      <code><![CDATA[$this->defaultSuffixes]]></code>
+    </InvalidOperand>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$settings]]></code>
+    </LessSpecificReturnStatement>
+    <MissingClosureParamType>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType>
+      <code><![CDATA[function ($value) {]]></code>
+      <code><![CDATA[function ($value) {]]></code>
+      <code><![CDATA[function (string $uid) {]]></code>
+    </MissingClosureReturnType>
+    <MissingDependency>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[IRootFolder]]></code>
+      <code><![CDATA[IRootFolder]]></code>
+    </MissingDependency>
+    <MissingParamType>
+      <code><![CDATA[$saveInitial]]></code>
+    </MissingParamType>
+    <MissingPropertyType>
+      <code><![CDATA[$defaultSuffixes]]></code>
+    </MissingPropertyType>
+    <MoreSpecificReturnType>
+      <code><![CDATA[\stdClass]]></code>
+    </MoreSpecificReturnType>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[preg_replace('/[^A-Za-z0-9.-]/', '', $value)]]></code>
+    </PossiblyInvalidArgument>
+    <RawObjectIteration>
+      <code><![CDATA[$oldSettings]]></code>
+    </RawObjectIteration>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[$toBeSaved]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="lib/Service/TagService.php">
+    <MissingParamType>
+      <code><![CDATA[$favorite]]></code>
+      <code><![CDATA[$fileId]]></code>
+      <code><![CDATA[$fileId]]></code>
+    </MissingParamType>
+    <MissingPropertyType>
+      <code><![CDATA[$cachedTags]]></code>
+    </MissingPropertyType>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$alltags]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyNullArgument>
+      <code><![CDATA[$alltags[$fileId]]]></code>
+    </PossiblyNullArgument>
+    <PossiblyNullReference>
+      <code><![CDATA[addToFavorites]]></code>
+      <code><![CDATA[getTagsForObjects]]></code>
+      <code><![CDATA[getTagsForObjects]]></code>
+      <code><![CDATA[removeFromFavorites]]></code>
+    </PossiblyNullReference>
+  </file>
+  <file src="lib/Service/Util.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$sleep]]></code>
+    </ArgumentTypeCoercion>
+    <MissingReturnType>
+      <code><![CDATA[retryIfLocked]]></code>
+    </MissingReturnType>
+  </file>
+  <file src="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$data->getData()]]></code>
+    </ArgumentTypeCoercion>
+    <MissingClosureParamType>
+      <code><![CDATA[$data]]></code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType>
+      <code><![CDATA[function ($data) {]]></code>
+    </MissingClosureReturnType>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$data->getData()]]></code>
+    </PossiblyInvalidArgument>
+  </file>
+</files>

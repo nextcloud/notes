@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<EditorHint v-if="editorHint" @close="editorHint=false" />
 	<NcContent v-else app-name="notes" :content-class="{loading: loading.notes}">
@@ -19,7 +24,7 @@
 			<template #footer>
 				<ul class="app-navigation-entry__settings">
 					<NcAppNavigationItem
-						:title="t('notes', 'Notes settings')"
+						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
 					>
 						<CogIcon slot="icon" :size="20" />
@@ -37,8 +42,6 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @note-deleted="onNoteDeleted" />
-
-		<router-view name="sidebar" />
 	</NcContent>
 </template>
 
@@ -52,7 +55,7 @@ import {
 } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/dist/index.css'
+import '@nextcloud/dialogs/style.css'
 
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
@@ -255,7 +258,7 @@ export default {
 				const action = '<button class="undo">' + this.t('notes', 'Undo Delete') + '</button>'
 				this.undoNotification = showSuccess(
 					'<span class="deletedLabel">' + label + '</span> ' + action,
-					{ isHTML: true, timeout: TOAST_PERMANENT_TIMEOUT, onRemove: this.onUndoNotificationClosed }
+					{ isHTML: true, timeout: TOAST_PERMANENT_TIMEOUT, onRemove: this.onUndoNotificationClosed },
 				)
 				this.undoNotification.toastElement.getElementsByClassName('undo')
 					.forEach(element => { element.onclick = this.onUndoDelete })
@@ -319,9 +322,9 @@ export default {
 	padding-top: 0 !important;
 	// Prevent shrinking or growing
 	flex: 0 0 auto;
-	padding-right: 3px;
+	padding-inline-end: 3px;
 	padding-bottom: 3px;
-	padding-left: 3px;
+	padding-inline-start: 3px;
 	margin: 0 3px;
 }
 </style>

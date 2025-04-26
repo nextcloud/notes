@@ -1,6 +1,11 @@
+<!--
+  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
-	<h3 class="title">
-		{{ title }}
+	<h3 class="name">
+		{{ name }}
 	</h3>
 </template>
 
@@ -12,7 +17,7 @@ export default {
 	},
 
 	props: {
-		title: {
+		name: {
 			type: String,
 			required: true,
 		},
@@ -21,11 +26,10 @@ export default {
 </script>
 
 <style scoped>
-	.title {
+	.name {
 		font-weight: bold;
-		color: var(--color-primary-element);
 		font-size: var(--default-font-size);
-		line-height: 44px;
+		line-height: var(--default-clickable-area);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;

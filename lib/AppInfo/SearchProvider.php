@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\AppInfo;
 
 use OCA\Notes\Service\Note;
@@ -23,7 +28,7 @@ class SearchProvider implements IProvider {
 	public function __construct(
 		Util $util,
 		NotesService $notesService,
-		IURLGenerator $url
+		IURLGenerator $url,
 	) {
 		$this->util = $util;
 		$this->notesService = $notesService;

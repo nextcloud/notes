@@ -1,3 +1,9 @@
+/**
+ * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: Jan-Christoph Borchardt http://jancborchardt.net
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 /* workaround for https://github.com/nextcloud/nextcloud-vue/issues/1384 */
 body {
 	min-height: 100%;
@@ -28,20 +34,28 @@ li:focus  .app-navigation-entry__utils .action-item {
 
 /* Welcome / Help */
 .feature {
-	background-position: left center;
+	background-position: 0 center;
 	width: 100%;
 	min-height: 32px;
 	line-height: 32px;
-	padding-left: 32px;
+	padding-inline-start: 32px;
 	margin-top: 0.3em !important;
 	margin-bottom: 0.3em !important;
 	display: inline-block;
 	vertical-align: middle;
 }
 
+body[dir='ltr'] .feature {
+	background-position-x: left;
+}
+
+body[dir='rtl'] .feature {
+	background-position-x: right;
+}
+
 .feature ul {
 	list-style: circle outside;
-	padding-left: 2em;
+	padding-inline-start: 2em;
 }
 
 
@@ -66,6 +80,6 @@ li:focus  .app-navigation-entry__utils .action-item {
 	}
 
 	.app-content {
-		margin-left: 0 !important;
+		margin-inline-start: 0 !important;
 	}
 }

@@ -1,30 +1,43 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<Fragment>
 		<NcAppNavigationItem
-			:title="t('notes', 'All notes')"
+			:name="t('notes', 'All notes')"
 			:class="{ active: selectedCategory === null }"
 			@click.prevent.stop="onSelectCategory(null)"
 		>
-			<HistoryIcon slot="icon" :size="20" />
-			<NcAppNavigationCounter slot="counter">
-				{{ numNotes }}
-			</NcAppNavigationCounter>
+			<template #icon>
+				<HistoryIcon :size="20" />
+			</template>
+			<template #counter>
+				<NcCounterBubble>
+					{{ numNotes }}
+				</NcCounterBubble>
+			</template>
 		</NcAppNavigationItem>
 
-		<NcAppNavigationCaption :title="t('notes', 'Categories')" />
+		<NcAppNavigationCaption :name="t('notes', 'Categories')" />
 
 		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"
-			:title="categoryTitle(category.name)"
+			:name="categoryTitle(category.name)"
 			:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
 			:class="{ active: category.name === selectedCategory }"
 			@click.prevent.stop="onSelectCategory(category.name)"
 		>
-			<FolderOutlineIcon v-if="category.name === ''" slot="icon" :size="20" />
-			<FolderIcon v-else slot="icon" :size="20" />
-			<NcAppNavigationCounter slot="counter">
-				{{ category.count }}
-			</NcAppNavigationCounter>
+			<template #icon>
+				<FolderOutlineIcon v-if="category.name === ''" :size="20" />
+				<FolderIcon v-else :size="20" />
+			</template>
+			<template #counter>
+				<NcCounterBubble>
+					{{ category.count }}
+				</NcCounterBubble>
+			</template>
 		</NcAppNavigationItem>
 	</Fragment>
 </template>
@@ -33,9 +46,9 @@
 import {
 	NcAppNavigationItem,
 	NcAppNavigationCaption,
-	NcAppNavigationCounter,
+	NcCounterBubble,
 } from '@nextcloud/vue'
-import { Fragment } from 'vue-fragment'
+import { Fragment } from 'vue-frag'
 
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
@@ -52,7 +65,7 @@ export default {
 		Fragment,
 		NcAppNavigationItem,
 		NcAppNavigationCaption,
-		NcAppNavigationCounter,
+		NcCounterBubble,
 		FolderIcon,
 		FolderOutlineIcon,
 		HistoryIcon,
@@ -83,7 +96,7 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .app-navigation-entry-wrapper.active:deep(.app-navigation-entry) {
 	background-color: var(--color-primary-element-light) !important;
 }

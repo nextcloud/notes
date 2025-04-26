@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2013 Bernhard Posselt <nukeawhale@gmail.com>
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
 use OCP\Files\File;
@@ -17,7 +23,7 @@ class NotesService {
 	public function __construct(
 		MetaService $metaService,
 		SettingsService $settings,
-		NoteUtil $noteUtil
+		NoteUtil $noteUtil,
 	) {
 		$this->metaService = $metaService;
 		$this->settings = $settings;
@@ -67,6 +73,9 @@ class NotesService {
 		}
 	}
 
+	/**
+	 * @throws NoteDoesNotExistException
+	 */
 	public function get(string $userId, int $id) : Note {
 		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
@@ -120,7 +129,7 @@ class NotesService {
 
 		// get file name
 		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
-		if ($fileSuffix === "custom") {
+		if ($fileSuffix === 'custom') {
 			$fileSuffix = $this->settings->get($userId, 'customSuffix');
 		}
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
@@ -149,20 +158,8 @@ class NotesService {
 		return $this->noteUtil->getSafeTitle($content);
 	}
 
-
-
-
-
-
-	/**
-	 * @param string $userId the user id
-	 * @return Folder
-	 */
 	private function getNotesFolder(string $userId, bool $create = true) : Folder {
-		$userPath = $this->noteUtil->getRoot()->getUserFolder($userId)->getPath();
-		$path = $userPath . '/' . $this->settings->get($userId, 'notesPath');
-		$folder = $this->noteUtil->getOrCreateFolder($path, $create);
-		return $folder;
+		return $this->noteUtil->getOrCreateNotesFolder($userId, $create);
 	}
 
 	/**
@@ -171,7 +168,7 @@ class NotesService {
 	private static function gatherNoteFiles(
 		string $customExtension,
 		Folder $folder,
-		string $categoryPrefix = ''
+		string $categoryPrefix = '',
 	) : array {
 		$data = [
 			'files' => [],
@@ -206,7 +203,7 @@ class NotesService {
 	 */
 	private function getCustomExtension(string $userId) {
 		$suffix = $this->settings->get($userId, 'customSuffix');
-		return ltrim($suffix, ".");
+		return ltrim($suffix, '.');
 	}
 
 	/**
@@ -250,7 +247,7 @@ class NotesService {
 	 * @param $fileDataArray
 	 * @throws NotPermittedException
 	 * @throws ImageNotWritableException
-	 * https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
+	 *                                   https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
 	 */
 	public function createImage(string $userId, int $noteid, $fileDataArray) {
 		$note = $this->get($userId, $noteid);
@@ -265,7 +262,7 @@ class NotesService {
 		}
 		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
 
-		if ($fileDataArray['tmp_name'] === "") {
+		if ($fileDataArray['tmp_name'] === '') {
 			throw new ImageNotWritableException();
 		}
 

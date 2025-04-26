@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2013 Bernhard Posselt <nukeawhale@gmail.com>
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\MetaNote;
@@ -51,7 +57,7 @@ class NotesApiController extends ApiController {
 		string $exclude = '',
 		int $pruneBefore = 0,
 		int $chunkSize = 0,
-		string $chunkCursor = null
+		?string $chunkCursor = null,
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$category,
@@ -112,7 +118,7 @@ class NotesApiController extends ApiController {
 		string $title = '',
 		string $content = '',
 		int $modified = 0,
-		bool $favorite = false
+		bool $favorite = false,
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category, $title, $content, $modified, $favorite) {
 			$note = $this->service->create($this->helper->getUID(), $title, $category);
@@ -143,7 +149,7 @@ class NotesApiController extends ApiController {
 		string $category = '',
 		string $content = '',
 		int $modified = 0,
-		bool $favorite = false
+		bool $favorite = false,
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category, $content, $modified, $favorite) {
 			$title = $this->service->getTitleFromContent($content);
@@ -162,7 +168,7 @@ class NotesApiController extends ApiController {
 		?int $modified = null,
 		?string $title = null,
 		?string $category = null,
-		?bool $favorite = null
+		?bool $favorite = null,
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$id,
@@ -202,7 +208,7 @@ class NotesApiController extends ApiController {
 		?string $content = null,
 		?int $modified = null,
 		?string $category = null,
-		?bool $favorite = null
+		?bool $favorite = null,
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content, $modified, $category, $favorite) {
 			if ($content === null) {

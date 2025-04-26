@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcAppContent>
 		<div class="welcome-content">
@@ -69,6 +74,14 @@ export default {
 <style scoped>
 .welcome-content {
 	padding: 4em 8em;
+}
+
+@media (max-width: 60em) {
+	.welcome-content {
+		margin: auto;
+		max-width: 40em;
+		padding: 2em 2em 1em 1em;
+	}
 }
 
 .welcome-content h2 {

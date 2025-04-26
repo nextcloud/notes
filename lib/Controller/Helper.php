@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\AppInfo\Application;
@@ -29,7 +34,7 @@ class Helper {
 		NotesService $notesService,
 		MetaService $metaService,
 		IUserSession $userSession,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->notesService = $notesService;
 		$this->metaService = $metaService;
@@ -48,14 +53,14 @@ class Helper {
 		if ($ifMatch) {
 			$matchEtags = preg_split('/,\s*/', $ifMatch);
 			$meta = $this->metaService->update($userId, $note);
-			if (!in_array('"'.$meta->getEtag().'"', $matchEtags)) {
+			if (!in_array('"' . $meta->getEtag() . '"', $matchEtags)) {
 				throw new ETagDoesNotMatchException($note);
 			}
 		}
 		return $note;
 	}
 
-	public function getNoteData(Note $note, array $exclude = [], Meta $meta = null) : array {
+	public function getNoteData(Note $note, array $exclude = [], ?Meta $meta = null) : array {
 		if ($meta === null) {
 			$meta = $this->metaService->update($this->getUID(), $note);
 		}
@@ -67,9 +72,9 @@ class Helper {
 	public function getNotesAndCategories(
 		int $pruneBefore,
 		array $exclude,
-		string $category = null,
+		?string $category = null,
 		int $chunkSize = 0,
-		string $chunkCursorStr = null
+		?string $chunkCursorStr = null,
 	) : array {
 		$userId = $this->getUID();
 		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
@@ -125,9 +130,10 @@ class Helper {
 	}
 
 	public function logException(\Throwable $e) : void {
-		$this->logger->error('Controller failed with '.get_class($e), [ 'exception' => $e ]);
+		$this->logger->error('Controller failed with ' . get_class($e), [ 'exception' => $e ]);
 	}
 
+	/** @param 200|201|400|403|404|423|500|507 $statusCode */
 	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {
 		$response = [
 			'errorType' => get_class($e)

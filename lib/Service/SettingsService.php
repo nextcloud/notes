@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2018 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
 use OCA\Notes\AppInfo\Application;
@@ -26,7 +31,7 @@ class SettingsService {
 		IConfig $config,
 		IL10N $l10n,
 		IRootFolder $root,
-		IAppManager $appManager
+		IAppManager $appManager,
 	) {
 		$this->config = $config;
 		$this->l10n = $l10n;
@@ -81,7 +86,7 @@ class SettingsService {
 		];
 	}
 
-	private function getDefaultNotesPath(string $uid) : string {
+	public function getDefaultNotesPath(string $uid) : string {
 		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
 		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
 		if ($defaultExists) {
@@ -94,7 +99,7 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function set(string $uid, array $settings) : void {
+	public function set(string $uid, array $settings, bool $writeDefaults = false) : void {
 		// load existing values for missing attributes
 		$oldSettings = $this->getSettingsFromDB($uid);
 		foreach ($oldSettings as $name => $value) {
@@ -107,10 +112,11 @@ class SettingsService {
 			if ($value !== null && array_key_exists($name, $this->attrs)) {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
-			if (!array_key_exists($name, $this->attrs)
+			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
+			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
 				|| $value === null
-				|| $value === $this->attrs[$name]['default']
-			) {
+				|| $value === $default
+			)) {
 				unset($settings[$name]);
 			}
 		}
@@ -155,7 +161,7 @@ class SettingsService {
 			}
 		}
 		if ($toBeSaved) {
-			$this->set($uid, (array) $settings);
+			$this->set($uid, (array)$settings);
 		}
 		return $settings;
 	}
@@ -168,7 +174,7 @@ class SettingsService {
 		if (property_exists($settings, $name)) {
 			return $settings->{$name};
 		} else {
-			throw new \OCP\PreConditionNotMetException('Setting '.$name.' not found for user '.$uid.'.');
+			throw new \OCP\PreConditionNotMetException('Setting ' . $name . ' not found for user ' . $uid . '.');
 		}
 	}
 

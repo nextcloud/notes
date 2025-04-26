@@ -1,8 +1,15 @@
+<!--
+  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcListItem
-		:title="title"
+		:name="title"
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
+		one-line
+		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
 	>
 		<template #subtitle>
@@ -22,38 +29,88 @@
 			<FileDocumentOutlineIcon v-else
 				slot="icon"
 				:size="20"
-				fill-color="var(--color-text-lighter)"
 			/>
+		</template>
+		<template v-if="isShared" #indicator>
+			<ShareVariantIcon :size="16" fill-color="#0082c9" />
 		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
 				{{ actionFavoriteText }}
 			</NcActionButton>
-			<NcActionButton @click="onToggleSidebar">
-				<SidebarIcon slot="icon" :size="20" />
-				{{ t('notes', 'Details') }}
+
+			<NcActionButton @click="onToggleSharing">
+				<template #icon>
+					<ShareVariantIcon :size="20" />
+				</template>
+				{{ t('notes', 'Share') }}
 			</NcActionButton>
-			<NcActionButton v-if="!note.readonly" :icon="actionDeleteIcon" @click="onDeleteNote">
-				{{ t('notes', 'Delete note') }}
+
+			<NcActionButton v-if="!showCategorySelect" @click="showCategorySelect = true">
+				<template #icon>
+					<FolderIcon :size="20" />
+				</template>
+				{{ categoryTitle }}
 			</NcActionButton>
+			<NcActionInput
+				v-else
+				:value="note.category"
+				type="multiselect"
+				label="label"
+				track-by="id"
+				:multiple="false"
+				:options="categories"
+				:disabled="loading.category"
+				:taggable="true"
+				@input="onCategoryChange"
+				@search-change="onCategoryChange"
+			>
+				<template #icon>
+					<FolderIcon :size="20" />
+				</template>
+				{{ t('notes', 'Change category') }}
+			</NcActionInput>
+
+			<NcActionButton v-if="!renaming" @click="startRenaming">
+				<PencilIcon slot="icon" :size="20" />
+				{{ t('notes', 'Rename') }}
+			</NcActionButton>
+			<NcActionInput v-else
+				v-model.trim="newTitle"
+				:disabled="!renaming"
+				:placeholder="t('notes', 'Rename note')"
+				:show-trailing-button="true"
+				@input="onInputChange($event)"
+				@submit="onRename"
+			>
+				<PencilIcon slot="icon" :size="20" />
+			</NcActionInput>
+
 			<NcActionSeparator />
-			<NcActionButton icon="icon-files-dark" @click="onCategorySelected">
-				{{ actionCategoryText }}
+
+			<NcActionButton v-if="!note.readonly"
+				:icon="actionDeleteIcon"
+				:close-after-click="true"
+				@click="onDeleteNote"
+			>
+				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
 		</template>
 	</NcListItem>
 </template>
 
 <script>
-import { NcListItem, NcActionButton } from '@nextcloud/vue'
+import { NcListItem, NcActionButton, NcActionSeparator, NcActionInput } from '@nextcloud/vue'
 import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
+import FolderIcon from 'vue-material-design-icons/Folder.vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
-import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
-import store from '../store.js'
-import { setFavorite, setTitle, fetchNote, deleteNote } from '../NotesService.js'
+import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
+import ShareVariantIcon from 'vue-material-design-icons/ShareVariant.vue'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default {
 	name: 'NoteItem',
@@ -61,10 +118,14 @@ export default {
 	components: {
 		AlertOctagonIcon,
 		FileDocumentOutlineIcon,
+		FolderIcon,
 		NcActionButton,
 		NcListItem,
-		SidebarIcon,
 		StarIcon,
+		NcActionSeparator,
+		NcActionInput,
+		PencilIcon,
+		ShareVariantIcon,
 	},
 
 	props: {
@@ -78,13 +139,21 @@ export default {
 		return {
 			loading: {
 				note: false,
+				category: false,
 			},
+			newTitle: '',
+			renaming: false,
+			showCategorySelect: false,
+			isShareCreated: false,
 		}
 	},
 
 	computed: {
 		isSelected() {
 			return this.$store.getters.getSelectedNote() === this.note.id
+		},
+		isShared() {
+			return this.note.isShared || this.isShareCreated
 		},
 
 		title() {
@@ -111,9 +180,33 @@ export default {
 		actionDeleteIcon() {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
+		categories() {
+			return [
+				{
+					id: '',
+					label: categoryLabel(''),
+				},
+				...this.$store.getters.getCategories(0, false).map((category) => ({
+					id: category,
+					label: categoryLabel(category),
+				})),
+			]
+		},
+	},
+
+	mounted() {
+		subscribe('files_sharing:share:created', this.onShareCreated)
+	},
+
+	destroyed() {
+		unsubscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
 	methods: {
+		onMenuChange(state) {
+			this.actionsOpen = state
+			this.showCategorySelect = false
+		},
 		onNoteSelected(noteId) {
 			this.$emit('note-selected', noteId)
 		},
@@ -131,24 +224,49 @@ export default {
 			this.actionsOpen = false
 			this.$emit('category-selected', this.note.category)
 		},
-		onToggleSidebar() {
-			this.actionsOpen = false
-			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
+		startRenaming() {
+			this.renaming = true
+			this.newTitle = this.note.title
+			this.$emit('start-renaming', this.note.id)
 		},
-		onRename(newTitle) {
+		onInputChange(event) {
+			this.newTitle = event.target.value.toString()
+		},
+		async onCategoryChange(result) {
+			this.showCategorySelect = false
+			const category = result?.id ?? result?.label ?? null
+			if (category !== null && this.note.category !== category) {
+				this.loading.category = true
+				await setCategory(this.note.id, category)
+				this.loading.category = false
+			}
+		},
+		async onRename() {
+			const newTitle = this.newTitle.toString()
+			if (!newTitle) {
+				return
+			}
 			this.loading.note = true
 			setTitle(this.note.id, newTitle)
-				.catch(() => {
+				.then(() => {
+					this.newTitle = ''
+				})
+				.catch((e) => {
+					console.error('Failed to rename note', e)
+					showError(this.t('notes', 'Error while renaming note.'))
 				})
 				.finally(() => {
 					this.loading.note = false
 				})
+
 			if (routeIsNewNote(this.$route)) {
 				this.$router.replace({
 					name: 'note',
 					params: { noteId: this.note.id.toString() },
 				})
 			}
+			this.renaming = false
+
 		},
 		async onDeleteNote() {
 			this.loading.delete = true
@@ -168,11 +286,31 @@ export default {
 				this.actionsOpen = false
 			}
 		},
+		onToggleSharing() {
+			if (window?.OCA?.Files?.Sidebar?.setActiveTab) {
+				emit('toggle-navigation', { open: false })
+				setTimeout(() => {
+					window.dispatchEvent(new Event('resize'))
+				}, 200)
+				window.OCA.Files.Sidebar.setActiveTab('sharing')
+				window.OCA.Files.Sidebar.open(this.note.internalPath)
+			}
+		},
+		async onShareCreated(event) {
+			const { share } = event
+
+			if (share.fileSource === this.note.id) {
+				this.isShareCreated = true
+			}
+		},
 	},
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .material-design-icon {
-	width: 44px;
+	width: var(--default-clickable-area);
+	.list-item__wrapper--active & {
+		color: var(--color-primary-element-text) !important;
+	}
 }
 </style>

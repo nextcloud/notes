@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
 use OCP\Files\File;
@@ -44,11 +49,11 @@ class Note {
 			$content = '';
 		}
 		if (!is_string($content)) {
-			throw new \Exception('Can\'t read file content for '.$this->file->getPath());
+			throw new \Exception('Can\'t read file content for ' . $this->file->getPath());
 		}
 		if (!mb_check_encoding($content, 'UTF-8')) {
 			$this->util->logger->warning(
-				'File encoding for '.$this->file->getPath().' is not UTF-8. This may cause problems.'
+				'File encoding for ' . $this->file->getPath() . ' is not UTF-8. This may cause problems.'
 			);
 			$content = mb_convert_encoding($content, 'UTF-8');
 		}
@@ -60,14 +65,14 @@ class Note {
 		$excerpt = trim($this->noteUtil->stripMarkdown($this->getContent()));
 		$title = $this->getTitle();
 		if (!empty($title)) {
-			$length = mb_strlen($title, "utf-8");
+			$length = mb_strlen($title, 'utf-8');
 			if (strncasecmp($excerpt, $title, $length) === 0) {
-				$excerpt = mb_substr($excerpt, $length, null, "utf-8");
+				$excerpt = mb_substr($excerpt, $length, null, 'utf-8');
 			}
 		}
 		$excerpt = trim($excerpt);
-		if (mb_strlen($excerpt, "utf-8") > $maxlen) {
-			$excerpt = mb_substr($excerpt, 0, $maxlen, "utf-8") . '…';
+		if (mb_strlen($excerpt, 'utf-8') > $maxlen) {
+			$excerpt = mb_substr($excerpt, 0, $maxlen, 'utf-8') . '…';
 		}
 		return str_replace("\n", "\u{2003}", $excerpt);
 	}
@@ -105,6 +110,9 @@ class Note {
 		if (!in_array('readonly', $exclude)) {
 			$data['readonly'] = $this->getReadOnly();
 		}
+		$data['internalPath'] = $this->noteUtil->getPathForUser($this->file);
+		$data['shareTypes'] = $this->noteUtil->getShareTypes($this->file);
+		$data['isShared'] = (bool)count($data['shareTypes']);
 		$data['error'] = false;
 		$data['errorType'] = '';
 		if (!in_array('content', $exclude)) {
@@ -112,10 +120,10 @@ class Note {
 				$data['content'] = $this->getContent();
 			} catch (\Throwable $e) {
 				$this->util->logger->error(
-					'Could not read content for file: '.$this->file->getPath(),
+					'Could not read content for file: ' . $this->file->getPath(),
 					[ 'exception' => $e ]
 				);
-				$message = $this->util->l10n->t('Error').': '.get_class($e);
+				$message = $this->util->l10n->t('Error') . ': ' . get_class($e);
 				$data['content'] = $message;
 				$data['error'] = true;
 				$data['errorType'] = get_class($e);

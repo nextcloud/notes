@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Tests\API;
 
 class APIv1Test extends CommonAPITest {
@@ -38,7 +43,7 @@ class APIv1Test extends CommonAPITest {
 		], (object)[
 		]);
 		// delete should fail
-		$response = $this->http->request('DELETE', 'notes/'.$note->id);
+		$response = $this->http->request('DELETE', 'notes/' . $note->id);
 		$this->checkResponse($response, 'Delete read-only note note', 403);
 		// test if nothing has changed
 		$this->checkGetReferenceNotes($refNotes, 'After read-only tests');
@@ -65,8 +70,8 @@ class APIv1Test extends CommonAPITest {
 		$this->assertNotEmpty($filteredNotes, 'Filtered notes');
 		$this->checkGetReferenceNotes(
 			$filteredNotes,
-			'Get notes with category '.$category,
-			'?category='.urlencode($category)
+			'Get notes with category ' . $category,
+			'?category=' . urlencode($category)
 		);
 	}
 
@@ -74,44 +79,44 @@ class APIv1Test extends CommonAPITest {
 		array $indexedRefNotes,
 		int $chunkSize,
 		string $messagePrefix,
-		string $chunkCursor = null,
-		array $collectedNotes = []
+		?string $chunkCursor = null,
+		array $collectedNotes = [],
 	) : array {
 		$requestCount = 0;
 		$previousChunkCursor = null;
 		do {
 			$requestCount++;
 			$previousChunkCursor = $chunkCursor;
-			$query = '?chunkSize='.$chunkSize;
+			$query = '?chunkSize=' . $chunkSize;
 			if ($chunkCursor) {
-				$query .= '&chunkCursor='.$chunkCursor;
+				$query .= '&chunkCursor=' . $chunkCursor;
 			}
-			$response = $this->http->request('GET', 'notes'.$query);
+			$response = $this->http->request('GET', 'notes' . $query);
 			$chunkCursor = $response->getHeaderLine('X-Notes-Chunk-Cursor');
-			$this->checkResponse($response, $messagePrefix.'Check response '.$requestCount, 200);
+			$this->checkResponse($response, $messagePrefix . 'Check response ' . $requestCount, 200);
 			$notes = json_decode($response->getBody()->getContents());
 			if ($chunkCursor) {
-				$this->assertIsArray($notes, $messagePrefix.'Response '.$requestCount);
+				$this->assertIsArray($notes, $messagePrefix . 'Response ' . $requestCount);
 				$this->assertLessThanOrEqual(
 					$chunkSize,
 					count($notes),
-					$messagePrefix.'Notes of response '.$requestCount
+					$messagePrefix . 'Notes of response ' . $requestCount
 				);
 				foreach ($notes as $note) {
 					$this->assertArrayNotHasKey(
 						$note->id,
 						$collectedNotes,
-						$messagePrefix.'Note ID of response '.$requestCount.' in collectedNotes'
+						$messagePrefix . 'Note ID of response ' . $requestCount . ' in collectedNotes'
 					);
 					$this->assertArrayHasKey(
 						$note->id,
 						$indexedRefNotes,
-						$messagePrefix.'Note ID of response '.$requestCount.' in refNotes'
+						$messagePrefix . 'Note ID of response ' . $requestCount . ' in refNotes'
 					);
 					$this->checkReferenceNote(
 						$indexedRefNotes[$note->id],
 						$note,
-						$messagePrefix.'Note in response '.$requestCount
+						$messagePrefix . 'Note in response ' . $requestCount
 					);
 					$collectedNotes[$note->id] = $note;
 				}
@@ -120,13 +125,13 @@ class APIv1Test extends CommonAPITest {
 				$this->checkReferenceNotes(
 					$indexedRefNotes,
 					$notes,
-					$messagePrefix.'Notes of response '.$requestCount,
+					$messagePrefix . 'Notes of response ' . $requestCount,
 					[],
 					$leftIds
 				);
 			}
 		} while ($chunkCursor && $requestCount < 100);
-		$this->assertEmpty($chunkCursor, $messagePrefix.'Last response Chunk Cursor');
+		$this->assertEmpty($chunkCursor, $messagePrefix . 'Last response Chunk Cursor');
 		return [
 			'previousChunkCursor' => $previousChunkCursor,
 			'collectedNotes' => $collectedNotes,
@@ -158,8 +163,8 @@ class APIv1Test extends CommonAPITest {
 		$this->checkResponse($response, 'Get settings', 200);
 		$settings = json_decode($response->getBody()->getContents());
 		foreach ($this->requiredSettings as $key => $type) {
-			$this->assertObjectHasAttribute($key, $settings, 'Settings has property '.$key);
-			$this->assertEquals($type, gettype($settings->$key), 'Property type of '.$key);
+			$this->assertObjectHasAttribute($key, $settings, 'Settings has property ' . $key);
+			$this->assertEquals($type, gettype($settings->$key), 'Property type of ' . $key);
 		}
 		return $settings;
 	}

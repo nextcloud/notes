@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2017 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
 use OCA\Notes\Db\Meta;
@@ -95,12 +100,12 @@ class MetaService {
 		if ($insertErrorCount) {
 			if ($insertErrorCount == count($notes)) {
 				$this->util->logger->warning(
-					'Database failed inserting Meta objects for all '.$insertErrorCount.' notes. '.
+					'Database failed inserting Meta objects for all ' . $insertErrorCount . ' notes. ' .
 					'If this happens consistently, there is a problem with your database.',
 				);
 			} else {
 				$this->util->logger->warning(
-					'Database failed inserting Meta objects for '.$insertErrorCount.' times.',
+					'Database failed inserting Meta objects for ' . $insertErrorCount . ' times.',
 				);
 			}
 		}
@@ -123,7 +128,7 @@ class MetaService {
 
 	private function getIndexedArray(array $data, string $property) : array {
 		$property = ucfirst($property);
-		$getter = 'get'.$property;
+		$getter = 'get' . $property;
 		$result = [];
 		foreach ($data as $entity) {
 			$result[$entity->$getter()] = $entity;
@@ -131,7 +136,7 @@ class MetaService {
 		return $result;
 	}
 
-	private function createMeta(string $userId, Note $note, callable $onError = null) : Meta {
+	private function createMeta(string $userId, Note $note, ?callable $onError = null) : Meta {
 		$meta = new Meta();
 		$meta->setUserId($userId);
 		$meta->setFileId($note->getId());
@@ -150,7 +155,7 @@ class MetaService {
 				$loglevel = 'debug';
 			}
 			$this->util->logger->$loglevel(
-				'Could not insert meta data for note '.$note->getId(),
+				'Could not insert meta data for note ' . $note->getId(),
 				[ 'exception' => $e ]
 			);
 		}
@@ -189,7 +194,7 @@ class MetaService {
 			}, 3);
 		} catch (\Throwable $t) {
 			$this->util->logger->error(
-				'Could not generate Content Etag for note '.$note->getId(),
+				'Could not generate Content Etag for note ' . $note->getId(),
 				[ 'exception' => $t ]
 			);
 			return '';

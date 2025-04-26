@@ -1,5 +1,10 @@
+<!--
+  - SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
-	<div class="text-editor-wrapper" :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen, 'is-mobile': isMobile }">
+	<div class="text-editor-wrapper" :class="{ loading: loading, 'icon-error': !loading && (!note || note.error), 'is-mobile': isMobile }">
 		<div v-show="!loading" ref="editor" class="text-editor" />
 	</div>
 </template>
@@ -10,7 +15,7 @@ import {
 } from '@nextcloud/vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
-import { queueCommand } from '../NotesService.js'
+import { queueCommand, refreshNote } from '../NotesService.js'
 import { routeIsNewNote } from '../Util.js'
 import store from '../store.js'
 
@@ -41,9 +46,6 @@ export default {
 		isNewNote() {
 			return routeIsNewNote(this.$route)
 		},
-		sidebarOpen() {
-			return store.state.app.sidebarOpen
-		},
 	},
 
 	watch: {
@@ -55,15 +57,18 @@ export default {
 		},
 	},
 
-	created() {
+	mounted() {
 		this.fetchData()
-		subscribe('files:file:updated', this.fileUpdated)
-
+		subscribe('files:node:updated', this.fileUpdated)
+		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	destroyed() {
 		this?.editor?.destroy()
-		unsubscribe('files:file:updated', this.fileUpdated)
+		unsubscribe('files:node:updated', this.fileUpdated)
+		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		unsubscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	methods: {
@@ -144,6 +149,38 @@ export default {
 				.replaceAll(/\s/gmu, ' ')
 			return title.length > 0 ? title : t('notes', 'New note')
 		},
+
+		async onFileRestoreRequested(event) {
+			const { fileInfo } = event
+
+			if (fileInfo.id !== this.note.id) {
+				return
+			}
+
+			this.loading = true
+		},
+
+		async onFileRestored(version) {
+			if (version.fileId !== this.note.id) {
+				return
+			}
+
+			const etag = await refreshNote(parseInt(this.noteId), this.etag)
+
+			if (etag) {
+				this.etag = etag
+			}
+
+			const autoResolve = setInterval(() => {
+				const el = document.querySelector('[data-cy="resolveServerVersion"]')
+
+				if (el) {
+					el.click()
+					clearInterval(autoResolve)
+				}
+			}, 200)
+			this.loading = false
+		},
 	},
 }
 </script>
@@ -164,7 +201,7 @@ export default {
 
 .is-mobile:deep(.text-menubar) {
 	// Avoid overlapping the navigation toggle
-	margin-left: 44px;
-	margin-top: 4px;
+	margin-inline-start: var(--default-clickable-area);
+	z-index: 1;
 }
 </style>

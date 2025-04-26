@@ -1,0 +1,103 @@
+<!--
+  - SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+# Authors
+
+ - Alexander Weidinger <irgendwie@users.noreply.github.com>
+ - Allan Nordhøy <epost@anotheragency.no>
+ - Andreas Jacobsen <andreasjacobsen93@gmail.com>
+ - Andy Scherzinger <info@andy-scherzinger.de>
+ - Benjamin Schmid <bentolor@users.noreply.github.com>
+ - Bernhard Posselt <BernhardPosselt@users.noreply.github.com>
+ - Bernhard Posselt <Raydiation@users.noreply.github.com>
+ - Bernhard Posselt <dev@bernhard-posselt.com>
+ - Bernhard Posselt <nukeawhale@gmail.com>
+ - CaCO3 <caco3@ruinelli.ch>
+ - Camila Ayres <smayres@gmail.com>
+ - Camila San <hello@camila.codes>
+ - Christian Weiske <cweiske@cweiske.de>
+ - Christoph Wurst <ChristophWurst@users.noreply.github.com>
+ - Dan Muckerman <danielmuckerman@me.com>
+ - Daniel <mail@danielkesselberg.de>
+ - Daniel Kesselberg <mail@danielkesselberg.de>
+ - Daniel Kraus <bovender@bovender.de>
+ - Daniel Moch <daniel@danielmoch.com>
+ - Daniel Morlock <github@danielmorlock.de>
+ - David Prévot <david@tilapin.org>
+ - Erik Pellikka <erik@pellikka.org>
+ - Fallon Turner <fcturner@users.noreply.github.com>
+ - Felix Nüsse <felix.nuesse@t-online.de>
+ - Ferdinand Mütsch <mail@ferdinand-muetsch.de>
+ - Florian Hülsmann <fh@cbix.de>
+ - Hendrik Leppelsack <hendrik@leppelsack.de>
+ - Holger Hees <holger.hees@gmail.com>
+ - Holly <holly@r00t.li>
+ - Jace Manshadi <jaymanshad@proton.me>
+ - Jacek Tomasiak <jacek.tomasiak@gmail.com>
+ - Jan C. Borchardt <hey@jancborchardt.net>
+ - Jan-Christoph Borchardt <hey@jancborchardt.net>
+ - Janez Urevc <janez@janezurevc.name>
+ - Jenkins for ownCloud <owncloud-bot@tmit.eu>
+ - Jenkins for ownCloud <thomas.mueller@tmit.eu>
+ - Jesus Samitier <jsamitier@protonmail.com>
+ - Joachim von Eichborn <joachimeichborn@users.noreply.github.com>
+ - Joas Schilling <213943+nickvergessen@users.noreply.github.com>
+ - Joas Schilling <coding@schilljs.com>
+ - John Molakvoæ <skjnldsv@protonmail.com>
+ - John Molakvoæ <skjnldsv@users.noreply.github.com>
+ - Jonathan Pagel <jonny_tischbein@systemli.org>
+ - Julius Härtl <github@jus.li>
+ - Julius Härtl <jus@bitgrid.net>
+ - Kate <26026535+provokateurin@users.noreply.github.com>
+ - Kim, Seungho (isho) <iolate@me.com>
+ - Konstantin <mail@konstantin.io>
+ - Konstantin Gorodinskii <mail@konstantin.io>
+ - Loki3000 <github@labcms.ru>
+ - Luka Trovic <89908051+luka-nextcloud@users.noreply.github.com>
+ - Luka Trovic <luka@nextcloud.com>
+ - Lukas Reschke <lukas@owncloud.com>
+ - Lukas Reschke <lukas@statuscode.ch>
+ - Marius Blüm <marius@lineone.io>
+ - Martin Monperrus <martin.monperrus@gnieh.org>
+ - Matthias Grundmann <matthias@glasmail.de>
+ - Morris Jobke <hey@morrisjobke.de>
+ - Morris Jobke <morris.jobke@gmail.com>
+ - Mostafa Ahangarha <ahangarha@riseup.net>
+ - Naveen <172697+naveensrinivasan@users.noreply.github.com>
+ - Nextcloud bot <bot@nextcloud.com>
+ - Niedermann IT-Dienstleistungen <stefan-niedermann@users.noreply.github.com>
+ - Raghu Nayyar <me@iraghu.com>
+ - RealRancor <RealRancor@users.noreply.github.com>
+ - Roberto Guido <bob4job@gmail.com>
+ - Robin Appelman <icewind@owncloud.com>
+ - Robin Appelman <robin@icewind.nl>
+ - Roeland Jago Douma <rullzer@users.noreply.github.com>
+ - Rutger Laurman <lekkerduidelijk@gmail.com>
+ - Simon L <szaimen@e.mail.de>
+ - Steven vanZyl <rushsteve12@gmail.com>
+ - Thomas Anderson <tnyeanderson@users.noreply.github.com>
+ - Thomas Mueller <thomas.mueller@tmit.eu>
+ - Thomas Müller <DeepDiver1975@users.noreply.github.com>
+ - Thomas Müller <thomas.mueller@tmit.eu>
+ - Tobias Kaminsky <tobias@nextcloud.com>
+ - Tristan Druyen <tristandruyen@pm.me>
+ - Valdnet <47037905+Valdnet@users.noreply.github.com>
+ - Volkan Gezer <volkangezer@gmail.com>
+ - dependabot-preview[bot] <27856297+dependabot-preview[bot]@users.noreply.github.com>
+ - dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+ - e.vukcevic <vukcevic.eleonora@schoenberger-group.com>
+ - fenn-cs <fenn25.fn@gmail.com>
+ - jld3103 <jld3103yt@gmail.com>
+ - kimthefirst <parrot@flapflap.net>
+ - korelstar <github@korelstar.de>
+ - korelstar <korelstar@users.noreply.github.com>
+ - nextcloud-command <nextcloud-command@users.noreply.github.com>
+ - provokateurin <kate@provokateurin.de>
+ - raghunayyar <me@iraghu.com>
+ - rakekniven <mark.ziegler@rakekniven.de>
+ - rushsteve1 <rushsteve12@gmail.com>
+ - salixor <kevin.cocchi@gmail.com>
+ - skjnldsv <skjnldsv@protonmail.com>
+ - tchncs <milanihl@googlemail.com>
+ - vincowl <vincent@heliosphere.fr>

@@ -1,9 +1,21 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
 		<template slot="list">
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
-					<input type="search" :placeholder="t('notes', 'Search for notes')" @input="event => searchText = event.target.value">
+					<NcTextField
+						:value.sync="searchText"
+						:label="t('notes', 'Search for notes')"
+						:show-trailing-button="searchText !== ''"
+						trailing-button-icon="close"
+						:trailing-button-label="t('Clear search')"
+						@trailing-button-click="searchText=''"
+					/>
 				</div>
 
 				<NotesList v-if="groupedNotes.length === 1"
@@ -13,11 +25,11 @@
 				<template v-for="(group, idx) in groupedNotes" v-else>
 					<NotesCaption v-if="group.category && category!==group.category"
 						:key="group.category"
-						:title="categoryToLabel(group.category)"
+						:name="categoryToLabel(group.category)"
 					/>
 					<NotesCaption v-if="group.timeslot"
 						:key="group.timeslot"
-						:title="group.timeslot"
+						:name="group.timeslot"
 					/>
 					<NotesList
 						:key="idx"
@@ -53,6 +65,7 @@ import {
 	NcAppContentList,
 	NcAppContentDetails,
 	NcButton,
+	NcTextField,
 } from '@nextcloud/vue'
 import { categoryLabel } from '../Util.js'
 import NotesList from './NotesList.vue'
@@ -70,6 +83,7 @@ export default {
 		NcAppContentList,
 		NcAppContentDetails,
 		NcButton,
+		NcTextField,
 		Note,
 		NotesList,
 		NotesCaption,
@@ -93,6 +107,7 @@ export default {
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
 			showFirstNotesOnly: true,
 			showNote: true,
+			searchText: '',
 		}
 	},
 
@@ -138,18 +153,11 @@ export default {
 				}, [])
 			}
 		},
-		searchText: {
-			get() {
-				return store.state.searchText
-			},
-			set(value) {
-				store.commit('updateSearchText', value)
-			},
-		},
 	},
 
 	watch: {
 		category() { this.showFirstNotesOnly = true },
+		searchText(value) { store.commit('updateSearchText', value) },
 	},
 
 	created() {
@@ -221,11 +229,13 @@ export default {
 <style lang="scss" scoped>
 .content-list {
 	padding: 0 4px;
+	height: 100%;
+	overflow-y: auto;
 }
 
 .content-list__search {
 	padding: 4px;
-	padding-left: 50px;
+	padding-inline-start: 50px;
 	position: sticky;
 	top: 0;
 	background-color: var(--color-main-background-translucent);
@@ -244,6 +254,7 @@ export default {
 
 .app-content-details {
 	height: 100%;
+	overflow: auto;
 }
 
 .loading-label {
@@ -265,6 +276,6 @@ export default {
 	border: 2px solid var(--color-loading-light);
 	border-top-color: var(--color-loading-dark);
 	vertical-align: top;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 }
 </style>

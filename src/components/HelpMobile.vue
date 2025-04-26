@@ -1,10 +1,15 @@
+<!--
+  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<Fragment>
 		<div class="feature icon-phone">
 			{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
 		</div>
 		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/nextcloud/nextcloud-notes">
+			<a target="_blank" href="https://github.com/nextcloud/notes-android">
 				{{ t('notes', 'Android app: {notes}', {notes: 'Nextcloud Notes'}) }}
 			</a>
 			<div>
@@ -21,7 +26,7 @@
 			</div>
 		</div>
 		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/phedlund/CloudNotes">
+			<a target="_blank" href="https://github.com/nextcloud/notes-ios">
 				{{ t('notes', 'iOS app: {notes}', {notes: 'Nextcloud Notes'}) }}
 			</a>
 			<div>
@@ -38,7 +43,7 @@
 
 import { generateFilePath } from '@nextcloud/router'
 
-import { Fragment } from 'vue-fragment'
+import { Fragment } from 'vue-frag'
 
 export default {
 	components: {
@@ -56,13 +61,17 @@ export default {
 <style scoped>
 .badge-wrapper {
 	margin-top: 2em;
-	margin-left: 2em;
+	margin-inline-start: 2em;
 	width: 100%;
 	clear:both;
 }
 
-.badge {
+body[dir='ltr'] .badge {
 	float: left;
+}
+
+body[dir='rtl'] .badge {
+	float: right;
 }
 
 .appstore-badge {

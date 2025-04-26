@@ -5,6 +5,8 @@ OC.L10N.register(
     "Error" : "Greška",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
+    "Share" : "Podjeli",
+    "Rename" : "Rename",
     "Edit" : "Izmjeni",
     "Today" : "Danas",
     "Yesterday" : "Jučer",

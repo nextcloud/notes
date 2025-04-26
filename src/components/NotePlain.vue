@@ -1,5 +1,10 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
-	<NcAppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error), 'sidebar-open': sidebarOpen }">
+	<NcAppContent :class="{ loading: loading || isManualSave, 'icon-error': !loading && (!note || note.error)}">
 		<div v-if="!loading && note && !note.error && !note.deleting"
 			id="note-container"
 			class="note-container"
@@ -47,13 +52,6 @@
 			</div>
 			<span class="action-buttons">
 				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-					<NcActionButton v-show="!sidebarOpen && !fullscreen"
-						icon="icon-details"
-						@click="onToggleSidebar"
-					>
-						<SidebarIcon slot="icon" :size="20" />
-						{{ t('notes', 'Details') }}
-					</NcActionButton>
 					<NcActionButton
 						v-tooltip.left="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
@@ -103,13 +101,12 @@ import {
 	isMobile,
 } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
-import { emit } from '@nextcloud/event-bus'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
 import EyeIcon from 'vue-material-design-icons/Eye.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
-import SidebarIcon from 'vue-material-design-icons/PageLayoutSidebarRight.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
 import { config } from '../config.js'
@@ -133,7 +130,6 @@ export default {
 		NcAppContent,
 		NcModal,
 		NoEditIcon,
-		SidebarIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
@@ -179,9 +175,6 @@ export default {
 		isManualSave() {
 			return store.state.app.isManualSave
 		},
-		sidebarOpen() {
-			return store.state.app.sidebarOpen
-		},
 	},
 
 	watch: {
@@ -205,6 +198,8 @@ export default {
 		document.addEventListener('fullscreenchange', this.onDetectFullscreen)
 		document.addEventListener('keydown', this.onKeyPress)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
+		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	destroyed() {
@@ -215,6 +210,8 @@ export default {
 		document.removeEventListener('keydown', this.onKeyPress)
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
 		this.onUpdateTitle(null)
+		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
+		unsubscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
 	methods: {
@@ -290,11 +287,6 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
 			}
-			this.actionsOpen = false
-		},
-
-		onToggleSidebar() {
-			store.commit('setSidebarOpen', !store.state.app.sidebarOpen)
 			this.actionsOpen = false
 		},
 
@@ -409,6 +401,25 @@ export default {
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
+
+		async onFileRestoreRequested(event) {
+			const { fileInfo } = event
+
+			if (fileInfo.id !== this.note.id) {
+				return
+			}
+
+			this.loading = true
+		},
+
+		async onFileRestored(version) {
+			if (version.fileId !== this.note.id) {
+				return
+			}
+
+			this.refreshNote()
+			this.loading = false
+		},
 	},
 }
 </script>
@@ -432,12 +443,9 @@ export default {
 		margin: 0 auto;
 	}
 	.note-container {
-		padding-right: 250px;
+		padding-inline-end: 250px;
 		transition-duration: var(--animation-quick);
-		transition-property: padding-right;
-	}
-	.sidebar-open .note-container {
-		padding-right: 0px;
+		transition-property: padding-inline-end;
 	}
 }
 
@@ -464,8 +472,8 @@ export default {
 .action-buttons {
 	position: fixed;
 	top: 50px;
-	right: 20px;
-	width: 44px;
+	inset-inline-end: 20px;
+	width: var(--default-clickable-area);
 	margin-top: 1em;
 	z-index: 2000;
 }

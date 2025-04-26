@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Tests\API;
 
 abstract class CommonAPITest extends AbstractAPITest {
@@ -30,8 +35,8 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->assertNotEmpty($notes, 'List of notes');
 		foreach ($notes as $note) {
 			foreach ($this->requiredAttributes as $key => $type) {
-				$this->assertObjectHasAttribute($key, $note, 'Note has property '.$key);
-				$this->assertEquals($type, gettype($note->$key), 'Property type of '.$key);
+				$this->assertObjectHasAttribute($key, $note, 'Note has property ' . $key);
+				$this->assertEquals($type, gettype($note->$key), 'Property type of ' . $key);
 			}
 		}
 		return $notes;
@@ -80,7 +85,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->checkGetReferenceNotes(
 			$refNotes,
 			'pruneBefore with Last-Modified',
-			'?pruneBefore='.$dt->getTimestamp(),
+			'?pruneBefore=' . $dt->getTimestamp(),
 			[],
 			[]
 		);
@@ -113,7 +118,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$testNotes = [];
 		$testNotes[] = $this->createNote((object)[
 			'title' => 'First *manual* title',
-			'content' => '# *First* test/ note'.PHP_EOL.'This is some body content with some data.',
+			'content' => '# *First* test/ note' . PHP_EOL . 'This is some body content with some data.',
 			'favorite' => true,
 			'category' => 'Test/../New Category',
 			'modified' => mktime(8, 14, 30, 10, 2, 2020),
@@ -123,7 +128,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 			'readonly' => false,
 		]);
 		$testNotes[] = $this->createNote((object)[
-			'content' => 'Note with Defaults'.PHP_EOL.'This is some body content with some data.',
+			'content' => 'Note with Defaults' . PHP_EOL . 'This is some body content with some data.',
 		], (object)[
 			'title' => $this->autotitle ? 'Note with Defaults' : 'New note', // waring: requires lang=C
 			'favorite' => false,
@@ -141,8 +146,8 @@ abstract class CommonAPITest extends AbstractAPITest {
 	 */
 	public function testGetSingleNote(array $refNotes, array $testNotes) : void {
 		foreach ($testNotes as $testNote) {
-			$response = $this->http->request('GET', 'notes/'.$testNote->id);
-			$this->checkResponse($response, 'Get note '.$testNote->title, 200);
+			$response = $this->http->request('GET', 'notes/' . $testNote->id);
+			$this->checkResponse($response, 'Get note ' . $testNote->title, 200);
 			$note = json_decode($response->getBody()->getContents());
 			$this->checkReferenceNote($testNote, $note, 'Get single note');
 		}
@@ -161,7 +166,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		// test update note with all attributes
 		$rn1 = $this->updateNote($note, (object)[
 			'title' => 'First *manual* edited title',
-			'content' => '# *First* edited/ note'.PHP_EOL.'This is some body content with some data.',
+			'content' => '# *First* edited/ note' . PHP_EOL . 'This is some body content with some data.',
 			'favorite' => false,
 			'category' => 'Test/Another Category',
 			'modified' => mktime(11, 46, 23, 4, 3, 2020),
@@ -183,7 +188,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 			'favorite' => true,
 		], (object)[]);
 		$rn4 = $this->updateNote($note, (object)[
-			'content' => '# First multi edited note'.PHP_EOL.'This is some body content with some data.',
+			'content' => '# First multi edited note' . PHP_EOL . 'This is some body content with some data.',
 		], (object)[
 			'title' => $this->autotitle ? 'First multi edited note' : 'First manual edited title',
 			'modified' => time(),
@@ -213,20 +218,20 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$this->checkGetReferenceNotes(
 			$allNotes,
 			'pruneBefore with Last-Modified before changing note',
-			'?pruneBefore='.$dt->getTimestamp(),
+			'?pruneBefore=' . $dt->getTimestamp(),
 			[],
 			[]
 		);
 
 		$note = $testNotes[0];
 		$rn1 = $this->updateNote($note, (object)[
-			'content' => $note->content.PHP_EOL.'Updated for pruneBefore test.',
+			'content' => $note->content . PHP_EOL . 'Updated for pruneBefore test.',
 		], (object)[]);
 
 		$this->checkGetReferenceNotes(
 			$allNotes,
 			'pruneBefore with Last-Modified after changing note',
-			'?pruneBefore='.$dt->getTimestamp(),
+			'?pruneBefore=' . $dt->getTimestamp(),
 			[],
 			[ $note->id ]
 		);
@@ -240,8 +245,8 @@ abstract class CommonAPITest extends AbstractAPITest {
 	public function testDeleteNotes(array $refNotes, array $testNotes) : void {
 		$this->checkGetReferenceNotes(array_merge($refNotes, $testNotes), 'Pre-condition');
 		foreach ($testNotes as $note) {
-			$response = $this->http->request('DELETE', 'notes/'.$note->id);
-			$this->checkResponse($response, 'Delete note '.$note->title, 200);
+			$response = $this->http->request('DELETE', 'notes/' . $note->id);
+			$this->checkResponse($response, 'Delete note ' . $note->title, 200);
 		}
 		// test non-existing note
 		$response = $this->http->request('DELETE', 'notes/1');
@@ -259,7 +264,7 @@ abstract class CommonAPITest extends AbstractAPITest {
 		$note = $notes[0]; // @phan-suppress-current-line PhanTypeArraySuspiciousNullable
 		$request = (object)[ 'content' => 'New test content' ];
 		// update will fail
-		$response1 = $this->http->request('PUT', 'notes/'.$note->id, [ 'auth' => $auth, 'json' => $request]);
+		$response1 = $this->http->request('PUT', 'notes/' . $note->id, [ 'auth' => $auth, 'json' => $request]);
 		$this->assertEquals(507, $response1->getStatusCode());
 		// craete will fail
 		$response2 = $this->http->request('POST', 'notes', [ 'auth' => $auth, 'json' => $request]);

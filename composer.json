@@ -1,11 +1,12 @@
 {
 	"require-dev": {
-		"nextcloud/ocp": "dev-stable25@dev",
-		"nextcloud/coding-standard": "^1.0",
-		"squizlabs/php_codesniffer": "^3",
-		"phan/phan": "^5",
-		"php-cs-fixer/shim": "3.34.0",
 		"guzzlehttp/guzzle": "^7",
+		"nextcloud/coding-standard": "^1.0",
+		"nextcloud/ocp": "dev-stable28",
+		"phan/phan": "^5",
+		"php-cs-fixer/shim": "3.75.0",
+		"psalm/phar": "^5.26",
+		"squizlabs/php_codesniffer": "^3",
 		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
 	},
 	"autoload-dev": {
@@ -13,5 +14,22 @@
 			"OCA\\Notes\\Tests\\API\\": "tests/api/"
 		}
 	},
-	"prefer-stable": true
+	"config": {
+		"platform": {
+			"php": "8.0"
+		},
+		"sort-packages": true
+	},
+	"prefer-stable": true,
+	"scripts": {
+		"test": [
+			"@test:unit"
+		],
+		"test:unit": "./vendor/bin/phpunit -c tests/unit/phpunit.xml",
+		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
+		"cs:check": "php-cs-fixer fix --dry-run --diff",
+		"cs:fix": "php-cs-fixer fix",
+		"psalm": "psalm.phar",
+		"phan": "phan"
+	}
 }

@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
 use OCP\ITagManager;
@@ -15,6 +20,10 @@ class TagService {
 		$this->tagger = $tagManager->load('files');
 	}
 
+	/**
+	 * @param list<int> $fileIds
+	 * @return void
+	 */
 	public function loadTags(array $fileIds) : void {
 		$this->cachedTags = $this->tagger->getTagsForObjects($fileIds);
 	}

@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcModal>
 		<div class="editor-hint-modal">
@@ -66,7 +71,7 @@ export default {
 	margin-top: 24px;
 
 	button {
-		margin-left: 12px;
+		margin-inline-start: 12px;
 	}
 }
 </style>

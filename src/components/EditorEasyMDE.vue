@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<div>
 		<div class="upload-button">
@@ -33,7 +38,7 @@ import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/dist/index.css'
+import '@nextcloud/dialogs/style.css'
 import {
 	NcActions,
 	NcActionButton,
@@ -163,7 +168,7 @@ export default {
 			// + 1 for some reason... not sure why
 			doc.replaceRange(newvalue,
 				{ line: index, ch: line.text.indexOf('[') },
-				{ line: index, ch: line.text.indexOf(']') + 1 }
+				{ line: index, ch: line.text.indexOf(']') + 1 },
 			)
 		},
 
@@ -203,7 +208,7 @@ export default {
 				['image/jpeg', 'image/png'],
 				true,
 				OC.dialogs.FILEPICKER_TYPE_CHOOSE,
-				currentNotePath
+				currentNotePath,
 			)
 		},
 
@@ -231,7 +236,7 @@ export default {
 					})
 					.catch((error) => {
 						console.error(error)
-						showError(t('notes', 'The file was not uploaded. Check your server logs.'),)
+						showError(t('notes', 'The file was not uploaded. Check your server logs.'))
 					})
 			}
 			temporaryInput.click()
@@ -354,7 +359,7 @@ export default {
 	border-radius: var(--border-radius);
 	background-position: center;
 	margin-top: 5px;
-	margin-left: 2px;
+	margin-inline-start: 2px;
 }
 
 .CodeMirror .cm-formatting-task.cm-property::before {
@@ -370,10 +375,10 @@ export default {
 
 .upload-button {
 	position: fixed;
-	right: 64px;
+	inset-inline-end: 64px;
 	z-index: 10;
 	height: 40px;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 	top: 65px;
 }
 </style>

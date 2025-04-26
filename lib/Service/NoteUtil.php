@@ -2,12 +2,21 @@
 
 declare(strict_types=1);
 
+/**
+ * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 namespace OCA\Notes\Service;
 
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\IDBConnection;
+use OCP\IUserSession;
+use OCP\Share\IManager;
+use OCP\Share\IShare;
 
 class NoteUtil {
 	private const MAX_TITLE_LENGTH = 100;
@@ -15,21 +24,35 @@ class NoteUtil {
 	private IDBConnection $db;
 	private IRootFolder $root;
 	private TagService $tagService;
+	private IManager $shareManager;
+	private IUserSession $userSession;
+	private SettingsService $settingsService;
 
 	public function __construct(
 		Util $util,
 		IRootFolder $root,
 		IDBConnection $db,
-		TagService $tagService
+		TagService $tagService,
+		IManager $shareManager,
+		IUserSession $userSession,
+		SettingsService $settingsService,
 	) {
 		$this->util = $util;
 		$this->root = $root;
 		$this->db = $db;
 		$this->tagService = $tagService;
+		$this->shareManager = $shareManager;
+		$this->userSession = $userSession;
+		$this->settingsService = $settingsService;
 	}
 
 	public function getRoot() : IRootFolder {
 		return $this->root;
+	}
+
+	public function getPathForUser(File $file) {
+		$userFolder = $this->root->getUserFolder($this->userSession->getUser()->getUID());
+		return $userFolder->getRelativePath($file->getPath());
 	}
 
 	public function getTagService() : TagService {
@@ -44,7 +67,7 @@ class NoteUtil {
 		$cats = array_filter($cats, function ($str) {
 			return $str !== '';
 		});
-		$path .= '/'.implode('/', $cats);
+		$path .= '/' . implode('/', $cats);
 		return $this->getOrCreateFolder($path);
 	}
 
@@ -56,10 +79,10 @@ class NoteUtil {
 	 * @param string $title the filename which should be used
 	 * @param string $suffix the suffix (incl. dot) which should be used
 	 * @param int $id the id of the note for which the title should be generated
-	 * used to see if the file itself has the title and not a different file for
-	 * checking for filename collisions
+	 *                used to see if the file itself has the title and not a different file for
+	 *                checking for filename collisions
 	 * @return string the resolved filename to prevent overwriting different
-	 * files with the same title
+	 *                files with the same title
 	 */
 	public function generateFileName(Folder $folder, string $title, string $suffix, int $id) : string {
 		$title = $this->getSafeTitle($title);
@@ -73,7 +96,7 @@ class NoteUtil {
 			// increments name (2) to name (3)
 			$match = preg_match('/\s\((?P<id>\d+)\)$/u', $title, $matches);
 			if ($match) {
-				$newId = ((int) $matches['id']) + 1;
+				$newId = ((int)$matches['id']) + 1;
 				$baseTitle = preg_replace('/\s\(\d+\)$/u', '', $title);
 				$idSuffix = ' (' . $newId . ')';
 			} else {
@@ -82,7 +105,7 @@ class NoteUtil {
 			}
 			// make sure there's enough room for the ID suffix before appending or it will be
 			// trimmed by getSafeTitle() and could cause infinite recursion
-			$newTitle = mb_substr($baseTitle, 0, self::MAX_TITLE_LENGTH - mb_strlen($idSuffix), "UTF-8") . $idSuffix;
+			$newTitle = mb_substr($baseTitle, 0, self::MAX_TITLE_LENGTH - mb_strlen($idSuffix), 'UTF-8') . $idSuffix;
 			return $this->generateFileName($folder, $newTitle, $suffix, $id);
 		}
 	}
@@ -99,7 +122,7 @@ class NoteUtil {
 		$title = preg_replace('/\s/u', ' ', $title);
 
 		// using a maximum of 100 chars should be enough
-		$title = mb_substr($title, 0, self::MAX_TITLE_LENGTH, "UTF-8");
+		$title = mb_substr($title, 0, self::MAX_TITLE_LENGTH, 'UTF-8');
 
 		// ensure that title is not empty
 		if (empty($title)) {
@@ -133,10 +156,10 @@ class NoteUtil {
 
 	public function stripMarkdown(string $str) : string {
 		// prepare content: remove markdown characters and empty spaces
-		$str = preg_replace("/^\s*[*+-]\s+/mu", "", $str); // list item
-		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", "$1", $str); // headline
-		$str = preg_replace("/^(=+|-+)$/mu", "", $str); // separate line for headline
-		$str = preg_replace("/(\*+|_+)(.*?)\\1/mu", "$2", $str); // emphasis
+		$str = preg_replace("/^\s*[*+-]\s+/mu", '', $str); // list item
+		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", '$1', $str); // headline
+		$str = preg_replace('/^(=+|-+)$/mu', '', $str); // separate line for headline
+		$str = preg_replace("/(\*+|_+)(.*?)\\1/mu", '$2', $str); // emphasis
 		return $str;
 	}
 
@@ -152,9 +175,55 @@ class NoteUtil {
 		} elseif ($create) {
 			$folder = $this->root->newFolder($path);
 		}
+
 		if (!($folder instanceof Folder)) {
-			throw new NotesFolderException($path.' is not a folder');
+			throw new NotesFolderException($path . ' is not a folder');
 		}
+
+		return $folder;
+	}
+
+	public function getNotesFolderUserPath(string $userId): ?string {
+		/** @psalm-suppress MissingDependency */
+		$userFolder = $this->getRoot()->getUserFolder($userId);
+		try {
+			$nodesFolder = $this->getOrCreateNotesFolder($userId, false);
+		} catch (NotesFolderException $e) {
+			$this->util->logger->warning("Failed to get notes folder for user $userId: " . $e->getMessage());
+			return null;
+		}
+		return $userFolder->getRelativePath($nodesFolder->getPath());
+	}
+
+	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
+		$userFolder = $this->getRoot()->getUserFolder($userId);
+		$notesPath = $this->settingsService->get($userId, 'notesPath');
+		$allowShared = $notesPath !== $this->settingsService->getDefaultNotesPath($userId);
+
+		$folder = null;
+		$updateNotesPath = false;
+		if ($userFolder->nodeExists($notesPath)) {
+			$folder = $userFolder->get($notesPath);
+			if (!$allowShared && $folder->isShared()) {
+				$notesPath = $userFolder->getNonExistingName($notesPath);
+				$folder = $userFolder->newFolder($notesPath);
+				$updateNotesPath = true;
+			}
+		} elseif ($create) {
+			$folder = $userFolder->newFolder($notesPath);
+			$updateNotesPath = true;
+		}
+
+		if (!($folder instanceof Folder)) {
+			throw new NotesFolderException($notesPath . ' is not a folder');
+		}
+
+		if ($updateNotesPath) {
+			$this->settingsService->set($userId, [
+				'notesPath' => $notesPath,
+			], true);
+		}
+
 		return $folder;
 	}
 
@@ -168,7 +237,7 @@ class NoteUtil {
 		$isEmpty = !count($content);
 		$isNotesFolder = $folder->getPath() === $notesFolder->getPath();
 		if ($isEmpty && !$isNotesFolder) {
-			$this->util->logger->debug('Deleting empty category folder '.$folder->getPath());
+			$this->util->logger->debug('Deleting empty category folder ' . $folder->getPath());
 			$parent = $folder->getParent();
 			$folder->delete();
 			$this->deleteEmptyFolder($parent, $notesFolder);
@@ -185,11 +254,11 @@ class NoteUtil {
 		$availableBytes = $folder->getFreeSpace();
 		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
 			$this->util->logger->error(
-				'Insufficient storage in '.$folder->getPath().': '.
-				'available are '.$availableBytes.'; '.
-				'required are '.$requiredBytes
+				'Insufficient storage in ' . $folder->getPath() . ': ' .
+				'available are ' . $availableBytes . '; ' .
+				'required are ' . $requiredBytes
 			);
-			throw new InsufficientStorageException($requiredBytes.' are required in '.$folder->getPath());
+			throw new InsufficientStorageException($requiredBytes . ' are required in ' . $folder->getPath());
 		}
 	}
 
@@ -202,5 +271,31 @@ class NoteUtil {
 		if (!$node->isUpdateable()) {
 			throw new NoteNotWritableException();
 		}
+	}
+
+	public function getShareTypes(File $file): array {
+		$userId = $file->getOwner()->getUID();
+		$requestedShareTypes = [
+			IShare::TYPE_USER,
+			IShare::TYPE_GROUP,
+			IShare::TYPE_LINK,
+			IShare::TYPE_REMOTE,
+			IShare::TYPE_EMAIL,
+			IShare::TYPE_ROOM,
+			IShare::TYPE_DECK,
+			// FIXME: Move to constant once Nextcloud 26 is the minimum supported version
+			15, // IShare::TYPE_SCIENCEMESH,
+		];
+		$shareTypes = [];
+
+		foreach ($requestedShareTypes as $shareType) {
+			$shares = $this->shareManager->getSharesBy($userId, $shareType, $file, false, 1, 0);
+
+			if (count($shares)) {
+				$shareTypes[] = $shareType;
+			}
+		}
+
+		return $shareTypes;
 	}
 }

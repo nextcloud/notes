@@ -1,12 +1,17 @@
+<!--
+  - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcAppSettingsDialog
-		:title="t('notes', 'Notes settings')"
+		:name="t('notes', 'Notes settings')"
 		:class="{ loading: saving }"
 		:show-navigation="true"
 		:open="settingsOpen"
 		@update:open="setSettingsOpen($event)"
 	>
-		<NcAppSettingsSection id="help-basics" :title="t('notes', 'Basics')">
+		<NcAppSettingsSection id="help-basics" :name="t('notes', 'Basics')">
 			<div class="feature icon-add">
 				{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
 			</div>
@@ -17,7 +22,7 @@
 				{{ t('notes', 'Organize your notes in categories.') }}
 			</div>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="notes-path-section" :title="t('notes', 'Notes path')">
+		<NcAppSettingsSection id="notes-path-section" :name="t('notes', 'Notes path')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'Folder to store your notes') }}
 			</p>
@@ -29,7 +34,7 @@
 				@click="onChangeNotePath"
 			>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="file-suffix-section" :title="t('notes', 'File extension')">
+		<NcAppSettingsSection id="file-suffix-section" :name="t('notes', 'File extension')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'File extension for new notes') }}
 			</p>
@@ -47,7 +52,7 @@
 				@change="onChangeSettings"
 			>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="note-mode-section" :title="t('notes', 'Display mode')">
+		<NcAppSettingsSection id="note-mode-section" :name="t('notes', 'Display mode')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'Display mode for notes') }}
 			</p>
@@ -57,7 +62,7 @@
 				</option>
 			</select>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="help-shortcuts" :title="t('notes', 'Shortcuts')">
+		<NcAppSettingsSection id="help-shortcuts" :name="t('notes', 'Shortcuts')">
 			<div class="feature icon-toggle-filelist">
 				{{ t('notes', 'Use shortcuts to quickly navigate this app.') }}
 			</div>
@@ -72,7 +77,7 @@
 				</tr>
 			</table>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="help-apps" :title="t('notes', 'Mobile apps')">
+		<NcAppSettingsSection id="help-apps" :name="t('notes', 'Mobile apps')">
 			<HelpMobile />
 		</NcAppSettingsSection>
 	</NcAppSettingsDialog>
@@ -84,7 +89,7 @@ import {
 	NcAppSettingsSection,
 } from '@nextcloud/vue'
 
-import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
+import { getFilePickerBuilder } from '@nextcloud/dialogs'
 
 import { setSettings } from '../NotesService.js'
 import store from '../store.js'
@@ -153,24 +158,22 @@ export default {
 	},
 
 	methods: {
-		onChangeNotePath(event) {
-			// Code Example from: https://github.com/nextcloud/text/blob/main/src/components/Menu/ActionInsertLink.vue#L130-L155
-			const filePicker = new FilePicker(
-				t('text', 'Select folder to link to'),
-				false, // multiselect
-				['text/directory'], // mime filter
-				true, // modal
-				FilePickerType.Choose, // type
-				true, // directories
-				event.target.value === '' ? '/' : event.target.value // path
-			)
-			filePicker.pick().then((file) => {
-				const client = OC.Files.getClient()
-				client.getFileInfo(file).then((_status, fileInfo) => {
-					this.settings.notesPath = fileInfo.path === '/' ? `/${fileInfo.name}` : `${fileInfo.path}/${fileInfo.name}`
-					this.onChangeSettingsReload()
+		async onChangeNotePath(event) {
+			const filePicker = getFilePickerBuilder(t('notes', 'Pick a notes folder'))
+				.allowDirectories(true)
+				.startAt(event.target.value === '' ? '/' : event.target.value)
+				.addButton({
+					label: t('notes', 'Set notes folder'),
+					callback: (nodes) => {
+						const node = nodes[0]
+						this.settings.notesPath = node.path
+						this.onChangeSettingsReload()
+					},
 				})
-			})
+				.build()
+
+			await filePicker.pick()
+
 		},
 		onChangeSettings() {
 			this.saving = true
