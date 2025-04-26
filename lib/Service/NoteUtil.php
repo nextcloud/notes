@@ -189,7 +189,7 @@ class NoteUtil {
 		try {
 			$nodesFolder = $this->getOrCreateNotesFolder($userId, false);
 		} catch (NotesFolderException $e) {
-			$this->util->logger->warning("Failed to get notes folder for user $userId: " . $e->getMessage());
+			$this->util->logger->info("Failed to get notes folder for user $userId: " . $e->getMessage());
 			return null;
 		}
 		return $userFolder->getRelativePath($nodesFolder->getPath());
