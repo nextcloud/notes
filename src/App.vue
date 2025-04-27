@@ -139,7 +139,13 @@ export default {
 					}
 					if (data.notes !== null) {
 						this.error = false
-						this.routeDefault(data.lastViewedNote)
+						console.log('settings', store.state.app.settings)
+						if (store.state.app.settings?.loadRecentOnStartUp) {
+							this.routeDefault(data.lastViewedNote)
+						} else {
+							this.routeWelcome()
+						}
+						
 					} else if (this.loading.notes) {
 						// only show error state if not loading in background
 						this.error = data.errorMessage
@@ -208,9 +214,13 @@ export default {
 			if (availableNotes.length > 0) {
 				this.routeToNote(availableNotes[0].id)
 			} else {
-				if (this.$route.name !== 'welcome') {
-					this.$router.push({ name: 'welcome' })
-				}
+				this.routeWelcome()
+			}
+		},
+
+		routeWelcome() {
+			if (this.$route.name !== 'welcome') {
+				this.$router.push({ name: 'welcome' })
 			}
 		},
 
