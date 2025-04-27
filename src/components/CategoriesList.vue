@@ -5,6 +5,9 @@
 
 <template>
 	<Fragment>
+		<NcButton @click="onToggleNotesList">
+			{{ t('notes', 'Toggle Notes List') }}
+		</NcButton>
 		<NcAppNavigationItem
 			:name="t('notes', 'All notes')"
 			:class="{ active: selectedCategory === null }"
@@ -47,6 +50,7 @@ import {
 	NcAppNavigationItem,
 	NcAppNavigationCaption,
 	NcCounterBubble,
+	NcButton,
 } from '@nextcloud/vue'
 import { Fragment } from 'vue-frag'
 
@@ -65,6 +69,7 @@ export default {
 		Fragment,
 		NcAppNavigationItem,
 		NcAppNavigationCaption,
+		NcButton,
 		NcCounterBubble,
 		FolderIcon,
 		FolderOutlineIcon,
@@ -83,9 +88,16 @@ export default {
 		selectedCategory() {
 			return store.getters.getSelectedCategory()
 		},
+		toggleNotesList() {
+			return store.getters.getToggleNotesList()
+		},
 	},
 
 	methods: {
+		onToggleNotesList() {
+			store.commit('setToggleNotesList', !this.toggleNotesList)
+		},
+
 		categoryTitle(category) {
 			return categoryLabel(category)
 		},
