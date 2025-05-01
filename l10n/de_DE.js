@@ -92,7 +92,7 @@ OC.L10N.register(
     "Full screen" : "Vollbild",
     "Note is read-only. You cannot change it." : "Notiz ist schreibgeschützt. Sie können sie nicht ändern.",
     "Save failed. Click to retry." : "Speichern fehlgeschlagen. Klicken Sie, um es erneut zu versuchen.",
-    "Update conflict. Click for resolving manually." : "Aktualisierungskonflikt. Bitte klicken um den Konflikt manuell zu lösen.",
+    "Update conflict. Click for resolving manually." : "Aktualisierungskonflikt. Bitte klicken, um den Konflikt manuell zu lösen.",
     "Today" : "Heute",
     "Yesterday" : "Gestern",
     "This week" : "Diese Woche",
