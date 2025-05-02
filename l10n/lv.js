@@ -19,6 +19,7 @@ OC.L10N.register(
     "Use current version" : "Izmantot pašreizējo versiju",
     "Edit" : "Labot",
     "Preview" : "Priekšskatīt",
+    "Exit full screen" : "Iziet no pilnekrāna",
     "Today" : "Šodien",
     "Yesterday" : "Vakar",
     "This week" : "Šonedēļ",
