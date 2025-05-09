@@ -22,10 +22,11 @@
 				{{ t('notes', 'Organize your notes in categories.') }}
 			</div>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="notes-path-section" :name="t('notes', 'Notes path')">
+		<NcAppSettingsSection id="notes-path-section" :name="t('notes', 'Notes folder')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'Folder to store your notes') }}
 			</p>
+
 			<input id="notesPath"
 				v-model="settings.notesPath"
 				type="text"
@@ -33,6 +34,14 @@
 				:placeholder="t('notes', 'Root directory')"
 				@click="onChangeNotePath"
 			>
+			<div>
+				<NcCheckboxRadioSwitch
+					v-model="settings.showHidden"
+					@update:checked="onChangeSettings"
+				>
+					{{ t('notes', 'Show hidden folders') }}
+				</NcCheckboxRadioSwitch>
+			</div>
 		</NcAppSettingsSection>
 		<NcAppSettingsSection id="file-suffix-section" :name="t('notes', 'File extension')">
 			<p class="app-settings-section__desc">
@@ -87,6 +96,7 @@
 import {
 	NcAppSettingsDialog,
 	NcAppSettingsSection,
+	NcCheckboxRadioSwitch,
 } from '@nextcloud/vue'
 
 import { getFilePickerBuilder } from '@nextcloud/dialogs'
@@ -101,6 +111,7 @@ export default {
 	components: {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
+		NcCheckboxRadioSwitch,
 		HelpMobile,
 	},
 
@@ -136,6 +147,7 @@ export default {
 				{ shortcut: t('notes', 'CTRL') + '+' + t('notes', 'ALT') + '+I', action: t('notes', 'Insert image') },
 				{ shortcut: t('notes', 'CTRL') + '+/', action: t('notes', 'Switch between editor and viewer') },
 			],
+			initialShowHidden: Boolean(store.state.app.settings.showHidden),
 		}
 	},
 
@@ -195,6 +207,12 @@ export default {
 		setSettingsOpen(newValue) {
 			this.settingsOpen = newValue
 			this.$emit('update:open', newValue)
+
+			if (this.settingsOpen) {
+				this.$data.initialShowHidden = Boolean(store.state.app.settings.showHidden)
+			} else if (this.$data.initialShowHidden !== store.state.app.settings.showHidden) {
+				this.$emit('reload')
+			}
 		},
 	},
 }
@@ -210,5 +228,9 @@ export default {
 
 .settings-block form {
 	display: inline-flex;
+}
+
+#notesPath {
+	margin-bottom: 1rem;
 }
 </style>
