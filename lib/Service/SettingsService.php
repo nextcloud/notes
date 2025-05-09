@@ -69,6 +69,12 @@ class SettingsService {
 					return '.' . $out;
 				},
 			],
+			'showHidden' => [
+				'default' => true,
+				'validate' => function ($value) {
+					return (bool)$value;
+				}
+			],
 		];
 	}
 
@@ -207,7 +213,7 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function get(string $uid, string $name, bool $saveInitial = false) : string {
+	public function get(string $uid, string $name, bool $saveInitial = false) : string|bool {
 		$settings = $this->getAll($uid, $saveInitial);
 		if (property_exists($settings, $name)) {
 			return $settings->{$name};

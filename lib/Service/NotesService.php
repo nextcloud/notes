@@ -23,11 +23,14 @@ class NotesService {
 	) {
 	}
 
-	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
+	public function getAll(string $userId, bool $autoCreateNotesFolder = false, ?bool $showHidden = null) : array {
 		$customExtension = $this->getCustomExtension($userId);
 		try {
 			$notesFolder = $this->getNotesFolder($userId, $autoCreateNotesFolder);
-			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			if ($showHidden === null) {
+				$showHidden = $this->settings->get($userId, 'showHidden');
+			}
+			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			$fileIds = array_keys($data['files']);
 			// pre-load tags for all notes (performance improvement)
 			$this->noteUtil->getTagService()->loadTags($fileIds);
@@ -59,7 +62,8 @@ class NotesService {
 		$customExtension = $this->getCustomExtension($userId);
 		try {
 			$notesFolder = $this->getNotesFolder($userId, false);
-			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			$showHidden = $this->settings->get($userId, 'showHidden');
+			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			return count($data['files']);
 		} catch (NotesFolderException $e) {
 			return 0;
@@ -241,6 +245,7 @@ class NotesService {
 	private static function gatherNoteFiles(
 		string $customExtension,
 		Folder $folder,
+		bool $showHidden,
 		string $categoryPrefix = '',
 	) : array {
 		$data = [
@@ -249,16 +254,14 @@ class NotesService {
 		];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
+			$hidden = str_starts_with($node->getName(), '.');
+			if ($hidden && !$showHidden) {
+				continue;
+			}
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
-				// hidden folders (e.g. the ".attachments.<id>" folders the Text
-				// editor creates for inline images) are not user-created
-				// categories and must not show up as such
-				if (str_starts_with($node->getName(), '.')) {
-					continue;
-				}
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
-				$data_sub = self::gatherNoteFiles($customExtension, $node, $subCategory . '/');
+				$data_sub = self::gatherNoteFiles($customExtension, $node, $showHidden, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
 				$data['categories'] = $data['categories'] + $data_sub['categories'];
 			} elseif (self::isNote($node, $customExtension)) {
