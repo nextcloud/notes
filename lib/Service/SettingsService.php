@@ -112,6 +112,9 @@ class SettingsService {
 			if ($value !== null && array_key_exists($name, $this->attrs)) {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
+			if ($name === 'notesPath' && $value !== null) {
+				continue;
+			}
 			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
 			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
 				|| $value === null
@@ -149,18 +152,22 @@ class SettingsService {
 		$settings = $this->getSettingsFromDB($uid);
 		// use default for empty settings
 		$toBeSaved = false;
+		$toSaveNotesPath = false;
 		foreach ($this->attrs as $name => $attr) {
 			if (!property_exists($settings, $name)) {
 				$defaultValue = $attr['default'];
 				if (is_callable($defaultValue)) {
 					$settings->{$name} = $defaultValue($uid);
 					$toBeSaved = $saveInitial;
+					if ($name === 'notesPath') {
+						$toSaveNotesPath = true;
+					}
 				} else {
 					$settings->{$name} = $defaultValue;
 				}
 			}
 		}
-		if ($toBeSaved) {
+		if ($toSaveNotesPath || $toBeSaved) {
 			$this->set($uid, (array)$settings);
 		}
 		return $settings;
