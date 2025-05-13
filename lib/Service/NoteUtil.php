@@ -184,15 +184,13 @@ class NoteUtil {
 	}
 
 	public function getNotesFolderUserPath(string $userId): ?string {
-		/** @psalm-suppress MissingDependency */
-		$userFolder = $this->getRoot()->getUserFolder($userId);
 		try {
-			$nodesFolder = $this->getOrCreateNotesFolder($userId, false);
+			$notesFolder = $this->settingsService->get($userId, 'notesPath');
+			return $notesFolder;
 		} catch (NotesFolderException $e) {
 			$this->util->logger->debug("Failed to get notes folder for user $userId: " . $e->getMessage());
 			return null;
 		}
-		return $userFolder->getRelativePath($nodesFolder->getPath());
 	}
 
 	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
