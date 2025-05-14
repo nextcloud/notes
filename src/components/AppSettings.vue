@@ -22,7 +22,7 @@
 				{{ t('notes', 'Organize your notes in categories.') }}
 			</div>
 		</NcAppSettingsSection>
-		<NcAppSettingsSection id="notes-path-section" :name="t('notes', 'Notes folder')">
+		<NcAppSettingsSection id="notes-path-section" :name="t('notes', 'Notes path')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'Folder to store your notes') }}
 			</p>

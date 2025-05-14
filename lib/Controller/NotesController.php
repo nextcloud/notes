@@ -359,7 +359,7 @@ class NotesController extends Controller {
 	}
 
 	private function inLockScope(Note $note, callable $callback) {
-		$isRichText = $this->settingsService->get($this->helper->getUID(), 'noteMode') === 'rich';
+		$isRichText = $this->settingsService->getValueString($this->helper->getUID(), 'noteMode') === 'rich';
 		$lockContext = new LockContext(
 			$note->getFile(),
 			$isRichText ? ILock::TYPE_APP : ILock::TYPE_USER,

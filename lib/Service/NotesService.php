@@ -35,7 +35,7 @@ class NotesService {
 		try {
 			$notesFolder = $this->getNotesFolder($userId, $autoCreateNotesFolder);
 			if ($showHidden === null) {
-				$showHidden = $this->settings->get($userId, 'showHidden');
+				$showHidden = $this->settings->getValueBool($userId, 'showHidden');
 			}
 			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			$fileIds = array_keys($data['files']);
@@ -69,7 +69,7 @@ class NotesService {
 		$customExtension = $this->getCustomExtension($userId);
 		try {
 			$notesFolder = $this->getNotesFolder($userId, false);
-			$showHidden = $this->settings->get($userId, 'showHidden');
+			$showHidden = $this->settings->getValueBool($userId, 'showHidden');
 			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			return count($data['files']);
 		} catch (NotesFolderException $e) {
@@ -132,9 +132,9 @@ class NotesService {
 		$this->noteUtil->ensureSufficientStorage($folder, 1);
 
 		// get file name
-		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
+		$fileSuffix = $this->settings->getValueString($userId, 'fileSuffix');
 		if ($fileSuffix === 'custom') {
-			$fileSuffix = $this->settings->get($userId, 'customSuffix');
+			$fileSuffix = $this->settings->getValueString($userId, 'customSuffix');
 		}
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
 		// create file
@@ -211,7 +211,7 @@ class NotesService {
 	 * Retrieve the value of user defined files extension
 	 */
 	private function getCustomExtension(string $userId) {
-		$suffix = $this->settings->get($userId, 'customSuffix');
+		$suffix = $this->settings->getValueString($userId, 'customSuffix');
 		return ltrim($suffix, '.');
 	}
 

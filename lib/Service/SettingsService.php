@@ -69,8 +69,8 @@ class SettingsService {
 				},
 			],
 			'showHidden' => [
-				'default' => true,
-				'validate' => function ($value) {
+				'default' => false,
+				'validate' => function (mixed $value) : bool {
 					return (bool)$value;
 				}
 			],
@@ -175,13 +175,15 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function get(string $uid, string $name) : string|bool {
-		$settings = $this->getAll($uid);
-		if (property_exists($settings, $name)) {
-			return $settings->{$name};
-		} else {
-			throw new \OCP\PreConditionNotMetException('Setting ' . $name . ' not found for user ' . $uid . '.');
-		}
+	public function getValueString(string $uid, string $name) : string {
+		return $this->get($uid, $name, 'string');
+	}
+
+	/**
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	public function getValueBool(string $uid, string $name) : bool {
+		return $this->get($uid, $name, 'boolean');
 	}
 
 	public function delete(string $uid, string $name): void {
@@ -204,4 +206,22 @@ class SettingsService {
 			? ['rich', 'edit', 'preview']
 			: ['edit', 'preview'];
 	}
+
+	/**
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	private function get(string $uid, string $name, string $type) : mixed {
+		$settings = $this->getAll($uid);
+		if (property_exists($settings, $name)) {
+			$value = $settings->{$name};
+			if (gettype($value) !== $type) {
+				throw new \TypeError('Invalid type');
+			}
+
+			return $value;
+		} else {
+			throw new \OCP\PreConditionNotMetException('Setting ' . $name . ' not found for user ' . $uid . '.');
+		}
+	}
+
 }
