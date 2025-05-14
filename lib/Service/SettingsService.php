@@ -152,22 +152,18 @@ class SettingsService {
 		$settings = $this->getSettingsFromDB($uid);
 		// use default for empty settings
 		$toBeSaved = false;
-		$toSaveNotesPath = false;
 		foreach ($this->attrs as $name => $attr) {
 			if (!property_exists($settings, $name)) {
 				$defaultValue = $attr['default'];
 				if (is_callable($defaultValue)) {
 					$settings->{$name} = $defaultValue($uid);
 					$toBeSaved = $saveInitial;
-					if ($name === 'notesPath') {
-						$toSaveNotesPath = true;
-					}
 				} else {
 					$settings->{$name} = $defaultValue;
 				}
 			}
 		}
-		if ($toSaveNotesPath || $toBeSaved) {
+		if ($toBeSaved) {
 			$this->set($uid, (array)$settings);
 		}
 		return $settings;
@@ -176,8 +172,8 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function get(string $uid, string $name) : string {
-		$settings = $this->getAll($uid);
+	public function get(string $uid, string $name, bool $saveInitial = false) : string {
+		$settings = $this->getAll($uid, $saveInitial);
 		if (property_exists($settings, $name)) {
 			return $settings->{$name};
 		} else {
