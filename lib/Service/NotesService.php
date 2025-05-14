@@ -30,13 +30,11 @@ class NotesService {
 		$this->noteUtil = $noteUtil;
 	}
 
-	public function getAll(string $userId, bool $autoCreateNotesFolder = false, ?bool $showHidden = null) : array {
+	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
 		$customExtension = $this->getCustomExtension($userId);
 		try {
 			$notesFolder = $this->getNotesFolder($userId, $autoCreateNotesFolder);
-			if ($showHidden === null) {
-				$showHidden = $this->settings->getValueBool($userId, 'showHidden');
-			}
+			$showHidden = $this->settings->getValueBool($userId, 'showHidden');
 			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			$fileIds = array_keys($data['files']);
 			// pre-load tags for all notes (performance improvement)

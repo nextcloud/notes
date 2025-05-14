@@ -66,9 +66,7 @@ class NotesApiController extends ApiController {
 			$this->settingsService->getAll($userId, true);
 			// load notes and categories
 			$exclude = explode(',', $exclude);
-			// show hidden folders by default, ignoring settings, so clients can handle them at will
-			$showHidden = true;
-			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor, $showHidden);
+			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor);
 			$notesData = $data['notesData'];
 			if (!$data['chunkCursor']) {
 				// if last chunk, then send all notes (pruned)
