@@ -112,6 +112,9 @@ class SettingsService {
 			if ($value !== null && array_key_exists($name, $this->attrs)) {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
 			}
+			if ($name === 'notesPath' && $value !== null) {
+				continue;
+			}
 			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
 			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
 				|| $value === null
@@ -169,8 +172,8 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function get(string $uid, string $name) : string {
-		$settings = $this->getAll($uid);
+	public function get(string $uid, string $name, bool $saveInitial = false) : string {
+		$settings = $this->getAll($uid, $saveInitial);
 		if (property_exists($settings, $name)) {
 			return $settings->{$name};
 		} else {

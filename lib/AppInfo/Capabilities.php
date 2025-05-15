@@ -26,7 +26,7 @@ class Capabilities implements ICapability {
 			Application::APP_ID => [
 				'api_version' => Application::$API_VERSIONS,
 				'version' => $this->appManager->getAppVersion(Application::APP_ID),
-				'notes_path' => $this->userId !== null && $this->userId !== ' ' ? $this->noteUtil->getNotesFolderUserPath($this->userId) : null,
+				'notes_path' => $this->userId !== null && $this->userId !== ' ' ? $this->noteUtil->getNotesFolderUserPath($this->userId, true) : null,
 			],
 		];
 	}
