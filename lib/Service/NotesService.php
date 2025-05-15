@@ -34,7 +34,8 @@ class NotesService {
 		$customExtension = $this->getCustomExtension($userId);
 		try {
 			$notesFolder = $this->getNotesFolder($userId, $autoCreateNotesFolder);
-			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			$showHidden = $this->settings->getValueBool($userId, 'showHidden');
+			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			$fileIds = array_keys($data['files']);
 			// pre-load tags for all notes (performance improvement)
 			$this->noteUtil->getTagService()->loadTags($fileIds);
@@ -66,7 +67,8 @@ class NotesService {
 		$customExtension = $this->getCustomExtension($userId);
 		try {
 			$notesFolder = $this->getNotesFolder($userId, false);
-			$data = self::gatherNoteFiles($customExtension, $notesFolder);
+			$showHidden = $this->settings->getValueBool($userId, 'showHidden');
+			$data = self::gatherNoteFiles($customExtension, $notesFolder, $showHidden);
 			return count($data['files']);
 		} catch (NotesFolderException $e) {
 			return 0;
@@ -128,9 +130,9 @@ class NotesService {
 		$this->noteUtil->ensureSufficientStorage($folder, 1);
 
 		// get file name
-		$fileSuffix = $this->settings->get($userId, 'fileSuffix');
+		$fileSuffix = $this->settings->getValueString($userId, 'fileSuffix');
 		if ($fileSuffix === 'custom') {
-			$fileSuffix = $this->settings->get($userId, 'customSuffix');
+			$fileSuffix = $this->settings->getValueString($userId, 'customSuffix');
 		}
 		$filename = $this->noteUtil->generateFileName($folder, $title, $fileSuffix, -1);
 		// create file
@@ -168,6 +170,7 @@ class NotesService {
 	private static function gatherNoteFiles(
 		string $customExtension,
 		Folder $folder,
+		bool $showHidden,
 		string $categoryPrefix = '',
 	) : array {
 		$data = [
@@ -176,10 +179,14 @@ class NotesService {
 		];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
+			$hidden = str_starts_with($node->getName(), '.');
+			if ($hidden && !$showHidden) {
+				continue;
+			}
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
-				$data_sub = self::gatherNoteFiles($customExtension, $node, $subCategory . '/');
+				$data_sub = self::gatherNoteFiles($customExtension, $node, $showHidden, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
 				$data['categories'] = $data['categories'] + $data_sub['categories'];
 			} elseif (self::isNote($node, $customExtension)) {
@@ -202,7 +209,7 @@ class NotesService {
 	 * Retrieve the value of user defined files extension
 	 */
 	private function getCustomExtension(string $userId) {
-		$suffix = $this->settings->get($userId, 'customSuffix');
+		$suffix = $this->settings->getValueString($userId, 'customSuffix');
 		return ltrim($suffix, '.');
 	}
 
