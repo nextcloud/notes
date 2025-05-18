@@ -197,7 +197,7 @@ class NoteUtil {
 
 	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
 		$userFolder = $this->getRoot()->getUserFolder($userId);
-		$notesPath = $this->settingsService->get($userId, 'notesPath');
+		$notesPath = $this->settingsService->getValueString($userId, 'notesPath');
 		$allowShared = $notesPath !== $this->settingsService->getDefaultNotesPath($userId);
 
 		$folder = null;
