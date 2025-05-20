@@ -102,7 +102,7 @@ OC.L10N.register(
     "Search for notes" : "Nach Notizen suchen",
     "Loading …" : "Lade …",
     "Find in all categories" : "In allen Kategorien suchen",
-    "Use Markdown markups to style your text." : "Verwende Markdown um deinen Text zu gestalten.",
+    "Use Markdown markups to style your text." : "Verwende Markdown, um deinen Text zu gestalten.",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Erstelle eine Notiz per Klick auf \"{newnote}\" in der App-Navigation.",
     "Note not found." : "Notiz nicht gefunden.",
     "Note is locked." : "Notiz ist gesperrt.",
