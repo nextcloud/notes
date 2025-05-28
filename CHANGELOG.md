@@ -12,7 +12,7 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
-## 4.13.0
+## 4.12.1
 
 ### Fixed
 

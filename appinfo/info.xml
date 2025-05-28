@@ -10,7 +10,7 @@
 	<summary>Distraction-free notes and writing</summary>
 	<description><![CDATA[
 The Notes app is a distraction free notes taking app for [Nextcloud](https://www.nextcloud.com/). It provides categories for better organization and supports formatting using [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax. Notes are saved as files in your Nextcloud, so you can view and edit them with every Nextcloud client. Furthermore, a separate [REST API](https://github.com/nextcloud/notes/blob/master/docs/api/README.md) allows for an easy integration into apps ([Android](https://github.com/nextcloud/notes-android), [iOS](https://github.com/nextcloud/notes-ios), as well as [3rd-party apps](https://github.com/nextcloud/notes/wiki#3rd-party-clients) which allow convenient access to your Nextcloud notes). Further features include marking notes as favorites.]]></description>
-	<version>4.13.0</version>
+	<version>4.12.1</version>
 	<licence>agpl</licence>
 	<author>Kristof Hamann</author>
 	<author>Bernhard Posselt</author>
