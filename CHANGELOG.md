@@ -12,6 +12,28 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.12.1
+
+### Fixed
+
+* Fix slow capabilities by @enjeck in [#1543](https://github.com/nextcloud/notes/pull/1543)
+* Fix: Use info instead of warning to avoid filling logs by @enjeck in [#1530](https://github.com/nextcloud/notes/pull/1530)
+
+### Dependencies
+
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.7 to 7.0.8 by @dependabot in [#1500](https://github.com/nextcloud/notes/pull/1500)
+* Chore(deps-dev): Bump guzzlehttp/guzzle from 7.9.2 to 7.9.3 by @dependabot in [#1512](https://github.com/nextcloud/notes/pull/1512)
+* Chore(deps): Bump @nextcloud/vue from 8.24.0 to 8.26.1 by @dependabot in [#1540](https://github.com/nextcloud/notes/pull/1540)
+* Chore(deps-dev): Bump http-proxy-middleware from 2.0.7 to 2.0.9 by @dependabot in [#1528](https://github.com/nextcloud/notes/pull/1528)
+* Chore(deps): Bump @nextcloud/dialogs from 6.1.1 to 6.3.0 by @dependabot in [#1542](https://github.com/nextcloud/notes/pull/1542)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.12.0 to 3.12.2 by @dependabot in [#1537](https://github.com/nextcloud/notes/pull/1537)
+* Chore(deps): Bump @nextcloud/moment from 1.3.2 to 1.3.4 by @dependabot in [#1539](https://github.com/nextcloud/notes/pull/1539)
+* Chore(deps): Bump diff from 7.0.0 to 8.0.1 by @dependabot in [#1545](https://github.com/nextcloud/notes/pull/1545)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.0.1 to 3.1.0 by @dependabot in [#1554](https://github.com/nextcloud/notes/pull/1554)
+* Update nextcloud/ocp dependencies by @nextcloud-command in [#1531](https://github.com/nextcloud/notes/pull/1531)
+* Fix npm audit by @nextcloud-command in [#1550](https://github.com/nextcloud/notes/pull/1550)
+
+
 ## 4.12.0
 
 ### Added
