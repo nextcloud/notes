@@ -7,6 +7,7 @@ OC.L10N.register(
     "New note" : "Ny note",
     "Undo Delete" : "Annuller Slet",
     "There are unsaved notes. Leaving the page will discard all changes!" : "Der er noter der ikke er gemt. Hvis du forlader denne side vil de blive smidt væk!",
+    "Notes settings" : "Noter indstillinger",
     "Open in edit mode" : "Åbn i redigeringstilstand",
     "Open in preview mode" : "Åbn forhåndsvisning",
     "Insert image" : "Indsæt billede",
@@ -30,6 +31,7 @@ OC.L10N.register(
     "Last week" : "Sidste uge",
     "This month" : "Denne måned",
     "Last month" : "Seneste måned",
+    "Search for notes" : "Søg efter noter",
     "Loading …" : "Indlæser…",
     "Uncategorized" : "Udenfor kategori",
     "Tasks" : "Opgaver"
