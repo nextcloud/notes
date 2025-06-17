@@ -14,6 +14,7 @@ OC.L10N.register(
     "Add to favorites" : "Pievienot izlasei",
     "Share" : "Koplietot",
     "Rename" : "Pārdēvēt",
+    "Rename note" : "Pārdēvēt piezīmi",
     "Delete note" : "Izdzēst piezīmi",
     "Use version from server" : "Izmantot servera versiju",
     "Use current version" : "Izmantot pašreizējo versiju",
