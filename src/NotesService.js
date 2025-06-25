@@ -183,7 +183,9 @@ export const setTitle = (noteId, title) => {
 	return axios
 		.put(url('/notes/' + noteId + '/title'), { title })
 		.then(response => {
-			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data })
+			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data.title })
+			// need to update the internal path as well since sharing sidebar uses it
+			store.commit('setNoteAttribute', { noteId, attribute: 'internalPath', value: response.data?.internalPath })
 		})
 		.catch(err => {
 			console.error(err)

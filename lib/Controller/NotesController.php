@@ -277,7 +277,10 @@ class NotesController extends Controller {
 							$note->setTitle($title);
 						});
 					}
-					$result = $note->getTitle();
+					$result = [
+						'title' => $note->getTitle(),
+						'internalPath' => $note->getData()['internalPath'], // based on the title
+					];
 					break;
 
 				case 'category':
