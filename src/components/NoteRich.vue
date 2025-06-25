@@ -94,6 +94,7 @@ export default {
 			this.editor = (await window.OCA.Text.createEditor({
 				el: this.$refs.editor,
 				fileId: parseInt(this.noteId),
+				filePath: this.note.internalPath,
 				readOnly: false,
 				onUpdate: ({ markdown }) => {
 					if (this.note) {
