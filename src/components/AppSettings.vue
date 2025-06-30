@@ -34,6 +34,11 @@
 				@click="onChangeNotePath"
 			>
 		</NcAppSettingsSection>
+		<NcAppSettingsSection id="start-up-section" :name="t('notes', 'Start Up')">
+			<NcCheckboxRadioSwitch :checked.sync="settings.loadRecentOnStartUp" @update:checked="onChangeSettings">
+				Load recently updated note on startup
+			</NcCheckboxRadioSwitch>
+		</NcAppSettingsSection>
 		<NcAppSettingsSection id="file-suffix-section" :name="t('notes', 'File extension')">
 			<p class="app-settings-section__desc">
 				{{ t('notes', 'File extension for new notes') }}
@@ -87,6 +92,7 @@
 import {
 	NcAppSettingsDialog,
 	NcAppSettingsSection,
+	NcCheckboxRadioSwitch,
 } from '@nextcloud/vue'
 
 import { getFilePickerBuilder } from '@nextcloud/dialogs'
@@ -101,6 +107,7 @@ export default {
 	components: {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
+		NcCheckboxRadioSwitch,
 		HelpMobile,
 	},
 
@@ -189,6 +196,17 @@ export default {
 			this.onChangeSettings()
 				.then(() => {
 					this.$emit('reload')
+				})
+		},
+
+		onChangeStartUp(event) {
+			this.saving = true
+			this.settings.loadRecentOnStartUp = event.target.checked
+			return setSettings(this.settings)
+				.catch(() => {
+				})
+				.then(() => {
+					this.saving = false
 				})
 		},
 

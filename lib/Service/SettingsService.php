@@ -68,6 +68,12 @@ class SettingsService {
 					return '.' . $out;
 				},
 			],
+			'loadRecentOnStartUp' => [
+				'default' => true,
+				'validate' => function ($value) {
+					return $value === 'true' || $value === true;
+				},
+			],
 		];
 	}
 
