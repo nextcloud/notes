@@ -8,6 +8,7 @@ OC.L10N.register(
     "Share" : "Shirikisha",
     "Rename" : "Badili jina",
     "Edit" : "Hariri",
+    "Preview" : "Hakiki",
     "Today" : "Leo",
     "Yesterday" : "Jana",
     "This week" : "Wiki hii",
