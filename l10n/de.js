@@ -41,7 +41,7 @@ OC.L10N.register(
     "Basics" : "Grundlagen",
     "Write down your thoughts without any distractions." : "Schreibe deine Gedanken ohne jegliche Störungen auf.",
     "Organize your notes in categories." : "Sortiere deine Notizen in Kategorien.",
-    "Notes path" : "Notizen Pfad",
+    "Notes path" : "Notizen-Pfad",
     "Folder to store your notes" : "Ordner zum Speichern deiner Notizen",
     "Root directory" : "Hauptverzeichnis",
     "File extension" : "Dateierweiterung",
