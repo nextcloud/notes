@@ -12,6 +12,32 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.12.2
+
+### Fixed
+
+* Fix: Update internalPath after updating title by @enjeck in [#1577](https://github.com/nextcloud/notes/pull/1577)
+* Fixed Title heading sync broken - Failed to push steps by @theroch in [#1580](https://github.com/nextcloud/notes/pull/1580)
+
+### Dependencies
+
+* Update nextcloud/ocp dependencies by @nextcloud-command in [#1562](https://github.com/nextcloud/notes/pull/1562)
+* Fix npm audit by @nextcloud-command in [#1563](https://github.com/nextcloud/notes/pull/1563)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.12.2 to 3.13.0 by @dependabot in [#1564](https://github.com/nextcloud/notes/pull/1564)
+* Ci: update node.yml workflow from template by @nextcloud-command in [#1565](https://github.com/nextcloud/notes/pull/1565)
+* Chore(deps): Bump @nextcloud/dialogs from 6.3.0 to 6.3.1 by @dependabot in [#1569](https://github.com/nextcloud/notes/pull/1569)
+* Fix npm audit by @nextcloud-command in [#1571](https://github.com/nextcloud/notes/pull/1571)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.9.0 to 2.10.0 by @dependabot in [#1574](https://github.com/nextcloud/notes/pull/1574)
+* Chore(deps-dev): Bump pbkdf2 from 3.1.2 to 3.1.3 by @dependabot in [#1575](https://github.com/nextcloud/notes/pull/1575)
+* Ci: update reuse.yml workflow from template by @nextcloud-command in [#1582](https://github.com/nextcloud/notes/pull/1582)
+* Chore(deps-dev): Bump phan/phan from 5.4.5 to 5.5.0 by @dependabot in [#1584](https://github.com/nextcloud/notes/pull/1584)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.13.0 to 3.13.2 by @dependabot in [#1585](https://github.com/nextcloud/notes/pull/1585)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.75.0 to 3.76.0 by @dependabot in [#1586](https://github.com/nextcloud/notes/pull/1586)
+* Update nextcloud/ocp dependencies by @nextcloud-command in [#1588](https://github.com/nextcloud/notes/pull/1588)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.10.0 to 2.11.2 by @dependabot in [#1590](https://github.com/nextcloud/notes/pull/1590)
+* Chore(deps): Bump skjnldsv/xpath-action from 7e6a7c379d0e9abc8acaef43df403ab4fc4f770c to f5b036e9d973f42c86324833fd00be90665fbf77 by @dependabot in [#1591](https://github.com/nextcloud/notes/pull/1591)
+
+
 ## 4.12.1
 
 ### Fixed
