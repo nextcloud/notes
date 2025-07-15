@@ -14,6 +14,7 @@ use OCA\Notes\Service\SettingsService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\File;
+use OCP\IUserManager;
 use OCP\Share\Events\BeforeShareCreatedEvent;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
@@ -24,7 +25,12 @@ class BeforeShareCreatedListener implements IEventListener {
 	private NoteUtil $noteUtil;
 	private LoggerInterface $logger;
 
-	public function __construct(SettingsService $settings, NoteUtil $noteUtil, LoggerInterface $logger) {
+	public function __construct(
+		protected IUserManager $userManager,
+		SettingsService $settings,
+		NoteUtil $noteUtil,
+		LoggerInterface $logger,
+	) {
 		$this->settings = $settings;
 		$this->noteUtil = $noteUtil;
 		$this->logger = $logger;
@@ -63,6 +69,12 @@ class BeforeShareCreatedListener implements IEventListener {
 
 			$share->setTarget('/' . $receiverNotesInternalPath . $itemTarget);
 		} catch (\Throwable $e) {
+			if (isset($receiver)) {
+				$user = $this->userManager->get($receiver);
+				if ($user && $user->getBackendClassName() === 'Guests') {
+					return;
+				}
+			}
 			$this->logger->error('Failed to overwrite share target for notes', [
 				'exception' => $e,
 			]);
