@@ -16,12 +16,12 @@
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
-			<AlertOctagonIcon v-if="note.error"
+			<AlertOctagonOutlineIcon v-if="note.error"
 				slot="icon"
 				:size="20"
 				fill-color="#E9322D"
 			/>
-			<StarIcon v-else-if="note.favorite"
+			<StarOutlineIcon v-else-if="note.favorite"
 				slot="icon"
 				:size="20"
 				fill-color="#FC0"
@@ -32,7 +32,7 @@
 			/>
 		</template>
 		<template v-if="isShared" #indicator>
-			<ShareVariantIcon :size="16" fill-color="#0082c9" />
+			<ShareVariantOutlineIcon :size="16" fill-color="#0082c9" />
 		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
@@ -41,14 +41,14 @@
 
 			<NcActionButton @click="onToggleSharing">
 				<template #icon>
-					<ShareVariantIcon :size="20" />
+					<ShareVariantOutlineIcon :size="20" />
 				</template>
 				{{ t('notes', 'Share') }}
 			</NcActionButton>
 
 			<NcActionButton v-if="!showCategorySelect" @click="showCategorySelect = true">
 				<template #icon>
-					<FolderIcon :size="20" />
+					<FolderOutlineIcon :size="20" />
 				</template>
 				{{ categoryTitle }}
 			</NcActionButton>
@@ -66,13 +66,13 @@
 				@search-change="onCategoryChange"
 			>
 				<template #icon>
-					<FolderIcon :size="20" />
+					<FolderOutlineIcon :size="20" />
 				</template>
 				{{ t('notes', 'Change category') }}
 			</NcActionInput>
 
 			<NcActionButton v-if="!renaming" @click="startRenaming">
-				<PencilIcon slot="icon" :size="20" />
+				<PencilOutlineIcon slot="icon" :size="20" />
 				{{ t('notes', 'Rename') }}
 			</NcActionButton>
 			<NcActionInput v-else
@@ -83,7 +83,7 @@
 				@input="onInputChange($event)"
 				@submit="onRename"
 			>
-				<PencilIcon slot="icon" :size="20" />
+				<PencilOutlineIcon slot="icon" :size="20" />
 			</NcActionInput>
 
 			<NcActionSeparator />
@@ -101,31 +101,31 @@
 
 <script>
 import { NcListItem, NcActionButton, NcActionSeparator, NcActionInput } from '@nextcloud/vue'
-import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
+import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
-import FolderIcon from 'vue-material-design-icons/Folder.vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
-import StarIcon from 'vue-material-design-icons/Star.vue'
+import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
+import StarOutlineIcon from 'vue-material-design-icons/StarOutline.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
-import ShareVariantIcon from 'vue-material-design-icons/ShareVariant.vue'
+import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default {
 	name: 'NoteItem',
 
 	components: {
-		AlertOctagonIcon,
+		AlertOctagonOutlineIcon,
 		FileDocumentOutlineIcon,
-		FolderIcon,
+		FolderOutlineIcon,
 		NcActionButton,
 		NcListItem,
-		StarIcon,
+		StarOutlineIcon,
 		NcActionSeparator,
 		NcActionInput,
-		PencilIcon,
-		ShareVariantIcon,
+		PencilOutlineIcon,
+		ShareVariantOutlineIcon,
 	},
 
 	props: {

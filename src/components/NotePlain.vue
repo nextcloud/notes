@@ -56,8 +56,8 @@
 						v-tooltip.left="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
-						<EditIcon v-if="preview" slot="icon" :size="20" />
-						<EyeIcon v-else slot="icon" :size="20" />
+						<PencilOutlineIcon v-if="preview" slot="icon" :size="20" />
+						<EyeOutlineIcon v-else slot="icon" :size="20" />
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>
 					<NcActionButton
@@ -70,7 +70,7 @@
 				</NcActions>
 				<NcActions v-if="note.readonly">
 					<NcActionButton>
-						<NoEditIcon slot="icon" :size="20" />
+						<PencilOffOutlineIcon slot="icon" :size="20" />
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</NcActionButton>
 				</NcActions>
@@ -103,10 +103,10 @@ import {
 import { showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
-import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
-import EyeIcon from 'vue-material-design-icons/Eye.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
+import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
-import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
+import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
 import { config } from '../config.js'
@@ -122,14 +122,14 @@ export default {
 
 	components: {
 		ConflictSolution,
-		EditIcon,
-		EyeIcon,
+		PencilOutlineIcon,
+		EyeOutlineIcon,
 		FullscreenIcon,
 		NcActions,
 		NcActionButton,
 		NcAppContent,
 		NcModal,
-		NoEditIcon,
+		PencilOffOutlineIcon,
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,

@@ -12,7 +12,7 @@
 			</div>
 			<div class="feature">
 				<NcButton type="secondary" @click="onNewNote">
-					<PlusIcon slot="icon" :size="20" />
+					<PlusOutlineIcon slot="icon" :size="20" />
 					{{ t('notes', 'New note') }}
 				</NcButton>
 			</div>
@@ -39,7 +39,7 @@ import {
 	NcButton,
 } from '@nextcloud/vue'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import PlusOutlineIcon from 'vue-material-design-icons/PlusOutline.vue'
 
 import CreateSampleButton from './CreateSampleButton.vue'
 import HelpMobile from './HelpMobile.vue'
@@ -54,7 +54,7 @@ export default {
 		HelpMobile,
 		NcAppContent,
 		NcButton,
-		PlusIcon,
+		PlusOutlineIcon,
 	},
 
 	methods: {
