@@ -104,9 +104,9 @@ import { showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 import EditIcon from 'vue-material-design-icons/LeadPencil.vue'
-import EyeIcon from 'vue-material-design-icons/Eye.vue'
+import EyeIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
-import NoEditIcon from 'vue-material-design-icons/PencilOff.vue'
+import NoEditIcon from 'vue-material-design-icons/PencilOffOutline.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 
 import { config } from '../config.js'

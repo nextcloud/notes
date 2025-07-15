@@ -101,15 +101,15 @@
 
 <script>
 import { NcListItem, NcActionButton, NcActionSeparator, NcActionInput } from '@nextcloud/vue'
-import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue'
+import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
-import FolderIcon from 'vue-material-design-icons/Folder.vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
-import StarIcon from 'vue-material-design-icons/Star.vue'
+import FolderIcon from 'vue-material-design-icons/FolderOutline.vue'
+import PencilIcon from 'vue-material-design-icons/PencilOutline.vue'
+import StarIcon from 'vue-material-design-icons/StarOutline.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
-import ShareVariantIcon from 'vue-material-design-icons/ShareVariant.vue'
+import ShareVariantIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default {

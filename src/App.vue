@@ -57,8 +57,8 @@ import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
-import CogIcon from 'vue-material-design-icons/Cog.vue'
+import PlusIcon from 'vue-material-design-icons/PlusOutline.vue'
+import CogIcon from 'vue-material-design-icons/CogOutline.vue'
 
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'

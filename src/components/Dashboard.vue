@@ -37,7 +37,7 @@
 import { NcButton, NcDashboardWidget, NcDashboardWidgetItem } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import PlusIcon from 'vue-material-design-icons/PlusOutline.vue'
 
 import { getDashboardData } from '../NotesService.js'
 import { categoryLabel } from '../Util.js'

@@ -15,7 +15,7 @@ import {
 	NcButton,
 } from '@nextcloud/vue'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import PlusIcon from 'vue-material-design-icons/PlusOutline.vue'
 
 import { createNote } from '../NotesService.js'
 import { getDefaultSampleNote, getDefaultSampleNoteTitle } from '../Util.js'
