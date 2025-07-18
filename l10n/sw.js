@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "Vidokezo",
     "Error" : "Hitilafu",
+    "Categories" : "Categories",
     "Remove from favorites" : "Ondoa kutoka katika vipendwa",
     "Add to favorites" : "Ongeza katika vipendwa",
     "Share" : "Shirikisha",
