@@ -39,7 +39,7 @@ import {
 	NcButton,
 } from '@nextcloud/vue'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import PlusIcon from 'vue-material-design-icons/PlusOutline.vue'
 
 import CreateSampleButton from './CreateSampleButton.vue'
 import HelpMobile from './HelpMobile.vue'
