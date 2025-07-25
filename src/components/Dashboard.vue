@@ -26,7 +26,7 @@
 		</NcDashboardWidget>
 		<div v-if="!loading" class="buttons-footer">
 			<NcButton :href="createNoteUrl">
-				<PlusIcon slot="icon" :size="20" />
+				<PlusOutline slot="icon" :size="20" />
 				{{ t('notes', 'New note') }}
 			</NcButton>
 		</div>
@@ -37,7 +37,7 @@
 import { NcButton, NcDashboardWidget, NcDashboardWidgetItem } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import PlusOutline from 'vue-material-design-icons/PlusOutline.vue'
 
 import { getDashboardData } from '../NotesService.js'
 import { categoryLabel } from '../Util.js'
@@ -49,7 +49,7 @@ export default {
 		NcButton,
 		NcDashboardWidget,
 		NcDashboardWidgetItem,
-		PlusIcon,
+		PlusOutline,
 	},
 
 	data() {
