@@ -6,7 +6,7 @@
 <template>
 	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
 		<template slot="list">
-			<NcAppContentList class="content-list">
+			<NcAppContentList v-if="!showNotesList" class="content-list">
 				<div class="content-list__search">
 					<NcTextField
 						:value.sync="searchText"
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-
 import {
 	NcAppContent,
 	NcAppContentList,
@@ -130,6 +129,9 @@ export default {
 			} else {
 				return this.filteredNotes
 			}
+		},
+		showNotesList() {
+			return store.state.app.toggleNotesList
 		},
 
 		// group notes by time ("All notes") or by category (if category chosen)
