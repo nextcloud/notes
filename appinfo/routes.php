@@ -187,14 +187,6 @@ return ['routes' => [
 		],
 	],
 	[
-		'name' => 'notes_api#fail',
-		'url' => '/api/{catchAll}',
-		'verb' => 'GET',
-		'requirements' => [
-			'catchAll' => '.*',
-		],
-	],
-	[
 		'name' => 'notes_api#preflighted_cors',
 		'url' => '/api/{apiVersion}/{path}',
 		'verb' => 'OPTIONS',
@@ -219,6 +211,14 @@ return ['routes' => [
 		'requirements' => [
 			'apiVersion' => '(v1.4)',
 			'noteid' => '\d+'
+		],
+	],
+	[
+		'name' => 'notes_api#fail',
+		'url' => '/api/{catchAll}',
+		'verb' => 'GET',
+		'requirements' => [
+			'catchAll' => '.*',
 		],
 	],
 ]];
