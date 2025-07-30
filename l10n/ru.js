@@ -14,7 +14,7 @@ OC.L10N.register(
     "Undo Delete" : "Отменить удаление",
     "Note recovered" : "Заметка восстановлена",
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Восстановлена [number] заметка","Восстановлены [number] заметки","Восстановлено [number] заметок","Восстановлено [number] заметок"],
-    "There are unsaved notes. Leaving the page will discard all changes!" : "Есть несохраненные заметки. Если покинуть страницу, все изменения будут утеряны.",
+    "There are unsaved notes. Leaving the page will discard all changes!" : "Есть несохранённые заметки. Если покинуть страницу, все изменения будут утеряны!",
     "Notes settings" : "Настройки заметок",
     "Please see Nextcloud server log for details." : "Для получения подробной информации, пожалуйста, обратитесь к журналам сервера Nextcloud.",
     "User defined" : "Определено пользователем",
