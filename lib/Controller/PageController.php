@@ -22,6 +22,8 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
@@ -58,10 +60,10 @@ class PageController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 * @suppress PhanUndeclaredClassReference, PhanTypeMismatchArgument, PhanUndeclaredClassMethod
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function index() : TemplateResponse {
 		$devMode = !is_file(dirname(__FILE__) . '/../../js/notes-main.js');
 		$response = new TemplateResponse(
@@ -100,9 +102,10 @@ class PageController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
+	 * 
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function create() : RedirectResponse {
 		$note = $this->notesService->create($this->userSession->getUser()->getUID(), '', '');
 		$note->setContent('');
