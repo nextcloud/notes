@@ -17,9 +17,13 @@ use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\CORS;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\StreamResponse;
 use OCP\Files\IMimeTypeDetector;
+
 use OCP\IRequest;
 
 class NotesApiController extends ApiController {
@@ -48,10 +52,10 @@ class NotesApiController extends ApiController {
 
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function index(
 		?string $category = null,
 		string $exclude = '',
@@ -92,10 +96,11 @@ class NotesApiController extends ApiController {
 
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function get(int $id, string $exclude = '') : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $exclude) {
 			$exclude = explode(',', $exclude);
@@ -109,10 +114,11 @@ class NotesApiController extends ApiController {
 
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function create(
 		string $category = '',
 		string $title = '',
@@ -140,11 +146,11 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @deprecated this was used in API v0.2 only, use #create() instead
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function createAutoTitle(
 		string $category = '',
 		string $content = '',
@@ -158,10 +164,11 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function update(
 		int $id,
 		?string $content = null,
@@ -198,11 +205,11 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @deprecated this was used in API v0.2 only, use #update() instead
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function updateAutoTitle(
 		int $id,
 		?string $content = null,
@@ -222,10 +229,11 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function destroy(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$this->service->delete($this->helper->getUID(), $id);
@@ -234,10 +242,11 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function setSettings() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
 			$this->settingsService->setPublic($this->helper->getUID(), $this->request->getParams());
@@ -246,19 +255,20 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function getSettings() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
 			return $this->settingsService->getPublic($this->helper->getUID());
 		});
 	}
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function fail() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
 			return new JSONResponse([], Http::STATUS_BAD_REQUEST);
@@ -269,11 +279,11 @@ class NotesApiController extends ApiController {
 
 	/**
 	 * With help from: https://github.com/nextcloud/cookbook
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @return JSONResponse|StreamResponse
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function getAttachment(int $noteid, string $path): Http\Response {
 		try {
 			$targetimage = $this->service->getAttachment(
@@ -297,10 +307,11 @@ class NotesApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @CORS
-	 * @NoCSRFRequired
+	 *
 	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
 	public function uploadFile(int $noteid): JSONResponse {
 		$file = $this->request->getUploadedFile('file');
 		return $this->helper->handleErrorResponse(function () use ($noteid, $file): array {
