@@ -76,6 +76,7 @@ OC.L10N.register(
     "Last month" : "Мінулы месяц",
     "Search for notes" : "Пошук нататак",
     "Loading …" : "Загрузка …",
+    "Find in all categories" : "Знайсці ва ўсіх катэгорыях",
     "Start writing a note by clicking on “{newnote}” in the app navigation." : "Пачніце пісаць нататку, націснуўшы \"{newnote}\" у навігацыі праграмы.",
     "Note not found." : "Нататка не знойдзена.",
     "Note is locked." : "Нататка заблакіравана.",
