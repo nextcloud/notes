@@ -11,7 +11,7 @@
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Borrada {number} nota","Borradas {number} notas","Borradas {number} notas"],
     "Undo Delete" : "Deshacer Borrado",
     "Note recovered" : "Nota recuperada",
-    "_Recovered {number} note_::_Recovered {number} notes_" : ["Recuperada {number} nota","Recuperadas {number} notas","Recuperadas {number} notas"],
+    "_Recovered {number} note_::_Recovered {number} notes_" : ["Se recuperó {number} nota","Se recuperaron {number} notas","Se recuperaron {number} notas"],
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin guardar. ¡Abandonar la página descartará los cambios!",
     "Notes settings" : "Configuración de Notes",
     "Please see Nextcloud server log for details." : "Por favor, revisa el registro del servidor de Nextcloud para ver los detalles.",
