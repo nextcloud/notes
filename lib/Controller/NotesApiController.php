@@ -281,7 +281,11 @@ class NotesApiController extends ApiController {
 				$noteid,
 				$path
 			);
-			$response = new StreamResponse($targetimage->fopen('rb'));
+			$fileHandle = $targetimage->fopen('rb');
+			if ($fileHandle === false) {
+				throw new \Exception('Could not open file');
+			}
+			$response = new StreamResponse($fileHandle);
 			$response->addHeader('Content-Disposition', 'attachment; filename="' . rawurldecode($targetimage->getName()) . '"');
 			$response->addHeader('Content-Type', $this->mimeTypeDetector->getSecureMimeType($targetimage->getMimeType()));
 			$response->addHeader('Cache-Control', 'public, max-age=604800');
@@ -299,7 +303,7 @@ class NotesApiController extends ApiController {
 	 */
 	public function uploadFile(int $noteid): JSONResponse {
 		$file = $this->request->getUploadedFile('file');
-		return $this->helper->handleErrorResponse(function () use ($noteid, $file) {
+		return $this->helper->handleErrorResponse(function () use ($noteid, $file): array {
 			return $this->service->createImage(
 				$this->helper->getUID(),
 				$noteid,
