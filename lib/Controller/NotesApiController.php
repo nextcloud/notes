@@ -36,7 +36,7 @@ class NotesApiController extends ApiController {
 		MetaService $metaService,
 		SettingsService $settingsService,
 		Helper $helper,
-		IMimeTypeDetector $mimeTypeDetector
+		IMimeTypeDetector $mimeTypeDetector,
 	) {
 		parent::__construct($AppName, $request);
 		$this->service = $service;
