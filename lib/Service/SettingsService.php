@@ -12,7 +12,9 @@ namespace OCA\Notes\Service;
 use OCA\Notes\AppInfo\Application;
 
 use OCP\App\IAppManager;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\IL10N;
 
@@ -41,7 +43,7 @@ class SettingsService {
 			'fileSuffix' => $this->getListAttrs('fileSuffix', [...$this->defaultSuffixes, 'custom']),
 			'notesPath' => [
 				'default' => function (string $uid) {
-					return $this->getDefaultNotesPath($uid);
+					return $this->getDefaultNotesNode($uid)['path'];
 				},
 				'validate' => function ($value) {
 					$value = str_replace([ '/', '\\' ], DIRECTORY_SEPARATOR, $value);
@@ -86,13 +88,46 @@ class SettingsService {
 		];
 	}
 
-	public function getDefaultNotesPath(string $uid) : string {
+	/**
+	 * Return the default notes node if it exists and the expected path if it exists
+	 * @return array{
+	 *     path: string,
+	 *     folder: ?Folder
+	 * }
+	 */
+	public function getDefaultNotesNode(string $uid): array {
 		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
-		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
-		if ($defaultExists) {
-			return $defaultFolder;
-		} else {
-			return $this->l10n->t($defaultFolder);
+		$userFolder = $this->root->getUserFolder($uid);
+		try {
+			/** @var Folder $node */
+			$node = $userFolder->get($defaultFolder);
+			return [
+				'path' => $defaultFolder,
+				'folder' => $node,
+			];
+		} catch (NotFoundException) {
+			$path = $this->l10n->t($defaultFolder);
+
+			if ($path == $defaultFolder) {
+				// English locale, still non-existing
+				return [
+					'path' => $path,
+					'folder' => null,
+				];
+			}
+
+			try {
+				$node = $userFolder->get($path);
+				return [
+					'path' => $path,
+					'folder' => $node,
+				];
+			} catch (NotFoundException) {
+				return [
+					'path' => $path,
+					'folder' => null,
+				];
+			}
 		}
 	}
 
