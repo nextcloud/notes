@@ -12,6 +12,25 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.12.3
+
+### Added
+
+* feat(ui): switch to outline icons by @JuliaKirschenheuter [#1596](https://github.com/nextcloud/notes/pull/1596)
+* Prevent exception for a share file by inviting a new guest account by @JuliaKirschenheuter [#1595](https://github.com/nextcloud/notes/pull/1595)
+* feat(files): Expose image api for other clients as api v1.4 including routes fix by @oli-ver [#1600](https://github.com/nextcloud/notes/pull/1600)
+
+### Fixed
+
+* fix(files): replace outline plus icon with normal one by @JuliaKirschenheuter [#1613](https://github.com/nextcloud/notes/pull/1613)
+
+### Dependencies
+
+* [main] Fix npm audit by @nextcloud-command [#1597](https://github.com/nextcloud/notes/pull/1597)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.76.0 to 3.85.1 by @dependabot[bot] [#1603](https://github.com/nextcloud/notes/pull/1603)
+* Chore(deps): Bump actions/checkout from 4.2.2 to 4.3.0 by @dependabot[bot] [#1612](https://github.com/nextcloud/notes/pull/1612)
+
+
 ## 4.12.2
 
 ### Fixed
