@@ -12,6 +12,7 @@ namespace OCA\Notes\Controller;
 use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IUserSession;
@@ -36,9 +37,9 @@ class SettingsController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
 	 * @throws \OCP\PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
 	public function set(): JSONResponse {
 		$this->service->set(
 			$this->getUID(),
@@ -48,15 +49,15 @@ class SettingsController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
 	 */
+	#[NoAdminRequired]
 	public function get(): JSONResponse {
 		return new JSONResponse($this->service->getAll($this->getUID()));
 	}
 
 	/**
-	 * @NoAdminRequired
 	 */
+	#[NoAdminRequired]
 	public function migrate(): JSONResponse {
 		$this->service->delete($this->getUID(), 'editorHint');
 		return new JSONResponse();
