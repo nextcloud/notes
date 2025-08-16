@@ -127,7 +127,7 @@ OC.L10N.register(
     "15 January 2021, via Nextcloud Notes" : "15 de Enero de 2021, via Nextcloud Notes",
     "Me, you, and all our friends!" : "¡Tú, yo, y todos nuestros amigos!",
     "Tasks" : "Tareas",
-    "Write nice todo lists" : "Escribir bonitas listas de para-hacer",
+    "Write nice todo lists" : "Escribir bonitas listas de tareas",
     "Buy Fries" : "Comprar patatas fritas",
     "Birthdays" : "Cumpleaños",
     "Jen, in three days!" : "Jen, en tres días!",
