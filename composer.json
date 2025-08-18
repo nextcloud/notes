@@ -1,35 +1,38 @@
 {
 	"require-dev": {
-		"guzzlehttp/guzzle": "^7",
-		"nextcloud/coding-standard": "^1.0",
 		"nextcloud/ocp": "dev-stable28",
-		"phan/phan": "^5",
-		"php-cs-fixer/shim": "3.85.1",
-		"psalm/phar": "^5.26",
-		"squizlabs/php_codesniffer": "^3",
-		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
+		"bamarni/composer-bin-plugin": "^1.8"
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"OCA\\Notes\\Tests\\API\\": "tests/api/"
+			"OCA\\Notes\\Tests\\API\\": "tests/api/",
+			"OCP\\": "vendor/nextcloud/ocp/OCP"
 		}
 	},
-	"config": {
-		"platform": {
-			"php": "8.0"
-		},
-		"sort-packages": true
-	},
-	"prefer-stable": true,
 	"scripts": {
-		"test": [
-			"@test:unit"
+		"post-install-cmd": [
+			"@composer bin all install --ansi"
 		],
-		"test:unit": "./vendor/bin/phpunit -c tests/unit/phpunit.xml",
-		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
+		"post-update-cmd": [
+			"@composer bin all update --ansi"
+		],
+		"lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
 		"cs:fix": "php-cs-fixer fix",
-		"psalm": "psalm.phar",
-		"phan": "phan"
+		"psalm": "psalm --threads=1",
+		"psalm:update-baseline": "psalm --threads=1 --update-baseline",
+		"psalm:clear": "psalm --clear-cache && psalm --clear-global-cache",
+		"psalm:fix": "psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
+		"test:unit": "phpunit --bootstrap vendor/autoload.php --testdox tests/api/",
+		"openapi": "generate-spec"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/package-versions-deprecated": true,
+			"bamarni/composer-bin-plugin": true
+		},
+		"platform": {
+			"php": "8.0"
+		}
 	}
 }

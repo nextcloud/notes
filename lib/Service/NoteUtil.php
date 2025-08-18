@@ -160,7 +160,7 @@ class NoteUtil {
 		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", '$1', $str); // headline
 		$str = preg_replace('/^(=+|-+)$/mu', '', $str); // separate line for headline
 		$str = preg_replace("/(\*+|_+)(.*?)\\1/mu", '$2', $str); // emphasis
-		return $str;
+		return $str ?? '';
 	}
 
 	/**
