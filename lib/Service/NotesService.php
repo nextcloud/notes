@@ -56,7 +56,7 @@ class NotesService {
 			if ($favA === $favB) {
 				return $b->getModified() - $a->getModified();
 			} else {
-				return $favA > $favB ? -1 : 1;
+				return (int)$favA > (int)$favB ? -1 : 1;
 			}
 		});
 		return $notes;

@@ -1,16 +1,22 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="2"
+    errorLevel="4"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
+	phpVersion="8.0"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="tests/psalm-baseline.xml"
+	findUnusedCode="false"
+	ensureOverrideAttribute="false"
 >
 	<stubs>
 		<file name="tests/stubs/ocp.php" preloadClasses="true"/>
 	</stubs>
     <projectFiles>
         <directory name="lib" />
+		<ignoreFiles>
+			<directory name="vendor" />
+		</ignoreFiles>
     </projectFiles>
     <extraFiles>
         <directory name="vendor/nextcloud/ocp" />
@@ -19,13 +25,6 @@
 		<DeprecatedMethod>
 			<errorLevel type="error" />
 		</DeprecatedMethod>
-		<UndefinedClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OC" />
-				<referencedClass name="Doctrine\DBAL\Types\Types"/>
-				<referencedClass name="Symfony\Component\Console\Command\Command"/>
-			</errorLevel>
-		</UndefinedClass>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">
 				<referencedClass name="Doctrine\DBAL\Driver\Statement" />
