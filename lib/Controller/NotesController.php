@@ -16,8 +16,11 @@ use OCA\Notes\Service\SettingsService;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\StreamResponse;
+
 use OCP\Files\IMimeTypeDetector;
 use OCP\Files\Lock\ILock;
 use OCP\Files\Lock\ILockManager;
@@ -57,8 +60,9 @@ class NotesController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function index(int $pruneBefore = 0) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($pruneBefore) {
 			$userId = $this->helper->getUID();
@@ -105,8 +109,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function dashboard() : JSONResponse {
 		return $this->helper->handleErrorResponse(function () {
 			$maxItems = 6;
@@ -137,8 +142,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function get(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);
@@ -160,8 +166,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function create(string $category = '', string $content = '', string $title = '') : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($category, $content, $title) {
 			$note = $this->notesService->create($this->helper->getUID(), $title, $category);
@@ -174,8 +181,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function undo(
 		int $id,
 		string $title,
@@ -213,8 +221,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function autotitle(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);
@@ -231,8 +240,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function update(int $id, string $content) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id, $content) {
 			$note = $this->helper->getNoteWithETagCheck($id, $this->request);
@@ -243,8 +253,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function updateProperty(
 		int $id,
 		string $property,
@@ -308,8 +319,9 @@ class NotesController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function destroy(int $id) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use ($id) {
 			$this->notesService->delete($this->helper->getUID(), $id);
@@ -319,10 +331,10 @@ class NotesController extends Controller {
 
 	/**
 	 * With help from: https://github.com/nextcloud/cookbook
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 * @return JSONResponse|StreamResponse
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function getAttachment(int $noteid, string $path): Http\Response {
 		try {
 			$targetimage = $this->notesService->getAttachment(
@@ -348,8 +360,9 @@ class NotesController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
+	 *
 	 */
+	#[NoAdminRequired]
 	public function uploadFile(int $noteid): JSONResponse {
 		$file = $this->request->getUploadedFile('file');
 		return $this->helper->handleErrorResponse(function () use ($noteid, $file) {
