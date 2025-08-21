@@ -115,11 +115,12 @@ class SettingsService {
 			if ($name === 'notesPath' && $value !== null) {
 				continue;
 			}
+			if (!array_key_exists($name, $this->attrs)) {
+				unset($settings[$name]);
+				continue;
+			}
 			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
-			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
-				|| $value === null
-				|| $value === $default
-			)) {
+			if (!$writeDefaults && ($value === null || $value === $default)) {
 				unset($settings[$name]);
 			}
 		}
