@@ -28,6 +28,7 @@ OC.L10N.register(
     "Loading …" : "Notiek ielāde ...",
     "Updating settings has failed." : "Iestatījumu atjaunināšana neizdevās.",
     "Uncategorized" : "Bez kategorijas",
-    "Tasks" : "Uzdevumi"
+    "Tasks" : "Uzdevumi",
+    "It looks that the notes app was installed from a development source. Please install it from the official <a href=\"%1$s\">Nextcloud App Store</a> instead. If you want to build the Notes app by yourself, please follow the <a href=\"%2$s\">developer instructions</a>." : "Izskatās, ka piezīmju lietotne tika uzstādīta un izstrādes avota. Lūgums uzstādīt to no officiālā <a href=\"%1$s\">Nextcloud lietotņu veikala</a>. Ja ir vēlēšanās būvēt piezīmju lietotni pašam, lūgums sekot <a href=\"%2$s\">norādēm izstrādātājiem</a>."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
