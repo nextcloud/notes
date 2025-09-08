@@ -122,7 +122,7 @@ OC.L10N.register(
     "Tasks" : "وظایف",
     "Write nice todo lists" : "Write nice todo lists",
     "Buy Fries" : "Buy Fries",
-    "Birthdays" : "Birthdays",
+    "Birthdays" : "تاریخ تولدها",
     "Jen, in three days!" : "Jen, in three days!",
     "Moss, 21.03.1973" : "Moss, 21.03.1973",
     "Roy, 1979" : "Roy, 1979",
