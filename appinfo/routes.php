@@ -212,7 +212,7 @@ return ['routes' => [
 		'url' => '/api/{apiVersion}/attachment/{noteid}',
 		'verb' => 'GET',
 		'requirements' => [
-			'apiVersion' => '(v1.4)',
+			'apiVersion' => '(v1|v1.4)',
 			'noteid' => '\d+'
 		],
 	],
@@ -221,7 +221,7 @@ return ['routes' => [
 		'url' => '/api/{apiVersion}/attachment/{noteid}',
 		'verb' => 'POST',
 		'requirements' => [
-			'apiVersion' => '(v1.4)',
+			'apiVersion' => '(v1|v1.4)',
 			'noteid' => '\d+'
 		],
 	],
