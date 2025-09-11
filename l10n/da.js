@@ -23,7 +23,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "Slet note",
     "Use current version" : "Brug aktuelle version",
-    "Edit" : "Rediger",
+    "Edit" : "Redigér",
     "Preview" : "Forhåndsvis",
     "Today" : "I dag",
     "Yesterday" : "I går",
