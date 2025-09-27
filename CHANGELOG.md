@@ -12,6 +12,28 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.12.4
+
+### Fixed
+
+* Chore(deprecation): Switch from annotations to method attributes by @oli-ver [#1604](https://github.com/nextcloud/notes/pull/1604)
+
+### Dependencies
+
+* Chore(deps): Bump actions/checkout from 4.3.0 to 5.0.0 by @dependabot[bot] [#1619](https://github.com/nextcloud/notes/pull/1619)
+* Chore(deps-dev): Bump sha.js from 2.4.11 to 2.4.12 by @dependabot[bot] [#1621](https://github.com/nextcloud/notes/pull/1621)
+* Chore(deps-dev): Bump cipher-base from 1.0.4 to 1.0.6 by @dependabot[bot] [#1622](https://github.com/nextcloud/notes/pull/1622)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.85.1 to 3.86.0 by @dependabot[bot] [#1628](https://github.com/nextcloud/notes/pull/1628)
+* Chore(deps-dev): Bump guzzlehttp/guzzle from 7.9.3 to 7.10.0 by @dependabot[bot] [#1629](https://github.com/nextcloud/notes/pull/1629)
+* Chore(deps-dev): Bump phan/phan from 5.5.0 to 5.5.1 by @dependabot[bot] [#1630](https://github.com/nextcloud/notes/pull/1630)
+
+### Added
+
+* feat(ui): switch to outline icons by @JuliaKirschenheuter [#1596](https://github.com/nextcloud/notes/pull/1596)
+* Prevent exception for a share file by inviting a new guest account by @JuliaKirschenheuter [#1595](https://github.com/nextcloud/notes/pull/1595)
+* feat(files): Expose image api for other clients as api v1.4 including routes fix by @oli-ver [#1600](https://github.com/nextcloud/notes/pull/1600)
+
+
 ## 4.12.3
 
 ### Added
