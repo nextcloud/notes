@@ -34,7 +34,7 @@ OC.L10N.register(
     "Set the current line as a big heading" : "Ställ in den aktuella raden som en stor rubrik",
     "Insert link" : "Infoga länk",
     "Insert image" : "Infoga bild",
-    "Switch between editor and viewer" : "Växla mellan redigerare och visare",
+    "Switch between editor and viewer" : "Växla mellan redigerings och visnings -läge",
     "Pick a notes folder" : "Välj en anteckningsmapp",
     "Set notes folder" : "Ställ in anteckningsmapp",
     "Basics" : "Grunder",
