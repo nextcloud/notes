@@ -126,7 +126,7 @@ OC.L10N.register(
     "Sample note" : "Узор нататкі",
     "15 January 2021, via Nextcloud Notes" : "15 студзеня 2021 г., праз Нататкі Nextcloud",
     "Me, you, and all our friends!" : "Я, ты і ўсе нашы сябры!",
-    "Tasks" : "Задачы",
+    "Tasks" : "Заданні",
     "Write nice todo lists" : "Пішыце прыгожыя спісы спраў",
     "Buy Fries" : "Купіць бульбу",
     "Birthdays" : "Дні нараджэння",
