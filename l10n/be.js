@@ -15,7 +15,7 @@ OC.L10N.register(
     "Note recovered" : "Нататка адноўлена",
     "_Recovered {number} note_::_Recovered {number} notes_" : ["Адноўлена {number} нататка","Адноўлены {number} нататкі","Адноўлена {number} нататак","Адноўлена {number} нататак"],
     "There are unsaved notes. Leaving the page will discard all changes!" : "Ёсць незахаваныя нататкі. Калі пакінуць старонку, усе змены будуць скасаваны!",
-    "Notes settings" : "Налады нататак",
+    "Notes settings" : "Налады Нататак",
     "Please see Nextcloud server log for details." : "Больш падрабязную інфармацыю шукайце ў журнале Nextcloud",
     "User defined" : "Вызначана карыстальнікам",
     "Open in rich text mode" : "Адкрываць у рэжыме фарматаванага тэксту",
