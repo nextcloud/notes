@@ -5,37 +5,35 @@
 
 <template>
 	<Fragment>
-		<div class="feature icon-phone">
-			{{ t('notes', 'Install the app for your mobile phone in order to access your notes from everywhere.') }}
-		</div>
-		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/nextcloud/notes-android">
-				{{ t('notes', 'Android app: {notes}', {notes: 'Nextcloud Notes'}) }}
-			</a>
-			<div>
-				<div class="badge">
-					<a target="_blank" href="https://play.google.com/store/apps/details?id=it.niedermann.owncloud.notes">
-						<img :src="getRoute('badge_playstore.svg')" class="appstore-badge badge-playstore-fix">
-					</a>
+		<div class="help-mobile">
+			<NcFormGroup :label="t('notes', 'Android')">
+				<div class="badge-wrapper">
+					<div>
+						<div class="badge">
+							<a target="_blank" href="https://play.google.com/store/apps/details?id=it.niedermann.owncloud.notes">
+								<img :src="getRoute('badge_playstore.svg')" class="appstore-badge badge-playstore-fix">
+							</a>
+						</div>
+						<div class="badge">
+							<a target="_blank" href="https://f-droid.org/repository/browse/?fdid=it.niedermann.owncloud.notes">
+								<img :src="getRoute('badge_fdroid.svg')" class="appstore-badge">
+							</a>
+						</div>
+					</div>
 				</div>
-				<div class="badge">
-					<a target="_blank" href="https://f-droid.org/repository/browse/?fdid=it.niedermann.owncloud.notes">
-						<img :src="getRoute('badge_fdroid.svg')" class="appstore-badge">
-					</a>
+			</NcFormGroup>
+
+			<NcFormGroup :label="t('notes', 'iPhone and iPad')">
+				<div class="badge-wrapper">
+					<div>
+						<div class="badge">
+							<a target="_blank" href="https://apps.apple.com/app/nextcloud-notes/id813973264">
+								<img :src="getRoute('badge_applestore.svg')" class="appstore-badge badge-playstore-fix">
+							</a>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
-		<div class="badge-wrapper">
-			<a target="_blank" href="https://github.com/nextcloud/notes-ios">
-				{{ t('notes', 'iOS app: {notes}', {notes: 'Nextcloud Notes'}) }}
-			</a>
-			<div>
-				<div class="badge">
-					<a target="_blank" href="https://apps.apple.com/app/nextcloud-notes/id813973264">
-						<img :src="getRoute('badge_applestore.svg')" class="appstore-badge badge-playstore-fix">
-					</a>
-				</div>
-			</div>
+			</NcFormGroup>
 		</div>
 	</Fragment>
 </template>
@@ -44,10 +42,12 @@
 import { generateFilePath } from '@nextcloud/router'
 
 import { Fragment } from 'vue-frag'
+import { NcFormGroup } from '@nextcloud/vue'
 
 export default {
 	components: {
 		Fragment,
+		NcFormGroup,
 	},
 
 	methods: {
@@ -59,9 +59,12 @@ export default {
 
 </script>
 <style scoped>
+.help-mobile {
+	display: flex;
+	flex-direction: column;
+}
+
 .badge-wrapper {
-	margin-top: 2em;
-	margin-inline-start: 2em;
 	width: 100%;
 	clear:both;
 }
