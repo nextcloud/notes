@@ -39,10 +39,8 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'
-import {
-	NcActions,
-	NcActionButton,
-} from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { basename, relative } from 'path'
 
 import store from '../store.js'

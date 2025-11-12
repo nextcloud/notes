@@ -100,7 +100,10 @@
 </template>
 
 <script>
-import { NcListItem, NcActionButton, NcActionSeparator, NcActionInput } from '@nextcloud/vue'
+import NcListItem from '@nextcloud/vue/components/NcListItem'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
