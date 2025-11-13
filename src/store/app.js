@@ -11,9 +11,13 @@ const state = {
 	isManualSave: false,
 	documentTitle: null,
 	searchText: '',
+	toggleNotesList: false,
 }
 
 const getters = {
+	getToggleNotesList: (state) => () => {
+		return state.toggleNotesList
+	},
 }
 
 const mutations = {
@@ -39,6 +43,10 @@ const mutations = {
 
 	updateSearchText(state, searchText) {
 		state.searchText = searchText
+	},
+
+	setToggleNotesList(state, value) {
+		state.toggleNotesList = value
 	},
 }
 
