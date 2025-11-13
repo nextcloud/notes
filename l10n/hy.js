@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Նոթեր",
     "Error" : "Սխալ",
     "New note" : "Նոր նոթ",
+    "Files" : "Ֆայլեր",
     "No notes yet" : "առայժմ գրառում չկա",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

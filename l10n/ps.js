@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Notes" : "شسیب",
     "Error" : "شسیب",
+    "Files" : "فایلونه",
     "Remove from favorites" : "له نښو ويستل",
     "Add to favorites" : "په نښه کول",
     "Share" : "شریکول",

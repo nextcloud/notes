@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Nota",
     "Error" : "Ralat",
     "New note" : "Note baharu",
+    "Files" : "Fail",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "Kongsi",

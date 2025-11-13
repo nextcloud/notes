@@ -4,6 +4,8 @@ OC.L10N.register(
     "Notes" : "Notes",
     "Error" : "Xatolik",
     "New note" : "New note",
+    "General" : "Umumiy",
+    "Files" : "Fayllar",
     "Categories" : "Kategoriyalar",
     "Share" : "Ulashish",
     "Rename" : "Nomini o'zgartirish",

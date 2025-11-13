@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Notat",
     "Error" : "Feil",
     "New note" : "Nytt notat",
+    "Files" : "Filer",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "Del",
