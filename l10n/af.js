@@ -7,6 +7,8 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Daar is ongestoorde veranderinge. Indien die bladsy gesluit word sal alle veranderinge geskrap word!",
     "Preview" : "Voorskou",
     "Insert image" : "Voer beeld in",
+    "General" : "Algemeen",
+    "Files" : " Lêers",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
     "Remove from favorites" : "Verwyder uit gunstelinge",

@@ -8,6 +8,7 @@ OC.L10N.register(
     "New note" : "Nota nueva",
     "Notes settings" : "Configuración de Notes",
     "File extension" : "Estensión de los ficheros",
+    "Files" : "Ficheros",
     "Mobile apps" : "Aplicaciones pa móviles",
     "Shortcuts" : "Atayos",
     "All notes" : "Toles notes",

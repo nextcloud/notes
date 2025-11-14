@@ -1,0 +1,10 @@
+{ "translations": {
+    "Error" : "ýalňyşlyk",
+    "Files" : "Faýllar",
+    "Add to favorites" : "Saýlananlara goşuň",
+    "Edit" : "Redaktirläň",
+    "Today" : "Şu gün",
+    "Yesterday" : "Düýn",
+    "This week" : "Bu hepdede"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
