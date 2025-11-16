@@ -137,21 +137,24 @@ export default {
 						// nothing changed
 						return
 					}
-					if (data.notes !== null) {
+					if (data && data.noteIds) {
 						this.error = false
-						this.routeDefault(data.lastViewedNote)
+						// Route to default note (lastViewedNote not available with chunked API)
+						// Users will need to manually select a note
+						this.routeDefault(0)
 					} else if (this.loading.notes) {
 						// only show error state if not loading in background
-						this.error = data.errorMessage
+						this.error = data?.errorMessage || true
 					} else {
-						console.error('Server error while updating list of notes: ' + data.errorMessage)
+						console.error('Server error while updating list of notes: ' + (data?.errorMessage || 'Unknown error'))
 					}
 				})
-				.catch(() => {
+				.catch((err) => {
 					// only show error state if not loading in background
 					if (this.loading.notes) {
 						this.error = true
 					}
+					console.error('Failed to load notes:', err)
 				})
 				.then(() => {
 					this.loading.notes = false

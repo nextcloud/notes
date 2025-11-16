@@ -13,6 +13,7 @@ const state = {
 	selectedCategory: null,
 	selectedNote: null,
 	filterString: '',
+	notesLoadingInProgress: false,
 }
 
 const getters = {
@@ -191,6 +192,10 @@ const mutations = {
 	setSelectedNote(state, note) {
 		state.selectedNote = note
 	},
+
+	setNotesLoadingInProgress(state, loading) {
+		state.notesLoadingInProgress = loading
+	},
 }
 
 const actions = {
@@ -212,6 +217,31 @@ const actions = {
 		// remove deleted notes
 		context.state.notes.forEach(note => {
 			if (!noteIds.includes(note.id)) {
+				context.commit('removeNote', note.id)
+			}
+		})
+	},
+
+	updateNotesIncremental(context, { notes, isLastChunk }) {
+		// Add/update notes from current chunk
+		if (!notes) {
+			return
+		}
+		for (const note of notes) {
+			// TODO check for parallel (local) changes!
+			context.commit('updateNote', note)
+		}
+		// Note: We don't remove deleted notes here - that's done in finalizeNotesUpdate
+	},
+
+	finalizeNotesUpdate(context, allNoteIds) {
+		// Remove notes that are no longer on the server
+		// This is only called after all chunks have been loaded
+		if (!allNoteIds) {
+			return
+		}
+		context.state.notes.forEach(note => {
+			if (!allNoteIds.includes(note.id)) {
 				context.commit('removeNote', note.id)
 			}
 		})

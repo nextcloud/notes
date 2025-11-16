@@ -73,44 +73,67 @@ export const getDashboardData = () => {
 		})
 }
 
-export const fetchNotes = () => {
+export const fetchNotes = async () => {
 	const lastETag = store.state.sync.etag
 	const lastModified = store.state.sync.lastModified
 	const headers = {}
 	if (lastETag) {
 		headers['If-None-Match'] = lastETag
 	}
-	return axios
-		.get(
-			url('/notes' + (lastModified ? '?pruneBefore=' + lastModified : '')),
+
+	try {
+		// Signal start of loading
+		store.commit('setNotesLoadingInProgress', true)
+
+		// Fetch settings first (only on first load)
+		if (!store.state.app.settings || Object.keys(store.state.app.settings).length === 0) {
+			try {
+				const settingsResponse = await axios.get(generateUrl('/apps/notes/api/v1/settings'))
+				store.commit('setSettings', settingsResponse.data)
+			} catch (err) {
+				console.warn('Failed to fetch settings, will continue with defaults', err)
+			}
+		}
+
+		// Load ALL notes metadata excluding content for performance
+		// Content is loaded on-demand when user selects a note
+		const params = new URLSearchParams()
+		if (lastModified) {
+			params.append('pruneBefore', lastModified)
+		}
+		params.append('exclude', 'content') // Exclude heavy content field
+
+		const response = await axios.get(
+			generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : '')),
 			{ headers },
 		)
-		.then(response => {
-			store.commit('setSettings', response.data.settings)
-			if (response.data.categories) {
-				store.commit('setCategories', response.data.categories)
-			}
-			if (response.data.noteIds && response.data.notesData) {
-				store.dispatch('updateNotes', { noteIds: response.data.noteIds, notes: response.data.notesData })
-			}
-			if (response.data.errorMessage) {
-				showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: response.data.errorMessage }))
-			} else {
-				store.commit('setSyncETag', response.headers.etag)
-				store.commit('setSyncLastModified', response.headers['last-modified'])
-			}
-			return response.data
-		})
-		.catch(err => {
-			if (err?.response?.status === 304) {
-				store.commit('setSyncLastModified', err.response.headers['last-modified'])
-				return null
-			} else {
-				console.error(err)
-				handleSyncError(t('notes', 'Fetching notes has failed.'), err)
-				throw err
-			}
-		})
+
+		// Process all notes - API v1 returns array directly
+		if (Array.isArray(response.data)) {
+			const notes = response.data
+			const noteIds = notes.map(note => note.id)
+
+			// Update all notes at once (content will be loaded on-demand)
+			store.dispatch('updateNotes', { noteIds, notes })
+		}
+
+		// Update ETag and last modified
+		store.commit('setSyncETag', response.headers.etag)
+		store.commit('setSyncLastModified', response.headers['last-modified'])
+		store.commit('setNotesLoadingInProgress', false)
+
+		return { noteIds: response.data.map(n => n.id) }
+	} catch (err) {
+		store.commit('setNotesLoadingInProgress', false)
+		if (err?.response?.status === 304) {
+			store.commit('setSyncLastModified', err.response.headers['last-modified'])
+			return null
+		} else {
+			console.error(err)
+			handleSyncError(t('notes', 'Fetching notes has failed.'), err)
+			throw err
+		}
+	}
 }
 
 export const fetchNote = noteId => {
