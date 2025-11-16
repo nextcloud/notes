@@ -130,36 +130,40 @@ export default {
 	},
 
 	methods: {
-		loadNotes() {
-			fetchNotes()
-				.then(data => {
-					if (data === null) {
-						// nothing changed
-						return
-					}
-					if (data && data.noteIds) {
-						this.error = false
-						// Route to default note (lastViewedNote not available with chunked API)
-						// Users will need to manually select a note
-						this.routeDefault(0)
-					} else if (this.loading.notes) {
-						// only show error state if not loading in background
-						this.error = data?.errorMessage || true
-					} else {
-						console.error('Server error while updating list of notes: ' + (data?.errorMessage || 'Unknown error'))
-					}
-				})
-				.catch((err) => {
+		async loadNotes() {
+			try {
+				// Load only the first chunk on initial load (50 notes)
+				// Subsequent chunks will be loaded on-demand when scrolling
+				const data = await fetchNotes(50, null)
+
+				if (data === null) {
+					// nothing changed (304 response)
+					return
+				}
+
+				if (data && data.noteIds) {
+					this.error = false
+					// Route to default note after first chunk
+					this.routeDefault(0)
+
+					// Store cursor for next chunk (will be used by scroll handler)
+					store.commit('setNotesChunkCursor', data.chunkCursor || null)
+				} else if (this.loading.notes) {
 					// only show error state if not loading in background
-					if (this.loading.notes) {
-						this.error = true
-					}
-					console.error('Failed to load notes:', err)
-				})
-				.then(() => {
-					this.loading.notes = false
-					this.startRefreshTimer(config.interval.notes.refresh)
-				})
+					this.error = data?.errorMessage || true
+				} else {
+					console.error('Server error while updating list of notes: ' + (data?.errorMessage || 'Unknown error'))
+				}
+			} catch (err) {
+				// only show error state if not loading in background
+				if (this.loading.notes) {
+					this.error = true
+				}
+				console.error('Failed to load notes:', err)
+			} finally {
+				this.loading.notes = false
+				this.startRefreshTimer(config.interval.notes.refresh)
+			}
 		},
 
 		startRefreshTimer(seconds) {

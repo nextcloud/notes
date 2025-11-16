@@ -73,7 +73,7 @@ export const getDashboardData = () => {
 		})
 }
 
-export const fetchNotes = async () => {
+export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 	const lastETag = store.state.sync.etag
 	const lastModified = store.state.sync.lastModified
 	const headers = {}
@@ -95,25 +95,39 @@ export const fetchNotes = async () => {
 			}
 		}
 
-		// Load ALL notes metadata excluding content for performance
+		// Load notes metadata in chunks excluding content for performance
 		// Content is loaded on-demand when user selects a note
 		const params = new URLSearchParams()
 		if (lastModified) {
 			params.append('pruneBefore', lastModified)
 		}
 		params.append('exclude', 'content') // Exclude heavy content field
+		params.append('chunkSize', chunkSize.toString()) // Request chunked data
+		if (chunkCursor) {
+			params.append('chunkCursor', chunkCursor) // Continue from previous chunk
+		}
 
 		const response = await axios.get(
 			generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : '')),
 			{ headers },
 		)
 
-		// Process all notes - API v1 returns array directly
-		if (Array.isArray(response.data)) {
-			const notes = response.data
-			const noteIds = notes.map(note => note.id)
+		const data = response.data
+		const notes = data.notes || []
+		const noteIds = data.noteIds || notes.map(note => note.id)
+		const nextCursor = data.chunkCursor || null
+		const isLastChunk = !nextCursor
 
-			// Update all notes at once (content will be loaded on-demand)
+		// Update notes incrementally
+		if (chunkCursor) {
+			// Subsequent chunk - use incremental update
+			store.dispatch('updateNotesIncremental', { notes, isLastChunk })
+			if (isLastChunk) {
+				// Final chunk - clean up deleted notes
+				store.dispatch('finalizeNotesUpdate', noteIds)
+			}
+		} else {
+			// First chunk - use full update
 			store.dispatch('updateNotes', { noteIds, notes })
 		}
 
@@ -122,7 +136,11 @@ export const fetchNotes = async () => {
 		store.commit('setSyncLastModified', response.headers['last-modified'])
 		store.commit('setNotesLoadingInProgress', false)
 
-		return { noteIds: response.data.map(n => n.id) }
+		return {
+			noteIds,
+			chunkCursor: nextCursor,
+			isLastChunk,
+		}
 	} catch (err) {
 		store.commit('setNotesLoadingInProgress', false)
 		if (err?.response?.status === 304) {

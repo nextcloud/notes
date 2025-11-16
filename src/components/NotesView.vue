@@ -68,6 +68,7 @@ import {
 	NcTextField,
 } from '@nextcloud/vue'
 import { categoryLabel } from '../Util.js'
+import { fetchNotes } from '../NotesService.js'
 import NotesList from './NotesList.vue'
 import NotesCaption from './NotesCaption.vue'
 import store from '../store.js'
@@ -207,28 +208,48 @@ export default {
 			}
 		},
 
-		onEndOfNotes(isVisible) {
+		async onEndOfNotes(isVisible) {
 			// Prevent rapid-fire loading by checking if we're already loading a batch
-			if (!isVisible || this.isLoadingMore || this.displayedNotesCount >= this.filteredNotes.length) {
+			if (!isVisible || this.isLoadingMore) {
 				return
 			}
 
 			// Set loading flag to prevent concurrent loads
 			this.isLoadingMore = true
 
-			// Use nextTick to ensure the loading flag is set before incrementing
-			this.$nextTick(() => {
-				// Load 50 more notes at a time
-				this.displayedNotesCount = Math.min(
-					this.displayedNotesCount + 50,
-					this.filteredNotes.length
-				)
+			try {
+				// Check if there are more notes to fetch from the server
+				const chunkCursor = store.state.sync.chunkCursor
 
-				// Reset loading flag after DOM update
+				if (chunkCursor) {
+					// Fetch next chunk from the API
+					const data = await fetchNotes(50, chunkCursor)
+
+					if (data && data.noteIds) {
+						// Update cursor for next fetch
+						store.commit('setNotesChunkCursor', data.chunkCursor || null)
+
+						// Increment display count to show newly loaded notes
+						this.displayedNotesCount = Math.min(
+							this.displayedNotesCount + 50,
+							this.filteredNotes.length
+						)
+					}
+				} else if (this.displayedNotesCount < this.filteredNotes.length) {
+					// No more chunks to fetch, but we have cached notes to display
+					this.$nextTick(() => {
+						this.displayedNotesCount = Math.min(
+							this.displayedNotesCount + 50,
+							this.filteredNotes.length
+						)
+					})
+				}
+			} finally {
+				// Reset loading flag after operation completes
 				this.$nextTick(() => {
 					this.isLoadingMore = false
 				})
-			})
+			}
 		},
 
 		onCategorySelected(category) {
