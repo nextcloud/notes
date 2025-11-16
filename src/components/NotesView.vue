@@ -106,6 +106,7 @@ export default {
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
 			displayedNotesCount: 50,
+			isLoadingMore: false,
 			showNote: true,
 			searchText: '',
 		}
@@ -155,10 +156,12 @@ export default {
 	watch: {
 		category() {
 			this.displayedNotesCount = 50
+			this.isLoadingMore = false
 		},
 		searchText(value) {
 			store.commit('updateSearchText', value)
 			this.displayedNotesCount = 50
+			this.isLoadingMore = false
 		},
 	},
 
@@ -205,13 +208,27 @@ export default {
 		},
 
 		onEndOfNotes(isVisible) {
-			if (isVisible && this.displayedNotesCount < this.filteredNotes.length) {
+			// Prevent rapid-fire loading by checking if we're already loading a batch
+			if (!isVisible || this.isLoadingMore || this.displayedNotesCount >= this.filteredNotes.length) {
+				return
+			}
+
+			// Set loading flag to prevent concurrent loads
+			this.isLoadingMore = true
+
+			// Use nextTick to ensure the loading flag is set before incrementing
+			this.$nextTick(() => {
 				// Load 50 more notes at a time
 				this.displayedNotesCount = Math.min(
 					this.displayedNotesCount + 50,
 					this.filteredNotes.length
 				)
-			}
+
+				// Reset loading flag after DOM update
+				this.$nextTick(() => {
+					this.isLoadingMore = false
+				})
+			})
 		},
 
 		onCategorySelected(category) {
