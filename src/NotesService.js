@@ -74,6 +74,7 @@ export const getDashboardData = () => {
 }
 
 export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
+	console.log('[fetchNotes] Called with chunkSize:', chunkSize, 'cursor:', chunkCursor)
 	const lastETag = store.state.sync.etag
 	const lastModified = store.state.sync.lastModified
 	const headers = {}
@@ -107,10 +108,14 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 			params.append('chunkCursor', chunkCursor) // Continue from previous chunk
 		}
 
-		const response = await axios.get(
-			generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : '')),
-			{ headers },
-		)
+		const url = generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : ''))
+		console.log('[fetchNotes] Requesting:', url)
+
+		const response = await axios.get(url, { headers })
+
+		console.log('[fetchNotes] Response received, status:', response.status)
+		console.log('[fetchNotes] Response data type:', Array.isArray(response.data) ? 'array' : typeof response.data)
+		console.log('[fetchNotes] Response data keys:', Object.keys(response.data || {}))
 
 		const data = response.data
 		const notes = data.notes || []
@@ -118,16 +123,21 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 		const nextCursor = data.chunkCursor || null
 		const isLastChunk = !nextCursor
 
+		console.log('[fetchNotes] Processed:', notes.length, 'notes, noteIds:', noteIds.length, 'nextCursor:', nextCursor, 'isLastChunk:', isLastChunk)
+
 		// Update notes incrementally
 		if (chunkCursor) {
 			// Subsequent chunk - use incremental update
+			console.log('[fetchNotes] Using incremental update for subsequent chunk')
 			store.dispatch('updateNotesIncremental', { notes, isLastChunk })
 			if (isLastChunk) {
 				// Final chunk - clean up deleted notes
+				console.log('[fetchNotes] Final chunk - cleaning up deleted notes')
 				store.dispatch('finalizeNotesUpdate', noteIds)
 			}
 		} else {
 			// First chunk - use full update
+			console.log('[fetchNotes] Using full update for first chunk')
 			store.dispatch('updateNotes', { noteIds, notes })
 		}
 
@@ -136,6 +146,7 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 		store.commit('setSyncLastModified', response.headers['last-modified'])
 		store.commit('setNotesLoadingInProgress', false)
 
+		console.log('[fetchNotes] Completed successfully')
 		return {
 			noteIds,
 			chunkCursor: nextCursor,
@@ -144,10 +155,11 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 	} catch (err) {
 		store.commit('setNotesLoadingInProgress', false)
 		if (err?.response?.status === 304) {
+			console.log('[fetchNotes] 304 Not Modified - no changes')
 			store.commit('setSyncLastModified', err.response.headers['last-modified'])
 			return null
 		} else {
-			console.error(err)
+			console.error('[fetchNotes] Error:', err)
 			handleSyncError(t('notes', 'Fetching notes has failed.'), err)
 			throw err
 		}

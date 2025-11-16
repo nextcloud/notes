@@ -131,17 +131,22 @@ export default {
 
 	methods: {
 		async loadNotes() {
+			console.log('[App.loadNotes] Starting initial load')
 			try {
 				// Load only the first chunk on initial load (50 notes)
 				// Subsequent chunks will be loaded on-demand when scrolling
 				const data = await fetchNotes(50, null)
+				console.log('[App.loadNotes] fetchNotes returned:', data)
 
 				if (data === null) {
 					// nothing changed (304 response)
+					console.log('[App.loadNotes] 304 Not Modified - no changes')
 					return
 				}
 
 				if (data && data.noteIds) {
+					console.log('[App.loadNotes] Success - received', data.noteIds.length, 'note IDs')
+					console.log('[App.loadNotes] Next cursor:', data.chunkCursor)
 					this.error = false
 					// Route to default note after first chunk
 					this.routeDefault(0)
@@ -150,6 +155,7 @@ export default {
 					store.commit('setNotesChunkCursor', data.chunkCursor || null)
 				} else if (this.loading.notes) {
 					// only show error state if not loading in background
+					console.log('[App.loadNotes] Error - no noteIds in response')
 					this.error = data?.errorMessage || true
 				} else {
 					console.error('Server error while updating list of notes: ' + (data?.errorMessage || 'Unknown error'))
@@ -159,7 +165,7 @@ export default {
 				if (this.loading.notes) {
 					this.error = true
 				}
-				console.error('Failed to load notes:', err)
+				console.error('[App.loadNotes] Exception:', err)
 			} finally {
 				this.loading.notes = false
 				this.startRefreshTimer(config.interval.notes.refresh)

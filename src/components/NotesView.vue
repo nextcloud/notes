@@ -209,8 +209,10 @@ export default {
 		},
 
 		async onEndOfNotes(isVisible) {
+			console.log('[NotesView.onEndOfNotes] Triggered, isVisible:', isVisible, 'isLoadingMore:', this.isLoadingMore)
 			// Prevent rapid-fire loading by checking if we're already loading a batch
 			if (!isVisible || this.isLoadingMore) {
+				console.log('[NotesView.onEndOfNotes] Skipping - not visible or already loading')
 				return
 			}
 
@@ -220,33 +222,46 @@ export default {
 			try {
 				// Check if there are more notes to fetch from the server
 				const chunkCursor = store.state.sync.chunkCursor
+				console.log('[NotesView.onEndOfNotes] Current cursor:', chunkCursor)
+				console.log('[NotesView.onEndOfNotes] displayedNotesCount:', this.displayedNotesCount, 'filteredNotes.length:', this.filteredNotes.length)
 
 				if (chunkCursor) {
 					// Fetch next chunk from the API
+					console.log('[NotesView.onEndOfNotes] Fetching next chunk from API')
 					const data = await fetchNotes(50, chunkCursor)
+					console.log('[NotesView.onEndOfNotes] Fetch complete, data:', data)
 
 					if (data && data.noteIds) {
 						// Update cursor for next fetch
+						console.log('[NotesView.onEndOfNotes] Updating cursor to:', data.chunkCursor)
 						store.commit('setNotesChunkCursor', data.chunkCursor || null)
 
 						// Increment display count to show newly loaded notes
-						this.displayedNotesCount = Math.min(
+						const newCount = Math.min(
 							this.displayedNotesCount + 50,
 							this.filteredNotes.length
 						)
+						console.log('[NotesView.onEndOfNotes] Updating displayedNotesCount from', this.displayedNotesCount, 'to', newCount)
+						this.displayedNotesCount = newCount
 					}
 				} else if (this.displayedNotesCount < this.filteredNotes.length) {
 					// No more chunks to fetch, but we have cached notes to display
+					console.log('[NotesView.onEndOfNotes] No cursor, but have cached notes to display')
 					this.$nextTick(() => {
-						this.displayedNotesCount = Math.min(
+						const newCount = Math.min(
 							this.displayedNotesCount + 50,
 							this.filteredNotes.length
 						)
+						console.log('[NotesView.onEndOfNotes] Updating displayedNotesCount from', this.displayedNotesCount, 'to', newCount)
+						this.displayedNotesCount = newCount
 					})
+				} else {
+					console.log('[NotesView.onEndOfNotes] All notes loaded, nothing to do')
 				}
 			} finally {
 				// Reset loading flag after operation completes
 				this.$nextTick(() => {
+					console.log('[NotesView.onEndOfNotes] Resetting isLoadingMore flag')
 					this.isLoadingMore = false
 				})
 			}
