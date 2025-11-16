@@ -105,7 +105,7 @@ export default {
 			timeslots: [],
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
-			showFirstNotesOnly: true,
+			displayedNotesCount: 50,
 			showNote: true,
 			searchText: '',
 		}
@@ -125,11 +125,8 @@ export default {
 		},
 
 		displayedNotes() {
-			if (this.filteredNotes.length > 40 && this.showFirstNotesOnly) {
-				return this.filteredNotes.slice(0, 30)
-			} else {
-				return this.filteredNotes
-			}
+			// Show notes up to displayedNotesCount, incrementally loading more as user scrolls
+			return this.filteredNotes.slice(0, this.displayedNotesCount)
 		},
 
 		// group notes by time ("All notes") or by category (if category chosen)
@@ -156,8 +153,13 @@ export default {
 	},
 
 	watch: {
-		category() { this.showFirstNotesOnly = true },
-		searchText(value) { store.commit('updateSearchText', value) },
+		category() {
+			this.displayedNotesCount = 50
+		},
+		searchText(value) {
+			store.commit('updateSearchText', value)
+			this.displayedNotesCount = 50
+		},
 	},
 
 	created() {
@@ -203,8 +205,12 @@ export default {
 		},
 
 		onEndOfNotes(isVisible) {
-			if (isVisible) {
-				this.showFirstNotesOnly = false
+			if (isVisible && this.displayedNotesCount < this.filteredNotes.length) {
+				// Load 50 more notes at a time
+				this.displayedNotesCount = Math.min(
+					this.displayedNotesCount + 50,
+					this.filteredNotes.length
+				)
 			}
 		},
 
