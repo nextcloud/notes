@@ -78,9 +78,9 @@ class NotesApiController extends ApiController {
 			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor);
 			$notesData = $data['notesData'];
 			if (!$data['chunkCursor']) {
-				// if last chunk, then send all notes (pruned)
-				$notesData += array_map(function (MetaNote $m) {
-					return [ 'id' => $m->note->getId() ];
+				// if last chunk, then send all notes (pruned) with full metadata
+				$notesData += array_map(function (MetaNote $m) use ($exclude) {
+					return $this->helper->getNoteData($m->note, $exclude, $m->meta);
 				}, $data['notesAll']);
 			}
 			$response = new JSONResponse(array_values($notesData));

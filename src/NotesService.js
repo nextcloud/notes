@@ -115,15 +115,19 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 
 		console.log('[fetchNotes] Response received, status:', response.status)
 		console.log('[fetchNotes] Response data type:', Array.isArray(response.data) ? 'array' : typeof response.data)
-		console.log('[fetchNotes] Response data keys:', Object.keys(response.data || {}))
+		console.log('[fetchNotes] Response headers:', response.headers)
 
-		const data = response.data
-		const notes = data.notes || []
-		const noteIds = data.noteIds || notes.map(note => note.id)
-		const nextCursor = data.chunkCursor || null
+		// Backend returns array of notes directly
+		const notes = Array.isArray(response.data) ? response.data : []
+		const noteIds = notes.map(note => note.id)
+
+		// Cursor is in response headers, not body
+		const nextCursor = response.headers['x-notes-chunk-cursor'] || null
+		const pendingCount = response.headers['x-notes-chunk-pending'] ? parseInt(response.headers['x-notes-chunk-pending']) : 0
 		const isLastChunk = !nextCursor
 
-		console.log('[fetchNotes] Processed:', notes.length, 'notes, noteIds:', noteIds.length, 'nextCursor:', nextCursor, 'isLastChunk:', isLastChunk)
+		console.log('[fetchNotes] Processed:', notes.length, 'notes, noteIds:', noteIds.length)
+		console.log('[fetchNotes] Cursor:', nextCursor, 'Pending:', pendingCount, 'isLastChunk:', isLastChunk)
 
 		// Update notes incrementally
 		if (chunkCursor) {
