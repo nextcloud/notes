@@ -126,6 +126,24 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 		const pendingCount = response.headers['x-notes-chunk-pending'] ? parseInt(response.headers['x-notes-chunk-pending']) : 0
 		const isLastChunk = !nextCursor
 
+		// Category statistics and total count from first chunk (if available)
+		const categoryStats = response.headers['x-notes-category-stats']
+		if (categoryStats) {
+			try {
+				const stats = JSON.parse(categoryStats)
+				console.log('[fetchNotes] Received category stats:', Object.keys(stats).length, 'categories')
+				store.commit('setCategoryStats', stats)
+			} catch (e) {
+				console.warn('[fetchNotes] Failed to parse category stats:', e)
+			}
+		}
+		const totalCount = response.headers['x-notes-total-count']
+		if (totalCount) {
+			const count = parseInt(totalCount)
+			console.log('[fetchNotes] Total notes count:', count)
+			store.commit('setTotalNotesCount', count)
+		}
+
 		console.log('[fetchNotes] Processed:', notes.length, 'notes, noteIds:', noteIds.length)
 		console.log('[fetchNotes] Cursor:', nextCursor, 'Pending:', pendingCount, 'isLastChunk:', isLastChunk)
 
@@ -167,6 +185,66 @@ export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
 			handleSyncError(t('notes', 'Fetching notes has failed.'), err)
 			throw err
 		}
+	}
+}
+
+export const searchNotes = async (searchQuery, chunkSize = 50, chunkCursor = null) => {
+	console.log('[searchNotes] Called with query:', searchQuery, 'chunkSize:', chunkSize, 'cursor:', chunkCursor)
+
+	try {
+		// Signal start of loading
+		store.commit('setNotesLoadingInProgress', true)
+
+		// Build search parameters
+		const params = new URLSearchParams()
+		params.append('search', searchQuery)
+		params.append('exclude', 'content') // Exclude heavy content field
+		params.append('chunkSize', chunkSize.toString())
+		if (chunkCursor) {
+			params.append('chunkCursor', chunkCursor)
+		}
+
+		const url = generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : ''))
+		console.log('[searchNotes] Requesting:', url)
+
+		const response = await axios.get(url)
+
+		console.log('[searchNotes] Response received, status:', response.status)
+
+		// Backend returns array of notes directly
+		const notes = Array.isArray(response.data) ? response.data : []
+		const noteIds = notes.map(note => note.id)
+
+		// Cursor is in response headers, not body
+		const nextCursor = response.headers['x-notes-chunk-cursor'] || null
+		const isLastChunk = !nextCursor
+
+		console.log('[searchNotes] Processed:', notes.length, 'notes, cursor:', nextCursor)
+
+		// For search, we want to replace notes on first chunk, then append on subsequent chunks
+		if (chunkCursor) {
+			// Subsequent chunk - use incremental update
+			console.log('[searchNotes] Using incremental update for subsequent chunk')
+			store.dispatch('updateNotesIncremental', { notes, isLastChunk })
+		} else {
+			// First chunk - replace with search results
+			console.log('[searchNotes] Using full update for first chunk')
+			store.dispatch('updateNotes', { noteIds, notes })
+		}
+
+		store.commit('setNotesLoadingInProgress', false)
+
+		console.log('[searchNotes] Completed successfully')
+		return {
+			noteIds,
+			chunkCursor: nextCursor,
+			isLastChunk,
+		}
+	} catch (err) {
+		store.commit('setNotesLoadingInProgress', false)
+		console.error('[searchNotes] Error:', err)
+		handleSyncError(t('notes', 'Searching notes has failed.'), err)
+		throw err
 	}
 }
 
