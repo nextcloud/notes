@@ -132,6 +132,13 @@ export default {
 	methods: {
 		async loadNotes() {
 			console.log('[App.loadNotes] Starting initial load')
+			// Skip refresh if in search mode - search results should not be overwritten
+			const searchText = store.state.app.searchText
+			if (searchText && searchText.trim() !== '') {
+				console.log('[App.loadNotes] Skipping - in search mode with query:', searchText)
+				this.startRefreshTimer(config.interval.notes.refresh)
+				return
+			}
 			try {
 				// Load only the first chunk on initial load (50 notes)
 				// Subsequent chunks will be loaded on-demand when scrolling
@@ -207,7 +214,17 @@ export default {
 		},
 
 		routeDefault(defaultNoteId) {
-			if (this.$route.name !== 'note' || !noteExists(this.$route.params.noteId)) {
+			console.log('[App.routeDefault] Called with defaultNoteId:', defaultNoteId)
+			console.log('[App.routeDefault] Current route:', this.$route.name, 'noteId:', this.$route.params.noteId)
+			// Don't redirect if user is already on a specific note route
+			// (the note will be fetched individually even if not in the loaded chunk)
+			if (this.$route.name === 'note' && this.$route.params.noteId) {
+				console.log('[App.routeDefault] Already on note route, skipping redirect')
+				return
+			}
+			// Only redirect if no note route is set (e.g., on welcome page)
+			if (this.$route.name !== 'note') {
+				console.log('[App.routeDefault] Not on note route, routing to default')
 				if (noteExists(defaultNoteId)) {
 					this.routeToNote(defaultNoteId)
 				} else {

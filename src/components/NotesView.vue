@@ -38,7 +38,7 @@
 					/>
 				</template>
 				<div
-					v-if="displayedNotes.length != filteredNotes.length"
+					v-if="hasMoreNotes"
 					v-observe-visibility="onEndOfNotes"
 					class="loading-label"
 				>
@@ -68,7 +68,7 @@ import {
 	NcTextField,
 } from '@nextcloud/vue'
 import { categoryLabel } from '../Util.js'
-import { fetchNotes } from '../NotesService.js'
+import { fetchNotes, searchNotes } from '../NotesService.js'
 import NotesList from './NotesList.vue'
 import NotesCaption from './NotesCaption.vue'
 import store from '../store.js'
@@ -110,6 +110,7 @@ export default {
 			isLoadingMore: false,
 			showNote: true,
 			searchText: '',
+			searchDebounceTimer: null,
 		}
 	},
 
@@ -129,6 +130,18 @@ export default {
 		displayedNotes() {
 			// Show notes up to displayedNotesCount, incrementally loading more as user scrolls
 			return this.filteredNotes.slice(0, this.displayedNotesCount)
+		},
+
+		chunkCursor() {
+			// Get the cursor for next chunk from store
+			return store.state.sync.chunkCursor
+		},
+
+		hasMoreNotes() {
+			// There are more notes if either:
+			// 1. We have more notes locally that aren't displayed yet, OR
+			// 2. There's a cursor indicating more notes on the server
+			return this.displayedNotes.length !== this.filteredNotes.length || this.chunkCursor !== null
 		},
 
 		// group notes by time ("All notes") or by category (if category chosen)
@@ -160,9 +173,48 @@ export default {
 			this.isLoadingMore = false
 		},
 		searchText(value) {
+			// Update store for client-side filtering (getFilteredNotes uses this)
 			store.commit('updateSearchText', value)
+
+			// Clear any existing debounce timer
+			if (this.searchDebounceTimer) {
+				clearTimeout(this.searchDebounceTimer)
+				this.searchDebounceTimer = null
+			}
+
+			// Reset display state
 			this.displayedNotesCount = 50
 			this.isLoadingMore = false
+
+			// Debounce search API calls (300ms delay)
+			this.searchDebounceTimer = setTimeout(async () => {
+				console.log('[NotesView] Search text changed:', value)
+
+				if (value && value.trim() !== '') {
+					// Perform server-side search
+					console.log('[NotesView] Initiating server-side search')
+					try {
+						await searchNotes(value.trim(), 50, null)
+						// Update cursor after search completes
+						console.log('[NotesView] Search completed')
+					} catch (err) {
+						console.error('[NotesView] Search failed:', err)
+					}
+				} else {
+					// Empty search - revert to normal pagination
+					console.log('[NotesView] Empty search - reverting to pagination')
+					// Clear notes and refetch (clearSyncCache not needed - fetchNotes will set new cursor)
+					store.commit('removeAllNotes')
+					try {
+						await fetchNotes(50, null)
+						// Reset display count after fetch completes
+						this.displayedNotesCount = 50
+						console.log('[NotesView] Reverted to normal notes view')
+					} catch (err) {
+						console.error('[NotesView] Failed to revert to normal view:', err)
+					}
+				}
+			}, 300)
 		},
 	},
 
@@ -222,13 +274,16 @@ export default {
 			try {
 				// Check if there are more notes to fetch from the server
 				const chunkCursor = store.state.sync.chunkCursor
-				console.log('[NotesView.onEndOfNotes] Current cursor:', chunkCursor)
+				const isSearchMode = this.searchText && this.searchText.trim() !== ''
+				console.log('[NotesView.onEndOfNotes] Current cursor:', chunkCursor, 'searchMode:', isSearchMode)
 				console.log('[NotesView.onEndOfNotes] displayedNotesCount:', this.displayedNotesCount, 'filteredNotes.length:', this.filteredNotes.length)
 
 				if (chunkCursor) {
-					// Fetch next chunk from the API
+					// Fetch next chunk from the API (using search or normal fetch based on mode)
 					console.log('[NotesView.onEndOfNotes] Fetching next chunk from API')
-					const data = await fetchNotes(50, chunkCursor)
+					const data = isSearchMode
+						? await searchNotes(this.searchText.trim(), 50, chunkCursor)
+						: await fetchNotes(50, chunkCursor)
 					console.log('[NotesView.onEndOfNotes] Fetch complete, data:', data)
 
 					if (data && data.noteIds) {

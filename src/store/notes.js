@@ -8,6 +8,8 @@ import { copyNote } from '../Util.js'
 
 const state = {
 	categories: [],
+	categoryStats: null, // Category counts from backend (set on first load)
+	totalNotesCount: null, // Total number of notes from backend (set on first load)
 	notes: [],
 	notesIds: {},
 	selectedCategory: null,
@@ -18,7 +20,8 @@ const state = {
 
 const getters = {
 	numNotes: (state) => () => {
-		return state.notes.length
+		// Use total count from backend if available, otherwise fall back to loaded notes count
+		return state.totalNotesCount !== null ? state.totalNotesCount : state.notes.length
 	},
 
 	noteExists: (state) => (id) => {
@@ -44,20 +47,45 @@ const getters = {
 			return i
 		}
 
-		// get categories from notes
-		const categories = {}
-		for (const note of state.notes) {
-			let cat = note.category
+		// Use backend category stats if available (set on first load)
+		// Otherwise calculate from loaded notes (partial data during pagination)
+		let categories = {}
+		if (state.categoryStats) {
+			// Use pre-calculated stats from backend
+			categories = { ...state.categoryStats }
+			// Apply maxLevel filtering if needed
 			if (maxLevel > 0) {
-				const index = nthIndexOf(cat, '/', maxLevel)
-				if (index > 0) {
-					cat = cat.substring(0, index)
+				const filteredCategories = {}
+				for (const cat in categories) {
+					const index = nthIndexOf(cat, '/', maxLevel)
+					const truncatedCat = index > 0 ? cat.substring(0, index) : cat
+					if (filteredCategories[truncatedCat] === undefined) {
+						filteredCategories[truncatedCat] = categories[cat]
+					} else {
+						filteredCategories[truncatedCat] += categories[cat]
+					}
 				}
+				categories = filteredCategories
 			}
-			if (categories[cat] === undefined) {
-				categories[cat] = 1
-			} else {
-				categories[cat] += 1
+		} else {
+			// Fallback: calculate from loaded notes (may be incomplete during pagination)
+			for (const note of state.notes) {
+				// Skip invalid notes
+				if (!note || !note.category) {
+					continue
+				}
+				let cat = note.category
+				if (maxLevel > 0) {
+					const index = nthIndexOf(cat, '/', maxLevel)
+					if (index > 0) {
+						cat = cat.substring(0, index)
+					}
+				}
+				if (categories[cat] === undefined) {
+					categories[cat] = 1
+				} else {
+					categories[cat] += 1
+				}
 			}
 		}
 		// get structured result from categories
@@ -81,8 +109,13 @@ const getters = {
 	},
 
 	getFilteredNotes: (state, getters, rootState, rootGetters) => () => {
-		const searchText = rootState.app.searchText.toLowerCase()
+		const searchText = rootState.app.searchText?.toLowerCase() || ''
 		const notes = state.notes.filter(note => {
+			// Skip invalid notes
+			if (!note || !note.category || !note.title) {
+				return false
+			}
+
 			if (state.selectedCategory !== null
 				&& state.selectedCategory !== note.category
 				&& !note.category.startsWith(state.selectedCategory + '/')) {
@@ -97,12 +130,16 @@ const getters = {
 		})
 
 		function cmpRecent(a, b) {
+			// Defensive: ensure both notes are valid
+			if (!a || !b) return 0
 			if (a.favorite && !b.favorite) return -1
 			if (!a.favorite && b.favorite) return 1
-			return b.modified - a.modified
+			return (b.modified || 0) - (a.modified || 0)
 		}
 
 		function cmpCategory(a, b) {
+			// Defensive: ensure both notes are valid
+			if (!a || !b || !a.category || !b.category || !a.title || !b.title) return 0
 			const cmpCat = a.category.localeCompare(b.category)
 			if (cmpCat !== 0) return cmpCat
 			if (a.favorite && !b.favorite) return -1
@@ -116,13 +153,18 @@ const getters = {
 	},
 
 	getFilteredTotalCount: (state, getters, rootState, rootGetters) => () => {
-		const searchText = rootState.app.searchText.toLowerCase()
+		const searchText = rootState.app.searchText?.toLowerCase() || ''
 
 		if (state.selectedCategory === null || searchText === '') {
 			return 0
 		}
 
 		const notes = state.notes.filter(note => {
+			// Skip invalid notes
+			if (!note || !note.category || !note.title) {
+				return false
+			}
+
 			if (state.selectedCategory === note.category || note.category.startsWith(state.selectedCategory + '/')) {
 				return false
 			}
@@ -179,10 +221,20 @@ const mutations = {
 	removeAllNotes(state) {
 		state.notes = []
 		state.notesIds = {}
+		state.categoryStats = null
+		state.totalNotesCount = null
 	},
 
 	setCategories(state, categories) {
 		state.categories = categories
+	},
+
+	setCategoryStats(state, stats) {
+		state.categoryStats = stats
+	},
+
+	setTotalNotesCount(state, count) {
+		state.totalNotesCount = count
 	},
 
 	setSelectedCategory(state, category) {
