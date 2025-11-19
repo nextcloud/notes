@@ -34,6 +34,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Переключиться между редактированием и просмотром",
     "Pick a notes folder" : "Выберите папку для заметок",
     "Set notes folder" : "Установить папку для заметок",
+    "General" : "Основные",
     "Display" : "Экран",
     "File extension" : "Расширение файла",
     "Files" : "файлов",
