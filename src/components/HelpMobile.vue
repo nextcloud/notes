@@ -42,7 +42,7 @@
 import { generateFilePath } from '@nextcloud/router'
 
 import { Fragment } from 'vue-frag'
-import { NcFormGroup } from '@nextcloud/vue'
+import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
 
 export default {
 	components: {

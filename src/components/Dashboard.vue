@@ -34,7 +34,9 @@
 </template>
 
 <script>
-import { NcButton, NcDashboardWidget, NcDashboardWidgetItem } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
+import NcDashboardWidgetItem from '@nextcloud/vue/components/NcDashboardWidgetItem'
 import { generateUrl } from '@nextcloud/router'
 
 import Plus from 'vue-material-design-icons/Plus.vue'

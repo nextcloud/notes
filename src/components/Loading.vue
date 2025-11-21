@@ -8,9 +8,7 @@
 </template>
 <script>
 
-import {
-	NcAppContent,
-} from '@nextcloud/vue'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 
 export default {
 	name: 'Loading',

@@ -43,11 +43,9 @@
 </template>
 
 <script>
-import {
-	NcAppNavigationItem,
-	NcAppNavigationCaption,
-	NcCounterBubble,
-} from '@nextcloud/vue'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
+import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
 import { Fragment } from 'vue-frag'
 
 import FolderIcon from 'vue-material-design-icons/Folder.vue'

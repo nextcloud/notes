@@ -24,7 +24,8 @@
 	</NcModal>
 </template>
 <script>
-import { NcModal, NcButton } from '@nextcloud/vue'
+import NcModal from '@nextcloud/vue/components/NcModal'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { loadState } from '@nextcloud/initial-state'
 
 import { deleteEditorMode, setSettings } from './../../NotesService.js'

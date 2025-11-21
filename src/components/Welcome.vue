@@ -34,10 +34,8 @@
 </template>
 <script>
 
-import {
-	NcAppContent,
-	NcButton,
-} from '@nextcloud/vue'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 import Plus from 'vue-material-design-icons/Plus.vue'
 

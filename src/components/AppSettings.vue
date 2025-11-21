@@ -86,19 +86,17 @@
 </template>
 
 <script>
-import {
-	NcAppSettingsDialog,
-	NcAppSettingsSection,
-	NcAppSettingsShortcutsSection,
-	NcHotkeyList,
-	NcHotkey,
-	NcRadioGroup,
-	NcRadioGroupButton,
-	NcFormBox,
-	NcFormBoxButton,
-	NcFormGroup,
-	NcTextField,
-} from '@nextcloud/vue'
+import NcAppSettingsDialog from '@nextcloud/vue/components/NcAppSettingsDialog'
+import NcAppSettingsSection from '@nextcloud/vue/components/NcAppSettingsSection'
+import NcAppSettingsShortcutsSection from '@nextcloud/vue/components/NcAppSettingsShortcutsSection'
+import NcHotkeyList from '@nextcloud/vue/components/NcHotkeyList'
+import NcHotkey from '@nextcloud/vue/components/NcHotkey'
+import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
+import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
+import NcFormBox from '@nextcloud/vue/components/NcFormBox'
+import NcFormBoxButton from '@nextcloud/vue/components/NcFormBoxButton'
+import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 
 import { getFilePickerBuilder } from '@nextcloud/dialogs'
 
