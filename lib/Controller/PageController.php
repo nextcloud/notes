@@ -21,6 +21,7 @@ use OCP\App\IAppManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\UserRateLimit;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -30,6 +31,7 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
+use Psr\Log\LoggerInterface;
 
 class PageController extends Controller {
 	private NotesService $notesService;
@@ -38,6 +40,7 @@ class PageController extends Controller {
 	private IURLGenerator $urlGenerator;
 	private IEventDispatcher $eventDispatcher;
 	private IInitialState $initialState;
+	private LoggerInterface $logger;
 
 	public function __construct(
 		string $AppName,
@@ -48,6 +51,7 @@ class PageController extends Controller {
 		IURLGenerator $urlGenerator,
 		IEventDispatcher $eventDispatcher,
 		IInitialState $initialState,
+		LoggerInterface $logger,
 	) {
 		parent::__construct($AppName, $request);
 		$this->notesService = $notesService;
@@ -56,6 +60,7 @@ class PageController extends Controller {
 		$this->urlGenerator = $urlGenerator;
 		$this->eventDispatcher = $eventDispatcher;
 		$this->initialState = $initialState;
+		$this->logger = $logger;
 	}
 
 
@@ -102,12 +107,25 @@ class PageController extends Controller {
 	}
 
 	/**
-	 *
+	 * @deprecated Use createPost() instead. This endpoint will be removed in a future version.
 	 */
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
-	public function create() : RedirectResponse {
-		$note = $this->notesService->create($this->userSession->getUser()->getUID(), '', '');
+	#[UserRateLimit(limit: 20, period: 60)]
+	public function createGet() : RedirectResponse {
+		$this->logger->debug('Deprecated GET /new endpoint used', [
+			'user' => $this->userSession->getUser()?->getUID(),
+			'remote_addr' => $this->request->getRemoteAddress(),
+			'user_agent' => $this->request->getHeader('User-Agent')
+		]);
+		return $this->createPost();
+	}
+
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	#[UserRateLimit(limit: 20, period: 60)]
+	public function createPost() : RedirectResponse {
+		$note = $this->notesService->create($this->userSession->getUser()?->getUID() ?? '', '', '');
 		$note->setContent('');
 		$url = $this->urlGenerator->linkToRoute('notes.page.indexnote', [ 'id' => $note->getId() ]);
 		return new RedirectResponse($url . '?new');
