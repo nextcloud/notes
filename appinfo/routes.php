@@ -20,9 +20,14 @@ return ['routes' => [
 		'postfix' => 'welcome',
 	],
 	[
-		'name' => 'page#create',
+		'name' => 'page#createGet', // deprecated, use createPost instead
 		'url' => '/new',
 		'verb' => 'GET',
+	],
+	[
+		'name' => 'page#createPost',
+		'url' => '/new',
+		'verb' => 'POST',
 	],
 	[
 		'name' => 'page#index',
