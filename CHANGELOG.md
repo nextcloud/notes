@@ -17,21 +17,37 @@ Types of changes:
 ### Fixed
 
 * Chore(deprecation): Switch from annotations to method attributes by @oli-ver [#1604](https://github.com/nextcloud/notes/pull/1604)
+* [main] Fix npm audit by @nextcloud-command [#1607](https://github.com/nextcloud/notes/pull/1607)
+* Build: update node and npm engines versions by @dependabot[bot] [#1626](https://github.com/nextcloud/notes/pull/1626)
+* Fix: Set max-version to 33 by @enjeck [#1641](https://github.com/nextcloud/notes/pull/1641)
+* Feat(ui): adapt notes settings to new UI components by @JuliaKirschenheuter [#1661](https://github.com/nextcloud/notes/pull/1661)
+* Perf: Use individual component imports to reduce bundle size and build time by @juliusknorr [#1662](https://github.com/nextcloud/notes/pull/1662)
+* Update `nextcloud/webpack-vue-config` and install `vue-loader` by @JuliaKirschenheuter [#1663](https://github.com/nextcloud/notes/pull/1663)
+* Update `nextcloud/vue` by @dependabot[bot] [#1664](https://github.com/nextcloud/notes/pull/1664)
+* [main] Update nextcloud/ocp dependency by @nextcloud-command [#1666](https://github.com/nextcloud/notes/pull/1666)
+* Fix: Update attributes by @enjeck [#1683](https://github.com/nextcloud/notes/pull/1683)
 
 ### Dependencies
 
 * Chore(deps): Bump actions/checkout from 4.3.0 to 5.0.0 by @dependabot[bot] [#1619](https://github.com/nextcloud/notes/pull/1619)
 * Chore(deps-dev): Bump sha.js from 2.4.11 to 2.4.12 by @dependabot[bot] [#1621](https://github.com/nextcloud/notes/pull/1621)
 * Chore(deps-dev): Bump cipher-base from 1.0.4 to 1.0.6 by @dependabot[bot] [#1622](https://github.com/nextcloud/notes/pull/1622)
-* Chore(deps-dev): Bump php-cs-fixer/shim from 3.85.1 to 3.86.0 by @dependabot[bot] [#1628](https://github.com/nextcloud/notes/pull/1628)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.13.2 to 4.0.0 by @dependabot[bot] [#1644](https://github.com/nextcloud/notes/pull/1644)
+* Chore(deps-dev): Bump staabm/annotate-pull-request-from-checkstyle from 1.8.5 to 1.8.6 by @dependabot[bot] [#1642](https://github.com/nextcloud/notes/pull/1642)
 * Chore(deps-dev): Bump guzzlehttp/guzzle from 7.9.3 to 7.10.0 by @dependabot[bot] [#1629](https://github.com/nextcloud/notes/pull/1629)
-* Chore(deps-dev): Bump phan/phan from 5.5.0 to 5.5.1 by @dependabot[bot] [#1630](https://github.com/nextcloud/notes/pull/1630)
-
-### Added
-
-* feat(ui): switch to outline icons by @JuliaKirschenheuter [#1596](https://github.com/nextcloud/notes/pull/1596)
-* Prevent exception for a share file by inviting a new guest account by @JuliaKirschenheuter [#1595](https://github.com/nextcloud/notes/pull/1595)
-* feat(files): Expose image api for other clients as api v1.4 including routes fix by @oli-ver [#1600](https://github.com/nextcloud/notes/pull/1600)
+* Chore(deps-dev): Bump phan/phan from 5.5.1 to 5.5.2 by @dependabot[bot] [#1657](https://github.com/nextcloud/notes/pull/1657)
+* Chore(deps): Bump fsfe/reuse-action from 5.0.0 to 6.0.0 by @dependabot[bot] [#1647](https://github.com/nextcloud/notes/pull/1647)
+* Chore(deps): Bump actions/setup-node from 4.4.0 to 6.0.0 by @dependabot[bot] [#1650](https://github.com/nextcloud/notes/pull/1650)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.86.0 to 3.89.1 by @dependabot[bot] [#1658](https://github.com/nextcloud/notes/pull/1658)
+* Chore(deps-dev): Bump js-yaml from 4.1.0 to 4.1.1 by @dependabot[bot] [#1665](https://github.com/nextcloud/notes/pull/1665)
+* Chore(deps): Bump @nextcloud/router from 3.0.1 to 3.1.0 by @dependabot[bot] [#1670](https://github.com/nextcloud/notes/pull/1670)
+* Chore(deps): Bump @nextcloud/event-bus from 3.3.2 to 3.3.3 by @dependabot[bot] [#1671](https://github.com/nextcloud/notes/pull/1671)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.1.0 to 3.1.1 by @dependabot[bot] [#1672](https://github.com/nextcloud/notes/pull/1672)
+* Chore(deps-dev): Bump @nextcloud/webpack-vue-config from 6.3.0 to 7.0.2 by @dependabot[bot] [#1673](https://github.com/nextcloud/notes/pull/1673)
+* Chore(deps): Bump @nextcloud/moment from 1.3.4 to 1.3.5 by @dependabot[bot] [#1674](https://github.com/nextcloud/notes/pull/1674)
+* Chore(deps-dev): Bump @nextcloud/browserslist-config from 3.0.1 to 3.1.2 by @dependabot[bot] [#1676](https://github.com/nextcloud/notes/pull/1676)
+* Chore(deps-dev): Bump @nextcloud/babel-config from 1.2.0 to 1.3.0 by @dependabot[bot] [#1677](https://github.com/nextcloud/notes/pull/1677)
+* Chore(deps): Bump @nextcloud/initial-state from 2.2.0 to 3.0.0 by @dependabot[bot] [#1679](https://github.com/nextcloud/notes/pull/1679)
 
 
 ## 4.12.3
