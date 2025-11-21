@@ -15,7 +15,7 @@ import {
 } from '@nextcloud/vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
-import { queueCommand, refreshNote } from '../NotesService.js'
+import { queueCommand, refreshNote, fetchNote } from '../NotesService.js'
 import { routeIsNewNote } from '../Util.js'
 import store from '../store.js'
 
@@ -80,6 +80,9 @@ export default {
 			}
 
 			this.loading = true
+
+			// Fetch note data if not already in store (e.g., when navigating directly to a note URL)
+			await fetchNote(parseInt(this.noteId))
 
 			await this.loadTextEditor()
 		},
