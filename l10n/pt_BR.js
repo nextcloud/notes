@@ -36,7 +36,7 @@ OC.L10N.register(
     "Pick a notes folder" : "Escolha uma pasta de notas",
     "Set notes folder" : "Definir pasta de notas",
     "General" : "Geral",
-    "Display" : "Tela",
+    "Display" : "Exibição",
     "File extension" : "Extensão de arquivo",
     "For new notes" : "Para novas notas",
     "Custom file extension" : "Extensão de arquivo personalizada",
