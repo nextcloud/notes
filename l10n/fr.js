@@ -74,7 +74,7 @@ OC.L10N.register(
     "Use version from server" : "Utiliser la version provenant du serveur",
     "Use current version" : "Utiliser la version actuelle",
     "Empty note" : "Note vide",
-    "Write …" : "Écrire ...",
+    "Write …" : "Écrire...",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Modifier",
     "Exit full screen" : "Quitter le plein écran",
