@@ -10,6 +10,7 @@ const state = {
 	etag: null,
 	lastModified: 0,
 	active: false,
+	chunkCursor: null,
 	// TODO add list of notes with changes during sync
 }
 
@@ -43,10 +44,15 @@ const mutations = {
 	clearSyncCache(state) {
 		state.etag = null
 		state.lastModified = 0
+		state.chunkCursor = null
 	},
 
 	setSyncActive(state, active) {
 		state.active = active
+	},
+
+	setNotesChunkCursor(state, cursor) {
+		state.chunkCursor = cursor
 	},
 }
 
