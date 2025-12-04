@@ -92,14 +92,12 @@
 </template>
 <script>
 
-import {
-	NcActions,
-	NcActionButton,
-	NcAppContent,
-	NcModal,
-	Tooltip,
-	isMobile,
-} from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcModal from '@nextcloud/vue/components/NcModal'
+import Tooltip from '@nextcloud/vue/directives/Tooltip'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
@@ -139,13 +137,17 @@ export default {
 		tooltip: Tooltip,
 	},
 
-	mixins: [isMobile],
-
 	props: {
 		noteId: {
 			type: String,
 			required: true,
 		},
+	},
+
+	setup() {
+		return {
+			isMobile: useIsMobile(),
+		}
 	},
 
 	data() {

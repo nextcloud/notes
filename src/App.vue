@@ -46,13 +46,11 @@
 </template>
 
 <script>
-import {
-	NcAppContent,
-	NcAppNavigation,
-	NcAppNavigationNew,
-	NcAppNavigationItem,
-	NcContent,
-} from '@nextcloud/vue'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
+import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcContent from '@nextcloud/vue/components/NcContent'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'

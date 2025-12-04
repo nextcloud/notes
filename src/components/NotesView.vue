@@ -60,13 +60,11 @@
 
 <script>
 
-import {
-	NcAppContent,
-	NcAppContentList,
-	NcAppContentDetails,
-	NcButton,
-	NcTextField,
-} from '@nextcloud/vue'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
+import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { categoryLabel } from '../Util.js'
 import { fetchNotes, searchNotes } from '../NotesService.js'
 import NotesList from './NotesList.vue'

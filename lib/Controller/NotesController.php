@@ -351,7 +351,8 @@ class NotesController extends Controller {
 				'Content-Type',
 				$this->mimeTypeDetector->getSecureMimeType($targetimage->getMimeType())
 			);
-			$response->addHeader('Cache-Control', 'public, max-age=604800');
+			$response->addHeader('Vary', 'Authorization, Cookie');
+			$response->cacheFor(3600);
 			return $response;
 		} catch (\Exception $e) {
 			$this->helper->logException($e);

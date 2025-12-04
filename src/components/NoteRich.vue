@@ -10,9 +10,7 @@
 </template>
 <script>
 
-import {
-	isMobile,
-} from '@nextcloud/vue'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 import { queueCommand, refreshNote, fetchNote } from '../NotesService.js'
@@ -22,13 +20,17 @@ import store from '../store.js'
 export default {
 	name: 'NoteRich',
 
-	mixins: [isMobile],
-
 	props: {
 		noteId: {
 			type: String,
 			required: true,
 		},
+	},
+
+	setup() {
+		return {
+			isMobile: useIsMobile(),
+		}
 	},
 
 	data() {
