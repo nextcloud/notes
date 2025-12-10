@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "নোট",
     "Error" : "সমস্যা",
     "New note" : "নতুন নোট",
+    "Files" : "ফাইল",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "ভাগাভাগি কর",

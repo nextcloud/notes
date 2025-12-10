@@ -29,6 +29,7 @@ OC.L10N.register(
     "Insert link" : "Lisää linkki",
     "Insert image" : "Lisää kuva",
     "Switch between editor and viewer" : "Vaihda muokkaus- ja katselutilan välllä",
+    "General" : "Yleiset",
     "File extension" : "Tiedostopääte",
     "Mobile apps" : "Mobiilisovellukset",
     "Shortcuts" : "Pikanäppäimet",

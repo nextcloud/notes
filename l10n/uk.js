@@ -35,6 +35,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Перемкнути редактор та переглядач",
     "Pick a notes folder" : "Виберіть каталог для нотаток",
     "Set notes folder" : "Встановити каталог для нотаток",
+    "General" : "Загальне",
     "Display" : "Дисплей",
     "File extension" : "Розширення",
     "Files" : "Робота з файлами",
