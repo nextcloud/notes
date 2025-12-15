@@ -41,6 +41,8 @@ OC.L10N.register(
     "Wrong image" : "Väärä kuva",
     "The file was not uploaded. Check your server logs." : "Tiedostoa ei ladattu. Tarkista palvelimen lokitiedot.",
     "Upload image" : "Lataa kuva",
+    "Android" : "Android",
+    "iPhone and iPad" : "iPhone ja iPad",
     "Remove from favorites" : "Poista suosikeista",
     "Add to favorites" : "Lisää suosikkeihin",
     "Error while renaming note." : "Virhe muuttaessa muistiinpanon nimeä.",
