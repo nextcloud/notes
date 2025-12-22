@@ -34,6 +34,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Prepnúť medzi editorom a prehliadačom",
     "Pick a notes folder" : "Vyberať adresár pre poznámky",
     "Set notes folder" : "Nastaviť adresár pre poznámky",
+    "General" : "Všeobecné",
     "Display" : "Display",
     "File extension" : "Prípona súboru",
     "Notes folder" : "Adresár pre poznámky",
