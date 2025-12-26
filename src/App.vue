@@ -128,33 +128,53 @@ export default {
 	},
 
 	methods: {
-		loadNotes() {
-			fetchNotes()
-				.then(data => {
-					if (data === null) {
-						// nothing changed
-						return
-					}
-					if (data.notes !== null) {
-						this.error = false
-						this.routeDefault(data.lastViewedNote)
-					} else if (this.loading.notes) {
-						// only show error state if not loading in background
-						this.error = data.errorMessage
-					} else {
-						console.error('Server error while updating list of notes: ' + data.errorMessage)
-					}
-				})
-				.catch(() => {
+		async loadNotes() {
+			console.log('[App.loadNotes] Starting initial load')
+			// Skip refresh if in search mode - search results should not be overwritten
+			const searchText = store.state.app.searchText
+			if (searchText && searchText.trim() !== '') {
+				console.log('[App.loadNotes] Skipping - in search mode with query:', searchText)
+				this.startRefreshTimer(config.interval.notes.refresh)
+				return
+			}
+			try {
+				// Load only the first chunk on initial load (50 notes)
+				// Subsequent chunks will be loaded on-demand when scrolling
+				const data = await fetchNotes(50, null)
+				console.log('[App.loadNotes] fetchNotes returned:', data)
+
+				if (data === null) {
+					// nothing changed (304 response)
+					console.log('[App.loadNotes] 304 Not Modified - no changes')
+					return
+				}
+
+				if (data && data.noteIds) {
+					console.log('[App.loadNotes] Success - received', data.noteIds.length, 'note IDs')
+					console.log('[App.loadNotes] Next cursor:', data.chunkCursor)
+					this.error = false
+					// Route to default note after first chunk
+					this.routeDefault(0)
+
+					// Store cursor for next chunk (will be used by scroll handler)
+					store.commit('setNotesChunkCursor', data.chunkCursor || null)
+				} else if (this.loading.notes) {
 					// only show error state if not loading in background
-					if (this.loading.notes) {
-						this.error = true
-					}
-				})
-				.then(() => {
-					this.loading.notes = false
-					this.startRefreshTimer(config.interval.notes.refresh)
-				})
+					console.log('[App.loadNotes] Error - no noteIds in response')
+					this.error = data?.errorMessage || true
+				} else {
+					console.error('Server error while updating list of notes: ' + (data?.errorMessage || 'Unknown error'))
+				}
+			} catch (err) {
+				// only show error state if not loading in background
+				if (this.loading.notes) {
+					this.error = true
+				}
+				console.error('[App.loadNotes] Exception:', err)
+			} finally {
+				this.loading.notes = false
+				this.startRefreshTimer(config.interval.notes.refresh)
+			}
 		},
 
 		startRefreshTimer(seconds) {
@@ -192,7 +212,17 @@ export default {
 		},
 
 		routeDefault(defaultNoteId) {
-			if (this.$route.name !== 'note' || !noteExists(this.$route.params.noteId)) {
+			console.log('[App.routeDefault] Called with defaultNoteId:', defaultNoteId)
+			console.log('[App.routeDefault] Current route:', this.$route.name, 'noteId:', this.$route.params.noteId)
+			// Don't redirect if user is already on a specific note route
+			// (the note will be fetched individually even if not in the loaded chunk)
+			if (this.$route.name === 'note' && this.$route.params.noteId) {
+				console.log('[App.routeDefault] Already on note route, skipping redirect')
+				return
+			}
+			// Only redirect if no note route is set (e.g., on welcome page)
+			if (this.$route.name !== 'note') {
+				console.log('[App.routeDefault] Not on note route, routing to default')
 				if (noteExists(defaultNoteId)) {
 					this.routeToNote(defaultNoteId)
 				} else {
