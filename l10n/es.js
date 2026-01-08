@@ -35,6 +35,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Cambiar entre editor y visor",
     "Pick a notes folder" : "Elige una carpeta de notas",
     "Set notes folder" : "Establece una carpeta de notas",
+    "General" : "General",
     "Display" : "Mostrar",
     "File extension" : "Extensión de archivo",
     "Notes folder" : "Carpeta de Notes",
