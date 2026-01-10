@@ -1,5 +1,6 @@
 <!--
   - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2025 Grigorij Aronov aronovgj@gmx.net
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
@@ -8,9 +9,11 @@
 		:name="title"
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
+		:draggable="isDraggable"
 		one-line
 		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
+		@dragstart.native="onDragStart"
 	>
 		<template #subtitle>
 			{{ categoryTitle }}
@@ -152,6 +155,10 @@ export default {
 	},
 
 	computed: {
+		isDraggable() {
+			return !this.note.readonly
+		},
+
 		isSelected() {
 			return this.$store.getters.getSelectedNote() === this.note.id
 		},
@@ -206,6 +213,22 @@ export default {
 	},
 
 	methods: {
+		onDragStart(event) {
+			if (!this.isDraggable) {
+				event.preventDefault()
+				return
+			}
+
+			const noteId = this.note.id.toString()
+			event.dataTransfer.effectAllowed = 'move'
+			try {
+				event.dataTransfer.setData('application/x-nextcloud-notes-note-id', noteId)
+			} catch {
+				// Some browsers only allow specific mime types.
+			}
+			event.dataTransfer.setData('text/plain', noteId)
+		},
+
 		onMenuChange(state) {
 			this.actionsOpen = state
 			this.showCategorySelect = false
