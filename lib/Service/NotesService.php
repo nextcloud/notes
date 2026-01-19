@@ -260,7 +260,8 @@ class NotesService {
 		} catch (\Exception $e) {
 			$filename = uniqid();
 		}
-		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
+		$parts = explode('.', $fileDataArray['name']);
+		$filename .= '.' . end($parts);
 
 		if ($fileDataArray['tmp_name'] === '') {
 			throw new ImageNotWritableException();
