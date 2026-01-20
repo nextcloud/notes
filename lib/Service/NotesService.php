@@ -13,21 +13,26 @@ namespace OCA\Notes\Service;
 use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
+use OCP\Files\IFilenameValidator;
+use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 
 class NotesService {
 	private MetaService $metaService;
 	private SettingsService $settings;
 	private NoteUtil $noteUtil;
+	private IFilenameValidator $filenameValidator;
 
 	public function __construct(
 		MetaService $metaService,
 		SettingsService $settings,
 		NoteUtil $noteUtil,
+		IFilenameValidator $filenameValidator,
 	) {
 		$this->metaService = $metaService;
 		$this->settings = $settings;
 		$this->noteUtil = $noteUtil;
+		$this->filenameValidator = $filenameValidator;
 	}
 
 	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
@@ -223,8 +228,8 @@ class NotesService {
 	 * @NoCSRFRequired
 	 * @return \OCP\Files\File
 	 */
-	public function getAttachment(string $userId, int $noteid, string $path) : File {
-		$note = $this->get($userId, $noteid);
+	public function getAttachment(string $userId, int $noteId, string $path) : File {
+		$note = $this->get($userId, $noteId);
 		$notesFolder = $this->getNotesFolder($userId);
 		$path = str_replace('\\', '/', $path); // change windows style path
 		$p = explode('/', $note->getCategory());
@@ -243,24 +248,24 @@ class NotesService {
 
 	/**
 	 * @param $userId
-	 * @param $noteid
+	 * @param $noteId
 	 * @param $fileDataArray
+	 *
+	 * @return array
 	 * @throws NotPermittedException
 	 * @throws ImageNotWritableException
-	 *                                   https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
+	 * @throws NotFoundException
+	 * @throws InvalidPathException
+	 *                              https://github.com/nextcloud/text/blob/main/lib/Service/AttachmentService.php
 	 */
-	public function createImage(string $userId, int $noteid, $fileDataArray) {
-		$note = $this->get($userId, $noteid);
+	public function createImage(string $userId, int $noteId, $fileDataArray) : array {
+		$note = $this->get($userId, $noteId);
 		$notesFolder = $this->getNotesFolder($userId);
-		$parent = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
+		$parentFolder = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
 
-		// try to generate long id, if not available on system fall back to a shorter one
-		try {
-			$filename = bin2hex(random_bytes(16));
-		} catch (\Exception $e) {
-			$filename = uniqid();
-		}
-		$filename = $filename . '.' . explode('.', $fileDataArray['name'])[1];
+		$saveDir = $this->getAttachmentDirectoryForNote($note, $userId);
+		$fileName = self::getUniqueFileName($saveDir, $fileDataArray['name']);
+		$this->filenameValidator->validateFilename($fileName);
 
 		if ($fileDataArray['tmp_name'] === '') {
 			throw new ImageNotWritableException();
@@ -272,8 +277,61 @@ class NotesService {
 		fclose($fp);
 
 		$result = [];
-		$result['filename'] = $filename;
-		$this->noteUtil->getRoot()->newFile($parent->getPath() . '/' . $filename, $content);
+		$result['filename'] = '.attachments.' . $note->getId() . '/' . $fileName;
+		$saveDir->newFile($fileName, $content);
 		return $result;
+	}
+
+	/**
+	 * Get unique file name in a directory. Add '(n)' suffix.
+	 *
+	 * @param Folder $dir
+	 * @param string $fileName
+	 *
+	 * @return string
+	 */
+	public static function getUniqueFileName(Folder $dir, string $fileName) : string {
+		$extension = pathinfo($fileName, PATHINFO_EXTENSION);
+		$counter = 1;
+		$uniqueFileName = $fileName;
+		if ($extension !== '') {
+			while ($dir->nodeExists($uniqueFileName)) {
+				$counter++;
+				$uniqueFileName = (string)preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
+			}
+		} else {
+			while ($dir->nodeExists($uniqueFileName)) {
+				$counter++;
+				$uniqueFileName = (string)preg_replace('/$/', ' (' . $counter . ')', $fileName);
+			}
+		}
+		return $uniqueFileName;
+	}
+
+	/**
+	 * Get or create file--specific attachment folder
+	 *
+	 * @param Note $note
+	 * @param string $userid
+	 *
+	 * @return Folder
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws InvalidPathException
+	 */
+	private function getAttachmentDirectoryForNote(Note $note, string $userId) : Folder {
+		$notesFolder = $this->getNotesFolder($userId);
+		$parentFolder = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
+
+		$attachmentFolderName = '.attachments.' . $note->getId();
+		if ($parentFolder->nodeExists($attachmentFolderName)) {
+			$attachmentFolder = $parentFolder->get($attachmentFolderName);
+			if ($attachmentFolder instanceof Folder) {
+				return $attachmentFolder;
+			}
+		} else {
+			return $parentFolder->newFolder($attachmentFolderName);
+		}
+		throw new NotFoundException('Attachment dir for note ' . $note->getId() . ' was not found or could not be created.');
 	}
 }
