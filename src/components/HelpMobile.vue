@@ -70,11 +70,11 @@ export default {
 }
 
 body[dir='ltr'] .badge {
-	float: left;
+	float: inline-start;
 }
 
 body[dir='rtl'] .badge {
-	float: right;
+	float: inline-end;
 }
 
 .appstore-badge {
