@@ -168,7 +168,7 @@ export default {
 	padding: 1em;
 	padding-top: 0;
 	line-height: 1.5em;
-	word-wrap: break-word;
+	overflow-wrap: break-word;
 
 	& h1, & h2, & h3, & h4, & h5, & h6 {
 		padding: 0;
