@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { expect, test } from "@playwright/test";
 import { login } from "../support/login";
 import { NoteEditor } from "../support/sections/NoteEditor";
