@@ -7,8 +7,8 @@
 		"build": "webpack --node-env production --progress",
 		"dev": "webpack --node-env development --progress",
 		"watch": "webpack --node-env development --progress --watch",
-		"lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src",
-		"lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src --fix",
+		"lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src playwright",
+		"lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src playwright --fix",
 		"stylelint": "stylelint 'src/**/*.vue' 'css/**/*.css'",
 		"stylelint:fix": "stylelint 'src/**/*.vue' 'css/**/*.css' --fix"
 	},
