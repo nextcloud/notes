@@ -17,7 +17,11 @@
     </extraFiles>
 	<issueHandlers>
 		<DeprecatedMethod>
-			<errorLevel type="error" />
+			<errorLevel type="suppress">
+				<referencedMethod name="OCP\IConfig::getUserValue" />
+				<referencedMethod name="OCP\IConfig::setUserValue" />
+				<referencedMethod name="OCP\IConfig::deleteUserValue" />
+			</errorLevel>
 		</DeprecatedMethod>
 		<UndefinedClass>
 			<errorLevel type="suppress">
