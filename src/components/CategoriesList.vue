@@ -1,6 +1,5 @@
 <!--
   - SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
-  - SPDX-FileCopyrightText: 2025 Grigorij Aronov aronovgj@gmx.net
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
