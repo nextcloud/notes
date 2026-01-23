@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Máte neuložené poznámky. Opustením stránky stratíte všetky zmeny!",
     "Notes settings" : "Nastavenia Poznámok",
     "Please see Nextcloud server log for details." : "Podrobnosti nájdete v protokole servera Nextcloud.",
+    "Custom" : "Vlastný",
     "Rich text" : "Formátovaný text",
     "Plain text" : "Obyčajný text",
     "Preview" : "Náhľad",
