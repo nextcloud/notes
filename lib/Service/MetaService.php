@@ -100,8 +100,8 @@ class MetaService {
 		if ($insertErrorCount) {
 			if ($insertErrorCount == count($notes)) {
 				$this->util->logger->warning(
-					'Database failed inserting Meta objects for all ' . $insertErrorCount . ' notes. ' .
-					'If this happens consistently, there is a problem with your database.',
+					'Database failed inserting Meta objects for all ' . $insertErrorCount . ' notes. '
+					. 'If this happens consistently, there is a problem with your database.',
 				);
 			} else {
 				$this->util->logger->warning(

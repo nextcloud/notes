@@ -252,9 +252,9 @@ class NoteUtil {
 		$availableBytes = $folder->getFreeSpace();
 		if ($availableBytes >= 0 && $availableBytes < $requiredBytes) {
 			$this->util->logger->error(
-				'Insufficient storage in ' . $folder->getPath() . ': ' .
-				'available are ' . $availableBytes . '; ' .
-				'required are ' . $requiredBytes
+				'Insufficient storage in ' . $folder->getPath() . ': '
+				. 'available are ' . $availableBytes . '; '
+				. 'required are ' . $requiredBytes
 			);
 			throw new InsufficientStorageException($requiredBytes . ' are required in ' . $folder->getPath());
 		}
