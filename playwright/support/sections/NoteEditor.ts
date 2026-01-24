@@ -11,8 +11,12 @@ export class NoteEditor {
 	public readonly content: Locator
 
 	constructor(public readonly page: Page) {
-		this.el = this.page.locator('.editor').first()
-		this.content = this.el.getByRole('textbox')
+		this.el = this.page.locator('.text-editor, .note-editor').first()
+		this.content = this.el
+			.locator(
+				'.ProseMirror, .CodeMirror textarea, [contenteditable="true"]',
+			)
+			.first()
 	}
 
 	public async type(keys: string): Promise<void> {

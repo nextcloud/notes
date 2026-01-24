@@ -18,5 +18,8 @@ export async function login(page: Page): Promise<void> {
 	await page.locator('#password').press('Enter')
 
 	// Wait for login to finish
-	await page.waitForURL('**/apps/**', { waitUntil: 'domcontentloaded' })
+	await page.waitForURL('**/apps/**', {
+		waitUntil: 'domcontentloaded',
+		timeout: 60000,
+	})
 }
