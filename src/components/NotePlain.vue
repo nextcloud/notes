@@ -53,7 +53,7 @@
 			<span class="action-buttons">
 				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
 					<NcActionButton
-						v-tooltip.left="t('notes', 'CTRL + /')"
+						:title="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
 						<PencilOutlineIcon v-if="preview" slot="icon" :size="20" />
@@ -96,7 +96,6 @@ import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcModal from '@nextcloud/vue/components/NcModal'
-import Tooltip from '@nextcloud/vue/directives/Tooltip'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -131,10 +130,6 @@ export default {
 		SyncAlertIcon,
 		TheEditor,
 		ThePreview,
-	},
-
-	directives: {
-		tooltip: Tooltip,
 	},
 
 	props: {
