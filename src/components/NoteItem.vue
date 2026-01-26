@@ -23,14 +23,10 @@
 				:size="20"
 				fill-color="#E9322D"
 			/>
-			<StarOutlineIcon v-else-if="note.favorite"
+			<StarIcon v-else-if="note.favorite"
 				slot="icon"
 				:size="20"
 				fill-color="#FC0"
-			/>
-			<FileDocumentOutlineIcon v-else
-				slot="icon"
-				:size="20"
 			/>
 		</template>
 		<template v-if="isShared" #indicator>
@@ -107,10 +103,9 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
-import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
-import StarOutlineIcon from 'vue-material-design-icons/StarOutline.vue'
+import StarIcon from 'vue-material-design-icons/Star.vue'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
@@ -122,11 +117,10 @@ export default {
 
 	components: {
 		AlertOctagonOutlineIcon,
-		FileDocumentOutlineIcon,
 		FolderOutlineIcon,
 		NcActionButton,
 		NcListItem,
-		StarOutlineIcon,
+		StarIcon,
 		NcActionSeparator,
 		NcActionInput,
 		PencilOutlineIcon,
@@ -145,6 +139,7 @@ export default {
 			loading: {
 				note: false,
 				category: false,
+				favorite: false,
 			},
 			newTitle: '',
 			renaming: false,
