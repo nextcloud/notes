@@ -28,13 +28,16 @@ jobs:
       SERVER_BRANCH: master
     steps:
     - name: Checkout
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        persist-credentials: false
+
     - name: Determine PHP version
       env:
         VERSION_MINMAX: ${{ matrix.version }}
       run: echo "PHP_VERSION=$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)" >> $GITHUB_ENV
     - name: Set up PHP ${{ env.PHP_VERSION }}
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
       with:
         php-version: ${{ env.PHP_VERSION }}
         extensions: pdo_mysql, zip, gd
