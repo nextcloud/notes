@@ -4,7 +4,7 @@
 		"nextcloud/coding-standard": "^1.0",
 		"nextcloud/ocp": "dev-stable28",
 		"phan/phan": "^5",
-		"php-cs-fixer/shim": "3.92.3",
+		"php-cs-fixer/shim": "3.93.0",
 		"psalm/phar": "^5.26",
 		"squizlabs/php_codesniffer": "^4",
 		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
