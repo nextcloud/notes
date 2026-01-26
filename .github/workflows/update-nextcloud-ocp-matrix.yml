@@ -13,6 +13,10 @@ on:
   schedule:
     - cron: '5 2 * * 0'
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   update-nextcloud-ocp:
     runs-on: ubuntu-latest
@@ -20,19 +24,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        branches: ['main']
-        target: ['stable28']
+        branches:
+          - ${{ github.event.repository.default_branch }}
 
     name: update-nextcloud-ocp-${{ matrix.branches }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
+          persist-credentials: false
           ref: ${{ matrix.branches }}
           submodules: true
 
+      - name: Get version matrix
+        id: versions
+        uses: icewind1991/nextcloud-version-matrix@58becf3b4bb6dc6cef677b15e2fd8e7d48c0908f # v1.3.1
+
       - name: Set up php8.2
-        uses: shivammathur/setup-php@c541c155eee45413f5b09a52248675b1a2575231 # v2.31.1
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
         with:
           php-version: 8.2
           # https://docs.nextcloud.com/server/stable/admin_manual/installation/source_installation.html#prerequisites-for-manual-installation
@@ -52,15 +61,15 @@ jobs:
 
       - name: Composer update nextcloud/ocp
         id: update_branch
-        run: composer require --dev nextcloud/ocp:dev-${{ matrix.target }}
+        run: composer require --dev nextcloud/ocp:dev-${{ steps.versions.outputs.branches-min }}
 
       - name: Raise on issue on failure
         uses: dacbd/create-issue-action@cdb57ab6ff8862aa09fee2be6ba77a59581921c2 # v2.0.0
         if: ${{ failure() && steps.update_branch.conclusion == 'failure' }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: Failed to update nextcloud/ocp package}
-          body: Please check the output of the GitHub action and manually resolve the issues<br>${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}<br>${{ steps.codeowners.outputs.codeowners }}
+          title: 'Failed to update nextcloud/ocp package'
+          body: 'Please check the output of the GitHub action and manually resolve the issues<br>${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}<br>${{ steps.codeowners.outputs.codeowners }}'
 
       - name: Reset checkout 3rdparty
         run: |
