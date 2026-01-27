@@ -53,5 +53,5 @@
 	"browserslist": [
 		"extends @nextcloud/browserslist-config"
 	],
-	"version": "4.12.4"
+	"version": "4.13.0"
 }
