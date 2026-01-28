@@ -8,6 +8,7 @@ import { copyNote } from '../Util.js'
 
 const state = {
 	categories: [],
+	localCategories: [],
 	notes: [],
 	notesIds: {},
 	selectedCategory: null,
@@ -43,20 +44,38 @@ const getters = {
 			return i
 		}
 
-		// get categories from notes
-		const categories = {}
-		for (const note of state.notes) {
-			let cat = note.category
+		function normalizeCategory(category) {
+			let cat = category
 			if (maxLevel > 0) {
 				const index = nthIndexOf(cat, '/', maxLevel)
 				if (index > 0) {
 					cat = cat.substring(0, index)
 				}
 			}
+			return cat
+		}
+
+		// get categories from notes
+		const categories = {}
+		for (const note of state.notes) {
+			let cat = normalizeCategory(note.category)
 			if (categories[cat] === undefined) {
 				categories[cat] = 1
 			} else {
 				categories[cat] += 1
+			}
+		}
+		const extraCategories = new Set([...state.categories, ...state.localCategories])
+		for (const category of extraCategories) {
+			if (!category) {
+				continue
+			}
+			const cat = normalizeCategory(category)
+			if (!cat) {
+				continue
+			}
+			if (categories[cat] === undefined) {
+				categories[cat] = 0
 			}
 		}
 		// get structured result from categories
@@ -182,6 +201,50 @@ const mutations = {
 
 	setCategories(state, categories) {
 		state.categories = categories
+		categories.forEach(category => {
+			if (category && !state.localCategories.includes(category)) {
+				state.localCategories.push(category)
+			}
+		})
+	},
+
+	addLocalCategory(state, category) {
+		if (!category || state.localCategories.includes(category) || state.categories.includes(category)) {
+			return
+		}
+		state.localCategories.push(category)
+	},
+
+	renameLocalCategory(state, { oldCategory, newCategory }) {
+		if (!oldCategory || !newCategory || oldCategory === newCategory) {
+			return
+		}
+		state.localCategories = state.localCategories.map(category => {
+			if (category === oldCategory) {
+				return newCategory
+			}
+			if (category.startsWith(oldCategory + '/')) {
+				return newCategory + category.slice(oldCategory.length)
+			}
+			return category
+		})
+		state.categories = state.categories.map(category => {
+			if (category === oldCategory) {
+				return newCategory
+			}
+			if (category.startsWith(oldCategory + '/')) {
+				return newCategory + category.slice(oldCategory.length)
+			}
+			return category
+		})
+	},
+
+	removeLocalCategory(state, category) {
+		if (!category) {
+			return
+		}
+		state.localCategories = state.localCategories.filter(cat => cat !== category && !cat.startsWith(category + '/'))
+		state.categories = state.categories.filter(cat => cat !== category && !cat.startsWith(category + '/'))
 	},
 
 	setSelectedCategory(state, category) {
