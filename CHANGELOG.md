@@ -12,6 +12,47 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 4.13.0
+
+### Added
+
+* feat (UI): drag & drop notes to categories by @aronovgj in [#1707](https://github.com/nextcloud/notes/pull/1707)
+** test: Setup Playwright and add some tests by @enjeck in [#1708](https://github.com/nextcloud/notes/pull/1708)
+
+### Fixed
+
+* fix: Revert to compatible libraries by @enjeck in [#1723](https://github.com/nextcloud/notes/pull/1723)
+* fix(attachments): Correctly keep intended attachment extension by @nickvergessen in [#1715](https://github.com/nextcloud/notes/pull/1715)
+* * [main] Fix npm audit by @nextcloud-command in [#1702](https://github.com/nextcloud/notes/pull/1702)
+* ci(actions): Pin action versions and update workflow templates by @nickvergessen in [#1725](https://github.com/nextcloud/notes/pull/1725)
+
+### Dependencies
+
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.8 to 7.0.9 by @dependabot[bot] in [#1687](https://github.com/nextcloud/notes/pull/1687)
+* Chore(deps-dev): Bump node-forge from 1.3.1 to 1.3.2 by @dependabot[bot] in [#1690](https://github.com/nextcloud/notes/pull/1690)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.89.2 to 3.91.1 by @dependabot[bot] in [#1692](https://github.com/nextcloud/notes/pull/1692)
+* Chore(deps): Bump mdast-util-to-hast from 13.2.0 to 13.2.1 by @dependabot[bot] in [#1694](https://github.com/nextcloud/notes/pull/1694)
+* Chore(deps-dev): Bump express from 4.21.2 to 4.22.1 by @dependabot[bot] in [#1695](https://github.com/nextcloud/notes/pull/1695)
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.9 to 7.0.11 by @dependabot[bot] in [#1697](https://github.com/nextcloud/notes/pull/1697)
+* Chore(deps): Bump actions/setup-node from 6.0.0 to 6.1.0 by @dependabot[bot] in [#1698](https://github.com/nextcloud/notes/pull/1698)
+* Chore(deps): Bump actions/checkout from 5.0.0 to 6.0.1 by @dependabot[bot] in [#1699](https://github.com/nextcloud/notes/pull/1699)
+* [main] Update nextcloud/ocp dependency by @nextcloud-command in [#1696](https://github.com/nextcloud/notes/pull/1696)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.11.2 to 2.11.3 by @dependabot[bot] in [#1685](https://github.com/nextcloud/notes/pull/1685)
+* Chore(deps): Bump @nextcloud/dialogs from 6.4.1 to 7.1.0 by @dependabot[bot] in [#1678](https://github.com/nextcloud/notes/pull/1678)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.91.1 to 3.92.3 by @dependabot[bot] in [#1709](https://github.com/nextcloud/notes/pull/1709)
+* Chore(deps): Bump actions/setup-node from 6.1.0 to 6.2.0 by @dependabot[bot] in [#1716](https://github.com/nextcloud/notes/pull/1716)
+* Chore(deps): Bump diff from 8.0.2 to 8.0.3 by @dependabot[bot] in [#1713](https://github.com/nextcloud/notes/pull/1713)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.1.1 to 3.2.0 by @dependabot[bot] in [#1718](https://github.com/nextcloud/notes/pull/1718)
+* Chore(deps-dev): Bump lodash from 4.17.21 to 4.17.23 by @dependabot[bot] in [#1721](https://github.com/nextcloud/notes/pull/1721)
+* Chore(deps): Bump @nextcloud/dialogs from 7.1.0 to 7.2.0 by @dependabot[bot] in [#1704](https://github.com/nextcloud/notes/pull/1704)
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.11 to 8.0.0 by @dependabot[bot] in [#1703](https://github.com/nextcloud/notes/pull/1703)
+* Chore(deps): Bump @nextcloud/vue from 8.35.2 to 9.4.0 by @dependabot[bot] in [#1722](https://github.com/nextcloud/notes/pull/1722)
+* Chore(deps-dev): Bump nextcloud/coding-standard from 1.3.2 to 1.4.0 by @dependabot[bot] in [#1583](https://github.com/nextcloud/notes/pull/1583)
+* Chore(deps): Bump peter-evans/create-pull-request from 8.0.0 to 8.1.0 by @dependabot[bot] in [#1726](https://github.com/nextcloud/notes/pull/1726)
+* Chore(deps): Bump webiny/action-conventional-commits from 1.3.0 to 1.3.1 by @dependabot[bot] in [#1727](https://github.com/nextcloud/notes/pull/1727)
+* Chore(deps): Bump actions/checkout from 6.0.1 to 6.0.2 by @dependabot[bot] in [#1728](https://github.com/nextcloud/notes/pull/1728)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.92.3 to 3.93.0 by @dependabot[bot] in [#1729](https://github.com/nextcloud/notes/pull/1729)
+
 ## 4.12.4
 
 ### Fixed
@@ -48,7 +89,6 @@ Types of changes:
 * Chore(deps-dev): Bump @nextcloud/browserslist-config from 3.0.1 to 3.1.2 by @dependabot[bot] [#1676](https://github.com/nextcloud/notes/pull/1676)
 * Chore(deps-dev): Bump @nextcloud/babel-config from 1.2.0 to 1.3.0 by @dependabot[bot] [#1677](https://github.com/nextcloud/notes/pull/1677)
 * Chore(deps): Bump @nextcloud/initial-state from 2.2.0 to 3.0.0 by @dependabot[bot] [#1679](https://github.com/nextcloud/notes/pull/1679)
-
 
 ## 4.12.3
 
