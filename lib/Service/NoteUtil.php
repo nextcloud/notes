@@ -13,6 +13,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
+use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IUserSession;
 use OCP\Share\IManager;
@@ -196,12 +197,20 @@ class NoteUtil {
 	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
 		$userFolder = $this->getRoot()->getUserFolder($userId);
 		$notesPath = $this->settingsService->get($userId, 'notesPath');
-		$allowShared = $notesPath !== $this->settingsService->getDefaultNotesPath($userId);
 
-		$folder = null;
+		['path' => $defaultPath, 'node' => $folder] = $this->settingsService->getDefaultNotesNode($userId);
+		$allowShared = $notesPath !== $defaultPath;
+
+		if ($allowShared) {
+			try {
+				$folder = $userFolder->get($notesPath);
+			} catch (NotFoundException) {
+				$folder = null;
+			}
+		}
+
 		$updateNotesPath = false;
-		if ($userFolder->nodeExists($notesPath)) {
-			$folder = $userFolder->get($notesPath);
+		if ($folder instanceof Folder) {
 			if (!$allowShared && $folder->isShared()) {
 				$notesPath = $userFolder->getNonExistingName($notesPath);
 				$folder = $userFolder->newFolder($notesPath);
