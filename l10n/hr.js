@@ -15,6 +15,7 @@ OC.L10N.register(
     "Please see Nextcloud server log for details." : "Pojedinosti potražite u zapisniku Nextcloudovog poslužitelja.",
     "Preview" : "Pretpregled",
     "Insert image" : "Umetni sliku",
+    "General" : "Općenito",
     "Shortcuts" : "Prečaci",
     "All notes" : "Sve bilješke",
     "Categories" : "Kategorije",
