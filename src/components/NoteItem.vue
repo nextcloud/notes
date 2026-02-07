@@ -116,6 +116,7 @@ import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { getSidebar } from '@nextcloud/files'
 
 export default {
 	name: 'NoteItem',
@@ -239,6 +240,7 @@ export default {
 			this.loading.favorite = true
 			setFavorite(this.note.id, !this.note.favorite)
 				.catch(() => {
+					this.loading.favorite = false
 				})
 				.then(() => {
 					this.loading.favorite = false
@@ -312,13 +314,28 @@ export default {
 			}
 		},
 		onToggleSharing() {
-			if (window?.OCA?.Files?.Sidebar?.setActiveTab) {
+			const sidebar = getSidebar()
+			if (!sidebar) {
+				showError(this.t('notes', 'Sharing not available.'))
+				return
+			}
+
+			try {
 				emit('toggle-navigation', { open: false })
 				setTimeout(() => {
 					window.dispatchEvent(new Event('resize'))
 				}, 200)
-				window.OCA.Files.Sidebar.setActiveTab('sharing')
-				window.OCA.Files.Sidebar.open(this.note.internalPath)
+				sidebar.open(this.note.internalPath)
+				setTimeout(() => {
+					try {
+						sidebar.setActiveTab('sharing')
+					} catch (e) {
+						console.warn('Could not activate sharing tab:', e.message)
+					}
+				}, 100)
+			} catch (error) {
+				console.error('Failed to open sidebar:', error)
+				showError(this.t('notes', 'Could not open the sharing sidebar.'))
 			}
 		},
 		async onShareCreated(event) {
