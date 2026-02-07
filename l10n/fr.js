@@ -18,7 +18,7 @@ OC.L10N.register(
     "Notes settings" : "Paramètres de Notes",
     "Please see Nextcloud server log for details." : "Veuillez consulter les logs du serveur Nextcloud pour plus de détails.",
     "Custom" : "Personnalisé",
-    "Rich text" : "Texte riche",
+    "Rich text" : "Texte enrichi",
     "Plain text" : "Texte brut",
     "Preview" : "Aperçu",
     "Make the selection bold" : "Mettre la sélection en gras",
