@@ -20,6 +20,7 @@
 		"@nextcloud/axios": "^2.5.1",
 		"@nextcloud/dialogs": "^7.1.0",
 		"@nextcloud/event-bus": "^3.3.3",
+		"@nextcloud/files": "^4.0.0-rc.1",
 		"@nextcloud/initial-state": "^3.0.0",
 		"@nextcloud/moment": "^1.3.5",
 		"@nextcloud/router": "^3.1.0",
