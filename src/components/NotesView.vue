@@ -8,6 +8,12 @@
 		<template slot="list">
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
+					<div class="content-list__actions">
+						<NcButton type="primary" :disabled="creatingNote" @click="onNewNote">
+							<PlusIcon slot="icon" :size="20" />
+							{{ t('notes', 'New note') }}
+						</NcButton>
+					</div>
 					<NcTextField
 						:value.sync="searchText"
 						:label="t('notes', 'Search for notes')"
@@ -70,6 +76,8 @@ import NotesList from './NotesList.vue'
 import NotesCaption from './NotesCaption.vue'
 import store from '../store.js'
 import Note from './Note.vue'
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import { createNote } from '../NotesService.js'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
 
@@ -85,6 +93,7 @@ export default {
 		Note,
 		NotesList,
 		NotesCaption,
+		PlusIcon,
 	},
 
 	directives: {
@@ -106,6 +115,7 @@ export default {
 			showFirstNotesOnly: true,
 			showNote: true,
 			searchText: '',
+			creatingNote: false,
 		}
 	},
 
@@ -210,6 +220,26 @@ export default {
 			store.commit('setSelectedCategory', category)
 		},
 
+		onNewNote() {
+			if (this.creatingNote) {
+				return
+			}
+			this.creatingNote = true
+			createNote(store.getters.getSelectedCategory())
+				.then(note => {
+					this.$router.push({
+						name: 'note',
+						params: { noteId: note.id.toString() },
+						query: { new: null },
+					})
+				})
+				.catch(() => {
+				})
+				.finally(() => {
+					this.creatingNote = false
+				})
+		},
+
 		hideNote() {
 			this.showNote = false
 		},
@@ -232,7 +262,7 @@ export default {
 }
 
 .content-list__search {
-	padding: 4px;
+	padding: var(--app-navigation-padding);
 	padding-inline-start: 50px;
 	position: sticky;
 	top: 0;
@@ -242,6 +272,16 @@ export default {
 	input {
 		width: 100%;
 	}
+}
+
+.content-list__actions {
+	display: flex;
+	margin-bottom: 6px;
+}
+
+.content-list__actions :deep(.button-vue) {
+	width: 100%;
+	justify-content: center;
 }
 
 .content-list__search-more {
