@@ -210,12 +210,12 @@ class NotesService {
 	 * @throws NoteDoesNotExistException
 	 */
 	private static function getFileById(string $customExtension, Folder $folder, int $id) : File {
-		$file = $folder->getById($id);
+		$file = $folder->getFirstNodeById($id);
 
-		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !self::isNote($file[0], $customExtension)) {
+		if (!($file instanceof File) || !self::isNote($file, $customExtension)) {
 			throw new NoteDoesNotExistException();
 		}
-		return $file[0];
+		return $file;
 	}
 
 	/**
