@@ -34,6 +34,7 @@ OC.L10N.register(
     "Switch between editor and viewer" : "Wisselen tussen bewerken en weergave",
     "Pick a notes folder" : "Kies een map voor notities",
     "Set notes folder" : "Map voor notities instellen",
+    "General" : "Algemeen",
     "Display" : "Scherm",
     "File extension" : "Bestandsextensie",
     "Notes folder" : "Map voor notities",
