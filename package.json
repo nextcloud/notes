@@ -26,7 +26,7 @@
 		"@nextcloud/vue": "^8.35.2",
 		"diff": "^8.0.3",
 		"easymde": "^2.20.0",
-		"markdown-it": "^14.1.0",
+		"markdown-it": "^14.1.1",
 		"markdown-it-bidi": "^0.2.0",
 		"markdown-it-task-checkbox": "^1.0.6",
 		"vue": "^2.7.16",
