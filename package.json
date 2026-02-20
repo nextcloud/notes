@@ -44,6 +44,7 @@
 		"@nextcloud/stylelint-config": "^3.2.1",
 		"@nextcloud/webpack-vue-config": "^7.0.2",
 		"@playwright/test": "^1.58.2",
+		"pdf-parse": "^2.4.5",
 		"vue-loader": "^15.11.1"
 	},
 	"engines": {
