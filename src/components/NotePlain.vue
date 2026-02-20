@@ -51,24 +51,33 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
-					<NcActionButton
-						:title="t('notes', 'CTRL + /')"
+				<div class="action-buttons-horizontal">
+					<NcButton
+						v-tooltip="t('notes', 'CTRL + /')"
+						:aria-label="preview ? t('notes', 'Edit') : t('notes', 'Preview')"
+						type="tertiary"
 						@click="onTogglePreview"
 					>
-						<PencilOutlineIcon v-if="preview" slot="icon" :size="20" />
-						<EyeOutlineIcon v-else slot="icon" :size="20" />
-						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
-					</NcActionButton>
-					<NcActionButton
+						<PencilOutlineIcon v-if="preview" :size="20" />
+						<EyeOutlineIcon v-else :size="20" />
+					</NcButton>
+					<NcButton
+						v-tooltip="fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen')"
+						:aria-label="fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen')"
 						:class="{ active: fullscreen }"
+						type="tertiary"
 						@click="onToggleDistractionFree"
 					>
-						<FullscreenIcon slot="icon" :size="20" />
-						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
-					</NcActionButton>
-				</NcActions>
-				<NcActions v-if="note.readonly">
+						<FullscreenIcon :size="20" />
+					</NcButton>
+					<NcActions v-if="showDetailsMenu" class="action-details">
+						<NcActionButton>
+							<DotsVerticalIcon slot="icon" :size="20" />
+							{{ t('notes', 'Details') }}
+						</NcActionButton>
+					</NcActions>
+				</div>
+				<NcActions v-if="note.readonly" class="action-error">
 					<NcActionButton>
 						<PencilOffOutlineIcon slot="icon" :size="20" />
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
@@ -94,6 +103,7 @@
 
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
@@ -105,6 +115,7 @@ import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
+import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 
 import { config } from '../config.js'
 import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
@@ -119,11 +130,13 @@ export default {
 
 	components: {
 		ConflictSolution,
+		DotsVerticalIcon,
 		PencilOutlineIcon,
 		EyeOutlineIcon,
 		FullscreenIcon,
 		NcActions,
 		NcActionButton,
+		NcButton,
 		NcAppContent,
 		NcModal,
 		PencilOffOutlineIcon,
@@ -151,6 +164,7 @@ export default {
 			fullscreen: false,
 			preview: false,
 			actionsOpen: false,
+			showDetailsMenu: false, // For future details functionality
 			autosaveTimer: null,
 			autotitleTimer: null,
 			refreshTimer: null,
@@ -249,7 +263,6 @@ export default {
 
 		onTogglePreview() {
 			this.preview = !this.preview
-			this.actionsOpen = false
 		},
 
 		onDetectFullscreen() {
@@ -284,7 +297,6 @@ export default {
 			} else {
 				launchIntoFullscreen(document.getElementById('note-container'))
 			}
-			this.actionsOpen = false
 		},
 
 		onVisibilityChange() {
@@ -470,9 +482,31 @@ export default {
 	position: fixed;
 	top: 50px;
 	inset-inline-end: 20px;
-	width: var(--default-clickable-area);
+	width: auto;
 	margin-top: 1em;
 	z-index: 2000;
+}
+
+.action-buttons-horizontal {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+.action-buttons-horizontal .nc-button {
+	min-width: var(--default-clickable-area);
+	min-height: var(--default-clickable-area);
+	width: var(--default-clickable-area);
+	height: var(--default-clickable-area);
+}
+
+.action-buttons-horizontal .nc-button.active {
+	background-color: var(--color-primary-element);
+	color: var(--color-primary-element-text);
+}
+
+.action-buttons-horizontal .nc-button.active:hover {
+	background-color: var(--color-primary-element-hover);
 }
 
 .action-buttons .action-error {
