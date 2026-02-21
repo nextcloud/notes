@@ -73,44 +73,179 @@ export const getDashboardData = () => {
 		})
 }
 
-export const fetchNotes = () => {
+export const fetchNotes = async (chunkSize = 50, chunkCursor = null) => {
+	console.log('[fetchNotes] Called with chunkSize:', chunkSize, 'cursor:', chunkCursor)
 	const lastETag = store.state.sync.etag
 	const lastModified = store.state.sync.lastModified
 	const headers = {}
 	if (lastETag) {
 		headers['If-None-Match'] = lastETag
 	}
-	return axios
-		.get(
-			url('/notes' + (lastModified ? '?pruneBefore=' + lastModified : '')),
-			{ headers },
-		)
-		.then(response => {
-			store.commit('setSettings', response.data.settings)
-			if (response.data.categories) {
-				store.commit('setCategories', response.data.categories)
+
+	try {
+		// Signal start of loading
+		store.commit('setNotesLoadingInProgress', true)
+
+		// Fetch settings first (only on first load)
+		if (!store.state.app.settings || Object.keys(store.state.app.settings).length === 0) {
+			try {
+				const settingsResponse = await axios.get(generateUrl('/apps/notes/api/v1/settings'))
+				store.commit('setSettings', settingsResponse.data)
+			} catch (err) {
+				console.warn('Failed to fetch settings, will continue with defaults', err)
 			}
-			if (response.data.noteIds && response.data.notesData) {
-				store.dispatch('updateNotes', { noteIds: response.data.noteIds, notes: response.data.notesData })
+		}
+
+		// Load notes metadata in chunks excluding content for performance
+		// Content is loaded on-demand when user selects a note
+		const params = new URLSearchParams()
+		if (lastModified) {
+			params.append('pruneBefore', lastModified)
+		}
+		params.append('exclude', 'content') // Exclude heavy content field
+		params.append('chunkSize', chunkSize.toString()) // Request chunked data
+		if (chunkCursor) {
+			params.append('chunkCursor', chunkCursor) // Continue from previous chunk
+		}
+
+		const url = generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : ''))
+		console.log('[fetchNotes] Requesting:', url)
+
+		const response = await axios.get(url, { headers })
+
+		console.log('[fetchNotes] Response received, status:', response.status)
+		console.log('[fetchNotes] Response data type:', Array.isArray(response.data) ? 'array' : typeof response.data)
+		console.log('[fetchNotes] Response headers:', response.headers)
+
+		// Backend returns array of notes directly
+		const notes = Array.isArray(response.data) ? response.data : []
+		const noteIds = notes.map(note => note.id)
+
+		// Cursor is in response headers, not body
+		const nextCursor = response.headers['x-notes-chunk-cursor'] || null
+		const pendingCount = response.headers['x-notes-chunk-pending'] ? parseInt(response.headers['x-notes-chunk-pending']) : 0
+		const isLastChunk = !nextCursor
+
+		// Category statistics and total count from first chunk (if available)
+		const categoryStats = response.headers['x-notes-category-stats']
+		if (categoryStats) {
+			try {
+				const stats = JSON.parse(categoryStats)
+				console.log('[fetchNotes] Received category stats:', Object.keys(stats).length, 'categories')
+				store.commit('setCategoryStats', stats)
+			} catch (e) {
+				console.warn('[fetchNotes] Failed to parse category stats:', e)
 			}
-			if (response.data.errorMessage) {
-				showError(t('notes', 'Error from Nextcloud server: {msg}', { msg: response.data.errorMessage }))
-			} else {
-				store.commit('setSyncETag', response.headers.etag)
-				store.commit('setSyncLastModified', response.headers['last-modified'])
+		}
+		const totalCount = response.headers['x-notes-total-count']
+		if (totalCount) {
+			const count = parseInt(totalCount)
+			console.log('[fetchNotes] Total notes count:', count)
+			store.commit('setTotalNotesCount', count)
+		}
+
+		console.log('[fetchNotes] Processed:', notes.length, 'notes, noteIds:', noteIds.length)
+		console.log('[fetchNotes] Cursor:', nextCursor, 'Pending:', pendingCount, 'isLastChunk:', isLastChunk)
+
+		// Update notes incrementally
+		if (chunkCursor) {
+			// Subsequent chunk - use incremental update
+			console.log('[fetchNotes] Using incremental update for subsequent chunk')
+			store.dispatch('updateNotesIncremental', { notes, isLastChunk })
+			if (isLastChunk) {
+				// Final chunk - clean up deleted notes
+				console.log('[fetchNotes] Final chunk - cleaning up deleted notes')
+				store.dispatch('finalizeNotesUpdate', noteIds)
 			}
-			return response.data
-		})
-		.catch(err => {
-			if (err?.response?.status === 304) {
-				store.commit('setSyncLastModified', err.response.headers['last-modified'])
-				return null
-			} else {
-				console.error(err)
-				handleSyncError(t('notes', 'Fetching notes has failed.'), err)
-				throw err
-			}
-		})
+		} else {
+			// First chunk - use full update
+			console.log('[fetchNotes] Using full update for first chunk')
+			store.dispatch('updateNotes', { noteIds, notes })
+		}
+
+		// Update ETag and last modified
+		store.commit('setSyncETag', response.headers.etag)
+		store.commit('setSyncLastModified', response.headers['last-modified'])
+		store.commit('setNotesLoadingInProgress', false)
+
+		console.log('[fetchNotes] Completed successfully')
+		return {
+			noteIds,
+			chunkCursor: nextCursor,
+			isLastChunk,
+		}
+	} catch (err) {
+		store.commit('setNotesLoadingInProgress', false)
+		if (err?.response?.status === 304) {
+			console.log('[fetchNotes] 304 Not Modified - no changes')
+			store.commit('setSyncLastModified', err.response.headers['last-modified'])
+			return null
+		} else {
+			console.error('[fetchNotes] Error:', err)
+			handleSyncError(t('notes', 'Fetching notes has failed.'), err)
+			throw err
+		}
+	}
+}
+
+export const searchNotes = async (searchQuery, chunkSize = 50, chunkCursor = null) => {
+	console.log('[searchNotes] Called with query:', searchQuery, 'chunkSize:', chunkSize, 'cursor:', chunkCursor)
+
+	try {
+		// Signal start of loading
+		store.commit('setNotesLoadingInProgress', true)
+
+		// Build search parameters
+		const params = new URLSearchParams()
+		params.append('search', searchQuery)
+		params.append('exclude', 'content') // Exclude heavy content field
+		params.append('chunkSize', chunkSize.toString())
+		if (chunkCursor) {
+			params.append('chunkCursor', chunkCursor)
+		}
+
+		const url = generateUrl('/apps/notes/api/v1/notes' + (params.toString() ? '?' + params.toString() : ''))
+		console.log('[searchNotes] Requesting:', url)
+
+		const response = await axios.get(url)
+
+		console.log('[searchNotes] Response received, status:', response.status)
+
+		// Backend returns array of notes directly
+		const notes = Array.isArray(response.data) ? response.data : []
+		const noteIds = notes.map(note => note.id)
+
+		// Cursor is in response headers, not body
+		const nextCursor = response.headers['x-notes-chunk-cursor'] || null
+		const isLastChunk = !nextCursor
+
+		console.log('[searchNotes] Processed:', notes.length, 'notes, cursor:', nextCursor)
+
+		// For search, we want to replace notes on first chunk, then append on subsequent chunks
+		if (chunkCursor) {
+			// Subsequent chunk - use incremental update
+			console.log('[searchNotes] Using incremental update for subsequent chunk')
+			store.dispatch('updateNotesIncremental', { notes, isLastChunk })
+		} else {
+			// First chunk - replace with search results
+			console.log('[searchNotes] Using full update for first chunk')
+			store.dispatch('updateNotes', { noteIds, notes })
+		}
+
+		store.commit('setNotesLoadingInProgress', false)
+
+		console.log('[searchNotes] Completed successfully')
+		return {
+			noteIds,
+			chunkCursor: nextCursor,
+			isLastChunk,
+		}
+	} catch (err) {
+		store.commit('setNotesLoadingInProgress', false)
+		console.error('[searchNotes] Error:', err)
+		handleSyncError(t('notes', 'Searching notes has failed.'), err)
+		throw err
+	}
 }
 
 export const fetchNote = noteId => {

@@ -38,7 +38,7 @@
 					/>
 				</template>
 				<div
-					v-if="displayedNotes.length != filteredNotes.length"
+					v-if="hasMoreNotes"
 					v-observe-visibility="onEndOfNotes"
 					class="loading-label"
 				>
@@ -66,6 +66,7 @@ import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { categoryLabel } from '../Util.js'
+import { fetchNotes, searchNotes } from '../NotesService.js'
 import NotesList from './NotesList.vue'
 import NotesCaption from './NotesCaption.vue'
 import store from '../store.js'
@@ -103,9 +104,11 @@ export default {
 			timeslots: [],
 			monthFormat: new Intl.DateTimeFormat(OC.getLanguage(), { month: 'long', year: 'numeric' }),
 			lastYear: new Date(new Date().getFullYear() - 1, 0),
-			showFirstNotesOnly: true,
+			displayedNotesCount: 50,
+			isLoadingMore: false,
 			showNote: true,
 			searchText: '',
+			searchDebounceTimer: null,
 		}
 	},
 
@@ -123,11 +126,20 @@ export default {
 		},
 
 		displayedNotes() {
-			if (this.filteredNotes.length > 40 && this.showFirstNotesOnly) {
-				return this.filteredNotes.slice(0, 30)
-			} else {
-				return this.filteredNotes
-			}
+			// Show notes up to displayedNotesCount, incrementally loading more as user scrolls
+			return this.filteredNotes.slice(0, this.displayedNotesCount)
+		},
+
+		chunkCursor() {
+			// Get the cursor for next chunk from store
+			return store.state.sync.chunkCursor
+		},
+
+		hasMoreNotes() {
+			// There are more notes if either:
+			// 1. We have more notes locally that aren't displayed yet, OR
+			// 2. There's a cursor indicating more notes on the server
+			return this.displayedNotes.length !== this.filteredNotes.length || this.chunkCursor !== null
 		},
 
 		// group notes by time ("All notes") or by category (if category chosen)
@@ -154,8 +166,54 @@ export default {
 	},
 
 	watch: {
-		category() { this.showFirstNotesOnly = true },
-		searchText(value) { store.commit('updateSearchText', value) },
+		category() {
+			this.displayedNotesCount = 50
+			this.isLoadingMore = false
+		},
+		searchText(value) {
+			// Update store for client-side filtering (getFilteredNotes uses this)
+			store.commit('updateSearchText', value)
+
+			// Clear any existing debounce timer
+			if (this.searchDebounceTimer) {
+				clearTimeout(this.searchDebounceTimer)
+				this.searchDebounceTimer = null
+			}
+
+			// Reset display state
+			this.displayedNotesCount = 50
+			this.isLoadingMore = false
+
+			// Debounce search API calls (300ms delay)
+			this.searchDebounceTimer = setTimeout(async () => {
+				console.log('[NotesView] Search text changed:', value)
+
+				if (value && value.trim() !== '') {
+					// Perform server-side search
+					console.log('[NotesView] Initiating server-side search')
+					try {
+						await searchNotes(value.trim(), 50, null)
+						// Update cursor after search completes
+						console.log('[NotesView] Search completed')
+					} catch (err) {
+						console.error('[NotesView] Search failed:', err)
+					}
+				} else {
+					// Empty search - revert to normal pagination
+					console.log('[NotesView] Empty search - reverting to pagination')
+					// Clear notes and refetch (clearSyncCache not needed - fetchNotes will set new cursor)
+					store.commit('removeAllNotes')
+					try {
+						await fetchNotes(50, null)
+						// Reset display count after fetch completes
+						this.displayedNotesCount = 50
+						console.log('[NotesView] Reverted to normal notes view')
+					} catch (err) {
+						console.error('[NotesView] Failed to revert to normal view:', err)
+					}
+				}
+			}, 300)
+		},
 	},
 
 	created() {
@@ -200,9 +258,65 @@ export default {
 			}
 		},
 
-		onEndOfNotes(isVisible) {
-			if (isVisible) {
-				this.showFirstNotesOnly = false
+		async onEndOfNotes(isVisible) {
+			console.log('[NotesView.onEndOfNotes] Triggered, isVisible:', isVisible, 'isLoadingMore:', this.isLoadingMore)
+			// Prevent rapid-fire loading by checking if we're already loading a batch
+			if (!isVisible || this.isLoadingMore) {
+				console.log('[NotesView.onEndOfNotes] Skipping - not visible or already loading')
+				return
+			}
+
+			// Set loading flag to prevent concurrent loads
+			this.isLoadingMore = true
+
+			try {
+				// Check if there are more notes to fetch from the server
+				const chunkCursor = store.state.sync.chunkCursor
+				const isSearchMode = this.searchText && this.searchText.trim() !== ''
+				console.log('[NotesView.onEndOfNotes] Current cursor:', chunkCursor, 'searchMode:', isSearchMode)
+				console.log('[NotesView.onEndOfNotes] displayedNotesCount:', this.displayedNotesCount, 'filteredNotes.length:', this.filteredNotes.length)
+
+				if (chunkCursor) {
+					// Fetch next chunk from the API (using search or normal fetch based on mode)
+					console.log('[NotesView.onEndOfNotes] Fetching next chunk from API')
+					const data = isSearchMode
+						? await searchNotes(this.searchText.trim(), 50, chunkCursor)
+						: await fetchNotes(50, chunkCursor)
+					console.log('[NotesView.onEndOfNotes] Fetch complete, data:', data)
+
+					if (data && data.noteIds) {
+						// Update cursor for next fetch
+						console.log('[NotesView.onEndOfNotes] Updating cursor to:', data.chunkCursor)
+						store.commit('setNotesChunkCursor', data.chunkCursor || null)
+
+						// Increment display count to show newly loaded notes
+						const newCount = Math.min(
+							this.displayedNotesCount + 50,
+							this.filteredNotes.length
+						)
+						console.log('[NotesView.onEndOfNotes] Updating displayedNotesCount from', this.displayedNotesCount, 'to', newCount)
+						this.displayedNotesCount = newCount
+					}
+				} else if (this.displayedNotesCount < this.filteredNotes.length) {
+					// No more chunks to fetch, but we have cached notes to display
+					console.log('[NotesView.onEndOfNotes] No cursor, but have cached notes to display')
+					this.$nextTick(() => {
+						const newCount = Math.min(
+							this.displayedNotesCount + 50,
+							this.filteredNotes.length
+						)
+						console.log('[NotesView.onEndOfNotes] Updating displayedNotesCount from', this.displayedNotesCount, 'to', newCount)
+						this.displayedNotesCount = newCount
+					})
+				} else {
+					console.log('[NotesView.onEndOfNotes] All notes loaded, nothing to do')
+				}
+			} finally {
+				// Reset loading flag after operation completes
+				this.$nextTick(() => {
+					console.log('[NotesView.onEndOfNotes] Resetting isLoadingMore flag')
+					this.isLoadingMore = false
+				})
 			}
 		},
 

@@ -62,25 +62,27 @@ class NotesApiController extends ApiController {
 		int $pruneBefore = 0,
 		int $chunkSize = 0,
 		?string $chunkCursor = null,
+		?string $search = null,
 	) : JSONResponse {
 		return $this->helper->handleErrorResponse(function () use (
 			$category,
 			$exclude,
 			$pruneBefore,
 			$chunkSize,
-			$chunkCursor
+			$chunkCursor,
+			$search
 		) {
 			// initialize settings
 			$userId = $this->helper->getUID();
 			$this->settingsService->getAll($userId, true);
 			// load notes and categories
 			$exclude = explode(',', $exclude);
-			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor);
+			$data = $this->helper->getNotesAndCategories($pruneBefore, $exclude, $category, $chunkSize, $chunkCursor, $search);
 			$notesData = $data['notesData'];
 			if (!$data['chunkCursor']) {
-				// if last chunk, then send all notes (pruned)
-				$notesData += array_map(function (MetaNote $m) {
-					return [ 'id' => $m->note->getId() ];
+				// if last chunk, then send all notes (pruned) with full metadata
+				$notesData += array_map(function (MetaNote $m) use ($exclude) {
+					return $this->helper->getNoteData($m->note, $exclude, $m->meta);
 				}, $data['notesAll']);
 			}
 			$response = new JSONResponse(array_values($notesData));
@@ -89,6 +91,19 @@ class NotesApiController extends ApiController {
 			if ($data['chunkCursor']) {
 				$response->addHeader('X-Notes-Chunk-Cursor', $data['chunkCursor']->toString());
 				$response->addHeader('X-Notes-Chunk-Pending', $data['numPendingNotes']);
+			}
+			// Add category statistics and total count on first chunk only (when no cursor provided)
+			if ($chunkCursor === null) {
+				$categoryStats = [];
+				foreach ($data['notesAll'] as $metaNote) {
+					$cat = $metaNote->note->getCategory();
+					if (!isset($categoryStats[$cat])) {
+						$categoryStats[$cat] = 0;
+					}
+					$categoryStats[$cat]++;
+				}
+				$response->addHeader('X-Notes-Category-Stats', json_encode($categoryStats));
+				$response->addHeader('X-Notes-Total-Count', (string)count($data['notesAll']));
 			}
 			return $response;
 		});
