@@ -105,6 +105,7 @@
     "Undo delete has failed for note {title}." : "{title} тэмдэглэл устгалт буцаах амжилтгүй боллоо.",
     "Deleting note {id} has failed." : "{id} тэмдэглэл устгах амжилтгүй боллоо.",
     "Toggling favorite for note {id} has failed." : "{id} тэмдэглэлийн дуртай сэлгэх амжилтгүй боллоо.",
+    "Updating the note's category has failed. Is the target directory writable?" : "Тэмдэглэлийн ангиллыг шинэчлэх амжилтгүй боллоо. Зорилтот хавтас бичих эрхтэй юу?",
     "Updating the category for note {id} has failed." : "{id} тэмдэглэлийн ангилал шинэчлэх амжилтгүй боллоо.",
     "Uncategorized" : "Ангилалгүй",
     "Sample note" : "Жишээ тэмдэглэл",
