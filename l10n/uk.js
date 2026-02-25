@@ -47,7 +47,7 @@ OC.L10N.register(
     "All notes" : "Усі нотатки",
     "Categories" : "Категорії",
     "Create a sample note with Markdown" : "Створіть зразок примітки з використанням текстової розмітки",
-    "No notes yet" : "Нотатки поки відсутні",
+    "No notes yet" : "Нотатки відсутні",
     "Select an image" : "Виберіть зображення",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Ви не можете вибрати зображення за межами каталогу з нотатками. Ваш каталог нотаток: {folder}",
     "Wrong image" : "Недійсне зображення",
