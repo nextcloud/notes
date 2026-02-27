@@ -15,7 +15,9 @@ Vue.mixin({ methods: { t, n } })
 
 // Make sure that the filesClient is available in the global scope used by the sidebar
 // FIXME: Can be dropped once Nextcloud 28 is the minimum supported version
-Object.assign(window.OCA.Files, { App: { fileList: { filesClient: OC.Files.getClient() } } }, window.OCA.Files)
+if (window.OCA?.Files && OC?.Files?.getClient) {
+	Object.assign(window.OCA.Files, { App: { fileList: { filesClient: OC.Files.getClient() } } }, window.OCA.Files)
+}
 
 export default new Vue({
 	el: '#content',
