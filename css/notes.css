@@ -60,26 +60,181 @@ body[dir='rtl'] .feature {
 
 
 @media print {
+	/* Hide UI elements that shouldn't appear in print */
 	#header,
 	.app-navigation,
 	#note-container .action-buttons,
-	#note-container .upload-button {
+	#note-container .upload-button,
+	.vue-content,
+	.app-navigation-toggle,
+	.app-sidebar,
+	.app-sidebar-tabs,
+	.modal-mask,
+	.modal-wrapper,
+	.toastify,
+	.notification-wrapper,
+	.app-content-list,
+	.text-menubar {
 		display: none !important;
 	}
 
-	.content {
-		display: block;
-		padding: 0;
-		color: #000;
+	/* Optimize page layout for printing */
+	html, body {
+		margin: 0 !important;
+		padding: 0 !important;
+		width: 100% !important;
+		height: auto !important;
+		background: white !important;
+		color: black !important;
+		font-family: "Times New Roman", Times, serif !important;
+		font-size: 12pt !important;
+		line-height: 1.5 !important;
 	}
 
-	#note-container .note-editor,
-	#note-container .note-preview {
-		padding: 0 !important;
-		font-size: 10pt !important;
+	.content,
+	#content {
+		display: block;
+		padding: 0;
+		margin: 0;
+		color: #000;
+		background: white;
+		width: 100% !important;
 	}
 
 	.app-content {
 		margin-inline-start: 0 !important;
+		margin: 0 !important;
+		padding: 20px !important;
+		width: 100% !important;
+		max-width: none !important;
+	}
+
+	/* Note content styling for print */
+	#note-container {
+		width: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		background: white !important;
+		box-shadow: none !important;
+		border: none !important;
+	}
+
+	#note-container .note-editor,
+	#note-container .note-preview,
+	.text-editor,
+	.text-editor-wrapper {
+		padding: 20px !important;
+		margin: 0 !important;
+		font-size: 12pt !important;
+		line-height: 1.5 !important;
+		color: black !important;
+		background: white !important;
+		width: 100% !important;
+		height: auto !important;
+		overflow: visible !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	/* Typography adjustments for better readability */
+	h1, h2, h3, h4, h5, h6 {
+		color: black !important;
+		margin-top: 18pt !important;
+		margin-bottom: 12pt !important;
+		font-weight: bold !important;
+		break-after: avoid !important;
+	}
+
+	h1 { font-size: 18pt !important; }
+	h2 { font-size: 16pt !important; }
+	h3 { font-size: 14pt !important; }
+	h4, h5, h6 { font-size: 12pt !important; }
+
+	p {
+		margin: 6pt 0 !important;
+		orphans: 3 !important;
+		widows: 3 !important;
+		color: black !important;
+	}
+
+	/* Lists */
+	ul, ol {
+		margin: 6pt 0 !important;
+		padding-inline-start: 20pt !important;
+	}
+
+	li {
+		margin-bottom: 3pt !important;
+		color: black !important;
+	}
+
+	/* Code blocks */
+	code, pre {
+		font-family: "Courier New", Courier, monospace !important;
+		font-size: 10pt !important;
+		background: #f5f5f5 !important;
+		border: 1px solid #ddd !important;
+		padding: 2pt !important;
+		color: black !important;
+	}
+
+	pre {
+		padding: 6pt !important;
+		margin: 6pt 0 !important;
+		break-inside: avoid !important;
+	}
+
+	/* Tables */
+	table {
+		border-collapse: collapse !important;
+		width: 100% !important;
+		margin: 12pt 0 !important;
+		break-inside: auto !important;
+	}
+
+	th, td {
+		border: 1px solid #000 !important;
+		padding: 4pt !important;
+		text-align: start !important;
+		color: black !important;
+	}
+
+	th {
+		background: #f0f0f0 !important;
+		font-weight: bold !important;
+	}
+
+	/* Links - show URLs in print */
+	a[href]:after {
+		content: " (" attr(href) ")";
+		font-size: 10pt;
+		color: #666;
+	}
+
+	/* Page break controls */
+	.page-break {
+		break-before: always !important;
+	}
+
+	.no-page-break {
+		break-inside: avoid !important;
+	}
+
+	/* Hide placeholder text */
+	.placeholder {
+		display: none !important;
+	}
+
+	/* Ensure images fit on page */
+	img {
+		max-width: 100% !important;
+		height: auto !important;
+		break-inside: avoid !important;
+	}
+
+	/* Remove any floating elements */
+	* {
+		float: none !important;
+		position: static !important;
 	}
 }
