@@ -40,5 +40,10 @@
 				<referencedClass name="Doctrine\DBAL\Statement" />
 			</errorLevel>
 		</UndefinedDocblockClass>
+		<InvalidTemplateParam>
+			<errorLevel type="suppress">
+				<file name="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php" />
+			</errorLevel>
+		</InvalidTemplateParam>
 	</issueHandlers>
 </psalm>
