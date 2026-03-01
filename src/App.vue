@@ -9,16 +9,16 @@
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<NcAppNavigationNew
 				v-show="!loading.notes && !error"
-				:text="t('notes', 'New note')"
-				@click="onNewNote"
+				:text="t('notes', 'New category')"
+				@click="onNewCategory"
+				@dragover.native="onNewCategoryDragOver"
+				@drop.native="onNewCategoryDrop"
 			>
-				<PlusIcon slot="icon" :size="20" />
+				<FolderPlusIcon slot="icon" :size="20" />
 			</NcAppNavigationNew>
 
 			<template #list>
-				<CategoriesList v-show="!loading.notes"
-					v-if="numNotes"
-				/>
+				<CategoriesList v-show="!loading.notes" />
 			</template>
 
 			<template #footer>
@@ -54,16 +54,17 @@ import NcContent from '@nextcloud/vue/components/NcContent'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'
+import { emit } from '@nextcloud/event-bus'
 
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
+import FolderPlusIcon from 'vue-material-design-icons/FolderPlus.vue'
 
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
 
 import { config } from './config.js'
-import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
+import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
 import store from './store.js'
 
 export default {
@@ -79,7 +80,7 @@ export default {
 		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
-		PlusIcon,
+		FolderPlusIcon,
 	},
 
 	data() {
@@ -89,7 +90,6 @@ export default {
 			},
 			loading: {
 				notes: true,
-				create: false,
 			},
 			error: false,
 			undoNotification: null,
@@ -227,20 +227,89 @@ export default {
 			this.settingsVisible = true
 		},
 
-		onNewNote() {
-			if (this.loading.create) {
+		onNewCategory() {
+			emit('notes:category:new')
+		},
+
+		onNewCategoryDragOver(event) {
+			if (!this.isNoteDrag(event)) {
 				return
 			}
-			this.loading.create = true
-			createNote(store.getters.getSelectedCategory())
-				.then(note => {
-					this.routeToNote(note.id, { new: null })
-				})
-				.catch(() => {
-				})
-				.finally(() => {
-					this.loading.create = false
-				})
+			event.preventDefault()
+			if (event.dataTransfer) {
+				event.dataTransfer.dropEffect = 'move'
+			}
+		},
+
+		onNewCategoryDrop(event) {
+			const noteId = this.getDraggedNoteId(event)
+			if (noteId === null) {
+				return
+			}
+			event.preventDefault()
+			event.stopPropagation()
+			emit('notes:category:new', { noteId })
+		},
+
+		getDraggedNoteId(event) {
+			const dt = event?.dataTransfer
+			if (!dt) {
+				return null
+			}
+
+			const types = Array.from(dt.types ?? [])
+			const hasCustom = types.includes('application/x-nextcloud-notes-note-id')
+			const hasUri = types.includes('text/uri-list')
+			if (!hasCustom && hasUri) {
+				return null
+			}
+
+			let raw = ''
+			if (hasCustom) {
+				try {
+					raw = dt.getData('application/x-nextcloud-notes-note-id')
+				} catch {
+					// Some browsers only allow specific mime types.
+				}
+			}
+			if (!raw) {
+				try {
+					raw = dt.getData('text/plain')
+				} catch {
+					raw = ''
+				}
+			}
+
+			const match = /^\s*(\d+)\s*$/.exec(raw)
+			const parsedId = match ? Number.parseInt(match[1], 10) : Number.NaN
+			if (!Number.isFinite(parsedId)) {
+				return null
+			}
+			const note = store.getters.getNote(parsedId)
+			if (!note || note.readonly) {
+				return null
+			}
+
+			return parsedId
+		},
+
+		isNoteDrag(event) {
+			const dt = event?.dataTransfer
+			if (!dt) {
+				return false
+			}
+			const types = Array.from(dt.types ?? [])
+			if (types.includes('application/x-nextcloud-notes-note-id')) {
+				return true
+			}
+			if (types.includes('text/uri-list')) {
+				return false
+			}
+			try {
+				return /^\s*\d+\s*$/.test(dt.getData('text/plain'))
+			} catch {
+				return false
+			}
 		},
 
 		onNoteDeleted(note) {
@@ -324,5 +393,20 @@ export default {
 	padding-bottom: 3px;
 	padding-inline-start: 3px;
 	margin: 0 3px;
+}
+
+:deep(.app-navigation__body) {
+	overflow: hidden !important;
+	flex: 0 0 auto;
+}
+
+:deep(.app-navigation__content) {
+	min-height: 0;
+}
+
+:deep(.app-navigation__list) {
+	flex: 1 1 auto;
+	min-height: 0;
+	height: auto !important;
 }
 </style>
