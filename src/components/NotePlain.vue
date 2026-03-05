@@ -311,6 +311,10 @@ export default {
 		},
 
 		refreshNote() {
+			if (!this.note) {
+				this.startRefreshTimer()
+				return
+			}
 			if (this.note.unsaved && !this.note.conflict) {
 				this.startRefreshTimer()
 				return
@@ -402,7 +406,7 @@ export default {
 		async onFileRestoreRequested(event) {
 			const { fileInfo } = event
 
-			if (fileInfo.id !== this.note.id) {
+			if (!this.note || fileInfo.id !== this.note.id) {
 				return
 			}
 
@@ -410,7 +414,7 @@ export default {
 		},
 
 		async onFileRestored(version) {
-			if (version.fileId !== this.note.id) {
+			if (!this.note || version.fileId !== this.note.id) {
 				return
 			}
 

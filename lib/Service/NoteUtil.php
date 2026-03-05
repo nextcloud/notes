@@ -60,16 +60,22 @@ class NoteUtil {
 		return $this->tagService;
 	}
 
-	public function getCategoryFolder(Folder $notesFolder, string $category) {
-		$path = $notesFolder->getPath();
-		// sanitise path
+	public function normalizeCategoryPath(string $category) : string {
 		$cats = explode('/', $category);
 		$cats = array_map([$this, 'sanitisePath'], $cats);
 		$cats = array_filter($cats, function ($str) {
 			return $str !== '';
 		});
-		$path .= '/' . implode('/', $cats);
-		return $this->getOrCreateFolder($path);
+		return implode('/', $cats);
+	}
+
+	public function getCategoryFolder(Folder $notesFolder, string $category, bool $create = true) : Folder {
+		$path = $notesFolder->getPath();
+		$normalized = $this->normalizeCategoryPath($category);
+		if ($normalized !== '') {
+			$path .= '/' . $normalized;
+		}
+		return $this->getOrCreateFolder($path, $create);
 	}
 
 	/**
