@@ -19,10 +19,10 @@ test.describe('Basic checks', () => {
 
 	test('Create note and type', async ({ page }) => {
 		await page.goto('/index.php/apps/notes/')
-		await page
-			.locator('#app-navigation-vue')
-			.getByRole('button', { name: 'New note' })
-			.click()
+		const newNoteButton = page.getByRole('button', { name: 'New note', exact: true })
+		await expect(newNoteButton).toBeVisible()
+		await newNoteButton.click()
+
 		const editor = new NoteEditor(page)
 		await editor.type('Hello from Playwright')
 		await expect(editor.content).toContainText('Hello from Playwright')

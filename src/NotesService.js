@@ -364,6 +364,32 @@ export const setCategory = (noteId, category) => {
 		})
 }
 
+export const renameCategory = (oldCategory, newCategory) => {
+	return axios
+		.patch(url('/notes/category'), null, { params: { oldCategory, newCategory } })
+		.then(response => {
+			return response.data
+		})
+		.catch(err => {
+			console.error(err)
+			handleSyncError(t('notes', 'Renaming category "{category}" has failed.', { category: oldCategory }), err)
+			throw err
+		})
+}
+
+export const deleteCategory = (category) => {
+	return axios
+		.delete(url('/notes/category'), { params: { category } })
+		.then(response => {
+			return response.data
+		})
+		.catch(err => {
+			console.error(err)
+			handleSyncError(t('notes', 'Deleting category "{category}" has failed.', { category }), err)
+			throw err
+		})
+}
+
 export const queueCommand = (noteId, type) => {
 	store.commit('addToQueue', { noteId, type })
 	_processQueue()
