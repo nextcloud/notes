@@ -7,13 +7,15 @@
 	<EditorHint v-if="editorHint" @close="editorHint=false" />
 	<NcContent v-else app-name="notes" :content-class="{loading: loading.notes}">
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
-			<NcAppNavigationNew
-				v-show="!loading.notes && !error"
-				:text="t('notes', 'New note')"
-				@click="onNewNote"
-			>
-				<PlusIcon slot="icon" :size="20" />
-			</NcAppNavigationNew>
+			<template #search>
+				<NcAppNavigationNew
+					v-show="!loading.notes && !error"
+					:text="t('notes', 'New note')"
+					@click="onNewNote"
+				>
+					<PlusIcon slot="icon" :size="20" />
+				</NcAppNavigationNew>
+			</template>
 
 			<template #list>
 				<CategoriesList v-show="!loading.notes"
