@@ -75,6 +75,7 @@ class Helper {
 		?string $category = null,
 		int $chunkSize = 0,
 		?string $chunkCursorStr = null,
+		?string $search = null,
 	) : array {
 		$userId = $this->getUID();
 		$chunkCursor = $chunkCursorStr ? ChunkCursor::fromString($chunkCursorStr) : null;
@@ -87,6 +88,21 @@ class Helper {
 			$metaNotes = array_filter($metaNotes, function (MetaNote $m) use ($category) {
 				return $m->note->getCategory() === $category;
 			});
+		}
+
+		// if a search query is provided, filter notes by title
+		if ($search !== null && $search !== '') {
+			$searchLower = mb_strtolower($search);
+			$this->logger->debug('Search query: ' . $search . ', lowercase: ' . $searchLower . ', notes before filter: ' . count($metaNotes));
+			$metaNotes = array_filter($metaNotes, function (MetaNote $m) use ($searchLower) {
+				$titleLower = mb_strtolower($m->note->getTitle());
+				$matches = str_contains($titleLower, $searchLower);
+				if ($matches) {
+					$this->logger->debug('Match found: ' . $m->note->getTitle());
+				}
+				return $matches;
+			});
+			$this->logger->debug('Notes after filter: ' . count($metaNotes));
 		}
 
 		// list of notes that should be sent to the client
