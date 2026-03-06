@@ -66,3 +66,9 @@ export const getDefaultSampleNote = () => {
 > ` + t('notes', 'Nextcloud, a safe home for all your data') + `
 `
 }
+
+export const escapeHtml = (str) => {
+	const element = document.createElement('div')
+	element.textContent = str
+	return element.innerHTML
+}

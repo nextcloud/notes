@@ -11,6 +11,7 @@
 
 import MarkdownIt from 'markdown-it'
 import { generateUrl } from '@nextcloud/router'
+import { escapeHtml } from '../Util.js'
 
 export default {
 	name: 'EditorMarkdownIt',
@@ -145,7 +146,10 @@ export default {
 
 				if (download) {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
-					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" src="' + dlimgpath + '">' + token.content + '</div></a></div>'
+					const tokenContent = escapeHtml(token.content)
+					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" '
+						+ 'src="' + dlimgpath + '">'
+						+ tokenContent + '</div></a></div>'
 				} else {
 					// pass token to default renderer.
 					return defaultRender(tokens, idx, options, env, self)
