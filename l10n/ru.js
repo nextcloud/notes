@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Есть несохранённые заметки. Если покинуть страницу, все изменения будут утеряны!",
     "Notes settings" : "Настройки заметок",
     "Please see Nextcloud server log for details." : "Для получения подробной информации, пожалуйста, обратитесь к журналам сервера Nextcloud.",
+    "Custom" : "Задать",
     "Rich text" : "Rich text",
     "Plain text" : "Обычный текст",
     "Preview" : "Предпросмотр",
