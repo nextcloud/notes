@@ -198,7 +198,7 @@ class NoteUtil {
 		$userFolder = $this->getRoot()->getUserFolder($userId);
 		$notesPath = $this->settingsService->get($userId, 'notesPath');
 
-		['path' => $defaultPath, 'node' => $folder] = $this->settingsService->getDefaultNotesNode($userId);
+		['path' => $defaultPath, 'folder' => $folder] = $this->settingsService->getDefaultNotesNode($userId);
 		$allowShared = $notesPath !== $defaultPath;
 
 		if ($allowShared) {
