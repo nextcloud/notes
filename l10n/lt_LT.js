@@ -33,7 +33,7 @@ OC.L10N.register(
     "Insert link" : "Įterpti nuorodą",
     "Insert image" : "Įterpti paveikslą",
     "Switch between editor and viewer" : "Perjungti tarp redaktoriaus ir žiūryklės",
-    "Pick a notes folder" : "Pasirinkite užrašų aplanką",
+    "Pick a notes folder" : "Pasirinkti užrašų aplanką",
     "Set notes folder" : "Nustatyti užrašų aplanką",
     "General" : "Bendra",
     "Display" : "Rodymas",
