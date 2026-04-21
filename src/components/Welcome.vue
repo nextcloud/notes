@@ -8,7 +8,7 @@
 		<div class="welcome-content">
 			<h2>{{ t('notes', 'Notes') }}</h2>
 			<div class="feature icon-add">
-				{{ t('notes', 'Start writing a note by clicking on “{newnote}” in the app navigation.', { newnote: t('notes', 'New note') }) }}
+				{{ t('notes', 'Start writing a note by clicking on “{newnote}”.', { newnote: t('notes', 'New note') }) }}
 			</div>
 			<div class="feature">
 				<NcButton type="secondary" @click="onNewNote">

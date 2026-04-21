@@ -92,6 +92,16 @@ return ['routes' => [
 		'verb' => 'DELETE',
 		'requirements' => ['id' => '\d+'],
 	],
+	[
+		'name' => 'notes#renameCategory',
+		'url' => '/notes/category',
+		'verb' => 'PATCH',
+	],
+	[
+		'name' => 'notes#deleteCategory',
+		'url' => '/notes/category',
+		'verb' => 'DELETE',
+	],
 
 	//////////  A T T A C H M E N T S  //////////
 
