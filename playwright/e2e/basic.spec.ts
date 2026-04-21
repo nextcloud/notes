@@ -25,6 +25,6 @@ test.describe('Basic checks', () => {
 
 		const editor = new NoteEditor(page)
 		await editor.type('Hello from Playwright')
-		await expect(editor.content).toContainText('Hello from Playwright')
+		await editor.expectText('Hello from Playwright')
 	})
 })
