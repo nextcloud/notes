@@ -83,7 +83,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "気を散らすことなくあなたの考えを書き留めてください。",
     "Use Markdown markups to style your text." : "マークダウン・マークアップを使用してテキストを整えます",
     "Organize your notes in categories." : "ノートをカテゴリ別に整理します",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "アプリのナビゲーションで「{newnote}」をクリックしてノートを書き始めます",
     "Note not found." : "ノートが見つかりません。",
     "Note is locked." : "ノートがロックされています。",
     "Insufficient storage." : "容量が不足しています。",

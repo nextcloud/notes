@@ -87,7 +87,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "دون أفكارك بكل يسر وسلاسة.",
     "Use Markdown markups to style your text." : "إستعمل علامات ماركداون لتنسيق نَصِّك.",
     "Organize your notes in categories." : "تنظيم ملاحظاتك في فئات.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "إبدأ كتابة الملاحظة بالنقر على “{newnote}” في واجهة التطبيق.",
     "Note not found." : "الملاحظة غير موجودة",
     "Note is locked." : "الملاحظة مقفلة",
     "Insufficient storage." : "مساحة التخزين لا تكفي",

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Loading …" : "Cargando…",
     "Write down your thoughts without any distractions." : "Escribi cualesquier pensamientu ensin nenguna distraición.",
     "Organize your notes in categories." : "Organiza les notes per categoríes.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Comienza a escribir notes al calcar en «{newnote}» na navegación de l'aplicación.",
     "Note not found." : "Nun s'atopó la nota",
     "Note is locked." : "La nota ta bloquiada",
     "Uncategorized" : "Ensin categoría",

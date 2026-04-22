@@ -94,7 +94,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Anote os seus pensamentos sen distraccións.",
     "Use Markdown markups to style your text." : "Empregue o marcado de Markdown para o estilo do seu texto.",
     "Organize your notes in categories." : "Organice as súas notas en categorías.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Comece a escribir unha nota premendo en «{newnote}» na navegación da aplicación.",
     "Note not found." : "Non se atopou ningunha nota.",
     "Note is locked." : "A nota está bloqueada.",
     "Insufficient storage." : "Non hai espazo de almacenamento abondo.",

@@ -87,7 +87,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Skrifaðu niður hugmyndir þínar án truflana.",
     "Use Markdown markups to style your text." : "Notaðu Markdown-einindi til að setja stíl á textann þinn.",
     "Organize your notes in categories." : "Skipulegðu minnispunktana þína í flokka",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Byrjaðu að skrifa minnispunkt með því að smella á “{newnote}” í valmynd forritsins.",
     "Note not found." : "Minnispunktur fannst ekki.",
     "Note is locked." : "Minnispunktur er læstur.",
     "Insufficient storage." : "Ónógt geymslupláss.",

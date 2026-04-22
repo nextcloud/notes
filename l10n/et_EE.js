@@ -94,7 +94,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Kirjuta oma mõtted üles nii, et miski ei sega.",
     "Use Markdown markups to style your text." : "Teksti  kujundamiseks kasuta Markdown-vormingut.",
     "Organize your notes in categories." : "Halda oma märkmeid kategooriate kaupa.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Klõpsi menüüst „{newnote}“ ja alusta märkme koostamist.",
     "Note not found." : "Märget ei leidu.",
     "Note is locked." : "Märge on lukus.",
     "Insufficient storage." : "Pol piisavalt andmeruumi.",

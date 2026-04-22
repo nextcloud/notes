@@ -75,7 +75,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Запишете мислите си без разсейване.",
     "Use Markdown markups to style your text." : "Използване на Markdown маркировки , за да оформите текста си.",
     "Organize your notes in categories." : "Организирайте бележките си в категории.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Започнете да пишете бележка, като кликнете върху „{newnote}“ в навигацията на приложението.",
     "Note not found." : "Бележката не е открита.",
     "Note is locked." : "Бележката е заключена.",
     "Insufficient storage." : "Недостатъчно място в хранилище.",

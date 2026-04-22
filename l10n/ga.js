@@ -94,7 +94,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Scríobh síos do chuid smaointe gan aon seachrán.",
     "Use Markdown markups to style your text." : "Bain úsáid as marcálacha Markdown chun do théacs a stíliú.",
     "Organize your notes in categories." : "Eagraigh do nótaí i gcatagóirí.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Tosaigh ag scríobh nóta trí chliceáil ar “{newnote}” i nascleanúint na haipe.",
     "Note not found." : "Nóta gan aimsiú.",
     "Note is locked." : "Nóta faoi ghlas.",
     "Insufficient storage." : "Stóráil neamhleor.",

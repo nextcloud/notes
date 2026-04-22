@@ -77,7 +77,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "افکار خود را بدون هیچ گونه حواس پرتی بنویسید.",
     "Use Markdown markups to style your text." : "برای سبک‌دهی به متن خود از نشانگرهای مارک‌داون استفاده کنید.",
     "Organize your notes in categories." : "یادداشت های خود را در دسته بندی ها ترتیب دهید.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "نوشتن یادداشت را با کلیک کردن روی \"{newnote}\" در ناوبری برنامه شروع کنید.",
     "Note not found." : "یادداشتی یافت نشد",
     "Note is locked." : "یادداشت قفل شده است",
     "Insufficient storage." : "Insufficient storage.",

@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "ایرر",
+    "Delete" : "Delete",
+    "Cancel" : "منسوخ کریں",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "تقسیم",

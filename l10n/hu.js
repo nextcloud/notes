@@ -94,7 +94,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Írd le a gondolatait, zavaró tényezők nélkül.",
     "Use Markdown markups to style your text." : "Használjon Markdown leírást a szövege formázásához.",
     "Organize your notes in categories." : "Rendezze kategóriákba a jegyzeteit.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Kezdjen el egy jegyzetet írni az „{newnote}” gombra kattintva a főmenüben.",
     "Note not found." : "A jegyzet nem található.",
     "Note is locked." : "A jegyzet zárolva van.",
     "Insufficient storage." : "Nincs elegendő tárhely a mentéshez.",

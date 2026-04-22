@@ -75,7 +75,6 @@ OC.L10N.register(
     "Loading …" : "불러오는 중 …",
     "Find in all categories" : "모든 카테고리에서 찾기",
     "Use Markdown markups to style your text." : "마크다운 기호 및 명령을 활용하여 문자를 꾸미십시오.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "앱에서 \"{newnote}\"을(를) 눌러 새 메모를 작성하십시오.",
     "Note not found." : "메모 없음",
     "Note is locked." : "메모가 잠겨 있습니다.",
     "Insufficient storage." : "저장소 용량이 부족합니다.",
