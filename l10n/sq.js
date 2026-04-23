@@ -7,6 +7,8 @@ OC.L10N.register(
     "Preview" : "Parapamje ",
     "General" : "I përgjithshëm",
     "Files" : "Skedarët",
+    "Delete" : "Fshini",
+    "Cancel" : "Anullo",
     "All notes" : "Të gjitha shënimet",
     "Categories" : "Kategoritë",
     "No notes yet" : "Nuk ka shënime",

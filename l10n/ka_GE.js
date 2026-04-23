@@ -7,6 +7,8 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "არსებობს შეუნახავი ჩანაწერები. გვერდის დატოვება ყველა ცვლილებას უარყოფს!",
     "Preview" : "წინასწარი ჩვენება",
     "Files" : "ფაილები",
+    "Delete" : "Delete",
+    "Cancel" : "უარყოფა",
     "Categories" : "კატეგორიები",
     "No notes yet" : "ჯერ ჩანაწერები არაა",
     "Remove from favorites" : "რჩეულებიდან ამოშლა",

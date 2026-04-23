@@ -7,6 +7,7 @@ OC.L10N.register(
     "There are unsaved notes. Leaving the page will discard all changes!" : "Hay notas sin salvar. ¡Al salir de la página perderá todos los cambios!",
     "Preview" : "Previsualizar",
     "Files" : "Archivos",
+    "Cancel" : "Cancelar",
     "Categories" : "Categorías",
     "No notes yet" : "Aún no hay notas",
     "Remove from favorites" : "Eliminar de favoritos",

@@ -153,6 +153,86 @@ class NotesService {
 		$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);
 	}
 
+	/**
+	 * @throws NoteDoesNotExistException
+	 */
+	public function renameCategory(string $userId, string $oldCategory, string $newCategory) : array {
+		$oldCategory = $this->noteUtil->normalizeCategoryPath($oldCategory);
+		$newCategory = $this->noteUtil->normalizeCategoryPath($newCategory);
+		if ($oldCategory === '' || $newCategory === '') {
+			throw new \InvalidArgumentException('Category must not be empty');
+		}
+		if ($oldCategory === $newCategory) {
+			return [
+				'oldCategory' => $oldCategory,
+				'newCategory' => $newCategory,
+			];
+		}
+		if (str_starts_with($newCategory, $oldCategory . '/')) {
+			throw new \InvalidArgumentException('Target category must not be a descendant of source category');
+		}
+
+		$notesFolder = $this->getNotesFolder($userId);
+		try {
+			$oldFolder = $this->noteUtil->getCategoryFolder($notesFolder, $oldCategory, false);
+		} catch (NotesFolderException $e) {
+			throw new NoteDoesNotExistException();
+		}
+
+		if ($notesFolder->nodeExists($newCategory)) {
+			throw new \InvalidArgumentException('Target category already exists');
+		}
+
+		$targetParentCategory = dirname($newCategory);
+		if ($targetParentCategory === '.') {
+			$targetParentCategory = '';
+		}
+		$targetParent = $this->noteUtil->getCategoryFolder($notesFolder, $targetParentCategory, true);
+
+		$oldParent = $oldFolder->getParent();
+		$targetPath = $targetParent->getPath() . '/' . basename($newCategory);
+		$oldFolder->move($targetPath);
+		if ($oldParent instanceof Folder) {
+			$this->noteUtil->deleteEmptyFolder($oldParent, $notesFolder);
+		}
+
+		return [
+			'oldCategory' => $oldCategory,
+			'newCategory' => $newCategory,
+		];
+	}
+
+	/**
+	 * @throws NoteDoesNotExistException
+	 */
+	public function deleteCategory(string $userId, string $category) : array {
+		$category = $this->noteUtil->normalizeCategoryPath($category);
+		if ($category === '') {
+			throw new \InvalidArgumentException('Category must not be empty');
+		}
+
+		$notesFolder = $this->getNotesFolder($userId);
+		try {
+			$folder = $this->noteUtil->getCategoryFolder($notesFolder, $category, false);
+		} catch (NotesFolderException $e) {
+			// If category folder was already removed (e.g. last note moved away),
+			// treat delete as idempotent success.
+			return [
+				'category' => $category,
+			];
+		}
+
+		$parent = $folder->getParent();
+		$folder->delete();
+		if ($parent instanceof Folder) {
+			$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);
+		}
+
+		return [
+			'category' => $category,
+		];
+	}
+
 	public function getTitleFromContent(string $content) : string {
 		$content = $this->noteUtil->stripMarkdown($content);
 		return $this->noteUtil->getSafeTitle($content);
@@ -210,12 +290,12 @@ class NotesService {
 	 * @throws NoteDoesNotExistException
 	 */
 	private static function getFileById(string $customExtension, Folder $folder, int $id) : File {
-		$file = $folder->getById($id);
+		$file = $folder->getFirstNodeById($id);
 
-		if (!array_key_exists(0, $file) || !($file[0] instanceof File) || !self::isNote($file[0], $customExtension)) {
+		if (!($file instanceof File) || !self::isNote($file, $customExtension)) {
 			throw new NoteDoesNotExistException();
 		}
-		return $file[0];
+		return $file;
 	}
 
 	/**

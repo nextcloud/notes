@@ -330,6 +330,26 @@ class NotesController extends Controller {
 	}
 
 	/**
+	 *
+	 */
+	#[NoAdminRequired]
+	public function renameCategory(string $oldCategory, string $newCategory) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($oldCategory, $newCategory) {
+			return $this->notesService->renameCategory($this->helper->getUID(), $oldCategory, $newCategory);
+		});
+	}
+
+	/**
+	 *
+	 */
+	#[NoAdminRequired]
+	public function deleteCategory(string $category) : JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($category) {
+			return $this->notesService->deleteCategory($this->helper->getUID(), $category);
+		});
+	}
+
+	/**
 	 * With help from: https://github.com/nextcloud/cookbook
 	 * @return JSONResponse|StreamResponse
 	 */

@@ -7,6 +7,8 @@ OC.L10N.register(
     "Preview" : "Xem trước",
     "Insert image" : "Chèn ảnh",
     "Files" : "Tệp tin",
+    "Delete" : "Delete",
+    "Cancel" : "Hủy bỏ",
     "All notes" : "Tất cả ghi chú",
     "Categories" : "Các hạng mục",
     "No notes yet" : "Chưa có ghi chú",

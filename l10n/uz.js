@@ -6,6 +6,8 @@ OC.L10N.register(
     "New note" : "New note",
     "General" : "Umumiy",
     "Files" : "Fayllar",
+    "Delete" : "O'chirish",
+    "Cancel" : "Bekor qilish",
     "Categories" : "Kategoriyalar",
     "Share" : "Ulashish",
     "Rename" : "Nomini o'zgartirish",

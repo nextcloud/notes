@@ -7,6 +7,8 @@ OC.L10N.register(
     "Preview" : "Pregled",
     "General" : "Opšte",
     "Files" : "Фајлови",
+    "Delete" : "Delete",
+    "Cancel" : "Otkaži",
     "All notes" : "Sve beleške",
     "No notes yet" : "Još nema beleški",
     "Remove from favorites" : "Remove from favorites",

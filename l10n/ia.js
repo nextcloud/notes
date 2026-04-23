@@ -6,6 +6,8 @@ OC.L10N.register(
     "New note" : "Nove nota",
     "Preview" : "Previsualisar",
     "Files" : "Files",
+    "Delete" : "Delete",
+    "Cancel" : "Cancellar",
     "No notes yet" : "Nulle notas ancora",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

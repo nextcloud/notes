@@ -123,6 +123,9 @@ export default {
 
 		onClose(noteId) {
 			const note = store.getters.getNote(parseInt(noteId))
+			if (!note || !Number.isFinite(note.id)) {
+				return
+			}
 			store.commit('updateNote', {
 				...note,
 				unsaved: false,
@@ -130,7 +133,7 @@ export default {
 		},
 
 		fileUpdated({ fileid }) {
-			if (this.note.id === fileid) {
+			if (this.note && this.note.id === fileid) {
 				this.onEdit({ unsaved: false })
 				if (this.shouldAutotitle) {
 					queueCommand(fileid, 'autotitle')
@@ -156,7 +159,7 @@ export default {
 		async onFileRestoreRequested(event) {
 			const { fileInfo } = event
 
-			if (fileInfo.id !== this.note.id) {
+			if (!this.note || fileInfo.id !== this.note.id) {
 				return
 			}
 
@@ -164,7 +167,7 @@ export default {
 		},
 
 		async onFileRestored(version) {
-			if (version.fileId !== this.note.id) {
+			if (!this.note || version.fileId !== this.note.id) {
 				return
 			}
 

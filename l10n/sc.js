@@ -49,7 +49,6 @@ OC.L10N.register(
     "Write down your thoughts without any distractions." : "Piga nota de is pensamentos tuos sena perunu disviu.",
     "Use Markdown markups to style your text." : "Imprea cuntrasignos Markdown pro formatare su testu tuo.",
     "Organize your notes in categories." : "Organiza is notas tuas in catègorias.",
-    "Start writing a note by clicking on “{newnote}” in the app navigation." : "Cumintza a iscrìere una nota incarchende subra de \"{newnote}\" in s'aplicatzione.",
     "Note not found." : "Nota no agatada.",
     "Note is locked." : "Sa nota est blocada.",
     "Insufficient storage." : "S'ispàtziu de archiviatzione non bastat.",

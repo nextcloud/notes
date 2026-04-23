@@ -4,6 +4,8 @@ OC.L10N.register(
     "Notes" : "Notizen",
     "Error" : "Fehler",
     "Files" : "Fichieren",
+    "Delete" : "Delete",
+    "Cancel" : "Ofbriechen",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "Deelen",

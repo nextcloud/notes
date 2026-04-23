@@ -4,6 +4,8 @@ OC.L10N.register(
     "Notes" : "Notes",
     "Error" : "Greška",
     "Files" : "Datoteke",
+    "Delete" : "Delete",
+    "Cancel" : "Otkaži",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "Podjeli",

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Error" : "Erreur",
     "Files" : "Ifuyla",
+    "Cancel" : "Sefsex",
     "Add to favorites" : "Rnu ismal",
     "Edit" : "Ẓreg",
     "Today" : "Ass-a",

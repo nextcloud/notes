@@ -5,6 +5,8 @@ OC.L10N.register(
     "Error" : "កំហុស",
     "New note" : "កំណត់​ចំណាំ​ថ្មី",
     "Files" : "ឯកសារ",
+    "Delete" : "Delete",
+    "Cancel" : "បោះបង់",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "ចែក​រំលែក",

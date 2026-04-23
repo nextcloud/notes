@@ -8,6 +8,8 @@ OC.L10N.register(
     "_Deleted {number} note_::_Deleted {number} notes_" : ["Dilemel {number} notenn","Dilemel {number} notenn","Dilemel {number} notenn","Dilemel {number} notenn","Dilemel {number} notenn"],
     "Preview" : "Ragwell",
     "Files" : "Restroù",
+    "Delete" : "Dilemel",
+    "Cancel" : "Nullañ",
     "Categories" : "Rummadoù",
     "Remove from favorites" : "Diverkañañ eus ar pennrolloù",
     "Add to favorites" : "Ouzhpennañ er pennrolloù",
