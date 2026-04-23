@@ -32,6 +32,8 @@ OC.L10N.register(
     "File extension" : "Разширение на файл",
     "Mobile apps" : "Мобилни приложения",
     "Shortcuts" : "Преки пътища",
+    "Delete" : "Delete",
+    "Cancel" : "Cancel",
     "All notes" : "Всички бележки",
     "Categories" : "Категории",
     "Create a sample note with Markdown" : "Създаване на примерна бележка с Мarkdown",

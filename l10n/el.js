@@ -40,6 +40,8 @@ OC.L10N.register(
     "Notes folder" : "Φάκελος Σημειώσεων",
     "Mobile apps" : "Εφαρμογές κινητού",
     "Shortcuts" : "Συντομεύσεις",
+    "Delete" : "Διαγραφή",
+    "Cancel" : "Ακύρωση",
     "All notes" : "Όλες οι σημειώσεις",
     "Categories" : "Κατηγορίες",
     "Create a sample note with Markdown" : "Δημιουργία δείγματος σημείωσης με Markdown",

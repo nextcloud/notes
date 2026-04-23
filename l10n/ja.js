@@ -35,6 +35,7 @@ OC.L10N.register(
     "File extension" : "ファイル拡張子",
     "Mobile apps" : "モバイルアプリ",
     "Shortcuts" : "キーボードショートカット",
+    "Delete" : "Delete",
     "All notes" : "すべてのノート",
     "Categories" : "カテゴリ",
     "Create a sample note with Markdown" : "Markdownでサンプルノートを作成する",

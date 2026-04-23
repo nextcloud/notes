@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Mapa bilješki",
     "Mobile apps" : "Mobilne aplikacije",
     "Shortcuts" : "Prečaci",
+    "Delete" : "Obriši",
+    "Cancel" : "Cancel",
     "All notes" : "Sve bilješke",
     "Categories" : "Kategorije",
     "Create a sample note with Markdown" : "Stvori oglednu bilješku s Markdownom",

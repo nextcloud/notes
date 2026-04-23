@@ -5,6 +5,8 @@ OC.L10N.register(
     "Error" : "Սխալ",
     "New note" : "Նոր նոթ",
     "Files" : "Ֆայլեր",
+    "Delete" : "Delete",
+    "Cancel" : "ընդհատել",
     "No notes yet" : "առայժմ գրառում չկա",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",

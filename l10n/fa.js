@@ -33,6 +33,8 @@ OC.L10N.register(
     "Files" : "فایل‌ها",
     "Mobile apps" : "کاره‌های همراه",
     "Shortcuts" : "میان‌برها",
+    "Delete" : "Delete",
+    "Cancel" : "لغو",
     "All notes" : "همه یادداشت ها",
     "Categories" : "دسته بندی ها",
     "Create a sample note with Markdown" : "ایجاد یادداشت نمونه با مارک‌داون",

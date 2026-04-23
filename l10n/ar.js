@@ -39,6 +39,8 @@ OC.L10N.register(
     "Notes folder" : "مجلد الملاحظات",
     "Mobile apps" : "التطبيقات المحمولة",
     "Shortcuts" : "اختصارات ",
+    "Delete" : "حذف",
+    "Cancel" : "إلغاء",
     "All notes" : "جميع الملاحظات",
     "Categories" : "التصنيفات",
     "Create a sample note with Markdown" : "إنشاء ملاحظة تجريبية بتسنيق  Markdown",

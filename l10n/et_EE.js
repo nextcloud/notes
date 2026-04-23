@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Märkmete kaust",
     "Mobile apps" : "Nutirakendused",
     "Shortcuts" : "Kiirklahvid",
+    "Delete" : "Kustuta",
+    "Cancel" : "Katkesta",
     "All notes" : "Kõik märkmed",
     "Categories" : "Kategooriad",
     "Create a sample note with Markdown" : "Koosta Markdown-vormingus märkmete näide",

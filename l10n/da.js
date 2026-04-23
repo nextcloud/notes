@@ -16,6 +16,8 @@ OC.L10N.register(
     "File extension" : "Filendelse",
     "Files" : "Filer",
     "Notes folder" : "Noter mappe",
+    "Delete" : "Slet",
+    "Cancel" : "Annullér",
     "All notes" : "Alle noter",
     "Categories" : "Kategorier",
     "No notes yet" : "Ingen noter endnu",

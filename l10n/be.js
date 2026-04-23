@@ -42,6 +42,8 @@ OC.L10N.register(
     "Files" : "Файлы",
     "Mobile apps" : "Мабільныя праграмы",
     "Shortcuts" : "Спалучэнні клавіш",
+    "Delete" : "Выдаліць",
+    "Cancel" : "Скасаваць",
     "All notes" : "Усе нататкі",
     "Categories" : "Катэгорыі",
     "Create a sample note with Markdown" : "Стварыць узорную нататку з дапамогай Markdownown",

@@ -16,6 +16,8 @@ OC.L10N.register(
     "Preview" : "תצוגה מקדימה",
     "Insert image" : "הוספת תמונה",
     "Shortcuts" : "קיצורי דרך",
+    "Delete" : "Delete",
+    "Cancel" : "ביטו",
     "All notes" : "כל הפתקים",
     "Categories" : "קטגוריות",
     "No notes yet" : "אין פתקים עדיין",

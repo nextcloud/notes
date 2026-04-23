@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Fillteán nótaí",
     "Mobile apps" : "Aipeanna soghluaiste",
     "Shortcuts" : "Aicearraí",
+    "Delete" : "Scrios",
+    "Cancel" : "Cealaigh",
     "All notes" : "Gach nótaí",
     "Categories" : "Catagóirí",
     "Create a sample note with Markdown" : "Cruthaigh nóta samplach le Markdown",

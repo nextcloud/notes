@@ -10,6 +10,8 @@ OC.L10N.register(
     "Preview" : "Previsualizar",
     "Insert image" : "Añadir imagen",
     "Files" : "Archivos",
+    "Delete" : "Borrado",
+    "Cancel" : "Cancelar",
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
     "No notes yet" : "Aún no hay notas",

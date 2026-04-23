@@ -35,6 +35,8 @@ OC.L10N.register(
     "For new notes" : "Uusille muistiinpanoille",
     "Mobile apps" : "Mobiilisovellukset",
     "Shortcuts" : "Pikanäppäimet",
+    "Delete" : "Delete",
+    "Cancel" : "Kumoa",
     "All notes" : "Kaikki muistiinpanot",
     "Categories" : "Luokat",
     "No notes yet" : "Ei muistiinpanoja",

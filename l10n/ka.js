@@ -34,6 +34,8 @@ OC.L10N.register(
     "Files" : "ფაილები",
     "Mobile apps" : "Mobile apps",
     "Shortcuts" : "Shortcuts",
+    "Delete" : "Delete",
+    "Cancel" : "Cancel",
     "All notes" : "All notes",
     "Categories" : "Categories",
     "Create a sample note with Markdown" : "Create a sample note with Markdown",

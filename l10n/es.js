@@ -41,6 +41,8 @@ OC.L10N.register(
     "Notes folder" : "Carpeta de Notes",
     "Mobile apps" : "Aplicaciones móviles",
     "Shortcuts" : "Atajos",
+    "Delete" : "Eliminar",
+    "Cancel" : "Cancel",
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
     "Create a sample note with Markdown" : "Crear una nota de ejemplo con Markdown",

@@ -35,6 +35,8 @@ OC.L10N.register(
     "File extension" : "Fitxategi-luzapena",
     "Mobile apps" : "Aplikazio mugikorrak",
     "Shortcuts" : "Lasterbideak",
+    "Delete" : "Delete",
+    "Cancel" : "Cancel",
     "All notes" : "Ohar guztiak",
     "Categories" : "Kategoriak",
     "Create a sample note with Markdown" : "Sortu lagin-ohar bat Markdown-ekin",

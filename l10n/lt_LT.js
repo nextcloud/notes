@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Užrašų aplankas",
     "Mobile apps" : "Programėlės mobiliesiems",
     "Shortcuts" : "Sparčiosios nuorodos",
+    "Delete" : "Ištrinti",
+    "Cancel" : "Atsisakyti",
     "All notes" : "Visi užrašai",
     "Categories" : "Kategorijos",
     "Create a sample note with Markdown" : "Sukurti pavyzdinę pastabą naudojant Markdown",

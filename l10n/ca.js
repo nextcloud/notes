@@ -35,6 +35,8 @@ OC.L10N.register(
     "File extension" : "Extensió dels fitxers",
     "Mobile apps" : "Aplicacions mòbils",
     "Shortcuts" : "Enllaços directes",
+    "Delete" : "Elimina",
+    "Cancel" : "Cancel•la",
     "All notes" : "Totes les notes",
     "Categories" : "Categories",
     "Create a sample note with Markdown" : "Crea una nota de mostra amb Markdown",

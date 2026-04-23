@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Jegyzetek mappa",
     "Mobile apps" : "Mobilalkalmazások",
     "Shortcuts" : "Gyorsbillentyűk",
+    "Delete" : "Delete",
+    "Cancel" : "Cancel",
     "All notes" : "Összes jegyzet",
     "Categories" : "Kategóriák",
     "Create a sample note with Markdown" : "Új példajegyzet létrehozása Markdownnal",

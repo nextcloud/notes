@@ -9,6 +9,7 @@ OC.L10N.register(
     "Insert image" : "Voer beeld in",
     "General" : "Algemeen",
     "Files" : " Lêers",
+    "Cancel" : "Kanselleer",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
     "Remove from favorites" : "Verwyder uit gunstelinge",

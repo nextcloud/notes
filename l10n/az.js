@@ -5,6 +5,8 @@ OC.L10N.register(
     "Error" : "Səhv",
     "New note" : "Yeni qeyd",
     "Files" : "Fayllar",
+    "Delete" : "Delete",
+    "Cancel" : "Dayandır",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "Paylaş",

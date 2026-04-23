@@ -33,6 +33,7 @@ OC.L10N.register(
     "Files" : "Archivos",
     "Mobile apps" : "Aplicaciones móviles",
     "Shortcuts" : "Atajos de teclado",
+    "Cancel" : "Cancelar",
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
     "Create a sample note with Markdown" : "Crear una nota de muestra con Markdown",

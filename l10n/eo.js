@@ -9,6 +9,8 @@ OC.L10N.register(
     "Preview" : "Antaŭvidi",
     "Insert image" : "Enmeti bildon",
     "Files" : "Dosieroj",
+    "Delete" : "Delete",
+    "Cancel" : "Nuligi",
     "All notes" : "Ĉiuj notoj",
     "Categories" : "Kategorioj",
     "Remove from favorites" : "Forigi el pliŝataĵoj",

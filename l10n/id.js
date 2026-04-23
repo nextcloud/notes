@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Folder catatan",
     "Mobile apps" : "Aplikasi seluler",
     "Shortcuts" : "Pintasan",
+    "Delete" : "Delete",
+    "Cancel" : "Membatalkan",
     "All notes" : "Semua catatan",
     "Categories" : "Kategori",
     "Create a sample note with Markdown" : "Buat contoh catatan dengan Markdown",

@@ -11,6 +11,8 @@ OC.L10N.register(
     "Files" : "Ficheros",
     "Mobile apps" : "Aplicaciones pa móviles",
     "Shortcuts" : "Atayos",
+    "Delete" : "Desaniciar",
+    "Cancel" : "Encaboxar",
     "All notes" : "Toles notes",
     "Categories" : "Categories",
     "No notes yet" : "Nun hai nenguna nota",

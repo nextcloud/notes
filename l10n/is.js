@@ -39,6 +39,8 @@ OC.L10N.register(
     "Notes folder" : "Mappa undir minnispunkta",
     "Mobile apps" : "Snjallsímaforrit",
     "Shortcuts" : "Flýtilyklar",
+    "Delete" : "Eyða",
+    "Cancel" : "Hætta við",
     "All notes" : "Allir minnispunktar",
     "Categories" : "Flokkar",
     "Create a sample note with Markdown" : "Útbúðu dæmi um minnispunkt með Markdown",

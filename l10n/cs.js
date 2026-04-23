@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notes folder" : "Složka s poznámkami",
     "Mobile apps" : "Mobilní aplikace",
     "Shortcuts" : "Zkratky",
+    "Delete" : "Smazat",
+    "Cancel" : "Storno",
     "All notes" : "Všechny poznámky",
     "Categories" : "Kategorie",
     "Create a sample note with Markdown" : "Vytvořit ukázkovou poznámku využívající Markdown značky",

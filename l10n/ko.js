@@ -30,6 +30,8 @@ OC.L10N.register(
     "File extension" : "파일 확장자",
     "Mobile apps" : "모바일 앱",
     "Shortcuts" : "단축키",
+    "Delete" : "삭제",
+    "Cancel" : "취소",
     "All notes" : "모든 메모",
     "Categories" : "분류",
     "Create a sample note with Markdown" : "마크다운으로 간단한 메모를 작성하세요",
