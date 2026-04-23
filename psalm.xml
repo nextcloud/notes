@@ -5,7 +5,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="tests/psalm-baseline.xml"
-    phpVersion="8.0"
+    phpVersion="8.1"
 >
 	<stubs>
 		<file name="tests/stubs/ocp.php" preloadClasses="true"/>
