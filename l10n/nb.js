@@ -36,6 +36,7 @@ OC.L10N.register(
     "Mobile apps" : "Mobilapper",
     "Shortcuts" : "Snarveier",
     "Delete" : "Delete",
+    "Cancel" : "Cancel",
     "All notes" : "Alle notater",
     "Categories" : "Kategorier",
     "Create a sample note with Markdown" : "Lag et eksempelnotat med Markdown",

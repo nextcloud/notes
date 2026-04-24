@@ -8,6 +8,8 @@ OC.L10N.register(
     "Notes settings" : "Piezīmju iestatījumi",
     "Preview" : "Priekšskatīt",
     "Files" : "Datnes",
+    "Delete" : "Izdzēst",
+    "Cancel" : "Atcelt",
     "All notes" : "Visas piezīmes",
     "Categories" : "Kategorijas",
     "No notes yet" : "Nav nevienas piezīmes",

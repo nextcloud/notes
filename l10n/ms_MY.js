@@ -6,6 +6,7 @@ OC.L10N.register(
     "New note" : "Note baharu",
     "Files" : "Fail",
     "Delete" : "Delete",
+    "Cancel" : "Batal",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Share" : "Kongsi",

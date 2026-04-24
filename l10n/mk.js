@@ -15,6 +15,8 @@ OC.L10N.register(
     "Please see Nextcloud server log for details." : "За повеќе детали проверете ги записите во серверот.",
     "Preview" : "Преглед",
     "General" : "Општо",
+    "Delete" : "Delete",
+    "Cancel" : "Cancel",
     "All notes" : "Сите белешки",
     "Categories" : "Категории",
     "No notes yet" : "Сеуште нема забелешки",

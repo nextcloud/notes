@@ -45,6 +45,7 @@ OC.L10N.register(
     "Mobile apps" : "Mobiele apps",
     "Shortcuts" : "Snelkoppelingen",
     "Delete" : "Verwijderen",
+    "Cancel" : "Annuleren",
     "All notes" : "Alle notities",
     "Categories" : "Categorieën",
     "Create a sample note with Markdown" : "Maak een voorbeeldnotitie met Markdown",

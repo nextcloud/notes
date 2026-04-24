@@ -45,6 +45,7 @@ OC.L10N.register(
     "Mobile apps" : "Гар утасны апп-ууд",
     "Shortcuts" : "Товчлолууд",
     "Delete" : "–£—Å—Ç–≥–∞—Ö",
+    "Cancel" : "–±–æ–ª–∏—É–ª–∞—Ö",
     "All notes" : "Бүх тэмдэг",
     "Categories" : "төрөл",
     "Create a sample note with Markdown" : "Markdown-тай жишээ тэмдэглэл үүсгэх",
