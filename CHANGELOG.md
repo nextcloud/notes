@@ -12,6 +12,31 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 5.0.0
+
+### Added
+
+* Use filled favorite icons and remove document icons in the UI in [#1730](https://github.com/nextcloud/notes/pull/1730)
+* Add rename and delete category actions in the sidebar in [#1732](https://github.com/nextcloud/notes/pull/1732)
+
+### Changed
+
+* perf: Replace `getById` call with `getFirstNodeById` in [#1743](https://github.com/nextcloud/notes/pull/1743)
+* Update to NC 30 and PHP max version to 8.5 in `info.xml` in [#1813](https://github.com/nextcloud/notes/pull/1813)
+
+### Fixed
+
+* Fix undefined node array key by using folder instead in [#1783](https://github.com/nextcloud/notes/pull/1783)
+* fix(tests): Update test structure in [#1823](https://github.com/nextcloud/notes/pull/1823)
+* fix: Sharing notes in [#1827](https://github.com/nextcloud/notes/pull/1827)
+
+### Dependencies
+
+* Update `nextcloud/ocp` dependency in [#1774](https://github.com/nextcloud/notes/pull/1774)
+* Apply npm audit fixes in [#1775](https://github.com/nextcloud/notes/pull/1775) and [#1802](https://github.com/nextcloud/notes/pull/1802)
+* Update runtime dependencies, including `@nextcloud/axios`, `axios`, `diff`, `follow-redirects`, `dompurify`, and `lodash` in [#1826](https://github.com/nextcloud/notes/pull/1826), [#1814](https://github.com/nextcloud/notes/pull/1814), [#1815](https://github.com/nextcloud/notes/pull/1815), [#1816](https://github.com/nextcloud/notes/pull/1816), [#1818](https://github.com/nextcloud/notes/pull/1818), and [#1807](https://github.com/nextcloud/notes/pull/1807)
+* Update tooling and CI dependencies in [#1786](https://github.com/nextcloud/notes/pull/1786), [#1787](https://github.com/nextcloud/notes/pull/1787), [#1788](https://github.com/nextcloud/notes/pull/1788), [#1790](https://github.com/nextcloud/notes/pull/1790), [#1794](https://github.com/nextcloud/notes/pull/1794), [#1800](https://github.com/nextcloud/notes/pull/1800), [#1805](https://github.com/nextcloud/notes/pull/1805), [#1806](https://github.com/nextcloud/notes/pull/1806), [#1808](https://github.com/nextcloud/notes/pull/1808), [#1820](https://github.com/nextcloud/notes/pull/1820), [#1821](https://github.com/nextcloud/notes/pull/1821), and [#1822](https://github.com/nextcloud/notes/pull/1822)
+
 ## 4.13.1
 
 ### Fixed
