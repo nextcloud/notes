@@ -28,20 +28,11 @@ class NoteFileEventsListener implements IEventListener {
 	public function handle(Event $event): void {
 		if ($event instanceof BeforeNodeWrittenEvent) {
 			$this->onFileModified($event->getNode());
-			return;
-		}
-
-		if ($event instanceof BeforeNodeTouchedEvent) {
+		} elseif ($event instanceof BeforeNodeTouchedEvent) {
 			$this->onFileModified($event->getNode());
-			return;
-		}
-
-		if ($event instanceof BeforeNodeDeletedEvent) {
+		} elseif ($event instanceof BeforeNodeDeletedEvent) {
 			$this->onFileModified($event->getNode());
-			return;
-		}
-
-		if ($event instanceof BeforeNodeRenamedEvent) {
+		} elseif ($event instanceof BeforeNodeRenamedEvent) {
 			$this->onFileModified($event->getSource());
 		}
 	}
