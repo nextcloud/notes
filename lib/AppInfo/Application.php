@@ -11,7 +11,6 @@ namespace OCA\Notes\AppInfo;
 
 use OCA\Notes\Listener\NoteFileEventsListener;
 use OCA\Notes\Reference\NoteReferenceProvider;
-use OCA\Notes\Service\MetaService;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
