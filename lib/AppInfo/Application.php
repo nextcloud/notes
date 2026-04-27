@@ -35,19 +35,17 @@ class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		$context->registerCapability(Capabilities::class);
 		$context->registerSearchProvider(SearchProvider::class);
+		$context->registerReferenceProvider(NoteReferenceProvider::class);
 		$context->registerDashboardWidget(DashboardWidget::class);
-
 		$context->registerEventListener(BeforeTemplateRenderedEvent::class, BeforeTemplateRenderedListener::class);
 		$context->registerEventListener(BeforeShareCreatedEvent::class, BeforeShareCreatedListener::class);
-
 		$context->registerEventListener(BeforeNodeWrittenEvent::class, NoteFileEventsListener::class);
 		$context->registerEventListener(BeforeNodeTouchedEvent::class, NoteFileEventsListener::class);
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, NoteFileEventsListener::class);
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, NoteFileEventsListener::class);
-
-		$context->registerReferenceProvider(NoteReferenceProvider::class);
 	}
 
 	public function boot(IBootContext $context): void {
+		// Intentionally empty
 	}
 }
