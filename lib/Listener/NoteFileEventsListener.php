@@ -18,7 +18,7 @@ use OCP\Files\Events\Node\BeforeNodeTouchedEvent;
 use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Node;
 
-/** @template-implements IEventListener<BeforeNodeWrittenEvent|BeforeNodeTouchedEvent|BeforeNodeDeletedEvent|BeforeNodeRenamedEvent|Event> */
+/** @template-implements IEventListener<BeforeNodeWrittenEvent|BeforeNodeTouchedEvent|BeforeNodeDeletedEvent|BeforeNodeRenamedEvent> */
 class NoteFileEventsListener implements IEventListener {
 	public function __construct(
 		private MetaService $metaService,
@@ -50,6 +50,9 @@ class NoteFileEventsListener implements IEventListener {
 		try {
 			$this->metaService->deleteByNote($node->getId());
 		} catch (\Throwable $e) {
+			// Intentionally non-fatal: MetaService::getAll() will reconcile on next sync.
+			// Consider: Log at debug level so persistent failures remain diagnosable.
+			// (logger would need to be injected if added)
 		}
 	}
 }
