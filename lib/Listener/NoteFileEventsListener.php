@@ -18,7 +18,7 @@ use OCP\Files\Events\Node\BeforeNodeTouchedEvent;
 use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Node;
 
-/** @template-implements IEventListener<BeforeNodeWrittenEvent|BeforeNodeTouchedEvent|BeforeNodeDeletedEvent|BeforeNodeRenamedEvent> */
+/** @template-implements IEventListener<BeforeNodeWrittenEvent|BeforeNodeTouchedEvent|BeforeNodeDeletedEvent|BeforeNodeRenamedEvent|Event> */
 class NoteFileEventsListener implements IEventListener {
 	public function __construct(
 		private MetaService $metaService,
