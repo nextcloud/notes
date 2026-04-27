@@ -28,25 +28,25 @@ use OCA\Notes\Db\MetaMapper;
  * Therefore, the Notes app maintains this information on its own. It is saved
  * in the database table `notes_meta`. To be honest, we do not store the exact
  * changed time, but a time `t` that is at some point between the real changed
- * time and the next synchronization time. However, this is totally sufficient
+ * time and next synchronization time. However, this is totally sufficient
  * for this purpose.
  *
- * Therefore, on synchronization, the method `MetaService.getAll` is called.
- * It generates an ETag for each note and compares it with the ETag from
+ * Therefore, on synchronization, the method `MetaService::getAll` is called.
+ * It generates an ETag for each note and compares it with the ETag from the
  * `notes_meta` database table in order to detect changes (or creates an entry
  * if not existent). If there are changes, the ETag is updated and `LastUpdate`
  * is set to the current time. The ETag is a hash over all note attributes
  * (except content, see below).
  *
  * But in order to further speed up synchronization, the content is not
- * compared every time (this would be very expensive!). Instead, a file hook
- * (see `OCA\Notes\NotesHook`) deletes the meta entry on every file change. As
- * a consequence, a new entry in `note_meta` is created on next
+ * compared every time (this would be very expensive!). Instead, a file event
+ * listener invalidates the meta entry on every relevant file change. As a
+ * consequence, a new entry in `notes_meta` is created on the next
  * synchronization.
  *
  * Hence, instead of using the real content for generating the note's ETag, it
- * uses a "content ETag" which is a hash over the content. Additionaly to the
- * file hooks, this "content ETag" is updated if Nextcloud's "file ETag" has
+ * uses a "content ETag" which is a hash over the content. Additionally to the
+ * file events, this "content ETag" is updated if Nextcloud's "file ETag" has
  * changed (but again, the "file ETag" is just an indicator, since it is not a
  * hash over the content).
  *
