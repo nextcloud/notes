@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<ul>
+	<ul class="notes-list">
 		<NoteItem v-for="note in notes"
 			:key="note.id"
 			:note="note"
@@ -50,3 +50,19 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+.notes-list:deep(.list-item__wrapper) {
+	border-block-end: 1px solid var(--color-border);
+	box-sizing: border-box;
+	padding-block: 0;
+}
+
+.notes-list:deep(.list-item__wrapper:first-of-type) {
+	padding-block-start: 0;
+}
+
+.notes-list:deep(.list-item__wrapper:last-of-type) {
+	padding-block-end: 0;
+}
+</style>
