@@ -14,7 +14,7 @@
 		@click="onNoteSelected(note.id)"
 		@dragstart.native="onDragStart"
 	>
-		<template #subtitle>
+		<template v-if="showCategoryTitle" #subname>
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
@@ -131,6 +131,10 @@ export default {
 		note: {
 			type: Object,
 			required: true,
+		},
+		showCategoryTitle: {
+			type: Boolean,
+			default: false,
 		},
 	},
 
