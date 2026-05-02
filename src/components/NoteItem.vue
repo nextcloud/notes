@@ -327,4 +327,14 @@ export default {
 		color: var(--color-primary-element-text) !important;
 	}
 }
+
+:deep(.list-item) {
+	padding: 0;
+}
+
+:deep(.list-item__anchor) {
+	box-sizing: border-box;
+	height: calc(var(--list-item-height) + 2 * var(--default-grid-baseline));
+	padding: var(--list-item-padding);
+}
 </style>
