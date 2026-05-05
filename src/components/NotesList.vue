@@ -6,9 +6,10 @@
 <template>
 	<ul>
 		<NoteItem v-for="note in notes"
-			:key="note.id"
+			:key="`${note.id}-${showCategoryTitle ? 'with-category-title' : 'without-category-title'}`"
 			:note="note"
 			:renaming="isRenaming(note.id)"
+			:show-category-title="showCategoryTitle"
 			@note-selected="onNoteSelected"
 			@start-renaming="onStartRenaming"
 		/>
@@ -29,6 +30,10 @@ export default {
 		notes: {
 			type: Array,
 			required: true,
+		},
+		showCategoryTitle: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
