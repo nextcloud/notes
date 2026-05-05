@@ -458,13 +458,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-navigation-entry-wrapper.active:deep(.app-navigation-entry) {
-	background-color: var(--color-primary-element-light) !important;
+	background-color: var(--color-primary-element) !important;
+}
+
+.app-navigation-entry-wrapper.active:deep(.app-navigation-entry:hover),
+.app-navigation-entry-wrapper.active:deep(.app-navigation-entry:focus-within) {
+	background-color: var(--color-primary-element-hover) !important;
 }
 
 .app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry) {
-	background-color: var(--color-primary-element-light) !important;
-	outline: 2px dashed var(--color-primary-element);
+	background-color: var(--color-primary-element) !important;
+	outline: 2px dashed var(--color-primary-element-text);
 	outline-offset: -2px;
+}
+
+.app-navigation-entry-wrapper.active:deep(.app-navigation-entry-link),
+.app-navigation-entry-wrapper.active:deep(.app-navigation-entry-button),
+.app-navigation-entry-wrapper.active:deep(.material-design-icon),
+.app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry-link),
+.app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry-button),
+.app-navigation-entry-wrapper.drop-over:deep(.material-design-icon) {
+	color: var(--color-primary-element-text) !important;
 }
 
 .app-navigation-entry-wrapper.category-no-actions:deep(.app-navigation-entry__counter-wrapper) {
