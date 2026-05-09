@@ -63,7 +63,7 @@ test.describe('Basic checks', () => {
 		await noteItem.locator('.action-item__menutoggle').click()
 		await page.getByRole('menuitem', { name: 'Share', exact: true }).click()
 
-		await expect(page.locator('[data-cy-notes-share-sidebar]')).toBeVisible({ timeout: 15000 })
+		await expect(page.locator('[data-cy-sidebar]')).toBeVisible({ timeout: 15000 })
 		await expect(page.getByText('Internal shares')).toBeVisible({ timeout: 15000 })
 	})
 })
