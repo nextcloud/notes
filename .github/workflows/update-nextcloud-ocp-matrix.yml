@@ -61,7 +61,7 @@ jobs:
 
       - name: Composer update nextcloud/ocp
         id: update_branch
-        run: composer require --dev nextcloud/ocp:dev-${{ steps.versions.outputs.branches-min }}
+        run: composer require --dev --with-all-dependencies nextcloud/ocp:dev-${{ steps.versions.outputs.branches-min }}
 
       - name: Raise on issue on failure
         uses: dacbd/create-issue-action@cdb57ab6ff8862aa09fee2be6ba77a59581921c2 # v2.0.0
