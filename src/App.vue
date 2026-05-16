@@ -41,7 +41,6 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @note-deleted="onNoteDeleted" />
-		<NoteShareSidebar />
 	</NcContent>
 </template>
 
@@ -62,7 +61,6 @@ import FolderPlusIcon from 'vue-material-design-icons/FolderPlus.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
-import NoteShareSidebar from './components/NoteShareSidebar.vue'
 
 import { config } from './config.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
@@ -82,7 +80,6 @@ export default {
 		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
-		NoteShareSidebar,
 		FolderPlusIcon,
 	},
 
