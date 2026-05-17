@@ -37,7 +37,7 @@ jobs:
         VERSION_MINMAX: ${{ matrix.version }}
       run: echo "PHP_VERSION=$(php tests/nextcloud-version.php --php-$VERSION_MINMAX)" >> $GITHUB_ENV
     - name: Set up PHP ${{ env.PHP_VERSION }}
-      uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2.37.0
+      uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # v2.37.1
       with:
         php-version: ${{ env.PHP_VERSION }}
         extensions: pdo_mysql, zip, gd
