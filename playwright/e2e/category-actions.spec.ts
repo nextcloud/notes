@@ -77,6 +77,26 @@ async function waitForNewNoteRoute(page: Page, previousNoteId: number | null): P
 	return noteId
 }
 
+async function createNoteViaApi(page: Page, category: string, title: string): Promise<number> {
+	return page.evaluate(async ({ category, title }) => {
+		const requestToken = (window as unknown as { OC: { requestToken: string } }).OC.requestToken
+		const response = await fetch('/index.php/apps/notes/notes', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				requesttoken: requestToken,
+			},
+			body: JSON.stringify({ category, title, content: '' }),
+		})
+		if (!response.ok) {
+			throw new Error(`Failed to create note: ${response.status} ${await response.text()}`)
+		}
+
+		const note = await response.json() as { id: number }
+		return note.id
+	}, { category, title })
+}
+
 async function ensureNotesView(page: Page): Promise<void> {
 	if (await notesSearchField(page).isVisible()) {
 		return
@@ -153,5 +173,26 @@ test.describe('Category actions', () => {
 		await expect(navigationRow(page, category)).toHaveCount(0)
 		await expect(navigationRow(page, 'All notes')).toHaveClass(/active/)
 		await expect(page).not.toHaveURL(deletedNoteUrl)
+	})
+
+	test('keeps all notes selected when opening a categorized note', async ({ page }, testInfo: TestInfo) => {
+		const category = uniqueCategoryName('all-notes', testInfo)
+		const title = `${category} note`
+		const noteId = await createNoteViaApi(page, category, title)
+
+		await page.goto('/index.php/apps/notes/')
+		await expect(contentNewNoteButton(page)).toBeVisible()
+		await expect(navigationRow(page, category)).toBeVisible()
+
+		await navigationRow(page, 'All notes').click()
+		await expect(navigationRow(page, 'All notes')).toHaveClass(/active/)
+
+		const noteLink = page.locator(`a[href$="/note/${noteId}"]`).first()
+		await expect(noteLink).toBeVisible()
+		await noteLink.click()
+
+		await expect(page).toHaveURL(new RegExp(`/note/${noteId}(\\?.*)?$`))
+		await expect(navigationRow(page, 'All notes')).toHaveClass(/active/)
+		await expect(navigationRow(page, category)).not.toHaveClass(/active/)
 	})
 })

@@ -71,7 +71,7 @@ import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-import { categoryLabel } from '../Util.js'
+import { categoryLabel, rootCategory } from '../Util.js'
 import NotesList from './NotesList.vue'
 import NotesCaption from './NotesCaption.vue'
 import store from '../store.js'
@@ -128,6 +128,15 @@ export default {
 			return store.getters.getSelectedCategory()
 		},
 
+		note() {
+			const noteId = Number.parseInt(this.noteId, 10)
+			return Number.isFinite(noteId) ? store.getters.getNote(noteId) : null
+		},
+
+		noteCategory() {
+			return this.note?.category ?? null
+		},
+
 		filteredNotes() {
 			return store.getters.getFilteredNotes()
 		},
@@ -164,16 +173,70 @@ export default {
 	},
 
 	watch: {
-		category() { this.showFirstNotesOnly = true },
+		category() {
+			this.showFirstNotesOnly = true
+			this.hideVisibleNoteOutsideSelectedCategory()
+		},
+		noteId() {
+			this.showNote = true
+			this.updateVisibleNoteSelection()
+		},
+		noteCategory() {
+			this.updateVisibleNoteSelection()
+		},
+		showNote() {
+			this.updateVisibleNoteSelection()
+		},
 		searchText(value) { store.commit('updateSearchText', value) },
 	},
 
 	created() {
 		this.updateTimeslots()
+		this.updateVisibleNoteSelection()
 		setInterval(this.updateTimeslots, 1000 * 60)
 	},
 
+	destroyed() {
+		this.clearVisibleNoteSelection()
+	},
+
 	methods: {
+		clearVisibleNoteSelection() {
+			if (store.getters.getSelectedNote() !== null) {
+				store.commit('setSelectedNote', null)
+			}
+		},
+
+		updateVisibleNoteSelection() {
+			const noteId = Number.parseInt(this.noteId, 10)
+			if (!this.showNote || !Number.isFinite(noteId)) {
+				this.clearVisibleNoteSelection()
+				return
+			}
+
+			if (store.getters.getSelectedNote() !== noteId) {
+				store.commit('setSelectedNote', noteId)
+			}
+
+			if (this.note && store.getters.getSelectedCategory() !== null) {
+				const category = rootCategory(this.note.category)
+				if (store.getters.getSelectedCategory() !== category) {
+					store.commit('setSelectedCategory', category)
+				}
+			}
+		},
+
+		hideVisibleNoteOutsideSelectedCategory() {
+			if (!this.showNote || !this.note) {
+				return
+			}
+
+			const selectedCategory = store.getters.getSelectedCategory()
+			if (selectedCategory !== null && selectedCategory !== rootCategory(this.note.category)) {
+				this.showNote = false
+			}
+		},
+
 		updateTimeslots() {
 			const now = new Date()
 			// define the time groups we want to allow
