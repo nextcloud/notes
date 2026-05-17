@@ -15,7 +15,9 @@
 					@dragover.native="onNewCategoryDragOver"
 					@drop.native="onNewCategoryDrop"
 				>
-					<FolderPlusIcon slot="icon" :size="20" />
+					<template #icon>
+						<FolderPlusIcon :size="20" />
+					</template>
 				</NcAppNavigationNew>
 				<CategoriesList v-show="!loading.notes" />
 			</template>
@@ -26,7 +28,9 @@
 						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
 					>
-						<CogIcon slot="icon" :size="20" />
+						<template #icon>
+							<CogIcon :size="20" />
+						</template>
 					</NcAppNavigationItem>
 				</ul>
 				<AppSettings v-if="!loading.notes && error !== true" :open.sync="settingsVisible" @reload="reloadNotes" />
@@ -57,7 +61,7 @@ import '@nextcloud/dialogs/style.css'
 import { emit } from '@nextcloud/event-bus'
 
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
-import FolderPlusIcon from 'vue-material-design-icons/FolderPlus.vue'
+import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
