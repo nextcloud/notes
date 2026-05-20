@@ -307,8 +307,14 @@ export default {
 			}
 		},
 		onToggleSharing() {
-			this.actionsOpen = false
-			emit('notes:share:open', { noteId: this.note.id })
+			if (window?.OCA?.Files?.Sidebar?.setActiveTab) {
+				emit('toggle-navigation', { open: false })
+				setTimeout(() => {
+					window.dispatchEvent(new Event('resize'))
+				}, 200)
+				window.OCA.Files.Sidebar.setActiveTab('sharing')
+				window.OCA.Files.Sidebar.open(this.note.internalPath)
+			}
 		},
 		async onShareCreated(event) {
 			const { share } = event

@@ -25,7 +25,7 @@ jobs:
         version: [min, max]
       fail-fast: false
     env:
-      SERVER_BRANCH: master
+      SERVER_BRANCH: stable32
     steps:
     - name: Checkout
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
