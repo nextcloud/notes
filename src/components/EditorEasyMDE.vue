@@ -8,9 +8,11 @@
 		<div class="upload-button">
 			<NcActions
 				container=".upload-button"
-				default-icon="icon-picture"
 				menu-align="right"
 			>
+				<template #icon>
+					<ImagePlusOutlineIcon :size="20" />
+				</template>
 				<NcActionButton
 					icon="icon-upload"
 					:close-after-click="true"
@@ -19,10 +21,12 @@
 					{{ t('notes', 'Upload image') }}
 				</NcActionButton>
 				<NcActionButton
-					icon="icon-picture"
 					:close-after-click="true"
 					@click="onClickInsertImage"
 				>
+					<template #icon>
+						<ImageOutlineIcon :size="20" />
+					</template>
 					{{ t('notes', 'Insert image') }}
 				</NcActionButton>
 			</NcActions>
@@ -41,6 +45,8 @@ import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import ImageOutlineIcon from 'vue-material-design-icons/ImageOutline.vue'
+import ImagePlusOutlineIcon from 'vue-material-design-icons/ImagePlusOutline.vue'
 import { basename, relative } from 'path'
 
 import store from '../store.js'
@@ -49,6 +55,8 @@ export default {
 	name: 'EditorEasyMDE',
 
 	components: {
+		ImageOutlineIcon,
+		ImagePlusOutlineIcon,
 		NcActions,
 		NcActionButton,
 	},

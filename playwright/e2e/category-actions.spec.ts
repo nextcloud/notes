@@ -36,6 +36,14 @@ function navigationRow(page: Page, name: string): Locator {
 		.first()
 }
 
+function navigationLink(page: Page, name: string): Locator {
+	return page.getByRole('link', { name, exact: true })
+}
+
+async function expectNavigationItemActive(page: Page, name: string): Promise<void> {
+	await expect(navigationLink(page, name)).toHaveAttribute('aria-current', 'page')
+}
+
 function uniqueCategoryName(prefix: string, testInfo: TestInfo): string {
 	return `Playwright ${prefix} ${testInfo.parallelIndex}-${Date.now()}`
 }
@@ -63,7 +71,7 @@ async function createCategory(page: Page, name: string): Promise<void> {
 	await input.press('Enter')
 
 	await expect(navigationRow(page, name)).toBeVisible()
-	await expect(navigationRow(page, name)).toHaveClass(/active/)
+	await expectNavigationItemActive(page, name)
 }
 
 async function waitForNewNoteRoute(page: Page, previousNoteId: number | null): Promise<number> {
@@ -124,7 +132,11 @@ async function openCategoryActions(page: Page, category: string): Promise<void> 
 	const row = navigationRow(page, category)
 
 	await expect(row).toBeVisible()
-	await row.getByRole('button', { name: 'Actions', exact: true }).click()
+	await row.hover()
+
+	const actionsButton = row.getByRole('button', { name: 'Actions', exact: true })
+	await expect(actionsButton).toBeVisible()
+	await actionsButton.click()
 }
 
 test.describe('Category actions', () => {
@@ -150,7 +162,7 @@ test.describe('Category actions', () => {
 		await renameInput.press('Enter')
 
 		await expect(navigationRow(page, renamedCategory)).toBeVisible()
-		await expect(navigationRow(page, renamedCategory)).toHaveClass(/active/)
+		await expectNavigationItemActive(page, renamedCategory)
 		await expect(navigationRow(page, renamedCategory).locator('.app-navigation-entry__counter-wrapper')).toContainText('1')
 		await expect(navigationRow(page, category)).toHaveCount(0)
 		await expect(page).toHaveURL(new RegExp(`/note/${noteId}(\\?.*)?$`))
@@ -171,7 +183,7 @@ test.describe('Category actions', () => {
 		await page.getByRole('button', { name: 'Delete', exact: true }).click()
 
 		await expect(navigationRow(page, category)).toHaveCount(0)
-		await expect(navigationRow(page, 'All notes')).toHaveClass(/active/)
+		await expectNavigationItemActive(page, 'All notes')
 		await expect(page).not.toHaveURL(deletedNoteUrl)
 	})
 

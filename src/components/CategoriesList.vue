@@ -7,9 +7,9 @@
 	<Fragment>
 		<NcAppNavigationItem
 			:name="t('notes', 'All notes')"
+			:active="selectedCategory === null"
 			:draggable="false"
 			:class="{
-				active: selectedCategory === null,
 				'drop-over': dragOverAllNotes,
 				'category-no-actions': true,
 			}"
@@ -36,13 +36,11 @@
 			ref="newCategoryItem"
 			:name="''"
 			:draggable="false"
-			:icon="'icon-files'"
 			:editable="true"
 			:edit-label="t('notes', 'Rename category')"
 			:edit-placeholder="t('notes', 'New category')"
 			:force-menu="true"
 			:force-display-actions="true"
-			menu-icon="icon-more"
 			class="category-draft"
 			@click.prevent.stop
 			@dragstart.native="onCategoryDragStart"
@@ -61,16 +59,14 @@
 		<NcAppNavigationItem v-for="category in categories"
 			:key="category.name"
 			:name="categoryTitle(category.name)"
+			:active="category.name === selectedCategory"
 			:draggable="false"
-			:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
 			:editable="category.name !== ''"
 			:edit-label="t('notes', 'Rename category')"
 			:edit-placeholder="category.name"
 			:force-menu="category.name !== ''"
 			:force-display-actions="category.name !== ''"
-			menu-icon="icon-more"
 			:class="{
-				active: category.name === selectedCategory,
 				'drop-over': category.name === dragOverCategory,
 				'category-no-actions': category.name === '',
 			}"
@@ -82,8 +78,8 @@
 			@update:name="onRenameCategory(category.name, $event)"
 		>
 			<template #icon>
-				<FolderOutlineIcon v-if="category.name === ''" :size="20" />
-				<FolderIcon v-else :size="20" />
+				<FolderIcon v-if="category.name === selectedCategory" :size="20" />
+				<FolderOutlineIcon v-else :size="20" />
 			</template>
 			<template #counter>
 				<NcCounterBubble>
@@ -92,10 +88,12 @@
 			</template>
 			<template v-if="category.name !== ''" #actions>
 				<NcActionButton
-					icon="icon-delete"
 					:close-after-click="true"
 					@click="onDeleteCategory(category.name)"
 				>
+					<template #icon>
+						<DeleteIcon :size="20" />
+					</template>
 					{{ t('notes', 'Delete category') }}
 				</NcActionButton>
 			</template>
@@ -112,6 +110,7 @@ import { Fragment } from 'vue-frag'
 import { showConfirmation } from '@nextcloud/dialogs'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
+import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
@@ -124,6 +123,7 @@ export default {
 	name: 'CategoriesList',
 
 	components: {
+		DeleteIcon,
 		Fragment,
 		NcActionButton,
 		NcAppNavigationItem,

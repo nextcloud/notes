@@ -14,7 +14,7 @@
 		@click="onNoteSelected(note.id)"
 		@dragstart.native="onDragStart"
 	>
-		<template #subtitle>
+		<template v-if="showCategoryTitle" #subname>
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
@@ -131,6 +131,10 @@ export default {
 		note: {
 			type: Object,
 			required: true,
+		},
+		showCategoryTitle: {
+			type: Boolean,
+			default: false,
 		},
 	},
 
@@ -326,5 +330,15 @@ export default {
 	.list-item__wrapper--active & {
 		color: var(--color-primary-element-text) !important;
 	}
+}
+
+:deep(.list-item) {
+	padding: 0;
+}
+
+:deep(.list-item__anchor) {
+	box-sizing: border-box;
+	height: calc(var(--list-item-height) + 2 * var(--default-grid-baseline));
+	padding: var(--list-item-padding);
 }
 </style>

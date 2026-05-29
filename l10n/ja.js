@@ -36,6 +36,7 @@ OC.L10N.register(
     "Mobile apps" : "モバイルアプリ",
     "Shortcuts" : "キーボードショートカット",
     "Delete" : "Delete",
+    "Cancel" : "キャンセル",
     "All notes" : "すべてのノート",
     "Categories" : "カテゴリ",
     "Create a sample note with Markdown" : "Markdownでサンプルノートを作成する",
