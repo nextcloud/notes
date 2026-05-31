@@ -73,7 +73,7 @@ OC.L10N.register(
     "Share" : "Jaga",
     "Change category" : "Muuda kategooriat",
     "Rename" : "Muuda nime",
-    "Rename note" : "Muuda märke nime",
+    "Rename note" : "Muuda märkme nime",
     "Delete note" : "Kustuta märge",
     "Error from Nextcloud server: {msg}" : "Nextcloudi serveri viga: {msg}",
     "The note has been changed in another session. Please choose which version should be saved." : "Seda märget on muudetud muus sessioonis. Palun vali, kumma versiooni tahaksid salvestada.",
