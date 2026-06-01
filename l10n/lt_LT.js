@@ -132,7 +132,7 @@ OC.L10N.register(
     "Write nice todo lists" : "Sudarykite gražius užduočių sąrašus",
     "Buy Fries" : "Pirkite bulvytes",
     "Birthdays" : "Gimtadieniai",
-    "Jen, in three days!" : "Jen, po trijų dienų!",
+    "Jen, in three days!" : "Jonas, po trijų dienų!",
     "Moss, 21.03.1973" : "Moss, 1973 m. kovo 21 d.",
     "Roy, 1979" : "Roy, 1979",
     "Review Steps" : "Peržiūros žingsniai",
