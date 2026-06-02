@@ -12,6 +12,44 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 6.0.0
+
+### Added
+
+* [Feat(ui): indicate category in "All notes" view (notes#1840)](https://github.com/nextcloud/notes/pull/1840)
+
+### Changed
+
+* [Fix(perf): replace legacy NotesHooks boot registration with typed file event listeners (notes#1836)](https://github.com/nextcloud/notes/pull/1836)
+* [Fix: Update min server version to 33 (notes#1852)](https://github.com/nextcloud/notes/pull/1852)
+* [Style: Update sidebar and general icons to latest design (notes#1863)](https://github.com/nextcloud/notes/pull/1863)
+
+### Fixed
+
+* [Fix dead zones in clickable note area (notes#1841)](https://github.com/nextcloud/notes/pull/1841)
+* [Fix: Update composer command to include all dependencies for nextclou… (notes#1859)](https://github.com/nextcloud/notes/pull/1859)
+
+### Dependencies
+
+* [[main] Fix npm audit (notes#1834)](https://github.com/nextcloud/notes/pull/1834)
+* [Chore(deps-dev): Bump php-cs-fixer/shim from 3.94.2 to 3.95.1 (notes#1838)](https://github.com/nextcloud/notes/pull/1838)
+* [[main] Fix npm audit (notes#1844)](https://github.com/nextcloud/notes/pull/1844)
+* [Chore(deps): Bump easymde from 2.20.0 to 2.21.0 (notes#1845)](https://github.com/nextcloud/notes/pull/1845)
+* [Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.2.1 to 3.2.2 (notes#1847)](https://github.com/nextcloud/notes/pull/1847)
+* [Chore(deps): Bump axios from 1.15.0 to 1.16.0 (notes#1848)](https://github.com/nextcloud/notes/pull/1848)
+* [Chore(deps): Bump fast-xml-builder from 1.1.5 to 1.2.0 (notes#1849)](https://github.com/nextcloud/notes/pull/1849)
+* [Chore(deps-dev): Bump fast-uri from 3.1.0 to 3.1.2 (notes#1850)](https://github.com/nextcloud/notes/pull/1850)
+* [Chore(deps-dev): Bump @babel/plugin-transform-modules-systemjs from 7.28.5 to 7.29.4 (notes#1851)](https://github.com/nextcloud/notes/pull/1851)
+* [Chore(deps-dev): Bump @playwright/test from 1.59.1 to 1.60.0 (notes#1855)](https://github.com/nextcloud/notes/pull/1855)
+* [Chore(deps-dev): Bump @protobufjs/utf8 from 1.1.0 to 1.1.1 (notes#1856)](https://github.com/nextcloud/notes/pull/1856)
+* [Chore(deps-dev): Bump protobufjs from 7.5.5 to 7.5.8 (notes#1857)](https://github.com/nextcloud/notes/pull/1857)
+* [Chore(deps): Bump shivammathur/setup-php from 2.37.0 to 2.37.1 (notes#1860)](https://github.com/nextcloud/notes/pull/1860)
+* [[main] Fix npm audit (notes#1862)](https://github.com/nextcloud/notes/pull/1862)
+* [Chore(deps): Bump brace-expansion from 5.0.5 to 5.0.6 (notes#1865)](https://github.com/nextcloud/notes/pull/1865)
+* [Chore(deps-dev): Bump webpack-dev-server from 5.2.3 to 5.2.4 (notes#1867)](https://github.com/nextcloud/notes/pull/1867)
+* [Chore(deps): Bump qs and express (notes#1868)](https://github.com/nextcloud/notes/pull/1868)
+* [Chore(deps): Bump markdown-it from 14.1.1 to 14.2.0 (notes#1869)](https://github.com/nextcloud/notes/pull/1869)
+
 ## 5.0.0
 
 ### Added
