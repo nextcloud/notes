@@ -3,7 +3,7 @@
 		"guzzlehttp/guzzle": "^7",
 		"nextcloud/coding-standard": "^1.0",
 		"nextcloud/ocp": "dev-stable33",
-		"phan/phan": "^5",
+		"phan/phan": "^6",
 		"php-cs-fixer/shim": "3.95.3",
 		"psalm/phar": "^5.26",
 		"squizlabs/php_codesniffer": "^4",
