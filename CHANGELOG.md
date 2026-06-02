@@ -12,6 +12,20 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 5.0.1
+
+### Fixed
+
+* [Fix: Sharing on older NC versions with files v3 (notes#1853)](https://github.com/nextcloud/notes/pull/1853)
+
+### Dependencies
+
+* [[main] Fix npm audit (notes#1834)](https://github.com/nextcloud/notes/pull/1834)
+* [Chore(deps-dev): Bump php-cs-fixer/shim from 3.94.2 to 3.95.1 (notes#1838)](https://github.com/nextcloud/notes/pull/1838)
+* [Chore(deps): Bump easymde from 2.20.0 to 2.21.0 (notes#1845)](https://github.com/nextcloud/notes/pull/1845)
+* [Chore(deps): Bump axios from 1.15.0 to 1.16.0 (notes#1848)](https://github.com/nextcloud/notes/pull/1848)
+* [Chore(deps): Bump fast-xml-builder from 1.1.5 to 1.2.0 (notes#1849)](https://github.com/nextcloud/notes/pull/1849)
+
 ## 5.0.0
 
 ### Added
