@@ -65,7 +65,7 @@ class Note {
 	}
 
 	public function getExcerpt(int $maxlen = 100) : string {
-		$excerpt = $this->noteUtil->stripMarkdown($this->getExcerptSource($maxlen));
+		$excerpt = $this->noteUtil->stripMarkdown($this->getExcerptContent($maxlen));
 
 		$title = $this->getTitle();
 		if ($title !== '') {
@@ -87,7 +87,7 @@ class Note {
 	 * Lightweight best-effort content reader for excerpts only.
 	 */
 	private function getExcerptContent(int $maxlen) : string {
-		$handle = $this->file->read();
+		$handle = $this->file->fopen('r');
 		if (!is_resource($handle)) {
 			return '';
 		}
