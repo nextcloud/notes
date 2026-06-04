@@ -62,9 +62,9 @@ class Note {
 	}
 
 	public function getExcerpt(int $maxlen = 100) : string {
-		$excerpt = trim($this->noteUtil->stripMarkdown($this->getContent()));
+		$excerpt = trim($this->noteUtil->stripMarkdown($this->getExcerptSource($maxlen)));
 		$title = $this->getTitle();
-		if (!empty($title)) {
+		if ($title !== '') {
 			$length = mb_strlen($title, 'utf-8');
 			if (strncasecmp($excerpt, $title, $length) === 0) {
 				$excerpt = mb_substr($excerpt, $length, null, 'utf-8');
@@ -75,6 +75,37 @@ class Note {
 			$excerpt = mb_substr($excerpt, 0, $maxlen, 'utf-8') . '…';
 		}
 		return str_replace("\n", "\u{2003}", $excerpt);
+	}
+
+	/**
+	 * Lightweight best-effort content reader for excerpts only.
+	 */
+	private function getExcerptContent(int $maxlen) : string {
+		$handle = $this->file->read();
+		if (!is_resource($handle)) {
+			return '';
+		}
+
+		// Over-read bytes assuming worst-case UTF-8 size (up to 4 bytes per
+		// character). This is only a heuristic for preview generation; markdown
+		// stripping may reduce the visible character count further.
+		$bytesToRead = max(512, $maxlen * 4);
+
+		try {
+			$content = fread($handle, $bytesToRead);
+			if ($content === false) {
+				return '';
+			}
+		} finally {
+			fclose($handle);
+		}
+
+		// Remove any partial trailing multibyte character from the truncated read.
+		$content = mb_strcut($content, 0, strlen($content), 'UTF-8');
+
+		$content = str_replace([ pack('H*', 'FEFF'), pack('H*', 'FFEF'), pack('H*', 'EFBBBF') ], '', $content);
+
+		return $content;
 	}
 
 	public function getModified() : int {
