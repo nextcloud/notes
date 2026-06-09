@@ -160,7 +160,7 @@ export default {
 		setInlineCodeRule() {
 			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
 				const token = tokens[idx]
-				return '<code class="inline-code">' + token.content + '</code>'
+				return '<code class="inline-code">' + escapeHtml(token.content) + '</code>'
 			}
 		},
 	},
