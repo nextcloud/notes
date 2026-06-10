@@ -30,7 +30,7 @@ export default {
 
 	computed: {
 		isRichMode() {
-			return window.oc_appswebroots.text && store.state.app?.settings?.noteMode === 'rich'
+			return OC.appswebroots?.text && store.state.app?.settings?.noteMode === 'rich'
 		},
 		isPlainMode() {
 			return store.state.app?.settings?.noteMode === 'edit' || store.state.app?.settings?.noteMode === 'preview'
