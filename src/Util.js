@@ -29,6 +29,14 @@ export const categoryLabel = (category) => {
 	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
 }
 
+export const rootCategory = (category) => {
+	if (!category) {
+		return ''
+	}
+	const separator = category.indexOf('/')
+	return separator === -1 ? category : category.substring(0, separator)
+}
+
 export const routeIsNewNote = ($route) => {
 	return {}.hasOwnProperty.call($route.query, 'new')
 }
