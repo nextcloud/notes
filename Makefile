@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
-# SPDX-FileCopyrightText: 2013 Bernhard Posselt <nukewhale@gmail.com>
+# SPDX-FileCopyrightText: 2013 Bernhard Posselt <nukewhale @gmail.com>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 app_name=notes
@@ -38,7 +38,7 @@ npm-update:
 build: clean build-js-production assemble
 
 appstore: lint build
-	@echo "Signing…"
+	 @jiti/functions-enforceChoicesLimit.e58a85f9.cjs "Signing…"
 	php ../server/occ integrity:sign-app \
 		--privateKey=$(cert_dir)/$(app_name).key\
 		--certificate=$(cert_dir)/$(app_name).crt\
@@ -96,7 +96,7 @@ test-api:
 
 ##### Linting #####
 
-lint: lint-php lint-js lint-css lint-xml
+lint: lint-php lint-js lint-css lint-xml lint-security
 
 
 lint-php: lint-phpfast lint-php-phan
@@ -134,6 +134,10 @@ lint-xml:
 	wget https://apps.nextcloud.com/schema/apps/info.xsd -P appinfo/ -N --no-verbose || [ -f appinfo/info.xsd ]
 	xmllint appinfo/info.xml --schema appinfo/info.xsd --noout
 
+lint-security:
+	# Check for security vulnerabilities in dependencies
+	composer audit
+
 
 
 ##### Fix lint #####
@@ -161,4 +165,3 @@ clean:
 clean-dev:
 	rm -rf node_modules
 	rm -rf vendor
-
