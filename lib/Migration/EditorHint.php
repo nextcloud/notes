@@ -17,11 +17,10 @@ use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
 class EditorHint implements IRepairStep {
-	private IConfig $config;
-	private IUserManager $userManager;
-	public function __construct(IConfig $config, IUserManager $userManager) {
-		$this->config = $config;
-		$this->userManager = $userManager;
+	public function __construct(
+		private IConfig $config,
+		private IUserManager $userManager,
+	) {
 	}
 
 	public function getName() {
