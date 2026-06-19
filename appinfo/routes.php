@@ -103,7 +103,6 @@ return ['routes' => [
 	],
 
 	//////////  A T T A C H M E N T S  //////////
-
 	[
 		'name' => 'notes#getAttachment',
 		'url' => '/notes/{noteid}/attachment',
