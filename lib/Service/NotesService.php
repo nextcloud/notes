@@ -16,18 +16,11 @@ use OCP\Files\Folder;
 use OCP\Files\NotPermittedException;
 
 class NotesService {
-	private MetaService $metaService;
-	private SettingsService $settings;
-	private NoteUtil $noteUtil;
-
 	public function __construct(
-		MetaService $metaService,
-		SettingsService $settings,
-		NoteUtil $noteUtil,
+		private MetaService $metaService,
+		private SettingsService $settings,
+		private NoteUtil $noteUtil,
 	) {
-		$this->metaService = $metaService;
-		$this->settings = $settings;
-		$this->noteUtil = $noteUtil;
 	}
 
 	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
@@ -94,6 +87,7 @@ class NotesService {
 			}
 		));
 	}
+
 	private function searchTermsInNote(Note $note, array $terms) : bool {
 		try {
 			$d = $note->getData();
@@ -108,6 +102,7 @@ class NotesService {
 			return false;
 		}
 	}
+
 	private function searchTermInData(array $strings, string $term) : bool {
 		foreach ($strings as $str) {
 			if (stripos($str, $term) !== false) {
