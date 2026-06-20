@@ -13,6 +13,8 @@ use Exception;
 use OCA\Notes\Service\Note;
 
 class ETagDoesNotMatchException extends Exception {
-	public function __construct(public Note $note) {
+	public function __construct(
+		public Note $note,
+	) {
 	}
 }
