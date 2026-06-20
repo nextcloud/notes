@@ -14,7 +14,9 @@ use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
 class Cleanup implements IRepairStep {
-	public function __construct(private MetaMapper $metaMapper) {
+	public function __construct(
+		private MetaMapper $metaMapper,
+	) {
 	}
 
 	/*
