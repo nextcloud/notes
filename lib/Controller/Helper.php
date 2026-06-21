@@ -16,12 +16,10 @@ use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\Util;
-
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\IUserSession;
-
 use Psr\Log\LoggerInterface;
 
 class Helper {

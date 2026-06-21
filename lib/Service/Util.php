@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OCA\Notes\Service;
 
 use OCP\IL10N;
-
 use Psr\Log\LoggerInterface;
 
 class Util {

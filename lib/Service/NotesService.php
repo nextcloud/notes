@@ -117,7 +117,6 @@ class NotesService {
 		return false;
 	}
 
-
 	/**
 	 * @throws \OCP\Files\NotPermittedException
 	 */
@@ -138,7 +137,6 @@ class NotesService {
 
 		return new Note($file, $notesFolder, $this->noteUtil);
 	}
-
 
 	/**
 	 * @throws NoteDoesNotExistException if note does not exist

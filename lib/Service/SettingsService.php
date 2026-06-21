@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OCA\Notes\Service;
 
 use OCA\Notes\AppInfo\Application;
-
 use OCP\App\IAppManager;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
