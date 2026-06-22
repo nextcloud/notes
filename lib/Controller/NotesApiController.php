@@ -25,27 +25,16 @@ use OCP\Files\IMimeTypeDetector;
 use OCP\IRequest;
 
 class NotesApiController extends ApiController {
-	private NotesService $service;
-	private MetaService $metaService;
-	private SettingsService $settingsService;
-	private Helper $helper;
-	private IMimeTypeDetector $mimeTypeDetector;
-
 	public function __construct(
 		string $AppName,
 		IRequest $request,
-		NotesService $service,
-		MetaService $metaService,
-		SettingsService $settingsService,
-		Helper $helper,
-		IMimeTypeDetector $mimeTypeDetector,
+		private NotesService $service,
+		private MetaService $metaService,
+		private SettingsService $settingsService,
+		private Helper $helper,
+		private IMimeTypeDetector $mimeTypeDetector,
 	) {
 		parent::__construct($AppName, $request);
-		$this->service = $service;
-		$this->metaService = $metaService;
-		$this->settingsService = $settingsService;
-		$this->helper = $helper;
-		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
 
 	/**
@@ -316,5 +305,4 @@ class NotesApiController extends ApiController {
 			);
 		});
 	}
-
 }

@@ -23,21 +23,12 @@ use OCP\IUserSession;
 use Psr\Log\LoggerInterface;
 
 class Helper {
-	private NotesService $notesService;
-	private MetaService $metaService;
-	public LoggerInterface $logger;
-	private IUserSession $userSession;
-
 	public function __construct(
-		NotesService $notesService,
-		MetaService $metaService,
-		IUserSession $userSession,
-		LoggerInterface $logger,
+		private NotesService $notesService,
+		private MetaService $metaService,
+		private IUserSession $userSession,
+		public LoggerInterface $logger,
 	) {
-		$this->notesService = $notesService;
-		$this->metaService = $metaService;
-		$this->userSession = $userSession;
-		$this->logger = $logger;
 	}
 
 	public function getUID() : string {

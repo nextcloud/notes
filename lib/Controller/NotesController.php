@@ -28,33 +28,18 @@ use OCP\IL10N;
 use OCP\IRequest;
 
 class NotesController extends Controller {
-	private NotesService $notesService;
-	private SettingsService $settingsService;
-	private ILockManager $lockManager;
-	private Helper $helper;
-	private IConfig $settings;
-	private IL10N $l10n;
-	private IMimeTypeDetector $mimeTypeDetector;
-
 	public function __construct(
 		string $AppName,
 		IRequest $request,
-		NotesService $notesService,
-		ILockManager $lockManager,
-		SettingsService $settingsService,
-		Helper $helper,
-		IConfig $settings,
-		IL10N $l10n,
-		IMimeTypeDetector $mimeTypeDetector,
+		private NotesService $notesService,
+		private ILockManager $lockManager,
+		private SettingsService $settingsService,
+		private Helper $helper,
+		private IConfig $settings,
+		private IL10N $l10n,
+		private IMimeTypeDetector $mimeTypeDetector,
 	) {
 		parent::__construct($AppName, $request);
-		$this->notesService = $notesService;
-		$this->settingsService = $settingsService;
-		$this->lockManager = $lockManager;
-		$this->helper = $helper;
-		$this->settings = $settings;
-		$this->l10n = $l10n;
-		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
 
 	/**

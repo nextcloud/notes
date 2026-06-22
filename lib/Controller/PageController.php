@@ -33,33 +33,18 @@ use OCP\IUserSession;
 use Psr\Log\LoggerInterface;
 
 class PageController extends Controller {
-	private NotesService $notesService;
-	private IConfig $config;
-	private IUserSession $userSession;
-	private IURLGenerator $urlGenerator;
-	private IEventDispatcher $eventDispatcher;
-	private IInitialState $initialState;
-	private LoggerInterface $logger;
-
 	public function __construct(
 		string $AppName,
 		IRequest $request,
-		NotesService $notesService,
-		IConfig $config,
-		IUserSession $userSession,
-		IURLGenerator $urlGenerator,
-		IEventDispatcher $eventDispatcher,
-		IInitialState $initialState,
-		LoggerInterface $logger,
+		private NotesService $notesService,
+		private IConfig $config,
+		private IUserSession $userSession,
+		private IURLGenerator $urlGenerator,
+		private IEventDispatcher $eventDispatcher,
+		private IInitialState $initialState,
+		private LoggerInterface $logger,
 	) {
 		parent::__construct($AppName, $request);
-		$this->notesService = $notesService;
-		$this->config = $config;
-		$this->userSession = $userSession;
-		$this->urlGenerator = $urlGenerator;
-		$this->eventDispatcher = $eventDispatcher;
-		$this->initialState = $initialState;
-		$this->logger = $logger;
 	}
 
 	/**

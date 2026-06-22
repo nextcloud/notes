@@ -17,18 +17,13 @@ use OCP\IRequest;
 use OCP\IUserSession;
 
 class SettingsController extends Controller {
-	private SettingsService $service;
-	private IUserSession $userSession;
-
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		SettingsService $service,
-		IUserSession $userSession,
+		private SettingsService $service,
+		private IUserSession $userSession,
 	) {
 		parent::__construct($appName, $request);
-		$this->service = $service;
-		$this->userSession = $userSession;
 	}
 
 	private function getUID(): string {
