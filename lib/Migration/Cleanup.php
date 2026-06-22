@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OCA\Notes\Migration;
 
 use OCA\Notes\Db\MetaMapper;
-
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 

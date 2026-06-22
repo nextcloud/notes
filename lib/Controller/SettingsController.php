@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\SettingsService;
-
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\JSONResponse;

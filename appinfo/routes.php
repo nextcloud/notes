@@ -37,7 +37,6 @@ return ['routes' => [
 		'requirements' => ['id' => '\d+'],
 	],
 
-
 	//////////  N O T E S  //////////
 	[
 		'name' => 'notes#index',
@@ -122,7 +121,6 @@ return ['routes' => [
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
 	['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
 	['name' => 'settings#migrate', 'url' => '/settings/migrate', 'verb' => 'POST'],
-
 
 	//////////  A P I  //////////
 	[

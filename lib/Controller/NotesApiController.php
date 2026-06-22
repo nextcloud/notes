@@ -14,7 +14,6 @@ use OCA\Notes\Service\MetaNote;
 use OCA\Notes\Service\MetaService;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
-
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\CORS;
@@ -23,7 +22,6 @@ use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\StreamResponse;
 use OCP\Files\IMimeTypeDetector;
-
 use OCP\IRequest;
 
 class NotesApiController extends ApiController {
@@ -49,7 +47,6 @@ class NotesApiController extends ApiController {
 		$this->helper = $helper;
 		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
-
 
 	/**
 	 */
@@ -94,7 +91,6 @@ class NotesApiController extends ApiController {
 		});
 	}
 
-
 	/**
 	 *
 	 */
@@ -111,7 +107,6 @@ class NotesApiController extends ApiController {
 			;
 		});
 	}
-
 
 	/**
 	 *
@@ -274,8 +269,6 @@ class NotesApiController extends ApiController {
 			return new JSONResponse([], Http::STATUS_BAD_REQUEST);
 		});
 	}
-
-
 
 	/**
 	 * With help from: https://github.com/nextcloud/cookbook

@@ -12,7 +12,6 @@ namespace OCA\Notes\AppInfo;
 use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\Util;
-
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Search\IProvider;
@@ -34,7 +33,6 @@ class SearchProvider implements IProvider {
 		$this->notesService = $notesService;
 		$this->url = $url;
 	}
-
 
 	public function getId(): string {
 		return Application::APP_ID;

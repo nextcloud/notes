@@ -13,7 +13,6 @@ namespace OCA\Notes\Controller;
 use OCA\Files\Event\LoadSidebar;
 use OCA\Notes\AppInfo\Application;
 use OCA\Notes\Service\NotesService;
-
 use OCA\Notes\Service\SettingsService;
 use OCA\Text\Event\LoadEditor;
 use OCA\Viewer\Event\LoadViewer;
@@ -62,7 +61,6 @@ class PageController extends Controller {
 		$this->initialState = $initialState;
 		$this->logger = $logger;
 	}
-
 
 	/**
 	 * @suppress PhanUndeclaredClassReference, PhanTypeMismatchArgument, PhanUndeclaredClassMethod

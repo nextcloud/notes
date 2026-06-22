@@ -13,14 +13,12 @@ namespace OCA\Notes\Controller;
 use OCA\Notes\Service\Note;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
-
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\StreamResponse;
-
 use OCP\Files\IMimeTypeDetector;
 use OCP\Files\Lock\ILock;
 use OCP\Files\Lock\ILockManager;
@@ -107,7 +105,6 @@ class NotesController extends Controller {
 		});
 	}
 
-
 	/**
 	 *
 	 */
@@ -140,7 +137,6 @@ class NotesController extends Controller {
 		});
 	}
 
-
 	/**
 	 *
 	 */
@@ -164,7 +160,6 @@ class NotesController extends Controller {
 		});
 	}
 
-
 	/**
 	 *
 	 */
@@ -178,7 +173,6 @@ class NotesController extends Controller {
 			return $this->helper->getNoteData($note);
 		});
 	}
-
 
 	/**
 	 *
@@ -219,7 +213,6 @@ class NotesController extends Controller {
 		});
 	}
 
-
 	/**
 	 *
 	 */
@@ -238,7 +231,6 @@ class NotesController extends Controller {
 		});
 	}
 
-
 	/**
 	 *
 	 */
@@ -250,7 +242,6 @@ class NotesController extends Controller {
 			return $this->helper->getNoteData($note);
 		});
 	}
-
 
 	/**
 	 *
@@ -316,7 +307,6 @@ class NotesController extends Controller {
 			return $result;
 		});
 	}
-
 
 	/**
 	 *
