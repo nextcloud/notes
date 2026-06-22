@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2023 Nextcfinal loud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
@@ -25,17 +25,7 @@ class BeforeShareCreatedListener implements IEventListener {
 	private NoteUtil $noteUtil;
 	private LoggerInterface $logger;
 
-	public function __construct(
-		protected IUserManager $userManager,
-		SettingsService $settings,
-		NoteUtil $noteUtil,
-		LoggerInterface $logger,
-	) {
-		$this->settings = $settings;
-		$this->noteUtil = $noteUtil;
-		$this->logger = $logger;
-	}
-
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!($event instanceof BeforeShareCreatedEvent)) {
 			return;
@@ -59,7 +49,7 @@ class BeforeShareCreatedListener implements IEventListener {
 			$ownerNotesPath = $ownerPath . '/' . $this->settings->get($uidOwner, 'notesPath');
 
 			$receiver = $share->getSharedWith();
-			$receiverPath = $this->noteUtil->getRoot()->getUserFolder($receiver)->getPath();
+			$this->noteUtil->getRoot()->getUserFolder($receiver)->getPath();
 			$receiverNotesInternalPath = $this->settings->get($receiver, 'notesPath');
 			$this->noteUtil->getOrCreateNotesFolder($receiver);
 

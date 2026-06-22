@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -23,6 +23,7 @@ class Cleanup implements IRepairStep {
 	/*
 	 * @inheritdoc
 	 */
+	#[\Override]
 	public function getName(): string {
 		return 'Clean up meta table';
 	}
@@ -30,6 +31,7 @@ class Cleanup implements IRepairStep {
 	/**
 	 * @inheritdoc
 	 */
+	#[\Override]
 	public function run(IOutput $output): void {
 		$this->metaMapper->deleteAll();
 	}

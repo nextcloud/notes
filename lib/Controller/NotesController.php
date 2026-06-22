@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -264,7 +264,6 @@ class NotesController extends Controller {
 			$favorite
 		) {
 			$note = $this->notesService->get($this->helper->getUID(), $id);
-			$result = null;
 			switch ($property) {
 				case 'modified':
 					if ($modified !== null) {
@@ -385,7 +384,7 @@ class NotesController extends Controller {
 		});
 	}
 
-	private function inLockScope(Note $note, callable $callback) {
+	private function inLockScope(Note $note, callable $callback): void {
 		$isRichText = $this->settingsService->get($this->helper->getUID(), 'noteMode') === 'rich';
 		$lockContext = new LockContext(
 			$note->getFile(),

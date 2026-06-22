@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -16,10 +16,6 @@ class TagService {
 	private ?ITags $tagger;
 	private $cachedTags;
 
-	public function __construct(ITagManager $tagManager) {
-		$this->tagger = $tagManager->load('files');
-	}
-
 	/**
 	 * @param list<int> $fileIds
 	 * @return void
@@ -28,7 +24,7 @@ class TagService {
 		$this->cachedTags = $this->tagger->getTagsForObjects($fileIds);
 	}
 
-	public function isFavorite($fileId) : bool {
+	public function isFavorite(int $fileId) : bool {
 		$alltags = $this->cachedTags;
 		if (!is_array($alltags)) {
 			$alltags = $this->tagger->getTagsForObjects([$fileId]);
@@ -36,7 +32,7 @@ class TagService {
 		return array_key_exists($fileId, $alltags) && in_array(ITags::TAG_FAVORITE, $alltags[$fileId]);
 	}
 
-	public function setFavorite($fileId, $favorite) : void {
+	public function setFavorite(int $fileId, bool $favorite) : void {
 		if ($favorite) {
 			$this->tagger->addToFavorites($fileId);
 		} else {

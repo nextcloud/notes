@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 /**
  * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
@@ -24,18 +24,7 @@ class NoteReferenceProvider extends ADiscoverableReferenceProvider {
 	private IL10N $l10n;
 	private LoggerInterface $logger;
 
-	public function __construct(
-		private IURLGenerator $urlGenerator,
-		private NotesService $notesService,
-		IUserSession $userSession,
-		IFactory $l10n,
-		LoggerInterface $logger,
-	) {
-		$this->userId = $userSession->getUser()?->getUID();
-		$this->l10n = $l10n->get('notes');
-		$this->logger = $logger;
-	}
-
+	#[\Override]
 	public function matchReference(string $referenceText): bool {
 		return $this->getNoteLinkId($referenceText) !== null;
 	}
@@ -54,6 +43,7 @@ class NoteReferenceProvider extends ADiscoverableReferenceProvider {
 		return null;
 	}
 
+	#[\Override]
 	public function resolveReference(string $referenceText): ?IReference {
 		$noteId = $this->getNoteLinkId($referenceText);
 		$reference = new Reference($referenceText);
@@ -75,26 +65,32 @@ class NoteReferenceProvider extends ADiscoverableReferenceProvider {
 		return null;
 	}
 
+	#[\Override]
 	public function getCachePrefix(string $referenceId): string {
 		return $referenceId;
 	}
 
+	#[\Override]
 	public function getCacheKey(string $referenceId): string {
 		return $this->userId ?? '';
 	}
 
+	#[\Override]
 	public function getId(): string {
 		return 'notes' ;
 	}
 
+	#[\Override]
 	public function getTitle(): string {
 		return $this->l10n->t('Notes');
 	}
 
+	#[\Override]
 	public function getOrder(): int {
 		return 10;
 	}
 
+	#[\Override]
 	public function getIconUrl(): string {
 		return $this->urlGenerator->imagePath('notes', 'notes.svg');
 	}

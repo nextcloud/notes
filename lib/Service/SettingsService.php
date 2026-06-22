@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -27,50 +27,6 @@ class SettingsService {
 	private array $attrs;
 
 	private $defaultSuffixes = [ '.md', '.txt' ];
-
-	public function __construct(
-		IConfig $config,
-		IL10N $l10n,
-		IRootFolder $root,
-		IAppManager $appManager,
-	) {
-		$this->config = $config;
-		$this->l10n = $l10n;
-		$this->root = $root;
-		$this->appManager = $appManager;
-		$this->attrs = [
-			'fileSuffix' => $this->getListAttrs('fileSuffix', [...$this->defaultSuffixes, 'custom']),
-			'notesPath' => [
-				'default' => function (string $uid) {
-					return $this->getDefaultNotesNode($uid)['path'];
-				},
-				'validate' => function ($value) {
-					$value = str_replace([ '/', '\\' ], DIRECTORY_SEPARATOR, $value);
-					$parts = explode(DIRECTORY_SEPARATOR, $value);
-					$path = [];
-					foreach ($parts as $part) {
-						if ($part === '..') {
-							array_pop($path);
-						} elseif (strlen($part) && $part !== '.') {
-							array_push($path, $part);
-						}
-					}
-					return implode(DIRECTORY_SEPARATOR, $path);
-				},
-			],
-			'noteMode' => $this->getListAttrs('noteMode', $this->getAvailableEditorModes()),
-			'customSuffix' => [
-				'default' => $this->defaultSuffixes[0],
-				'validate' => function ($value) {
-					$out = ltrim(preg_replace('/[^A-Za-z0-9.-]/', '', $value), '.');
-					if (empty($out)) {
-						$out = substr($this->defaultSuffixes[0], 1);
-					}
-					return '.' . $out;
-				},
-			],
-		];
-	}
 
 	private function getListAttrs(string $attributeName, array $values) : array {
 		$default = $this->config->getAppValue(Application::APP_ID, $attributeName, $values[0]);
@@ -182,7 +138,7 @@ class SettingsService {
 		return $settings;
 	}
 
-	public function getAll(string $uid, $saveInitial = false) : \stdClass {
+	public function getAll(string $uid, bool $saveInitial = false) : \stdClass {
 		$settings = $this->getSettingsFromDB($uid);
 		// use default for empty settings
 		$toBeSaved = false;

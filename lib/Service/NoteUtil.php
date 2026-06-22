@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -29,29 +29,11 @@ class NoteUtil {
 	private IUserSession $userSession;
 	private SettingsService $settingsService;
 
-	public function __construct(
-		Util $util,
-		IRootFolder $root,
-		IDBConnection $db,
-		TagService $tagService,
-		IManager $shareManager,
-		IUserSession $userSession,
-		SettingsService $settingsService,
-	) {
-		$this->util = $util;
-		$this->root = $root;
-		$this->db = $db;
-		$this->tagService = $tagService;
-		$this->shareManager = $shareManager;
-		$this->userSession = $userSession;
-		$this->settingsService = $settingsService;
-	}
-
 	public function getRoot() : IRootFolder {
 		return $this->root;
 	}
 
-	public function getPathForUser(File $file) {
+	public function getPathForUser(File $file): string|null {
 		$userFolder = $this->root->getUserFolder($this->userSession->getUser()->getUID());
 		return $userFolder->getRelativePath($file->getPath());
 	}
@@ -161,7 +143,7 @@ class NoteUtil {
 		return trim($str);
 	}
 
-	public function stripMarkdown(string $str) : string {
+	public function stripMarkdown(string $str) : string|null {
 		// prepare content: remove markdown characters and empty spaces
 		$str = preg_replace("/^\s*[*+-]\s+/mu", '', $str); // list item
 		$str = preg_replace("/^#+\s+(.*?)\s*#*$/mu", '$1', $str); // headline

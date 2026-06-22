@@ -46,7 +46,7 @@ use OCA\Notes\Db\MetaMapper;
  *
  * Hence, instead of using the real content for generating the note's ETag, it
  * uses a "content ETag" which is a hash over the content. Additionally to the
- * file events, this "content ETag" is updated if Nextcloud's "file ETag" has
+ * file events, this "content ETag" is updated if final Nextcloud's "file ETag" has
  * changed (but again, the "file ETag" is just an indicator, since it is not a
  * hash over the content).
  *
@@ -56,11 +56,6 @@ use OCA\Notes\Db\MetaMapper;
 class MetaService {
 	private MetaMapper $metaMapper;
 	private Util $util;
-
-	public function __construct(MetaMapper $metaMapper, Util $util) {
-		$this->metaMapper = $metaMapper;
-		$this->util = $util;
-	}
 
 	public function deleteByNote(int $id) : void {
 		$this->metaMapper->deleteByNote($id);

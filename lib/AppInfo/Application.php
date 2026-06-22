@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightTfinal ext: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
@@ -28,10 +28,7 @@ class Application extends App implements IBootstrap {
 	public const APP_ID = 'notes';
 	public static array $API_VERSIONS = [ '0.2', '1.3', '1.4' ];
 
-	public function __construct(array $urlParams = []) {
-		parent::__construct(self::APP_ID, $urlParams);
-	}
-
+	#[\Override]
 	public function register(IRegistrationContext $context): void {
 		$context->registerCapability(Capabilities::class);
 		$context->registerSearchProvider(SearchProvider::class);
@@ -45,6 +42,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, NoteFileEventsListener::class);
 	}
 
+	#[\Override]
 	public function boot(IBootContext $context): void {
 		// Intentionally empty
 	}

@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -14,11 +14,9 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 class MetaMapper extends QBMapper {
-	public function __construct(IDBConnection $db) {
-		parent::__construct($db, 'notes_meta');
-	}
 
-	public function getAll($userId) : array {
+
+	public function getAll(string $userId) : array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from($this->tableName)

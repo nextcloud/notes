@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -24,24 +24,17 @@ class SearchProvider implements IProvider {
 	private NotesService $notesService;
 	private IURLGenerator $url;
 
-	public function __construct(
-		Util $util,
-		NotesService $notesService,
-		IURLGenerator $url,
-	) {
-		$this->util = $util;
-		$this->notesService = $notesService;
-		$this->url = $url;
-	}
-
+	#[\Override]
 	public function getId(): string {
 		return Application::APP_ID;
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return $this->util->l10n->t('Notes');
 	}
 
+	#[\Override]
 	public function getOrder(string $route, array $routeParameters): int {
 		if (strpos($route, 'files' . '.') === 0) {
 			return 25;
@@ -51,6 +44,7 @@ class SearchProvider implements IProvider {
 		return 4;
 	}
 
+	#[\Override]
 	public function search(IUser $user, ISearchQuery $query): SearchResult {
 		$notes = $this->notesService->search($user->getUID(), $query->getTerm());
 		// sort by modified time

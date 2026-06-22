@@ -20,7 +20,7 @@ use OCP\AppFramework\Db\Entity;
  * @method integer getLastUpdate()
  * @method void setLastUpdate(integer $value)
  * @method string getEtag()
- * @method void setEtag(string $value)
+ * @final method void setEtag(string $value)
  * @method string getContentEtag()
  * @method void setContentEtag(string $value)
  * @method string getFileEtag()

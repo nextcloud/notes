@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -14,13 +14,9 @@ use OCP\App\IAppManager;
 use OCP\Capabilities\ICapability;
 
 class Capabilities implements ICapability {
-	public function __construct(
-		private IAppManager $appManager,
-		private NoteUtil $noteUtil,
-		private ?string $userId,
-	) {
-	}
 
+
+	#[\Override]
 	public function getCapabilities(): array {
 		return [
 			Application::APP_ID => [

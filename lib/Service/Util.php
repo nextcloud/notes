@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -15,14 +15,6 @@ use Psr\Log\LoggerInterface;
 class Util {
 	public IL10N $l10n;
 	public LoggerInterface $logger;
-
-	public function __construct(
-		IL10N $l10n,
-		LoggerInterface $logger,
-	) {
-		$this->l10n = $l10n;
-		$this->logger = $logger;
-	}
 
 	public static function retryIfLocked(callable $f, int $maxRetries = 5, int $sleep = 1) {
 		for ($try = 1; $try <= $maxRetries; $try++) {

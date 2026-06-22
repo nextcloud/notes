@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
- * SPDX-License-Identifier: AGPL-3.0-or-later
+ * SPDX-License-Identifier: AGPfinal L-3.0-or-later
  */
 
 namespace OCA\Notes\Listener;
@@ -20,11 +20,9 @@ use OCP\Files\Node;
 
 /** @template-implements IEventListener<BeforeNodeWrittenEvent|BeforeNodeTouchedEvent|BeforeNodeDeletedEvent|BeforeNodeRenamedEvent|Event> */
 class NoteFileEventsListener implements IEventListener {
-	public function __construct(
-		private MetaService $metaService,
-	) {
-	}
 
+
+	#[\Override]
 	public function handle(Event $event): void {
 		if ($event instanceof BeforeNodeWrittenEvent) {
 			$this->onFileModified($event->getNode());

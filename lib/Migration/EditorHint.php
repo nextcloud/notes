@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -24,10 +24,15 @@ class EditorHint implements IRepairStep {
 		$this->userManager = $userManager;
 	}
 
+	#[\Override]
 	public function getName() {
 		return 'Show a hint about the new editor to existing users';
 	}
 
+	#[\Override]
+	/**
+	 * @return void
+	 */
 	public function run(IOutput $output) {
 		$appVersion = $this->config->getAppValue('notes', 'installed_version');
 

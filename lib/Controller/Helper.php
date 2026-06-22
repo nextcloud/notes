@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -27,18 +27,6 @@ class Helper {
 	private MetaService $metaService;
 	public LoggerInterface $logger;
 	private IUserSession $userSession;
-
-	public function __construct(
-		NotesService $notesService,
-		MetaService $metaService,
-		IUserSession $userSession,
-		LoggerInterface $logger,
-	) {
-		$this->notesService = $notesService;
-		$this->metaService = $metaService;
-		$this->userSession = $userSession;
-		$this->logger = $logger;
-	}
 
 	public function getUID() : string {
 		return $this->userSession->getUser()->getUID();

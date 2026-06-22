@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -19,16 +19,6 @@ class NotesService {
 	private MetaService $metaService;
 	private SettingsService $settings;
 	private NoteUtil $noteUtil;
-
-	public function __construct(
-		MetaService $metaService,
-		SettingsService $settings,
-		NoteUtil $noteUtil,
-	) {
-		$this->metaService = $metaService;
-		$this->settings = $settings;
-		$this->noteUtil = $noteUtil;
-	}
 
 	public function getAll(string $userId, bool $autoCreateNotesFolder = false) : array {
 		$customExtension = $this->getCustomExtension($userId);
@@ -141,7 +131,7 @@ class NotesService {
 	/**
 	 * @throws NoteDoesNotExistException if note does not exist
 	 */
-	public function delete(string $userId, int $id) {
+	public function delete(string $userId, int $id): void {
 		$customExtension = $this->getCustomExtension($userId);
 		$notesFolder = $this->getNotesFolder($userId);
 		$file = self::getFileById($customExtension, $notesFolder, $id);
@@ -279,7 +269,7 @@ class NotesService {
 	/**
 	 * Retrieve the value of user defined files extension
 	 */
-	private function getCustomExtension(string $userId) {
+	private function getCustomExtension(string $userId): string {
 		$suffix = $this->settings->get($userId, 'customSuffix');
 		return ltrim($suffix, '.');
 	}
@@ -323,11 +313,16 @@ class NotesService {
 	 * @param $userId
 	 * @param $noteid
 	 * @param $fileDataArray
+	 *
 	 * @throws NotPermittedException
 	 * @throws ImageNotWritableException
-	 *                                   https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
+  *                                   https://github.com/nextcloud/deck/blob/master/lib/Service/AttachmentService.php
+	 *
+	 * @return string[]
+	 *
+	 * @psalm-return array{filename: string}
 	 */
-	public function createImage(string $userId, int $noteid, $fileDataArray) {
+	public function createImage(string $userId, int $noteid, array $fileDataArray): array {
 		$note = $this->get($userId, $noteid);
 		$notesFolder = $this->getNotesFolder($userId);
 		$parent = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());

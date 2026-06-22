@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -25,19 +25,10 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	private IL10N $l10n;
 	private NotesService $notesService;
 
-	public function __construct(
-		IURLGenerator $url,
-		IL10N $l10n,
-		NotesService $notesService,
-	) {
-		$this->url = $url;
-		$this->l10n = $l10n;
-		$this->notesService = $notesService;
-	}
-
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getId(): string {
 		return 'notes';
 	}
@@ -45,6 +36,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getTitle(): string {
 		return $this->l10n->t('Notes');
 	}
@@ -52,6 +44,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getOrder(): int {
 		return 30;
 	}
@@ -59,6 +52,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getIconClass(): string {
 		return 'icon-notes';
 	}
@@ -66,6 +60,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getUrl(): ?string {
 		return $this->url->linkToRouteAbsolute('notes.page.index');
 	}
@@ -73,10 +68,12 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function load(): void {
 		\OCP\Util::addScript('notes', 'notes-dashboard');
 	}
 
+	#[\Override]
 	public function getWidgetButtons(string $userId): array {
 		$buttons = [
 			new WidgetButton(
@@ -95,6 +92,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 		return $buttons;
 	}
 
+	#[\Override]
 	public function getItems(string $userId, ?string $since = null, int $limit = 7): array {
 		$notes = $this->notesService->getTopNotes($userId);
 		$notes = array_slice($notes, 0, $limit);
@@ -112,6 +110,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 		}, $notes));
 	}
 
+	#[\Override]
 	public function getIconUrl(): string {
 		return $this->url->getAbsoluteURL($this->url->imagePath('notes', 'notes-dark.svg'));
 	}
