@@ -116,6 +116,7 @@ class SettingsService {
 			}
 
 			try {
+				/** @var Folder $node */
 				$node = $userFolder->get($path);
 				return [
 					'path' => $path,
