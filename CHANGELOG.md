@@ -12,6 +12,19 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 6.0.1
+
+### Changed
+
+* [chore: escape inline markdown content (notes#1907)](https://github.com/nextcloud/notes/pull/1907)
+* [chore(frontend): Use OC.appswebroots instead of oc_appswebroots (notes#1891)](https://github.com/nextcloud/notes/pull/1891)
+* [chore: Apply php-cs-fixer changes and constructor property promotion (notes#1905)](https://github.com/nextcloud/notes/pull/1905)
+
+### Dependencies
+
+* [[main] Fix npm audit (notes#1876)](https://github.com/nextcloud/notes/pull/1876)
+* [[main] Update nextcloud/ocp dependency (notes#1875)](https://github.com/nextcloud/notes/pull/1875)
+
 ## 6.0.0
 
 ### Added
