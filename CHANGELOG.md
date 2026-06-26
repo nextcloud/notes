@@ -12,6 +12,12 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 5.0.2
+
+### Changes
+
+* [chore: escape inline markdown content (notes#1908)](https://github.com/nextcloud/notes/pull/1908)
+
 ## 5.0.1
 
 ### Fixed
