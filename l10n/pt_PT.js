@@ -2,9 +2,12 @@ OC.L10N.register(
     "notes",
     {
     "Notes" : "Notas",
+    "More notes" : "Mais notas",
     "Error" : "Erro",
     "New note" : "Nova nota",
+    "Plain text" : "Texto puro",
     "Preview" : "Pré-visualização",
+    "The selection will be turned into monospace" : "A seleção será transformada em monoespaçado",
     "Files" : "Ficheiros",
     "Delete" : "Delete",
     "Cancel" : "Cancel",
@@ -25,6 +28,13 @@ OC.L10N.register(
     "This month" : "Este mês",
     "Last month" : "Ultimo mês",
     "Loading …" : "A carregar...",
-    "Tasks" : "Tarefas"
+    "Updating settings has failed." : "A atualização das configurações falhou.",
+    "Renaming note {id} has failed." : "Falha ao renomear a nota {id}.",
+    "Deleting note {id} has failed." : "A exclusão da nota {id} falhou.",
+    "Deleting category \"{category}\" has failed." : "A remoção da categoria \"{category}\" falhou.",
+    "Tasks" : "Tarefas",
+    "Write nice todo lists" : "Escreva boas listas de tarefas",
+    "Roy, 1979" : "Roy, 1979",
+    "Quotes" : "Cotações"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
