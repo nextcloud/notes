@@ -109,7 +109,7 @@ OC.L10N.register(
     "Insufficient storage." : "Nepakankama atminties talpa.",
     "See JavaScript console and server log for details." : "Išsamesnės informacijos ieškokite „JavaScript“ konsolėje ir serverio žurnale.",
     "Updating settings has failed." : "Nepavyko atnaujinti nustatymų.",
-    "Fetching notes for dashboard has failed." : "Nepavyko gauti pastabų ataskaitų suvestinei.",
+    "Fetching notes for dashboard has failed." : "Nepavyko gauti pastabų skydeliui.",
     "Fetching notes has failed." : "Nepavyko gauti užrašų.",
     "Fetching note {id} has failed." : "Nepavyko atsisiųsti {id} užrašą.",
     "Refreshing note {id} has failed." : "Nepavyko atnaujinti {id} užrašo.",
