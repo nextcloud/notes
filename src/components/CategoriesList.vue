@@ -245,9 +245,9 @@ export default {
 			}
 		},
 
-		removeNotesFromCategory(categoryName) {
+		moveNotesToUncategorized(categoryName) {
 			for (const note of this.getNotesInCategory(categoryName)) {
-				store.commit('removeNote', note.id)
+				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'category', value: '' })
 			}
 		},
 
@@ -293,10 +293,10 @@ export default {
 				let confirmed = false
 				const message = this.n(
 					'notes',
-					'Delete category "{category}" and its {count} note?',
-					'Delete category "{category}" and its {count} notes?',
+					'Delete category "{category}"? Its {count} note will be kept and moved to "{target}".',
+					'Delete category "{category}"? Its {count} notes will be kept and moved to "{target}".',
 					notes.length,
-					{ category: this.categoryTitle(categoryName), count: notes.length },
+					{ category: this.categoryTitle(categoryName), count: notes.length, target: this.categoryTitle('') },
 				)
 				try {
 					confirmed = await showConfirmation({
@@ -316,11 +316,9 @@ export default {
 
 			try {
 				await deleteCategoryRequest(categoryName)
-				const deletedCategory = categoryName
-				await this.closeOpenNoteBeforeDelete(deletedCategory)
-				this.removeNotesFromCategory(deletedCategory)
-				store.commit('removeLocalCategory', deletedCategory)
-				this.clearSelectedCategoryForDelete(deletedCategory)
+				this.moveNotesToUncategorized(categoryName)
+				store.commit('removeLocalCategory', categoryName)
+				this.clearSelectedCategoryForDelete(categoryName)
 			} catch {
 				// NotesService already shows a toast on failure.
 			}
@@ -421,32 +419,6 @@ export default {
 
 		onSelectCategory(category) {
 			store.commit('setSelectedCategory', category)
-		},
-
-		async closeOpenNoteBeforeDelete(categoryName) {
-			const noteId = Number.parseInt(this.$route?.params?.noteId, 10)
-			if (!Number.isFinite(noteId)) {
-				return
-			}
-			const note = store.getters.getNote(noteId)
-			if (!note) {
-				return
-			}
-			if (note.category === categoryName || note.category.startsWith(categoryName + '/')) {
-				const remainingNote = store.state.notes.notes.find(other => (
-					other.id !== noteId
-					&& other.category !== categoryName
-					&& !other.category.startsWith(categoryName + '/')
-				))
-				if (remainingNote) {
-					await this.$router.push({
-						name: 'note',
-						params: { noteId: remainingNote.id.toString() },
-					}).catch(() => {})
-				} else {
-					await this.$router.push({ name: 'welcome' }).catch(() => {})
-				}
-			}
 		},
 
 		onCategoryDragStart(event) {

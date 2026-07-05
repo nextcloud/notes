@@ -215,15 +215,35 @@ class NotesService {
 			];
 		}
 
-		$parent = $folder->getParent();
-		$folder->delete();
-		if ($parent instanceof Folder) {
-			$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);
+		foreach ($this->getAll($userId)['notes'] as $note) {
+			$noteCategory = $note->getCategory();
+			if ($noteCategory === $category || str_starts_with($noteCategory, $category . '/')) {
+				$note->setCategory('');
+			}
+		}
+
+		if ($notesFolder->nodeExists($category)) {
+			$parent = $folder->getParent();
+			$this->deleteFoldersWithoutFiles($folder);
+			if ($parent instanceof Folder) {
+				$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);
+			}
 		}
 
 		return [
 			'category' => $category,
 		];
+	}
+
+	private function deleteFoldersWithoutFiles(Folder $folder) : void {
+		foreach ($folder->getDirectoryListing() as $node) {
+			if ($node instanceof Folder) {
+				$this->deleteFoldersWithoutFiles($node);
+			}
+		}
+		if (count($folder->getDirectoryListing()) === 0) {
+			$folder->delete();
+		}
 	}
 
 	public function getTitleFromContent(string $content) : string {
