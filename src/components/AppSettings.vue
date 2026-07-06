@@ -34,6 +34,14 @@
 				</NcRadioGroupButton>
 			</NcRadioGroup>
 
+			<NcCheckboxRadioSwitch
+				:checked="settings.showCategoryInList !== false"
+				type="switch"
+				@update:checked="onChangeShowCategoryInList"
+			>
+				{{ t('notes', 'Show category names in the list of all notes') }}
+			</NcCheckboxRadioSwitch>
+
 			<NcRadioGroup
 				v-model="settings.fileSuffix"
 				:label="t('notes', 'File extension')"
@@ -91,6 +99,7 @@ import NcAppSettingsSection from '@nextcloud/vue/components/NcAppSettingsSection
 import NcAppSettingsShortcutsSection from '@nextcloud/vue/components/NcAppSettingsShortcutsSection'
 import NcHotkeyList from '@nextcloud/vue/components/NcHotkeyList'
 import NcHotkey from '@nextcloud/vue/components/NcHotkey'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
 import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
 import NcFormBox from '@nextcloud/vue/components/NcFormBox'
@@ -112,6 +121,7 @@ export default {
 	name: 'AppSettings',
 
 	components: {
+		NcCheckboxRadioSwitch,
 		NcTextField,
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
@@ -201,6 +211,11 @@ export default {
 			await filePicker.pick()
 
 		},
+		onChangeShowCategoryInList(checked) {
+			this.$set(this.settings, 'showCategoryInList', checked)
+			this.onChangeSettings()
+		},
+
 		onChangeSettings() {
 			this.saving = true
 			return setSettings(this.settings)
