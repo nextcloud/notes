@@ -137,9 +137,14 @@ export default {
 			}
 		},
 
-		// group notes by time ("All notes") or by category (if category chosen)
+		// time grouping applies to "All notes" and to categories without subcategories
+		groupByTime() {
+			return this.category === null || this.filteredNotes.every(note => note.category === this.category)
+		},
+
+		// group notes by time or by category (if category with subcategories chosen)
 		groupedNotes() {
-			if (this.category === null) {
+			if (this.groupByTime) {
 				return this.displayedNotes.reduce((g, note) => {
 					const timeslot = this.getTimeslotFromNote(note)
 					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
