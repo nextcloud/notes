@@ -128,7 +128,9 @@ const getters = {
 			return a.title.localeCompare(b.title)
 		}
 
-		notes.sort(state.selectedCategory === null ? cmpRecent : cmpCategory)
+		const flatCategory = state.selectedCategory !== null
+			&& notes.every(note => note.category === state.selectedCategory)
+		notes.sort(state.selectedCategory === null || flatCategory ? cmpRecent : cmpCategory)
 
 		return notes
 	},
