@@ -429,25 +429,21 @@ export default {
 	min-height: 100%;
 	width: 100%;
 	background-color: var(--color-main-background);
+	display: flex;
+	flex-direction: column;
+	padding: 3em 1em 1em;
 }
 
 .note-editor {
-	max-width: 47em;
+	position: relative;
+	flex: 1;
+	width: 100%;
+	max-width: 90em;
+	margin: 0 auto;
 	font-size: 16px;
-	padding: 1em;
-	padding-bottom: 0;
-}
-
-/* center editor on large screens */
-@media (min-width: 1600px) {
-	.note-editor {
-		margin: 0 auto;
-	}
-	.note-container {
-		padding-inline-end: 250px;
-		transition-duration: var(--animation-quick);
-		transition-property: padding-inline-end;
-	}
+	padding: 1em 1.5em 0;
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-large);
 }
 
 /* distraction free styles */
@@ -460,12 +456,14 @@ export default {
 
 .note-container.fullscreen .note-editor {
 	margin: 0 auto;
+	border: none;
+	border-radius: 0;
 }
 
 /* placeholder */
 .placeholder {
 	position: absolute;
-	padding: 1em;
+	padding: 1em 1.5em;
 	opacity: 0.5;
 }
 
