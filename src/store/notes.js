@@ -128,6 +128,15 @@ const getters = {
 			return a.title.localeCompare(b.title)
 		}
 
+		function cmpTitle(a, b) {
+			return a.title.localeCompare(b.title)
+		}
+
+		if (rootState.app.settings.sortMode === 'title') {
+			notes.sort(cmpTitle)
+			return notes
+		}
+
 		const flatCategory = state.selectedCategory !== null
 			&& notes.every(note => note.category === state.selectedCategory)
 		notes.sort(state.selectedCategory === null || flatCategory ? cmpRecent : cmpCategory)

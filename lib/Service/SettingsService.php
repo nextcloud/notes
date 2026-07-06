@@ -69,6 +69,7 @@ class SettingsService {
 					return '.' . $out;
 				},
 			],
+			'sortMode' => $this->getListAttrs('sortMode', ['modified', 'title']),
 		];
 	}
 
