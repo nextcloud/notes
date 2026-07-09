@@ -40,7 +40,7 @@
     "For new notes" : "Для нових нотаток",
     "Custom file extension" : "Власне розширення файлів",
     "Files" : "Робота з файлами",
-    "Notes folder" : "Папка Нотатки",
+    "Notes folder" : "Каталог для Нотаток",
     "Mobile apps" : "Застосунки",
     "Shortcuts" : "Скорочення",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Вилучити категорію \"{category}\" та {count} нотатку в ній?","Вилучити категорію \"{category}\" та {count} нотатки в ній?","Вилучити категорію \"{category}\" та {count} нотаток в ній?","Вилучити категорію \"{category}\" та {count} нотаток в ній?"],
