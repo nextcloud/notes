@@ -14,22 +14,40 @@
 							{{ t('notes', 'New note') }}
 						</NcButton>
 					</div>
-					<NcTextField
-						:value.sync="searchText"
-						:label="t('notes', 'Search for notes')"
-						:show-trailing-button="searchText !== ''"
-						trailing-button-icon="close"
-						:trailing-button-label="t('Clear search')"
-						@trailing-button-click="searchText=''"
-					/>
+					<div class="content-list__filter">
+						<NcTextField
+							:value.sync="searchText"
+							:label="t('notes', 'Search for notes')"
+							:show-trailing-button="searchText !== ''"
+							trailing-button-icon="close"
+							:trailing-button-label="t('Clear search')"
+							@trailing-button-click="searchText=''"
+						/>
+						<NcActions class="sort-menu"
+							:aria-label="t('notes', 'Sort notes')"
+							:force-menu="true"
+						>
+							<template #icon>
+								<SortAlphabeticalAscendingIcon v-if="sortMode === 'title'" :size="20" />
+								<SortClockDescendingOutlineIcon v-else :size="20" />
+							</template>
+							<NcActionButton :close-after-click="true" @click="onSetSortMode('modified')">
+								<template #icon>
+									<SortClockDescendingOutlineIcon :size="20" />
+								</template>
+								{{ t('notes', 'Sort by modification date') }}
+							</NcActionButton>
+							<NcActionButton :close-after-click="true" @click="onSetSortMode('title')">
+								<template #icon>
+									<SortAlphabeticalAscendingIcon :size="20" />
+								</template>
+								{{ t('notes', 'Sort alphabetically') }}
+							</NcActionButton>
+						</NcActions>
+					</div>
 				</div>
 
-				<NotesList v-if="groupedNotes.length === 1"
-					:notes="groupedNotes[0].notes"
-					:show-category-title="category === null"
-					@note-selected="onNoteSelected"
-				/>
-				<template v-for="(group, idx) in groupedNotes" v-else>
+				<template v-for="(group, idx) in groupedNotes">
 					<NotesCaption v-if="group.category && category!==group.category"
 						:key="group.category"
 						:name="categoryToLabel(group.category)"
@@ -68,6 +86,8 @@
 
 <script>
 
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
@@ -79,7 +99,9 @@ import NotesCaption from './NotesCaption.vue'
 import store from '../store.js'
 import Note from './Note.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
-import { createNote } from '../NotesService.js'
+import SortAlphabeticalAscendingIcon from 'vue-material-design-icons/SortAlphabeticalAscending.vue'
+import SortClockDescendingOutlineIcon from 'vue-material-design-icons/SortClockDescendingOutline.vue'
+import { createNote, setSettings } from '../NotesService.js'
 
 import { ObserveVisibility } from 'vue-observe-visibility'
 
@@ -87,6 +109,8 @@ export default {
 	name: 'NotesView',
 
 	components: {
+		NcActions,
+		NcActionButton,
 		NcAppContent,
 		NcAppContentList,
 		NcAppContentDetails,
@@ -96,6 +120,8 @@ export default {
 		NotesList,
 		NotesCaption,
 		PlusIcon,
+		SortAlphabeticalAscendingIcon,
+		SortClockDescendingOutlineIcon,
 	},
 
 	directives: {
@@ -142,9 +168,22 @@ export default {
 			}
 		},
 
-		// group notes by time ("All notes") or by category (if category chosen)
+		sortMode() {
+			return store.state.app.settings.sortMode === 'title' ? 'title' : 'modified'
+		},
+
+		// time grouping applies to "All notes" and to categories without subcategories
+		groupByTime() {
+			return this.category === null || this.filteredNotes.every(note => note.category === this.category)
+		},
+
+		// group notes by time or by category (if category with subcategories chosen);
+		// the alphabetical sort mode uses a single group without captions
 		groupedNotes() {
-			if (this.category === null) {
+			if (this.sortMode === 'title') {
+				return [{ notes: this.displayedNotes }]
+			}
+			if (this.groupByTime) {
 				return this.displayedNotes.reduce((g, note) => {
 					const timeslot = this.getTimeslotFromNote(note)
 					if (g.length === 0 || g[g.length - 1].timeslot !== timeslot) {
@@ -222,6 +261,14 @@ export default {
 			store.commit('setSelectedCategory', category)
 		},
 
+		onSetSortMode(mode) {
+			if (this.sortMode === mode) {
+				return
+			}
+			store.state.app.settings.sortMode = mode
+			setSettings(store.state.app.settings)
+		},
+
 		onNewNote() {
 			if (this.creatingNote) {
 				return
@@ -279,6 +326,16 @@ export default {
 .content-list__actions {
 	display: flex;
 	margin-bottom: 6px;
+}
+
+.content-list__filter {
+	display: flex;
+	align-items: center;
+	gap: var(--default-grid-baseline);
+}
+
+.content-list__filter :deep(.input-field) {
+	flex: 1;
 }
 
 .content-list__actions :deep(.button-vue) {
