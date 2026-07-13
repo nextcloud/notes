@@ -110,20 +110,20 @@ export default {
 
 	computed: {
 		numNotes() {
-			return store.getters.numNotes()
+			return store.notes.numNotes()
 		},
 
 		notes() {
-			return store.state.notes.notes
+			return store.notes.notes
 		},
 
 		filteredNotes() {
-			return store.getters.getFilteredNotes()
+			return store.notes.getFilteredNotes()
 		},
 	},
 
 	created() {
-		store.commit('setDocumentTitle', document.title)
+		store.app.setDocumentTitle(document.title)
 		window.addEventListener('beforeunload', this.onClose)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
 		this.loadNotes()
@@ -192,8 +192,8 @@ export default {
 			if (this.$route.path !== '/') {
 				this.$router.push('/')
 			}
-			store.commit('removeAllNotes')
-			store.commit('clearSyncCache')
+			store.notes.removeAllNotes()
+			store.sync.clearSyncCache()
 			this.loading.notes = true
 			this.loadNotes()
 		},
@@ -249,7 +249,7 @@ export default {
 		},
 
 		onNewCategoryDrop(event) {
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, noteId => store.notes.getNote(noteId))
 			if (noteId === null) {
 				return
 			}

@@ -146,7 +146,7 @@ export default {
 
 	computed: {
 		numNotes() {
-			return store.getters.numNotes()
+			return store.notes.numNotes()
 		},
 
 		categories() {
@@ -154,7 +154,7 @@ export default {
 		},
 
 		selectedCategory() {
-			return store.getters.getSelectedCategory()
+			return store.notes.getSelectedCategory()
 		},
 	},
 
@@ -222,50 +222,50 @@ export default {
 			}
 			const exists = this.categories.some(category => category.name === trimmed)
 			if (!exists) {
-				store.commit('addLocalCategory', trimmed)
+				store.notes.addLocalCategory(trimmed)
 			}
-			store.commit('setSelectedCategory', trimmed)
+			store.notes.setSelectedCategory(trimmed)
 			if (droppedNoteId !== null) {
 				setCategory(droppedNoteId, trimmed).catch(() => {})
 			}
 		},
 
 		getNotesInCategory(category) {
-			return store.state.notes.notes.filter(note => note.category === category || note.category.startsWith(category + '/'))
+			return store.notes.notes.filter(note => note.category === category || note.category.startsWith(category + '/'))
 		},
 
 		updateNotesForCategoryRename(oldCategory, newCategory) {
-			for (const note of store.state.notes.notes) {
+			for (const note of store.notes.notes) {
 				if (note.category === oldCategory || note.category.startsWith(oldCategory + '/')) {
 					const updatedCategory = note.category.startsWith(oldCategory + '/')
 						? newCategory + note.category.slice(oldCategory.length)
 						: newCategory
-					store.commit('setNoteAttribute', { noteId: note.id, attribute: 'category', value: updatedCategory })
+					store.notes.setNoteAttribute({ noteId: note.id, attribute: 'category', value: updatedCategory })
 				}
 			}
 		},
 
 		removeNotesFromCategory(categoryName) {
 			for (const note of this.getNotesInCategory(categoryName)) {
-				store.commit('removeNote', note.id)
+				store.notes.removeNote(note.id)
 			}
 		},
 
 		updateSelectedCategoryForRename(oldCategory, newCategory) {
 			const selected = this.selectedCategory
 			if (selected === oldCategory) {
-				store.commit('setSelectedCategory', newCategory)
+				store.notes.setSelectedCategory(newCategory)
 				return
 			}
 			if (selected && selected.startsWith(oldCategory + '/')) {
-				store.commit('setSelectedCategory', newCategory + selected.slice(oldCategory.length))
+				store.notes.setSelectedCategory(newCategory + selected.slice(oldCategory.length))
 			}
 		},
 
 		clearSelectedCategoryForDelete(category) {
 			const selected = this.selectedCategory
 			if (selected === category || (selected && selected.startsWith(category + '/'))) {
-				store.commit('setSelectedCategory', null)
+				store.notes.setSelectedCategory(null)
 			}
 		},
 
@@ -280,7 +280,7 @@ export default {
 				const oldName = category
 				const newName = response?.newCategory || trimmed
 				this.updateNotesForCategoryRename(oldName, newName)
-				store.commit('renameLocalCategory', { oldCategory: oldName, newCategory: newName })
+				store.notes.renameLocalCategory({ oldCategory: oldName, newCategory: newName })
 				this.updateSelectedCategoryForRename(oldName, newName)
 			} catch {
 				// NotesService already shows a toast on failure.
@@ -319,7 +319,7 @@ export default {
 				const deletedCategory = categoryName
 				await this.closeOpenNoteBeforeDelete(deletedCategory)
 				this.removeNotesFromCategory(deletedCategory)
-				store.commit('removeLocalCategory', deletedCategory)
+				store.notes.removeLocalCategory(deletedCategory)
 				this.clearSelectedCategoryForDelete(deletedCategory)
 			} catch {
 				// NotesService already shows a toast on failure.
@@ -387,12 +387,12 @@ export default {
 			event.stopPropagation()
 
 			this.dragOverAllNotes = false
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, noteId => store.notes.getNote(noteId))
 			if (noteId === null) {
 				return
 			}
 
-			const note = store.getters.getNote(noteId)
+			const note = store.notes.getNote(noteId)
 			if (!note || note.category === '') {
 				return
 			}
@@ -404,14 +404,14 @@ export default {
 			event.preventDefault()
 			event.stopPropagation()
 
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, noteId => store.notes.getNote(noteId))
 			this.dragOverCategory = null
 			this.dragOverAllNotes = false
 			if (noteId === null) {
 				return
 			}
 
-			const note = store.getters.getNote(noteId)
+			const note = store.notes.getNote(noteId)
 			if (!note || note.category === category) {
 				return
 			}
@@ -420,7 +420,7 @@ export default {
 		},
 
 		onSelectCategory(category) {
-			store.commit('setSelectedCategory', category)
+			store.notes.setSelectedCategory(category)
 		},
 
 		async closeOpenNoteBeforeDelete(categoryName) {
@@ -428,12 +428,12 @@ export default {
 			if (!Number.isFinite(noteId)) {
 				return
 			}
-			const note = store.getters.getNote(noteId)
+			const note = store.notes.getNote(noteId)
 			if (!note) {
 				return
 			}
 			if (note.category === categoryName || note.category.startsWith(categoryName + '/')) {
-				const remainingNote = store.state.notes.notes.find(other => (
+				const remainingNote = store.notes.notes.find(other => (
 					other.id !== noteId
 					&& other.category !== categoryName
 					&& !other.category.startsWith(categoryName + '/')

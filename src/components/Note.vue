@@ -30,10 +30,10 @@ export default {
 
 	computed: {
 		isRichMode() {
-			return OC.appswebroots?.text && store.state.app?.settings?.noteMode === 'rich'
+			return OC.appswebroots?.text && store.app?.settings?.noteMode === 'rich'
 		},
 		isPlainMode() {
-			return store.state.app?.settings?.noteMode === 'edit' || store.state.app?.settings?.noteMode === 'preview'
+			return store.app?.settings?.noteMode === 'edit' || store.app?.settings?.noteMode === 'preview'
 		},
 	},
 }

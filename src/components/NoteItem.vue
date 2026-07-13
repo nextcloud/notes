@@ -111,6 +111,7 @@ import { showError } from '@nextcloud/dialogs'
 import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import store from '../store.js'
 
 export default {
 	name: 'NoteItem',
@@ -158,7 +159,7 @@ export default {
 		},
 
 		isSelected() {
-			return this.$store.getters.getSelectedNote() === this.note.id
+			return store.notes.getSelectedNote() === this.note.id
 		},
 		isShared() {
 			return this.note.isShared || this.isShareCreated
@@ -194,7 +195,7 @@ export default {
 					id: '',
 					label: categoryLabel(''),
 				},
-				...this.$store.getters.getCategories(0, false).map((category) => ({
+				...store.notes.getCategories(0, false).map((category) => ({
 					id: category,
 					label: categoryLabel(category),
 				})),

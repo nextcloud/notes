@@ -43,7 +43,7 @@ export default {
 
 	computed: {
 		note() {
-			return store.getters.getNote(parseInt(this.noteId))
+			return store.notes.getNote(parseInt(this.noteId))
 		},
 		isNewNote() {
 			return routeIsNewNote(this.$route)
@@ -115,18 +115,18 @@ export default {
 		},
 
 		onEdit(noteData = {}) {
-			store.commit('updateNote', {
+			store.notes.updateNote({
 				...this.note,
 				...noteData,
 			})
 		},
 
 		onClose(noteId) {
-			const note = store.getters.getNote(parseInt(noteId))
+			const note = store.notes.getNote(parseInt(noteId))
 			if (!note || !Number.isFinite(note.id)) {
 				return
 			}
-			store.commit('updateNote', {
+			store.notes.updateNote({
 				...note,
 				unsaved: false,
 			})
