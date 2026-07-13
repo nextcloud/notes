@@ -112,7 +112,7 @@ export default {
 			if (!Number.isFinite(this.noteId)) {
 				return null
 			}
-			return store.getters.getNote(this.noteId)
+			return store.notes.getNote(this.noteId)
 		},
 
 		sharingTab() {

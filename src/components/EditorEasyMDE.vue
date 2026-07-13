@@ -194,7 +194,7 @@ export default {
 		},
 
 		async onClickInsertImage() {
-			const apppath = '/' + store.state.app.settings.notesPath + '/'
+			const apppath = '/' + store.app.settings.notesPath + '/'
 			const currentNotePath = apppath + this.notecategory
 
 			const doc = this.mde.codemirror.getDoc()

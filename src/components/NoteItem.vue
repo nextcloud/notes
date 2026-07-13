@@ -112,6 +112,7 @@ import StarIcon from 'vue-material-design-icons/Star.vue'
 import logger from '../Logger.js'
 import { deleteNote, fetchNote, setCategory, setFavorite, setTitle } from '../NotesService.js'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
+import store from '../store.js'
 
 export default {
 	name: 'NoteItem',
@@ -161,7 +162,7 @@ export default {
 		},
 
 		isSelected() {
-			return this.$store.getters.getSelectedNote() === this.note.id
+			return store.notes.getSelectedNote() === this.note.id
 		},
 
 		isShared() {
@@ -202,7 +203,7 @@ export default {
 					id: '',
 					label: categoryLabel(''),
 				},
-				...this.$store.getters.getCategories(0, false).map((category) => ({
+				...store.notes.getCategories(0, false).map((category) => ({
 					id: category,
 					label: categoryLabel(category),
 				})),
