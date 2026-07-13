@@ -1,56 +1,49 @@
 /**
- * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { set } from 'vue'
+import { defineStore } from 'pinia'
 
-const state = {
-	queue: {},
-	etag: null,
-	lastModified: 0,
-	active: false,
-	// TODO add list of notes with changes during sync
-}
+export const useSyncStore = defineStore('sync', {
+	state: () => ({
+		queue: {},
+		etag: null,
+		lastModified: 0,
+		active: false,
+		// TODO add list of notes with changes during sync
+	}),
 
-const getters = {
-}
+	actions: {
+		addToQueue({ noteId, type }) {
+			const key = noteId + '-' + type
+			this.queue[key] = { noteId, type }
+		},
 
-const mutations = {
-	addToQueue(state, { noteId, type }) {
-		const cmd = { noteId, type }
-		const key = noteId + '-' + type
-		set(state.queue, key, cmd)
+		clearQueue() {
+			this.queue = {}
+		},
+
+		setSyncETag(etag) {
+			if (etag) {
+				this.etag = etag
+			}
+		},
+
+		setSyncLastModified(strLastModified) {
+			const lastModified = Date.parse(strLastModified)
+			if (lastModified) {
+				this.lastModified = lastModified / 1000
+			}
+		},
+
+		clearSyncCache() {
+			this.etag = null
+			this.lastModified = 0
+		},
+
+		setSyncActive(active) {
+			this.active = active
+		},
 	},
-
-	clearQueue(state) {
-		state.queue = {}
-	},
-
-	setSyncETag(state, etag) {
-		if (etag) {
-			state.etag = etag
-		}
-	},
-
-	setSyncLastModified(state, strLastModified) {
-		const lastModified = Date.parse(strLastModified)
-		if (lastModified) {
-			state.lastModified = lastModified / 1000
-		}
-	},
-
-	clearSyncCache(state) {
-		state.etag = null
-		state.lastModified = 0
-	},
-
-	setSyncActive(state, active) {
-		state.active = active
-	},
-}
-
-const actions = {
-}
-
-export default { state, getters, mutations, actions }
+})
