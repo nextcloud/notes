@@ -1,48 +1,42 @@
 /**
- * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { set } from 'vue'
+import { defineStore } from 'pinia'
 
-const state = {
-	settings: {},
-	isSaving: false,
-	isManualSave: false,
-	documentTitle: null,
-	searchText: '',
-}
+export const useAppStore = defineStore('app', {
+	state: () => ({
+		settings: {},
+		isSaving: false,
+		isManualSave: false,
+		documentTitle: null,
+		searchText: '',
+	}),
 
-const getters = {
-}
+	actions: {
+		setSettings(settings) {
+			this.settings = settings
+		},
 
-const mutations = {
-	setSettings(state, settings) {
-		state.settings = settings
+		setNoteMode(mode) {
+			this.settings.noteMode = mode
+		},
+
+		setSaving(isSaving) {
+			this.isSaving = isSaving
+		},
+
+		setManualSave(isManualSave) {
+			this.isManualSave = isManualSave
+		},
+
+		setDocumentTitle(title) {
+			this.documentTitle = title
+		},
+
+		updateSearchText(searchText) {
+			this.searchText = searchText
+		},
 	},
-
-	setNoteMode(state, mode) {
-		set(state.settings, 'noteMode', mode)
-	},
-
-	setSaving(state, isSaving) {
-		state.isSaving = isSaving
-	},
-
-	setManualSave(state, isManualSave) {
-		state.isManualSave = isManualSave
-	},
-
-	setDocumentTitle(state, title) {
-		state.documentTitle = title
-	},
-
-	updateSearchText(state, searchText) {
-		state.searchText = searchText
-	},
-}
-
-const actions = {
-}
-
-export default { state, getters, mutations, actions }
+})
