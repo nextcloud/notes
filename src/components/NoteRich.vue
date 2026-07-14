@@ -98,6 +98,9 @@ export default {
 				fileId: parseInt(this.noteId),
 				filePath: this.note.internalPath,
 				readOnly: false,
+				onLoaded: () => {
+					this.loading = false
+				},
 				onUpdate: ({ markdown }) => {
 					if (this.note) {
 						const unsaved = !!(this.note?.content && this.note.content !== markdown)
@@ -109,9 +112,6 @@ export default {
 					}
 				},
 			}))
-				.onLoaded(() => {
-					this.loading = false
-				})
 		},
 
 		onEdit(noteData = {}) {
