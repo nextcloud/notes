@@ -27,6 +27,7 @@
 		"@nextcloud/vue": "^9.8.2",
 		"diff": "^9.0.0",
 		"easymde": "^2.21.0",
+		"eslint-plugin-vue": "^10.9.2",
 		"markdown-it": "^14.3.0",
 		"markdown-it-bidi": "^0.2.0",
 		"markdown-it-task-checkbox": "^1.0.6",
