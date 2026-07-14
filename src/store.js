@@ -4,9 +4,9 @@
  */
 
 import { createPinia, setActivePinia } from 'pinia'
-import { useAppStore } from './store/app.js'
-import { useNotesStore } from './store/notes.js'
-import { useSyncStore } from './store/sync.js'
+import { useAppStore } from './stores/app.js'
+import { useNotesStore } from './stores/notes.js'
+import { useSyncStore } from './stores/sync.js'
 
 export const pinia = createPinia()
 setActivePinia(pinia)
