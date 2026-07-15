@@ -7,10 +7,11 @@
 	<!-- eslint-disable-next-line vue/no-v-html -->
 	<div class="note-preview" v-html="html" />
 </template>
+
 <script>
 
-import MarkdownIt from 'markdown-it'
 import { generateUrl } from '@nextcloud/router'
+import MarkdownIt from 'markdown-it'
 import { escapeHtml } from '../Util.js'
 
 export default {
@@ -21,10 +22,12 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		readonly: {
 			type: Boolean,
 			required: true,
 		},
+
 		noteid: {
 			type: String,
 			required: true,
@@ -32,7 +35,6 @@ export default {
 	},
 
 	data() {
-
 		const md = new MarkdownIt({
 			linkify: true,
 			breaks: true,
@@ -123,8 +125,7 @@ export default {
 
 				if (!path.startsWith('http://')
 					&& !path.startsWith('https://')
-					&& !path.startsWith('data:')
-				) {
+					&& !path.startsWith('data:')) {
 					path = path.split('?').shift()
 					const lowecasePath = path.toLowerCase()
 					path = generateUrl(
@@ -138,8 +139,7 @@ export default {
 						&& !lowecasePath.endsWith('.bmp')
 						&& !lowecasePath.endsWith('.webp')
 						&& !lowecasePath.endsWith('.gif')
-						&& !lowecasePath.endsWith('.png')
-					) {
+						&& !lowecasePath.endsWith('.png')) {
 						download = true
 					}
 				}
@@ -167,6 +167,7 @@ export default {
 
 }
 </script>
+
 <style lang="scss">
 .note-preview {
 	padding: 1em;

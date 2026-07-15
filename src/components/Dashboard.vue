@@ -6,16 +6,16 @@
 <template>
 	<div class="dashboard-box">
 		<NcDashboardWidget
-			empty-content-icon="icon-notes"
-			:empty-content-message="t('notes', 'No notes yet')"
+			emptyContentIcon="icon-notes"
+			:emptyContentMessage="t('notes', 'No notes yet')"
 			:items="items"
 			:loading="loading"
 		>
 			<template #default="{ item }">
 				<NcDashboardWidgetItem
-					:target-url="getItemTargetUrl(item)"
-					:main-text="item.title"
-					:sub-text="subtext(item)"
+					:targetUrl="getItemTargetUrl(item)"
+					:mainText="item.title"
+					:subText="subtext(item)"
 				>
 					<div slot="avatar"
 						class="note-item"
@@ -34,13 +34,11 @@
 </template>
 
 <script>
+import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
 import NcDashboardWidgetItem from '@nextcloud/vue/components/NcDashboardWidgetItem'
-import { generateUrl } from '@nextcloud/router'
-
 import Plus from 'vue-material-design-icons/Plus.vue'
-
 import { getDashboardData } from '../NotesService.js'
 import { categoryLabel } from '../Util.js'
 
@@ -88,7 +86,7 @@ export default {
 
 	methods: {
 		loadDashboardData() {
-			getDashboardData().then(data => {
+			getDashboardData().then((data) => {
 				this.items = data.items
 				this.hasMoreItems = data.hasMoreItems
 				this.loading = false

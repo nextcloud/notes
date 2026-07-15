@@ -9,9 +9,9 @@
 			:key="`${note.id}-${showCategoryTitle ? 'with-category-title' : 'without-category-title'}`"
 			:note="note"
 			:renaming="isRenaming(note.id)"
-			:show-category-title="showCategoryTitle"
-			@note-selected="onNoteSelected"
-			@start-renaming="onStartRenaming"
+			:showCategoryTitle="showCategoryTitle"
+			@noteSelected="onNoteSelected"
+			@startRenaming="onStartRenaming"
 		/>
 	</ul>
 </template>
@@ -31,23 +31,28 @@ export default {
 			type: Array,
 			required: true,
 		},
+
 		showCategoryTitle: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	data() {
 		return {
 			renamingNotes: [],
 		}
 	},
+
 	methods: {
 		onNoteSelected(noteId) {
-			this.$emit('note-selected', noteId)
+			this.$emit('noteSelected', noteId)
 		},
+
 		onStartRenaming(noteId) {
 			this.renamingNotes.push(noteId)
 		},
+
 		isRenaming(noteId) {
 			return this.renamingNotes.includes(noteId)
 		},

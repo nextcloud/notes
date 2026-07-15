@@ -6,6 +6,7 @@
 <template>
 	<NcAppContent class="loading" />
 </template>
+
 <script>
 
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'

@@ -58,6 +58,7 @@ export default {
 }
 
 </script>
+
 <style scoped>
 .help-mobile {
 	display: flex;

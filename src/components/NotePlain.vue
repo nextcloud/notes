@@ -10,10 +10,10 @@
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
-			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
+			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict = false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
-						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
+						<SyncAlertIcon slot="icon" :size="30" fillColor="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -21,20 +21,20 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@on-choose-solution="onUseRemoteVersion"
+							@onChooseSolution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@on-choose-solution="onUseLocalVersion"
+							@onChooseSolution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
 			</NcModal>
 			<div class="note-editor">
 				<div v-show="!note.content" class="placeholder">
-					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
+					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
 				<ThePreview v-if="preview"
 					:value="note.content"
@@ -90,29 +90,28 @@
 		</div>
 	</NcAppContent>
 </template>
+
 <script>
 
-import NcActions from '@nextcloud/vue/components/NcActions'
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import NcAppContent from '@nextcloud/vue/components/NcAppContent'
-import NcModal from '@nextcloud/vue/components/NcModal'
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
-
-import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcModal from '@nextcloud/vue/components/NcModal'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
-
-import { config } from '../config.js'
-import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
-import { routeIsNewNote } from '../Util.js'
+import ConflictSolution from './ConflictSolution.vue'
 import TheEditor from './EditorEasyMDE.vue'
 import ThePreview from './EditorMarkdownIt.vue'
-import ConflictSolution from './ConflictSolution.vue'
+import { config } from '../config.js'
+import { conflictSolutionLocal, conflictSolutionRemote, fetchNote, queueCommand, refreshNote, saveNoteManually } from '../NotesService.js'
 import store from '../store.js'
+import { routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NotePlain',
@@ -163,12 +162,15 @@ export default {
 		note() {
 			return store.notes.getNote(parseInt(this.noteId))
 		},
+
 		title() {
 			return this.note ? this.note.title : ''
 		},
+
 		isNewNote() {
 			return routeIsNewNote(this.$route)
 		},
+
 		isManualSave() {
 			return store.app.isManualSave
 		},
@@ -180,8 +182,9 @@ export default {
 				this.fetchData()
 			}
 		},
+
 		title: 'onUpdateTitle',
-		'note.conflict'(newConflict, oldConflict) {
+		'note.conflict': function(newConflict, oldConflict) {
 			if (newConflict) {
 				this.showConflict = true
 			}
@@ -319,7 +322,7 @@ export default {
 				this.startRefreshTimer()
 				return
 			}
-			refreshNote(parseInt(this.noteId), this.etag).then(etag => {
+			refreshNote(parseInt(this.noteId), this.etag).then((etag) => {
 				if (etag) {
 					this.etag = etag
 					this.$forceUpdate()
@@ -371,14 +374,14 @@ export default {
 		onKeyPress(event) {
 			if (event.ctrlKey || event.metaKey) {
 				switch (event.key.toLowerCase()) {
-				case 's':
-					event.preventDefault()
-					this.onManualSave()
-					break
-				case '/':
-					event.preventDefault()
-					this.onTogglePreview()
-					break
+					case 's':
+						event.preventDefault()
+						this.onManualSave()
+						break
+					case '/':
+						event.preventDefault()
+						this.onTogglePreview()
+						break
 				}
 			}
 		},
@@ -424,6 +427,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 .note-container {
 	min-height: 100%;

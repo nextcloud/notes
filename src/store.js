@@ -4,7 +4,6 @@
  */
 
 import { createPinia, setActivePinia } from 'pinia'
-
 import { useAppStore } from './stores/app.js'
 import { useNotesStore } from './stores/notes.js'
 import { useSyncStore } from './stores/sync.js'

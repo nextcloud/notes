@@ -23,11 +23,11 @@
 		</div>
 	</NcModal>
 </template>
-<script>
-import NcModal from '@nextcloud/vue/components/NcModal'
-import NcButton from '@nextcloud/vue/components/NcButton'
-import { loadState } from '@nextcloud/initial-state'
 
+<script>
+import { loadState } from '@nextcloud/initial-state'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcModal from '@nextcloud/vue/components/NcModal'
 import { deleteEditorMode, setSettings } from './../../NotesService.js'
 
 export default {
@@ -35,11 +35,13 @@ export default {
 		NcModal,
 		NcButton,
 	},
+
 	data() {
 		return {
 			loading: false,
 		}
 	},
+
 	methods: {
 		async useOld() {
 			const oldState = loadState('notes', 'config', {})
@@ -50,6 +52,7 @@ export default {
 			await deleteEditorMode()
 			this.$emit('close')
 		},
+
 		async useNew() {
 			setSettings({
 				...loadState('notes', 'config', {}),
@@ -61,6 +64,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .editor-hint-modal {
 	margin: 24px;

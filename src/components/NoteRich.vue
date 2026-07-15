@@ -8,14 +8,14 @@
 		<div v-show="!loading" ref="editor" class="text-editor" />
 	</div>
 </template>
+
 <script>
 
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
-
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { queueCommand, refreshNote } from '../NotesService.js'
-import { routeIsNewNote } from '../Util.js'
 import store from '../store.js'
+import { routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NoteRich',
@@ -45,6 +45,7 @@ export default {
 		note() {
 			return store.notes.getNote(parseInt(this.noteId))
 		},
+
 		isNewNote() {
 			return routeIsNewNote(this.$route)
 		},
@@ -190,6 +191,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .text-editor-wrapper {
 	height: 100%;

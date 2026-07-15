@@ -4,8 +4,8 @@
  */
 
 import { defineStore } from 'pinia'
-import { useAppStore } from './app.js'
 import { copyNote } from '../Util.js'
+import { useAppStore } from './app.js'
 
 export const useNotesStore = defineStore('notes', {
 	state: () => ({
@@ -103,7 +103,7 @@ export const useNotesStore = defineStore('notes', {
 		getFilteredNotes: (state) => () => {
 			const appStore = useAppStore()
 			const searchText = appStore.searchText.toLowerCase()
-			const notes = state.notes.filter(note => {
+			const notes = state.notes.filter((note) => {
 				if (state.selectedCategory !== null
 					&& state.selectedCategory !== note.category
 					&& !note.category.startsWith(state.selectedCategory + '/')) {
@@ -118,16 +118,16 @@ export const useNotesStore = defineStore('notes', {
 			})
 
 			function cmpRecent(a, b) {
-				if (a.favorite && !b.favorite) return -1
-				if (!a.favorite && b.favorite) return 1
+				if (a.favorite && !b.favorite) { return -1 }
+				if (!a.favorite && b.favorite) { return 1 }
 				return b.modified - a.modified
 			}
 
 			function cmpCategory(a, b) {
 				const cmpCat = a.category.localeCompare(b.category)
-				if (cmpCat !== 0) return cmpCat
-				if (a.favorite && !b.favorite) return -1
-				if (!a.favorite && b.favorite) return 1
+				if (cmpCat !== 0) { return cmpCat }
+				if (a.favorite && !b.favorite) { return -1 }
+				if (!a.favorite && b.favorite) { return 1 }
 				return a.title.localeCompare(b.title)
 			}
 
@@ -144,7 +144,7 @@ export const useNotesStore = defineStore('notes', {
 				return 0
 			}
 
-			const notes = state.notes.filter(note => {
+			const notes = state.notes.filter((note) => {
 				if (state.selectedCategory === note.category || note.category.startsWith(state.selectedCategory + '/')) {
 					return false
 				}
@@ -194,7 +194,7 @@ export const useNotesStore = defineStore('notes', {
 		},
 
 		removeNote(id) {
-			this.notes = this.notes.filter(note => note.id !== id)
+			this.notes = this.notes.filter((note) => note.id !== id)
 			delete this.notesIds[id]
 		},
 
@@ -205,7 +205,7 @@ export const useNotesStore = defineStore('notes', {
 
 		setCategories(categories) {
 			this.categories = categories
-			categories.forEach(category => {
+			categories.forEach((category) => {
 				if (category && !this.localCategories.includes(category)) {
 					this.localCategories.push(category)
 				}
@@ -223,7 +223,7 @@ export const useNotesStore = defineStore('notes', {
 			if (!oldCategory || !newCategory || oldCategory === newCategory) {
 				return
 			}
-			this.localCategories = this.localCategories.map(category => {
+			this.localCategories = this.localCategories.map((category) => {
 				if (category === oldCategory) {
 					return newCategory
 				}
@@ -232,7 +232,7 @@ export const useNotesStore = defineStore('notes', {
 				}
 				return category
 			})
-			this.categories = this.categories.map(category => {
+			this.categories = this.categories.map((category) => {
 				if (category === oldCategory) {
 					return newCategory
 				}
@@ -247,8 +247,8 @@ export const useNotesStore = defineStore('notes', {
 			if (!category) {
 				return
 			}
-			this.localCategories = this.localCategories.filter(cat => cat !== category && !cat.startsWith(category + '/'))
-			this.categories = this.categories.filter(cat => cat !== category && !cat.startsWith(category + '/'))
+			this.localCategories = this.localCategories.filter((cat) => cat !== category && !cat.startsWith(category + '/'))
+			this.categories = this.categories.filter((cat) => cat !== category && !cat.startsWith(category + '/'))
 		},
 
 		setSelectedCategory(category) {
@@ -275,7 +275,7 @@ export const useNotesStore = defineStore('notes', {
 				this.updateNote(note)
 			}
 			// remove deleted notes
-			this.notes.forEach(note => {
+			this.notes.forEach((note) => {
 				if (!noteIds.includes(note.id)) {
 					this.removeNote(note.id)
 				}

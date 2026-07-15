@@ -4,8 +4,8 @@
 -->
 
 <template>
-	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
-		<template slot="list">
+	<NcAppContent paneConfigKey="note" :showDetails="showNote" @update:showDetails="hideNote">
+		<template #list>
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
 					<div class="content-list__actions">
@@ -17,17 +17,17 @@
 					<NcTextField
 						:value.sync="searchText"
 						:label="t('notes', 'Search for notes')"
-						:show-trailing-button="searchText !== ''"
-						trailing-button-icon="close"
-						:trailing-button-label="t('Clear search')"
-						@trailing-button-click="searchText=''"
+						:showTrailingButton="searchText !== ''"
+						trailingButtonIcon="close"
+						:trailingButtonLabel="t('Clear search')"
+						@trailingButtonClick="searchText = ''"
 					/>
 				</div>
 
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
-					:show-category-title="category === null"
-					@note-selected="onNoteSelected"
+					:showCategoryTitle="category === null"
+					@noteSelected="onNoteSelected"
 				/>
 				<template v-for="(group, idx) in groupedNotes" v-else>
 					<NotesCaption v-if="group.category && category!==group.category"
@@ -41,8 +41,8 @@
 					<NotesList
 						:key="idx"
 						:notes="group.notes"
-						:show-category-title="category === null"
-						@note-selected="onNoteSelected"
+						:showCategoryTitle="category === null"
+						@noteSelected="onNoteSelected"
 					/>
 				</template>
 				<div
@@ -50,7 +50,7 @@
 					v-observe-visibility="onEndOfNotes"
 					class="loading-label"
 				>
-					{{ t('notes', 'Loading …') }}
+					{{ t('notes', 'Loading …') }}
 				</div>
 				<div v-if="getFilteredTotalCount > 0" class="content-list__search-more">
 					<NcButton @click="onCategorySelected(null)">
@@ -61,27 +61,26 @@
 		</template>
 
 		<NcAppContentDetails>
-			<Note v-if="showNote" :note-id="noteId" @note-deleted="onNoteDeleted" />
+			<Note v-if="showNote" :noteId="noteId" @noteDeleted="onNoteDeleted" />
 		</NcAppContentDetails>
 	</NcAppContent>
 </template>
 
 <script>
 
+import { ObserveVisibility } from 'vue-observe-visibility'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
-import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
+import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-import { categoryLabel } from '../Util.js'
-import NotesList from './NotesList.vue'
-import NotesCaption from './NotesCaption.vue'
-import store from '../store.js'
-import Note from './Note.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import Note from './Note.vue'
+import NotesCaption from './NotesCaption.vue'
+import NotesList from './NotesList.vue'
 import { createNote } from '../NotesService.js'
-
-import { ObserveVisibility } from 'vue-observe-visibility'
+import store from '../store.js'
+import { categoryLabel } from '../Util.js'
 
 export default {
 	name: 'NotesView',
@@ -202,7 +201,7 @@ export default {
 				return ''
 			}
 			const t = note.modified * 1000
-			const timeslot = this.timeslots.find(timeslot => t >= timeslot.t.getTime())
+			const timeslot = this.timeslots.find((timeslot) => t >= timeslot.t.getTime())
 			if (timeslot !== undefined) {
 				return timeslot.l
 			} else if (t >= this.lastYear) {
@@ -228,7 +227,7 @@ export default {
 			}
 			this.creatingNote = true
 			createNote(store.notes.getSelectedCategory())
-				.then(note => {
+				.then((note) => {
 					this.$router.push({
 						name: 'note',
 						params: { noteId: note.id.toString() },
@@ -247,7 +246,7 @@ export default {
 		},
 
 		onNoteDeleted(note) {
-			this.$emit('note-deleted', note)
+			this.$emit('noteDeleted', note)
 		},
 
 		onNoteSelected(noteId) {
@@ -256,6 +255,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .content-list {
 	padding: 0 4px;
