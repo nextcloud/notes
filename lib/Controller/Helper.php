@@ -123,9 +123,9 @@ class Helper {
 	}
 
 	/** @param 200|201|400|403|404|423|500|507 $statusCode */
-	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {
+	public function createErrorResponse(\Throwable $e, int $statusCode, bool $exposeType = true) : JSONResponse {
 		$response = [
-			'errorType' => get_class($e)
+			'errorType' => $exposeType ? get_class($e) : 'Exception'
 		];
 		return new JSONResponse($response, $statusCode);
 	}
@@ -150,7 +150,7 @@ class Helper {
 			$response = $this->createErrorResponse($e, Http::STATUS_LOCKED);
 		} catch (\Throwable $e) {
 			$this->logException($e);
-			$response = $this->createErrorResponse($e, Http::STATUS_INTERNAL_SERVER_ERROR);
+			$response = $this->createErrorResponse($e, Http::STATUS_INTERNAL_SERVER_ERROR, false);
 		}
 		$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS));
 		return $response;
