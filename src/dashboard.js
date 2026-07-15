@@ -8,10 +8,10 @@ __webpack_public_path__ = OC.linkTo('notes', 'js/') // eslint-disable-line
 
 document.addEventListener('DOMContentLoaded', () => {
 	OCA.Dashboard.register('notes', async (el) => {
-		const { default: Vue } = await import(/* webpackChunkName: "dashboard-lazy" */'vue')
+		const { createApp } = await import(/* webpackChunkName: "dashboard-lazy" */'vue')
 		const { default: Dashboard } = await import(/* webpackChunkName: "dashboard-lazy" */'./components/Dashboard.vue')
-		Vue.mixin({ methods: { t, n } })
-		const View = Vue.extend(Dashboard)
-		new View().$mount(el)
+		const app = createApp(Dashboard)
+		app.mixin({ methods: { t, n } })
+		app.mount(el)
 	})
 })
