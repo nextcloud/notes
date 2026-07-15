@@ -285,7 +285,7 @@ class NotesApiController extends ApiController {
 			return $response;
 		} catch (\Exception $e) {
 			$this->helper->logException($e);
-			return $this->helper->createErrorResponse($e, Http::STATUS_NOT_FOUND);
+			return $this->helper->createErrorResponse(Http::STATUS_NOT_FOUND);
 		}
 	}
 
