@@ -51,7 +51,7 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+				<NcActions v-model:open="actionsOpen" container=".action-buttons" menuAlign="right">
 					<NcActionButton
 						:title="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"

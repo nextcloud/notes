@@ -33,7 +33,7 @@
 						</template>
 					</NcAppNavigationItem>
 				</ul>
-				<AppSettings v-if="!loading.notes && error !== true" :open.sync="settingsVisible" @reload="reloadNotes" />
+				<AppSettings v-if="!loading.notes && error !== true" v-model:open="settingsVisible" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
 

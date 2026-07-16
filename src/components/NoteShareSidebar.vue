@@ -5,8 +5,8 @@
 
 <template>
 	<NcAppSidebar
+		v-model:active="activeTab"
 		data-cy-notes-share-sidebar
-		:active.sync="activeTab"
 		forceMenu
 		:loading="isOpen && loading"
 		:name="note?.title || t('notes', 'Share')"

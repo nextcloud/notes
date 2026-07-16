@@ -15,7 +15,7 @@
 						</NcButton>
 					</div>
 					<NcTextField
-						:value.sync="searchText"
+						v-model="searchText"
 						:label="t('notes', 'Search for notes')"
 						:showTrailingButton="searchText !== ''"
 						trailingButtonIcon="close"
