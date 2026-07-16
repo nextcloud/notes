@@ -99,6 +99,7 @@ export function getDefaultSampleNoteTitle() {
 	return t('notes', 'Sample note')
 }
 
+/* eslint-disable @stylistic/indent-binary-ops */
 export function getDefaultSampleNote() {
 	return '# ' + getDefaultSampleNoteTitle() + `
 
@@ -128,6 +129,7 @@ export function getDefaultSampleNote() {
 > ` + t('notes', 'Nextcloud, a safe home for all your data') + `
 `
 }
+/* eslint-enable @stylistic/indent-binary-ops */
 
 export function escapeHtml(str) {
 	const element = document.createElement('div')

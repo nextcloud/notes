@@ -93,9 +93,11 @@ export default {
 			filter: {
 				category: null,
 			},
+
 			loading: {
 				notes: true,
 			},
+
 			error: false,
 			undoNotification: null,
 			undoTimer: null,

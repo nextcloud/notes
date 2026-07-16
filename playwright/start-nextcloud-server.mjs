@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+/* global process */
+
 import {
 	configureNextcloud,
 	startNextcloud,
@@ -32,7 +34,6 @@ async function start() {
 async function stop() {
 	process.stderr.write('Stopping Nextcloud server…\n')
 	await stopNextcloud()
-	// eslint-disable-next-line n/no-process-exit
 	process.exit(0)
 }
 
