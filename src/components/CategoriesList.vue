@@ -150,7 +150,7 @@ export default {
 		subscribe('notes:category:new', this.startNewCategory)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('notes:category:new', this.startNewCategory)
 		this.stopNewCategoryMonitor()
 	},

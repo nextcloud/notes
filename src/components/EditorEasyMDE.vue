@@ -116,7 +116,7 @@ export default {
 		this.mde.codemirror.focus()
 	},
 
-	destroyed() {
+	unmounted() {
 		this.mde = null
 	},
 

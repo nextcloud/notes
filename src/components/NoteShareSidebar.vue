@@ -130,7 +130,7 @@ export default {
 		subscribe('notes:share:open', this.onShareOpen)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('notes:share:open', this.onShareOpen)
 	},
 

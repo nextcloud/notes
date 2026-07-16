@@ -202,7 +202,7 @@ export default {
 		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
-	destroyed() {
+	unmounted() {
 		this.stopRefreshTimer()
 		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)

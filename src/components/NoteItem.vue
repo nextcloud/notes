@@ -214,7 +214,7 @@ export default {
 		subscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('files_sharing:share:created', this.onShareCreated)
 	},
 

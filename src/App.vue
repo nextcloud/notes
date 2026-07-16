@@ -127,7 +127,7 @@ export default {
 		this.loadNotes()
 	},
 
-	destroyed() {
+	unmounted() {
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
 		this.stopRefreshTimer()
 	},
