@@ -50,7 +50,7 @@
 			</NcActionButton>
 			<NcActionInput
 				v-else
-				:value="note.category"
+				:modelValue="note.category"
 				type="multiselect"
 				label="label"
 				trackBy="id"
@@ -58,7 +58,7 @@
 				:options="categories"
 				:disabled="loading.category"
 				:taggable="true"
-				@input="onCategoryChange"
+				@update:modelValue="onCategoryChange"
 				@searchChange="onCategoryChange"
 			>
 				<template #icon>
@@ -77,7 +77,6 @@
 				v-model.trim="newTitle"
 				:disabled="!renaming"
 				:placeholder="t('notes', 'Rename note')"
-				@input="onInputChange($event)"
 				:showTrailingButton="true"
 				@submit="onRename"
 			>
@@ -265,10 +264,7 @@ export default {
 		startRenaming() {
 			this.renaming = true
 			this.newTitle = this.note.title
-			this.$emit('start-renaming', this.note.id)
-		},
-		onInputChange(event) {
-			this.newTitle = event.target.value.toString()
+			this.$emit('startRenaming', this.note.id)
 		},
 
 		async onCategoryChange(result) {
