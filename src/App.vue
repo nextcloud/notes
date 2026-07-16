@@ -19,7 +19,7 @@
 						<FolderPlusIcon :size="20" />
 					</template>
 				</NcAppNavigationNew>
-				<CategoriesList v-show="!loading.notes" />
+				<CategoriesList :loading="loading.notes" />
 			</template>
 
 			<template #footer>
