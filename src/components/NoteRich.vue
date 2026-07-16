@@ -13,6 +13,7 @@
 
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { markRaw } from 'vue'
 import { queueCommand, refreshNote } from '../NotesService.js'
 import store from '../store.js'
 import { routeIsNewNote } from '../Util.js'
@@ -94,7 +95,7 @@ export default {
 			this?.editor?.destroy()
 			this.loading = true
 			this.shouldAutotitle = undefined
-			this.editor = (await window.OCA.Text.createEditor({
+			this.editor = markRaw(await window.OCA.Text.createEditor({
 				el: this.$refs.editor,
 				fileId: parseInt(this.noteId),
 				filePath: this.note.internalPath,
