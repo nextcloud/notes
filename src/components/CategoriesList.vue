@@ -5,6 +5,7 @@
 
 <template>
 	<NcAppNavigationItem
+		v-show="!loading"
 		:name="t('notes', 'All notes')"
 		:active="selectedCategory === null"
 		:draggable="false"
@@ -26,10 +27,11 @@
 		</template>
 	</NcAppNavigationItem>
 
-		<NcAppNavigationCaption :name="t('notes', 'Categories')" />
+	<NcAppNavigationCaption v-show="!loading" :name="t('notes', 'Categories')" />
 
 	<NcAppNavigationItem
 		v-if="newCategoryDraft"
+		v-show="!loading"
 		ref="newCategoryItem"
 		name=""
 		:draggable="false"
@@ -52,6 +54,7 @@
 	</NcAppNavigationItem>
 
 	<NcAppNavigationItem v-for="category in categories"
+		v-show="!loading"
 		:key="category.name"
 		:name="categoryTitle(category.name)"
 		:active="category.name === selectedCategory"
@@ -120,6 +123,10 @@ export default {
 		FolderIcon,
 		FolderOutlineIcon,
 		HistoryIcon,
+	},
+
+	props: {
+		loading: Boolean,
 	},
 
 	data() {
