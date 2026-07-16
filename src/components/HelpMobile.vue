@@ -4,49 +4,45 @@
 -->
 
 <template>
-	<Fragment>
-		<div class="help-mobile">
-			<NcFormGroup :label="t('notes', 'Android')">
-				<div class="badge-wrapper">
-					<div>
-						<div class="badge">
-							<a target="_blank" href="https://play.google.com/store/apps/details?id=it.niedermann.owncloud.notes">
-								<img :src="getRoute('badge_playstore.svg')" class="appstore-badge badge-playstore-fix">
-							</a>
-						</div>
-						<div class="badge">
-							<a target="_blank" href="https://f-droid.org/repository/browse/?fdid=it.niedermann.owncloud.notes">
-								<img :src="getRoute('badge_fdroid.svg')" class="appstore-badge">
-							</a>
-						</div>
+	<div class="help-mobile">
+		<NcFormGroup :label="t('notes', 'Android')">
+			<div class="badge-wrapper">
+				<div>
+					<div class="badge">
+						<a target="_blank" href="https://play.google.com/store/apps/details?id=it.niedermann.owncloud.notes">
+							<img :src="getRoute('badge_playstore.svg')" class="appstore-badge badge-playstore-fix">
+						</a>
+					</div>
+					<div class="badge">
+						<a target="_blank" href="https://f-droid.org/repository/browse/?fdid=it.niedermann.owncloud.notes">
+							<img :src="getRoute('badge_fdroid.svg')" class="appstore-badge">
+						</a>
 					</div>
 				</div>
-			</NcFormGroup>
+			</div>
+		</NcFormGroup>
 
-			<NcFormGroup :label="t('notes', 'iPhone and iPad')">
-				<div class="badge-wrapper">
-					<div>
-						<div class="badge">
-							<a target="_blank" href="https://apps.apple.com/app/nextcloud-notes/id813973264">
-								<img :src="getRoute('badge_applestore.svg')" class="appstore-badge badge-playstore-fix">
-							</a>
-						</div>
+		<NcFormGroup :label="t('notes', 'iPhone and iPad')">
+			<div class="badge-wrapper">
+				<div>
+					<div class="badge">
+						<a target="_blank" href="https://apps.apple.com/app/nextcloud-notes/id813973264">
+							<img :src="getRoute('badge_applestore.svg')" class="appstore-badge badge-playstore-fix">
+						</a>
 					</div>
 				</div>
-			</NcFormGroup>
-		</div>
-	</Fragment>
+			</div>
+		</NcFormGroup>
+	</div>
 </template>
+
 <script>
 
 import { generateFilePath } from '@nextcloud/router'
-
-import { Fragment } from 'vue-frag'
 import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
 
 export default {
 	components: {
-		Fragment,
 		NcFormGroup,
 	},
 
