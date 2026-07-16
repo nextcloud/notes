@@ -4,8 +4,8 @@
 -->
 
 <template>
-	<NcButton type="secondary" @click="onNewNote">
 		<Plus slot="icon" :size="20" />
+	<NcButton variant="secondary" @click="onNewNote">
 		{{ t('notes', 'Create a sample note with Markdown') }}
 	</NcButton>
 </template>

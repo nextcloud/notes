@@ -9,8 +9,8 @@
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
 					<div class="content-list__actions">
-						<NcButton type="primary" :disabled="creatingNote" @click="onNewNote">
 							<PlusIcon slot="icon" :size="20" />
+						<NcButton variant="primary" :disabled="creatingNote" @click="onNewNote">
 							{{ t('notes', 'New note') }}
 						</NcButton>
 					</div>

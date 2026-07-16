@@ -13,10 +13,10 @@
 			<p>{{ t('notes', 'This option can also be changed later on in the Notes app settings.') }}</p>
 
 			<div class="submit-buttons">
-				<NcButton type="secondary" :disabled="loading" @click="useOld">
+				<NcButton variant="secondary" :disabled="loading" @click="useOld">
 					{{ t('notes', 'Keep plain Markdown editor') }}
 				</NcButton>
-				<NcButton type="primary" :disabled="loading" @click="useNew">
+				<NcButton variant="primary" :disabled="loading" @click="useNew">
 					{{ t('notes', 'Use rich editor') }}
 				</NcButton>
 			</div>
