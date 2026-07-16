@@ -4,107 +4,98 @@
 -->
 
 <template>
-	<Fragment>
-		<NcAppNavigationItem
-			:name="t('notes', 'All notes')"
-			:active="selectedCategory === null"
-			:draggable="false"
-			class="category-no-actions"
-			:class="{
-				'drop-over': dragOverAllNotes,
-			}"
-			@click.prevent.stop="onSelectCategory(null)"
-			@dragstart.native="onCategoryDragStart"
-			@dragover.native="onAllNotesDragOver($event)"
-			@dragleave.native="onAllNotesDragLeave($event)"
-			@drop.native="onAllNotesDrop($event)"
-		>
-			<template #icon>
-				<HistoryIcon :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					{{ numNotes }}
-				</NcCounterBubble>
-			</template>
-		</NcAppNavigationItem>
+	<NcAppNavigationItem
+		:name="t('notes', 'All notes')"
+		:active="selectedCategory === null"
+		:draggable="false"
+		class="category-no-actions"
+		:class="{
+			'drop-over': dragOverAllNotes,
+		}"
+		@click.prevent.stop="onSelectCategory(null)"
+		@dragstart.native="onCategoryDragStart"
+		@dragover.native="onAllNotesDragOver($event)"
+		@dragleave.native="onAllNotesDragLeave($event)"
+		@drop.native="onAllNotesDrop($event)"
+	>
+		<template #icon>
+			<HistoryIcon :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="numNotes" />
+		</template>
+	</NcAppNavigationItem>
 
 		<NcAppNavigationCaption :name="t('notes', 'Categories')" />
 
-		<NcAppNavigationItem
-			v-if="newCategoryDraft"
-			ref="newCategoryItem"
-			name=""
-			:draggable="false"
-			:editable="true"
-			:editLabel="t('notes', 'Rename category')"
-			:editPlaceholder="t('notes', 'New category')"
-			:forceMenu="true"
-			:forceDisplayActions="true"
-			class="category-draft"
-			@click.prevent.stop
-			@dragstart.native="onCategoryDragStart"
-			@update:name="onCreateCategory"
-		>
-			<template #icon>
-				<FolderIcon :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					0
-				</NcCounterBubble>
-			</template>
-		</NcAppNavigationItem>
+	<NcAppNavigationItem
+		v-if="newCategoryDraft"
+		ref="newCategoryItem"
+		name=""
+		:draggable="false"
+		:editable="true"
+		:editLabel="t('notes', 'Rename category')"
+		:editPlaceholder="t('notes', 'New category')"
+		:forceMenu="true"
+		:forceDisplayActions="true"
+		class="category-draft"
+		@click.prevent.stop
+		@dragstart.native="onCategoryDragStart"
+		@update:name="onCreateCategory"
+	>
+		<template #icon>
+			<FolderIcon :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="0" />
+		</template>
+	</NcAppNavigationItem>
 
-		<NcAppNavigationItem v-for="category in categories"
-			:key="category.name"
-			:name="categoryTitle(category.name)"
-			:active="category.name === selectedCategory"
-			:draggable="false"
-			:editable="category.name !== ''"
-			:editLabel="t('notes', 'Rename category')"
-			:editPlaceholder="category.name"
-			:forceMenu="category.name !== ''"
-			:forceDisplayActions="category.name !== ''"
-			:class="{
-				'drop-over': category.name === dragOverCategory,
-				'category-no-actions': category.name === '',
-			}"
-			@click.prevent.stop="onSelectCategory(category.name)"
-			@dragstart.native="onCategoryDragStart"
-			@dragover.native="onCategoryDragOver(category.name, $event)"
-			@dragleave.native="onCategoryDragLeave(category.name, $event)"
-			@drop.native="onCategoryDrop(category.name, $event)"
-			@update:name="onRenameCategory(category.name, $event)"
-		>
-			<template #icon>
-				<FolderIcon v-if="category.name === selectedCategory" :size="20" />
-				<FolderOutlineIcon v-else :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					{{ category.count }}
-				</NcCounterBubble>
-			</template>
-			<template v-if="category.name !== ''" #actions>
-				<NcActionButton
-					:closeAfterClick="true"
-					@click="onDeleteCategory(category.name)"
-				>
-					<template #icon>
-						<DeleteIcon :size="20" />
-					</template>
-					{{ t('notes', 'Delete category') }}
-				</NcActionButton>
-			</template>
-		</NcAppNavigationItem>
-	</Fragment>
+	<NcAppNavigationItem v-for="category in categories"
+		:key="category.name"
+		:name="categoryTitle(category.name)"
+		:active="category.name === selectedCategory"
+		:draggable="false"
+		:editable="category.name !== ''"
+		:editLabel="t('notes', 'Rename category')"
+		:editPlaceholder="category.name"
+		:forceMenu="category.name !== ''"
+		:forceDisplayActions="category.name !== ''"
+		:class="{
+			'drop-over': category.name === dragOverCategory,
+			'category-no-actions': category.name === '',
+		}"
+		@click.prevent.stop="onSelectCategory(category.name)"
+		@dragstart.native="onCategoryDragStart"
+		@dragover.native="onCategoryDragOver(category.name, $event)"
+		@dragleave.native="onCategoryDragLeave(category.name, $event)"
+		@drop.native="onCategoryDrop(category.name, $event)"
+		@update:name="onRenameCategory(category.name, $event)"
+	>
+		<template #icon>
+			<FolderIcon v-if="category.name === selectedCategory" :size="20" />
+			<FolderOutlineIcon v-else :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="category.count" />
+		</template>
+		<template v-if="category.name !== ''" #actions>
+			<NcActionButton
+				:closeAfterClick="true"
+				@click="onDeleteCategory(category.name)"
+			>
+				<template #icon>
+					<DeleteIcon :size="20" />
+				</template>
+				{{ t('notes', 'Delete category') }}
+			</NcActionButton>
+		</template>
+	</NcAppNavigationItem>
 </template>
 
 <script>
 import { showConfirmation } from '@nextcloud/dialogs'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-import { Fragment } from 'vue-frag'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
@@ -122,7 +113,6 @@ export default {
 
 	components: {
 		DeleteIcon,
-		Fragment,
 		NcActionButton,
 		NcAppNavigationItem,
 		NcAppNavigationCaption,
