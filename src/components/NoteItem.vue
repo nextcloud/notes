@@ -58,7 +58,7 @@
 				:options="categories"
 				:disabled="loading.category"
 				:taggable="true"
-				@input="onCategoryChange"
+				@update:modelValue="onCategoryChange"
 				@searchChange="onCategoryChange"
 			>
 				<template #icon>
@@ -78,7 +78,6 @@
 				:disabled="!renaming"
 				:placeholder="t('notes', 'Rename note')"
 				:showTrailingButton="true"
-				@input="onInputChange($event)"
 				@submit="onRename"
 			>
 				<template #icon>
@@ -244,7 +243,7 @@ export default {
 		},
 
 		onNoteSelected(noteId) {
-			this.$emit('note-selected', noteId)
+			this.$emit('noteSelected', noteId)
 		},
 
 		onToggleFavorite() {
@@ -260,17 +259,13 @@ export default {
 
 		onCategorySelected() {
 			this.actionsOpen = false
-			this.$emit('category-selected', this.note.category)
+			this.$emit('categorySelected', this.note.category)
 		},
 
 		startRenaming() {
 			this.renaming = true
 			this.newTitle = this.note.title
-			this.$emit('start-renaming', this.note.id)
-		},
-
-		onInputChange(event) {
-			this.newTitle = event.target.value.toString()
+			this.$emit('startRenaming', this.note.id)
 		},
 
 		async onCategoryChange(result) {
@@ -318,7 +313,7 @@ export default {
 					throw new Error('Note has errors')
 				}
 				await deleteNote(this.note.id, () => {
-					this.$emit('note-deleted', note)
+					this.$emit('noteDeleted', note)
 					this.loading.delete = false
 					this.actionsOpen = false
 				})
