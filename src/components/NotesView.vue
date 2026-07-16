@@ -9,8 +9,10 @@
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
 					<div class="content-list__actions">
-							<PlusIcon slot="icon" :size="20" />
 						<NcButton variant="primary" :disabled="creatingNote" @click="onNewNote">
+							<template #icon>
+								<PlusIcon :size="20" />
+							</template>
 							{{ t('notes', 'New note') }}
 						</NcButton>
 					</div>
@@ -29,17 +31,14 @@
 					:showCategoryTitle="category === null"
 					@noteSelected="onNoteSelected"
 				/>
-				<template v-for="(group, idx) in groupedNotes" v-else>
-					<NotesCaption v-if="group.category && category!==group.category"
-						:key="group.category"
+				<template v-for="(group, idx) in groupedNotes" v-else :key="idx">
+					<NotesCaption v-if="group.category && category !== group.category"
 						:name="categoryToLabel(group.category)"
 					/>
 					<NotesCaption v-if="group.timeslot"
-						:key="group.timeslot"
 						:name="group.timeslot"
 					/>
 					<NotesList
-						:key="idx"
 						:notes="group.notes"
 						:showCategoryTitle="category === null"
 						@noteSelected="onNoteSelected"

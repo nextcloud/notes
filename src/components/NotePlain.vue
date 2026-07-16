@@ -13,7 +13,7 @@
 			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict = false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
-						<SyncAlertIcon slot="icon" :size="30" fillColor="var(--color-error)" />
+						<SyncAlertIcon :size="30" fillColor="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -56,33 +56,43 @@
 						:title="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
-						<PencilOutlineIcon v-if="preview" slot="icon" :size="20" />
-						<EyeOutlineIcon v-else slot="icon" :size="20" />
+						<template #icon>
+							<PencilOutlineIcon v-if="preview" :size="20" />
+							<EyeOutlineIcon v-else :size="20" />
+						</template>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>
 					<NcActionButton
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
-						<FullscreenIcon slot="icon" :size="20" />
+						<template #icon>
+							<FullscreenIcon :size="20" />
+						</template>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.readonly">
 					<NcActionButton>
-						<PencilOffOutlineIcon slot="icon" :size="20" />
+						<template #icon>
+							<PencilOffOutlineIcon :size="20" />
+						</template>
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.saveError" class="action-error">
 					<NcActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
+						<template #icon>
+							<SyncAlertIcon :size="20" fillColor="var(--color-text)" />
+						</template>
 						{{ t('notes', 'Save failed. Click to retry.') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.conflict" class="action-error">
-					<NcActionButton @click="showConflict=true">
-						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
+					<NcActionButton @click="showConflict = true">
+						<template #icon>
+							<SyncAlertIcon :size="20" fillColor="var(--color-text)" />
+						</template>
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
 					</NcActionButton>
 				</NcActions>

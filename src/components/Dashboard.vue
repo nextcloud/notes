@@ -17,16 +17,20 @@
 					:mainText="item.title"
 					:subText="subtext(item)"
 				>
-					<div slot="avatar"
-						class="note-item"
-						:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
-					/>
+					<template #avatar>
+						<div
+							class="note-item"
+							:class="{ 'note-item-favorite': item.favorite, 'note-item-no-favorites': !hasFavorites }"
+						/>
+					</template>
 				</NcDashboardWidgetItem>
 			</template>
 		</NcDashboardWidget>
 		<div v-if="!loading" class="buttons-footer">
 			<NcButton :href="createNoteUrl">
-				<Plus slot="icon" :size="20" />
+				<template #icon>
+					<Plus :size="20" />
+				</template>
 				{{ t('notes', 'New note') }}
 			</NcButton>
 		</div>

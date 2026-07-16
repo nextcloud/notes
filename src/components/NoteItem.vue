@@ -19,12 +19,10 @@
 		</template>
 		<template #icon>
 			<AlertOctagonOutlineIcon v-if="note.error"
-				slot="icon"
 				:size="20"
 				fillColor="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
-				slot="icon"
 				:size="20"
 				fillColor="#FC0"
 			/>
@@ -70,7 +68,9 @@
 			</NcActionInput>
 
 			<NcActionButton v-if="!renaming" @click="startRenaming">
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 				{{ t('notes', 'Rename') }}
 			</NcActionButton>
 			<NcActionInput v-else
@@ -81,7 +81,9 @@
 				:showTrailingButton="true"
 				@submit="onRename"
 			>
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 			</NcActionInput>
 
 			<NcActionSeparator />

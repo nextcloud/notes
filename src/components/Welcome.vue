@@ -11,8 +11,10 @@
 				{{ t('notes', 'Start writing a note by clicking on “{newnote}”.', { newnote: t('notes', 'New note') }) }}
 			</div>
 			<div class="feature">
-					<Plus slot="icon" :size="20" />
 				<NcButton variant="secondary" @click="onNewNote">
+					<template #icon>
+						<Plus :size="20" />
+					</template>
 					{{ t('notes', 'New note') }}
 				</NcButton>
 			</div>
