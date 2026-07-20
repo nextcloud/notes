@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { getSidebarTabs } from '@nextcloud/files'
 import NcAppSidebar from '@nextcloud/vue/components/NcAppSidebar'
 import NcAppSidebarTab from '@nextcloud/vue/components/NcAppSidebarTab'
@@ -65,7 +66,6 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
-import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import store from '../store.js'
 import { fetchDavNode } from '../WebdavService.js'
 

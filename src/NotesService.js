@@ -4,9 +4,8 @@
  */
 
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-
+import { generateUrl } from '@nextcloud/router'
 import store from './store.js'
 import { copyNote } from './Util.js'
 
@@ -19,61 +18,61 @@ function handleSyncError(message, err = null) {
 	if (err?.response) {
 		const statusCode = err.response?.status
 		switch (statusCode) {
-		case 404:
-			showError(message + ' ' + t('notes', 'Note not found.'))
-			break
-		case 423:
-			showError(message + ' ' + t('notes', 'Note is locked.'))
-			break
-		case 507:
-			showError(message + ' ' + t('notes', 'Insufficient storage.'))
-			break
-		default:
-			showError(message + ' HTTP ' + statusCode + ' (' + err.response.data?.errorType + ')')
+			case 404:
+				showError(message + ' ' + t('notes', 'Note not found.'))
+				break
+			case 423:
+				showError(message + ' ' + t('notes', 'Note is locked.'))
+				break
+			case 507:
+				showError(message + ' ' + t('notes', 'Insufficient storage.'))
+				break
+			default:
+				showError(message + ' HTTP ' + statusCode + ' (' + err.response.data?.errorType + ')')
 		}
 	} else {
 		showError(message + ' ' + t('notes', 'See JavaScript console and server log for details.'))
 	}
 }
 
-export const setSettings = settings => {
+export function setSettings(settings) {
 	return axios
 		.put(url('/settings'), settings)
-		.then(response => {
+		.then((response) => {
 			const settings = response.data
 			store.commit('setSettings', settings)
 			return settings
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Updating settings has failed.'), err)
 			throw err
 		})
 }
 
-export const deleteEditorMode = () => {
+export function deleteEditorMode() {
 	return axios
 		.post(url('/settings/migrate'))
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			throw err
 		})
 }
 
-export const getDashboardData = () => {
+export function getDashboardData() {
 	return axios
 		.get(url('/notes/dashboard'))
-		.then(response => {
+		.then((response) => {
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Fetching notes for dashboard has failed.'), err)
 			throw err
 		})
 }
 
-export const fetchNotes = () => {
+export function fetchNotes() {
 	const lastETag = store.state.sync.etag
 	const lastModified = store.state.sync.lastModified
 	const headers = {}
@@ -85,7 +84,7 @@ export const fetchNotes = () => {
 			url('/notes' + (lastModified ? '?pruneBefore=' + lastModified : '')),
 			{ headers },
 		)
-		.then(response => {
+		.then((response) => {
 			store.commit('setSettings', response.data.settings)
 			if (response.data.categories) {
 				store.commit('setCategories', response.data.categories)
@@ -101,7 +100,7 @@ export const fetchNotes = () => {
 			}
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			if (err?.response?.status === 304) {
 				store.commit('setSyncLastModified', err.response.headers['last-modified'])
 				return null
@@ -113,10 +112,10 @@ export const fetchNotes = () => {
 		})
 }
 
-export const fetchNote = noteId => {
+export function fetchNote(noteId) {
 	return axios
 		.get(url('/notes/' + noteId))
-		.then(response => {
+		.then((response) => {
 			const localNote = store.getters.getNote(parseInt(noteId))
 			// only overwrite if there are no unsaved changes
 			if (!localNote || !localNote.unsaved) {
@@ -124,7 +123,7 @@ export const fetchNote = noteId => {
 			}
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			if (err?.response?.status === 404) {
 				throw err
 			} else {
@@ -137,7 +136,7 @@ export const fetchNote = noteId => {
 		})
 }
 
-export const refreshNote = (noteId, lastETag) => {
+export function refreshNote(noteId, lastETag) {
 	const headers = {}
 	if (lastETag) {
 		headers['If-None-Match'] = lastETag
@@ -149,7 +148,7 @@ export const refreshNote = (noteId, lastETag) => {
 			url('/notes/' + noteId),
 			{ headers },
 		)
-		.then(response => {
+		.then((response) => {
 			if (note.conflict) {
 				store.commit('setNoteAttribute', { noteId, attribute: 'conflict', value: response.data })
 				return response.headers.etag
@@ -163,7 +162,7 @@ export const refreshNote = (noteId, lastETag) => {
 			}
 			return null
 		})
-		.catch(err => {
+		.catch((err) => {
 			if (err?.response?.status === 304 || note.deleting) {
 				// ignore error if note is deleting or not changed
 				return null
@@ -179,33 +178,33 @@ export const refreshNote = (noteId, lastETag) => {
 		})
 }
 
-export const setTitle = (noteId, title) => {
+export function setTitle(noteId, title) {
 	return axios
 		.put(url('/notes/' + noteId + '/title'), { title })
-		.then(response => {
+		.then((response) => {
 			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data.title })
 			// need to update the internal path as well since sharing sidebar uses it
 			store.commit('setNoteAttribute', { noteId, attribute: 'internalPath', value: response.data?.internalPath })
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Renaming note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
 }
 
-export const createNote = (category, title, content) => {
+export function createNote(category, title, content) {
 	return axios
 		.post(url('/notes'), {
 			category: category || '',
 			content: content || '',
 			title: title || '',
 		})
-		.then(response => {
+		.then((response) => {
 			_updateLocalNote(response.data)
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Creating new note has failed.'), err)
 			throw err
@@ -224,16 +223,14 @@ function _updateNote(note) {
 	const requestOptions = { headers: { 'If-Match': '"' + note.etag + '"' } }
 	return axios
 		.put(url('/notes/' + note.id), { content: note.content }, requestOptions)
-		.then(response => {
+		.then((response) => {
 			note.saveError = false
 			store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
 			const updated = response.data
 			if (updated.content === note.content) {
 				// everything is fine
 				// => update note with remote data
-				_updateLocalNote(
-					{ ...updated, unsaved: false },
-				)
+				_updateLocalNote({ ...updated, unsaved: false })
 			} else {
 				// content has changed locally in the meanwhile
 				// => merge note, but exclude content
@@ -243,7 +240,7 @@ function _updateNote(note) {
 				)
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			if (err?.response?.status === 412) {
 				// ETag does not match, try to merge changes
 				note.saveError = false
@@ -253,9 +250,7 @@ function _updateNote(note) {
 				if (remote.content === note.content) {
 					// content is already up-to-date
 					// => update note with remote data
-					_updateLocalNote(
-						{ ...remote, unsaved: false },
-					)
+					_updateLocalNote({ ...remote, unsaved: false })
 				} else if (remote.content === reference.content) {
 					// remote content has not changed
 					// => use all other attributes and sync again
@@ -276,7 +271,7 @@ function _updateNote(note) {
 		})
 }
 
-export const conflictSolutionLocal = note => {
+export function conflictSolutionLocal(note) {
 	note.etag = note.conflict.etag
 	_updateLocalNote(
 		copyNote(note.conflict, note, ['content']),
@@ -286,41 +281,39 @@ export const conflictSolutionLocal = note => {
 	queueCommand(note.id, 'content')
 }
 
-export const conflictSolutionRemote = note => {
-	_updateLocalNote(
-		{ ...note.conflict, unsaved: false },
-	)
+export function conflictSolutionRemote(note) {
+	_updateLocalNote({ ...note.conflict, unsaved: false })
 	store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: undefined })
 }
 
-export const autotitleNote = noteId => {
+export function autotitleNote(noteId) {
 	return axios
 		.put(url('/notes/' + noteId + '/autotitle'))
 		.then((response) => {
 			store.commit('setNoteAttribute', { noteId, attribute: 'title', value: response.data })
 			refreshNote(noteId)
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Updating title for note {id} has failed.', { id: noteId }), err)
 		})
 }
 
-export const undoDeleteNote = (note) => {
+export function undoDeleteNote(note) {
 	return axios
 		.post(url('/notes/undo'), note)
-		.then(response => {
+		.then((response) => {
 			_updateLocalNote(response.data)
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Undo delete has failed for note {title}.', { title: note.title }), err)
 			throw err
 		})
 }
 
-export const deleteNote = async (noteId, onNoteDeleted) => {
+export async function deleteNote(noteId, onNoteDeleted) {
 	store.commit('setNoteAttribute', { noteId, attribute: 'deleting', value: 'deleting' })
 	try {
 		await axios.delete(url('/notes/' + noteId))
@@ -334,63 +327,63 @@ export const deleteNote = async (noteId, onNoteDeleted) => {
 	store.commit('removeNote', noteId)
 }
 
-export const setFavorite = (noteId, favorite) => {
+export function setFavorite(noteId, favorite) {
 	return axios
 		.put(url('/notes/' + noteId + '/favorite'), { favorite })
-		.then(response => {
+		.then((response) => {
 			store.commit('setNoteAttribute', { noteId, attribute: 'favorite', value: response.data })
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Toggling favorite for note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
 }
 
-export const setCategory = (noteId, category) => {
+export function setCategory(noteId, category) {
 	return axios
 		.put(url('/notes/' + noteId + '/category'), { category })
-		.then(response => {
+		.then((response) => {
 			const realCategory = response.data
 			if (category !== realCategory) {
 				handleSyncError(t('notes', 'Updating the note\'s category has failed. Is the target directory writable?'))
 			}
 			store.commit('setNoteAttribute', { noteId, attribute: 'category', value: realCategory })
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Updating the category for note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
 }
 
-export const renameCategory = (oldCategory, newCategory) => {
+export function renameCategory(oldCategory, newCategory) {
 	return axios
 		.patch(url('/notes/category'), null, { params: { oldCategory, newCategory } })
-		.then(response => {
+		.then((response) => {
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Renaming category "{category}" has failed.', { category: oldCategory }), err)
 			throw err
 		})
 }
 
-export const deleteCategory = (category) => {
+export function deleteCategory(category) {
 	return axios
 		.delete(url('/notes/category'), { params: { category } })
-		.then(response => {
+		.then((response) => {
 			return response.data
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err)
 			handleSyncError(t('notes', 'Deleting category "{category}" has failed.', { category }), err)
 			throw err
 		})
 }
 
-export const queueCommand = (noteId, type) => {
+export function queueCommand(noteId, type) {
 	store.commit('addToQueue', { noteId, type })
 	_processQueue()
 }
@@ -407,16 +400,15 @@ function _processQueue() {
 		for (const cmd of queue) {
 			try {
 				switch (cmd.type) {
-				case 'content':
-					await _updateNote(store.state.notes.notesIds[cmd.noteId])
-					break
-				case 'autotitle':
-					await autotitleNote(cmd.noteId)
-					break
-				default:
-					console.error('Unknown queue command: ' + cmd.type)
+					case 'content':
+						await _updateNote(store.state.notes.notesIds[cmd.noteId])
+						break
+					case 'autotitle':
+						await autotitleNote(cmd.noteId)
+						break
+					default:
+						console.error('Unknown queue command: ' + cmd.type)
 				}
-
 			} catch (e) {
 				console.error('Command has failed with error:')
 				console.error(e)
@@ -429,17 +421,17 @@ function _processQueue() {
 	_executeQueueCommands()
 }
 
-export const saveNoteManually = (noteId) => {
+export function saveNoteManually(noteId) {
 	store.commit('setNoteAttribute', { noteId, attribute: 'saveError', value: false })
 	store.commit('setManualSave', true)
 	queueCommand(noteId, 'content')
 }
 
-export const noteExists = (noteId) => {
+export function noteExists(noteId) {
 	return store.getters.noteExists(noteId)
 }
 
-export const getCategories = (maxLevel, details) => {
+export function getCategories(maxLevel, details) {
 	const categories = store.getters.getCategories(maxLevel, details)
 	if (maxLevel === 0) {
 		return [...new Set([...categories, ...store.state.notes.categories])]

@@ -9,9 +9,9 @@
 			:name="t('notes', 'All notes')"
 			:active="selectedCategory === null"
 			:draggable="false"
+			class="category-no-actions"
 			:class="{
 				'drop-over': dragOverAllNotes,
-				'category-no-actions': true,
 			}"
 			@click.prevent.stop="onSelectCategory(null)"
 			@dragstart.native="onCategoryDragStart"
@@ -34,7 +34,7 @@
 		<NcAppNavigationItem
 			v-if="newCategoryDraft"
 			ref="newCategoryItem"
-			:name="''"
+			name=""
 			:draggable="false"
 			:editable="true"
 			:edit-label="t('notes', 'Rename category')"
@@ -102,22 +102,20 @@
 </template>
 
 <script>
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
-import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
-import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
-import { Fragment } from 'vue-frag'
 import { showConfirmation } from '@nextcloud/dialogs'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-
+import { Fragment } from 'vue-frag'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
-
 import { deleteCategory as deleteCategoryRequest, getCategories, renameCategory as renameCategoryRequest, setCategory } from '../NotesService.js'
-import { categoryLabel, getDraggedNoteId, isNoteDrag } from '../Util.js'
 import store from '../store.js'
+import { categoryLabel, getDraggedNoteId, isNoteDrag } from '../Util.js'
 
 export default {
 	name: 'CategoriesList',
@@ -220,7 +218,7 @@ export default {
 			if (!trimmed) {
 				return
 			}
-			const exists = this.categories.some(category => category.name === trimmed)
+			const exists = this.categories.some((category) => category.name === trimmed)
 			if (!exists) {
 				store.commit('addLocalCategory', trimmed)
 			}
@@ -231,7 +229,7 @@ export default {
 		},
 
 		getNotesInCategory(category) {
-			return store.state.notes.notes.filter(note => note.category === category || note.category.startsWith(category + '/'))
+			return store.state.notes.notes.filter((note) => note.category === category || note.category.startsWith(category + '/'))
 		},
 
 		updateNotesForCategoryRename(oldCategory, newCategory) {
@@ -387,7 +385,7 @@ export default {
 			event.stopPropagation()
 
 			this.dragOverAllNotes = false
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, (noteId) => store.getters.getNote(noteId))
 			if (noteId === null) {
 				return
 			}
@@ -404,7 +402,7 @@ export default {
 			event.preventDefault()
 			event.stopPropagation()
 
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, (noteId) => store.getters.getNote(noteId))
 			this.dragOverCategory = null
 			this.dragOverAllNotes = false
 			if (noteId === null) {
@@ -433,7 +431,7 @@ export default {
 				return
 			}
 			if (note.category === categoryName || note.category.startsWith(categoryName + '/')) {
-				const remainingNote = store.state.notes.notes.find(other => (
+				const remainingNote = store.state.notes.notes.find((other) => (
 					other.id !== noteId
 					&& other.category !== categoryName
 					&& !other.category.startsWith(categoryName + '/')
@@ -456,6 +454,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry) {
 	background-color: var(--color-primary-element-light) !important;

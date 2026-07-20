@@ -9,18 +9,18 @@
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
 					<div class="content-list__actions">
-						<NcButton type="primary" :disabled="creatingNote" @click="onNewNote">
+						<NcButton variant="primary" :disabled="creatingNote" @click="onNewNote">
 							<PlusIcon slot="icon" :size="20" />
 							{{ t('notes', 'New note') }}
 						</NcButton>
 					</div>
 					<NcTextField
-						:value.sync="searchText"
+						v-model="searchText"
 						:label="t('notes', 'Search for notes')"
 						:show-trailing-button="searchText !== ''"
 						trailing-button-icon="close"
 						:trailing-button-label="t('Clear search')"
-						@trailing-button-click="searchText=''"
+						@trailing-button-click="searchText = ''"
 					/>
 				</div>
 
@@ -30,7 +30,7 @@
 					@note-selected="onNoteSelected"
 				/>
 				<template v-for="(group, idx) in groupedNotes" v-else>
-					<NotesCaption v-if="group.category && category!==group.category"
+					<NotesCaption v-if="group.category && category !== group.category"
 						:key="group.category"
 						:name="categoryToLabel(group.category)"
 					/>
@@ -50,7 +50,7 @@
 					v-observe-visibility="onEndOfNotes"
 					class="loading-label"
 				>
-					{{ t('notes', 'Loading …') }}
+					{{ t('notes', 'Loading …') }}
 				</div>
 				<div v-if="getFilteredTotalCount > 0" class="content-list__search-more">
 					<NcButton @click="onCategorySelected(null)">
@@ -68,20 +68,19 @@
 
 <script>
 
+import { ObserveVisibility } from 'vue-observe-visibility'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
-import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
+import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-import { categoryLabel } from '../Util.js'
-import NotesList from './NotesList.vue'
-import NotesCaption from './NotesCaption.vue'
-import store from '../store.js'
-import Note from './Note.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
+import Note from './Note.vue'
+import NotesCaption from './NotesCaption.vue'
+import NotesList from './NotesList.vue'
 import { createNote } from '../NotesService.js'
-
-import { ObserveVisibility } from 'vue-observe-visibility'
+import store from '../store.js'
+import { categoryLabel } from '../Util.js'
 
 export default {
 	name: 'NotesView',
@@ -202,7 +201,7 @@ export default {
 				return ''
 			}
 			const t = note.modified * 1000
-			const timeslot = this.timeslots.find(timeslot => t >= timeslot.t.getTime())
+			const timeslot = this.timeslots.find((timeslot) => t >= timeslot.t.getTime())
 			if (timeslot !== undefined) {
 				return timeslot.l
 			} else if (t >= this.lastYear) {
@@ -228,7 +227,7 @@ export default {
 			}
 			this.creatingNote = true
 			createNote(store.getters.getSelectedCategory())
-				.then(note => {
+				.then((note) => {
 					this.$router.push({
 						name: 'note',
 						params: { noteId: note.id.toString() },
@@ -256,6 +255,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .content-list {
 	padding: 0 4px;

@@ -36,20 +36,21 @@
 		</div>
 	</div>
 </template>
+
 <script>
 
-import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/style.css'
-import NcActions from '@nextcloud/vue/components/NcActions'
+import { generateUrl } from '@nextcloud/router'
+import EasyMDE from 'easymde'
+import { basename, relative } from 'path'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
 import ImageOutlineIcon from 'vue-material-design-icons/ImageOutline.vue'
 import ImagePlusOutlineIcon from 'vue-material-design-icons/ImagePlusOutline.vue'
-import { basename, relative } from 'path'
-
 import store from '../store.js'
+
+import '@nextcloud/dialogs/style.css'
 
 export default {
 	name: 'EditorEasyMDE',
@@ -66,14 +67,17 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		readonly: {
 			type: Boolean,
 			required: true,
 		},
+
 		noteid: {
 			type: String,
 			required: true,
 		},
+
 		notecategory: {
 			type: String,
 			required: true,
@@ -92,6 +96,7 @@ export default {
 				forceSync: true,
 				tabSize: 4,
 			},
+
 			mde: null,
 		}
 	},
@@ -117,15 +122,10 @@ export default {
 
 	methods: {
 		initialize() {
-			const config = Object.assign({
-				element: this.$el.lastElementChild.firstElementChild,
-				initialValue: this.value,
-				renderingConfig: {},
-				shortcuts: {
-					toggleSideBySide: null,
-					togglePreview: null,
-				},
-			}, this.config)
+			const config = {element: this.$el.lastElementChild.firstElementChild, initialValue: this.value, renderingConfig: {}, shortcuts: {
+				toggleSideBySide: null,
+				togglePreview: null,
+			},...this.config}
 
 			this.mde = new EasyMDE(config)
 
@@ -172,10 +172,7 @@ export default {
 			const newvalue = (el.textContent === '[x]') ? '[ ]' : '[x]'
 
 			// + 1 for some reason... not sure why
-			doc.replaceRange(newvalue,
-				{ line: index, ch: line.text.indexOf('[') },
-				{ line: index, ch: line.text.indexOf(']') + 1 },
-			)
+			doc.replaceRange(newvalue, { line: index, ch: line.text.indexOf('[') }, { line: index, ch: line.text.indexOf(']') + 1 })
 		},
 
 		onClickEditor(event) {
@@ -196,7 +193,6 @@ export default {
 			OC.dialogs.filepicker(
 				t('notes', 'Select an image'),
 				(path) => {
-
 					if (!path.startsWith(apppath)) {
 						OC.dialogs.alert(
 							t('notes', 'You cannot select images outside of your notes folder. Your notes folder is: {folder}', { folder: apppath }),
@@ -250,6 +246,7 @@ export default {
 	},
 }
 </script>
+
 <style>
 @import '~easymde/dist/easymde.min.css';
 

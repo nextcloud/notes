@@ -13,6 +13,7 @@
 		</button>
 	</div>
 </template>
+
 <script>
 
 import { diffLines } from 'diff'
@@ -25,10 +26,12 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		reference: {
 			type: String,
 			required: true,
 		},
+
 		button: {
 			type: String,
 			required: true,
@@ -48,9 +51,9 @@ export default {
 				}
 			}
 			const lines = []
-			diffs.forEach(diff => {
+			diffs.forEach((diff) => {
 				const className = line2class(diff)
-				diff.value.replace(/\r?\n$/, '').split(/\r?\n/).forEach(line => {
+				diff.value.replace(/\r?\n$/, '').split(/\r?\n/).forEach((line) => {
 					lines.push({ line, className })
 				})
 			})
@@ -59,6 +62,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 .conflict-solution {
 	height: 100%;

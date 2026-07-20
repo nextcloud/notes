@@ -8,6 +8,7 @@
 		{{ value }}
 	</p>
 </template>
+
 <script>
 
 export default {
@@ -21,6 +22,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 .editor {
 	padding: 1em;

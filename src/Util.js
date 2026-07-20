@@ -13,11 +13,11 @@ export const noteAttributes = [
 	'category',
 ]
 
-export const copyNote = (from, to, exclude) => {
+export function copyNote(from, to, exclude) {
 	if (exclude === undefined) {
 		exclude = []
 	}
-	noteAttributes.forEach(attr => {
+	noteAttributes.forEach((attr) => {
 		if (!exclude.includes(attr)) {
 			to[attr] = from[attr]
 		}
@@ -25,15 +25,15 @@ export const copyNote = (from, to, exclude) => {
 	return to
 }
 
-export const categoryLabel = (category) => {
+export function categoryLabel(category) {
 	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
 }
 
-export const routeIsNewNote = ($route) => {
-	return {}.hasOwnProperty.call($route.query, 'new')
+export function routeIsNewNote($route) {
+	return Object.hasOwn($route.query, 'new')
 }
 
-export const isNoteDrag = (event) => {
+export function isNoteDrag(event) {
 	const dt = event?.dataTransfer
 	if (!dt) {
 		return false
@@ -53,7 +53,7 @@ export const isNoteDrag = (event) => {
 	}
 }
 
-export const getDraggedNoteId = (event, getNoteById) => {
+export function getDraggedNoteId(event, getNoteById) {
 	const dt = event?.dataTransfer
 	if (!dt) {
 		return null
@@ -99,6 +99,7 @@ export const getDefaultSampleNoteTitle = () => {
 	return t('notes', 'Sample note')
 }
 
+/* eslint-disable @stylistic/indent-binary-ops */
 export const getDefaultSampleNote = () => {
 	return '# ' + getDefaultSampleNoteTitle() + `
 
@@ -128,8 +129,9 @@ export const getDefaultSampleNote = () => {
 > ` + t('notes', 'Nextcloud, a safe home for all your data') + `
 `
 }
+/* eslint-enable @stylistic/indent-binary-ops */
 
-export const escapeHtml = (str) => {
+export function escapeHtml(str) {
 	const element = document.createElement('div')
 	element.textContent = str
 	return element.innerHTML
