@@ -109,6 +109,7 @@ import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
+import logger from '../Logger.js'
 import { deleteNote, fetchNote, setCategory, setFavorite, setTitle } from '../NotesService.js'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
 
@@ -290,7 +291,7 @@ export default {
 					this.newTitle = ''
 				})
 				.catch((e) => {
-					console.error('Failed to rename note', e)
+					logger.error('Failed to rename note', { error: e })
 					showError(this.t('notes', 'Error while renaming note.'))
 				})
 				.finally(() => {

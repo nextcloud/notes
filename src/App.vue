@@ -65,6 +65,7 @@ import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
 import NoteShareSidebar from './components/NoteShareSidebar.vue'
 import { config } from './config.js'
+import logger from './Logger.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
 import store from './store.js'
 import { getDraggedNoteId, isNoteDrag } from './Util.js'
@@ -149,7 +150,7 @@ export default {
 						// only show error state if not loading in background
 						this.error = data.errorMessage
 					} else {
-						console.error('Server error while updating list of notes: ' + data.errorMessage)
+						logger.error('Server error while updating list of notes', { errorMessage: data.errorMessage })
 					}
 				})
 				.catch(() => {

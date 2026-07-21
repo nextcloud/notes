@@ -48,6 +48,7 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import ImageOutlineIcon from 'vue-material-design-icons/ImageOutline.vue'
 import ImagePlusOutlineIcon from 'vue-material-design-icons/ImagePlusOutline.vue'
+import logger from '../Logger.js'
 import store from '../store.js'
 
 import '@nextcloud/dialogs/style.css'
@@ -237,7 +238,7 @@ export default {
 						cm.focus()
 					})
 					.catch((error) => {
-						console.error(error)
+						logger.error('Failed to upload attachment', { error })
 						showError(t('notes', 'The file was not uploaded. Check your server logs.'))
 					})
 			}

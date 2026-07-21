@@ -4,6 +4,7 @@
  */
 
 import Vue, { set } from 'vue'
+import logger from '../Logger.js'
 import { copyNote } from '../Util.js'
 
 const state = {
@@ -261,9 +262,7 @@ const actions = {
 		// add/update new notes
 		if (!notes || !noteIds) {
 			// TODO remove this block after fixing #886
-			console.error('This should not happen, please see issue #886')
-			console.info(notes)
-			console.info(noteIds)
+			logger.error('This should not happen, please see issue #886', { notes, noteIds })
 			// eslint-disable-next-line no-console
 			console.trace()
 			return

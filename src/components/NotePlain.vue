@@ -109,6 +109,7 @@ import ConflictSolution from './ConflictSolution.vue'
 import TheEditor from './EditorEasyMDE.vue'
 import ThePreview from './EditorMarkdownIt.vue'
 import { config } from '../config.js'
+import logger from '../Logger.js'
 import { conflictSolutionLocal, conflictSolutionRemote, fetchNote, queueCommand, refreshNote, saveNoteManually } from '../NotesService.js'
 import store from '../store.js'
 import { routeIsNewNote } from '../Util.js'
@@ -395,13 +396,13 @@ export default {
 		},
 
 		onUseLocalVersion() {
-			console.debug('conflict solution: use local version')
+			logger.debug('conflict solution: use local version')
 			conflictSolutionLocal(this.note)
 			this.showConflict = false
 		},
 
 		onUseRemoteVersion() {
-			console.debug('conflict solution: use remote version')
+			logger.debug('conflict solution: use remote version')
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},

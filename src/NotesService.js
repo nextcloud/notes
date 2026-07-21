@@ -6,6 +6,7 @@
 import axios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
 import { generateUrl } from '@nextcloud/router'
+import logger from './Logger.js'
 import store from './store.js'
 import { copyNote } from './Util.js'
 
@@ -44,7 +45,7 @@ export function setSettings(settings) {
 			return settings
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Updating settings has failed', { error: err })
 			handleSyncError(t('notes', 'Updating settings has failed.'), err)
 			throw err
 		})
@@ -54,7 +55,7 @@ export function deleteEditorMode() {
 	return axios
 		.post(url('/settings/migrate'))
 		.catch((err) => {
-			console.error(err)
+			logger.error('Deleting editor mode setting has failed', { error: err })
 			throw err
 		})
 }
@@ -66,7 +67,7 @@ export function getDashboardData() {
 			return response.data
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Fetching notes for dashboard has failed', { error: err })
 			handleSyncError(t('notes', 'Fetching notes for dashboard has failed.'), err)
 			throw err
 		})
@@ -105,7 +106,7 @@ export function fetchNotes() {
 				store.commit('setSyncLastModified', err.response.headers['last-modified'])
 				return null
 			} else {
-				console.error(err)
+				logger.error('Fetching notes has failed', { error: err })
 				handleSyncError(t('notes', 'Fetching notes has failed.'), err)
 				throw err
 			}
@@ -127,7 +128,7 @@ export function fetchNote(noteId) {
 			if (err?.response?.status === 404) {
 				throw err
 			} else {
-				console.error(err)
+				logger.error('Fetching note has failed', { noteId, error: err })
 				const msg = t('notes', 'Fetching note {id} has failed.', { id: noteId })
 				store.commit('setNoteAttribute', { noteId, attribute: 'error', value: true })
 				store.commit('setNoteAttribute', { noteId, attribute: 'errorType', value: msg })
@@ -168,10 +169,10 @@ export function refreshNote(noteId, lastETag) {
 				return null
 			} else if (err?.code === 'ECONNABORTED') {
 				// ignore cancelled request
-				console.debug('Refresh Note request was cancelled.')
+				logger.debug('Refresh Note request was cancelled.')
 				return null
 			} else {
-				console.error(err)
+				logger.error('Refreshing note has failed', { noteId, error: err })
 				handleSyncError(t('notes', 'Refreshing note {id} has failed.', { id: noteId }), err)
 			}
 			return null
@@ -187,7 +188,7 @@ export function setTitle(noteId, title) {
 			store.commit('setNoteAttribute', { noteId, attribute: 'internalPath', value: response.data?.internalPath })
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Renaming note has failed', { noteId, error: err })
 			handleSyncError(t('notes', 'Renaming note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
@@ -205,7 +206,7 @@ export function createNote(category, title, content) {
 			return response.data
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Creating new note has failed', { error: err })
 			handleSyncError(t('notes', 'Creating new note has failed.'), err)
 			throw err
 		})
@@ -260,12 +261,12 @@ function _updateNote(note) {
 					)
 					queueCommand(note.id, 'content')
 				} else {
-					console.info('Note update conflict. Manual resolution required.')
+					logger.info('Note update conflict. Manual resolution required.', { noteId: note.id })
 					store.commit('setNoteAttribute', { noteId: note.id, attribute: 'conflict', value: remote })
 				}
 			} else {
 				store.commit('setNoteAttribute', { noteId: note.id, attribute: 'saveError', value: true })
-				console.error(err)
+				logger.error('Saving note has failed', { noteId: note.id, error: err })
 				handleSyncError(t('notes', 'Saving note {id} has failed.', { id: note.id }), err)
 			}
 		})
@@ -294,7 +295,7 @@ export function autotitleNote(noteId) {
 			refreshNote(noteId)
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Updating title for note has failed', { noteId, error: err })
 			handleSyncError(t('notes', 'Updating title for note {id} has failed.', { id: noteId }), err)
 		})
 }
@@ -307,7 +308,7 @@ export function undoDeleteNote(note) {
 			return response.data
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Undo delete has failed for note', { title: note.title, error: err })
 			handleSyncError(t('notes', 'Undo delete has failed for note {title}.', { title: note.title }), err)
 			throw err
 		})
@@ -318,7 +319,7 @@ export async function deleteNote(noteId, onNoteDeleted) {
 	try {
 		await axios.delete(url('/notes/' + noteId))
 	} catch (err) {
-		console.error(err)
+		logger.error('Deleting note has failed', { noteId, error: err })
 		handleSyncError(t('notes', 'Deleting note {id} has failed.', { id: noteId }), err)
 	}
 	// remove note always since we don't know when exactly the error happened
@@ -334,7 +335,7 @@ export function setFavorite(noteId, favorite) {
 			store.commit('setNoteAttribute', { noteId, attribute: 'favorite', value: response.data })
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Toggling favorite for note has failed', { noteId, error: err })
 			handleSyncError(t('notes', 'Toggling favorite for note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
@@ -351,7 +352,7 @@ export function setCategory(noteId, category) {
 			store.commit('setNoteAttribute', { noteId, attribute: 'category', value: realCategory })
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Updating the category for note has failed', { noteId, error: err })
 			handleSyncError(t('notes', 'Updating the category for note {id} has failed.', { id: noteId }), err)
 			throw err
 		})
@@ -364,7 +365,7 @@ export function renameCategory(oldCategory, newCategory) {
 			return response.data
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Renaming category has failed', { oldCategory, error: err })
 			handleSyncError(t('notes', 'Renaming category "{category}" has failed.', { category: oldCategory }), err)
 			throw err
 		})
@@ -377,7 +378,7 @@ export function deleteCategory(category) {
 			return response.data
 		})
 		.catch((err) => {
-			console.error(err)
+			logger.error('Deleting category has failed', { category, error: err })
 			handleSyncError(t('notes', 'Deleting category "{category}" has failed.', { category }), err)
 			throw err
 		})
@@ -407,11 +408,10 @@ function _processQueue() {
 						await autotitleNote(cmd.noteId)
 						break
 					default:
-						console.error('Unknown queue command: ' + cmd.type)
+						logger.error('Unknown queue command', { type: cmd.type })
 				}
 			} catch (e) {
-				console.error('Command has failed with error:')
-				console.error(e)
+				logger.error('Command has failed with error', { error: e })
 			}
 		}
 		store.commit('setSaving', false)
