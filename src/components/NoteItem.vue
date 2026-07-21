@@ -320,6 +320,7 @@ export default {
 					this.actionsOpen = false
 				})
 			} catch (e) {
+				logger.error('Error during preparing note for deletion', { error: e })
 				showError(this.t('notes', 'Error during preparing note for deletion.'))
 				this.loading.delete = false
 				this.actionsOpen = false

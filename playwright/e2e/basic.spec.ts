@@ -6,8 +6,8 @@
 import type { Page } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
-import { login } from '../support/login'
-import { NoteEditor } from '../support/sections/NoteEditor'
+import { login } from '../support/login.ts'
+import { NoteEditor } from '../support/sections/NoteEditor.ts'
 
 function currentNoteId(page: Page): number | null {
 	const match = page.url().match(/\/note\/(\d+)(?:\?.*)?$/)

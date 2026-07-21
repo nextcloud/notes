@@ -95,12 +95,12 @@ export function getDraggedNoteId(event, getNoteById) {
 	return noteId
 }
 
-export const getDefaultSampleNoteTitle = () => {
+export function getDefaultSampleNoteTitle() {
 	return t('notes', 'Sample note')
 }
 
 /* eslint-disable @stylistic/indent-binary-ops */
-export const getDefaultSampleNote = () => {
+export function getDefaultSampleNote() {
 	return '# ' + getDefaultSampleNoteTitle() + `
 
 * 📅 ` + t('notes', '15 January 2021, via Nextcloud Notes') + `

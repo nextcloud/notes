@@ -249,7 +249,7 @@ export default {
 			this.$emit('note-deleted', note)
 		},
 
-		onNoteSelected(noteId) {
+		onNoteSelected() {
 			this.showNote = true
 		},
 	},

@@ -23,6 +23,10 @@ export default [
 				singleline: 'beside',
 				multiline: 'ignore',
 			}],
+			// allow some component names to not be multi-word
+			'vue/multi-word-component-names': ['error', {
+				ignores: ['Dashboard', 'Loading', 'Note', 'Welcome'],
+		}],
 		},
 	},
 ]

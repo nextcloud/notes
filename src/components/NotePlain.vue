@@ -185,7 +185,7 @@ export default {
 		},
 
 		title: 'onUpdateTitle',
-		'note.conflict': function(newConflict, oldConflict) {
+		'note.conflict': function(newConflict) {
 			if (newConflict) {
 				this.showConflict = true
 			}

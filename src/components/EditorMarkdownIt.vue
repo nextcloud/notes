@@ -12,6 +12,8 @@
 
 import { generateUrl } from '@nextcloud/router'
 import MarkdownIt from 'markdown-it'
+import markdownItBidi from 'markdown-it-bidi'
+import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
 import { escapeHtml } from '../Util.js'
 
 export default {
@@ -40,12 +42,12 @@ export default {
 			breaks: true,
 		})
 
-		md.use(require('markdown-it-task-checkbox'), {
+		md.use(markdownItTaskCheckbox, {
 			disabled: this.readonly,
 			liClass: 'task-list-item',
 		})
 
-		md.use(require('markdown-it-bidi'))
+		md.use(markdownItBidi)
 
 		return {
 			html: '',
@@ -158,7 +160,7 @@ export default {
 		},
 
 		setInlineCodeRule() {
-			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
+			this.md.renderer.rules.code_inline = function(tokens, idx) {
 				const token = tokens[idx]
 				return '<code class="inline-code">' + escapeHtml(token.content) + '</code>'
 			}

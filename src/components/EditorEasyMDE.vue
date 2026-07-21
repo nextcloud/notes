@@ -123,10 +123,18 @@ export default {
 
 	methods: {
 		initialize() {
-			const config = {element: this.$el.lastElementChild.firstElementChild, initialValue: this.value, renderingConfig: {}, shortcuts: {
-				toggleSideBySide: null,
-				togglePreview: null,
-			},...this.config}
+			const config = {
+				element: this.$el.lastElementChild.firstElementChild,
+				initialValue: this.value,
+				renderingConfig: {},
+
+				shortcuts: {
+					toggleSideBySide: null,
+					togglePreview: null,
+				},
+
+				...this.config,
+			}
 
 			this.mde = new EasyMDE(config)
 

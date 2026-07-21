@@ -288,7 +288,7 @@ export default {
 		async onDeleteCategory(categoryName) {
 			const notes = this.getNotesInCategory(categoryName)
 			if (notes.length > 0) {
-				let confirmed = false
+				let confirmed
 				const message = this.n(
 					'notes',
 					'Delete category "{category}" and its {count} note?',

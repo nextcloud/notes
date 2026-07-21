@@ -6,7 +6,7 @@
 import type { Locator, Page, TestInfo } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
-import { login } from '../support/login'
+import { login } from '../support/login.ts'
 
 function appNavigation(page: Page): Locator {
 	return page.getByRole('navigation').filter({

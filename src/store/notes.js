@@ -99,7 +99,7 @@ const getters = {
 		return result
 	},
 
-	getFilteredNotes: (state, getters, rootState, rootGetters) => () => {
+	getFilteredNotes: (state, getters, rootState) => () => {
 		const searchText = rootState.app.searchText.toLowerCase()
 		const notes = state.notes.filter((note) => {
 			if (state.selectedCategory !== null
@@ -116,16 +116,26 @@ const getters = {
 		})
 
 		function cmpRecent(a, b) {
-			if (a.favorite && !b.favorite) { return -1 }
-			if (!a.favorite && b.favorite) { return 1 }
+			if (a.favorite && !b.favorite) {
+				return -1
+			}
+			if (!a.favorite && b.favorite) {
+				return 1
+			}
 			return b.modified - a.modified
 		}
 
 		function cmpCategory(a, b) {
 			const cmpCat = a.category.localeCompare(b.category)
-			if (cmpCat !== 0) { return cmpCat }
-			if (a.favorite && !b.favorite) { return -1 }
-			if (!a.favorite && b.favorite) { return 1 }
+			if (cmpCat !== 0) {
+				return cmpCat
+			}
+			if (a.favorite && !b.favorite) {
+				return -1
+			}
+			if (!a.favorite && b.favorite) {
+				return 1
+			}
 			return a.title.localeCompare(b.title)
 		}
 
@@ -134,7 +144,7 @@ const getters = {
 		return notes
 	},
 
-	getFilteredTotalCount: (state, getters, rootState, rootGetters) => () => {
+	getFilteredTotalCount: (state, getters, rootState) => () => {
 		const searchText = rootState.app.searchText.toLowerCase()
 
 		if (state.selectedCategory === null || searchText === '') {
