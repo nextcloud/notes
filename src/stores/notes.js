@@ -4,6 +4,7 @@
  */
 
 import { defineStore } from 'pinia'
+import Vue, { set } from 'vue'
 import logger from '../Logger.js'
 import { copyNote } from '../Util.js'
 import { useAppStore } from './app.js'
@@ -187,13 +188,13 @@ export const useNotesStore = defineStore('notes', {
 				if (updated.content !== undefined && updated.etag !== undefined) {
 					note.content = updated.content
 					note.etag = updated.etag
-					note.unsaved = updated.unsaved
-					note.error = updated.error
-					note.errorType = updated.errorType
+					set(note, 'unsaved', updated.unsaved)
+					set(note, 'error', updated.error)
+					set(note, 'errorType', updated.errorType)
 				}
 			} else {
 				this.notes.push(updated)
-				this.notesIds[updated.id] = updated
+				set(this.notesIds, updated.id, updated)
 			}
 		},
 
@@ -206,7 +207,7 @@ export const useNotesStore = defineStore('notes', {
 
 		removeNote(id) {
 			this.notes = this.notes.filter((note) => note.id !== id)
-			delete this.notesIds[id]
+			Vue.delete(this.notesIds, id)
 		},
 
 		removeAllNotes() {
