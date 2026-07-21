@@ -26,7 +26,7 @@
 
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
-					:show-category-title="category === null"
+					:show-category-title="showCategoryTitles"
 					@note-selected="onNoteSelected"
 				/>
 				<template v-for="(group, idx) in groupedNotes" v-else>
@@ -41,7 +41,7 @@
 					<NotesList
 						:key="idx"
 						:notes="group.notes"
-						:show-category-title="category === null"
+						:show-category-title="showCategoryTitles"
 						@note-selected="onNoteSelected"
 					/>
 				</template>
@@ -140,6 +140,10 @@ export default {
 			} else {
 				return this.filteredNotes
 			}
+		},
+
+		showCategoryTitles() {
+			return this.category === null && store.state.app.settings.showCategoryInList !== false
 		},
 
 		// group notes by time ("All notes") or by category (if category chosen)

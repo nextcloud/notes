@@ -69,6 +69,12 @@ class SettingsService {
 					return '.' . $out;
 				},
 			],
+			'showCategoryInList' => [
+				'default' => true,
+				'validate' => function ($value) {
+					return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+				},
+			],
 		];
 	}
 
