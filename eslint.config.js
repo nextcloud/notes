@@ -1,0 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+import { recommendedVue2Javascript } from '@nextcloud/eslint-config'
+
+export default [
+	...recommendedVue2Javascript,
+	{
+		rules: {
+		// do not require JSDoc comments
+			'jsdoc/require-jsdoc': 'off',
+		},
+	},
+	{
+		files: ['**/*.vue'],
+		rules: {
+		// no ending html tag on a new line (was warn in "vue/strongly-recommended")
+			'vue/html-closing-bracket-newline': ['error', { multiline: 'always' }],
+			// allow first attribute in new line if multiline
+			'vue/first-attribute-linebreak': ['error', {
+				singleline: 'beside',
+				multiline: 'ignore',
+			}],
+			// allow some component names to not be multi-word
+			'vue/multi-word-component-names': ['error', {
+				ignores: ['Dashboard', 'Loading', 'Note', 'Welcome'],
+		}],
+		},
+	},
+]

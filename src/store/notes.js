@@ -4,6 +4,7 @@
  */
 
 import Vue, { set } from 'vue'
+import logger from '../Logger.js'
 import { copyNote } from '../Util.js'
 
 const state = {
@@ -98,9 +99,9 @@ const getters = {
 		return result
 	},
 
-	getFilteredNotes: (state, getters, rootState, rootGetters) => () => {
+	getFilteredNotes: (state, getters, rootState) => () => {
 		const searchText = rootState.app.searchText.toLowerCase()
-		const notes = state.notes.filter(note => {
+		const notes = state.notes.filter((note) => {
 			if (state.selectedCategory !== null
 				&& state.selectedCategory !== note.category
 				&& !note.category.startsWith(state.selectedCategory + '/')) {
@@ -115,16 +116,26 @@ const getters = {
 		})
 
 		function cmpRecent(a, b) {
-			if (a.favorite && !b.favorite) return -1
-			if (!a.favorite && b.favorite) return 1
+			if (a.favorite && !b.favorite) {
+				return -1
+			}
+			if (!a.favorite && b.favorite) {
+				return 1
+			}
 			return b.modified - a.modified
 		}
 
 		function cmpCategory(a, b) {
 			const cmpCat = a.category.localeCompare(b.category)
-			if (cmpCat !== 0) return cmpCat
-			if (a.favorite && !b.favorite) return -1
-			if (!a.favorite && b.favorite) return 1
+			if (cmpCat !== 0) {
+				return cmpCat
+			}
+			if (a.favorite && !b.favorite) {
+				return -1
+			}
+			if (!a.favorite && b.favorite) {
+				return 1
+			}
 			return a.title.localeCompare(b.title)
 		}
 
@@ -133,14 +144,14 @@ const getters = {
 		return notes
 	},
 
-	getFilteredTotalCount: (state, getters, rootState, rootGetters) => () => {
+	getFilteredTotalCount: (state, getters, rootState) => () => {
 		const searchText = rootState.app.searchText.toLowerCase()
 
 		if (state.selectedCategory === null || searchText === '') {
 			return 0
 		}
 
-		const notes = state.notes.filter(note => {
+		const notes = state.notes.filter((note) => {
 			if (state.selectedCategory === note.category || note.category.startsWith(state.selectedCategory + '/')) {
 				return false
 			}
@@ -190,7 +201,7 @@ const mutations = {
 	},
 
 	removeNote(state, id) {
-		state.notes = state.notes.filter(note => note.id !== id)
+		state.notes = state.notes.filter((note) => note.id !== id)
 		Vue.delete(state.notesIds, id)
 	},
 
@@ -201,7 +212,7 @@ const mutations = {
 
 	setCategories(state, categories) {
 		state.categories = categories
-		categories.forEach(category => {
+		categories.forEach((category) => {
 			if (category && !state.localCategories.includes(category)) {
 				state.localCategories.push(category)
 			}
@@ -219,7 +230,7 @@ const mutations = {
 		if (!oldCategory || !newCategory || oldCategory === newCategory) {
 			return
 		}
-		state.localCategories = state.localCategories.map(category => {
+		state.localCategories = state.localCategories.map((category) => {
 			if (category === oldCategory) {
 				return newCategory
 			}
@@ -228,7 +239,7 @@ const mutations = {
 			}
 			return category
 		})
-		state.categories = state.categories.map(category => {
+		state.categories = state.categories.map((category) => {
 			if (category === oldCategory) {
 				return newCategory
 			}
@@ -243,8 +254,8 @@ const mutations = {
 		if (!category) {
 			return
 		}
-		state.localCategories = state.localCategories.filter(cat => cat !== category && !cat.startsWith(category + '/'))
-		state.categories = state.categories.filter(cat => cat !== category && !cat.startsWith(category + '/'))
+		state.localCategories = state.localCategories.filter((cat) => cat !== category && !cat.startsWith(category + '/'))
+		state.categories = state.categories.filter((cat) => cat !== category && !cat.startsWith(category + '/'))
 	},
 
 	setSelectedCategory(state, category) {
@@ -261,9 +272,7 @@ const actions = {
 		// add/update new notes
 		if (!notes || !noteIds) {
 			// TODO remove this block after fixing #886
-			console.error('This should not happen, please see issue #886')
-			console.info(notes)
-			console.info(noteIds)
+			logger.error('This should not happen, please see issue #886', { notes, noteIds })
 			// eslint-disable-next-line no-console
 			console.trace()
 			return
@@ -273,7 +282,7 @@ const actions = {
 			context.commit('updateNote', note)
 		}
 		// remove deleted notes
-		context.state.notes.forEach(note => {
+		context.state.notes.forEach((note) => {
 			if (!noteIds.includes(note.id)) {
 				context.commit('removeNote', note.id)
 			}

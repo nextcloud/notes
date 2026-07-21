@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect, type Locator, type Page, type TestInfo, test } from '@playwright/test'
-import { login } from '../support/login'
+import type { Locator, Page, TestInfo } from '@playwright/test'
+
+import { expect, test } from '@playwright/test'
+import { login } from '../support/login.ts'
 
 function appNavigation(page: Page): Locator {
 	return page.getByRole('navigation').filter({

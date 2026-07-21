@@ -31,23 +31,28 @@ export default {
 			type: Array,
 			required: true,
 		},
+
 		showCategoryTitle: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	data() {
 		return {
 			renamingNotes: [],
 		}
 	},
+
 	methods: {
 		onNoteSelected(noteId) {
 			this.$emit('note-selected', noteId)
 		},
+
 		onStartRenaming(noteId) {
 			this.renamingNotes.push(noteId)
 		},
+
 		isRenaming(noteId) {
 			return this.renamingNotes.includes(noteId)
 		},

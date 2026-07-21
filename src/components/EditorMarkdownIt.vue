@@ -7,10 +7,13 @@
 	<!-- eslint-disable-next-line vue/no-v-html -->
 	<div class="note-preview" v-html="html" />
 </template>
+
 <script>
 
-import MarkdownIt from 'markdown-it'
 import { generateUrl } from '@nextcloud/router'
+import MarkdownIt from 'markdown-it'
+import markdownItBidi from 'markdown-it-bidi'
+import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
 import { escapeHtml } from '../Util.js'
 
 export default {
@@ -21,10 +24,12 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		readonly: {
 			type: Boolean,
 			required: true,
 		},
+
 		noteid: {
 			type: String,
 			required: true,
@@ -32,18 +37,17 @@ export default {
 	},
 
 	data() {
-
 		const md = new MarkdownIt({
 			linkify: true,
 			breaks: true,
 		})
 
-		md.use(require('markdown-it-task-checkbox'), {
+		md.use(markdownItTaskCheckbox, {
 			disabled: this.readonly,
 			liClass: 'task-list-item',
 		})
 
-		md.use(require('markdown-it-bidi'))
+		md.use(markdownItBidi)
 
 		return {
 			html: '',
@@ -123,8 +127,7 @@ export default {
 
 				if (!path.startsWith('http://')
 					&& !path.startsWith('https://')
-					&& !path.startsWith('data:')
-				) {
+					&& !path.startsWith('data:')) {
 					path = path.split('?').shift()
 					const lowecasePath = path.toLowerCase()
 					path = generateUrl(
@@ -138,8 +141,7 @@ export default {
 						&& !lowecasePath.endsWith('.bmp')
 						&& !lowecasePath.endsWith('.webp')
 						&& !lowecasePath.endsWith('.gif')
-						&& !lowecasePath.endsWith('.png')
-					) {
+						&& !lowecasePath.endsWith('.png')) {
 						download = true
 					}
 				}
@@ -158,7 +160,7 @@ export default {
 		},
 
 		setInlineCodeRule() {
-			this.md.renderer.rules.code_inline = function(tokens, idx, options, env, self) {
+			this.md.renderer.rules.code_inline = function(tokens, idx) {
 				const token = tokens[idx]
 				return '<code class="inline-code">' + escapeHtml(token.content) + '</code>'
 			}
@@ -167,6 +169,7 @@ export default {
 
 }
 </script>
+
 <style lang="scss">
 .note-preview {
 	padding: 1em;
