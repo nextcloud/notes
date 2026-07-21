@@ -104,7 +104,7 @@ export const useNotesStore = defineStore('notes', {
 		getFilteredNotes: (state) => () => {
 			const appStore = useAppStore()
 			const searchText = appStore.searchText.toLowerCase()
-			const notes = state.notes.filter(note => {
+			const notes = state.notes.filter((note) => {
 				if (state.selectedCategory !== null
 					&& state.selectedCategory !== note.category
 					&& !note.category.startsWith(state.selectedCategory + '/')) {
@@ -120,11 +120,11 @@ export const useNotesStore = defineStore('notes', {
 
 			function cmpRecent(a, b) {
 				if (a.favorite && !b.favorite) {
-				return -1
-			}
+					return -1
+				}
 				if (!a.favorite && b.favorite) {
-				return 1
-			}
+					return 1
+				}
 				return b.modified - a.modified
 			}
 
@@ -132,7 +132,7 @@ export const useNotesStore = defineStore('notes', {
 				const cmpCat = a.category.localeCompare(b.category)
 				if (cmpCat !== 0) {
 					return cmpCat
-					}
+				}
 				if (a.favorite && !b.favorite) {
 					return -1
 				}
@@ -292,25 +292,3 @@ export const useNotesStore = defineStore('notes', {
 		},
 	},
 })
-const actions = {
-	updateNotes(context, { noteIds, notes }) {
-		// add/update new notes
-		if (!notes || !noteIds) {
-			// TODO remove this block after fixing #886
-			logger.error('This should not happen, please see issue #886', { notes, noteIds })
-			// eslint-disable-next-line no-console
-			console.trace()
-			return
-		}
-		for (const note of notes) {
-			// TODO check for parallel (local) changes!
-			context.commit('updateNote', note)
-		}
-		// remove deleted notes
-		context.state.notes.forEach((note) => {
-			if (!noteIds.includes(note.id)) {
-				context.commit('removeNote', note.id)
-			}
-		})
-	},
-}
