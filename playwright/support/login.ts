@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
 /**
  * Log in as the admin user.

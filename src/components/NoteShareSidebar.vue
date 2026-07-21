@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { getSidebarTabs } from '@nextcloud/files'
 import NcAppSidebar from '@nextcloud/vue/components/NcAppSidebar'
 import NcAppSidebarTab from '@nextcloud/vue/components/NcAppSidebarTab'
@@ -65,7 +66,7 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
-import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import logger from '../Logger.js'
 import store from '../store.js'
 import { fetchDavNode } from '../WebdavService.js'
 
@@ -163,7 +164,7 @@ export default {
 				await window.customElements.whenDefined(tab.tagName)
 				this.initializedTabs.add(tab.tagName)
 			} catch (error) {
-				console.error('Failed to initialize the sharing sidebar tab in Notes', error)
+				logger.error('Failed to initialize the sharing sidebar tab in Notes', { error })
 				this.tabError = this.t('notes', 'Failed to load the sharing sidebar.')
 			} finally {
 				this.initializingTabs.delete(tab.tagName)
@@ -192,7 +193,7 @@ export default {
 				try {
 					folder = await fetchDavNode(node.dirname || '/')
 				} catch (error) {
-					console.error('Failed to load the parent folder for the Notes sharing sidebar', error)
+					logger.error('Failed to load the parent folder for the Notes sharing sidebar', { error })
 				}
 
 				if (requestToken !== this.contextRequestToken) {
@@ -206,7 +207,7 @@ export default {
 					return
 				}
 
-				console.error('Failed to load the selected note for the Notes sharing sidebar', error)
+				logger.error('Failed to load the selected note for the Notes sharing sidebar', { error })
 				this.currentNode = null
 				this.currentFolder = null
 				this.contextError = this.t('notes', 'Unable to load the selected note for sharing.')

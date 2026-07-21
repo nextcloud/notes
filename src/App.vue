@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<EditorHint v-if="editorHint" @close="editorHint=false" />
+	<EditorHint v-if="editorHint" @close="editorHint = false" />
 	<NcContent v-else app-name="notes" :content-class="{loading: loading.notes}">
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
@@ -50,28 +50,27 @@
 </template>
 
 <script>
+import { showSuccess, TOAST_PERMANENT_TIMEOUT, TOAST_UNDO_TIMEOUT } from '@nextcloud/dialogs'
+import { emit } from '@nextcloud/event-bus'
+import { loadState } from '@nextcloud/initial-state'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
-import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
 import NcContent from '@nextcloud/vue/components/NcContent'
-import { loadState } from '@nextcloud/initial-state'
-import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/style.css'
-import { emit } from '@nextcloud/event-bus'
-
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
 import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
-
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
 import NoteShareSidebar from './components/NoteShareSidebar.vue'
-
 import { config } from './config.js'
+import logger from './Logger.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
-import { getDraggedNoteId, isNoteDrag } from './Util.js'
 import store from './store.js'
+import { getDraggedNoteId, isNoteDrag } from './Util.js'
+
+import '@nextcloud/dialogs/style.css'
 
 export default {
 	name: 'App',
@@ -95,9 +94,11 @@ export default {
 			filter: {
 				category: null,
 			},
+
 			loading: {
 				notes: true,
 			},
+
 			error: false,
 			undoNotification: null,
 			undoTimer: null,
@@ -137,7 +138,7 @@ export default {
 	methods: {
 		loadNotes() {
 			fetchNotes()
-				.then(data => {
+				.then((data) => {
 					if (data === null) {
 						// nothing changed
 						return
@@ -149,7 +150,7 @@ export default {
 						// only show error state if not loading in background
 						this.error = data.errorMessage
 					} else {
-						console.error('Server error while updating list of notes: ' + data.errorMessage)
+						logger.error('Server error while updating list of notes', { errorMessage: data.errorMessage })
 					}
 				})
 				.catch(() => {
@@ -209,7 +210,7 @@ export default {
 		},
 
 		routeFirst() {
-			const availableNotes = this.filteredNotes.filter(note => !note.error && !note.deleting)
+			const availableNotes = this.filteredNotes.filter((note) => !note.error && !note.deleting)
 			if (availableNotes.length > 0) {
 				this.routeToNote(availableNotes[0].id)
 			} else {
@@ -249,7 +250,7 @@ export default {
 		},
 
 		onNewCategoryDrop(event) {
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, (noteId) => store.getters.getNote(noteId))
 			if (noteId === null) {
 				return
 			}
@@ -274,10 +275,10 @@ export default {
 					{ isHTML: true, timeout: TOAST_PERMANENT_TIMEOUT, onRemove: this.onUndoNotificationClosed },
 				)
 				this.undoNotification.toastElement.getElementsByClassName('undo')
-					.forEach(element => { element.onclick = this.onUndoDelete })
+					.forEach((element) => { element.onclick = this.onUndoDelete })
 			} else {
 				this.undoNotification.toastElement.getElementsByClassName('deletedLabel')
-					.forEach(element => { element.textContent = label })
+					.forEach((element) => { element.textContent = label })
 			}
 			this.undoTimer = setTimeout(this.onRemoveUndoNotification, TOAST_UNDO_TIMEOUT)
 			this.routeFirst()
@@ -292,7 +293,7 @@ export default {
 
 		onUndoDelete() {
 			const number = this.deletedNotes.length
-			this.deletedNotes.forEach(note => undoDeleteNote(note))
+			this.deletedNotes.forEach((note) => undoDeleteNote(note))
 			this.onRemoveUndoNotification()
 			if (number === 1) {
 				showSuccess(this.t('notes', 'Note recovered'))
@@ -318,7 +319,7 @@ export default {
 		},
 
 		onClose(event) {
-			if (!this.notes.every(note => !note.unsaved)) {
+			if (!this.notes.every((note) => !note.unsaved)) {
 				event.preventDefault()
 				return this.t('notes', 'There are unsaved notes. Leaving the page will discard all changes!')
 			}

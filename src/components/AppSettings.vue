@@ -86,27 +86,25 @@
 </template>
 
 <script>
+import { getFilePickerBuilder } from '@nextcloud/dialogs'
 import NcAppSettingsDialog from '@nextcloud/vue/components/NcAppSettingsDialog'
 import NcAppSettingsSection from '@nextcloud/vue/components/NcAppSettingsSection'
 import NcAppSettingsShortcutsSection from '@nextcloud/vue/components/NcAppSettingsShortcutsSection'
-import NcHotkeyList from '@nextcloud/vue/components/NcHotkeyList'
-import NcHotkey from '@nextcloud/vue/components/NcHotkey'
-import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
-import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
 import NcFormBox from '@nextcloud/vue/components/NcFormBox'
 import NcFormBoxButton from '@nextcloud/vue/components/NcFormBoxButton'
 import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
+import NcHotkey from '@nextcloud/vue/components/NcHotkey'
+import NcHotkeyList from '@nextcloud/vue/components/NcHotkeyList'
+import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
+import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-
-import { getFilePickerBuilder } from '@nextcloud/dialogs'
-
-import { setSettings } from '../NotesService.js'
-import store from '../store.js'
-import HelpMobile from './HelpMobile.vue'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
+import FolderOpenOutlineIcon from 'vue-material-design-icons/FolderOpenOutline.vue'
 import FormatAlignLeftIcon from 'vue-material-design-icons/FormatAlignLeft.vue'
 import NewspaperVariantOutlineIcon from 'vue-material-design-icons/NewspaperVariantOutline.vue'
-import FolderOpenOutlineIcon from 'vue-material-design-icons/FolderOpenOutline.vue'
+import HelpMobile from './HelpMobile.vue'
+import { setSettings } from '../NotesService.js'
+import store from '../store.js'
 
 export default {
 	name: 'AppSettings',
@@ -141,11 +139,13 @@ export default {
 				{ value: '.txt', label: '.txt' },
 				{ value: 'custom', label: t('notes', 'Custom') },
 			],
+
 			noteModes: [
 				{ value: 'rich', label: t('notes', 'Rich text'), icon: 'NewspaperVariantOutlineIcon' },
 				{ value: 'edit', label: t('notes', 'Plain text'), icon: 'FormatAlignLeftIcon' },
 				{ value: 'preview', label: t('notes', 'Preview'), icon: 'EyeOutlineIcon' },
 			],
+
 			saving: false,
 			settingsOpen: this.open,
 			shortcuts: [
@@ -199,8 +199,8 @@ export default {
 				.build()
 
 			await filePicker.pick()
-
 		},
+
 		onChangeSettings() {
 			this.saving = true
 			return setSettings(this.settings)
@@ -225,6 +225,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 .loading .settings-block {
 	visibility: hidden;

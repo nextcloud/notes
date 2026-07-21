@@ -37,10 +37,10 @@
 		</div>
 	</Fragment>
 </template>
+
 <script>
 
 import { generateFilePath } from '@nextcloud/router'
-
 import { Fragment } from 'vue-frag'
 import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
 
@@ -58,6 +58,7 @@ export default {
 }
 
 </script>
+
 <style scoped>
 .help-mobile {
 	display: flex;

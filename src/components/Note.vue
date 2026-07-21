@@ -8,9 +8,10 @@
 	<NotePlain v-else-if="isPlainMode" :note-id="noteId" />
 	<div v-else />
 </template>
+
 <script>
-import NoteRich from './NoteRich.vue'
 import NotePlain from './NotePlain.vue'
+import NoteRich from './NoteRich.vue'
 import store from '../store.js'
 
 export default {
@@ -32,6 +33,7 @@ export default {
 		isRichMode() {
 			return OC.appswebroots?.text && store.state.app?.settings?.noteMode === 'rich'
 		},
+
 		isPlainMode() {
 			return store.state.app?.settings?.noteMode === 'edit' || store.state.app?.settings?.noteMode === 'preview'
 		},
