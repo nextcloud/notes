@@ -111,8 +111,8 @@ import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutli
 import StarIcon from 'vue-material-design-icons/Star.vue'
 import logger from '../Logger.js'
 import { deleteNote, fetchNote, setCategory, setFavorite, setTitle } from '../NotesService.js'
-import { categoryLabel, routeIsNewNote } from '../Util.js'
 import store from '../store.js'
+import { categoryLabel, routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NoteItem',
