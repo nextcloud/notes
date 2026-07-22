@@ -52,8 +52,8 @@
 				v-else
 				:modelValue="note.category"
 				type="multiselect"
-				label="label"
-				trackBy="id"
+				:label="t('notes', 'Change category')"
+				:labelOutside="false"
 				:multiple="false"
 				:options="categories"
 				:disabled="loading.category"
