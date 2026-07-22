@@ -22,7 +22,6 @@ OC.L10N.register(
     "Edit" : "Modifi",
     "Today" : "Hodiaŭ",
     "Yesterday" : "Hieraŭ",
-    "Loading …" : "Ŝargado...",
     "Updating the note's category has failed. Is the target directory writable?" : "Ĝisdaztigo de la nota kategorio malsukcesis. Ĉu la celdosierujo skribeblas?",
     "Uncategorized" : "Senkategoria",
     "Tasks" : "Taskoj"

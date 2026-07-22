@@ -24,7 +24,6 @@ OC.L10N.register(
     "Last week" : "Tuần trước",
     "This month" : "Tháng này",
     "Last month" : "Tháng trước",
-    "Loading …" : "Đang tải...",
     "Uncategorized" : "Chưa phân loại",
     "Tasks" : "Nhiệm vụ"
 },

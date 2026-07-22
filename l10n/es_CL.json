@@ -20,7 +20,6 @@
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
     "This month" : "Este mes",
-    "Loading …" : "Cargando …",
     "Uncategorized" : "Sin categoría",
     "Tasks" : "Tareas"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

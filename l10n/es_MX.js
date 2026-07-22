@@ -28,7 +28,6 @@ OC.L10N.register(
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
     "This month" : "Este mes",
-    "Loading …" : "Cargando …",
     "Undo delete has failed for note {title}." : "Error al restaurar la nota{title}",
     "Uncategorized" : "Sin categoría",
     "Tasks" : "Tareas"

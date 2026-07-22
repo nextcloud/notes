@@ -15,7 +15,6 @@ OC.L10N.register(
     "Last week" : "පසුගිය සතිය",
     "This month" : "මෙම මාසය",
     "Last month" : "පසුගිය මාසය",
-    "Loading …" : "පූරණය වෙමින් …",
     "Tasks" : "කාර්යයන්"
 },
 "nplurals=2; plural=(n != 1);");

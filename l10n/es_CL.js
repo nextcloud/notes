@@ -22,7 +22,6 @@ OC.L10N.register(
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",
     "This month" : "Este mes",
-    "Loading …" : "Cargando …",
     "Uncategorized" : "Sin categoría",
     "Tasks" : "Tareas"
 },

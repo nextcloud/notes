@@ -21,7 +21,6 @@ OC.L10N.register(
     "Last week" : "สัปดาห์ที่แล้ว",
     "This month" : "เดือนนี้",
     "Last month" : "เดือนที่แล้ว",
-    "Loading …" : "กำลังโหลด …",
     "Uncategorized" : "ไม่ได้จัดหมวดหมู่",
     "Tasks" : "งาน"
 },
