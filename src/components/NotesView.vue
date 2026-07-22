@@ -28,6 +28,7 @@
 					:notes="groupedNotes[0].notes"
 					:show-category-title="category === null"
 					@note-selected="onNoteSelected"
+					@note-deleted="onNoteDeleted"
 				/>
 				<template v-for="(group, idx) in groupedNotes" v-else>
 					<NotesCaption v-if="group.category && category !== group.category"
@@ -43,6 +44,7 @@
 						:notes="group.notes"
 						:show-category-title="category === null"
 						@note-selected="onNoteSelected"
+						@note-deleted="onNoteDeleted"
 					/>
 				</template>
 				<div
