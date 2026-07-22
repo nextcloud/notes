@@ -3,27 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Page } from '@playwright/test'
-
 import { expect, test } from '@playwright/test'
 import { login } from '../support/login.ts'
+import { currentNoteId, newNoteButton, waitForNoteRoute } from '../support/note.ts'
 import { NoteEditor } from '../support/sections/NoteEditor.ts'
-
-function currentNoteId(page: Page): number | null {
-	const match = page.url().match(/\/note\/(\d+)(?:\?.*)?$/)
-	return match ? Number(match[1]) : null
-}
-
-async function waitForNoteRoute(page: Page, previousNoteId: number | null): Promise<number> {
-	await expect.poll(() => currentNoteId(page)).not.toBe(previousNoteId)
-
-	const noteId = currentNoteId(page)
-	if (noteId === null || noteId === previousNoteId) {
-		throw new Error('Expected to navigate to a note route')
-	}
-
-	return noteId
-}
 
 test.describe('Basic checks', () => {
 	test.beforeEach(async ({ page }) => {
@@ -38,9 +21,8 @@ test.describe('Basic checks', () => {
 	test('Create note and type', async ({ page }) => {
 		await page.goto('/index.php/apps/notes/')
 		const previousNoteId = currentNoteId(page)
-		const newNoteButton = page.getByRole('button', { name: 'New note', exact: true })
-		await expect(newNoteButton).toBeVisible()
-		await newNoteButton.click()
+		await expect(newNoteButton(page)).toBeVisible()
+		await newNoteButton(page).click()
 		await waitForNoteRoute(page, previousNoteId)
 
 		const editor = new NoteEditor(page)
@@ -51,7 +33,7 @@ test.describe('Basic checks', () => {
 	test('Open share sidebar from note actions', async ({ page }) => {
 		await page.goto('/index.php/apps/notes/')
 		const previousNoteId = currentNoteId(page)
-		await page.getByRole('button', { name: 'New note', exact: true }).click()
+		await newNoteButton(page).click()
 		const noteId = await waitForNoteRoute(page, previousNoteId)
 
 		const editor = new NoteEditor(page)
@@ -67,5 +49,49 @@ test.describe('Basic checks', () => {
 
 		await expect(page.locator('[data-cy-notes-share-sidebar]')).toBeVisible({ timeout: 15000 })
 		await expect(page.getByText('Internal shares')).toBeVisible({ timeout: 15000 })
+	})
+
+	test('persists note content after a reload', async ({ page }) => {
+		await page.goto('/index.php/apps/notes/')
+		const previousNoteId = currentNoteId(page)
+		await newNoteButton(page).click()
+		const noteId = await waitForNoteRoute(page, previousNoteId)
+
+		const editor = new NoteEditor(page)
+		const content = `Persistence check ${Date.now()}`
+
+		const savedResponse = page.waitForResponse((response) => response.url().includes(`/notes/${noteId}`)
+			&& response.request().method() === 'PUT')
+		await editor.type(content)
+		await savedResponse
+
+		await page.reload()
+		await expect(page).toHaveURL(new RegExp(`/note/${noteId}(\\?.*)?$`))
+		await editor.expectText(content)
+	})
+
+	test('filters notes with the search field', async ({ page }) => {
+		await page.goto('/index.php/apps/notes/')
+
+		const uniqueWord = `Findme${Date.now()}`
+		const previousNoteId = currentNoteId(page)
+		await newNoteButton(page).click()
+		const noteId = await waitForNoteRoute(page, previousNoteId)
+
+		const editor = new NoteEditor(page)
+		await editor.type(uniqueWord)
+		await editor.expectText(uniqueWord)
+
+		const noteLink = page.locator(`a[href$="/note/${noteId}"]`).first()
+
+		const searchField = page.getByRole('textbox', { name: 'Search for notes', exact: true })
+		await searchField.fill('this text matches no note at all')
+		await expect(noteLink).toHaveCount(0)
+
+		await searchField.fill(uniqueWord)
+		await expect(noteLink).toBeVisible()
+
+		await searchField.fill('')
+		await expect(noteLink).toBeVisible()
 	})
 })

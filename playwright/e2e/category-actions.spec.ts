@@ -7,6 +7,7 @@ import type { Locator, Page, TestInfo } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
 import { login } from '../support/login.ts'
+import { createNote, currentNoteId, newNoteButton, noteRow, uniqueTitle, waitForNoteRoute } from '../support/note.ts'
 
 function appNavigation(page: Page): Locator {
 	return page.getByRole('navigation').filter({
@@ -16,10 +17,6 @@ function appNavigation(page: Page): Locator {
 
 function newCategoryButton(page: Page): Locator {
 	return page.getByRole('button', { name: 'New category', exact: true })
-}
-
-function contentNewNoteButton(page: Page): Locator {
-	return page.getByRole('button', { name: 'New note', exact: true })
 }
 
 function notesSearchField(page: Page): Locator {
@@ -46,20 +43,11 @@ async function expectNavigationItemActive(page: Page, name: string): Promise<voi
 	await expect(navigationLink(page, name)).toHaveAttribute('aria-current', 'page')
 }
 
-function uniqueCategoryName(prefix: string, testInfo: TestInfo): string {
-	return `Playwright ${prefix} ${testInfo.parallelIndex}-${Date.now()}`
-}
-
-function currentNoteId(page: Page): number | null {
-	const match = page.url().match(/\/note\/(\d+)(?:\?.*)?$/)
-	return match ? Number(match[1]) : null
-}
-
 async function openNotesApp(page: Page): Promise<void> {
 	await page.goto('/index.php/apps/notes/')
 	await expect(newCategoryButton(page)).toBeVisible()
-	await expect(contentNewNoteButton(page)).toHaveCount(1)
-	await expect(contentNewNoteButton(page)).toBeVisible()
+	await expect(newNoteButton(page)).toHaveCount(1)
+	await expect(newNoteButton(page)).toBeVisible()
 }
 
 async function createCategory(page: Page, name: string): Promise<void> {
@@ -76,25 +64,14 @@ async function createCategory(page: Page, name: string): Promise<void> {
 	await expectNavigationItemActive(page, name)
 }
 
-async function waitForNewNoteRoute(page: Page, previousNoteId: number | null): Promise<number> {
-	await expect.poll(() => currentNoteId(page)).not.toBe(previousNoteId)
-
-	const noteId = currentNoteId(page)
-	if (noteId === null || noteId === previousNoteId) {
-		throw new Error('Expected a new note route after creating a note')
-	}
-
-	return noteId
-}
-
 async function ensureNotesView(page: Page): Promise<void> {
 	if (await notesSearchField(page).isVisible()) {
 		return
 	}
 
 	const previousNoteId = currentNoteId(page)
-	await contentNewNoteButton(page).click()
-	await waitForNewNoteRoute(page, previousNoteId)
+	await newNoteButton(page).click()
+	await waitForNoteRoute(page, previousNoteId)
 	await expect(notesSearchField(page)).toBeVisible()
 }
 
@@ -104,7 +81,7 @@ async function createNoteInSelectedCategory(page: Page, category: string): Promi
 	const previousNoteId = currentNoteId(page)
 	await notesViewNewNoteButton(page).click()
 
-	const noteId = await waitForNewNoteRoute(page, previousNoteId)
+	const noteId = await waitForNoteRoute(page, previousNoteId)
 	await expect(navigationRow(page, category).locator('.app-navigation-entry__counter-wrapper')).toContainText('1')
 
 	return noteId
@@ -128,7 +105,7 @@ test.describe('Category actions', () => {
 	})
 
 	test('renames a category from the actions menu', async ({ page }, testInfo: TestInfo) => {
-		const category = uniqueCategoryName('rename', testInfo)
+		const category = uniqueTitle('rename', testInfo)
 		const renamedCategory = `${category} renamed`
 		const noteId = await (async () => {
 			await createCategory(page, category)
@@ -151,7 +128,7 @@ test.describe('Category actions', () => {
 	})
 
 	test('deletes a category from the actions menu', async ({ page }, testInfo: TestInfo) => {
-		const category = uniqueCategoryName('delete', testInfo)
+		const category = uniqueTitle('delete', testInfo)
 		await createCategory(page, category)
 		const noteId = await createNoteInSelectedCategory(page, category)
 		const deletedNoteUrl = new RegExp(`/note/${noteId}(\\?.*)?$`)
@@ -167,5 +144,27 @@ test.describe('Category actions', () => {
 		await expect(navigationRow(page, category)).toHaveCount(0)
 		await expectNavigationItemActive(page, 'All notes')
 		await expect(page).not.toHaveURL(deletedNoteUrl)
+	})
+})
+
+test.describe('Drag and drop', () => {
+	test.beforeEach(async ({ page }) => {
+		await login(page)
+		await page.goto('/index.php/apps/notes/')
+		await expect(newCategoryButton(page)).toBeVisible()
+	})
+
+	test('moves a note into a category by dragging it', async ({ page }, testInfo: TestInfo) => {
+		const category = uniqueTitle('drag-target', testInfo)
+		const title = uniqueTitle('drag-note', testInfo)
+
+		await createCategory(page, category)
+		const noteId = await createNote(page, title)
+
+		await noteRow(page, noteId).dragTo(navigationRow(page, category))
+
+		await expect(navigationRow(page, category).locator('.app-navigation-entry__counter-wrapper')).toContainText('1')
+		await navigationRow(page, category).getByRole('link').click()
+		await expect(noteRow(page, noteId)).toBeVisible()
 	})
 })
