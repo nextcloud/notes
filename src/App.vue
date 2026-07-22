@@ -274,11 +274,15 @@ export default {
 					'<span class="deletedLabel">' + label + '</span> ' + action,
 					{ isHTML: true, timeout: TOAST_PERMANENT_TIMEOUT, onRemove: this.onUndoNotificationClosed },
 				)
-				this.undoNotification.toastElement.getElementsByClassName('undo')
-					.forEach((element) => { element.onclick = this.onUndoDelete })
+				const undoButton = this.undoNotification.toastElement.querySelector('.undo')
+				if (undoButton) {
+					undoButton.onclick = this.onUndoDelete
+				}
 			} else {
-				this.undoNotification.toastElement.getElementsByClassName('deletedLabel')
-					.forEach((element) => { element.textContent = label })
+				const deletedLabel = this.undoNotification.toastElement.querySelector('.deletedLabel')
+				if (deletedLabel) {
+					deletedLabel.textContent = label
+				}
 			}
 			this.undoTimer = setTimeout(this.onRemoveUndoNotification, TOAST_UNDO_TIMEOUT)
 			this.routeFirst()

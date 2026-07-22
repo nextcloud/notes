@@ -12,6 +12,7 @@
 			:show-category-title="showCategoryTitle"
 			@note-selected="onNoteSelected"
 			@start-renaming="onStartRenaming"
+			@note-deleted="onNoteDeleted"
 		/>
 	</ul>
 </template>
@@ -51,6 +52,10 @@ export default {
 
 		onStartRenaming(noteId) {
 			this.renamingNotes.push(noteId)
+		},
+
+		onNoteDeleted(note) {
+			this.$emit('note-deleted', note)
 		},
 
 		isRenaming(noteId) {
