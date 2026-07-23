@@ -8,20 +8,20 @@
 		<div class="upload-button">
 			<NcActions
 				container=".upload-button"
-				menu-align="right"
+				menuAlign="right"
 			>
 				<template #icon>
 					<ImagePlusOutlineIcon :size="20" />
 				</template>
 				<NcActionButton
 					icon="icon-upload"
-					:close-after-click="true"
+					:closeAfterClick="true"
 					@click="onClickUploadImage"
 				>
 					{{ t('notes', 'Upload image') }}
 				</NcActionButton>
 				<NcActionButton
-					:close-after-click="true"
+					:closeAfterClick="true"
 					@click="onClickInsertImage"
 				>
 					<template #icon>
@@ -117,7 +117,7 @@ export default {
 		this.mde.codemirror.focus()
 	},
 
-	destroyed() {
+	unmounted() {
 		this.mde = null
 	},
 

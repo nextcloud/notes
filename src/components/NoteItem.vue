@@ -9,7 +9,7 @@
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:draggable="isDraggable"
-		one-line
+		oneLine
 		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
 		@dragstart.native="onDragStart"
@@ -21,16 +21,16 @@
 			<AlertOctagonOutlineIcon v-if="note.error"
 				slot="icon"
 				:size="20"
-				fill-color="#E9322D"
+				fillColor="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
 				slot="icon"
 				:size="20"
-				fill-color="#FC0"
+				fillColor="#FC0"
 			/>
 		</template>
 		<template v-if="isShared" #indicator>
-			<ShareVariantOutlineIcon :size="16" fill-color="#0082c9" />
+			<ShareVariantOutlineIcon :size="16" fillColor="#0082c9" />
 		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
@@ -52,16 +52,16 @@
 			</NcActionButton>
 			<NcActionInput
 				v-else
-				:model-value="note.category"
+				:modelValue="note.category"
 				type="multiselect"
 				label="label"
-				track-by="id"
+				trackBy="id"
 				:multiple="false"
 				:options="categories"
 				:disabled="loading.category"
 				:taggable="true"
 				@input="onCategoryChange"
-				@search-change="onCategoryChange"
+				@searchChange="onCategoryChange"
 			>
 				<template #icon>
 					<FolderOutlineIcon :size="20" />
@@ -70,25 +70,29 @@
 			</NcActionInput>
 
 			<NcActionButton v-if="!renaming" @click="startRenaming">
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 				{{ t('notes', 'Rename') }}
 			</NcActionButton>
 			<NcActionInput v-else
 				v-model.trim="newTitle"
 				:disabled="!renaming"
 				:placeholder="t('notes', 'Rename note')"
-				:show-trailing-button="true"
+				:showTrailingButton="true"
 				@input="onInputChange($event)"
 				@submit="onRename"
 			>
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 			</NcActionInput>
 
 			<NcActionSeparator />
 
 			<NcActionButton v-if="!note.readonly"
 				:icon="actionDeleteIcon"
-				:close-after-click="true"
+				:closeAfterClick="true"
 				@click="onDeleteNote"
 			>
 				{{ t('notes', 'Delete note') }}
@@ -215,7 +219,7 @@ export default {
 		subscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('files_sharing:share:created', this.onShareCreated)
 	},
 

@@ -9,10 +9,10 @@
 			:key="`${note.id}-${showCategoryTitle ? 'with-category-title' : 'without-category-title'}`"
 			:note="note"
 			:renaming="isRenaming(note.id)"
-			:show-category-title="showCategoryTitle"
-			@note-selected="onNoteSelected"
-			@start-renaming="onStartRenaming"
-			@note-deleted="onNoteDeleted"
+			:showCategoryTitle="showCategoryTitle"
+			@noteSelected="onNoteSelected"
+			@startRenaming="onStartRenaming"
+			@noteDeleted="onNoteDeleted"
 		/>
 	</ul>
 </template>

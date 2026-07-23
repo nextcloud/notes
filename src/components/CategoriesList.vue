@@ -37,10 +37,10 @@
 			name=""
 			:draggable="false"
 			:editable="true"
-			:edit-label="t('notes', 'Rename category')"
-			:edit-placeholder="t('notes', 'New category')"
-			:force-menu="true"
-			:force-display-actions="true"
+			:editLabel="t('notes', 'Rename category')"
+			:editPlaceholder="t('notes', 'New category')"
+			:forceMenu="true"
+			:forceDisplayActions="true"
 			class="category-draft"
 			@click.prevent.stop
 			@dragstart.native="onCategoryDragStart"
@@ -62,10 +62,10 @@
 			:active="category.name === selectedCategory"
 			:draggable="false"
 			:editable="category.name !== ''"
-			:edit-label="t('notes', 'Rename category')"
-			:edit-placeholder="category.name"
-			:force-menu="category.name !== ''"
-			:force-display-actions="category.name !== ''"
+			:editLabel="t('notes', 'Rename category')"
+			:editPlaceholder="category.name"
+			:forceMenu="category.name !== ''"
+			:forceDisplayActions="category.name !== ''"
 			:class="{
 				'drop-over': category.name === dragOverCategory,
 				'category-no-actions': category.name === '',
@@ -88,7 +88,7 @@
 			</template>
 			<template v-if="category.name !== ''" #actions>
 				<NcActionButton
-					:close-after-click="true"
+					:closeAfterClick="true"
 					@click="onDeleteCategory(category.name)"
 				>
 					<template #icon>
@@ -160,7 +160,7 @@ export default {
 		subscribe('notes:category:new', this.startNewCategory)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('notes:category:new', this.startNewCategory)
 		this.stopNewCategoryMonitor()
 	},
