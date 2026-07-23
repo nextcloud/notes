@@ -56,11 +56,11 @@
 						:title="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
-						<template #icon>
-							<PencilOutlineIcon v-if="preview" :size="20" />
+						<template v-if="preview" #icon>
+							<PencilOutlineIcon :size="20" />
 						</template>
-						<template #icon>
-							<EyeOutlineIcon v-else :size="20" />
+						<template v-else #icon>
+							<EyeOutlineIcon :size="20" />
 						</template>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>

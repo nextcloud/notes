@@ -32,7 +32,7 @@
 					@noteSelected="onNoteSelected"
 					@noteDeleted="onNoteDeleted"
 				/>
-				<template v-for="(group, idx) in groupedNotes" v-else>
+				<template v-for="(group, idx) in groupedNotes" v-else :key="idx">
 					<NotesCaption v-if="group.category && category !== group.category"
 						:key="group.category"
 						:name="categoryToLabel(group.category)"
@@ -42,7 +42,6 @@
 						:name="group.timeslot"
 					/>
 					<NotesList
-						:key="idx"
 						:notes="group.notes"
 						:showCategoryTitle="category === null"
 						@noteSelected="onNoteSelected"
