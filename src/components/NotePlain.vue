@@ -161,7 +161,7 @@ export default {
 
 	computed: {
 		note() {
-			return store.getters.getNote(parseInt(this.noteId))
+			return store.notes.getNote(parseInt(this.noteId))
 		},
 
 		title() {
@@ -173,7 +173,7 @@ export default {
 		},
 
 		isManualSave() {
-			return store.state.app.isManualSave
+			return store.app.isManualSave
 		},
 	},
 
@@ -226,7 +226,7 @@ export default {
 
 			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.preview = store.state.app.settings.noteMode === 'preview' && !this.isNewNote
+			this.preview = store.app.settings.noteMode === 'preview' && !this.isNewNote
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
 					if (note.error) {
@@ -243,7 +243,7 @@ export default {
 		},
 
 		onUpdateTitle(title) {
-			const defaultTitle = store.state.app.documentTitle
+			const defaultTitle = store.app.documentTitle
 			if (title) {
 				document.title = title + ' - ' + defaultTitle
 			} else {
@@ -340,7 +340,7 @@ export default {
 					content: newContent,
 					unsaved: true,
 				}
-				store.commit('updateNote', note)
+				store.notes.updateNote(note)
 				this.$forceUpdate()
 
 				// queue auto saving note content
@@ -391,7 +391,7 @@ export default {
 			const note = {
 				...this.note,
 			}
-			store.commit('updateNote', note)
+			store.notes.updateNote(note)
 			saveNoteManually(this.note.id)
 		},
 

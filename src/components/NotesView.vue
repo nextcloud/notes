@@ -28,6 +28,7 @@
 					:notes="groupedNotes[0].notes"
 					:show-category-title="category === null"
 					@note-selected="onNoteSelected"
+					@note-deleted="onNoteDeleted"
 				/>
 				<template v-for="(group, idx) in groupedNotes" v-else>
 					<NotesCaption v-if="group.category && category !== group.category"
@@ -43,6 +44,7 @@
 						:notes="group.notes"
 						:show-category-title="category === null"
 						@note-selected="onNoteSelected"
+						@note-deleted="onNoteDeleted"
 					/>
 				</template>
 				<div
@@ -122,15 +124,15 @@ export default {
 
 	computed: {
 		getFilteredTotalCount() {
-			return store.getters.getFilteredTotalCount()
+			return store.notes.getFilteredTotalCount()
 		},
 
 		category() {
-			return store.getters.getSelectedCategory()
+			return store.notes.getSelectedCategory()
 		},
 
 		filteredNotes() {
-			return store.getters.getFilteredNotes()
+			return store.notes.getFilteredNotes()
 		},
 
 		displayedNotes() {
@@ -166,7 +168,7 @@ export default {
 
 	watch: {
 		category() { this.showFirstNotesOnly = true },
-		searchText(value) { store.commit('updateSearchText', value) },
+		searchText(value) { store.app.updateSearchText(value) },
 	},
 
 	created() {
@@ -218,7 +220,7 @@ export default {
 		},
 
 		onCategorySelected(category) {
-			store.commit('setSelectedCategory', category)
+			store.notes.setSelectedCategory(category)
 		},
 
 		onNewNote() {
@@ -226,7 +228,7 @@ export default {
 				return
 			}
 			this.creatingNote = true
-			createNote(store.getters.getSelectedCategory())
+			createNote(store.notes.getSelectedCategory())
 				.then((note) => {
 					this.$router.push({
 						name: 'note',
