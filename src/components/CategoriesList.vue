@@ -14,10 +14,10 @@
 			'drop-over': dragOverAllNotes,
 		}"
 		@click.prevent.stop="onSelectCategory(null)"
-		@dragstart.native="onCategoryDragStart"
-		@dragover.native="onAllNotesDragOver($event)"
-		@dragleave.native="onAllNotesDragLeave($event)"
-		@drop.native="onAllNotesDrop($event)"
+		@dragstart="onCategoryDragStart"
+		@dragover="onAllNotesDragOver($event)"
+		@dragleave="onAllNotesDragLeave($event)"
+		@drop="onAllNotesDrop($event)"
 	>
 		<template #icon>
 			<HistoryIcon :size="20" />
@@ -42,7 +42,7 @@
 		:forceDisplayActions="true"
 		class="category-draft"
 		@click.prevent.stop
-		@dragstart.native="onCategoryDragStart"
+		@dragstart="onCategoryDragStart"
 		@update:name="onCreateCategory"
 	>
 		<template #icon>
@@ -69,10 +69,10 @@
 			'category-no-actions': category.name === '',
 		}"
 		@click.prevent.stop="onSelectCategory(category.name)"
-		@dragstart.native="onCategoryDragStart"
-		@dragover.native="onCategoryDragOver(category.name, $event)"
-		@dragleave.native="onCategoryDragLeave(category.name, $event)"
-		@drop.native="onCategoryDrop(category.name, $event)"
+		@dragstart="onCategoryDragStart"
+		@dragover="onCategoryDragOver(category.name, $event)"
+		@dragleave="onCategoryDragLeave(category.name, $event)"
+		@drop="onCategoryDrop(category.name, $event)"
 		@update:name="onRenameCategory(category.name, $event)"
 	>
 		<template #icon>

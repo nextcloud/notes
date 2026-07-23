@@ -12,8 +12,8 @@
 					v-show="!loading.notes && !error"
 					:text="t('notes', 'New category')"
 					@click="onNewCategory"
-					@dragover.native="onNewCategoryDragOver"
-					@drop.native="onNewCategoryDrop"
+					@dragover="onNewCategoryDragOver"
+					@drop="onNewCategoryDrop"
 				>
 					<template #icon>
 						<FolderPlusIcon :size="20" />

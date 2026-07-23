@@ -12,7 +12,7 @@
 		oneLine
 		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
-		@dragstart.native="onDragStart"
+		@dragstart="onDragStart"
 	>
 		<template v-if="showCategoryTitle" #subname>
 			{{ categoryTitle }}
