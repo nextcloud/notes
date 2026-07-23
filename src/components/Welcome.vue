@@ -12,7 +12,9 @@
 			</div>
 			<div class="feature">
 				<NcButton variant="secondary" @click="onNewNote">
-					<Plus slot="icon" :size="20" />
+					<template #icon>
+						<Plus :size="20" />
+					</template>
 					{{ t('notes', 'New note') }}
 				</NcButton>
 			</div>

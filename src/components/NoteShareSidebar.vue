@@ -5,12 +5,12 @@
 
 <template>
 	<NcAppSidebar
+		v-model:active="activeTab"
 		data-cy-notes-share-sidebar
-		force-menu
-		:active.sync="activeTab"
+		forceMenu
 		:loading="isOpen && loading"
 		:name="note?.title || t('notes', 'Share')"
-		no-toggle
+		noToggle
 		:open="isOpen"
 		@closed="onClosed"
 		@update:open="onToggle"
@@ -131,7 +131,7 @@ export default {
 		subscribe('notes:share:open', this.onShareOpen)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('notes:share:open', this.onShareOpen)
 	},
 

@@ -7,7 +7,7 @@
 	<NcAppSettingsDialog
 		:name="t('notes', 'Notes settings')"
 		:class="{ loading: saving }"
-		:show-navigation="true"
+		:showNavigation="true"
 		:open="settingsOpen"
 		:legacy="false"
 		@update:open="setSettingsOpen($event)"
@@ -58,7 +58,7 @@
 				<NcFormBox>
 					<NcFormBoxButton :label="t('notes', 'Notes folder')"
 						:description=" '/' + settings.notesPath"
-						inverted-accent
+						invertedAccent
 						@click="onChangeNotePath"
 					>
 						<template #icon>

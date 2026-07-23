@@ -67,7 +67,7 @@ export default {
 		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
-	destroyed() {
+	unmounted() {
 		this?.editor?.destroy()
 		unsubscribe('files:node:updated', this.fileUpdated)
 		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
