@@ -19,12 +19,10 @@
 		</template>
 		<template #icon>
 			<AlertOctagonOutlineIcon v-if="note.error"
-				slot="icon"
 				:size="20"
 				fillColor="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
-				slot="icon"
 				:size="20"
 				fillColor="#FC0"
 			/>

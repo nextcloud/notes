@@ -13,7 +13,7 @@
 			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict = false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
-						<SyncAlertIcon slot="icon" :size="30" fillColor="var(--color-error)" />
+						<SyncAlertIcon :size="30" fillColor="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
