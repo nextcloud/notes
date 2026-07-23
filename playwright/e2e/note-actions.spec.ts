@@ -27,15 +27,19 @@ test.describe('Note actions', () => {
 		const title = uniqueTitle('favorite', testInfo)
 		const noteId = await createNote(page, title)
 
+		const favorited = page.waitForResponse((response) => response.url().includes('/favorite'))
 		await openNoteActions(page, noteId)
 		await page.getByRole('menuitem', { name: 'Add to favorites' }).click()
+		await favorited
 
 		await openNoteActions(page, noteId)
 		await expect(page.getByRole('menuitem', { name: 'Remove from favorites' })).toBeVisible()
 		await page.keyboard.press('Escape')
 
+		const unfavorited = page.waitForResponse((response) => response.url().includes('/favorite'))
 		await openNoteActions(page, noteId)
 		await page.getByRole('menuitem', { name: 'Remove from favorites' }).click()
+		await unfavorited
 
 		await openNoteActions(page, noteId)
 		await expect(page.getByRole('menuitem', { name: 'Add to favorites' })).toBeVisible()
