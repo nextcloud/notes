@@ -49,6 +49,7 @@
 		"@nextcloud/stylelint-config": "^3.2.2",
 		"@nextcloud/webpack-vue-config": "^7.0.2",
 		"@playwright/test": "^1.61.1",
+		"terser-webpack-plugin": "^5.6.1",
 		"vue-loader": "^17.3.1"
 	},
 	"engines": {
