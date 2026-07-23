@@ -80,6 +80,7 @@ OC.L10N.register(
     "Use version from server" : "Naudoti versiją iš serverio",
     "Use current version" : "Naudoti esamą versiją",
     "Empty note" : "Tušti užrašai",
+    "Write …" : "Rašyti ...",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Taisyti",
     "Exit full screen" : "Išeiti iš viso ekrano",

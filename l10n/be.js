@@ -90,6 +90,7 @@ OC.L10N.register(
     "This month" : "Гэты месяц",
     "Last month" : "Мінулы месяц",
     "Search for notes" : "Пошук нататак",
+    "Loading …" : "Загрузка …",
     "Find in all categories" : "Знайсці ва ўсіх катэгорыях",
     "Write down your thoughts without any distractions." : "Запісвайце свае думкі без адцягнення ўвагі.",
     "Use Markdown markups to style your text." : "Выкарыстоўваць разметку Markdown для стылізацыі тэксту.",
