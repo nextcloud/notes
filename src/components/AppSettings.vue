@@ -132,6 +132,11 @@ export default {
 		open: Boolean,
 	},
 
+	emits: [
+		'reload',
+		'update:open',
+	],
+
 	data() {
 		return {
 			extensions: [

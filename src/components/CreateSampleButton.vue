@@ -25,6 +25,10 @@ export default {
 		Plus,
 	},
 
+	emits: [
+		'click',
+	],
+
 	methods: {
 		onNewNote() {
 			this.$emit('click')

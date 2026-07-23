@@ -142,6 +142,13 @@ export default {
 		},
 	},
 
+	emits: [
+		'categorySelected',
+		'noteDeleted',
+		'noteSelected',
+		'startRenaming',
+	],
+
 	data() {
 		return {
 			loading: {

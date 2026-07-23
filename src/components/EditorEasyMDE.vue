@@ -85,6 +85,10 @@ export default {
 		},
 	},
 
+	emits: [
+		'input',
+	],
+
 	data() {
 		return {
 			config: {
