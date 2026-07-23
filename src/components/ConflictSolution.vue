@@ -8,7 +8,7 @@
 		<div class="text">
 			<pre v-for="(l, i) in diff" :key="i" :class="l.className">{{ l.line }}</pre>
 		</div>
-		<button @click="$emit('on-choose-solution')">
+		<button @click="$emit('onChooseSolution')">
 			{{ button }}
 		</button>
 	</div>
@@ -37,6 +37,10 @@ export default {
 			required: true,
 		},
 	},
+
+	emits: [
+		'onChooseSolution',
+	],
 
 	computed: {
 		diff() {

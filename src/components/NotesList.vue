@@ -39,6 +39,11 @@ export default {
 		},
 	},
 
+	emits: [
+		'noteSelected',
+		'noteDeleted',
+	],
+
 	data() {
 		return {
 			renamingNotes: [],
@@ -47,7 +52,7 @@ export default {
 
 	methods: {
 		onNoteSelected(noteId) {
-			this.$emit('note-selected', noteId)
+			this.$emit('noteSelected', noteId)
 		},
 
 		onStartRenaming(noteId) {
@@ -55,7 +60,7 @@ export default {
 		},
 
 		onNoteDeleted(note) {
-			this.$emit('note-deleted', note)
+			this.$emit('noteDeleted', note)
 		},
 
 		isRenaming(noteId) {

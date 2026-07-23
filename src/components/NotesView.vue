@@ -112,6 +112,10 @@ export default {
 		},
 	},
 
+	emits: [
+		'noteDeleted',
+	],
+
 	data() {
 		return {
 			timeslots: [],
@@ -250,7 +254,7 @@ export default {
 		},
 
 		onNoteDeleted(note) {
-			this.$emit('note-deleted', note)
+			this.$emit('noteDeleted', note)
 		},
 
 		onNoteSelected() {
