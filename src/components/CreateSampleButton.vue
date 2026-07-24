@@ -5,7 +5,9 @@
 
 <template>
 	<NcButton variant="secondary" @click="onNewNote">
-		<Plus slot="icon" :size="20" />
+		<template #icon>
+			<Plus :size="20" />
+		</template>
 		{{ t('notes', 'Create a sample note with Markdown') }}
 	</NcButton>
 </template>
@@ -22,6 +24,10 @@ export default {
 		NcButton,
 		Plus,
 	},
+
+	emits: [
+		'click',
+	],
 
 	methods: {
 		onNewNote() {

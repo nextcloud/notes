@@ -4,8 +4,8 @@
 -->
 
 <template>
-	<NoteRich v-if="isRichMode" :note-id="noteId" />
-	<NotePlain v-else-if="isPlainMode" :note-id="noteId" />
+	<NoteRich v-if="isRichMode" :noteId="noteId" />
+	<NotePlain v-else-if="isPlainMode" :noteId="noteId" />
 	<div v-else />
 </template>
 

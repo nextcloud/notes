@@ -9,28 +9,26 @@
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:draggable="isDraggable"
-		one-line
+		oneLine
 		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
-		@dragstart.native="onDragStart"
+		@dragstart="onDragStart"
 	>
 		<template v-if="showCategoryTitle" #subname>
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
 			<AlertOctagonOutlineIcon v-if="note.error"
-				slot="icon"
 				:size="20"
-				fill-color="#E9322D"
+				fillColor="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
-				slot="icon"
 				:size="20"
-				fill-color="#FC0"
+				fillColor="#FC0"
 			/>
 		</template>
 		<template v-if="isShared" #indicator>
-			<ShareVariantOutlineIcon :size="16" fill-color="#0082c9" />
+			<ShareVariantOutlineIcon :size="16" fillColor="#0082c9" />
 		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
@@ -52,16 +50,16 @@
 			</NcActionButton>
 			<NcActionInput
 				v-else
-				:model-value="note.category"
+				:modelValue="note.category"
 				type="multiselect"
-				label="label"
-				track-by="id"
+				:label="t('notes', 'Change category')"
+				:labelOutside="false"
 				:multiple="false"
 				:options="categories"
 				:disabled="loading.category"
 				:taggable="true"
-				@input="onCategoryChange"
-				@search-change="onCategoryChange"
+				@update:modelValue="onCategoryChange"
+				@searchChange="onCategoryChange"
 			>
 				<template #icon>
 					<FolderOutlineIcon :size="20" />
@@ -70,25 +68,28 @@
 			</NcActionInput>
 
 			<NcActionButton v-if="!renaming" @click="startRenaming">
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 				{{ t('notes', 'Rename') }}
 			</NcActionButton>
 			<NcActionInput v-else
 				v-model.trim="newTitle"
 				:disabled="!renaming"
 				:placeholder="t('notes', 'Rename note')"
-				:show-trailing-button="true"
-				@input="onInputChange($event)"
+				:showTrailingButton="true"
 				@submit="onRename"
 			>
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 			</NcActionInput>
 
 			<NcActionSeparator />
 
 			<NcActionButton v-if="!note.readonly"
 				:icon="actionDeleteIcon"
-				:close-after-click="true"
+				:closeAfterClick="true"
 				@click="onDeleteNote"
 			>
 				{{ t('notes', 'Delete note') }}
@@ -140,6 +141,13 @@ export default {
 			default: false,
 		},
 	},
+
+	emits: [
+		'categorySelected',
+		'noteDeleted',
+		'noteSelected',
+		'startRenaming',
+	],
 
 	data() {
 		return {
@@ -215,7 +223,7 @@ export default {
 		subscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
@@ -242,7 +250,7 @@ export default {
 		},
 
 		onNoteSelected(noteId) {
-			this.$emit('note-selected', noteId)
+			this.$emit('noteSelected', noteId)
 		},
 
 		onToggleFavorite() {
@@ -258,17 +266,13 @@ export default {
 
 		onCategorySelected() {
 			this.actionsOpen = false
-			this.$emit('category-selected', this.note.category)
+			this.$emit('categorySelected', this.note.category)
 		},
 
 		startRenaming() {
 			this.renaming = true
 			this.newTitle = this.note.title
-			this.$emit('start-renaming', this.note.id)
-		},
-
-		onInputChange(event) {
-			this.newTitle = event.target.value.toString()
+			this.$emit('startRenaming', this.note.id)
 		},
 
 		async onCategoryChange(result) {
@@ -316,7 +320,7 @@ export default {
 					throw new Error('Note has errors')
 				}
 				await deleteNote(this.note.id, () => {
-					this.$emit('note-deleted', note)
+					this.$emit('noteDeleted', note)
 					this.loading.delete = false
 					this.actionsOpen = false
 				})

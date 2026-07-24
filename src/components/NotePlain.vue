@@ -13,7 +13,7 @@
 			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict = false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
-						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
+						<SyncAlertIcon :size="30" fillColor="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -21,13 +21,13 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@on-choose-solution="onUseRemoteVersion"
+							@onChooseSolution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@on-choose-solution="onUseLocalVersion"
+							@onChooseSolution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
@@ -51,38 +51,50 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+				<NcActions v-model:open="actionsOpen" container=".action-buttons" menuAlign="right">
 					<NcActionButton
 						:title="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
-						<PencilOutlineIcon v-if="preview" slot="icon" :size="20" />
-						<EyeOutlineIcon v-else slot="icon" :size="20" />
+						<template v-if="preview" #icon>
+							<PencilOutlineIcon :size="20" />
+						</template>
+						<template v-else #icon>
+							<EyeOutlineIcon :size="20" />
+						</template>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>
 					<NcActionButton
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
-						<FullscreenIcon slot="icon" :size="20" />
+						<template #icon>
+							<FullscreenIcon :size="20" />
+						</template>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.readonly">
 					<NcActionButton>
-						<PencilOffOutlineIcon slot="icon" :size="20" />
+						<template #icon>
+							<PencilOffOutlineIcon :size="20" />
+						</template>
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.saveError" class="action-error">
 					<NcActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
+						<template #icon>
+							<SyncAlertIcon :size="20" fillColor="var(--color-text)" />
+						</template>
 						{{ t('notes', 'Save failed. Click to retry.') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.conflict" class="action-error">
 					<NcActionButton @click="showConflict = true">
-						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
+						<template #icon>
+							<SyncAlertIcon :size="20" fillColor="var(--color-text)" />
+						</template>
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
 					</NcActionButton>
 				</NcActions>
@@ -203,7 +215,7 @@ export default {
 		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
-	destroyed() {
+	unmounted() {
 		this.stopRefreshTimer()
 		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { recommendedVue2Javascript } from '@nextcloud/eslint-config'
+import { recommended } from '@nextcloud/eslint-config'
 
 export default [
-	...recommendedVue2Javascript,
+	...recommended,
 	{
 		rules: {
 		// do not require JSDoc comments
@@ -26,7 +26,7 @@ export default [
 			// allow some component names to not be multi-word
 			'vue/multi-word-component-names': ['error', {
 				ignores: ['Dashboard', 'Loading', 'Note', 'Welcome'],
-		}],
+			}],
 		},
 	},
 ]

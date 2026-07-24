@@ -4,7 +4,6 @@
  */
 
 import { defineStore } from 'pinia'
-import { set } from 'vue'
 
 export const useSyncStore = defineStore('sync', {
 	state: () => ({
@@ -19,7 +18,7 @@ export const useSyncStore = defineStore('sync', {
 		addToQueue({ noteId, type }) {
 			const cmd = { noteId, type }
 			const key = noteId + '-' + type
-			set(this.queue, key, cmd)
+			this.queue[key] = cmd
 		},
 
 		clearQueue() {

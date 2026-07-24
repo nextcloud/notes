@@ -36,6 +36,10 @@ export default {
 		},
 	},
 
+	emits: [
+		'input',
+	],
+
 	data() {
 		const md = new MarkdownIt({
 			linkify: true,
