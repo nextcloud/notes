@@ -310,7 +310,9 @@ class NotesService {
 			}
 		}
 		$targetNode = $notesFolder->get(implode('/', $p));
-		assert($targetNode instanceof \OCP\Files\File);
+		if (!($targetNode instanceof File)) {
+			throw new NoteDoesNotExistException();
+		}
 		return $targetNode;
 	}
 
