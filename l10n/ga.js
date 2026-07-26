@@ -80,6 +80,7 @@ OC.L10N.register(
     "Use version from server" : "Bain úsáid as leagan ón bhfreastalaí",
     "Use current version" : "Úsáid an leagan reatha",
     "Empty note" : "Nóta folamh",
+    "Write …" : "Scríobh …",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Cuir in eagar",
     "Exit full screen" : "Scoir scáileán iomlán",
