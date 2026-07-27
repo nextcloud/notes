@@ -49,8 +49,8 @@
 					/>
 				</template>
 				<div
-					v-if="displayedNotes.length != filteredNotes.length"
-					v-observe-visibility="onEndOfNotes"
+					v-show="displayedNotes.length != filteredNotes.length"
+					ref="endOfNotesLabel"
 					class="loading-label"
 				>
 					{{ t('notes', 'Loading …') }}
@@ -71,7 +71,6 @@
 
 <script>
 
-import { ObserveVisibility } from 'vue-observe-visibility'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
 import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
@@ -100,10 +99,6 @@ export default {
 		PlusIcon,
 	},
 
-	directives: {
-		'observe-visibility': ObserveVisibility,
-	},
-
 	props: {
 		noteId: {
 			type: String,
@@ -124,6 +119,7 @@ export default {
 			showNote: true,
 			searchText: '',
 			creatingNote: false,
+			endOfNotesObserver: null,
 		}
 	},
 
@@ -181,6 +177,14 @@ export default {
 		setInterval(this.updateTimeslots, 1000 * 60)
 	},
 
+	mounted() {
+		this.setupEndOfNotesObserver()
+	},
+
+	beforeUnmount() {
+		this.endOfNotesObserver.disconnect()
+	},
+
 	methods: {
 		updateTimeslots() {
 			const now = new Date()
@@ -218,10 +222,15 @@ export default {
 			}
 		},
 
-		onEndOfNotes(isVisible) {
-			if (isVisible) {
-				this.showFirstNotesOnly = false
-			}
+		setupEndOfNotesObserver() {
+			this.endOfNotesObserver = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					this.showFirstNotesOnly = false
+				}
+			})
+			this.$nextTick(() => {
+				this.endOfNotesObserver.observe(this.$refs.endOfNotesLabel)
+			})
 		},
 
 		onCategorySelected(category) {

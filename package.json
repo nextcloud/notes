@@ -38,7 +38,6 @@
 		"pinia": "^3.0.4",
 		"vue": "^3.5.39",
 		"vue-material-design-icons": "^5.3.1",
-		"vue-observe-visibility": "^1.0.0",
 		"vue-router": "^5.2.0"
 	},
 	"devDependencies": {
