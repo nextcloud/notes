@@ -5,21 +5,21 @@
 
 <template>
 	<EditorHint v-if="editorHint" @close="editorHint = false" />
-	<NcContent v-else app-name="notes" :content-class="{loading: loading.notes}">
+	<NcContent v-else appName="notes" :contentClass="{loading: loading.notes}">
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
 				<NcAppNavigationNew
 					v-show="!loading.notes && !error"
 					:text="t('notes', 'New category')"
 					@click="onNewCategory"
-					@dragover.native="onNewCategoryDragOver"
-					@drop.native="onNewCategoryDrop"
+					@dragover="onNewCategoryDragOver"
+					@drop="onNewCategoryDrop"
 				>
 					<template #icon>
 						<FolderPlusIcon :size="20" />
 					</template>
 				</NcAppNavigationNew>
-				<CategoriesList v-show="!loading.notes" />
+				<CategoriesList :loading="loading.notes" />
 			</template>
 
 			<template #footer>
@@ -33,7 +33,7 @@
 						</template>
 					</NcAppNavigationItem>
 				</ul>
-				<AppSettings v-if="!loading.notes && error !== true" :open.sync="settingsVisible" @reload="reloadNotes" />
+				<AppSettings v-if="!loading.notes && error !== true" v-model:open="settingsVisible" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
 
@@ -44,7 +44,7 @@
 				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
 		</NcAppContent>
-		<router-view v-else @note-deleted="onNoteDeleted" />
+		<router-view v-else @noteDeleted="onNoteDeleted" />
 		<NoteShareSidebar />
 	</NcContent>
 </template>
@@ -130,7 +130,7 @@ export default {
 		this.loadNotes()
 	},
 
-	destroyed() {
+	unmounted() {
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
 		this.stopRefreshTimer()
 	},

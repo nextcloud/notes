@@ -4,17 +4,13 @@
  */
 
 import { generateUrl } from '@nextcloud/router'
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Loading from './components/Loading.vue'
 import NotesView from './components/NotesView.vue'
 import Welcome from './components/Welcome.vue'
 
-Vue.use(Router)
-
-export default new Router({
-	mode: 'history',
-	base: generateUrl('apps/notes'),
+export default createRouter({
+	history: createWebHistory(generateUrl('apps/notes')),
 	linkActiveClass: 'active',
 	routes: [
 		{

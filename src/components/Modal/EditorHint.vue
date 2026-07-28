@@ -36,6 +36,10 @@ export default {
 		NcButton,
 	},
 
+	emits: [
+		'close',
+	],
+
 	data() {
 		return {
 			loading: false,

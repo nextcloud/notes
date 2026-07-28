@@ -4,33 +4,35 @@
 -->
 
 <template>
-	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
-		<template slot="list">
+	<NcAppContent paneConfigKey="note" :showDetails="showNote" @update:showDetails="hideNote">
+		<template #list>
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
 					<div class="content-list__actions">
 						<NcButton variant="primary" :disabled="creatingNote" @click="onNewNote">
-							<PlusIcon slot="icon" :size="20" />
+							<template #icon>
+								<PlusIcon :size="20" />
+							</template>
 							{{ t('notes', 'New note') }}
 						</NcButton>
 					</div>
 					<NcTextField
 						v-model="searchText"
 						:label="t('notes', 'Search for notes')"
-						:show-trailing-button="searchText !== ''"
-						trailing-button-icon="close"
-						:trailing-button-label="t('Clear search')"
-						@trailing-button-click="searchText = ''"
+						:showTrailingButton="searchText !== ''"
+						trailingButtonIcon="close"
+						:trailingButtonLabel="t('Clear search')"
+						@trailingButtonClick="searchText = ''"
 					/>
 				</div>
 
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
-					:show-category-title="category === null"
-					@note-selected="onNoteSelected"
-					@note-deleted="onNoteDeleted"
+					:showCategoryTitle="category === null"
+					@noteSelected="onNoteSelected"
+					@noteDeleted="onNoteDeleted"
 				/>
-				<template v-for="(group, idx) in groupedNotes" v-else>
+				<template v-for="(group, idx) in groupedNotes" v-else :key="idx">
 					<NotesCaption v-if="group.category && category !== group.category"
 						:key="group.category"
 						:name="categoryToLabel(group.category)"
@@ -40,16 +42,15 @@
 						:name="group.timeslot"
 					/>
 					<NotesList
-						:key="idx"
 						:notes="group.notes"
-						:show-category-title="category === null"
-						@note-selected="onNoteSelected"
-						@note-deleted="onNoteDeleted"
+						:showCategoryTitle="category === null"
+						@noteSelected="onNoteSelected"
+						@noteDeleted="onNoteDeleted"
 					/>
 				</template>
 				<div
-					v-if="displayedNotes.length != filteredNotes.length"
-					v-observe-visibility="onEndOfNotes"
+					v-show="displayedNotes.length != filteredNotes.length"
+					ref="endOfNotesLabel"
 					class="loading-label"
 				>
 					{{ t('notes', 'Loading …') }}
@@ -63,14 +64,13 @@
 		</template>
 
 		<NcAppContentDetails>
-			<Note v-if="showNote" :note-id="noteId" @note-deleted="onNoteDeleted" />
+			<Note v-if="showNote" :noteId="noteId" @noteDeleted="onNoteDeleted" />
 		</NcAppContentDetails>
 	</NcAppContent>
 </template>
 
 <script>
 
-import { ObserveVisibility } from 'vue-observe-visibility'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
 import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
@@ -99,16 +99,16 @@ export default {
 		PlusIcon,
 	},
 
-	directives: {
-		'observe-visibility': ObserveVisibility,
-	},
-
 	props: {
 		noteId: {
 			type: String,
 			required: true,
 		},
 	},
+
+	emits: [
+		'noteDeleted',
+	],
 
 	data() {
 		return {
@@ -176,6 +176,14 @@ export default {
 		setInterval(this.updateTimeslots, 1000 * 60)
 	},
 
+	mounted() {
+		this.setupEndOfNotesObserver()
+	},
+
+	beforeUnmount() {
+		this.endOfNotesObserver.disconnect()
+	},
+
 	methods: {
 		updateTimeslots() {
 			const now = new Date()
@@ -213,10 +221,15 @@ export default {
 			}
 		},
 
-		onEndOfNotes(isVisible) {
-			if (isVisible) {
-				this.showFirstNotesOnly = false
-			}
+		setupEndOfNotesObserver() {
+			this.endOfNotesObserver = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					this.showFirstNotesOnly = false
+				}
+			})
+			this.$nextTick(() => {
+				this.endOfNotesObserver.observe(this.$refs.endOfNotesLabel)
+			})
 		},
 
 		onCategorySelected(category) {
@@ -248,7 +261,7 @@ export default {
 		},
 
 		onNoteDeleted(note) {
-			this.$emit('note-deleted', note)
+			this.$emit('noteDeleted', note)
 		},
 
 		onNoteSelected() {
