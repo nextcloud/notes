@@ -119,7 +119,6 @@ export default {
 			showNote: true,
 			searchText: '',
 			creatingNote: false,
-			endOfNotesObserver: null,
 		}
 	},
 
