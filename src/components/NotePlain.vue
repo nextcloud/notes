@@ -21,13 +21,13 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@onChooseSolution="onUseRemoteVersion"
+							@chooseSolution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@onChooseSolution="onUseLocalVersion"
+							@chooseSolution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
