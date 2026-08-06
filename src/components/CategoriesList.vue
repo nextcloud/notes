@@ -27,7 +27,35 @@
 		</template>
 	</NcAppNavigationItem>
 
-	<NcAppNavigationCaption v-show="!loading" :name="t('notes', 'Categories')" />
+	<!--
+		The "New category" action sits inline next to the caption. Dropping a
+		note anywhere on the caption row also starts a new category with that
+		note in it, which is what the former full-width button offered — the
+		row is a far easier drop target than the icon alone.
+	-->
+	<NcAppNavigationCaption v-if="!disabled"
+		v-show="!loading"
+		:name="t('notes', 'Categories')"
+		:inline="1"
+		:class="{ 'drop-over-caption': dragOverNewCategory }"
+		@dragover="onNewCategoryDragOver($event)"
+		@dragleave="onNewCategoryDragLeave($event)"
+		@drop="onNewCategoryDrop($event)"
+	>
+		<template #actions>
+			<!--
+				Rendered inline by NcActions, so it becomes a single icon button
+				whose accessible name and tooltip are the action text.
+			-->
+			<NcActionButton @click="startNewCategory()">
+				<template #icon>
+					<FolderPlusIcon :size="20" />
+				</template>
+				{{ t('notes', 'New category') }}
+			</NcActionButton>
+		</template>
+	</NcAppNavigationCaption>
+	<NcAppNavigationCaption v-else v-show="!loading" :name="t('notes', 'Categories')" />
 
 	<NcAppNavigationItem
 		v-if="newCategoryDraft"
@@ -106,6 +134,7 @@ import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
 import { deleteCategory as deleteCategoryRequest, getCategories, renameCategory as renameCategoryRequest, setCategory } from '../NotesService.js'
 import store from '../store.js'
@@ -122,16 +151,20 @@ export default {
 		NcCounterBubble,
 		FolderIcon,
 		FolderOutlineIcon,
+		FolderPlusIcon,
 		HistoryIcon,
 	},
 
 	props: {
 		loading: Boolean,
+		/** Hides the "New category" action, e.g. while the note list failed to load */
+		disabled: Boolean,
 	},
 
 	data() {
 		return {
 			dragOverCategory: null,
+			dragOverNewCategory: false,
 			dragOverAllNotes: false,
 			newCategoryDraft: false,
 			newCategoryMonitor: null,
@@ -177,6 +210,37 @@ export default {
 				this.$refs.newCategoryItem?.handleEdit?.()
 				this.monitorNewCategoryEditing()
 			})
+		},
+
+		onNewCategoryDragOver(event) {
+			if (!isNoteDrag(event)) {
+				return
+			}
+			event.preventDefault()
+			if (event.dataTransfer) {
+				event.dataTransfer.dropEffect = 'move'
+			}
+			this.dragOverNewCategory = true
+		},
+
+		onNewCategoryDragLeave(event) {
+			// dragleave also fires when moving onto a child element, so ignore
+			// events that are still inside the caption row
+			if (event.currentTarget?.contains(event.relatedTarget)) {
+				return
+			}
+			this.dragOverNewCategory = false
+		},
+
+		onNewCategoryDrop(event) {
+			this.dragOverNewCategory = false
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
+			if (noteId === null) {
+				return
+			}
+			event.preventDefault()
+			event.stopPropagation()
+			this.startNewCategory({ noteId })
 		},
 
 		stopNewCategoryMonitor() {
@@ -457,6 +521,14 @@ export default {
 	background-color: var(--color-primary-element-light) !important;
 	outline: 2px dashed var(--color-primary-element);
 	outline-offset: -2px;
+}
+
+/* The caption is not an .app-navigation-entry, so it needs its own drop hint. */
+.app-navigation-caption.drop-over-caption {
+	background-color: var(--color-primary-element-light);
+	outline: 2px dashed var(--color-primary-element);
+	outline-offset: -2px;
+	border-radius: var(--border-radius-element, var(--border-radius-large));
 }
 
 .app-navigation-entry-wrapper.category-no-actions:deep(.app-navigation-entry__counter-wrapper) {
