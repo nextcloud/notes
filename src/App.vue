@@ -5,7 +5,11 @@
 
 <template>
 	<EditorHint v-if="editorHint" @close="editorHint = false" />
-	<NcContent v-else appName="notes" :contentClass="{loading: loading.notes}">
+	<NcContent v-else
+		appName="notes"
+		:class="{ 'notes-zen': zenMode }"
+		:contentClass="{loading: loading.notes}"
+	>
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
 				<NcAppNavigationNew
@@ -120,6 +124,10 @@ export default {
 
 		filteredNotes() {
 			return store.notes.getFilteredNotes()
+		},
+
+		zenMode() {
+			return store.app.zenMode
 		},
 	},
 
@@ -359,5 +367,36 @@ export default {
 	flex: 1 1 auto;
 	min-height: 0;
 	height: auto !important;
+}
+</style>
+
+<style lang="scss">
+/* Intentionally not scoped: zen mode hides DOM that belongs to @nextcloud/vue —
+   the navigation, and the note-list pane of NcAppContent's split view — which a
+   scoped style cannot reach. */
+.notes-zen {
+	.app-navigation,
+	.app-navigation-toggle-wrapper,
+	.splitpanes__pane-list,
+	.splitpanes__splitter {
+		display: none;
+	}
+
+	/* the details pane is sized by splitpanes via an inline width */
+	.splitpanes__pane-details {
+		width: 100% !important;
+	}
+
+	/* Centre the note at any window width. Outside zen mode this only happens
+	   above 1600px, where there is room for the list next to it. */
+	.note-editor {
+		margin-inline: auto;
+	}
+
+	/* the large-screen rule reserves space on the right for the action menu;
+	   with the panes gone the note would sit visibly off-centre */
+	.note-container {
+		padding-inline-end: 0;
+	}
 }
 </style>

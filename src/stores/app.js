@@ -12,6 +12,15 @@ export const useAppStore = defineStore('app', {
 		isManualSave: false,
 		documentTitle: null,
 		searchText: '',
+		/**
+		 * Zen mode hides the app's own chrome — the category sidebar and the
+		 * note list — leaving just the note.
+		 *
+		 * Kept client-side on purpose: it is something you switch on to write a
+		 * paragraph and off again, so it does not belong in the settings the
+		 * mobile clients read, and it does not survive a reload.
+		 */
+		zenMode: false,
 	}),
 
 	actions: {
@@ -37,6 +46,14 @@ export const useAppStore = defineStore('app', {
 
 		updateSearchText(searchText) {
 			this.searchText = searchText
+		},
+
+		setZenMode(zenMode) {
+			this.zenMode = zenMode
+		},
+
+		toggleZenMode() {
+			this.zenMode = !this.zenMode
 		},
 	},
 })
