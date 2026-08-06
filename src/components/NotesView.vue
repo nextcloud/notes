@@ -9,7 +9,7 @@
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
 					<div class="content-list__actions">
-						<NcButton variant="primary" :disabled="creatingNote" @click="onNewNote">
+						<NcButton variant="primary" :disabled="creatingNote || loadingTemplates" @click="onNewNote">
 							<template #icon>
 								<PlusIcon :size="20" />
 							</template>
@@ -66,11 +66,19 @@
 		<NcAppContentDetails>
 			<Note v-if="showNote" :noteId="noteId" @noteDeleted="onNoteDeleted" />
 		</NcAppContentDetails>
+
+		<TemplatePicker v-if="templatePickerOpen"
+			:templates="templates"
+			:creating="creatingNote"
+			@close="templatePickerOpen = false"
+			@select="onTemplateSelected"
+		/>
 	</NcAppContent>
 </template>
 
 <script>
 
+import { showError } from '@nextcloud/dialogs'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
 import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
@@ -80,8 +88,11 @@ import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import Note from './Note.vue'
 import NotesCaption from './NotesCaption.vue'
 import NotesList from './NotesList.vue'
+import TemplatePicker from './TemplatePicker.vue'
+import logger from '../Logger.js'
 import { createNote } from '../NotesService.js'
 import store from '../store.js'
+import { fetchNoteTemplates, fetchTemplateContent } from '../TemplateService.js'
 import { categoryLabel } from '../Util.js'
 
 export default {
@@ -97,6 +108,7 @@ export default {
 		NotesList,
 		NotesCaption,
 		PlusIcon,
+		TemplatePicker,
 	},
 
 	props: {
@@ -119,6 +131,9 @@ export default {
 			showNote: true,
 			searchText: '',
 			creatingNote: false,
+			templates: [],
+			templatePickerOpen: false,
+			loadingTemplates: false,
 		}
 	},
 
@@ -236,13 +251,39 @@ export default {
 			store.notes.setSelectedCategory(category)
 		},
 
-		onNewNote() {
+		async onNewNote() {
+			if (this.creatingNote || this.loadingTemplates || this.templatePickerOpen) {
+				return
+			}
+
+			this.loadingTemplates = true
+			try {
+				this.templates = await fetchNoteTemplates()
+			} finally {
+				this.loadingTemplates = false
+			}
+
+			if (this.templates.length === 0) {
+				this.createNoteFromTemplate(null)
+				return
+			}
+			this.templatePickerOpen = true
+		},
+
+		onTemplateSelected(template) {
+			this.createNoteFromTemplate(template)
+		},
+
+		createNoteFromTemplate(template) {
 			if (this.creatingNote) {
 				return
 			}
 			this.creatingNote = true
-			createNote(store.notes.getSelectedCategory())
+
+			this.templateContent(template)
+				.then((content) => createNote(store.notes.getSelectedCategory(), '', content))
 				.then((note) => {
+					this.templatePickerOpen = false
 					this.$router.push({
 						name: 'note',
 						params: { noteId: note.id.toString() },
@@ -250,10 +291,28 @@ export default {
 					})
 				})
 				.catch(() => {
+					// createNote() reports its own failures
 				})
 				.finally(() => {
 					this.creatingNote = false
 				})
+		},
+
+		/**
+		 * @param {object|null} template chosen template, null for a blank note
+		 * @return {Promise<string>} the new note's initial content
+		 */
+		async templateContent(template) {
+			if (!template) {
+				return ''
+			}
+			try {
+				return await fetchTemplateContent(template.templateId)
+			} catch (error) {
+				logger.error('Reading the note template has failed', { error })
+				showError(t('notes', 'Could not read the template. Creating an empty note instead.'))
+				return ''
+			}
 		},
 
 		hideNote() {
