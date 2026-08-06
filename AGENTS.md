@@ -47,14 +47,16 @@ Setup: `make dev-setup` (runs `composer install` + `npm install`). Requires PHP 
 - `npm run stylelint` / `npm run stylelint:fix`
 
 ### PHP
+- `composer run test:unit` — PHPUnit unit tests (`make test-unit`)
 - `composer run cs:check` / `composer run cs:fix` — php-cs-fixer (Nextcloud coding standard)
 - `composer run psalm` — static analysis
 - `composer run phan` — static analysis (CI uses `make lint-php-phan`)
 - `make lint` runs everything (PHP + JS + CSS + info.xml); `make lint-fix` auto-fixes
 
 ### Tests
-There are no PHP unit tests. Three suites exist:
+Four suites exist:
 
+- **PHP unit tests** (`tests/unit/`): PHPUnit against mocked OCP interfaces, no server, no database. `make test-unit` (or `composer run test:unit`). Only for logic that can be reached without a running Nextcloud — tree walking, path and title handling, cursor encoding, share-type batching. Run a single test: `./vendor/bin/phpunit -c tests/unit/phpunit.xml --filter testMethodName`
 - **JS unit tests** (`src/tests/`): vitest in jsdom, no server needed. `npm run test` (or `test:coverage`). For plain modules only — testing a component would need `@vitejs/plugin-vue` adding to `vitest.config.js`.
 - **API tests** (`tests/api/`): PHPUnit tests that make HTTP requests via Guzzle against a **running Nextcloud server at `http://localhost:8080`** with the app enabled and a user `test`/`test`. Run with `make test-api`. Run a single test: `phpunit --bootstrap vendor/autoload.php --filter testMethodName tests/api/APIv1Test.php`
 - **Playwright e2e** (`playwright/e2e/`): `npm run test:e2e` (or `test:e2e:ui`). Automatically starts a Nextcloud Docker container on port 8089 (requires Docker; up to 5 min for first start). Tests run with a single worker on purpose — the bundled server uses SQLite and flakes under parallel logins.
