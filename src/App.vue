@@ -59,17 +59,24 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @noteDeleted="onNoteDeleted" />
-		<NcButton v-if="zenMode"
-			class="zen-exit"
-			variant="secondary"
-			:title="t('notes', 'CTRL + .')"
-			:aria-label="t('notes', 'Exit zen mode')"
-			@click="onToggleZenMode"
-		>
-			<template #icon>
-				<FocusIcon :size="20" />
-			</template>
-		</NcButton>
+		<!--
+			The button is wrapped rather than positioned directly: NcButton's own
+			`.button-vue[data-v-…] { position: relative }` carries an attribute
+			selector, so it outranks any single class we could put on the button
+			and `position: fixed` would be ignored. A plain div has nothing
+			competing for it.
+		-->
+		<div v-if="zenMode" class="zen-exit">
+			<NcButton variant="secondary"
+				:title="t('notes', 'CTRL + .')"
+				:aria-label="t('notes', 'Exit zen mode')"
+				@click="onToggleZenMode"
+			>
+				<template #icon>
+					<FocusIcon :size="20" />
+				</template>
+			</NcButton>
+		</div>
 		<NoteShareSidebar />
 	</NcContent>
 </template>
@@ -456,10 +463,12 @@ export default {
 	bottom: calc(var(--default-grid-baseline) * 4);
 	inset-inline-start: calc(var(--default-grid-baseline) * 4);
 	z-index: 2000;
-	opacity: 0.6;
+	/* subdued until wanted, but it is the only visible way out, so not invisible */
+	opacity: 0.7;
+	transition: opacity var(--animation-quick) ease-in-out;
 
 	&:hover,
-	&:focus-visible {
+	&:focus-within {
 		opacity: 1;
 	}
 }
