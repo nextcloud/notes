@@ -9,20 +9,31 @@
 		data-cy-notes-share-sidebar
 		forceMenu
 		:loading="isOpen && loading"
-		:name="note?.title || t('notes', 'Share')"
+		:name="note?.title || t('notes', 'Note')"
 		noToggle
 		:open="isOpen"
 		@closed="onClosed"
 		@update:open="onToggle"
 	>
-		<NcAppSidebarTab
-			v-if="sharingTab"
-			:id="sharingTab.id"
-			:name="sharingTab.displayName"
-			:order="sharingTab.order"
+		<NcAppSidebarTab v-if="note"
+			id="notes-info"
+			:name="t('notes', 'Note info')"
+			:order="0"
 		>
 			<template #icon>
-				<NcIconSvgWrapper :svg="sharingTab.iconSvgInline" />
+				<InformationOutlineIcon :size="20" />
+			</template>
+			<NoteInfo :note="note" :node="currentNode" :contentLoading="loadingContent" />
+		</NcAppSidebarTab>
+
+		<NcAppSidebarTab v-for="tab in tabs"
+			:id="tab.id"
+			:key="tab.id"
+			:name="tab.displayName"
+			:order="tab.order"
+		>
+			<template #icon>
+				<NcIconSvgWrapper :svg="tab.iconSvgInline" />
 			</template>
 
 			<NcEmptyContent v-if="loading">
@@ -33,26 +44,26 @@
 
 			<NcEmptyContent v-else-if="!currentNode || error">
 				<template #icon>
-					<ShareVariantOutlineIcon :size="44" />
+					<FileOutlineIcon :size="44" />
 				</template>
-				{{ error || t('notes', 'Unable to load the selected note for sharing.') }}
+				{{ error || t('notes', 'Unable to load the selected note.') }}
 			</NcEmptyContent>
 
 			<component
-				:is="sharingTab.tagName"
+				:is="tab.tagName"
 				v-else
-				:active.prop="activeTab === sharingTab.id"
+				:active.prop="activeTab === tab.id"
 				:folder.prop="currentFolder"
 				:node.prop="currentNode"
 				:view.prop="currentView"
 			/>
 		</NcAppSidebarTab>
 
-		<NcEmptyContent v-else-if="isOpen">
+		<NcEmptyContent v-if="isOpen && tabs.length === 0 && !note">
 			<template #icon>
-				<ShareVariantOutlineIcon :size="44" />
+				<FileOutlineIcon :size="44" />
 			</template>
-			{{ t('notes', 'Sharing is not available right now.') }}
+			{{ t('notes', 'Sharing and versions are not available right now.') }}
 		</NcEmptyContent>
 	</NcAppSidebar>
 </template>
@@ -65,8 +76,12 @@ import NcAppSidebarTab from '@nextcloud/vue/components/NcAppSidebarTab'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
-import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
+import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
+import NoteInfo from './NoteInfo.vue'
 import logger from '../Logger.js'
+import { fetchNote } from '../NotesService.js'
+import { selectNoteSidebarTabs } from '../sidebarTabs.js'
 import store from '../store.js'
 import { fetchDavNode } from '../WebdavService.js'
 
@@ -79,7 +94,9 @@ export default {
 		NcEmptyContent,
 		NcIconSvgWrapper,
 		NcLoadingIcon,
-		ShareVariantOutlineIcon,
+		FileOutlineIcon,
+		InformationOutlineIcon,
+		NoteInfo,
 	},
 
 	data() {
@@ -93,6 +110,7 @@ export default {
 			initializedTabs: new Set(),
 			isOpen: false,
 			loadingContext: false,
+			loadingContent: false,
 			loadingTab: false,
 			noteId: null,
 			tabError: '',
@@ -115,8 +133,12 @@ export default {
 			return store.notes.getNote(this.noteId)
 		},
 
-		sharingTab() {
-			return getSidebarTabs().find((tab) => tab.id === 'sharing') || null
+		tabs() {
+			return selectNoteSidebarTabs(getSidebarTabs(), {
+				node: this.currentNode,
+				folder: this.currentFolder,
+				view: this.currentView,
+			})
 		},
 
 		currentView() {
@@ -127,58 +149,103 @@ export default {
 		},
 	},
 
+	watch: {
+		activeTab: 'ensureContent',
+	},
+
 	mounted() {
+		// the share event is kept so anything already emitting it keeps working
 		subscribe('notes:share:open', this.onShareOpen)
+		subscribe('notes:sidebar:open', this.onSidebarOpen)
 	},
 
 	unmounted() {
 		unsubscribe('notes:share:open', this.onShareOpen)
+		unsubscribe('notes:sidebar:open', this.onSidebarOpen)
 	},
 
 	methods: {
-		async initializeSharingTab() {
-			const tab = this.sharingTab
-			if (!tab) {
-				this.loadingTab = false
-				this.tabError = this.t('notes', 'Sharing is not available right now.')
+		/**
+		 * The note list payload excludes content, so a note that has never been
+		 * opened has none. The info tab needs it for the counts — fetch it, but
+		 * only when that tab is actually being looked at, so opening the sidebar
+		 * to share a note does not pull its whole body down.
+		 */
+		async ensureContent() {
+			if (this.activeTab !== 'notes-info' || this.loadingContent) {
+				return
+			}
+			if (!Number.isFinite(this.noteId) || typeof this.note?.content === 'string') {
 				return
 			}
 
-			if (window.customElements.get(tab.tagName) || this.initializedTabs.has(tab.tagName)) {
+			this.loadingContent = true
+			try {
+				await fetchNote(this.noteId)
+			} catch (error) {
+				logger.error('Failed to load the note body for the info tab', { error })
+			} finally {
+				this.loadingContent = false
+			}
+		},
+
+		async initializeTabs() {
+			const tabs = this.tabs
+			if (tabs.length === 0) {
 				this.loadingTab = false
-				this.tabError = ''
+				this.tabError = this.t('notes', 'Sharing and versions are not available right now.')
 				return
+			}
+
+			// One tab failing to define its element must not hide the others, so
+			// they are initialised independently and only a total failure is
+			// reported as an error.
+			const results = await Promise.all(tabs.map((tab) => this.initializeTab(tab)))
+
+			this.loadingTab = false
+			this.tabError = results.includes(true)
+				? ''
+				: this.t('notes', 'Failed to load the note sidebar.')
+		},
+
+		/**
+		 * @param {object} tab a registered Files sidebar tab
+		 * @return {Promise<boolean>} whether the tab is usable
+		 */
+		async initializeTab(tab) {
+			if (window.customElements.get(tab.tagName) || this.initializedTabs.has(tab.tagName)) {
+				return true
 			}
 
 			if (this.initializingTabs.has(tab.tagName)) {
+				// another open is already awaiting this one
 				this.loadingTab = true
-				return
+				return true
 			}
 
 			this.initializingTabs.add(tab.tagName)
 			this.loadingTab = true
-			this.tabError = ''
 
 			try {
 				await tab.onInit?.()
 				await window.customElements.whenDefined(tab.tagName)
 				this.initializedTabs.add(tab.tagName)
+				return true
 			} catch (error) {
-				logger.error('Failed to initialize the sharing sidebar tab in Notes', { error })
-				this.tabError = this.t('notes', 'Failed to load the sharing sidebar.')
+				logger.error('Failed to initialize a sidebar tab in Notes', { error, tab: tab.id })
+				return false
 			} finally {
 				this.initializingTabs.delete(tab.tagName)
-				this.loadingTab = false
 			}
 		},
 
-		async loadShareContext() {
+		async loadNodeContext() {
 			const internalPath = this.note?.internalPath
 			if (!internalPath) {
 				this.loadingContext = false
 				this.currentNode = null
 				this.currentFolder = null
-				this.contextError = this.t('notes', 'Unable to load the selected note for sharing.')
+				this.contextError = this.t('notes', 'Unable to load the selected note.')
 				return
 			}
 
@@ -193,7 +260,7 @@ export default {
 				try {
 					folder = await fetchDavNode(node.dirname || '/')
 				} catch (error) {
-					logger.error('Failed to load the parent folder for the Notes sharing sidebar', { error })
+					logger.error('Failed to load the parent folder for the Notes sidebar', { error })
 				}
 
 				if (requestToken !== this.contextRequestToken) {
@@ -207,10 +274,10 @@ export default {
 					return
 				}
 
-				logger.error('Failed to load the selected note for the Notes sharing sidebar', { error })
+				logger.error('Failed to load the selected note for the Notes sidebar', { error })
 				this.currentNode = null
 				this.currentFolder = null
-				this.contextError = this.t('notes', 'Unable to load the selected note for sharing.')
+				this.contextError = this.t('notes', 'Unable to load the selected note.')
 			} finally {
 				if (requestToken === this.contextRequestToken) {
 					this.loadingContext = false
@@ -218,10 +285,14 @@ export default {
 			}
 		},
 
-		async onShareOpen({ noteId }) {
+		onShareOpen({ noteId }) {
+			return this.onSidebarOpen({ noteId, tab: 'sharing' })
+		},
+
+		async onSidebarOpen({ noteId, tab = 'sharing' }) {
 			this.contextRequestToken += 1
 			this.noteId = Number(noteId)
-			this.activeTab = 'sharing'
+			this.activeTab = tab
 			this.isOpen = true
 			this.contextError = ''
 			this.tabError = ''
@@ -230,14 +301,15 @@ export default {
 			this.loadingContext = false
 			this.loadingTab = false
 
-			if (!this.sharingTab) {
-				await this.initializeSharingTab()
+			if (this.tabs.length === 0) {
+				await this.initializeTabs()
 				return
 			}
 
 			await Promise.all([
-				this.initializeSharingTab(),
-				this.loadShareContext(),
+				this.initializeTabs(),
+				this.loadNodeContext(),
+				this.ensureContent(),
 			])
 		},
 
