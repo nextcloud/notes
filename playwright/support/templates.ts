@@ -51,9 +51,16 @@ export async function stubNoTemplates(page: Page): Promise<void> {
  * @param request The request context to upload with, cookie-free so that the
  *   writing DAV calls are not rejected by the CSRF check
  * @param content Content of the template file
+ * @param options Shape of the template as the endpoint lists it
+ * @param options.hasPreview Whether the endpoint claims a preview for it
  * @return The label the picker shows for the template
  */
-export async function stubTemplate(page: Page, request: APIRequestContext, content: string): Promise<string> {
+export async function stubTemplate(
+	page: Page,
+	request: APIRequestContext,
+	content: string,
+	{ hasPreview = false }: { hasPreview?: boolean } = {},
+): Promise<string> {
 	const label = `Playwright template ${Date.now()}`
 	const basename = `${label}.md`
 
@@ -83,7 +90,8 @@ export async function stubTemplate(page: Page, request: APIRequestContext, conte
 				basename,
 				fileid,
 				mime: 'text/markdown',
-				hasPreview: false,
+				hasPreview,
+				// the endpoint leaves this null for the user's own templates
 				previewUrl: null,
 			}],
 		}]),

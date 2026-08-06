@@ -119,9 +119,7 @@ export default {
 						key,
 						label: templateLabel(template),
 						template,
-						previewUrl: template.hasPreview && !this.brokenPreviews.includes(key)
-							? template.previewUrl
-							: null,
+						previewUrl: this.brokenPreviews.includes(key) ? null : template.previewUrl,
 						iconSvgInline: template.iconSvgInline,
 					}
 				}),
