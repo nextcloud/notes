@@ -26,6 +26,13 @@ export function noteRow(page: Page, noteId: number): Locator {
 		.locator('xpath=ancestor::li[1]')
 }
 
+export async function openNoteActions(page: Page, noteId: number): Promise<Locator> {
+	const row = noteRow(page, noteId)
+	await row.hover()
+	await row.locator('.action-item__menutoggle').click()
+	return row
+}
+
 export async function waitForNoteRoute(page: Page, previousNoteId: number | null): Promise<number> {
 	await expect.poll(() => currentNoteId(page)).not.toBe(previousNoteId)
 
