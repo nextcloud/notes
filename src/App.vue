@@ -12,18 +12,7 @@
 	>
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
-				<NcAppNavigationNew
-					v-show="!loading.notes && !error"
-					:text="t('notes', 'New category')"
-					@click="onNewCategory"
-					@dragover="onNewCategoryDragOver"
-					@drop="onNewCategoryDrop"
-				>
-					<template #icon>
-						<FolderPlusIcon :size="20" />
-					</template>
-				</NcAppNavigationNew>
-				<CategoriesList :loading="loading.notes" />
+				<CategoriesList :loading="loading.notes" :hideNewCategoryAction="!!error" />
 			</template>
 
 			<template #footer>
@@ -92,11 +81,9 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
-import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcContent from '@nextcloud/vue/components/NcContent'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
-import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import FocusIcon from 'vue-material-design-icons/ImageFilterCenterFocusStrongOutline.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import AppSettings from './components/AppSettings.vue'
@@ -107,7 +94,6 @@ import { config } from './config.js'
 import logger from './Logger.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
 import store from './store.js'
-import { getDraggedNoteId, isNoteDrag } from './Util.js'
 
 import '@nextcloud/dialogs/style.css'
 
@@ -126,13 +112,11 @@ export default {
 		EditorHint,
 		NcAppContent,
 		NcAppNavigation,
-		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcButton,
 		NcContent,
 		FocusIcon,
 		NoteShareSidebar,
-		FolderPlusIcon,
 		ShareVariantOutlineIcon,
 	},
 
@@ -356,30 +340,6 @@ export default {
 			} else {
 				store.app.setZenMode(false)
 			}
-		},
-
-		onNewCategory() {
-			emit('notes:category:new')
-		},
-
-		onNewCategoryDragOver(event) {
-			if (!isNoteDrag(event)) {
-				return
-			}
-			event.preventDefault()
-			if (event.dataTransfer) {
-				event.dataTransfer.dropEffect = 'move'
-			}
-		},
-
-		onNewCategoryDrop(event) {
-			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
-			if (noteId === null) {
-				return
-			}
-			event.preventDefault()
-			event.stopPropagation()
-			emit('notes:category:new', { noteId })
 		},
 
 		onNoteDeleted(note) {
