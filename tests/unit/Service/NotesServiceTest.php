@@ -215,23 +215,9 @@ class NotesServiceTest extends TestCase {
 	/**
 	 * Characterization test — this pins a bug, it does not endorse it.
 	 *
-	 * gatherNoteFiles() merges the recursion's categories with `+`:
-	 *
-	 *     $data['categories'] = $data['categories'] + $data_sub['categories'];
-	 *
-	 * Both operands are sequentially-keyed lists, so the union keeps the
-	 * left-hand value for every key that already exists and silently discards
-	 * the rest. The result is that only top-level folders survive; every nested
-	 * subcategory is dropped. `array_merge()` is the fix.
-	 *
-	 * Visible effect today: a nested folder that *contains* notes still appears
-	 * in the UI, because the frontend derives categories from the notes
-	 * themselves and only consults this list for folders that have none. So the
-	 * symptom is an empty nested subcategory missing from the sidebar. The v1
-	 * API does not expose this list, so third-party clients are unaffected.
-	 *
-	 * When this is fixed, the expectation below becomes
-	 * ['Work', 'Work/Projects', 'Work/Projects/2026', 'Personal', 'Personal/Recipes'].
+	 * gatherNoteFiles() merges the recursion's categories with `+` rather than
+	 * array_merge(), so a subcategory whose index the parent already occupies
+	 * is discarded.
 	 */
 	public function testNestedCategoriesAreCurrentlyDropped(): void {
 		$categories = $this->gather([
@@ -252,12 +238,22 @@ class NotesServiceTest extends TestCase {
 		);
 	}
 
-	/**
-	 * The counterpart to the test above: the *files* union is keyed by file id,
-	 * which is unique across the tree, so `+` is correct there and no note is
-	 * lost. This is what makes the categories case a slip rather than a
-	 * misunderstanding, and it must keep working if the merge is changed.
-	 */
+	public function testWhichNestedCategoriesSurviveDependsOnSiblingOrder(): void {
+		$categories = $this->gather([
+			'Work' => [
+				'A' => [],
+				'B' => [],
+				'C' => [],
+			],
+		])['categories'];
+
+		self::assertSame(
+			['Work', 'Work/B', 'Work/C'],
+			array_values($categories),
+			'the first sibling collides with the parent index and is lost',
+		);
+	}
+
 	public function testNoNoteIsLostByTheFileUnionAcrossSiblingFolders(): void {
 		self::assertSame(
 			['a.txt', 'b.txt', 'c.txt', 'd.txt'],
