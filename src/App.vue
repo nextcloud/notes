@@ -8,18 +8,7 @@
 	<NcContent v-else appName="notes" :contentClass="{loading: loading.notes}">
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
-				<NcAppNavigationNew
-					v-show="!loading.notes && !error"
-					:text="t('notes', 'New category')"
-					@click="onNewCategory"
-					@dragover="onNewCategoryDragOver"
-					@drop="onNewCategoryDrop"
-				>
-					<template #icon>
-						<FolderPlusIcon :size="20" />
-					</template>
-				</NcAppNavigationNew>
-				<CategoriesList :loading="loading.notes" />
+				<CategoriesList :loading="loading.notes" :disabled="!!error" />
 			</template>
 
 			<template #footer>
@@ -51,15 +40,12 @@
 
 <script>
 import { showSuccess, TOAST_PERMANENT_TIMEOUT, TOAST_UNDO_TIMEOUT } from '@nextcloud/dialogs'
-import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
-import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
 import NcContent from '@nextcloud/vue/components/NcContent'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
-import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
@@ -68,7 +54,6 @@ import { config } from './config.js'
 import logger from './Logger.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
 import store from './store.js'
-import { getDraggedNoteId, isNoteDrag } from './Util.js'
 
 import '@nextcloud/dialogs/style.css'
 
@@ -82,11 +67,9 @@ export default {
 		EditorHint,
 		NcAppContent,
 		NcAppNavigation,
-		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
 		NoteShareSidebar,
-		FolderPlusIcon,
 	},
 
 	data() {
@@ -233,30 +216,6 @@ export default {
 
 		openSettings() {
 			this.settingsVisible = true
-		},
-
-		onNewCategory() {
-			emit('notes:category:new')
-		},
-
-		onNewCategoryDragOver(event) {
-			if (!isNoteDrag(event)) {
-				return
-			}
-			event.preventDefault()
-			if (event.dataTransfer) {
-				event.dataTransfer.dropEffect = 'move'
-			}
-		},
-
-		onNewCategoryDrop(event) {
-			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
-			if (noteId === null) {
-				return
-			}
-			event.preventDefault()
-			event.stopPropagation()
-			emit('notes:category:new', { noteId })
 		},
 
 		onNoteDeleted(note) {
