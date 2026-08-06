@@ -113,9 +113,11 @@ export default {
 					key: String(template.fileid ?? template.templateId),
 					label: templateLabel(template),
 					template,
-					previewUrl: template.hasPreview && !this.brokenPreviews.includes(template.fileid)
-						? template.previewUrl
-						: null,
+					// the service resolves this to a usable URL or null; a URL that
+					// still fails to load is remembered so the card falls back
+					previewUrl: this.brokenPreviews.includes(template.fileid)
+						? null
+						: template.previewUrl,
 					iconSvgInline: template.iconSvgInline,
 				})),
 			]

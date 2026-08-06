@@ -5,7 +5,7 @@
 
 import axios from '@nextcloud/axios'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
-import { generateOcsUrl } from '@nextcloud/router'
+import { generateOcsUrl, generateUrl } from '@nextcloud/router'
 import logger from './Logger.js'
 
 /**
@@ -14,6 +14,39 @@ import logger from './Logger.js'
  * a note.
  */
 const NOTE_MIMETYPES = ['text/markdown', 'text/plain']
+
+/** Rendered size of a template card's thumbnail, in CSS pixels. */
+const PREVIEW_SIZE = 256
+
+/**
+ * URL of a template's thumbnail, or null when there is none to show.
+ *
+ * The template endpoint reports `hasPreview` but leaves `previewUrl` at null
+ * for the user's own templates — setCustomPreviewUrl() is only ever called for
+ * templates an app registers — so the URL has to be built from the file id
+ * against core's preview endpoint, which is what the Files app does too.
+ *
+ * @param {object} template a template as reported by the endpoint
+ * @return {string|null} preview URL, or null
+ */
+function previewUrl(template) {
+	if (template.previewUrl) {
+		return template.previewUrl
+	}
+	if (!template.hasPreview || !template.fileid) {
+		return null
+	}
+
+	return generateUrl('/core/preview?fileId={fileId}&x={x}&y={y}&a={a}&mimeFallback={mimeFallback}', {
+		fileId: template.fileid,
+		x: PREVIEW_SIZE,
+		y: PREVIEW_SIZE,
+		// keep the aspect ratio rather than cropping the top of the note away,
+		// and fall back to a mimetype icon instead of a broken image
+		a: 1,
+		mimeFallback: 1,
+	})
+}
 
 /**
  * Templates the user can start a note from.
@@ -38,6 +71,7 @@ export async function fetchNoteTemplates() {
 			.filter((creator) => (creator.mimetypes ?? []).some((mime) => NOTE_MIMETYPES.includes(mime)))
 			.flatMap((creator) => (creator.templates ?? []).map((template) => ({
 				...template,
+				previewUrl: previewUrl(template),
 				// the creator's icon is the sensible stand-in when a template has
 				// no preview of its own
 				iconSvgInline: creator.iconSvgInline,
