@@ -71,11 +71,11 @@ class NotesServiceTest extends NotesTestCase {
 
 	/**
 	 * @param array<int|string, string|array<int|string, mixed>> $spec
-	 * @return array{files: array<int, File>, categories: list<string>}
+	 * @return array{files: array<int, File>, categories: array<int, string>, folders: list<Folder>}
 	 */
 	private function gather(array $spec, string $customExtension = 'md', bool $showHidden = false): array {
 		$method = new \ReflectionMethod(NotesService::class, 'gatherNoteFiles');
-		/** @var array{files: array<int, File>, categories: list<string>} $result */
+		/** @var array{files: array<int, File>, categories: array<int, string>, folders: list<Folder>} $result */
 		$result = $method->invoke(null, $customExtension, $this->folder($spec), $showHidden);
 		return $result;
 	}
@@ -140,6 +140,32 @@ class NotesServiceTest extends NotesTestCase {
 		$categories = $this->gather(['.attachments.42' => [], 'Work' => []], 'md', true)['categories'];
 
 		self::assertSame(['Work'], array_values($categories));
+	}
+
+	public function testTheWalkReportsEveryFolderIncludingTheNotesFolderItself(): void {
+		$result = $this->gather([
+			'top.txt',
+			'Work' => [
+				'a.txt',
+				'Projects' => [
+					'2026' => ['deep.md'],
+				],
+			],
+			'Personal' => [],
+		]);
+
+		self::assertCount(5, $result['folders']);
+		self::assertContainsOnlyInstancesOf(Folder::class, $result['folders']);
+	}
+
+	public function testWalkedFoldersAreAListWithNoGaps(): void {
+		$result = $this->gather([
+			'Work' => ['Projects' => []],
+			'Personal' => ['Recipes' => []],
+		]);
+
+		self::assertSame(range(0, count($result['folders']) - 1), array_keys($result['folders']));
+		self::assertCount(5, $result['folders']);
 	}
 
 	public function testCollectsCategoriesIncludingFoldersWithoutNotes(): void {
