@@ -5,11 +5,40 @@
 
 import axios from '@nextcloud/axios'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
-import { generateOcsUrl } from '@nextcloud/router'
+import { generateOcsUrl, generateUrl } from '@nextcloud/router'
 import logger from './Logger.js'
 
 /** Mimetypes a note can be made from; the Office formats are dropped. */
 const NOTE_MIMETYPES = ['text/markdown', 'text/plain']
+
+/** Requested size of a template card's thumbnail, in pixels. */
+const PREVIEW_SIZE = 256
+
+/**
+ * URL of a template's thumbnail, or null when there is none to show.
+ *
+ * The endpoint reports `hasPreview` but leaves `previewUrl` at null for the
+ * user's own templates, so the URL has to be built from the file id.
+ *
+ * @param {object} template a template as reported by the endpoint
+ * @return {string|null} preview URL, or null
+ */
+function previewUrl(template) {
+	if (template.previewUrl) {
+		return template.previewUrl
+	}
+	if (!template.hasPreview || !template.fileid) {
+		return null
+	}
+
+	return generateUrl('/core/preview?fileId={fileId}&x={x}&y={y}&a={a}', {
+		fileId: template.fileid,
+		x: PREVIEW_SIZE,
+		y: PREVIEW_SIZE,
+		// keep the aspect ratio rather than cropping the note
+		a: 1,
+	})
+}
 
 /**
  * Templates the user can start a note from, taken from the Files app's
@@ -30,6 +59,7 @@ export async function fetchNoteTemplates() {
 				.filter((template) => NOTE_MIMETYPES.includes(template.mime))
 				.map((template) => ({
 					...template,
+					previewUrl: previewUrl(template),
 					iconSvgInline: creator.iconSvgInline,
 				})))
 	} catch (error) {
