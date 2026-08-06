@@ -239,9 +239,14 @@ class NotesServiceTest extends TestCase {
 	 *     $data['categories'] = $data['categories'] + $data_sub['categories'];
 	 *
 	 * Both operands are sequentially-keyed lists, so the union keeps the
-	 * left-hand value for every key that already exists and silently discards
-	 * the rest. The result is that only top-level folders survive; every nested
-	 * subcategory is dropped. `array_merge()` is the fix.
+	 * left-hand value for every index that is already occupied and silently
+	 * discards the rest. `array_merge()` is the fix.
+	 *
+	 * Which subcategories are lost therefore depends on position, not on depth:
+	 * a subfolder is dropped only while the parent's list is already at least as
+	 * long as the recursion's. That makes the outcome look arbitrary --- see
+	 * {@see testWhichNestedCategoriesSurviveDependsOnSiblingOrder}, where
+	 * 'Work/A' vanishes but its siblings 'Work/B' and 'Work/C' do not.
 	 *
 	 * Visible effect today: a nested folder that *contains* notes still appears
 	 * in the UI, because the frontend derives categories from the notes
@@ -268,6 +273,33 @@ class NotesServiceTest extends TestCase {
 			['Work', 'Personal'],
 			array_values($categories),
 			'nested subcategories are lost to the "+" array union — see the docblock',
+		);
+	}
+
+	/**
+	 * The companion to the test above, and the reason the bug is easy to
+	 * misread as "nesting is unsupported": the union only loses an entry whose
+	 * index is already taken, so a folder with more children than the parent
+	 * has accumulated keeps the later ones. Here 'Work' occupies index 0, so
+	 * 'Work/A' (index 0 of the recursion) is dropped while 'Work/B' and
+	 * 'Work/C' survive.
+	 *
+	 * With array_merge() the expectation becomes
+	 * ['Work', 'Work/A', 'Work/B', 'Work/C'].
+	 */
+	public function testWhichNestedCategoriesSurviveDependsOnSiblingOrder(): void {
+		$categories = $this->gather([
+			'Work' => [
+				'A' => [],
+				'B' => [],
+				'C' => [],
+			],
+		])['categories'];
+
+		self::assertSame(
+			['Work', 'Work/B', 'Work/C'],
+			array_values($categories),
+			'the first sibling collides with the parent index and is lost',
 		);
 	}
 
