@@ -65,6 +65,16 @@
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>
 					<NcActionButton
+						:class="{ active: zenMode }"
+						:title="t('notes', 'CTRL + .')"
+						@click="onToggleZenMode"
+					>
+						<template #icon>
+							<FocusIcon :size="20" />
+						</template>
+						{{ zenMode ? t('notes', 'Exit zen mode') : t('notes', 'Zen mode') }}
+					</NcActionButton>
+					<NcActionButton
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
@@ -114,6 +124,7 @@ import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
+import FocusIcon from 'vue-material-design-icons/ImageFilterCenterFocusStrongOutline.vue'
 import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
@@ -134,6 +145,7 @@ export default {
 		PencilOutlineIcon,
 		EyeOutlineIcon,
 		FullscreenIcon,
+		FocusIcon,
 		NcActions,
 		NcActionButton,
 		NcAppContent,
@@ -187,6 +199,15 @@ export default {
 		isManualSave() {
 			return store.app.isManualSave
 		},
+
+		zenMode() {
+			return store.app.zenMode
+		},
+
+		/** Whether the editor is on screen at all — see the watcher below. */
+		hasEditableNote() {
+			return !this.loading && !!this.note && !this.note.error && !this.note.deleting
+		},
 	},
 
 	watch: {
@@ -197,6 +218,16 @@ export default {
 		},
 
 		title: 'onUpdateTitle',
+		// Zen mode hides the navigation and the note list, and the toggle lives
+		// inside the editor. If the note goes away — deleted elsewhere, or a read
+		// error — the toggle would go with it and there would be nothing left to
+		// click, so leave zen mode as soon as there is nothing to focus on.
+		hasEditableNote(hasNote) {
+			if (!hasNote) {
+				store.app.setZenMode(false)
+			}
+		},
+
 		'note.conflict': function(newConflict) {
 			if (newConflict) {
 				this.showConflict = true
@@ -217,6 +248,7 @@ export default {
 
 	unmounted() {
 		this.stopRefreshTimer()
+		store.app.setZenMode(false)
 		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('fullscreenchange', this.onDetectFullscreen)
@@ -385,6 +417,12 @@ export default {
 		},
 
 		onKeyPress(event) {
+			// Escape is the way out of zen mode; the conflict dialog gets it first
+			if (event.key === 'Escape' && this.zenMode && !this.showConflict) {
+				event.preventDefault()
+				store.app.setZenMode(false)
+				return
+			}
 			if (event.ctrlKey || event.metaKey) {
 				switch (event.key.toLowerCase()) {
 					case 's':
@@ -395,8 +433,16 @@ export default {
 						event.preventDefault()
 						this.onTogglePreview()
 						break
+					case '.':
+						event.preventDefault()
+						this.onToggleZenMode()
+						break
 				}
 			}
+		},
+
+		onToggleZenMode() {
+			store.app.toggleZenMode()
 		},
 
 		onManualSave() {
