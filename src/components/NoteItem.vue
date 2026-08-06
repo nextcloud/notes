@@ -42,6 +42,13 @@
 				{{ t('notes', 'Share') }}
 			</NcActionButton>
 
+			<NcActionButton @click="onShowVersions">
+				<template #icon>
+					<BackupRestoreIcon :size="20" />
+				</template>
+				{{ t('notes', 'Versions') }}
+			</NcActionButton>
+
 			<NcActionButton v-if="!showCategorySelect" @click="showCategorySelect = true">
 				<template #icon>
 					<FolderOutlineIcon :size="20" />
@@ -106,6 +113,7 @@ import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
+import BackupRestoreIcon from 'vue-material-design-icons/BackupRestore.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
@@ -120,6 +128,7 @@ export default {
 
 	components: {
 		AlertOctagonOutlineIcon,
+		BackupRestoreIcon,
 		FolderOutlineIcon,
 		NcActionButton,
 		NcListItem,
@@ -335,6 +344,11 @@ export default {
 		onToggleSharing() {
 			this.actionsOpen = false
 			emit('notes:share:open', { noteId: this.note.id })
+		},
+
+		onShowVersions() {
+			this.actionsOpen = false
+			emit('notes:sidebar:open', { noteId: this.note.id, tab: 'files_versions' })
 		},
 
 		async onShareCreated(event) {
