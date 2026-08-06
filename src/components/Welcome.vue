@@ -11,8 +11,10 @@
 				{{ t('notes', 'Start writing a note by clicking on “{newnote}”.', { newnote: t('notes', 'New note') }) }}
 			</div>
 			<div class="feature">
-				<NcButton type="secondary" @click="onNewNote">
-					<Plus slot="icon" :size="20" />
+				<NcButton variant="secondary" @click="onNewNote">
+					<template #icon>
+						<Plus :size="20" />
+					</template>
 					{{ t('notes', 'New note') }}
 				</NcButton>
 			</div>
@@ -32,16 +34,14 @@
 		</div>
 	</NcAppContent>
 </template>
+
 <script>
 
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcButton from '@nextcloud/vue/components/NcButton'
-
 import Plus from 'vue-material-design-icons/Plus.vue'
-
 import CreateSampleButton from './CreateSampleButton.vue'
 import HelpMobile from './HelpMobile.vue'
-
 import { createNote } from '../NotesService.js'
 
 export default {
@@ -58,7 +58,7 @@ export default {
 	methods: {
 		onNewNote() {
 			createNote()
-				.then(note => {
+				.then((note) => {
 					this.$router.push({
 						name: 'note',
 						params: { noteId: note.id.toString() },
@@ -69,6 +69,7 @@ export default {
 }
 
 </script>
+
 <style scoped>
 .welcome-content {
 	padding: 4em 8em;

@@ -95,7 +95,7 @@ class SettingsService {
 	 * }
 	 */
 	public function getDefaultNotesNode(string $uid): array {
-		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
+		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes') ?: 'Notes';
 		$userFolder = $this->root->getUserFolder($uid);
 		try {
 			/** @var Folder $node */

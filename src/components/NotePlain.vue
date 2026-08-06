@@ -10,10 +10,10 @@
 			class="note-container"
 			:class="{ fullscreen: fullscreen }"
 		>
-			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict=false">
+			<NcModal v-if="note.conflict && showConflict" size="full" @close="showConflict = false">
 				<div class="conflict-modal">
 					<div class="conflict-header">
-						<SyncAlertIcon slot="icon" :size="30" fill-color="var(--color-error)" />
+						<SyncAlertIcon :size="30" fillColor="var(--color-error)" />
 						{{ t('notes', 'The note has been changed in another session. Please choose which version should be saved.') }}
 					</div>
 					<div class="conflict-solutions">
@@ -21,20 +21,20 @@
 							:content="note.conflict.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use version from server')"
-							@on-choose-solution="onUseRemoteVersion"
+							@chooseSolution="onUseRemoteVersion"
 						/>
 						<ConflictSolution
 							:content="note.content"
 							:reference="note.reference.content"
 							:button="t('notes', 'Use current version')"
-							@on-choose-solution="onUseLocalVersion"
+							@chooseSolution="onUseLocalVersion"
 						/>
 					</div>
 				</div>
 			</NcModal>
 			<div class="note-editor">
 				<div v-show="!note.content" class="placeholder">
-					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
+					{{ preview ? t('notes', 'Empty note') : t('notes', 'Write …') }}
 				</div>
 				<ThePreview v-if="preview"
 					:value="note.content"
@@ -51,38 +51,50 @@
 				/>
 			</div>
 			<span class="action-buttons">
-				<NcActions :open.sync="actionsOpen" container=".action-buttons" menu-align="right">
+				<NcActions v-model:open="actionsOpen" container=".action-buttons" menuAlign="right">
 					<NcActionButton
 						:title="t('notes', 'CTRL + /')"
 						@click="onTogglePreview"
 					>
-						<PencilOutlineIcon v-if="preview" slot="icon" :size="20" />
-						<EyeOutlineIcon v-else slot="icon" :size="20" />
+						<template v-if="preview" #icon>
+							<PencilOutlineIcon :size="20" />
+						</template>
+						<template v-else #icon>
+							<EyeOutlineIcon :size="20" />
+						</template>
 						{{ preview ? t('notes', 'Edit') : t('notes', 'Preview') }}
 					</NcActionButton>
 					<NcActionButton
 						:class="{ active: fullscreen }"
 						@click="onToggleDistractionFree"
 					>
-						<FullscreenIcon slot="icon" :size="20" />
+						<template #icon>
+							<FullscreenIcon :size="20" />
+						</template>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.readonly">
 					<NcActionButton>
-						<PencilOffOutlineIcon slot="icon" :size="20" />
+						<template #icon>
+							<PencilOffOutlineIcon :size="20" />
+						</template>
 						{{ t('notes', 'Note is read-only. You cannot change it.') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.saveError" class="action-error">
 					<NcActionButton @click="onManualSave">
-						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
+						<template #icon>
+							<SyncAlertIcon :size="20" fillColor="var(--color-text)" />
+						</template>
 						{{ t('notes', 'Save failed. Click to retry.') }}
 					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.conflict" class="action-error">
-					<NcActionButton @click="showConflict=true">
-						<SyncAlertIcon slot="icon" :size="20" fill-color="var(--color-text)" />
+					<NcActionButton @click="showConflict = true">
+						<template #icon>
+							<SyncAlertIcon :size="20" fillColor="var(--color-text)" />
+						</template>
 						{{ t('notes', 'Update conflict. Click for resolving manually.') }}
 					</NcActionButton>
 				</NcActions>
@@ -90,29 +102,29 @@
 		</div>
 	</NcAppContent>
 </template>
+
 <script>
 
-import NcActions from '@nextcloud/vue/components/NcActions'
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import NcAppContent from '@nextcloud/vue/components/NcAppContent'
-import NcModal from '@nextcloud/vue/components/NcModal'
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
-
-import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcModal from '@nextcloud/vue/components/NcModal'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
-
-import { config } from '../config.js'
-import { fetchNote, refreshNote, saveNoteManually, queueCommand, conflictSolutionLocal, conflictSolutionRemote } from '../NotesService.js'
-import { routeIsNewNote } from '../Util.js'
+import ConflictSolution from './ConflictSolution.vue'
 import TheEditor from './EditorEasyMDE.vue'
 import ThePreview from './EditorMarkdownIt.vue'
-import ConflictSolution from './ConflictSolution.vue'
+import { config } from '../config.js'
+import logger from '../Logger.js'
+import { conflictSolutionLocal, conflictSolutionRemote, fetchNote, queueCommand, refreshNote, saveNoteManually } from '../NotesService.js'
 import store from '../store.js'
+import { routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NotePlain',
@@ -161,16 +173,19 @@ export default {
 
 	computed: {
 		note() {
-			return store.getters.getNote(parseInt(this.noteId))
+			return store.notes.getNote(parseInt(this.noteId))
 		},
+
 		title() {
 			return this.note ? this.note.title : ''
 		},
+
 		isNewNote() {
 			return routeIsNewNote(this.$route)
 		},
+
 		isManualSave() {
-			return store.state.app.isManualSave
+			return store.app.isManualSave
 		},
 	},
 
@@ -180,8 +195,9 @@ export default {
 				this.fetchData()
 			}
 		},
+
 		title: 'onUpdateTitle',
-		'note.conflict'(newConflict, oldConflict) {
+		'note.conflict': function(newConflict) {
 			if (newConflict) {
 				this.showConflict = true
 			}
@@ -199,7 +215,7 @@ export default {
 		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
-	destroyed() {
+	unmounted() {
 		this.stopRefreshTimer()
 		document.removeEventListener('webkitfullscreenchange', this.onDetectFullscreen)
 		document.removeEventListener('mozfullscreenchange', this.onDetectFullscreen)
@@ -222,7 +238,7 @@ export default {
 
 			this.onUpdateTitle(this.title)
 			this.loading = true
-			this.preview = store.state.app.settings.noteMode === 'preview' && !this.isNewNote
+			this.preview = store.app.settings.noteMode === 'preview' && !this.isNewNote
 			fetchNote(parseInt(this.noteId))
 				.then((note) => {
 					if (note.error) {
@@ -239,7 +255,7 @@ export default {
 		},
 
 		onUpdateTitle(title) {
-			const defaultTitle = store.state.app.documentTitle
+			const defaultTitle = store.app.documentTitle
 			if (title) {
 				document.title = title + ' - ' + defaultTitle
 			} else {
@@ -319,7 +335,7 @@ export default {
 				this.startRefreshTimer()
 				return
 			}
-			refreshNote(parseInt(this.noteId), this.etag).then(etag => {
+			refreshNote(parseInt(this.noteId), this.etag).then((etag) => {
 				if (etag) {
 					this.etag = etag
 					this.$forceUpdate()
@@ -336,7 +352,7 @@ export default {
 					content: newContent,
 					unsaved: true,
 				}
-				store.commit('updateNote', note)
+				store.notes.updateNote(note)
 				this.$forceUpdate()
 
 				// queue auto saving note content
@@ -371,14 +387,14 @@ export default {
 		onKeyPress(event) {
 			if (event.ctrlKey || event.metaKey) {
 				switch (event.key.toLowerCase()) {
-				case 's':
-					event.preventDefault()
-					this.onManualSave()
-					break
-				case '/':
-					event.preventDefault()
-					this.onTogglePreview()
-					break
+					case 's':
+						event.preventDefault()
+						this.onManualSave()
+						break
+					case '/':
+						event.preventDefault()
+						this.onTogglePreview()
+						break
 				}
 			}
 		},
@@ -387,18 +403,18 @@ export default {
 			const note = {
 				...this.note,
 			}
-			store.commit('updateNote', note)
+			store.notes.updateNote(note)
 			saveNoteManually(this.note.id)
 		},
 
 		onUseLocalVersion() {
-			console.debug('conflict solution: use local version')
+			logger.debug('conflict solution: use local version')
 			conflictSolutionLocal(this.note)
 			this.showConflict = false
 		},
 
 		onUseRemoteVersion() {
-			console.debug('conflict solution: use remote version')
+			logger.debug('conflict solution: use remote version')
 			conflictSolutionRemote(this.note)
 			this.showConflict = false
 		},
@@ -424,6 +440,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 .note-container {
 	min-height: 100%;

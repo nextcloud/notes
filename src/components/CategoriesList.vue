@@ -4,127 +4,118 @@
 -->
 
 <template>
-	<Fragment>
-		<NcAppNavigationItem
-			:name="t('notes', 'All notes')"
-			:active="selectedCategory === null"
-			:draggable="false"
-			:class="{
-				'drop-over': dragOverAllNotes,
-				'category-no-actions': true,
-			}"
-			@click.prevent.stop="onSelectCategory(null)"
-			@dragstart.native="onCategoryDragStart"
-			@dragover.native="onAllNotesDragOver($event)"
-			@dragleave.native="onAllNotesDragLeave($event)"
-			@drop.native="onAllNotesDrop($event)"
-		>
-			<template #icon>
-				<HistoryIcon :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					{{ numNotes }}
-				</NcCounterBubble>
-			</template>
-		</NcAppNavigationItem>
+	<NcAppNavigationItem
+		v-show="!loading"
+		:name="t('notes', 'All notes')"
+		:active="selectedCategory === null"
+		:draggable="false"
+		class="category-no-actions"
+		:class="{
+			'drop-over': dragOverAllNotes,
+		}"
+		@click.prevent.stop="onSelectCategory(null)"
+		@dragstart="onCategoryDragStart"
+		@dragover="onAllNotesDragOver($event)"
+		@dragleave="onAllNotesDragLeave($event)"
+		@drop="onAllNotesDrop($event)"
+	>
+		<template #icon>
+			<HistoryIcon :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="numNotes" />
+		</template>
+	</NcAppNavigationItem>
 
-		<NcAppNavigationCaption :name="t('notes', 'Categories')" />
+	<NcAppNavigationCaption v-show="!loading" :name="t('notes', 'Categories')" />
 
-		<NcAppNavigationItem
-			v-if="newCategoryDraft"
-			ref="newCategoryItem"
-			:name="''"
-			:draggable="false"
-			:editable="true"
-			:edit-label="t('notes', 'Rename category')"
-			:edit-placeholder="t('notes', 'New category')"
-			:force-menu="true"
-			:force-display-actions="true"
-			class="category-draft"
-			@click.prevent.stop
-			@dragstart.native="onCategoryDragStart"
-			@update:name="onCreateCategory"
-		>
-			<template #icon>
-				<FolderIcon :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					0
-				</NcCounterBubble>
-			</template>
-		</NcAppNavigationItem>
+	<NcAppNavigationItem
+		v-if="newCategoryDraft"
+		v-show="!loading"
+		ref="newCategoryItem"
+		name=""
+		:draggable="false"
+		:editable="true"
+		:editLabel="t('notes', 'Rename category')"
+		:editPlaceholder="t('notes', 'New category')"
+		:forceMenu="true"
+		:forceDisplayActions="true"
+		class="category-draft"
+		@click.prevent.stop
+		@dragstart="onCategoryDragStart"
+		@update:name="onCreateCategory"
+	>
+		<template #icon>
+			<FolderIcon :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="0" />
+		</template>
+	</NcAppNavigationItem>
 
-		<NcAppNavigationItem v-for="category in categories"
-			:key="category.name"
-			:name="categoryTitle(category.name)"
-			:active="category.name === selectedCategory"
-			:draggable="false"
-			:editable="category.name !== ''"
-			:edit-label="t('notes', 'Rename category')"
-			:edit-placeholder="category.name"
-			:force-menu="category.name !== ''"
-			:force-display-actions="category.name !== ''"
-			:class="{
-				'drop-over': category.name === dragOverCategory,
-				'category-no-actions': category.name === '',
-			}"
-			@click.prevent.stop="onSelectCategory(category.name)"
-			@dragstart.native="onCategoryDragStart"
-			@dragover.native="onCategoryDragOver(category.name, $event)"
-			@dragleave.native="onCategoryDragLeave(category.name, $event)"
-			@drop.native="onCategoryDrop(category.name, $event)"
-			@update:name="onRenameCategory(category.name, $event)"
-		>
-			<template #icon>
-				<FolderIcon v-if="category.name === selectedCategory" :size="20" />
-				<FolderOutlineIcon v-else :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					{{ category.count }}
-				</NcCounterBubble>
-			</template>
-			<template v-if="category.name !== ''" #actions>
-				<NcActionButton
-					:close-after-click="true"
-					@click="onDeleteCategory(category.name)"
-				>
-					<template #icon>
-						<DeleteIcon :size="20" />
-					</template>
-					{{ t('notes', 'Delete category') }}
-				</NcActionButton>
-			</template>
-		</NcAppNavigationItem>
-	</Fragment>
+	<NcAppNavigationItem v-for="category in categories"
+		v-show="!loading"
+		:key="category.name"
+		:name="categoryTitle(category.name)"
+		:active="category.name === selectedCategory"
+		:draggable="false"
+		:editable="category.name !== ''"
+		:editLabel="t('notes', 'Rename category')"
+		:editPlaceholder="category.name"
+		:forceMenu="category.name !== ''"
+		:forceDisplayActions="category.name !== ''"
+		:class="{
+			'drop-over': category.name === dragOverCategory,
+			'category-no-actions': category.name === '',
+		}"
+		@click.prevent.stop="onSelectCategory(category.name)"
+		@dragstart="onCategoryDragStart"
+		@dragover="onCategoryDragOver(category.name, $event)"
+		@dragleave="onCategoryDragLeave(category.name, $event)"
+		@drop="onCategoryDrop(category.name, $event)"
+		@update:name="onRenameCategory(category.name, $event)"
+	>
+		<template #icon>
+			<FolderIcon v-if="category.name === selectedCategory" :size="20" />
+			<FolderOutlineIcon v-else :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="category.count" />
+		</template>
+		<template v-if="category.name !== ''" #actions>
+			<NcActionButton
+				:closeAfterClick="true"
+				@click="onDeleteCategory(category.name)"
+			>
+				<template #icon>
+					<DeleteIcon :size="20" />
+				</template>
+				{{ t('notes', 'Delete category') }}
+			</NcActionButton>
+		</template>
+	</NcAppNavigationItem>
 </template>
 
 <script>
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
-import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
-import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
-import { Fragment } from 'vue-frag'
 import { showConfirmation } from '@nextcloud/dialogs'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
-
 import { deleteCategory as deleteCategoryRequest, getCategories, renameCategory as renameCategoryRequest, setCategory } from '../NotesService.js'
-import { categoryLabel, getDraggedNoteId, isNoteDrag } from '../Util.js'
 import store from '../store.js'
+import { categoryLabel, getDraggedNoteId, isNoteDrag } from '../Util.js'
 
 export default {
 	name: 'CategoriesList',
 
 	components: {
 		DeleteIcon,
-		Fragment,
 		NcActionButton,
 		NcAppNavigationItem,
 		NcAppNavigationCaption,
@@ -132,6 +123,10 @@ export default {
 		FolderIcon,
 		FolderOutlineIcon,
 		HistoryIcon,
+	},
+
+	props: {
+		loading: Boolean,
 	},
 
 	data() {
@@ -146,7 +141,7 @@ export default {
 
 	computed: {
 		numNotes() {
-			return store.getters.numNotes()
+			return store.notes.numNotes()
 		},
 
 		categories() {
@@ -154,7 +149,7 @@ export default {
 		},
 
 		selectedCategory() {
-			return store.getters.getSelectedCategory()
+			return store.notes.getSelectedCategory()
 		},
 	},
 
@@ -162,7 +157,7 @@ export default {
 		subscribe('notes:category:new', this.startNewCategory)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('notes:category:new', this.startNewCategory)
 		this.stopNewCategoryMonitor()
 	},
@@ -220,52 +215,52 @@ export default {
 			if (!trimmed) {
 				return
 			}
-			const exists = this.categories.some(category => category.name === trimmed)
+			const exists = this.categories.some((category) => category.name === trimmed)
 			if (!exists) {
-				store.commit('addLocalCategory', trimmed)
+				store.notes.addLocalCategory(trimmed)
 			}
-			store.commit('setSelectedCategory', trimmed)
+			store.notes.setSelectedCategory(trimmed)
 			if (droppedNoteId !== null) {
 				setCategory(droppedNoteId, trimmed).catch(() => {})
 			}
 		},
 
 		getNotesInCategory(category) {
-			return store.state.notes.notes.filter(note => note.category === category || note.category.startsWith(category + '/'))
+			return store.notes.notes.filter((note) => note.category === category || note.category.startsWith(category + '/'))
 		},
 
 		updateNotesForCategoryRename(oldCategory, newCategory) {
-			for (const note of store.state.notes.notes) {
+			for (const note of store.notes.notes) {
 				if (note.category === oldCategory || note.category.startsWith(oldCategory + '/')) {
 					const updatedCategory = note.category.startsWith(oldCategory + '/')
 						? newCategory + note.category.slice(oldCategory.length)
 						: newCategory
-					store.commit('setNoteAttribute', { noteId: note.id, attribute: 'category', value: updatedCategory })
+					store.notes.setNoteAttribute({ noteId: note.id, attribute: 'category', value: updatedCategory })
 				}
 			}
 		},
 
 		removeNotesFromCategory(categoryName) {
 			for (const note of this.getNotesInCategory(categoryName)) {
-				store.commit('removeNote', note.id)
+				store.notes.removeNote(note.id)
 			}
 		},
 
 		updateSelectedCategoryForRename(oldCategory, newCategory) {
 			const selected = this.selectedCategory
 			if (selected === oldCategory) {
-				store.commit('setSelectedCategory', newCategory)
+				store.notes.setSelectedCategory(newCategory)
 				return
 			}
 			if (selected && selected.startsWith(oldCategory + '/')) {
-				store.commit('setSelectedCategory', newCategory + selected.slice(oldCategory.length))
+				store.notes.setSelectedCategory(newCategory + selected.slice(oldCategory.length))
 			}
 		},
 
 		clearSelectedCategoryForDelete(category) {
 			const selected = this.selectedCategory
 			if (selected === category || (selected && selected.startsWith(category + '/'))) {
-				store.commit('setSelectedCategory', null)
+				store.notes.setSelectedCategory(null)
 			}
 		},
 
@@ -280,7 +275,7 @@ export default {
 				const oldName = category
 				const newName = response?.newCategory || trimmed
 				this.updateNotesForCategoryRename(oldName, newName)
-				store.commit('renameLocalCategory', { oldCategory: oldName, newCategory: newName })
+				store.notes.renameLocalCategory({ oldCategory: oldName, newCategory: newName })
 				this.updateSelectedCategoryForRename(oldName, newName)
 			} catch {
 				// NotesService already shows a toast on failure.
@@ -290,7 +285,7 @@ export default {
 		async onDeleteCategory(categoryName) {
 			const notes = this.getNotesInCategory(categoryName)
 			if (notes.length > 0) {
-				let confirmed = false
+				let confirmed
 				const message = this.n(
 					'notes',
 					'Delete category "{category}" and its {count} note?',
@@ -319,7 +314,7 @@ export default {
 				const deletedCategory = categoryName
 				await this.closeOpenNoteBeforeDelete(deletedCategory)
 				this.removeNotesFromCategory(deletedCategory)
-				store.commit('removeLocalCategory', deletedCategory)
+				store.notes.removeLocalCategory(deletedCategory)
 				this.clearSelectedCategoryForDelete(deletedCategory)
 			} catch {
 				// NotesService already shows a toast on failure.
@@ -387,12 +382,12 @@ export default {
 			event.stopPropagation()
 
 			this.dragOverAllNotes = false
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
 			if (noteId === null) {
 				return
 			}
 
-			const note = store.getters.getNote(noteId)
+			const note = store.notes.getNote(noteId)
 			if (!note || note.category === '') {
 				return
 			}
@@ -404,14 +399,14 @@ export default {
 			event.preventDefault()
 			event.stopPropagation()
 
-			const noteId = getDraggedNoteId(event, noteId => store.getters.getNote(noteId))
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
 			this.dragOverCategory = null
 			this.dragOverAllNotes = false
 			if (noteId === null) {
 				return
 			}
 
-			const note = store.getters.getNote(noteId)
+			const note = store.notes.getNote(noteId)
 			if (!note || note.category === category) {
 				return
 			}
@@ -420,7 +415,7 @@ export default {
 		},
 
 		onSelectCategory(category) {
-			store.commit('setSelectedCategory', category)
+			store.notes.setSelectedCategory(category)
 		},
 
 		async closeOpenNoteBeforeDelete(categoryName) {
@@ -428,12 +423,12 @@ export default {
 			if (!Number.isFinite(noteId)) {
 				return
 			}
-			const note = store.getters.getNote(noteId)
+			const note = store.notes.getNote(noteId)
 			if (!note) {
 				return
 			}
 			if (note.category === categoryName || note.category.startsWith(categoryName + '/')) {
-				const remainingNote = store.state.notes.notes.find(other => (
+				const remainingNote = store.notes.notes.find((other) => (
 					other.id !== noteId
 					&& other.category !== categoryName
 					&& !other.category.startsWith(categoryName + '/')
@@ -456,6 +451,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry) {
 	background-color: var(--color-primary-element-light) !important;

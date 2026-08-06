@@ -4,13 +4,14 @@
 -->
 
 <template>
-	<NoteRich v-if="isRichMode" :note-id="noteId" />
-	<NotePlain v-else-if="isPlainMode" :note-id="noteId" />
+	<NoteRich v-if="isRichMode" :noteId="noteId" />
+	<NotePlain v-else-if="isPlainMode" :noteId="noteId" />
 	<div v-else />
 </template>
+
 <script>
-import NoteRich from './NoteRich.vue'
 import NotePlain from './NotePlain.vue'
+import NoteRich from './NoteRich.vue'
 import store from '../store.js'
 
 export default {
@@ -30,10 +31,11 @@ export default {
 
 	computed: {
 		isRichMode() {
-			return OC.appswebroots?.text && store.state.app?.settings?.noteMode === 'rich'
+			return OC.appswebroots?.text && store.app?.settings?.noteMode === 'rich'
 		},
+
 		isPlainMode() {
-			return store.state.app?.settings?.noteMode === 'edit' || store.state.app?.settings?.noteMode === 'preview'
+			return store.app?.settings?.noteMode === 'edit' || store.app?.settings?.noteMode === 'preview'
 		},
 	},
 }

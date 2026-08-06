@@ -35,7 +35,6 @@ OC.L10N.register(
     "This month" : "Denne måned",
     "Last month" : "Seneste måned",
     "Search for notes" : "Søg efter noter",
-    "Loading …" : "Indlæser…",
     "Uncategorized" : "Udenfor kategori",
     "Tasks" : "Opgaver"
 },

@@ -22,7 +22,6 @@ OC.L10N.register(
     "Today" : "Vandag",
     "Yesterday" : "Gister",
     "This week" : "Vandeesweek",
-    "Loading …" : "Laai …",
     "Uncategorized" : "Ongekategorieseer",
     "Tasks" : "Take"
 },

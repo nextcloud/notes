@@ -123,9 +123,9 @@ class Helper {
 	}
 
 	/** @param 200|201|400|403|404|423|500|507 $statusCode */
-	public function createErrorResponse(\Throwable $e, int $statusCode) : JSONResponse {
+	public function createErrorResponse(int $statusCode) : JSONResponse {
 		$response = [
-			'errorType' => get_class($e)
+			'errorType' => 'Exception'
 		];
 		return new JSONResponse($response, $statusCode);
 	}
@@ -138,19 +138,19 @@ class Helper {
 			$response = new JSONResponse($this->getNoteData($e->note), Http::STATUS_PRECONDITION_FAILED);
 		} catch (\OCA\Notes\Service\NoteDoesNotExistException $e) {
 			$this->logException($e);
-			$response = $this->createErrorResponse($e, Http::STATUS_NOT_FOUND);
+			$response = $this->createErrorResponse(Http::STATUS_NOT_FOUND);
 		} catch (\OCA\Notes\Service\InsufficientStorageException $e) {
 			$this->logException($e);
-			$response = $this->createErrorResponse($e, Http::STATUS_INSUFFICIENT_STORAGE);
+			$response = $this->createErrorResponse(Http::STATUS_INSUFFICIENT_STORAGE);
 		} catch (\OCA\Notes\Service\NoteNotWritableException $e) {
 			$this->logException($e);
-			$response = $this->createErrorResponse($e, Http::STATUS_FORBIDDEN);
+			$response = $this->createErrorResponse(Http::STATUS_FORBIDDEN);
 		} catch (\OCP\Lock\LockedException $e) {
 			$this->logException($e);
-			$response = $this->createErrorResponse($e, Http::STATUS_LOCKED);
+			$response = $this->createErrorResponse(Http::STATUS_LOCKED);
 		} catch (\Throwable $e) {
 			$this->logException($e);
-			$response = $this->createErrorResponse($e, Http::STATUS_INTERNAL_SERVER_ERROR);
+			$response = $this->createErrorResponse(Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 		$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS));
 		return $response;

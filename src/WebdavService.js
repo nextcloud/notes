@@ -28,7 +28,7 @@ function registerSharingDavProperties() {
 	sharingDavPropertiesRegistered = true
 }
 
-export const fetchDavNode = async (path) => {
+export async function fetchDavNode(path) {
 	registerSharingDavProperties()
 
 	const result = await client.stat(`${getRootPath()}${normalizePath(path)}`, {

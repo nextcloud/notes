@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect, type Locator, type Page } from '@playwright/test'
+import type { Locator, Page } from '@playwright/test'
+
+import { expect } from '@playwright/test'
 
 export class NoteEditor {
-
 	public readonly el: Locator
 	public readonly codeMirror: Locator
 	public readonly surface: Locator
@@ -66,5 +67,4 @@ export class NoteEditor {
 
 		await expect(this.surface).toContainText(keys)
 	}
-
 }

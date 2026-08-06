@@ -9,28 +9,26 @@
 		:active="isSelected"
 		:to="{ name: 'note', params: { noteId: note.id.toString() } }"
 		:draggable="isDraggable"
-		one-line
+		oneLine
 		@update:menuOpen="onMenuChange"
 		@click="onNoteSelected(note.id)"
-		@dragstart.native="onDragStart"
+		@dragstart="onDragStart"
 	>
 		<template v-if="showCategoryTitle" #subname>
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
 			<AlertOctagonOutlineIcon v-if="note.error"
-				slot="icon"
 				:size="20"
-				fill-color="#E9322D"
+				fillColor="#E9322D"
 			/>
 			<StarIcon v-else-if="note.favorite"
-				slot="icon"
 				:size="20"
-				fill-color="#FC0"
+				fillColor="#FC0"
 			/>
 		</template>
 		<template v-if="isShared" #indicator>
-			<ShareVariantOutlineIcon :size="16" fill-color="#0082c9" />
+			<ShareVariantOutlineIcon :size="16" fillColor="#0082c9" />
 		</template>
 		<template #actions>
 			<NcActionButton :icon="actionFavoriteIcon" @click="onToggleFavorite">
@@ -52,16 +50,16 @@
 			</NcActionButton>
 			<NcActionInput
 				v-else
-				:value="note.category"
+				:modelValue="note.category"
 				type="multiselect"
-				label="label"
-				track-by="id"
+				:label="t('notes', 'Change category')"
+				:labelOutside="false"
 				:multiple="false"
 				:options="categories"
 				:disabled="loading.category"
 				:taggable="true"
-				@input="onCategoryChange"
-				@search-change="onCategoryChange"
+				@update:modelValue="onCategoryChange"
+				@searchChange="onCategoryChange"
 			>
 				<template #icon>
 					<FolderOutlineIcon :size="20" />
@@ -70,25 +68,28 @@
 			</NcActionInput>
 
 			<NcActionButton v-if="!renaming" @click="startRenaming">
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 				{{ t('notes', 'Rename') }}
 			</NcActionButton>
 			<NcActionInput v-else
 				v-model.trim="newTitle"
 				:disabled="!renaming"
 				:placeholder="t('notes', 'Rename note')"
-				:show-trailing-button="true"
-				@input="onInputChange($event)"
+				:showTrailingButton="true"
 				@submit="onRename"
 			>
-				<PencilOutlineIcon slot="icon" :size="20" />
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
 			</NcActionInput>
 
 			<NcActionSeparator />
 
 			<NcActionButton v-if="!note.readonly"
 				:icon="actionDeleteIcon"
-				:close-after-click="true"
+				:closeAfterClick="true"
 				@click="onDeleteNote"
 			>
 				{{ t('notes', 'Delete note') }}
@@ -98,19 +99,21 @@
 </template>
 
 <script>
-import NcListItem from '@nextcloud/vue/components/NcListItem'
+import { showError } from '@nextcloud/dialogs'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcListItem from '@nextcloud/vue/components/NcListItem'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
-import StarIcon from 'vue-material-design-icons/Star.vue'
-import { categoryLabel, routeIsNewNote } from '../Util.js'
-import { showError } from '@nextcloud/dialogs'
-import { setFavorite, setTitle, fetchNote, deleteNote, setCategory } from '../NotesService.js'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
-import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import StarIcon from 'vue-material-design-icons/Star.vue'
+import logger from '../Logger.js'
+import { deleteNote, fetchNote, setCategory, setFavorite, setTitle } from '../NotesService.js'
+import store from '../store.js'
+import { categoryLabel, routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NoteItem',
@@ -132,11 +135,19 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		showCategoryTitle: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
+	emits: [
+		'categorySelected',
+		'noteDeleted',
+		'noteSelected',
+		'startRenaming',
+	],
 
 	data() {
 		return {
@@ -145,6 +156,7 @@ export default {
 				category: false,
 				favorite: false,
 			},
+
 			newTitle: '',
 			renaming: false,
 			showCategorySelect: false,
@@ -158,8 +170,9 @@ export default {
 		},
 
 		isSelected() {
-			return this.$store.getters.getSelectedNote() === this.note.id
+			return store.notes.getSelectedNote() === this.note.id
 		},
+
 		isShared() {
 			return this.note.isShared || this.isShareCreated
 		},
@@ -175,6 +188,7 @@ export default {
 		actionFavoriteText() {
 			return this.note.favorite ? this.t('notes', 'Remove from favorites') : this.t('notes', 'Add to favorites')
 		},
+
 		actionFavoriteIcon() {
 			let icon = this.note.favorite ? 'icon-star-dark' : 'icon-starred'
 			if (this.loading.favorite) {
@@ -182,19 +196,22 @@ export default {
 			}
 			return icon
 		},
+
 		actionCategoryText() {
 			return categoryLabel(this.note.category)
 		},
+
 		actionDeleteIcon() {
 			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
+
 		categories() {
 			return [
 				{
 					id: '',
 					label: categoryLabel(''),
 				},
-				...this.$store.getters.getCategories(0, false).map((category) => ({
+				...store.notes.getCategories(0, false).map((category) => ({
 					id: category,
 					label: categoryLabel(category),
 				})),
@@ -206,7 +223,7 @@ export default {
 		subscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
-	destroyed() {
+	unmounted() {
 		unsubscribe('files_sharing:share:created', this.onShareCreated)
 	},
 
@@ -231,9 +248,11 @@ export default {
 			this.actionsOpen = state
 			this.showCategorySelect = false
 		},
+
 		onNoteSelected(noteId) {
-			this.$emit('note-selected', noteId)
+			this.$emit('noteSelected', noteId)
 		},
+
 		onToggleFavorite() {
 			this.loading.favorite = true
 			setFavorite(this.note.id, !this.note.favorite)
@@ -244,18 +263,18 @@ export default {
 					this.actionsOpen = false
 				})
 		},
+
 		onCategorySelected() {
 			this.actionsOpen = false
-			this.$emit('category-selected', this.note.category)
+			this.$emit('categorySelected', this.note.category)
 		},
+
 		startRenaming() {
 			this.renaming = true
 			this.newTitle = this.note.title
-			this.$emit('start-renaming', this.note.id)
+			this.$emit('startRenaming', this.note.id)
 		},
-		onInputChange(event) {
-			this.newTitle = event.target.value.toString()
-		},
+
 		async onCategoryChange(result) {
 			this.showCategorySelect = false
 			const category = result?.id ?? result?.label ?? null
@@ -265,6 +284,7 @@ export default {
 				this.loading.category = false
 			}
 		},
+
 		async onRename() {
 			const newTitle = this.newTitle.toString()
 			if (!newTitle) {
@@ -276,7 +296,7 @@ export default {
 					this.newTitle = ''
 				})
 				.catch((e) => {
-					console.error('Failed to rename note', e)
+					logger.error('Failed to rename note', { error: e })
 					showError(this.t('notes', 'Error while renaming note.'))
 				})
 				.finally(() => {
@@ -290,8 +310,8 @@ export default {
 				})
 			}
 			this.renaming = false
-
 		},
+
 		async onDeleteNote() {
 			this.loading.delete = true
 			try {
@@ -300,20 +320,23 @@ export default {
 					throw new Error('Note has errors')
 				}
 				await deleteNote(this.note.id, () => {
-					this.$emit('note-deleted', note)
+					this.$emit('noteDeleted', note)
 					this.loading.delete = false
 					this.actionsOpen = false
 				})
 			} catch (e) {
+				logger.error('Error during preparing note for deletion', { error: e })
 				showError(this.t('notes', 'Error during preparing note for deletion.'))
 				this.loading.delete = false
 				this.actionsOpen = false
 			}
 		},
+
 		onToggleSharing() {
 			this.actionsOpen = false
 			emit('notes:share:open', { noteId: this.note.id })
 		},
+
 		async onShareCreated(event) {
 			const { share } = event
 
@@ -324,6 +347,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .material-design-icon {
 	width: var(--default-clickable-area);

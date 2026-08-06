@@ -27,7 +27,6 @@ OC.L10N.register(
     "Yesterday" : "Vakar",
     "This week" : "Šonedēļ",
     "This month" : "Šis mēnesis",
-    "Loading …" : "Notiek ielāde ...",
     "Updating settings has failed." : "Iestatījumu atjaunināšana neizdevās.",
     "Uncategorized" : "Bez kategorijas",
     "Tasks" : "Uzdevumi",

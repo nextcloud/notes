@@ -29,7 +29,6 @@ OC.L10N.register(
     "This month" : "Esti mes",
     "Last month" : "El mes pasáu",
     "Search for notes" : "Buscar notes",
-    "Loading …" : "Cargando…",
     "Write down your thoughts without any distractions." : "Escribi cualesquier pensamientu ensin nenguna distraición.",
     "Organize your notes in categories." : "Organiza les notes per categoríes.",
     "Note not found." : "Nun s'atopó la nota",
