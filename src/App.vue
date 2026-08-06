@@ -29,6 +29,16 @@
 			<template #footer>
 				<ul class="app-navigation-entry__settings">
 					<NcAppNavigationItem
+						v-if="!loading.notes && !error"
+						:name="t('notes', 'Zen mode')"
+						:title="t('notes', 'CTRL + .')"
+						@click.prevent="onToggleZenMode"
+					>
+						<template #icon>
+							<FocusIcon :size="20" />
+						</template>
+					</NcAppNavigationItem>
+					<NcAppNavigationItem
 						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
 					>
@@ -49,6 +59,17 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @noteDeleted="onNoteDeleted" />
+		<NcButton v-if="zenMode"
+			class="zen-exit"
+			variant="secondary"
+			:title="t('notes', 'CTRL + .')"
+			:aria-label="t('notes', 'Exit zen mode')"
+			@click="onToggleZenMode"
+		>
+			<template #icon>
+				<FocusIcon :size="20" />
+			</template>
+		</NcButton>
 		<NoteShareSidebar />
 	</NcContent>
 </template>
@@ -61,9 +82,11 @@ import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
 import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcContent from '@nextcloud/vue/components/NcContent'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
 import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
+import FocusIcon from 'vue-material-design-icons/ImageFilterCenterFocusStrongOutline.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
@@ -88,7 +111,9 @@ export default {
 		NcAppNavigation,
 		NcAppNavigationNew,
 		NcAppNavigationItem,
+		NcButton,
 		NcContent,
+		FocusIcon,
 		NoteShareSidebar,
 		FolderPlusIcon,
 	},
@@ -135,11 +160,13 @@ export default {
 		store.app.setDocumentTitle(document.title)
 		window.addEventListener('beforeunload', this.onClose)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
+		document.addEventListener('keydown', this.onKeyDown)
 		this.loadNotes()
 	},
 
 	unmounted() {
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
+		document.removeEventListener('keydown', this.onKeyDown)
 		this.stopRefreshTimer()
 	},
 
@@ -241,6 +268,29 @@ export default {
 
 		openSettings() {
 			this.settingsVisible = true
+		},
+
+		onToggleZenMode() {
+			store.app.toggleZenMode()
+		},
+
+		onKeyDown(event) {
+			// Ctrl + . toggles, Escape only ever leaves. Both are ignored while a
+			// dialog is open so it can keep Escape for closing itself.
+			// Key repeat would toggle the mode over and over while the keys are held.
+			if (event.repeat) {
+				return
+			}
+			if (document.querySelector('.modal-mask, .dialog__modal')) {
+				return
+			}
+			if ((event.ctrlKey || event.metaKey) && event.key === '.') {
+				event.preventDefault()
+				this.onToggleZenMode()
+			} else if (event.key === 'Escape' && this.zenMode) {
+				event.preventDefault()
+				store.app.setZenMode(false)
+			}
 		},
 
 		onNewCategory() {
@@ -397,6 +447,21 @@ export default {
 	   with the panes gone the note would sit visibly off-centre */
 	.note-container {
 		padding-inline-end: 0;
+	}
+}
+
+/* Bottom corner on purpose: the top of the editor is taken by NotePlain's
+   action menu and, in rich mode, by the Text app's sticky menubar. */
+.zen-exit {
+	position: fixed;
+	bottom: calc(var(--default-grid-baseline) * 4);
+	inset-inline-end: calc(var(--default-grid-baseline) * 4);
+	z-index: 2000;
+	opacity: 0.6;
+
+	&:hover,
+	&:focus-visible {
+		opacity: 1;
 	}
 }
 </style>
