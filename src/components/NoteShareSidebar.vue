@@ -15,6 +15,17 @@
 		@closed="onClosed"
 		@update:open="onToggle"
 	>
+		<NcAppSidebarTab v-if="note"
+			id="notes-info"
+			:name="t('notes', 'Note info')"
+			:order="0"
+		>
+			<template #icon>
+				<InformationOutlineIcon :size="20" />
+			</template>
+			<NoteInfo :note="note" :node="currentNode" :contentLoading="loadingContent" />
+		</NcAppSidebarTab>
+
 		<NcAppSidebarTab v-for="tab in tabs"
 			:id="tab.id"
 			:key="tab.id"
@@ -48,7 +59,7 @@
 			/>
 		</NcAppSidebarTab>
 
-		<NcEmptyContent v-if="isOpen && tabs.length === 0">
+		<NcEmptyContent v-if="isOpen && tabs.length === 0 && !note">
 			<template #icon>
 				<FileOutlineIcon :size="44" />
 			</template>
@@ -66,7 +77,10 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
+import NoteInfo from './NoteInfo.vue'
 import logger from '../Logger.js'
+import { fetchNote } from '../NotesService.js'
 import { selectNoteSidebarTabs } from '../sidebarTabs.js'
 import store from '../store.js'
 import { fetchDavNode } from '../WebdavService.js'
@@ -81,6 +95,8 @@ export default {
 		NcIconSvgWrapper,
 		NcLoadingIcon,
 		FileOutlineIcon,
+		InformationOutlineIcon,
+		NoteInfo,
 	},
 
 	data() {
@@ -94,6 +110,7 @@ export default {
 			initializedTabs: new Set(),
 			isOpen: false,
 			loadingContext: false,
+			loadingContent: false,
 			loadingTab: false,
 			noteId: null,
 			tabError: '',
@@ -132,6 +149,10 @@ export default {
 		},
 	},
 
+	watch: {
+		activeTab: 'ensureContent',
+	},
+
 	mounted() {
 		// the share event is kept so anything already emitting it keeps working
 		subscribe('notes:share:open', this.onShareOpen)
@@ -144,6 +165,30 @@ export default {
 	},
 
 	methods: {
+		/**
+		 * The note list payload excludes content, so a note that has never been
+		 * opened has none. The info tab needs it for the counts — fetch it, but
+		 * only when that tab is actually being looked at, so opening the sidebar
+		 * to share a note does not pull its whole body down.
+		 */
+		async ensureContent() {
+			if (this.activeTab !== 'notes-info' || this.loadingContent) {
+				return
+			}
+			if (!Number.isFinite(this.noteId) || typeof this.note?.content === 'string') {
+				return
+			}
+
+			this.loadingContent = true
+			try {
+				await fetchNote(this.noteId)
+			} catch (error) {
+				logger.error('Failed to load the note body for the info tab', { error })
+			} finally {
+				this.loadingContent = false
+			}
+		},
+
 		async initializeTabs() {
 			const tabs = this.tabs
 			if (tabs.length === 0) {
@@ -264,6 +309,7 @@ export default {
 			await Promise.all([
 				this.initializeTabs(),
 				this.loadNodeContext(),
+				this.ensureContent(),
 			])
 		},
 
