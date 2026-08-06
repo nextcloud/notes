@@ -446,12 +446,15 @@ export default {
 	}
 }
 
-/* Bottom corner on purpose: the top of the editor is taken by NotePlain's
-   action menu and, in rich mode, by the Text app's sticky menubar. */
+/* Bottom inline-start, which is where the "Zen mode" entry in the navigation
+   footer was standing a moment ago: leaving is then the same gesture in the same
+   corner as entering, rather than a hunt across the window. Never the top —
+   that belongs to NotePlain's action menu and to the Text app's sticky
+   menubar. */
 .zen-exit {
 	position: fixed;
 	bottom: calc(var(--default-grid-baseline) * 4);
-	inset-inline-end: calc(var(--default-grid-baseline) * 4);
+	inset-inline-start: calc(var(--default-grid-baseline) * 4);
 	z-index: 2000;
 	opacity: 0.6;
 
