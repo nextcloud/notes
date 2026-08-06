@@ -211,6 +211,50 @@ class NotesServiceTest extends TestCase {
 		}
 	}
 
+	// ---- folders (needed for the bulk share lookup) -------------------------
+
+	/**
+	 * NoteUtil::loadShareTypes() needs every folder of the tree, because
+	 * IManager::getSharesInFolder() only reports on a folder's direct children
+	 * (the server rejects $shallow = false). Missing a folder here would mean
+	 * silently losing the shared indicator for the notes inside it.
+	 */
+	public function testTheWalkReportsEveryFolderIncludingTheNotesFolderItself(): void {
+		$result = $this->gather([
+			'top.txt',
+			'Work' => [
+				'a.txt',
+				'Projects' => [
+					'2026' => ['deep.md'],
+				],
+			],
+			'Personal' => [],
+		]);
+
+		self::assertCount(
+			5,
+			$result['folders'],
+			'the notes folder plus Work, Work/Projects, Work/Projects/2026 and Personal',
+		);
+		self::assertContainsOnlyInstancesOf(Folder::class, $result['folders']);
+	}
+
+	public function testFoldersIsAListWithNoGapsSoEveryEntryIsIterated(): void {
+		// this is the counterpart to the categories bug below: 'folders' is
+		// merged with array_merge(), so nested entries survive
+		$result = $this->gather([
+			'Work' => ['Projects' => []],
+			'Personal' => ['Recipes' => []],
+		]);
+
+		self::assertSame(
+			range(0, count($result['folders']) - 1),
+			array_keys($result['folders']),
+			'a "+" union here would drop nested folders and skip their shares',
+		);
+		self::assertCount(5, $result['folders']);
+	}
+
 	// ---- categories --------------------------------------------------------
 
 	public function testCollectsTopLevelCategories(): void {
