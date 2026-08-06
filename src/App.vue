@@ -5,7 +5,11 @@
 
 <template>
 	<EditorHint v-if="editorHint" @close="editorHint = false" />
-	<NcContent v-else appName="notes" :contentClass="{loading: loading.notes}">
+	<NcContent v-else
+		appName="notes"
+		:class="{ 'notes-zen': zenMode }"
+		:contentClass="{loading: loading.notes}"
+	>
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
 				<NcAppNavigationNew
@@ -24,6 +28,16 @@
 
 			<template #footer>
 				<ul class="app-navigation-entry__settings">
+					<NcAppNavigationItem
+						v-if="!loading.notes && !error"
+						:name="t('notes', 'Zen mode')"
+						:title="t('notes', 'CTRL + .')"
+						@click.prevent="onToggleZenMode"
+					>
+						<template #icon>
+							<FocusIcon :size="20" />
+						</template>
+					</NcAppNavigationItem>
 					<NcAppNavigationItem
 						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
@@ -45,6 +59,24 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @noteDeleted="onNoteDeleted" />
+		<!--
+			The button is wrapped rather than positioned directly: NcButton's own
+			`.button-vue[data-v-…] { position: relative }` carries an attribute
+			selector, so it outranks any single class we could put on the button
+			and `position: fixed` would be ignored. A plain div has nothing
+			competing for it.
+		-->
+		<div v-if="zenMode" class="zen-exit">
+			<NcButton variant="secondary"
+				:title="t('notes', 'CTRL + .')"
+				:aria-label="t('notes', 'Exit zen mode')"
+				@click="onToggleZenMode"
+			>
+				<template #icon>
+					<FocusIcon :size="20" />
+				</template>
+			</NcButton>
+		</div>
 		<NoteShareSidebar />
 	</NcContent>
 </template>
@@ -57,9 +89,11 @@ import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
 import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcContent from '@nextcloud/vue/components/NcContent'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
 import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
+import FocusIcon from 'vue-material-design-icons/ImageFilterCenterFocusStrongOutline.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
@@ -84,7 +118,9 @@ export default {
 		NcAppNavigation,
 		NcAppNavigationNew,
 		NcAppNavigationItem,
+		NcButton,
 		NcContent,
+		FocusIcon,
 		NoteShareSidebar,
 		FolderPlusIcon,
 	},
@@ -121,17 +157,23 @@ export default {
 		filteredNotes() {
 			return store.notes.getFilteredNotes()
 		},
+
+		zenMode() {
+			return store.app.zenMode
+		},
 	},
 
 	created() {
 		store.app.setDocumentTitle(document.title)
 		window.addEventListener('beforeunload', this.onClose)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
+		document.addEventListener('keydown', this.onKeyDown)
 		this.loadNotes()
 	},
 
 	unmounted() {
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
+		document.removeEventListener('keydown', this.onKeyDown)
 		this.stopRefreshTimer()
 	},
 
@@ -233,6 +275,25 @@ export default {
 
 		openSettings() {
 			this.settingsVisible = true
+		},
+
+		onToggleZenMode() {
+			store.app.toggleZenMode()
+		},
+
+		onKeyDown(event) {
+			// Ctrl + . toggles, Escape only ever leaves. Both are ignored while a
+			// dialog is open so it can keep Escape for closing itself.
+			if (document.querySelector('.modal-mask, .dialog__modal')) {
+				return
+			}
+			if ((event.ctrlKey || event.metaKey) && event.key === '.') {
+				event.preventDefault()
+				this.onToggleZenMode()
+			} else if (event.key === 'Escape' && this.zenMode) {
+				event.preventDefault()
+				store.app.setZenMode(false)
+			}
 		},
 
 		onNewCategory() {
@@ -359,5 +420,56 @@ export default {
 	flex: 1 1 auto;
 	min-height: 0;
 	height: auto !important;
+}
+</style>
+
+<style lang="scss">
+/* Intentionally not scoped: zen mode hides DOM that belongs to @nextcloud/vue —
+   the navigation, and the note-list pane of NcAppContent's split view — which a
+   scoped style cannot reach. */
+.notes-zen {
+	.app-navigation,
+	.app-navigation-toggle-wrapper,
+	.splitpanes__pane-list,
+	.splitpanes__splitter {
+		display: none;
+	}
+
+	/* the details pane is sized by splitpanes via an inline width */
+	.splitpanes__pane-details {
+		width: 100% !important;
+	}
+
+	/* Centre the note at any window width. Outside zen mode this only happens
+	   above 1600px, where there is room for the list next to it. */
+	.note-editor {
+		margin-inline: auto;
+	}
+
+	/* the large-screen rule reserves space on the right for the action menu;
+	   with the panes gone the note would sit visibly off-centre */
+	.note-container {
+		padding-inline-end: 0;
+	}
+}
+
+/* Bottom inline-start, which is where the "Zen mode" entry in the navigation
+   footer was standing a moment ago: leaving is then the same gesture in the same
+   corner as entering, rather than a hunt across the window. Never the top —
+   that belongs to NotePlain's action menu and to the Text app's sticky
+   menubar. */
+.zen-exit {
+	position: fixed;
+	bottom: calc(var(--default-grid-baseline) * 4);
+	inset-inline-start: calc(var(--default-grid-baseline) * 4);
+	z-index: 2000;
+	/* subdued until wanted, but it is the only visible way out, so not invisible */
+	opacity: 0.7;
+	transition: opacity var(--animation-quick) ease-in-out;
+
+	&:hover,
+	&:focus-within {
+		opacity: 1;
+	}
 }
 </style>
