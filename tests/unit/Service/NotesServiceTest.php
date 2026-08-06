@@ -99,11 +99,11 @@ class NotesServiceTest extends TestCase {
 
 	/**
 	 * @param array<int|string, string|array<int|string, mixed>> $spec
-	 * @return array{files: array<int, File>, categories: list<string>}
+	 * @return array{files: array<int, File>, categories: array<int, string>, folders: list<Folder>}
 	 */
 	private function gather(array $spec, string $customExtension = 'md', bool $showHidden = true): array {
 		$method = new \ReflectionMethod(NotesService::class, 'gatherNoteFiles');
-		/** @var array{files: array<int, File>, categories: list<string>} $result */
+		/** @var array{files: array<int, File>, categories: array<int, string>, folders: list<Folder>} $result */
 		$result = $method->invoke(null, $customExtension, $this->folder($spec), $showHidden);
 		return $result;
 	}
@@ -192,6 +192,48 @@ class NotesServiceTest extends TestCase {
 		foreach ($files as $id => $file) {
 			self::assertSame($id, $file->getId(), 'the array key must be the file id');
 		}
+	}
+
+	// ---- folders (needed for the bulk share lookup) -------------------------
+
+	/**
+	 * NoteUtil::loadShareTypes() needs every folder of the tree, because
+	 * IManager::getSharesInFolder() only reports on a folder's direct children
+	 * (the server rejects $shallow = false). Missing a folder here would mean
+	 * silently losing the shared indicator for the notes inside it.
+	 */
+	public function testTheWalkReportsEveryFolderIncludingTheNotesFolderItself(): void {
+		$result = $this->gather([
+			'top.txt',
+			'Work' => [
+				'a.txt',
+				'Projects' => [
+					'2026' => ['deep.md'],
+				],
+			],
+			'Personal' => [],
+		]);
+
+		self::assertCount(
+			5,
+			$result['folders'],
+			'the notes folder plus Work, Work/Projects, Work/Projects/2026 and Personal',
+		);
+		self::assertContainsOnlyInstancesOf(Folder::class, $result['folders']);
+	}
+
+	public function testFoldersIsAListWithNoGapsSoEveryEntryIsIterated(): void {
+		$result = $this->gather([
+			'Work' => ['Projects' => []],
+			'Personal' => ['Recipes' => []],
+		]);
+
+		self::assertSame(
+			range(0, count($result['folders']) - 1),
+			array_keys($result['folders']),
+			'a "+" union here would drop nested folders and skip their shares',
+		);
+		self::assertCount(5, $result['folders']);
 	}
 
 	// ---- categories --------------------------------------------------------

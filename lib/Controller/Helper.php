@@ -103,6 +103,11 @@ class Helper {
 		// if the chunk does not contain all remaining notes, then generate new chunk cursor
 		$newChunkCursor = $numPendingNotes ? ChunkCursor::fromNote($lastUpdate, end($chunkedNotes)) : null;
 
+		$this->notesService->preloadShareTypes(
+			$data['folders'],
+			array_values(array_map(fn (MetaNote $m): int => $m->note->getId(), $chunkedNotes)),
+		);
+
 		// load data for the current chunk
 		$notesData = array_map(function (MetaNote $m) use ($exclude) {
 			return $this->getNoteData($m->note, $exclude, $m->meta);
