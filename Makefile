@@ -87,8 +87,13 @@ watch-js:
 
 ##### Testing #####
 
-test: test-api
+test: test-unit test-api
 
+# No Nextcloud instance required.
+test-unit:
+	composer run test:unit
+
+# Requires a running Nextcloud with the app enabled, see .github/workflows/test.yml
 test-api:
 	phpunit --bootstrap vendor/autoload.php --testdox tests/api/
 
