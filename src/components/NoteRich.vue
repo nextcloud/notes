@@ -14,6 +14,7 @@
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { markRaw } from 'vue'
+import { parseNoteLink } from '../noteLinks.js'
 import { queueCommand, refreshNote } from '../NotesService.js'
 import store from '../store.js'
 import { routeIsNewNote } from '../Util.js'
@@ -102,6 +103,17 @@ export default {
 				readOnly: false,
 				onLoaded: () => {
 					this.loading = false
+				},
+				// Replacing the default handler means reimplementing its fallback:
+				// Text's own opens everything in a new tab.
+				openLinkHandler: (href) => {
+					const noteId = parseNoteLink(href)
+					if (noteId !== null) {
+						this.$router.push({ name: 'note', params: { noteId: String(noteId) } })
+							.catch(() => {})
+						return
+					}
+					window.open(new URL(href, window.location.href).href, '_blank', 'noopener')
 				},
 				onUpdate: ({ markdown }) => {
 					if (this.note) {
