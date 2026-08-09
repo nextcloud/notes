@@ -100,7 +100,10 @@ import { getDraggedNoteId, isNoteDrag } from './Util.js'
 
 import '@nextcloud/dialogs/style.css'
 
-const isAppleDevice = /mac|iphone|ipad|ipod/i.test(navigator.userAgentData?.platform ?? navigator.platform ?? '')
+const APPLE_PLATFORM = /mac|iphone|ipad|ipod/i
+const OPEN_DIALOG_SELECTOR = '.modal-mask, .dialog__modal'
+
+const isAppleDevice = APPLE_PLATFORM.test(navigator.userAgentData?.platform ?? navigator.platform ?? '')
 
 export default {
 	name: 'App',
@@ -316,7 +319,7 @@ export default {
 			if (isToggle && !this.canUseZenMode) {
 				return
 			}
-			if (document.querySelector('.modal-mask, .dialog__modal')) {
+			if (document.querySelector(OPEN_DIALOG_SELECTOR)) {
 				return
 			}
 			event.preventDefault()
