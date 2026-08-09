@@ -23,7 +23,7 @@ function zenModeEntry(page: Page): Locator {
 }
 
 function exitZenModeButton(page: Page): Locator {
-	return page.getByRole('button', { name: 'Exit zen mode', exact: true })
+	return page.getByRole('button', { name: /^Exit zen mode/ })
 }
 
 async function expectZenMode(page: Page, active: boolean): Promise<void> {
@@ -98,8 +98,11 @@ test.describe('Zen mode', () => {
 			return /mac|iphone|ipad|ipod/i.test(platform)
 		})
 
+		const shortcut = isAppleDevice ? 'Cmd + .' : 'Ctrl + .'
+		await expect(zenModeEntry(page)).toHaveAttribute('title', `Zen mode (${shortcut})`)
+
 		await enterZenMode(page)
-		await expect(exitZenModeButton(page)).toHaveAttribute('title', isAppleDevice ? 'Cmd + .' : 'Ctrl + .')
+		await expect(exitZenModeButton(page)).toHaveAttribute('title', `Exit zen mode (${shortcut})`)
 	})
 
 	test('leaves zen mode with Escape but never enters it', async ({ page }, testInfo: TestInfo) => {

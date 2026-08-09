@@ -31,7 +31,7 @@
 					<NcAppNavigationItem
 						v-if="canUseZenMode"
 						:name="t('notes', 'Zen mode')"
-						:title="zenModeShortcut"
+						:title="zenModeTitle"
 						@click.prevent="onToggleZenMode"
 					>
 						<template #icon>
@@ -62,8 +62,8 @@
 		<!-- Wrapped in a div because NcButton's own scoped `position: relative` outranks any class we could add. -->
 		<div v-if="zenMode" class="zen-exit">
 			<NcButton variant="secondary"
-				:title="zenModeShortcut"
-				:aria-label="t('notes', 'Exit zen mode')"
+				:title="exitZenModeTitle"
+				:aria-label="exitZenModeTitle"
 				@click="onToggleZenMode"
 			>
 				<template #icon>
@@ -163,7 +163,15 @@ export default {
 		},
 
 		zenModeShortcut() {
-			return isAppleDevice ? t('notes', 'Cmd + .') : t('notes', 'Ctrl + .')
+			return isAppleDevice ? 'Cmd + .' : 'Ctrl + .'
+		},
+
+		zenModeTitle() {
+			return t('notes', 'Zen mode ({shortcut})', { shortcut: this.zenModeShortcut })
+		},
+
+		exitZenModeTitle() {
+			return t('notes', 'Exit zen mode ({shortcut})', { shortcut: this.zenModeShortcut })
 		},
 	},
 
