@@ -29,7 +29,7 @@
 			<template #footer>
 				<ul class="app-navigation-entry__settings">
 					<NcAppNavigationItem
-						v-if="!loading.notes && !error"
+						v-if="canUseZenMode"
 						:name="t('notes', 'Zen mode')"
 						:title="zenModeShortcut"
 						@click.prevent="onToggleZenMode"
@@ -164,8 +164,20 @@ export default {
 			return store.app.zenMode
 		},
 
+		canUseZenMode() {
+			return !this.loading.notes && !this.error && this.$route.name === 'note'
+		},
+
 		zenModeShortcut() {
 			return isAppleDevice ? t('notes', 'Cmd + .') : t('notes', 'Ctrl + .')
+		},
+	},
+
+	watch: {
+		canUseZenMode(canUseZenMode) {
+			if (!canUseZenMode) {
+				store.app.setZenMode(false)
+			}
 		},
 	},
 
@@ -298,6 +310,9 @@ export default {
 				&& (event.code === 'Period' || event.key === '.')
 			const isExit = event.key === 'Escape' && this.zenMode
 			if (!isToggle && !isExit) {
+				return
+			}
+			if (isToggle && !this.canUseZenMode) {
 				return
 			}
 			if (document.querySelector('.modal-mask, .dialog__modal')) {

@@ -7,7 +7,7 @@ import type { Locator, Page, TestInfo } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
 import { login } from '../support/login.ts'
-import { createNote, newNoteButton, uniqueTitle } from '../support/note.ts'
+import { createNote, deleteAllNotes, newNoteButton, uniqueTitle } from '../support/note.ts'
 import { NoteEditor } from '../support/sections/NoteEditor.ts'
 
 function navigation(page: Page): Locator {
@@ -135,6 +135,18 @@ test.describe('Zen mode', () => {
 		const content = `${title}\n\nWritten without the chrome`
 		await editor.type(content)
 		await editor.expectText(content)
+	})
+
+	test('is not offered while no note is open', async ({ page }) => {
+		await deleteAllNotes(page)
+		await page.goto('/index.php/apps/notes/')
+		await expect(page).toHaveURL(/\/welcome$/)
+
+		await expect(zenModeEntry(page)).toHaveCount(0)
+
+		await page.keyboard.press('Control+Period')
+		await expect(exitZenModeButton(page)).toHaveCount(0)
+		await expect(navigation(page)).toBeVisible()
 	})
 
 	test('does not survive a reload', async ({ page }, testInfo: TestInfo) => {
