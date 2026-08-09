@@ -13,12 +13,7 @@ export const useAppStore = defineStore('app', {
 		documentTitle: null,
 		searchText: '',
 		/**
-		 * Zen mode hides the app's own chrome — the category sidebar and the
-		 * note list — leaving just the note.
-		 *
-		 * Kept client-side on purpose: it is something you switch on to write a
-		 * paragraph and off again, so it does not belong in the settings the
-		 * mobile clients read, and it does not survive a reload.
+		 * Zen mode hides the app's category sidebar and the note list, leaving just the note.
 		 */
 		zenMode: false,
 	}),

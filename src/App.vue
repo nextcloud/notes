@@ -59,13 +59,7 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @noteDeleted="onNoteDeleted" />
-		<!--
-			The button is wrapped rather than positioned directly: NcButton's own
-			`.button-vue[data-v-…] { position: relative }` carries an attribute
-			selector, so it outranks any single class we could put on the button
-			and `position: fixed` would be ignored. A plain div has nothing
-			competing for it.
-		-->
+		<!-- Wrapped in a div because NcButton's own scoped `position: relative` outranks any class we could add. -->
 		<div v-if="zenMode" class="zen-exit">
 			<NcButton variant="secondary"
 				:title="zenModeShortcut"
@@ -304,8 +298,7 @@ export default {
 			if (event.repeat) {
 				return
 			}
-			// Ctrl/Cmd + . toggles, Escape only leaves. `code` pins the physical
-			// key across layouts, `key` covers those with the period elsewhere.
+			// `code` pins the physical key across layouts, `key` covers those with the period elsewhere.
 			const isToggle = (event.ctrlKey || event.metaKey)
 				&& (event.code === 'Period' || event.key === '.')
 			const isExit = event.key === 'Escape' && this.zenMode
@@ -454,9 +447,7 @@ export default {
 </style>
 
 <style lang="scss">
-/* Intentionally not scoped: zen mode hides DOM that belongs to @nextcloud/vue —
-   the navigation, and the note-list pane of NcAppContent's split view — which a
-   scoped style cannot reach. */
+/* Not scoped: the hidden elements belong to @nextcloud/vue. */
 .notes-zen {
 	.app-navigation,
 	.app-navigation-toggle-wrapper,
@@ -465,35 +456,26 @@ export default {
 		display: none;
 	}
 
-	/* the details pane is sized by splitpanes via an inline width */
+	/* overrides the inline width splitpanes sets */
 	.splitpanes__pane-details {
 		width: 100% !important;
 	}
 
-	/* Centre the note at any window width. Outside zen mode this only happens
-	   above 1600px, where there is room for the list next to it. */
 	.note-editor {
 		margin-inline: auto;
 	}
 
-	/* the large-screen rule reserves space on the right for the action menu;
-	   with the panes gone the note would sit visibly off-centre */
 	.note-container {
 		padding-inline-end: 0;
 	}
 }
 
-/* Bottom inline-start, which is where the "Zen mode" entry in the navigation
-   footer was standing a moment ago: leaving is then the same gesture in the same
-   corner as entering, rather than a hunt across the window. Never the top —
-   that belongs to NotePlain's action menu and to the Text app's sticky
-   menubar. */
+/* Bottom inline-start: the top belongs to NotePlain's action menu and the Text app's menubar. */
 .zen-exit {
 	position: fixed;
 	bottom: calc(var(--default-grid-baseline) * 4);
 	inset-inline-start: calc(var(--default-grid-baseline) * 4);
 	z-index: 2000;
-	/* subdued until wanted, but it is the only visible way out, so not invisible */
 	opacity: 0.7;
 	transition: opacity var(--animation-quick) ease-in-out;
 
