@@ -76,6 +76,11 @@ There are no PHP unit tests. Two integration test suites exist:
 
 ## Conventions
 
+- **Code comments** document the code, never the process that produced it:
+  - Comments describe what the code does — method signatures, behavior, and constraints the code itself cannot express (e.g. a non-obvious invariant or workaround).
+  - Never add comments that document progress, decisions, or changes (e.g. "changed X to Y", "as requested", "this fixes ...", "previously this did ..."). That belongs in the commit message or PR discussion; in the code it goes stale and becomes misleading.
+  - Do not narrate self-explanatory code. If the code is readable without a comment, omit the comment.
+  - Keep comments brief — short and simple, matching the comment density of the surrounding code.
 - **Conventional commits** are enforced on PRs by CI (e.g. `fix(l10n): ...`, `feat: ...`).
 - Every file needs an SPDX license header; CI enforces REUSE compliance.
 - `l10n/` translation files are synced from Transifex — never edit them manually.
