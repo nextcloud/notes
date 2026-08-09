@@ -77,7 +77,7 @@ There are no PHP unit tests. Two integration test suites exist:
 ## Conventions
 
 - **Conventional commits** are enforced on PRs by CI (e.g. `fix(l10n): ...`, `feat: ...`).
-- Every file needs an SPDX license header (`SPDX-FileCopyrightText` + `SPDX-License-Identifier: AGPL-3.0-or-later`); CI enforces REUSE compliance.
+- Every file needs an SPDX license header; CI enforces REUSE compliance.
 - `l10n/` translation files are synced from Transifex — never edit them manually.
 - The minimum Nextcloud version in `appinfo/info.xml` must stay consistent with `composer.json`'s `nextcloud/ocp` branch; `php tests/nextcloud-version.php` checks this (part of `make lint`).
 - The README description paragraph must stay synchronized with `appinfo/info.xml`.
