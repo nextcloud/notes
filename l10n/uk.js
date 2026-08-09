@@ -80,6 +80,7 @@ OC.L10N.register(
     "Use version from server" : "Використовувати віддалену версію",
     "Use current version" : "Використовувати поточну версію",
     "Empty note" : "Порожня нотатка",
+    "Write …" : "Написати ...",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Редагувати",
     "Exit full screen" : "Вийти з повноекранного режиму",
