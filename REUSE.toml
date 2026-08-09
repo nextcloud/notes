@@ -12,6 +12,12 @@ SPDX-FileCopyrightText = "none"
 SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
+path = ["CLAUDE.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Nextcloud GmbH and Nextcloud contributors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
 path = ["l10n/**.js", "l10n/**.json", "js/**.mjs.map", "js/**.mjs", "css/**.css"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2019-2024 Nextcloud GmbH and Nextcloud contributors"
