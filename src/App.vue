@@ -31,7 +31,7 @@
 					<NcAppNavigationItem
 						v-if="!loading.notes && !error"
 						:name="t('notes', 'Zen mode')"
-						:title="t('notes', 'CTRL + .')"
+						:title="zenModeShortcut"
 						@click.prevent="onToggleZenMode"
 					>
 						<template #icon>
@@ -68,7 +68,7 @@
 		-->
 		<div v-if="zenMode" class="zen-exit">
 			<NcButton variant="secondary"
-				:title="t('notes', 'CTRL + .')"
+				:title="zenModeShortcut"
 				:aria-label="t('notes', 'Exit zen mode')"
 				@click="onToggleZenMode"
 			>
@@ -105,6 +105,8 @@ import store from './store.js'
 import { getDraggedNoteId, isNoteDrag } from './Util.js'
 
 import '@nextcloud/dialogs/style.css'
+
+const isAppleDevice = /mac|iphone|ipad|ipod/i.test(navigator.userAgentData?.platform ?? navigator.platform ?? '')
 
 export default {
 	name: 'App',
@@ -160,6 +162,10 @@ export default {
 
 		zenMode() {
 			return store.app.zenMode
+		},
+
+		zenModeShortcut() {
+			return isAppleDevice ? t('notes', 'Cmd + .') : t('notes', 'Ctrl + .')
 		},
 	},
 
@@ -282,20 +288,25 @@ export default {
 		},
 
 		onKeyDown(event) {
-			// Ctrl + . toggles, Escape only ever leaves. Both are ignored while a
-			// dialog is open so it can keep Escape for closing itself.
 			// Key repeat would toggle the mode over and over while the keys are held.
 			if (event.repeat) {
+				return
+			}
+			// Ctrl/Cmd + . toggles, Escape only leaves. `code` pins the physical
+			// key across layouts, `key` covers those with the period elsewhere.
+			const isToggle = (event.ctrlKey || event.metaKey)
+				&& (event.code === 'Period' || event.key === '.')
+			const isExit = event.key === 'Escape' && this.zenMode
+			if (!isToggle && !isExit) {
 				return
 			}
 			if (document.querySelector('.modal-mask, .dialog__modal')) {
 				return
 			}
-			if ((event.ctrlKey || event.metaKey) && event.key === '.') {
-				event.preventDefault()
+			event.preventDefault()
+			if (isToggle) {
 				this.onToggleZenMode()
-			} else if (event.key === 'Escape' && this.zenMode) {
-				event.preventDefault()
+			} else {
 				store.app.setZenMode(false)
 			}
 		},
