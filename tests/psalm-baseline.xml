@@ -6,15 +6,6 @@
       <code><![CDATA[$this->noteUtil->getRoot()]]></code>
     </MissingDependency>
   </file>
-  <file src="lib/AppInfo/NotesHooks.php">
-    <MissingDependency>
-      <code><![CDATA[IRootFolder]]></code>
-      <code><![CDATA[IRootFolder]]></code>
-    </MissingDependency>
-    <MissingParamType>
-      <code><![CDATA[$service]]></code>
-    </MissingParamType>
-  </file>
   <file src="lib/Controller/ChunkCursor.php">
     <MissingConstructor>
       <code><![CDATA[$noteId]]></code>

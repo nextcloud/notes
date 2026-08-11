@@ -5,6 +5,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="tests/psalm-baseline.xml"
+    phpVersion="8.2"
 >
 	<stubs>
 		<file name="tests/stubs/ocp.php" preloadClasses="true"/>
@@ -17,7 +18,11 @@
     </extraFiles>
 	<issueHandlers>
 		<DeprecatedMethod>
-			<errorLevel type="error" />
+			<errorLevel type="suppress">
+				<referencedMethod name="OCP\IConfig::getUserValue" />
+				<referencedMethod name="OCP\IConfig::setUserValue" />
+				<referencedMethod name="OCP\IConfig::deleteUserValue" />
+			</errorLevel>
 		</DeprecatedMethod>
 		<UndefinedClass>
 			<errorLevel type="suppress">
@@ -35,5 +40,10 @@
 				<referencedClass name="Doctrine\DBAL\Statement" />
 			</errorLevel>
 		</UndefinedDocblockClass>
+		<InvalidTemplateParam>
+			<errorLevel type="suppress">
+				<file name="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php" />
+			</errorLevel>
+		</InvalidTemplateParam>
 	</issueHandlers>
 </psalm>

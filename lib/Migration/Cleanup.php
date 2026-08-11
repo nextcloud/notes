@@ -10,15 +10,13 @@ declare(strict_types=1);
 namespace OCA\Notes\Migration;
 
 use OCA\Notes\Db\MetaMapper;
-
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
 class Cleanup implements IRepairStep {
-	private MetaMapper $metaMapper;
-
-	public function __construct(MetaMapper $metaMapper) {
-		$this->metaMapper = $metaMapper;
+	public function __construct(
+		private MetaMapper $metaMapper,
+	) {
 	}
 
 	/*

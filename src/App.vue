@@ -4,21 +4,22 @@
 -->
 
 <template>
-	<EditorHint v-if="editorHint" @close="editorHint=false" />
-	<NcContent v-else app-name="notes" :content-class="{loading: loading.notes}">
+	<EditorHint v-if="editorHint" @close="editorHint = false" />
+	<NcContent v-else appName="notes" :contentClass="{loading: loading.notes}">
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
-			<NcAppNavigationNew
-				v-show="!loading.notes && !error"
-				:text="t('notes', 'New note')"
-				@click="onNewNote"
-			>
-				<PlusIcon slot="icon" :size="20" />
-			</NcAppNavigationNew>
-
 			<template #list>
-				<CategoriesList v-show="!loading.notes"
-					v-if="numNotes"
-				/>
+				<NcAppNavigationNew
+					v-show="!loading.notes && !error"
+					:text="t('notes', 'New category')"
+					@click="onNewCategory"
+					@dragover="onNewCategoryDragOver"
+					@drop="onNewCategoryDrop"
+				>
+					<template #icon>
+						<FolderPlusIcon :size="20" />
+					</template>
+				</NcAppNavigationNew>
+				<CategoriesList :loading="loading.notes" />
 			</template>
 
 			<template #footer>
@@ -27,10 +28,12 @@
 						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
 					>
-						<CogIcon slot="icon" :size="20" />
+						<template #icon>
+							<CogIcon :size="20" />
+						</template>
 					</NcAppNavigationItem>
 				</ul>
-				<AppSettings v-if="!loading.notes && error !== true" :open.sync="settingsVisible" @reload="reloadNotes" />
+				<AppSettings v-if="!loading.notes && error !== true" v-model:open="settingsVisible" @reload="reloadNotes" />
 			</template>
 		</NcAppNavigation>
 
@@ -41,32 +44,33 @@
 				<p>{{ t('notes', 'Please see Nextcloud server log for details.') }}</p>
 			</div>
 		</NcAppContent>
-		<router-view v-else @note-deleted="onNoteDeleted" />
+		<router-view v-else @noteDeleted="onNoteDeleted" />
+		<NoteShareSidebar />
 	</NcContent>
 </template>
 
 <script>
-import {
-	NcAppContent,
-	NcAppNavigation,
-	NcAppNavigationNew,
-	NcAppNavigationItem,
-	NcContent,
-} from '@nextcloud/vue'
+import { showSuccess, TOAST_PERMANENT_TIMEOUT, TOAST_UNDO_TIMEOUT } from '@nextcloud/dialogs'
+import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
-import { showSuccess, TOAST_UNDO_TIMEOUT, TOAST_PERMANENT_TIMEOUT } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/style.css'
-
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
-import CogIcon from 'vue-material-design-icons/Cog.vue'
-
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
+import NcContent from '@nextcloud/vue/components/NcContent'
+import CogIcon from 'vue-material-design-icons/CogOutline.vue'
+import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
-
+import NoteShareSidebar from './components/NoteShareSidebar.vue'
 import { config } from './config.js'
-import { fetchNotes, noteExists, createNote, undoDeleteNote } from './NotesService.js'
+import logger from './Logger.js'
+import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
 import store from './store.js'
+import { getDraggedNoteId, isNoteDrag } from './Util.js'
+
+import '@nextcloud/dialogs/style.css'
 
 export default {
 	name: 'App',
@@ -81,7 +85,8 @@ export default {
 		NcAppNavigationNew,
 		NcAppNavigationItem,
 		NcContent,
-		PlusIcon,
+		NoteShareSidebar,
+		FolderPlusIcon,
 	},
 
 	data() {
@@ -89,10 +94,11 @@ export default {
 			filter: {
 				category: null,
 			},
+
 			loading: {
 				notes: true,
-				create: false,
 			},
+
 			error: false,
 			undoNotification: null,
 			undoTimer: null,
@@ -105,26 +111,26 @@ export default {
 
 	computed: {
 		numNotes() {
-			return store.getters.numNotes()
+			return store.notes.numNotes()
 		},
 
 		notes() {
-			return store.state.notes.notes
+			return store.notes.notes
 		},
 
 		filteredNotes() {
-			return store.getters.getFilteredNotes()
+			return store.notes.getFilteredNotes()
 		},
 	},
 
 	created() {
-		store.commit('setDocumentTitle', document.title)
+		store.app.setDocumentTitle(document.title)
 		window.addEventListener('beforeunload', this.onClose)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
 		this.loadNotes()
 	},
 
-	destroyed() {
+	unmounted() {
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
 		this.stopRefreshTimer()
 	},
@@ -132,7 +138,7 @@ export default {
 	methods: {
 		loadNotes() {
 			fetchNotes()
-				.then(data => {
+				.then((data) => {
 					if (data === null) {
 						// nothing changed
 						return
@@ -144,7 +150,7 @@ export default {
 						// only show error state if not loading in background
 						this.error = data.errorMessage
 					} else {
-						console.error('Server error while updating list of notes: ' + data.errorMessage)
+						logger.error('Server error while updating list of notes', { errorMessage: data.errorMessage })
 					}
 				})
 				.catch(() => {
@@ -187,8 +193,8 @@ export default {
 			if (this.$route.path !== '/') {
 				this.$router.push('/')
 			}
-			store.commit('removeAllNotes')
-			store.commit('clearSyncCache')
+			store.notes.removeAllNotes()
+			store.sync.clearSyncCache()
 			this.loading.notes = true
 			this.loadNotes()
 		},
@@ -204,7 +210,7 @@ export default {
 		},
 
 		routeFirst() {
-			const availableNotes = this.filteredNotes.filter(note => !note.error && !note.deleting)
+			const availableNotes = this.filteredNotes.filter((note) => !note.error && !note.deleting)
 			if (availableNotes.length > 0) {
 				this.routeToNote(availableNotes[0].id)
 			} else {
@@ -229,20 +235,28 @@ export default {
 			this.settingsVisible = true
 		},
 
-		onNewNote() {
-			if (this.loading.create) {
+		onNewCategory() {
+			emit('notes:category:new')
+		},
+
+		onNewCategoryDragOver(event) {
+			if (!isNoteDrag(event)) {
 				return
 			}
-			this.loading.create = true
-			createNote(store.getters.getSelectedCategory())
-				.then(note => {
-					this.routeToNote(note.id, { new: null })
-				})
-				.catch(() => {
-				})
-				.finally(() => {
-					this.loading.create = false
-				})
+			event.preventDefault()
+			if (event.dataTransfer) {
+				event.dataTransfer.dropEffect = 'move'
+			}
+		},
+
+		onNewCategoryDrop(event) {
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
+			if (noteId === null) {
+				return
+			}
+			event.preventDefault()
+			event.stopPropagation()
+			emit('notes:category:new', { noteId })
 		},
 
 		onNoteDeleted(note) {
@@ -260,11 +274,15 @@ export default {
 					'<span class="deletedLabel">' + label + '</span> ' + action,
 					{ isHTML: true, timeout: TOAST_PERMANENT_TIMEOUT, onRemove: this.onUndoNotificationClosed },
 				)
-				this.undoNotification.toastElement.getElementsByClassName('undo')
-					.forEach(element => { element.onclick = this.onUndoDelete })
+				const undoButton = this.undoNotification.toastElement.querySelector('.undo')
+				if (undoButton) {
+					undoButton.onclick = this.onUndoDelete
+				}
 			} else {
-				this.undoNotification.toastElement.getElementsByClassName('deletedLabel')
-					.forEach(element => { element.textContent = label })
+				const deletedLabel = this.undoNotification.toastElement.querySelector('.deletedLabel')
+				if (deletedLabel) {
+					deletedLabel.textContent = label
+				}
 			}
 			this.undoTimer = setTimeout(this.onRemoveUndoNotification, TOAST_UNDO_TIMEOUT)
 			this.routeFirst()
@@ -279,7 +297,7 @@ export default {
 
 		onUndoDelete() {
 			const number = this.deletedNotes.length
-			this.deletedNotes.forEach(note => undoDeleteNote(note))
+			this.deletedNotes.forEach((note) => undoDeleteNote(note))
 			this.onRemoveUndoNotification()
 			if (number === 1) {
 				showSuccess(this.t('notes', 'Note recovered'))
@@ -305,7 +323,7 @@ export default {
 		},
 
 		onClose(event) {
-			if (!this.notes.every(note => !note.unsaved)) {
+			if (!this.notes.every((note) => !note.unsaved)) {
 				event.preventDefault()
 				return this.t('notes', 'There are unsaved notes. Leaving the page will discard all changes!')
 			}
@@ -326,5 +344,20 @@ export default {
 	padding-bottom: 3px;
 	padding-inline-start: 3px;
 	margin: 0 3px;
+}
+
+:deep(.app-navigation__body) {
+	overflow: hidden !important;
+	flex: 0 0 auto;
+}
+
+:deep(.app-navigation__content) {
+	min-height: 0;
+}
+
+:deep(.app-navigation__list) {
+	flex: 1 1 auto;
+	min-height: 0;
+	height: auto !important;
 }
 </style>

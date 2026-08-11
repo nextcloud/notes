@@ -10,9 +10,10 @@ declare(strict_types=1);
 namespace OCA\Notes\Service;
 
 use OCA\Notes\AppInfo\Application;
-
 use OCP\App\IAppManager;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\IL10N;
 
@@ -41,7 +42,7 @@ class SettingsService {
 			'fileSuffix' => $this->getListAttrs('fileSuffix', [...$this->defaultSuffixes, 'custom']),
 			'notesPath' => [
 				'default' => function (string $uid) {
-					return $this->getDefaultNotesPath($uid);
+					return $this->getDefaultNotesNode($uid)['path'];
 				},
 				'validate' => function ($value) {
 					$value = str_replace([ '/', '\\' ], DIRECTORY_SEPARATOR, $value);
@@ -92,13 +93,47 @@ class SettingsService {
 		];
 	}
 
-	public function getDefaultNotesPath(string $uid) : string {
-		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes');
-		$defaultExists = $this->root->getUserFolder($uid)->nodeExists($defaultFolder);
-		if ($defaultExists) {
-			return $defaultFolder;
-		} else {
-			return $this->l10n->t($defaultFolder);
+	/**
+	 * Return the default notes node if it exists and the expected path if it exists
+	 * @return array{
+	 *     path: string,
+	 *     folder: ?Folder
+	 * }
+	 */
+	public function getDefaultNotesNode(string $uid): array {
+		$defaultFolder = $this->config->getAppValue(Application::APP_ID, 'defaultFolder', 'Notes') ?: 'Notes';
+		$userFolder = $this->root->getUserFolder($uid);
+		try {
+			/** @var Folder $node */
+			$node = $userFolder->get($defaultFolder);
+			return [
+				'path' => $defaultFolder,
+				'folder' => $node,
+			];
+		} catch (NotFoundException) {
+			$path = $this->l10n->t($defaultFolder);
+
+			if ($path == $defaultFolder) {
+				// English locale, still non-existing
+				return [
+					'path' => $path,
+					'folder' => null,
+				];
+			}
+
+			try {
+				/** @var Folder $node */
+				$node = $userFolder->get($path);
+				return [
+					'path' => $path,
+					'folder' => $node,
+				];
+			} catch (NotFoundException) {
+				return [
+					'path' => $path,
+					'folder' => null,
+				];
+			}
 		}
 	}
 
@@ -117,6 +152,9 @@ class SettingsService {
 		foreach ($settings as $name => $value) {
 			if ($value !== null && array_key_exists($name, $this->attrs)) {
 				$settings[$name] = $value = $this->attrs[$name]['validate']($value);
+			}
+			if ($name === 'notesPath' && $value !== null) {
+				continue;
 			}
 			$default = is_callable($this->attrs[$name]['default']) ? $this->attrs[$name]['default']($uid) : $this->attrs[$name]['default'];
 			if (!$writeDefaults && (!array_key_exists($name, $this->attrs)
@@ -175,8 +213,8 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function getValueString(string $uid, string $name) : string {
-		return $this->get($uid, $name, 'string');
+	public function getValueString(string $uid, string $name, bool $saveInitial = false) : string {
+		return $this->get($uid, $name, 'string', $saveInitial);
 	}
 
 	/**
@@ -210,8 +248,8 @@ class SettingsService {
 	/**
 	 * @throws \OCP\PreConditionNotMetException
 	 */
-	private function get(string $uid, string $name, string $type) : mixed {
-		$settings = $this->getAll($uid);
+	private function get(string $uid, string $name, string $type, bool $saveInitial = false) : mixed {
+		$settings = $this->getAll($uid, $saveInitial);
 		if (property_exists($settings, $name)) {
 			$value = $settings->{$name};
 			if (gettype($value) !== $type) {
@@ -223,5 +261,4 @@ class SettingsService {
 			throw new \OCP\PreConditionNotMetException('Setting ' . $name . ' not found for user ' . $uid . '.');
 		}
 	}
-
 }

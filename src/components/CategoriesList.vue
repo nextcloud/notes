@@ -4,65 +4,119 @@
 -->
 
 <template>
-	<Fragment>
-		<NcAppNavigationItem
-			:name="t('notes', 'All notes')"
-			:class="{ active: selectedCategory === null }"
-			@click.prevent.stop="onSelectCategory(null)"
-		>
-			<template #icon>
-				<HistoryIcon :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					{{ numNotes }}
-				</NcCounterBubble>
-			</template>
-		</NcAppNavigationItem>
+	<NcAppNavigationItem
+		v-show="!loading"
+		:name="t('notes', 'All notes')"
+		:active="selectedCategory === null"
+		:draggable="false"
+		class="category-no-actions"
+		:class="{
+			'drop-over': dragOverAllNotes,
+		}"
+		@click.prevent.stop="onSelectCategory(null)"
+		@dragstart="onCategoryDragStart"
+		@dragover="onAllNotesDragOver($event)"
+		@dragleave="onAllNotesDragLeave($event)"
+		@drop="onAllNotesDrop($event)"
+	>
+		<template #icon>
+			<HistoryIcon :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="numNotes" />
+		</template>
+	</NcAppNavigationItem>
 
-		<NcAppNavigationCaption :name="t('notes', 'Categories')" />
+	<NcAppNavigationCaption v-show="!loading" :name="t('notes', 'Categories')" />
 
-		<NcAppNavigationItem v-for="category in categories"
-			:key="category.name"
-			:name="categoryTitle(category.name)"
-			:icon="category.name === '' ? 'icon-emptyfolder' : 'icon-files'"
-			:class="{ active: category.name === selectedCategory }"
-			@click.prevent.stop="onSelectCategory(category.name)"
-		>
-			<template #icon>
-				<FolderOutlineIcon v-if="category.name === ''" :size="20" />
-				<FolderIcon v-else :size="20" />
-			</template>
-			<template #counter>
-				<NcCounterBubble>
-					{{ category.count }}
-				</NcCounterBubble>
-			</template>
-		</NcAppNavigationItem>
-	</Fragment>
+	<NcAppNavigationItem
+		v-if="newCategoryDraft"
+		v-show="!loading"
+		ref="newCategoryItem"
+		name=""
+		:draggable="false"
+		:editable="true"
+		:editLabel="t('notes', 'Rename category')"
+		:editPlaceholder="t('notes', 'New category')"
+		:forceMenu="true"
+		:forceDisplayActions="true"
+		class="category-draft"
+		@click.prevent.stop
+		@dragstart="onCategoryDragStart"
+		@update:name="onCreateCategory"
+	>
+		<template #icon>
+			<FolderIcon :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="0" />
+		</template>
+	</NcAppNavigationItem>
+
+	<NcAppNavigationItem v-for="category in categories"
+		v-show="!loading"
+		:key="category.name"
+		:name="categoryTitle(category.name)"
+		:active="category.name === selectedCategory"
+		:draggable="false"
+		:editable="category.name !== ''"
+		:editLabel="t('notes', 'Rename category')"
+		:editPlaceholder="category.name"
+		:forceMenu="category.name !== ''"
+		:forceDisplayActions="category.name !== ''"
+		:class="{
+			'drop-over': category.name === dragOverCategory,
+			'category-no-actions': category.name === '',
+		}"
+		@click.prevent.stop="onSelectCategory(category.name)"
+		@dragstart="onCategoryDragStart"
+		@dragover="onCategoryDragOver(category.name, $event)"
+		@dragleave="onCategoryDragLeave(category.name, $event)"
+		@drop="onCategoryDrop(category.name, $event)"
+		@update:name="onRenameCategory(category.name, $event)"
+	>
+		<template #icon>
+			<FolderIcon v-if="category.name === selectedCategory" :size="20" />
+			<FolderOutlineIcon v-else :size="20" />
+		</template>
+		<template #counter>
+			<NcCounterBubble :count="category.count" />
+		</template>
+		<template v-if="category.name !== ''" #actions>
+			<NcActionButton
+				:closeAfterClick="true"
+				@click="onDeleteCategory(category.name)"
+			>
+				<template #icon>
+					<DeleteIcon :size="20" />
+				</template>
+				{{ t('notes', 'Delete category') }}
+			</NcActionButton>
+		</template>
+	</NcAppNavigationItem>
 </template>
 
 <script>
-import {
-	NcAppNavigationItem,
-	NcAppNavigationCaption,
-	NcCounterBubble,
-} from '@nextcloud/vue'
-import { Fragment } from 'vue-frag'
-
+import { showConfirmation } from '@nextcloud/dialogs'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
+import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
-
-import { getCategories } from '../NotesService.js'
-import { categoryLabel } from '../Util.js'
+import { deleteCategory as deleteCategoryRequest, getCategories, renameCategory as renameCategoryRequest, setCategory } from '../NotesService.js'
 import store from '../store.js'
+import { categoryLabel, getDraggedNoteId, isNoteDrag } from '../Util.js'
 
 export default {
 	name: 'CategoriesList',
 
 	components: {
-		Fragment,
+		DeleteIcon,
+		NcActionButton,
 		NcAppNavigationItem,
 		NcAppNavigationCaption,
 		NcCounterBubble,
@@ -71,9 +125,23 @@ export default {
 		HistoryIcon,
 	},
 
+	props: {
+		loading: Boolean,
+	},
+
+	data() {
+		return {
+			dragOverCategory: null,
+			dragOverAllNotes: false,
+			newCategoryDraft: false,
+			newCategoryMonitor: null,
+			newCategoryDropNoteId: null,
+		}
+	},
+
 	computed: {
 		numNotes() {
-			return store.getters.numNotes()
+			return store.notes.numNotes()
 		},
 
 		categories() {
@@ -81,8 +149,17 @@ export default {
 		},
 
 		selectedCategory() {
-			return store.getters.getSelectedCategory()
+			return store.notes.getSelectedCategory()
 		},
+	},
+
+	mounted() {
+		subscribe('notes:category:new', this.startNewCategory)
+	},
+
+	unmounted() {
+		unsubscribe('notes:category:new', this.startNewCategory)
+		this.stopNewCategoryMonitor()
 	},
 
 	methods: {
@@ -90,14 +167,299 @@ export default {
 			return categoryLabel(category)
 		},
 
+		startNewCategory(payload = {}) {
+			if (this.newCategoryDraft) {
+				return
+			}
+			this.newCategoryDropNoteId = payload?.noteId ?? null
+			this.newCategoryDraft = true
+			this.$nextTick(() => {
+				this.$refs.newCategoryItem?.handleEdit?.()
+				this.monitorNewCategoryEditing()
+			})
+		},
+
+		stopNewCategoryMonitor() {
+			if (this.newCategoryMonitor) {
+				cancelAnimationFrame(this.newCategoryMonitor)
+				this.newCategoryMonitor = null
+			}
+		},
+
+		monitorNewCategoryEditing() {
+			this.stopNewCategoryMonitor()
+			const check = () => {
+				if (!this.newCategoryDraft) {
+					this.stopNewCategoryMonitor()
+					this.newCategoryDropNoteId = null
+					return
+				}
+				const item = this.$refs.newCategoryItem
+				if (item && item.editingActive === false) {
+					this.newCategoryDraft = false
+					this.stopNewCategoryMonitor()
+					this.newCategoryDropNoteId = null
+					return
+				}
+				this.newCategoryMonitor = requestAnimationFrame(check)
+			}
+			this.newCategoryMonitor = requestAnimationFrame(check)
+		},
+
+		onCreateCategory(newCategory) {
+			const trimmed = newCategory?.trim() ?? ''
+			this.newCategoryDraft = false
+			this.stopNewCategoryMonitor()
+			const droppedNoteId = this.newCategoryDropNoteId
+			this.newCategoryDropNoteId = null
+			if (!trimmed) {
+				return
+			}
+			const exists = this.categories.some((category) => category.name === trimmed)
+			if (!exists) {
+				store.notes.addLocalCategory(trimmed)
+			}
+			store.notes.setSelectedCategory(trimmed)
+			if (droppedNoteId !== null) {
+				setCategory(droppedNoteId, trimmed).catch(() => {})
+			}
+		},
+
+		getNotesInCategory(category) {
+			return store.notes.notes.filter((note) => note.category === category || note.category.startsWith(category + '/'))
+		},
+
+		updateNotesForCategoryRename(oldCategory, newCategory) {
+			for (const note of store.notes.notes) {
+				if (note.category === oldCategory || note.category.startsWith(oldCategory + '/')) {
+					const updatedCategory = note.category.startsWith(oldCategory + '/')
+						? newCategory + note.category.slice(oldCategory.length)
+						: newCategory
+					store.notes.setNoteAttribute({ noteId: note.id, attribute: 'category', value: updatedCategory })
+				}
+			}
+		},
+
+		removeNotesFromCategory(categoryName) {
+			for (const note of this.getNotesInCategory(categoryName)) {
+				store.notes.removeNote(note.id)
+			}
+		},
+
+		updateSelectedCategoryForRename(oldCategory, newCategory) {
+			const selected = this.selectedCategory
+			if (selected === oldCategory) {
+				store.notes.setSelectedCategory(newCategory)
+				return
+			}
+			if (selected && selected.startsWith(oldCategory + '/')) {
+				store.notes.setSelectedCategory(newCategory + selected.slice(oldCategory.length))
+			}
+		},
+
+		clearSelectedCategoryForDelete(category) {
+			const selected = this.selectedCategory
+			if (selected === category || (selected && selected.startsWith(category + '/'))) {
+				store.notes.setSelectedCategory(null)
+			}
+		},
+
+		async onRenameCategory(category, newCategory) {
+			const trimmed = newCategory?.trim() ?? ''
+			if (!trimmed || trimmed === category) {
+				return
+			}
+
+			try {
+				const response = await renameCategoryRequest(category, trimmed)
+				const oldName = category
+				const newName = response?.newCategory || trimmed
+				this.updateNotesForCategoryRename(oldName, newName)
+				store.notes.renameLocalCategory({ oldCategory: oldName, newCategory: newName })
+				this.updateSelectedCategoryForRename(oldName, newName)
+			} catch {
+				// NotesService already shows a toast on failure.
+			}
+		},
+
+		async onDeleteCategory(categoryName) {
+			const notes = this.getNotesInCategory(categoryName)
+			if (notes.length > 0) {
+				let confirmed
+				const message = this.n(
+					'notes',
+					'Delete category "{category}" and its {count} note?',
+					'Delete category "{category}" and its {count} notes?',
+					notes.length,
+					{ category: this.categoryTitle(categoryName), count: notes.length },
+				)
+				try {
+					confirmed = await showConfirmation({
+						name: this.t('notes', 'Delete category'),
+						text: message,
+						labelConfirm: this.t('notes', 'Delete'),
+						labelReject: this.t('notes', 'Cancel'),
+						severity: 'warning',
+					})
+				} catch {
+					confirmed = window.confirm(message)
+				}
+				if (!confirmed) {
+					return
+				}
+			}
+
+			try {
+				await deleteCategoryRequest(categoryName)
+				const deletedCategory = categoryName
+				await this.closeOpenNoteBeforeDelete(deletedCategory)
+				this.removeNotesFromCategory(deletedCategory)
+				store.notes.removeLocalCategory(deletedCategory)
+				this.clearSelectedCategoryForDelete(deletedCategory)
+			} catch {
+				// NotesService already shows a toast on failure.
+			}
+		},
+
+		onCategoryDragOver(category, event) {
+			if (!isNoteDrag(event)) {
+				this.dragOverCategory = null
+				this.dragOverAllNotes = false
+				return
+			}
+			event.preventDefault()
+			if (event.dataTransfer) {
+				event.dataTransfer.dropEffect = 'move'
+			}
+			this.dragOverAllNotes = false
+			this.dragOverCategory = category
+		},
+
+		onAllNotesDragOver(event) {
+			if (!isNoteDrag(event)) {
+				this.dragOverCategory = null
+				this.dragOverAllNotes = false
+				return
+			}
+			event.preventDefault()
+			if (event.dataTransfer) {
+				event.dataTransfer.dropEffect = 'move'
+			}
+			this.dragOverCategory = null
+			this.dragOverAllNotes = true
+		},
+
+		onAllNotesDragLeave(event) {
+			if (!this.dragOverAllNotes) {
+				return
+			}
+
+			const currentTarget = event.currentTarget
+			const relatedTarget = event.relatedTarget
+			if (currentTarget && relatedTarget && currentTarget.contains(relatedTarget)) {
+				return
+			}
+
+			this.dragOverAllNotes = false
+		},
+
+		onCategoryDragLeave(category, event) {
+			if (this.dragOverCategory !== category) {
+				return
+			}
+
+			const currentTarget = event.currentTarget
+			const relatedTarget = event.relatedTarget
+			if (currentTarget && relatedTarget && currentTarget.contains(relatedTarget)) {
+				return
+			}
+
+			this.dragOverCategory = null
+		},
+
+		async onAllNotesDrop(event) {
+			event.preventDefault()
+			event.stopPropagation()
+
+			this.dragOverAllNotes = false
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
+			if (noteId === null) {
+				return
+			}
+
+			const note = store.notes.getNote(noteId)
+			if (!note || note.category === '') {
+				return
+			}
+
+			await setCategory(noteId, '')
+		},
+
+		async onCategoryDrop(category, event) {
+			event.preventDefault()
+			event.stopPropagation()
+
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
+			this.dragOverCategory = null
+			this.dragOverAllNotes = false
+			if (noteId === null) {
+				return
+			}
+
+			const note = store.notes.getNote(noteId)
+			if (!note || note.category === category) {
+				return
+			}
+
+			await setCategory(noteId, category)
+		},
+
 		onSelectCategory(category) {
-			store.commit('setSelectedCategory', category)
+			store.notes.setSelectedCategory(category)
+		},
+
+		async closeOpenNoteBeforeDelete(categoryName) {
+			const noteId = Number.parseInt(this.$route?.params?.noteId, 10)
+			if (!Number.isFinite(noteId)) {
+				return
+			}
+			const note = store.notes.getNote(noteId)
+			if (!note) {
+				return
+			}
+			if (note.category === categoryName || note.category.startsWith(categoryName + '/')) {
+				const remainingNote = store.notes.notes.find((other) => (
+					other.id !== noteId
+					&& other.category !== categoryName
+					&& !other.category.startsWith(categoryName + '/')
+				))
+				if (remainingNote) {
+					await this.$router.push({
+						name: 'note',
+						params: { noteId: remainingNote.id.toString() },
+					}).catch(() => {})
+				} else {
+					await this.$router.push({ name: 'welcome' }).catch(() => {})
+				}
+			}
+		},
+
+		onCategoryDragStart(event) {
+			event.preventDefault()
+			event.stopPropagation()
 		},
 	},
 }
 </script>
+
 <style lang="scss" scoped>
-.app-navigation-entry-wrapper.active:deep(.app-navigation-entry) {
+.app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry) {
 	background-color: var(--color-primary-element-light) !important;
+	outline: 2px dashed var(--color-primary-element);
+	outline-offset: -2px;
+}
+
+.app-navigation-entry-wrapper.category-no-actions:deep(.app-navigation-entry__counter-wrapper) {
+	margin-inline-end: calc(var(--default-grid-baseline) * 2 + var(--default-clickable-area));
 }
 </style>

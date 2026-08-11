@@ -20,9 +20,14 @@ return ['routes' => [
 		'postfix' => 'welcome',
 	],
 	[
-		'name' => 'page#create',
+		'name' => 'page#createGet', // deprecated, use createPost instead
 		'url' => '/new',
 		'verb' => 'GET',
+	],
+	[
+		'name' => 'page#createPost',
+		'url' => '/new',
+		'verb' => 'POST',
 	],
 	[
 		'name' => 'page#index',
@@ -31,7 +36,6 @@ return ['routes' => [
 		'postfix' => 'note',
 		'requirements' => ['id' => '\d+'],
 	],
-
 
 	//////////  N O T E S  //////////
 	[
@@ -87,9 +91,18 @@ return ['routes' => [
 		'verb' => 'DELETE',
 		'requirements' => ['id' => '\d+'],
 	],
+	[
+		'name' => 'notes#renameCategory',
+		'url' => '/notes/category',
+		'verb' => 'PATCH',
+	],
+	[
+		'name' => 'notes#deleteCategory',
+		'url' => '/notes/category',
+		'verb' => 'DELETE',
+	],
 
 	//////////  A T T A C H M E N T S  //////////
-
 	[
 		'name' => 'notes#getAttachment',
 		'url' => '/notes/{noteid}/attachment',
@@ -107,7 +120,6 @@ return ['routes' => [
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
 	['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
 	['name' => 'settings#migrate', 'url' => '/settings/migrate', 'verb' => 'POST'],
-
 
 	//////////  A P I  //////////
 	[
@@ -183,15 +195,7 @@ return ['routes' => [
 		'url' => '/api/{apiVersion}/settings',
 		'verb' => 'GET',
 		'requirements' => [
-			'apiVersion' => '(v1)',
-		],
-	],
-	[
-		'name' => 'notes_api#fail',
-		'url' => '/api/{catchAll}',
-		'verb' => 'GET',
-		'requirements' => [
-			'catchAll' => '.*',
+			'apiVersion' => '(v1|v1.4)',
 		],
 	],
 	[
@@ -201,6 +205,32 @@ return ['routes' => [
 		'requirements' => [
 			'apiVersion' => '(v0.2|v1)',
 			'path' => '.+',
+		],
+	],
+	[
+		'name' => 'notes_api#getAttachment',
+		'url' => '/api/{apiVersion}/attachment/{noteid}',
+		'verb' => 'GET',
+		'requirements' => [
+			'apiVersion' => '(v1.4)',
+			'noteid' => '\d+'
+		],
+	],
+	[
+		'name' => 'notes_api#uploadFile',
+		'url' => '/api/{apiVersion}/attachment/{noteid}',
+		'verb' => 'POST',
+		'requirements' => [
+			'apiVersion' => '(v1.4)',
+			'noteid' => '\d+'
+		],
+	],
+	[
+		'name' => 'notes_api#fail',
+		'url' => '/api/{catchAll}',
+		'verb' => 'GET',
+		'requirements' => [
+			'catchAll' => '.*',
 		],
 	],
 ]];

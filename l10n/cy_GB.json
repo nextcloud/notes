@@ -2,9 +2,10 @@
     "Notes" : "Nodiadau",
     "Error" : "Gwall",
     "New note" : "Nodyn newydd",
-    "Open in edit mode" : "Agor yn y modd golygu",
-    "Open in preview mode" : "Agor yn y modd rhagolwg",
-    "Display mode for notes" : "Modd arddangos nodiadau",
+    "Preview" : "Rhagolwg",
+    "Files" : "Ffeiliau",
+    "Delete" : "Delete",
+    "Cancel" : "Diddymu",
     "All notes" : "Pob nodyn",
     "No notes yet" : "Dim nodiadau eto",
     "Remove from favorites" : "Remove from favorites",
@@ -12,12 +13,10 @@
     "Share" : "Rhannu",
     "Rename" : "Rename",
     "Edit" : "Golygu",
-    "Preview" : "Rhagolwg",
     "Today" : "Heddiw",
     "Yesterday" : "Ddoe",
     "This week" : "Wythnos yma",
     "This month" : "Mis yma",
-    "Loading …" : "Yn llwytho …",
     "Uncategorized" : "Dim categori"
 },"pluralForm" :"nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;"
 }

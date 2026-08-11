@@ -8,27 +8,30 @@
 		<div v-show="!loading" ref="editor" class="text-editor" />
 	</div>
 </template>
+
 <script>
 
-import {
-	isMobile,
-} from '@nextcloud/vue'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
-
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { markRaw } from 'vue'
 import { queueCommand, refreshNote } from '../NotesService.js'
-import { routeIsNewNote } from '../Util.js'
 import store from '../store.js'
+import { routeIsNewNote } from '../Util.js'
 
 export default {
 	name: 'NoteRich',
-
-	mixins: [isMobile],
 
 	props: {
 		noteId: {
 			type: String,
 			required: true,
 		},
+	},
+
+	setup() {
+		return {
+			isMobile: useIsMobile(),
+		}
 	},
 
 	data() {
@@ -41,8 +44,9 @@ export default {
 
 	computed: {
 		note() {
-			return store.getters.getNote(parseInt(this.noteId))
+			return store.notes.getNote(parseInt(this.noteId))
 		},
+
 		isNewNote() {
 			return routeIsNewNote(this.$route)
 		},
@@ -64,7 +68,7 @@ export default {
 		subscribe('files_versions:restore:restored', this.onFileRestored)
 	},
 
-	destroyed() {
+	unmounted() {
 		this?.editor?.destroy()
 		unsubscribe('files:node:updated', this.fileUpdated)
 		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
@@ -91,10 +95,14 @@ export default {
 			this?.editor?.destroy()
 			this.loading = true
 			this.shouldAutotitle = undefined
-			this.editor = (await window.OCA.Text.createEditor({
+			this.editor = markRaw(await window.OCA.Text.createEditor({
 				el: this.$refs.editor,
 				fileId: parseInt(this.noteId),
+				filePath: this.note.internalPath,
 				readOnly: false,
+				onLoaded: () => {
+					this.loading = false
+				},
 				onUpdate: ({ markdown }) => {
 					if (this.note) {
 						const unsaved = !!(this.note?.content && this.note.content !== markdown)
@@ -106,28 +114,28 @@ export default {
 					}
 				},
 			}))
-				.onLoaded(() => {
-					this.loading = false
-				})
 		},
 
 		onEdit(noteData = {}) {
-			store.commit('updateNote', {
+			store.notes.updateNote({
 				...this.note,
 				...noteData,
 			})
 		},
 
 		onClose(noteId) {
-			const note = store.getters.getNote(parseInt(noteId))
-			store.commit('updateNote', {
+			const note = store.notes.getNote(parseInt(noteId))
+			if (!note || !Number.isFinite(note.id)) {
+				return
+			}
+			store.notes.updateNote({
 				...note,
 				unsaved: false,
 			})
 		},
 
 		fileUpdated({ fileid }) {
-			if (this.note.id === fileid) {
+			if (this.note && this.note.id === fileid) {
 				this.onEdit({ unsaved: false })
 				if (this.shouldAutotitle) {
 					queueCommand(fileid, 'autotitle')
@@ -153,7 +161,7 @@ export default {
 		async onFileRestoreRequested(event) {
 			const { fileInfo } = event
 
-			if (fileInfo.id !== this.note.id) {
+			if (!this.note || fileInfo.id !== this.note.id) {
 				return
 			}
 
@@ -161,7 +169,7 @@ export default {
 		},
 
 		async onFileRestored(version) {
-			if (version.fileId !== this.note.id) {
+			if (!this.note || version.fileId !== this.note.id) {
 				return
 			}
 
@@ -184,6 +192,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .text-editor-wrapper {
 	height: 100%;

@@ -9,6 +9,8 @@
 /.nextcloudignore
 /webpack.*.js
 /.codecov.yml
+/AGENTS.md
+/CLAUDE.md
 /composer.json
 /composer.lock
 /psalm.xml

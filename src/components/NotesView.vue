@@ -4,26 +4,36 @@
 -->
 
 <template>
-	<NcAppContent pane-config-key="note" :show-details="showNote" @update:showDetails="hideNote">
-		<template slot="list">
+	<NcAppContent paneConfigKey="note" :showDetails="showNote" @update:showDetails="hideNote">
+		<template #list>
 			<NcAppContentList class="content-list">
 				<div class="content-list__search">
+					<div class="content-list__actions">
+						<NcButton variant="primary" :disabled="creatingNote" @click="onNewNote">
+							<template #icon>
+								<PlusIcon :size="20" />
+							</template>
+							{{ t('notes', 'New note') }}
+						</NcButton>
+					</div>
 					<NcTextField
-						:value.sync="searchText"
+						v-model="searchText"
 						:label="t('notes', 'Search for notes')"
-						:show-trailing-button="searchText !== ''"
-						trailing-button-icon="close"
-						:trailing-button-label="t('Clear search')"
-						@trailing-button-click="searchText=''"
+						:showTrailingButton="searchText !== ''"
+						trailingButtonIcon="close"
+						:trailingButtonLabel="t('Clear search')"
+						@trailingButtonClick="searchText = ''"
 					/>
 				</div>
 
 				<NotesList v-if="groupedNotes.length === 1"
 					:notes="groupedNotes[0].notes"
-					@note-selected="onNoteSelected"
+					:showCategoryTitle="category === null"
+					@noteSelected="onNoteSelected"
+					@noteDeleted="onNoteDeleted"
 				/>
-				<template v-for="(group, idx) in groupedNotes" v-else>
-					<NotesCaption v-if="group.category && category!==group.category"
+				<template v-for="(group, idx) in groupedNotes" v-else :key="idx">
+					<NotesCaption v-if="group.category && category !== group.category"
 						:key="group.category"
 						:name="categoryToLabel(group.category)"
 					/>
@@ -32,17 +42,18 @@
 						:name="group.timeslot"
 					/>
 					<NotesList
-						:key="idx"
 						:notes="group.notes"
-						@note-selected="onNoteSelected"
+						:showCategoryTitle="category === null"
+						@noteSelected="onNoteSelected"
+						@noteDeleted="onNoteDeleted"
 					/>
 				</template>
 				<div
-					v-if="displayedNotes.length != filteredNotes.length"
-					v-observe-visibility="onEndOfNotes"
+					v-show="displayedNotes.length != filteredNotes.length"
+					ref="endOfNotesLabel"
 					class="loading-label"
 				>
-					{{ t('notes', 'Loading …') }}
+					{{ t('notes', 'Loading …') }}
 				</div>
 				<div v-if="getFilteredTotalCount > 0" class="content-list__search-more">
 					<NcButton @click="onCategorySelected(null)">
@@ -53,27 +64,25 @@
 		</template>
 
 		<NcAppContentDetails>
-			<Note v-if="showNote" :note-id="noteId" @note-deleted="onNoteDeleted" />
+			<Note v-if="showNote" :noteId="noteId" @noteDeleted="onNoteDeleted" />
 		</NcAppContentDetails>
 	</NcAppContent>
 </template>
 
 <script>
 
-import {
-	NcAppContent,
-	NcAppContentList,
-	NcAppContentDetails,
-	NcButton,
-	NcTextField,
-} from '@nextcloud/vue'
-import { categoryLabel } from '../Util.js'
-import NotesList from './NotesList.vue'
-import NotesCaption from './NotesCaption.vue'
-import store from '../store.js'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcAppContentDetails from '@nextcloud/vue/components/NcAppContentDetails'
+import NcAppContentList from '@nextcloud/vue/components/NcAppContentList'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import Note from './Note.vue'
-
-import { ObserveVisibility } from 'vue-observe-visibility'
+import NotesCaption from './NotesCaption.vue'
+import NotesList from './NotesList.vue'
+import { createNote } from '../NotesService.js'
+import store from '../store.js'
+import { categoryLabel } from '../Util.js'
 
 export default {
 	name: 'NotesView',
@@ -87,10 +96,7 @@ export default {
 		Note,
 		NotesList,
 		NotesCaption,
-	},
-
-	directives: {
-		'observe-visibility': ObserveVisibility,
+		PlusIcon,
 	},
 
 	props: {
@@ -100,6 +106,10 @@ export default {
 		},
 	},
 
+	emits: [
+		'noteDeleted',
+	],
+
 	data() {
 		return {
 			timeslots: [],
@@ -108,20 +118,21 @@ export default {
 			showFirstNotesOnly: true,
 			showNote: true,
 			searchText: '',
+			creatingNote: false,
 		}
 	},
 
 	computed: {
 		getFilteredTotalCount() {
-			return store.getters.getFilteredTotalCount()
+			return store.notes.getFilteredTotalCount()
 		},
 
 		category() {
-			return store.getters.getSelectedCategory()
+			return store.notes.getSelectedCategory()
 		},
 
 		filteredNotes() {
-			return store.getters.getFilteredNotes()
+			return store.notes.getFilteredNotes()
 		},
 
 		displayedNotes() {
@@ -157,12 +168,20 @@ export default {
 
 	watch: {
 		category() { this.showFirstNotesOnly = true },
-		searchText(value) { store.commit('updateSearchText', value) },
+		searchText(value) { store.app.updateSearchText(value) },
 	},
 
 	created() {
 		this.updateTimeslots()
 		setInterval(this.updateTimeslots, 1000 * 60)
+	},
+
+	mounted() {
+		this.setupEndOfNotesObserver()
+	},
+
+	beforeUnmount() {
+		this.endOfNotesObserver.disconnect()
 	},
 
 	methods: {
@@ -192,7 +211,7 @@ export default {
 				return ''
 			}
 			const t = note.modified * 1000
-			const timeslot = this.timeslots.find(timeslot => t >= timeslot.t.getTime())
+			const timeslot = this.timeslots.find((timeslot) => t >= timeslot.t.getTime())
 			if (timeslot !== undefined) {
 				return timeslot.l
 			} else if (t >= this.lastYear) {
@@ -202,14 +221,39 @@ export default {
 			}
 		},
 
-		onEndOfNotes(isVisible) {
-			if (isVisible) {
-				this.showFirstNotesOnly = false
-			}
+		setupEndOfNotesObserver() {
+			this.endOfNotesObserver = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					this.showFirstNotesOnly = false
+				}
+			})
+			this.$nextTick(() => {
+				this.endOfNotesObserver.observe(this.$refs.endOfNotesLabel)
+			})
 		},
 
 		onCategorySelected(category) {
-			store.commit('setSelectedCategory', category)
+			store.notes.setSelectedCategory(category)
+		},
+
+		onNewNote() {
+			if (this.creatingNote) {
+				return
+			}
+			this.creatingNote = true
+			createNote(store.notes.getSelectedCategory())
+				.then((note) => {
+					this.$router.push({
+						name: 'note',
+						params: { noteId: note.id.toString() },
+						query: { new: null },
+					})
+				})
+				.catch(() => {
+				})
+				.finally(() => {
+					this.creatingNote = false
+				})
 		},
 
 		hideNote() {
@@ -217,15 +261,16 @@ export default {
 		},
 
 		onNoteDeleted(note) {
-			this.$emit('note-deleted', note)
+			this.$emit('noteDeleted', note)
 		},
 
-		onNoteSelected(noteId) {
+		onNoteSelected() {
 			this.showNote = true
 		},
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .content-list {
 	padding: 0 4px;
@@ -234,7 +279,7 @@ export default {
 }
 
 .content-list__search {
-	padding: 4px;
+	padding: var(--app-navigation-padding);
 	padding-inline-start: 50px;
 	position: sticky;
 	top: 0;
@@ -244,6 +289,16 @@ export default {
 	input {
 		width: 100%;
 	}
+}
+
+.content-list__actions {
+	display: flex;
+	margin-bottom: 6px;
+}
+
+.content-list__actions :deep(.button-vue) {
+	width: 100%;
+	justify-content: center;
 }
 
 .content-list__search-more {

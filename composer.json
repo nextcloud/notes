@@ -1,22 +1,24 @@
 {
 	"require-dev": {
-		"guzzlehttp/guzzle": "^7",
+		"guzzlehttp/guzzle": "^8",
 		"nextcloud/coding-standard": "^1.0",
-		"nextcloud/ocp": "dev-stable28",
-		"phan/phan": "^5",
-		"php-cs-fixer/shim": "3.75.0",
+		"nextcloud/ocp": "dev-stable33",
+		"phan/phan": "^6",
+		"php-cs-fixer/shim": "3.95.17",
 		"psalm/phar": "^5.26",
-		"squizlabs/php_codesniffer": "^3",
+		"squizlabs/php_codesniffer": "^4",
 		"staabm/annotate-pull-request-from-checkstyle": "^1.1.0"
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"OCA\\Notes\\Tests\\API\\": "tests/api/"
+			"OCA\\Notes\\Tests\\API\\": "tests/api/",
+			"OCP\\": "vendor/nextcloud/ocp/OCP/",
+			"OC\\": "vendor/nextcloud/ocp/OC/"
 		}
 	},
 	"config": {
 		"platform": {
-			"php": "8.0"
+			"php": "8.2"
 		},
 		"sort-packages": true
 	},

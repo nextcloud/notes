@@ -6,11 +6,13 @@
 <template>
 	<ul>
 		<NoteItem v-for="note in notes"
-			:key="note.id"
+			:key="`${note.id}-${showCategoryTitle ? 'with-category-title' : 'without-category-title'}`"
 			:note="note"
 			:renaming="isRenaming(note.id)"
-			@note-selected="onNoteSelected"
-			@start-renaming="onStartRenaming"
+			:showCategoryTitle="showCategoryTitle"
+			@noteSelected="onNoteSelected"
+			@startRenaming="onStartRenaming"
+			@noteDeleted="onNoteDeleted"
 		/>
 	</ul>
 </template>
@@ -30,19 +32,37 @@ export default {
 			type: Array,
 			required: true,
 		},
+
+		showCategoryTitle: {
+			type: Boolean,
+			default: false,
+		},
 	},
+
+	emits: [
+		'noteSelected',
+		'noteDeleted',
+	],
+
 	data() {
 		return {
 			renamingNotes: [],
 		}
 	},
+
 	methods: {
 		onNoteSelected(noteId) {
-			this.$emit('note-selected', noteId)
+			this.$emit('noteSelected', noteId)
 		},
+
 		onStartRenaming(noteId) {
 			this.renamingNotes.push(noteId)
 		},
+
+		onNoteDeleted(note) {
+			this.$emit('noteDeleted', note)
+		},
+
 		isRenaming(noteId) {
 			return this.renamingNotes.includes(noteId)
 		},

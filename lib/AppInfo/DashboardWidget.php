@@ -81,7 +81,7 @@ class DashboardWidget implements IWidget, IButtonWidget, IAPIWidget, IIconWidget
 		$buttons = [
 			new WidgetButton(
 				WidgetButton::TYPE_NEW,
-				$this->url->linkToRouteAbsolute('notes.page.create'),
+				$this->url->linkToRouteAbsolute('notes.page.createGet'),
 				$this->l10n->t('Create new note')
 			)
 		];

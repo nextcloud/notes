@@ -25,7 +25,6 @@ class Note {
 		$this->util = $noteUtil->util;
 	}
 
-
 	public function getId() : int {
 		return $this->file->getId();
 	}
@@ -89,7 +88,6 @@ class Note {
 		return !$this->file->isUpdateable();
 	}
 
-
 	public function getData(array $exclude = []) : array {
 		$data = [];
 		if (!in_array('id', $exclude)) {
@@ -136,7 +134,6 @@ class Note {
 	public function getFileEtag() : string {
 		return $this->file->getEtag();
 	}
-
 
 	public function setTitle(string $title) : void {
 		$this->noteUtil->ensureNoteIsWritable($this->file);

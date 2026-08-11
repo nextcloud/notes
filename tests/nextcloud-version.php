@@ -32,7 +32,6 @@ function getNCVersionFromComposer($path) {
 	return $v;
 }
 
-
 function getNCVersionFromComposerBranchAlias($path) {
 	if (!file_exists($path)) {
 		throw new Exception('Composer file does not exists: ' . $path);
@@ -53,7 +52,6 @@ function getNCVersionFromComposerBranchAlias($path) {
 	}
 	return $v;
 }
-
 
 function getValidProperty($json, $prop) {
 	if (!property_exists($json, $prop)) {
@@ -107,7 +105,6 @@ function versionCompare($sv1, $sv2, $type) {
 }
 
 $pathAppInfo = __DIR__ . '/../appinfo/info.xml';
-
 
 if (in_array('--appinfo', $argv)) {
 	echo getDependencyVersionFromAppInfo($pathAppInfo, 'nextcloud', 'min');

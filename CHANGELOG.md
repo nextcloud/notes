@@ -12,6 +12,260 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 6.0.1
+
+### Changed
+
+* [chore: escape inline markdown content (notes#1907)](https://github.com/nextcloud/notes/pull/1907)
+* [chore(frontend): Use OC.appswebroots instead of oc_appswebroots (notes#1891)](https://github.com/nextcloud/notes/pull/1891)
+* [chore: Apply php-cs-fixer changes and constructor property promotion (notes#1905)](https://github.com/nextcloud/notes/pull/1905)
+
+### Dependencies
+
+* [[main] Fix npm audit (notes#1876)](https://github.com/nextcloud/notes/pull/1876)
+* [[main] Update nextcloud/ocp dependency (notes#1875)](https://github.com/nextcloud/notes/pull/1875)
+
+## 6.0.0
+
+### Added
+
+* [Feat(ui): indicate category in "All notes" view (notes#1840)](https://github.com/nextcloud/notes/pull/1840)
+
+### Changed
+
+* [Fix(perf): replace legacy NotesHooks boot registration with typed file event listeners (notes#1836)](https://github.com/nextcloud/notes/pull/1836)
+* [Fix: Update min server version to 33 (notes#1852)](https://github.com/nextcloud/notes/pull/1852)
+* [Style: Update sidebar and general icons to latest design (notes#1863)](https://github.com/nextcloud/notes/pull/1863)
+
+### Fixed
+
+* [Fix dead zones in clickable note area (notes#1841)](https://github.com/nextcloud/notes/pull/1841)
+* [Fix: Update composer command to include all dependencies for nextclou… (notes#1859)](https://github.com/nextcloud/notes/pull/1859)
+
+### Dependencies
+
+* [[main] Fix npm audit (notes#1834)](https://github.com/nextcloud/notes/pull/1834)
+* [Chore(deps-dev): Bump php-cs-fixer/shim from 3.94.2 to 3.95.1 (notes#1838)](https://github.com/nextcloud/notes/pull/1838)
+* [[main] Fix npm audit (notes#1844)](https://github.com/nextcloud/notes/pull/1844)
+* [Chore(deps): Bump easymde from 2.20.0 to 2.21.0 (notes#1845)](https://github.com/nextcloud/notes/pull/1845)
+* [Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.2.1 to 3.2.2 (notes#1847)](https://github.com/nextcloud/notes/pull/1847)
+* [Chore(deps): Bump axios from 1.15.0 to 1.16.0 (notes#1848)](https://github.com/nextcloud/notes/pull/1848)
+* [Chore(deps): Bump fast-xml-builder from 1.1.5 to 1.2.0 (notes#1849)](https://github.com/nextcloud/notes/pull/1849)
+* [Chore(deps-dev): Bump fast-uri from 3.1.0 to 3.1.2 (notes#1850)](https://github.com/nextcloud/notes/pull/1850)
+* [Chore(deps-dev): Bump @babel/plugin-transform-modules-systemjs from 7.28.5 to 7.29.4 (notes#1851)](https://github.com/nextcloud/notes/pull/1851)
+* [Chore(deps-dev): Bump @playwright/test from 1.59.1 to 1.60.0 (notes#1855)](https://github.com/nextcloud/notes/pull/1855)
+* [Chore(deps-dev): Bump @protobufjs/utf8 from 1.1.0 to 1.1.1 (notes#1856)](https://github.com/nextcloud/notes/pull/1856)
+* [Chore(deps-dev): Bump protobufjs from 7.5.5 to 7.5.8 (notes#1857)](https://github.com/nextcloud/notes/pull/1857)
+* [Chore(deps): Bump shivammathur/setup-php from 2.37.0 to 2.37.1 (notes#1860)](https://github.com/nextcloud/notes/pull/1860)
+* [[main] Fix npm audit (notes#1862)](https://github.com/nextcloud/notes/pull/1862)
+* [Chore(deps): Bump brace-expansion from 5.0.5 to 5.0.6 (notes#1865)](https://github.com/nextcloud/notes/pull/1865)
+* [Chore(deps-dev): Bump webpack-dev-server from 5.2.3 to 5.2.4 (notes#1867)](https://github.com/nextcloud/notes/pull/1867)
+* [Chore(deps): Bump qs and express (notes#1868)](https://github.com/nextcloud/notes/pull/1868)
+* [Chore(deps): Bump markdown-it from 14.1.1 to 14.2.0 (notes#1869)](https://github.com/nextcloud/notes/pull/1869)
+
+## 5.0.0
+
+### Added
+
+* Use filled favorite icons and remove document icons in the UI in [#1730](https://github.com/nextcloud/notes/pull/1730)
+* Add rename and delete category actions in the sidebar in [#1732](https://github.com/nextcloud/notes/pull/1732)
+
+### Changed
+
+* perf: Replace `getById` call with `getFirstNodeById` in [#1743](https://github.com/nextcloud/notes/pull/1743)
+* Update to NC 30 and PHP max version to 8.5 in `info.xml` in [#1813](https://github.com/nextcloud/notes/pull/1813)
+
+### Fixed
+
+* Fix undefined node array key by using folder instead in [#1783](https://github.com/nextcloud/notes/pull/1783)
+* fix(tests): Update test structure in [#1823](https://github.com/nextcloud/notes/pull/1823)
+* fix: Sharing notes in [#1827](https://github.com/nextcloud/notes/pull/1827)
+
+### Dependencies
+
+* Update `nextcloud/ocp` dependency in [#1774](https://github.com/nextcloud/notes/pull/1774)
+* Apply npm audit fixes in [#1775](https://github.com/nextcloud/notes/pull/1775) and [#1802](https://github.com/nextcloud/notes/pull/1802)
+* Update runtime dependencies, including `@nextcloud/axios`, `axios`, `diff`, `follow-redirects`, `dompurify`, and `lodash` in [#1826](https://github.com/nextcloud/notes/pull/1826), [#1814](https://github.com/nextcloud/notes/pull/1814), [#1815](https://github.com/nextcloud/notes/pull/1815), [#1816](https://github.com/nextcloud/notes/pull/1816), [#1818](https://github.com/nextcloud/notes/pull/1818), and [#1807](https://github.com/nextcloud/notes/pull/1807)
+* Update tooling and CI dependencies in [#1786](https://github.com/nextcloud/notes/pull/1786), [#1787](https://github.com/nextcloud/notes/pull/1787), [#1788](https://github.com/nextcloud/notes/pull/1788), [#1790](https://github.com/nextcloud/notes/pull/1790), [#1794](https://github.com/nextcloud/notes/pull/1794), [#1800](https://github.com/nextcloud/notes/pull/1800), [#1805](https://github.com/nextcloud/notes/pull/1805), [#1806](https://github.com/nextcloud/notes/pull/1806), [#1808](https://github.com/nextcloud/notes/pull/1808), [#1820](https://github.com/nextcloud/notes/pull/1820), [#1821](https://github.com/nextcloud/notes/pull/1821), and [#1822](https://github.com/nextcloud/notes/pull/1822)
+
+## 4.13.1
+
+### Fixed
+
+* fix(performance): Avoid checking existence of default notes folder 3 times by @CarlSchwan in [#1614](https://github.com/nextcloud/notes/pull/1614)
+* fix: Cannot read properties of undefined getClient by @enjeck in [#1760](https://github.com/nextcloud/notes/pull/1760)
+* Fix a scroll bar inside the app navigation by @JuliaKirschenheuter in [#1773](https://github.com/nextcloud/notes/pull/1773)
+* fix(files): Apply HTML escaping to all user-controlled input before сoncatenating it into HTML by @JuliaKirschenheuter in [#1768](https://github.com/nextcloud/notes/pull/1768)
+* [main] Fix npm audit by @nextcloud-command in [#1746](https://github.com/nextcloud/notes/pull/1746)
+* [main] Fix npm audit by @nextcloud-command in [#1737](https://github.com/nextcloud/notes/pull/1737)
+*
+### Dependencies
+
+* Chore(deps): Bump dorny/paths-filter from 3.0.2 to 4.0.0 by @dependabot[bot] in [#1779](https://github.com/nextcloud/notes/pull/1779)
+* Chore(deps): Bump actions/checkout from 6.0.0 to 6.0.2 by @dependabot[bot] in [#1734](https://github.com/nextcloud/notes/pull/1734)
+* Chore(deps-dev): Bump @playwright/test from 1.58.0 to 1.58.1 by @dependabot[bot] in [#1740](https://github.com/nextcloud/notes/pull/1740)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.93.0 to 3.93.1 by @dependabot[bot] in [#1738](https://github.com/nextcloud/notes/pull/1738)
+* Chore(deps): Bump actions/upload-artifact from 5.0.0 to 6.0.0 by @dependabot[bot] in [#1735](https://github.com/nextcloud/notes/pull/1735)
+* Chore(deps): Bump actions/setup-node from 6.0.0 to 6.2.0 by @dependabot[bot] in [#1736](https://github.com/nextcloud/notes/pull/1736)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.2.0 to 3.2.1 by @dependabot[bot] in [#1744](https://github.com/nextcloud/notes/pull/1744)
+* Chore(deps-dev): Bump @playwright/test from 1.58.1 to 1.58.2 by @dependabot[bot] in [#1748](https://github.com/nextcloud/notes/pull/1748)
+* Chore(deps): Bump markdown-it from 14.1.0 to 14.1.1 by @dependabot[bot] in [#1750](https://github.com/nextcloud/notes/pull/1750)
+* Chore(deps): Bump axios from 1.13.2 to 1.13.5 by @dependabot[bot] in [#1751](https://github.com/nextcloud/notes/pull/1751)
+* Chore(deps): Bump icewind1991/nextcloud-version-matrix from 1.3.1 to 1.3.2 by @dependabot[bot] in [#1754](https://github.com/nextcloud/notes/pull/1754)
+* Chore(deps-dev): Bump minimatch from 3.1.2 to 3.1.4 by @dependabot[bot] in [#1758](https://github.com/nextcloud/notes/pull/1758)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.11.3 to 2.11.4 by @dependabot[bot] in [#1762](https://github.com/nextcloud/notes/pull/1762)
+* Chore(deps): Bump actions/upload-artifact from 6.0.0 to 7.0.0 by @dependabot[bot] in [#1763](https://github.com/nextcloud/notes/pull/1763)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.93.1 to 3.94.2 by @dependabot[bot] in [#1766](https://github.com/nextcloud/notes/pull/1766)
+* Chore(deps-dev): Bump immutable from 5.1.4 to 5.1.5 by @dependabot[bot] in [#1769](https://github.com/nextcloud/notes/pull/1769)
+* Chore(deps): Bump actions/setup-node from 6.2.0 to 6.3.0 by @dependabot[bot] in [#1772](https://github.com/nextcloud/notes/pull/1772)
+* [main] Update nextcloud/ocp dependency by @nextcloud-command in [#1765](https://github.com/nextcloud/notes/pull/1765)
+* [main] Update nextcloud/ocp dependency by @nextcloud-command in [#1724](https://github.com/nextcloud/notes/pull/1724)
+
+## 4.13.0
+
+### Added
+
+* feat (UI): drag & drop notes to categories by @aronovgj in [#1707](https://github.com/nextcloud/notes/pull/1707)
+** test: Setup Playwright and add some tests by @enjeck in [#1708](https://github.com/nextcloud/notes/pull/1708)
+
+### Fixed
+
+* fix: Revert to compatible libraries by @enjeck in [#1723](https://github.com/nextcloud/notes/pull/1723)
+* fix(attachments): Correctly keep intended attachment extension by @nickvergessen in [#1715](https://github.com/nextcloud/notes/pull/1715)
+* * [main] Fix npm audit by @nextcloud-command in [#1702](https://github.com/nextcloud/notes/pull/1702)
+* ci(actions): Pin action versions and update workflow templates by @nickvergessen in [#1725](https://github.com/nextcloud/notes/pull/1725)
+
+### Dependencies
+
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.8 to 7.0.9 by @dependabot[bot] in [#1687](https://github.com/nextcloud/notes/pull/1687)
+* Chore(deps-dev): Bump node-forge from 1.3.1 to 1.3.2 by @dependabot[bot] in [#1690](https://github.com/nextcloud/notes/pull/1690)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.89.2 to 3.91.1 by @dependabot[bot] in [#1692](https://github.com/nextcloud/notes/pull/1692)
+* Chore(deps): Bump mdast-util-to-hast from 13.2.0 to 13.2.1 by @dependabot[bot] in [#1694](https://github.com/nextcloud/notes/pull/1694)
+* Chore(deps-dev): Bump express from 4.21.2 to 4.22.1 by @dependabot[bot] in [#1695](https://github.com/nextcloud/notes/pull/1695)
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.9 to 7.0.11 by @dependabot[bot] in [#1697](https://github.com/nextcloud/notes/pull/1697)
+* Chore(deps): Bump actions/setup-node from 6.0.0 to 6.1.0 by @dependabot[bot] in [#1698](https://github.com/nextcloud/notes/pull/1698)
+* Chore(deps): Bump actions/checkout from 5.0.0 to 6.0.1 by @dependabot[bot] in [#1699](https://github.com/nextcloud/notes/pull/1699)
+* [main] Update nextcloud/ocp dependency by @nextcloud-command in [#1696](https://github.com/nextcloud/notes/pull/1696)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.11.2 to 2.11.3 by @dependabot[bot] in [#1685](https://github.com/nextcloud/notes/pull/1685)
+* Chore(deps): Bump @nextcloud/dialogs from 6.4.1 to 7.1.0 by @dependabot[bot] in [#1678](https://github.com/nextcloud/notes/pull/1678)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.91.1 to 3.92.3 by @dependabot[bot] in [#1709](https://github.com/nextcloud/notes/pull/1709)
+* Chore(deps): Bump actions/setup-node from 6.1.0 to 6.2.0 by @dependabot[bot] in [#1716](https://github.com/nextcloud/notes/pull/1716)
+* Chore(deps): Bump diff from 8.0.2 to 8.0.3 by @dependabot[bot] in [#1713](https://github.com/nextcloud/notes/pull/1713)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.1.1 to 3.2.0 by @dependabot[bot] in [#1718](https://github.com/nextcloud/notes/pull/1718)
+* Chore(deps-dev): Bump lodash from 4.17.21 to 4.17.23 by @dependabot[bot] in [#1721](https://github.com/nextcloud/notes/pull/1721)
+* Chore(deps): Bump @nextcloud/dialogs from 7.1.0 to 7.2.0 by @dependabot[bot] in [#1704](https://github.com/nextcloud/notes/pull/1704)
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.11 to 8.0.0 by @dependabot[bot] in [#1703](https://github.com/nextcloud/notes/pull/1703)
+* Chore(deps): Bump @nextcloud/vue from 8.35.2 to 9.4.0 by @dependabot[bot] in [#1722](https://github.com/nextcloud/notes/pull/1722)
+* Chore(deps-dev): Bump nextcloud/coding-standard from 1.3.2 to 1.4.0 by @dependabot[bot] in [#1583](https://github.com/nextcloud/notes/pull/1583)
+* Chore(deps): Bump peter-evans/create-pull-request from 8.0.0 to 8.1.0 by @dependabot[bot] in [#1726](https://github.com/nextcloud/notes/pull/1726)
+* Chore(deps): Bump webiny/action-conventional-commits from 1.3.0 to 1.3.1 by @dependabot[bot] in [#1727](https://github.com/nextcloud/notes/pull/1727)
+* Chore(deps): Bump actions/checkout from 6.0.1 to 6.0.2 by @dependabot[bot] in [#1728](https://github.com/nextcloud/notes/pull/1728)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.92.3 to 3.93.0 by @dependabot[bot] in [#1729](https://github.com/nextcloud/notes/pull/1729)
+
+## 4.12.4
+
+### Fixed
+
+* Chore(deprecation): Switch from annotations to method attributes by @oli-ver [#1604](https://github.com/nextcloud/notes/pull/1604)
+* [main] Fix npm audit by @nextcloud-command [#1607](https://github.com/nextcloud/notes/pull/1607)
+* Build: update node and npm engines versions by @dependabot[bot] [#1626](https://github.com/nextcloud/notes/pull/1626)
+* Fix: Set max-version to 33 by @enjeck [#1641](https://github.com/nextcloud/notes/pull/1641)
+* Feat(ui): adapt notes settings to new UI components by @JuliaKirschenheuter [#1661](https://github.com/nextcloud/notes/pull/1661)
+* Perf: Use individual component imports to reduce bundle size and build time by @juliusknorr [#1662](https://github.com/nextcloud/notes/pull/1662)
+* Update `nextcloud/webpack-vue-config` and install `vue-loader` by @JuliaKirschenheuter [#1663](https://github.com/nextcloud/notes/pull/1663)
+* Update `nextcloud/vue` by @dependabot[bot] [#1664](https://github.com/nextcloud/notes/pull/1664)
+* [main] Update nextcloud/ocp dependency by @nextcloud-command [#1666](https://github.com/nextcloud/notes/pull/1666)
+* Fix: Update attributes by @enjeck [#1683](https://github.com/nextcloud/notes/pull/1683)
+
+### Dependencies
+
+* Chore(deps): Bump actions/checkout from 4.3.0 to 5.0.0 by @dependabot[bot] [#1619](https://github.com/nextcloud/notes/pull/1619)
+* Chore(deps-dev): Bump sha.js from 2.4.11 to 2.4.12 by @dependabot[bot] [#1621](https://github.com/nextcloud/notes/pull/1621)
+* Chore(deps-dev): Bump cipher-base from 1.0.4 to 1.0.6 by @dependabot[bot] [#1622](https://github.com/nextcloud/notes/pull/1622)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.13.2 to 4.0.0 by @dependabot[bot] [#1644](https://github.com/nextcloud/notes/pull/1644)
+* Chore(deps-dev): Bump staabm/annotate-pull-request-from-checkstyle from 1.8.5 to 1.8.6 by @dependabot[bot] [#1642](https://github.com/nextcloud/notes/pull/1642)
+* Chore(deps-dev): Bump guzzlehttp/guzzle from 7.9.3 to 7.10.0 by @dependabot[bot] [#1629](https://github.com/nextcloud/notes/pull/1629)
+* Chore(deps-dev): Bump phan/phan from 5.5.1 to 5.5.2 by @dependabot[bot] [#1657](https://github.com/nextcloud/notes/pull/1657)
+* Chore(deps): Bump fsfe/reuse-action from 5.0.0 to 6.0.0 by @dependabot[bot] [#1647](https://github.com/nextcloud/notes/pull/1647)
+* Chore(deps): Bump actions/setup-node from 4.4.0 to 6.0.0 by @dependabot[bot] [#1650](https://github.com/nextcloud/notes/pull/1650)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.86.0 to 3.89.1 by @dependabot[bot] [#1658](https://github.com/nextcloud/notes/pull/1658)
+* Chore(deps-dev): Bump js-yaml from 4.1.0 to 4.1.1 by @dependabot[bot] [#1665](https://github.com/nextcloud/notes/pull/1665)
+* Chore(deps): Bump @nextcloud/router from 3.0.1 to 3.1.0 by @dependabot[bot] [#1670](https://github.com/nextcloud/notes/pull/1670)
+* Chore(deps): Bump @nextcloud/event-bus from 3.3.2 to 3.3.3 by @dependabot[bot] [#1671](https://github.com/nextcloud/notes/pull/1671)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.1.0 to 3.1.1 by @dependabot[bot] [#1672](https://github.com/nextcloud/notes/pull/1672)
+* Chore(deps-dev): Bump @nextcloud/webpack-vue-config from 6.3.0 to 7.0.2 by @dependabot[bot] [#1673](https://github.com/nextcloud/notes/pull/1673)
+* Chore(deps): Bump @nextcloud/moment from 1.3.4 to 1.3.5 by @dependabot[bot] [#1674](https://github.com/nextcloud/notes/pull/1674)
+* Chore(deps-dev): Bump @nextcloud/browserslist-config from 3.0.1 to 3.1.2 by @dependabot[bot] [#1676](https://github.com/nextcloud/notes/pull/1676)
+* Chore(deps-dev): Bump @nextcloud/babel-config from 1.2.0 to 1.3.0 by @dependabot[bot] [#1677](https://github.com/nextcloud/notes/pull/1677)
+* Chore(deps): Bump @nextcloud/initial-state from 2.2.0 to 3.0.0 by @dependabot[bot] [#1679](https://github.com/nextcloud/notes/pull/1679)
+
+## 4.12.3
+
+### Added
+
+* feat(ui): switch to outline icons by @JuliaKirschenheuter [#1596](https://github.com/nextcloud/notes/pull/1596)
+* Prevent exception for a share file by inviting a new guest account by @JuliaKirschenheuter [#1595](https://github.com/nextcloud/notes/pull/1595)
+* feat(files): Expose image api for other clients as api v1.4 including routes fix by @oli-ver [#1600](https://github.com/nextcloud/notes/pull/1600)
+
+### Fixed
+
+* fix(files): replace outline plus icon with normal one by @JuliaKirschenheuter [#1613](https://github.com/nextcloud/notes/pull/1613)
+
+### Dependencies
+
+* [main] Fix npm audit by @nextcloud-command [#1597](https://github.com/nextcloud/notes/pull/1597)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.76.0 to 3.85.1 by @dependabot[bot] [#1603](https://github.com/nextcloud/notes/pull/1603)
+* Chore(deps): Bump actions/checkout from 4.2.2 to 4.3.0 by @dependabot[bot] [#1612](https://github.com/nextcloud/notes/pull/1612)
+
+
+## 4.12.2
+
+### Fixed
+
+* Fix: Update internalPath after updating title by @enjeck in [#1577](https://github.com/nextcloud/notes/pull/1577)
+* Fixed Title heading sync broken - Failed to push steps by @theroch in [#1580](https://github.com/nextcloud/notes/pull/1580)
+
+### Dependencies
+
+* Update nextcloud/ocp dependencies by @nextcloud-command in [#1562](https://github.com/nextcloud/notes/pull/1562)
+* Fix npm audit by @nextcloud-command in [#1563](https://github.com/nextcloud/notes/pull/1563)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.12.2 to 3.13.0 by @dependabot in [#1564](https://github.com/nextcloud/notes/pull/1564)
+* Ci: update node.yml workflow from template by @nextcloud-command in [#1565](https://github.com/nextcloud/notes/pull/1565)
+* Chore(deps): Bump @nextcloud/dialogs from 6.3.0 to 6.3.1 by @dependabot in [#1569](https://github.com/nextcloud/notes/pull/1569)
+* Fix npm audit by @nextcloud-command in [#1571](https://github.com/nextcloud/notes/pull/1571)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.9.0 to 2.10.0 by @dependabot in [#1574](https://github.com/nextcloud/notes/pull/1574)
+* Chore(deps-dev): Bump pbkdf2 from 3.1.2 to 3.1.3 by @dependabot in [#1575](https://github.com/nextcloud/notes/pull/1575)
+* Ci: update reuse.yml workflow from template by @nextcloud-command in [#1582](https://github.com/nextcloud/notes/pull/1582)
+* Chore(deps-dev): Bump phan/phan from 5.4.5 to 5.5.0 by @dependabot in [#1584](https://github.com/nextcloud/notes/pull/1584)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.13.0 to 3.13.2 by @dependabot in [#1585](https://github.com/nextcloud/notes/pull/1585)
+* Chore(deps-dev): Bump php-cs-fixer/shim from 3.75.0 to 3.76.0 by @dependabot in [#1586](https://github.com/nextcloud/notes/pull/1586)
+* Update nextcloud/ocp dependencies by @nextcloud-command in [#1588](https://github.com/nextcloud/notes/pull/1588)
+* Chore(deps): Bump svenstaro/upload-release-action from 2.10.0 to 2.11.2 by @dependabot in [#1590](https://github.com/nextcloud/notes/pull/1590)
+* Chore(deps): Bump skjnldsv/xpath-action from 7e6a7c379d0e9abc8acaef43df403ab4fc4f770c to f5b036e9d973f42c86324833fd00be90665fbf77 by @dependabot in [#1591](https://github.com/nextcloud/notes/pull/1591)
+
+
+## 4.12.1
+
+### Fixed
+
+* Fix slow capabilities by @enjeck in [#1543](https://github.com/nextcloud/notes/pull/1543)
+* Fix: Use info instead of warning to avoid filling logs by @enjeck in [#1530](https://github.com/nextcloud/notes/pull/1530)
+
+### Dependencies
+
+* Chore(deps): Bump peter-evans/create-pull-request from 7.0.7 to 7.0.8 by @dependabot in [#1500](https://github.com/nextcloud/notes/pull/1500)
+* Chore(deps-dev): Bump guzzlehttp/guzzle from 7.9.2 to 7.9.3 by @dependabot in [#1512](https://github.com/nextcloud/notes/pull/1512)
+* Chore(deps): Bump @nextcloud/vue from 8.24.0 to 8.26.1 by @dependabot in [#1540](https://github.com/nextcloud/notes/pull/1540)
+* Chore(deps-dev): Bump http-proxy-middleware from 2.0.7 to 2.0.9 by @dependabot in [#1528](https://github.com/nextcloud/notes/pull/1528)
+* Chore(deps): Bump @nextcloud/dialogs from 6.1.1 to 6.3.0 by @dependabot in [#1542](https://github.com/nextcloud/notes/pull/1542)
+* Chore(deps-dev): Bump squizlabs/php_codesniffer from 3.12.0 to 3.12.2 by @dependabot in [#1537](https://github.com/nextcloud/notes/pull/1537)
+* Chore(deps): Bump @nextcloud/moment from 1.3.2 to 1.3.4 by @dependabot in [#1539](https://github.com/nextcloud/notes/pull/1539)
+* Chore(deps): Bump diff from 7.0.0 to 8.0.1 by @dependabot in [#1545](https://github.com/nextcloud/notes/pull/1545)
+* Chore(deps-dev): Bump @nextcloud/stylelint-config from 3.0.1 to 3.1.0 by @dependabot in [#1554](https://github.com/nextcloud/notes/pull/1554)
+* Update nextcloud/ocp dependencies by @nextcloud-command in [#1531](https://github.com/nextcloud/notes/pull/1531)
+* Fix npm audit by @nextcloud-command in [#1550](https://github.com/nextcloud/notes/pull/1550)
+
+
 ## 4.12.0
 
 ### Added
