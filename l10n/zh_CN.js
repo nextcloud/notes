@@ -80,6 +80,7 @@ OC.L10N.register(
     "Use version from server" : "使用服务器版本",
     "Use current version" : "使用当前版本",
     "Empty note" : "空笔记",
+    "Write …" : "写 …",
     "CTRL + /" : "CTRL + /",
     "Edit" : "编辑",
     "Exit full screen" : "退出全屏",
