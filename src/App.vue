@@ -60,7 +60,16 @@
 		</NcAppContent>
 		<router-view v-else @noteDeleted="onNoteDeleted" />
 		<!-- Wrapped in a div because NcButton's own scoped `position: relative` outranks any class we could add. -->
-		<div v-if="zenMode" class="zen-exit">
+		<div v-if="zenMode" class="zen-controls">
+			<NcButton variant="secondary"
+				:title="shareTitle"
+				:aria-label="shareTitle"
+				@click="onOpenShareSidebar"
+			>
+				<template #icon>
+					<ShareVariantOutlineIcon :size="20" />
+				</template>
+			</NcButton>
 			<NcButton variant="secondary"
 				:title="exitZenModeTitle"
 				:aria-label="exitZenModeTitle"
@@ -88,6 +97,7 @@ import NcContent from '@nextcloud/vue/components/NcContent'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
 import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import FocusIcon from 'vue-material-design-icons/ImageFilterCenterFocusStrongOutline.vue'
+import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
@@ -122,6 +132,7 @@ export default {
 		FocusIcon,
 		NoteShareSidebar,
 		FolderPlusIcon,
+		ShareVariantOutlineIcon,
 	},
 
 	data() {
@@ -175,6 +186,10 @@ export default {
 
 		exitZenModeTitle() {
 			return t('notes', 'Exit zen mode ({shortcut})', { shortcut: this.zenModeShortcut })
+		},
+
+		shareTitle() {
+			return t('notes', 'Share')
 		},
 	},
 
@@ -302,6 +317,10 @@ export default {
 
 		onToggleZenMode() {
 			store.app.toggleZenMode()
+		},
+
+		onOpenShareSidebar() {
+			emit('notes:share:open', { noteId: this.$route.params.noteId })
 		},
 
 		onKeyDown(event) {
@@ -458,7 +477,40 @@ export default {
 </style>
 
 <style lang="scss">
-/* Not scoped: the hidden elements belong to @nextcloud/vue. */
+/* Not scoped: the hidden elements belong to @nextcloud/vue and to the server layout. */
+
+/* Same approach as the viewer app: hide the header instead of removing it, so the
+   layout below it never reflows. */
+body:has(.notes-zen) #header {
+	visibility: hidden;
+}
+
+/* Two nested boxes reserve room for the header and the rounded body container: the
+   server's #content and NcContent's own .content. Both have to give up that room. */
+#content:has(.notes-zen) {
+	inset: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 0;
+}
+
+/* The id outranks NcContent's scoped `.content[data-v-*]` rule, which is what sizes
+   this box down to the header and the body container margin. */
+#content-vue.notes-zen {
+	width: 100%;
+	height: 100%;
+	padding-bottom: env(safe-area-inset-bottom, 0px);
+	border-radius: 0;
+
+	/* The still-present navigation sibling keeps granting the content rounded start
+	   corners and a separator border. The id is needed to outrank that selector. */
+	.app-content {
+		border-inline-start: none;
+		border-radius: 0;
+	}
+}
+
 .notes-zen {
 	.app-navigation,
 	.app-navigation-toggle-wrapper,
@@ -482,7 +534,9 @@ export default {
 }
 
 /* Bottom inline-start: the top belongs to NotePlain's action menu and the Text app's menubar. */
-.zen-exit {
+.zen-controls {
+	display: flex;
+	gap: calc(var(--default-grid-baseline) * 2);
 	position: fixed;
 	bottom: calc(var(--default-grid-baseline) * 4);
 	inset-inline-start: calc(var(--default-grid-baseline) * 4);

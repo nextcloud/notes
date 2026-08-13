@@ -26,15 +26,29 @@ function exitZenModeButton(page: Page): Locator {
 	return page.getByRole('button', { name: /^Exit zen mode/ })
 }
 
+function header(page: Page): Locator {
+	return page.locator('#header')
+}
+
+function shareButton(page: Page): Locator {
+	return page.getByRole('button', { name: 'Share', exact: true })
+}
+
+function shareSidebar(page: Page): Locator {
+	return page.locator('[data-cy-notes-share-sidebar]')
+}
+
 async function expectZenMode(page: Page, active: boolean): Promise<void> {
 	if (active) {
 		await expect(exitZenModeButton(page)).toBeVisible()
 		await expect(navigation(page)).toBeHidden()
 		await expect(noteList(page)).toBeHidden()
+		await expect(header(page)).toBeHidden()
 	} else {
 		await expect(exitZenModeButton(page)).toHaveCount(0)
 		await expect(navigation(page)).toBeVisible()
 		await expect(noteList(page)).toBeVisible()
+		await expect(header(page)).toBeVisible()
 	}
 }
 
@@ -50,11 +64,53 @@ test.describe('Zen mode', () => {
 		await expect(newNoteButton(page)).toBeVisible()
 	})
 
-	test('hides the navigation and the note list', async ({ page }, testInfo: TestInfo) => {
+	test('hides the navigation, the note list and the header', async ({ page }, testInfo: TestInfo) => {
 		await createNote(page, uniqueTitle('zen', testInfo))
 
 		await expectZenMode(page, false)
 		await enterZenMode(page)
+	})
+
+	test('fills the viewport once the header is hidden', async ({ page }, testInfo: TestInfo) => {
+		await createNote(page, uniqueTitle('zen viewport', testInfo))
+
+		await enterZenMode(page)
+
+		const viewport = page.viewportSize()
+		expect(viewport).not.toBeNull()
+
+		// Every nested box has to give up the room it reserves for the header and the
+		// rounded body container, not just the outermost one. NcAppContent nests, so a
+		// selector can legitimately match more than one element.
+		for (const selector of ['#content', '#content-vue', '#app-content-vue', '.note-container']) {
+			const elements = await page.locator(selector).all()
+			expect(elements.length, selector).toBeGreaterThan(0)
+
+			for (const [index, element] of elements.entries()) {
+				const where = `${selector}[${index}]`
+
+				const box = await element.boundingBox()
+				expect(box, where).not.toBeNull()
+				expect(box!.x, where).toBe(0)
+				expect(box!.y, where).toBe(0)
+				expect(box!.width, where).toBeCloseTo(viewport!.width, 0)
+				expect(box!.height, where).toBeCloseTo(viewport!.height, 0)
+
+				const radius = await element.evaluate((el) => getComputedStyle(el).borderRadius)
+				expect(radius, where).toMatch(/^0px( 0px)*$/)
+			}
+		}
+	})
+
+	test('opens the share sidebar in zen mode', async ({ page }, testInfo: TestInfo) => {
+		await createNote(page, uniqueTitle('zen sidebar', testInfo))
+
+		await enterZenMode(page)
+
+		await shareButton(page).click()
+		await expect(shareSidebar(page)).toBeVisible({ timeout: 15000 })
+		// The sidebar must not cost us zen mode.
+		await expectZenMode(page, true)
 	})
 
 	test('leaves zen mode with the exit button', async ({ page }, testInfo: TestInfo) => {
