@@ -88,6 +88,7 @@
 import { showSuccess, TOAST_PERMANENT_TIMEOUT, TOAST_UNDO_TIMEOUT } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
@@ -135,6 +136,12 @@ export default {
 		ShareVariantOutlineIcon,
 	},
 
+	setup() {
+		return {
+			isMobile: useIsMobile(),
+		}
+	},
+
 	data() {
 		return {
 			filter: {
@@ -172,8 +179,10 @@ export default {
 			return store.app.zenMode
 		},
 
+		/* Mobile layouts have no chrome worth hiding and no room for the floating
+		   controls, so zen mode stays out of their way. */
 		canUseZenMode() {
-			return !this.loading.notes && !this.error && this.$route.name === 'note'
+			return !this.loading.notes && !this.error && this.$route.name === 'note' && !this.isMobile
 		},
 
 		zenModeShortcut() {

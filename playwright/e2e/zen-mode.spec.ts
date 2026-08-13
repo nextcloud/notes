@@ -10,6 +10,9 @@ import { login } from '../support/login.ts'
 import { createNote, deleteAllNotes, newNoteButton, uniqueTitle } from '../support/note.ts'
 import { NoteEditor } from '../support/sections/NoteEditor.ts'
 
+/* Narrower than the 1024px mobile breakpoint that @nextcloud/vue's useIsMobile uses. */
+const MOBILE_VIEWPORT = { width: 800, height: 700 }
+
 function navigation(page: Page): Locator {
 	return page.locator('.app-navigation')
 }
@@ -206,6 +209,28 @@ test.describe('Zen mode', () => {
 		await page.keyboard.press('Control+Period')
 		await expect(exitZenModeButton(page)).toHaveCount(0)
 		await expect(navigation(page)).toBeVisible()
+	})
+
+	test('is not offered on mobile screen sizes', async ({ page }, testInfo: TestInfo) => {
+		await createNote(page, uniqueTitle('zen mobile', testInfo))
+		await page.setViewportSize(MOBILE_VIEWPORT)
+
+		await expect(zenModeEntry(page)).toHaveCount(0)
+
+		await page.keyboard.press('Control+Period')
+		await expect(exitZenModeButton(page)).toHaveCount(0)
+		await expect(header(page)).toBeVisible()
+	})
+
+	test('leaves zen mode when the viewport shrinks to mobile', async ({ page }, testInfo: TestInfo) => {
+		await createNote(page, uniqueTitle('zen shrink', testInfo))
+
+		await enterZenMode(page)
+		await page.setViewportSize(MOBILE_VIEWPORT)
+
+		await expect(exitZenModeButton(page)).toHaveCount(0)
+		await expect(zenModeEntry(page)).toHaveCount(0)
+		await expect(header(page)).toBeVisible()
 	})
 
 	test('does not survive a reload', async ({ page }, testInfo: TestInfo) => {
