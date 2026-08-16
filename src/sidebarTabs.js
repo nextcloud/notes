@@ -49,3 +49,69 @@ export function selectNoteSidebarTabs(tabs, { node = null, folder = null, view =
 		})
 		.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
 }
+
+/**
+ * How long a tab is given to define its custom element.
+ *
+ * customElements.whenDefined() never settles for an element that is never
+ * defined, so a tab whose onInit() does not deliver one must not be waited for
+ * forever.
+ *
+ * @type {number}
+ */
+export const TAB_DEFINITION_TIMEOUT = 10000
+
+/** Initializations in flight, keyed by tag name, so opens can share one. */
+const pendingTabs = new Map()
+
+/**
+ * @param {object} tab a registered Files sidebar tab
+ * @return {Promise<boolean>} whether its custom element got defined
+ */
+async function defineTabElement(tab) {
+	let timeout
+	try {
+		await Promise.race([
+			(async () => {
+				await tab.onInit?.()
+				await window.customElements.whenDefined(tab.tagName)
+			})(),
+			new Promise((resolve, reject) => {
+				timeout = setTimeout(
+					() => reject(new Error(`${tab.tagName} was not defined in time`)),
+					TAB_DEFINITION_TIMEOUT,
+				)
+			}),
+		])
+		return true
+	} catch (error) {
+		logger.error('Failed to initialize a sidebar tab in Notes', { error, tab: tab.id })
+		return false
+	} finally {
+		clearTimeout(timeout)
+	}
+}
+
+/**
+ * Bring a tab's custom element into the registry, once per element at a time.
+ *
+ * An open while another one is still defining the same element awaits that
+ * initialization rather than assuming it succeeded.
+ *
+ * @param {object} tab a registered Files sidebar tab
+ * @return {Promise<boolean>} whether the tab is usable
+ */
+export function initializeSidebarTab(tab) {
+	if (window.customElements.get(tab.tagName)) {
+		return Promise.resolve(true)
+	}
+
+	if (!pendingTabs.has(tab.tagName)) {
+		pendingTabs.set(
+			tab.tagName,
+			defineTabElement(tab).finally(() => pendingTabs.delete(tab.tagName)),
+		)
+	}
+
+	return pendingTabs.get(tab.tagName)
+}

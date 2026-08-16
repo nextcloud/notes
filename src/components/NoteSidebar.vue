@@ -45,7 +45,7 @@
 			<component
 				:is="tab.tagName"
 				v-else
-				:active.prop="activeTab === tab.id"
+				:active.prop="resolvedTab === tab.id"
 				:folder.prop="currentFolder"
 				:node.prop="currentNode"
 				:view.prop="currentView"
@@ -56,7 +56,7 @@
 			<template #icon>
 				<FileOutlineIcon :size="44" />
 			</template>
-			{{ tabError || t('notes', 'Sharing and versions are not available right now.') }}
+			{{ t('notes', 'Sharing and versions are not available right now.') }}
 		</NcEmptyContent>
 	</NcAppSidebar>
 </template>
@@ -72,14 +72,9 @@ import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
 import NoteSidebarSubname from './NoteSidebarSubname.vue'
 import logger from '../Logger.js'
-import { selectNoteSidebarTabs } from '../sidebarTabs.js'
+import { initializeSidebarTab, selectNoteSidebarTabs } from '../sidebarTabs.js'
 import store from '../store.js'
 import { fetchDavNode } from '../WebdavService.js'
-
-// customElements.whenDefined() never settles for an element that is never
-// defined, so a tab whose onInit() does not deliver one must not be waited for
-// forever
-const TAB_DEFINITION_TIMEOUT = 10000
 
 export default {
 	name: 'NoteSidebar',
@@ -101,14 +96,11 @@ export default {
 			contextRequestToken: 0,
 			currentFolder: null,
 			currentNode: null,
-			pendingTabs: new Map(),
-			initializedTabs: new Set(),
 			failedTabs: new Set(),
 			isOpen: false,
 			loadingContext: false,
 			loadingTab: false,
 			noteId: null,
-			tabError: '',
 		}
 	},
 
@@ -136,6 +128,20 @@ export default {
 			return this.availableTabs.filter((tab) => !this.failedTabs.has(tab.tagName))
 		},
 
+		/**
+		 * NcAppSidebar falls back to its first tab when the active one is not
+		 * among them, but does not report that back, so the tab id has to be
+		 * clamped here as well for `active` to reach the right custom element.
+		 * The watcher below writes the clamped id back, so `activeTab` does not
+		 * keep naming a tab that is not on screen.
+		 */
+		resolvedTab() {
+			if (this.tabs.some(({ id }) => id === this.activeTab)) {
+				return this.activeTab
+			}
+			return this.tabs[0]?.id ?? this.activeTab
+		},
+
 		currentView() {
 			return {
 				id: 'notes',
@@ -145,10 +151,10 @@ export default {
 	},
 
 	watch: {
-		// the versions tab drops out once the node says it is not applicable,
-		// so what was requested is not necessarily still renderable
-		tabs(tabs) {
-			this.activeTab = this.resolveTab(this.activeTab, tabs)
+		resolvedTab(tabId) {
+			if (tabId !== this.activeTab) {
+				this.activeTab = tabId
+			}
 		},
 	},
 
@@ -173,78 +179,30 @@ export default {
 			}
 
 			const requestToken = this.contextRequestToken
+			this.loadingTab = true
 
-			// One tab failing to define its element must not hide the others, so
-			// they are initialised independently and only a total failure is
-			// reported as an error.
-			const results = await Promise.all(tabs.map((tab) => this.initializeTab(tab)))
+			const results = await Promise.all(tabs.map(initializeSidebarTab))
 
 			if (requestToken !== this.contextRequestToken) {
 				return
 			}
 
+			tabs.forEach((tab, index) => {
+				if (!results[index]) {
+					this.failedTabs.add(tab.tagName)
+				}
+			})
+
 			this.loadingTab = false
-			this.tabError = results.includes(true)
-				? ''
-				: this.t('notes', 'Failed to load the note sidebar.')
 		},
 
-		/**
-		 * @param {object} tab a registered Files sidebar tab
-		 * @return {Promise<boolean>} whether the tab is usable
-		 */
-		async initializeTab(tab) {
-			if (window.customElements.get(tab.tagName) || this.initializedTabs.has(tab.tagName)) {
-				return true
-			}
-
-			this.loadingTab = true
-
-			// an open while another one is still initializing the same element
-			// has to await that initialization, not assume it succeeded
-			const pending = this.pendingTabs.get(tab.tagName)
-			if (pending) {
-				return pending
-			}
-
-			const initialization = this.defineTabElement(tab)
-			this.pendingTabs.set(tab.tagName, initialization)
-
-			try {
-				return await initialization
-			} finally {
-				this.pendingTabs.delete(tab.tagName)
-			}
-		},
-
-		/**
-		 * @param {object} tab a registered Files sidebar tab
-		 * @return {Promise<boolean>} whether its custom element got defined
-		 */
-		async defineTabElement(tab) {
-			let timeout
-			try {
-				await Promise.race([
-					(async () => {
-						await tab.onInit?.()
-						await window.customElements.whenDefined(tab.tagName)
-					})(),
-					new Promise((resolve, reject) => {
-						timeout = setTimeout(
-							() => reject(new Error(`${tab.tagName} was not defined in time`)),
-							TAB_DEFINITION_TIMEOUT,
-						)
-					}),
-				])
-				this.initializedTabs.add(tab.tagName)
-				return true
-			} catch (error) {
-				logger.error('Failed to initialize a sidebar tab in Notes', { error, tab: tab.id })
-				this.failedTabs.add(tab.tagName)
-				return false
-			} finally {
-				clearTimeout(timeout)
-			}
+		resetContext() {
+			this.contextRequestToken += 1
+			this.contextError = ''
+			this.currentNode = null
+			this.currentFolder = null
+			this.loadingContext = false
+			this.loadingTab = false
 		},
 
 		async loadNodeContext() {
@@ -293,38 +251,16 @@ export default {
 			}
 		},
 
-		/**
-		 * NcAppSidebar falls back to its first tab when the active one is not
-		 * among them, but does not report that back, so the tab id here has to
-		 * be clamped as well for `active` to reach the right custom element.
-		 *
-		 * @param {string} tab the requested tab id
-		 * @param {Array<object>} tabs the tabs currently rendered
-		 * @return {string} the requested tab if renderable, the first one otherwise
-		 */
-		resolveTab(tab, tabs) {
-			if (tabs.length === 0 || tabs.some(({ id }) => id === tab)) {
-				return tab
-			}
-			return tabs[0].id
-		},
-
 		onShareOpen({ noteId }) {
 			return this.onSidebarOpen({ noteId, tab: 'sharing' })
 		},
 
 		async onSidebarOpen({ noteId, tab = 'sharing' }) {
-			this.contextRequestToken += 1
+			this.resetContext()
 			this.noteId = Number(noteId)
 			this.isOpen = true
-			this.contextError = ''
-			this.tabError = ''
-			this.currentNode = null
-			this.currentFolder = null
-			this.loadingContext = false
-			this.loadingTab = false
 			this.failedTabs.clear()
-			this.activeTab = this.resolveTab(tab, this.tabs)
+			this.activeTab = tab
 
 			if (this.availableTabs.length === 0) {
 				await this.initializeTabs()
@@ -348,14 +284,8 @@ export default {
 				return
 			}
 
-			this.contextRequestToken += 1
+			this.resetContext()
 			this.noteId = null
-			this.contextError = ''
-			this.currentNode = null
-			this.currentFolder = null
-			this.loadingContext = false
-			this.loadingTab = false
-			this.tabError = ''
 		},
 	},
 }
