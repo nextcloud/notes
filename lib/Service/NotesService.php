@@ -250,6 +250,12 @@ class NotesService {
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
+				// hidden folders (e.g. the ".attachments.<id>" folders the Text
+				// editor creates for inline images) are not user-created
+				// categories and must not show up as such
+				if (str_starts_with($node->getName(), '.')) {
+					continue;
+				}
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
 				$data_sub = self::gatherNoteFiles($customExtension, $node, $subCategory . '/');
