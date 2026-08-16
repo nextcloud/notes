@@ -89,6 +89,39 @@ test.describe('Note sidebar', () => {
 		await expect(page.getByText('Internal shares')).toBeVisible()
 	})
 
+	test('fills the sharing icon only while its tab is active', async ({ page }, testInfo: TestInfo) => {
+		const noteId = await createNote(page, uniqueTitle('sidebar-icons', testInfo))
+
+		await openSidebarFromActions(page, noteId, 'Share')
+
+		await expect(tabButton(page, 'sharing').locator('.share-variant-icon')).toBeVisible()
+		await expect(tabButton(page, 'sharing').locator('.share-variant-outline-icon')).toHaveCount(0)
+
+		await tabButton(page, 'files_versions').click()
+
+		await expect(tabButton(page, 'sharing').locator('.share-variant-outline-icon')).toBeVisible()
+		await expect(tabButton(page, 'sharing').locator('.share-variant-icon')).toHaveCount(0)
+	})
+
+	test('lines the tab icons up with each other', async ({ page }, testInfo: TestInfo) => {
+		const noteId = await createNote(page, uniqueTitle('sidebar-align', testInfo))
+
+		await openSidebarFromActions(page, noteId, 'Share')
+		await expect(tabButton(page, 'files_versions')).toBeVisible()
+
+		const icons = await page.evaluate(() => {
+			const box = (id: string) => {
+				const selector = `#tab-button-${id} :is(.icon-vue, .material-design-icon)`
+				const { y, height } = document.querySelector(selector)!.getBoundingClientRect()
+				return { y, height }
+			}
+			return { sharing: box('sharing'), versions: box('files_versions') }
+		})
+
+		expect(icons.versions.y).toBeCloseTo(icons.sharing.y, 0)
+		expect(icons.versions.height).toBeCloseTo(icons.sharing.height, 0)
+	})
+
 	test('falls back to the first tab when the requested one is unavailable', async ({ page }, testInfo: TestInfo) => {
 		const noteId = await createNote(page, uniqueTitle('sidebar-fallback', testInfo))
 
