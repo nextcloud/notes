@@ -7,7 +7,7 @@ import type { Locator, Page, TestInfo } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
 import { login } from '../support/login.ts'
-import { createNote, newNoteButton, openNoteActions, uniqueTitle } from '../support/note.ts'
+import { createNote, newNoteButton, openNoteActions, setNoteMode, uniqueTitle } from '../support/note.ts'
 
 interface EventBusWindow extends Window {
 	_nc_event_bus: {
@@ -85,5 +85,29 @@ test.describe('Note sidebar', () => {
 		await expect(sidebar(page)).toBeVisible({ timeout: 15000 })
 		await expect(tabButton(page, 'sharing')).toHaveAttribute('aria-selected', 'true')
 		await expect(page.getByText('Internal shares')).toBeVisible({ timeout: 15000 })
+	})
+
+	// The editor's own actions menu only exists in the markdown editor; the rich
+	// editor brings its own menu bar.
+	test.describe('markdown editor', () => {
+		test.beforeEach(async ({ page, request }) => {
+			await setNoteMode(request, 'edit')
+			await page.reload()
+		})
+
+		test.afterEach(async ({ request }) => {
+			await setNoteMode(request, 'rich')
+		})
+
+		test('opens the sidebar from the editor actions menu', async ({ page }, testInfo: TestInfo) => {
+			await createNote(page, uniqueTitle('sidebar-editor-menu', testInfo))
+
+			await page.locator('.action-buttons .action-item__menutoggle').first().click()
+			await page.getByRole('menuitem', { name: 'Open sidebar', exact: true }).click()
+
+			await expect(sidebar(page)).toBeVisible({ timeout: 15000 })
+			await expect(tabButton(page, 'sharing')).toHaveAttribute('aria-selected', 'true')
+			await expect(page.getByText('Internal shares')).toBeVisible({ timeout: 15000 })
+		})
 	})
 })

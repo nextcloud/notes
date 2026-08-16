@@ -73,6 +73,12 @@
 						</template>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</NcActionButton>
+					<NcActionButton @click="onOpenSidebar">
+						<template #icon>
+							<DockRightIcon :size="20" />
+						</template>
+						{{ t('notes', 'Open sidebar') }}
+					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.readonly">
 					<NcActionButton>
@@ -112,6 +118,7 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcModal from '@nextcloud/vue/components/NcModal'
+import DockRightIcon from 'vue-material-design-icons/DockRight.vue'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
@@ -131,6 +138,7 @@ export default {
 
 	components: {
 		ConflictSolution,
+		DockRightIcon,
 		PencilOutlineIcon,
 		EyeOutlineIcon,
 		FullscreenIcon,
@@ -266,6 +274,11 @@ export default {
 		onTogglePreview() {
 			this.preview = !this.preview
 			this.actionsOpen = false
+		},
+
+		onOpenSidebar() {
+			this.actionsOpen = false
+			emit('notes:sidebar:open', { noteId: this.noteId })
 		},
 
 		onDetectFullscreen() {
