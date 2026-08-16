@@ -26,7 +26,11 @@
 			:order="tab.order"
 		>
 			<template #icon>
-				<NcIconSvgWrapper :svg="tab.iconSvgInline" />
+				<template v-if="tab.id === 'sharing'">
+					<ShareVariantIcon v-if="resolvedTab === tab.id" :size="20" />
+					<ShareVariantOutlineIcon v-else :size="20" />
+				</template>
+				<NcIconSvgWrapper v-else :svg="tab.iconSvgInline" inline />
 			</template>
 
 			<NcEmptyContent v-if="loading">
@@ -70,6 +74,8 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
+import ShareVariantIcon from 'vue-material-design-icons/ShareVariant.vue'
+import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import NoteSidebarSubname from './NoteSidebarSubname.vue'
 import logger from '../Logger.js'
 import { selectNoteSidebarTabs } from '../sidebarTabs.js'
@@ -138,6 +144,8 @@ export default {
 		NcLoadingIcon,
 		FileOutlineIcon,
 		NoteSidebarSubname,
+		ShareVariantIcon,
+		ShareVariantOutlineIcon,
 	},
 
 	data() {
