@@ -27,6 +27,10 @@ function versionsList(page: Page): Locator {
 	return sidebar(page).locator('[data-files-versions-versions-list]')
 }
 
+function subname(page: Page): Locator {
+	return sidebar(page).locator('.app-sidebar-header__subname')
+}
+
 async function openSidebarFromActions(page: Page, noteId: number, action: string): Promise<void> {
 	await openNoteActions(page, noteId)
 	await page.getByRole('menuitem', { name: action, exact: true }).click()
@@ -47,6 +51,17 @@ test.describe('Note sidebar', () => {
 
 		await expect(tabButton(page, 'files_versions')).toHaveAttribute('aria-selected', 'true')
 		await expect(versionsList(page)).toBeAttached({ timeout: 15000 })
+	})
+
+	test('shows the size, the modification date and the owner of the note', async ({ page }, testInfo: TestInfo) => {
+		const noteId = await createNote(page, uniqueTitle('sidebar-subname', testInfo))
+
+		await openSidebarFromActions(page, noteId, 'Share')
+
+		await expect(subname(page)).toBeVisible({ timeout: 15000 })
+		await expect(subname(page)).toContainText(/\d+(\.\d+)?\s?(B|KB|MB|GB)/)
+		await expect(subname(page).locator('[data-timestamp]')).toBeVisible()
+		await expect(subname(page).locator('.user-bubble__content')).toContainText('admin')
 	})
 
 	test('renders the allow-listed tabs only', async ({ page }, testInfo: TestInfo) => {
