@@ -12,10 +12,47 @@ export function uniqueTitle(prefix: string, testInfo: TestInfo): string {
 	return `Playwright ${prefix} ${testInfo.parallelIndex}-${Date.now()}`
 }
 
+function apiUser(): string {
+	return process.env.NC_USER ?? 'admin'
+}
+
 function apiHeaders(): Record<string, string> {
-	const user = process.env.NC_USER ?? 'admin'
 	const password = process.env.NC_PASS ?? 'admin'
-	return { Authorization: `Basic ${Buffer.from(`${user}:${password}`).toString('base64')}` }
+	return { Authorization: `Basic ${Buffer.from(`${apiUser()}:${password}`).toString('base64')}` }
+}
+
+/**
+ * Create a note and rewrite it through WebDAV until it has one version per
+ * given revision. Writing goes around the app on purpose, so the note keeps its
+ * file name instead of being retitled from the changed content.
+ *
+ * @param request The request fixture to use
+ * @param revisions The contents to write, oldest first
+ * @return The id of the created note
+ */
+export async function createNoteRevisions(request: APIRequestContext, revisions: string[]): Promise<number> {
+	expect(revisions.length, 'revisions to write').toBeGreaterThan(0)
+
+	const created = await request.post('/index.php/apps/notes/api/v1/notes', {
+		headers: apiHeaders(),
+		data: { content: revisions[0] },
+	})
+	expect(created.ok(), 'creating the note').toBeTruthy()
+
+	const note = await created.json()
+	const path = note.internalPath.split('/').map(encodeURIComponent).join('/')
+
+	for (const content of revisions.slice(1)) {
+		// recent versions are thinned out to one per two seconds
+		await new Promise((resolve) => setTimeout(resolve, 3500))
+		const written = await request.put(`/remote.php/dav/files/${apiUser()}${path}`, {
+			headers: apiHeaders(),
+			data: content,
+		})
+		expect(written.ok(), 'writing a revision').toBeTruthy()
+	}
+
+	return note.id
 }
 
 /**
