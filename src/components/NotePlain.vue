@@ -221,6 +221,7 @@ export default {
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
 		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		subscribe('files_versions:restore:restored', this.onFileRestored)
+		subscribe('files_versions:restore:failed', this.onFileRestoreFailed)
 	},
 
 	unmounted() {
@@ -233,6 +234,7 @@ export default {
 		this.onUpdateTitle(null)
 		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		unsubscribe('files_versions:restore:restored', this.onFileRestored)
+		unsubscribe('files_versions:restore:failed', this.onFileRestoreFailed)
 	},
 
 	methods: {
@@ -339,22 +341,23 @@ export default {
 			}, interval * 1000)
 		},
 
-		refreshNote() {
-			if (!this.note) {
-				this.startRefreshTimer()
-				return
-			}
-			if (this.note.unsaved && !this.note.conflict) {
-				this.startRefreshTimer()
-				return
-			}
-			refreshNote(parseInt(this.noteId), this.etag).then((etag) => {
+		async refreshNote() {
+			try {
+				if (!this.note) {
+					return
+				}
+				if (this.note.unsaved && !this.note.conflict) {
+					return
+				}
+
+				const etag = await refreshNote(parseInt(this.noteId), this.etag)
 				if (etag) {
 					this.etag = etag
 					this.$forceUpdate()
 				}
+			} finally {
 				this.startRefreshTimer()
-			})
+			}
 		},
 
 		onEdit(newContent) {
@@ -432,23 +435,37 @@ export default {
 			this.showConflict = false
 		},
 
-		async onFileRestoreRequested(event) {
-			const { fileInfo } = event
+		// the node of a restore carries a numeric fileid, a version a string fileId
+		isCurrentNote(fileId) {
+			return this.note && Number(fileId) === this.note.id
+		},
 
-			if (!this.note || fileInfo.id !== this.note.id) {
+		onFileRestoreRequested({ node }) {
+			if (!this.isCurrentNote(node?.fileid)) {
 				return
 			}
 
 			this.loading = true
 		},
 
-		async onFileRestored(version) {
-			if (!this.note || version.fileId !== this.note.id) {
+		onFileRestoreFailed(version) {
+			if (!this.isCurrentNote(version?.fileId)) {
 				return
 			}
 
-			this.refreshNote()
 			this.loading = false
+		},
+
+		async onFileRestored({ node }) {
+			if (!this.isCurrentNote(node?.fileid)) {
+				return
+			}
+
+			try {
+				await this.refreshNote()
+			} finally {
+				this.loading = false
+			}
 		},
 	},
 }
