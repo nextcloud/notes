@@ -5,7 +5,11 @@
 
 <template>
 	<EditorHint v-if="editorHint" @close="editorHint = false" />
-	<NcContent v-else appName="notes" :contentClass="{loading: loading.notes}">
+	<NcContent v-else
+		appName="notes"
+		:class="{ 'notes-zen': zenMode }"
+		:contentClass="{loading: loading.notes}"
+	>
 		<NcAppNavigation :class="{loading: loading.notes, 'icon-error': error}">
 			<template #list>
 				<NcAppNavigationNew
@@ -24,6 +28,16 @@
 
 			<template #footer>
 				<ul class="app-navigation-entry__settings">
+					<NcAppNavigationItem
+						v-if="canUseZenMode"
+						:name="t('notes', 'Zen mode')"
+						:title="zenModeTitle"
+						@click.prevent="onToggleZenMode"
+					>
+						<template #icon>
+							<FocusIcon :size="20" />
+						</template>
+					</NcAppNavigationItem>
 					<NcAppNavigationItem
 						:name="t('notes', 'Notes settings')"
 						@click.prevent="openSettings"
@@ -45,6 +59,27 @@
 			</div>
 		</NcAppContent>
 		<router-view v-else @noteDeleted="onNoteDeleted" />
+		<!-- Wrapped in a div because NcButton's own scoped `position: relative` outranks any class we could add. -->
+		<div v-if="zenMode" class="zen-controls">
+			<NcButton variant="secondary"
+				:title="shareTitle"
+				:aria-label="shareTitle"
+				@click="onOpenShareSidebar"
+			>
+				<template #icon>
+					<ShareVariantOutlineIcon :size="20" />
+				</template>
+			</NcButton>
+			<NcButton variant="secondary"
+				:title="exitZenModeTitle"
+				:aria-label="exitZenModeTitle"
+				@click="onToggleZenMode"
+			>
+				<template #icon>
+					<FocusIcon :size="20" />
+				</template>
+			</NcButton>
+		</div>
 		<NoteShareSidebar />
 	</NcContent>
 </template>
@@ -53,13 +88,17 @@
 import { showSuccess, TOAST_PERMANENT_TIMEOUT, TOAST_UNDO_TIMEOUT } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
 import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcContent from '@nextcloud/vue/components/NcContent'
 import CogIcon from 'vue-material-design-icons/CogOutline.vue'
 import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
+import FocusIcon from 'vue-material-design-icons/ImageFilterCenterFocusStrongOutline.vue'
+import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
@@ -71,6 +110,11 @@ import store from './store.js'
 import { getDraggedNoteId, isNoteDrag } from './Util.js'
 
 import '@nextcloud/dialogs/style.css'
+
+const APPLE_PLATFORM = /mac|iphone|ipad|ipod/i
+const OPEN_DIALOG_SELECTOR = '.modal-mask, .dialog__modal'
+
+const isAppleDevice = APPLE_PLATFORM.test(navigator.userAgentData?.platform ?? navigator.platform ?? '')
 
 export default {
 	name: 'App',
@@ -84,9 +128,18 @@ export default {
 		NcAppNavigation,
 		NcAppNavigationNew,
 		NcAppNavigationItem,
+		NcButton,
 		NcContent,
+		FocusIcon,
 		NoteShareSidebar,
 		FolderPlusIcon,
+		ShareVariantOutlineIcon,
+	},
+
+	setup() {
+		return {
+			isMobile: useIsMobile(),
+		}
 	},
 
 	data() {
@@ -121,17 +174,53 @@ export default {
 		filteredNotes() {
 			return store.notes.getFilteredNotes()
 		},
+
+		zenMode() {
+			return store.app.zenMode
+		},
+
+		/* Mobile layouts have no chrome worth hiding and no room for the floating
+		   controls, so zen mode stays out of their way. */
+		canUseZenMode() {
+			return !this.loading.notes && !this.error && this.$route.name === 'note' && !this.isMobile
+		},
+
+		zenModeShortcut() {
+			return isAppleDevice ? 'Cmd + .' : 'Ctrl + .'
+		},
+
+		zenModeTitle() {
+			return t('notes', 'Zen mode ({shortcut})', { shortcut: this.zenModeShortcut })
+		},
+
+		exitZenModeTitle() {
+			return t('notes', 'Exit zen mode ({shortcut})', { shortcut: this.zenModeShortcut })
+		},
+
+		shareTitle() {
+			return t('notes', 'Share')
+		},
+	},
+
+	watch: {
+		canUseZenMode(canUseZenMode) {
+			if (!canUseZenMode) {
+				store.app.setZenMode(false)
+			}
+		},
 	},
 
 	created() {
 		store.app.setDocumentTitle(document.title)
 		window.addEventListener('beforeunload', this.onClose)
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
+		document.addEventListener('keydown', this.onKeyDown)
 		this.loadNotes()
 	},
 
 	unmounted() {
 		document.removeEventListener('visibilitychange', this.onVisibilityChange)
+		document.removeEventListener('keydown', this.onKeyDown)
 		this.stopRefreshTimer()
 	},
 
@@ -233,6 +322,40 @@ export default {
 
 		openSettings() {
 			this.settingsVisible = true
+		},
+
+		onToggleZenMode() {
+			store.app.toggleZenMode()
+		},
+
+		onOpenShareSidebar() {
+			emit('notes:share:open', { noteId: this.$route.params.noteId })
+		},
+
+		onKeyDown(event) {
+			// Key repeat would toggle the mode over and over while the keys are held.
+			if (event.repeat) {
+				return
+			}
+			// `code` pins the physical key across layouts, `key` covers those with the period elsewhere.
+			const isToggle = (event.ctrlKey || event.metaKey)
+				&& (event.code === 'Period' || event.key === '.')
+			const isExit = event.key === 'Escape' && this.zenMode
+			if (!isToggle && !isExit) {
+				return
+			}
+			if (isToggle && !this.canUseZenMode) {
+				return
+			}
+			if (document.querySelector(OPEN_DIALOG_SELECTOR)) {
+				return
+			}
+			event.preventDefault()
+			if (isToggle) {
+				this.onToggleZenMode()
+			} else {
+				store.app.setZenMode(false)
+			}
 		},
 
 		onNewCategory() {
@@ -359,5 +482,80 @@ export default {
 	flex: 1 1 auto;
 	min-height: 0;
 	height: auto !important;
+}
+</style>
+
+<style lang="scss">
+/* Not scoped: the hidden elements belong to @nextcloud/vue and to the server layout. */
+
+/* Same approach as the viewer app: hide the header instead of removing it, so the
+   layout below it never reflows. */
+body:has(.notes-zen) #header {
+	visibility: hidden;
+}
+
+/* Two nested boxes reserve room for the header and the rounded body container: the
+   server's #content and NcContent's own .content. Both have to give up that room. */
+#content:has(.notes-zen) {
+	inset: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 0;
+}
+
+/* The id outranks NcContent's scoped `.content[data-v-*]` rule, which is what sizes
+   this box down to the header and the body container margin. */
+#content-vue.notes-zen {
+	width: 100%;
+	height: 100%;
+	padding-bottom: env(safe-area-inset-bottom, 0px);
+	border-radius: 0;
+
+	/* The still-present navigation sibling keeps granting the content rounded start
+	   corners and a separator border. The id is needed to outrank that selector. */
+	.app-content {
+		border-inline-start: none;
+		border-radius: 0;
+	}
+}
+
+.notes-zen {
+	.app-navigation,
+	.app-navigation-toggle-wrapper,
+	.splitpanes__pane-list,
+	.splitpanes__splitter {
+		display: none;
+	}
+
+	/* overrides the inline width splitpanes sets */
+	.splitpanes__pane-details {
+		width: 100% !important;
+	}
+
+	.note-editor {
+		margin-inline: auto;
+	}
+
+	.note-container {
+		padding-inline-end: 0;
+	}
+}
+
+/* Bottom inline-start: the top belongs to NotePlain's action menu and the Text app's menubar. */
+.zen-controls {
+	display: flex;
+	gap: calc(var(--default-grid-baseline) * 2);
+	position: fixed;
+	bottom: calc(var(--default-grid-baseline) * 4);
+	inset-inline-start: calc(var(--default-grid-baseline) * 4);
+	z-index: 2000;
+	opacity: 0.7;
+	transition: opacity var(--animation-quick) ease-in-out;
+
+	&:hover,
+	&:focus-within {
+		opacity: 1;
+	}
 }
 </style>

@@ -37,6 +37,25 @@ export async function waitForNoteRoute(page: Page, previousNoteId: number | null
 	return noteId
 }
 
+/**
+ * Remove every note of the logged in user, so the app lands on the welcome screen.
+ *
+ * @param page The page object to use
+ */
+export async function deleteAllNotes(page: Page): Promise<void> {
+	const user = process.env.NC_USER ?? 'admin'
+	const password = process.env.NC_PASS ?? 'admin'
+	const headers = { Authorization: `Basic ${Buffer.from(`${user}:${password}`).toString('base64')}` }
+
+	const response = await page.request.get('/index.php/apps/notes/api/v1/notes', { headers })
+	expect(response.ok()).toBeTruthy()
+
+	for (const note of await response.json()) {
+		const deletion = await page.request.delete(`/index.php/apps/notes/api/v1/notes/${note.id}`, { headers })
+		expect(deletion.ok(), `deleting note ${note.id}`).toBeTruthy()
+	}
+}
+
 export async function createNote(page: Page, title: string): Promise<number> {
 	const previousNoteId = currentNoteId(page)
 	await newNoteButton(page).click()

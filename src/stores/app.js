@@ -12,6 +12,10 @@ export const useAppStore = defineStore('app', {
 		isManualSave: false,
 		documentTitle: null,
 		searchText: '',
+		/**
+		 * Zen mode hides the app's category sidebar and the note list, leaving just the note.
+		 */
+		zenMode: false,
 	}),
 
 	actions: {
@@ -37,6 +41,14 @@ export const useAppStore = defineStore('app', {
 
 		updateSearchText(searchText) {
 			this.searchText = searchText
+		},
+
+		setZenMode(zenMode) {
+			this.zenMode = zenMode
+		},
+
+		toggleZenMode() {
+			this.zenMode = !this.zenMode
 		},
 	},
 })
