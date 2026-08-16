@@ -15,6 +15,10 @@
 		@closed="onClosed"
 		@update:open="onToggle"
 	>
+		<template v-if="currentNode" #subname>
+			<NoteSidebarSubname :node="currentNode" />
+		</template>
+
 		<NcAppSidebarTab v-for="tab in tabs"
 			:id="tab.id"
 			:key="tab.id"
@@ -66,6 +70,7 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
+import NoteSidebarSubname from './NoteSidebarSubname.vue'
 import logger from '../Logger.js'
 import { selectNoteSidebarTabs } from '../sidebarTabs.js'
 import store from '../store.js'
@@ -86,6 +91,7 @@ export default {
 		NcIconSvgWrapper,
 		NcLoadingIcon,
 		FileOutlineIcon,
+		NoteSidebarSubname,
 	},
 
 	data() {
