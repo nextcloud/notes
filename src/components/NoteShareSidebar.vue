@@ -211,11 +211,13 @@ export default {
 		// the share event is kept so anything already emitting it keeps working
 		subscribe('notes:share:open', this.onShareOpen)
 		subscribe('notes:sidebar:open', this.onSidebarOpen)
+		subscribe('files:node:updated', this.onNodeUpdated)
 	},
 
 	unmounted() {
 		unsubscribe('notes:share:open', this.onShareOpen)
 		unsubscribe('notes:sidebar:open', this.onSidebarOpen)
+		unsubscribe('files:node:updated', this.onNodeUpdated)
 	},
 
 	methods: {
@@ -296,6 +298,19 @@ export default {
 				if (requestToken === this.contextRequestToken) {
 					this.loadingContext = false
 				}
+			}
+		},
+
+		/**
+		 * Tabs report what they changed about the note through this event — a
+		 * restored version for instance — and hand out a node of their own,
+		 * which they in turn watch for changes.
+		 *
+		 * @param {object} node the updated node
+		 */
+		onNodeUpdated(node) {
+			if (node?.source && node.source === this.currentNode?.source) {
+				this.currentNode = node
 			}
 		},
 

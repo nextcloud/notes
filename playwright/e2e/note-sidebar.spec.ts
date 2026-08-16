@@ -15,6 +15,11 @@ interface EventBusWindow extends Window {
 	}
 }
 
+interface NodeLike {
+	mtime: Date
+	clone: () => NodeLike
+}
+
 function sidebar(page: Page): Locator {
 	return page.locator('[data-cy-notes-share-sidebar]')
 }
@@ -25,6 +30,12 @@ function tabButton(page: Page, tabId: string): Locator {
 
 function versionsList(page: Page): Locator {
 	return sidebar(page).locator('[data-files-versions-versions-list]')
+}
+
+// scoped to the list rather than the sidebar: the sharing tab's element reports
+// itself as its own shadow root, which sends a piercing query into a loop
+function versionEntries(page: Page): Locator {
+	return page.locator('[data-files-versions-versions-list] [data-files-versions-version]')
 }
 
 function subname(page: Page): Locator {
@@ -51,6 +62,30 @@ test.describe('Note sidebar', () => {
 
 		await expect(tabButton(page, 'files_versions')).toHaveAttribute('aria-selected', 'true')
 		await expect(versionsList(page)).toBeAttached({ timeout: 15000 })
+	})
+
+	test('reloads the versions list when the note is updated', async ({ page }, testInfo: TestInfo) => {
+		const noteId = await createNote(page, uniqueTitle('sidebar-reload', testInfo))
+
+		await openSidebarFromActions(page, noteId, 'Versions')
+		await expect(versionEntries(page).first()).toBeVisible({ timeout: 15000 })
+
+		let reloads = 0
+		page.on('request', (request) => {
+			if (request.method() === 'PROPFIND' && request.url().includes('/remote.php/dav/versions/')) {
+				reloads += 1
+			}
+		})
+
+		// what files_versions hands out once it has restored a version
+		await page.evaluate(() => {
+			const tab = document.querySelector('files-versions_sidebar-tab') as unknown as { node: NodeLike }
+			const node = tab.node.clone()
+			node.mtime = new Date(node.mtime.getTime() - 60000)
+			;(window as unknown as EventBusWindow)._nc_event_bus.emit('files:node:updated', node)
+		})
+
+		await expect.poll(() => reloads, { timeout: 15000 }).toBeGreaterThan(0)
 	})
 
 	test('shows the size, the modification date and the owner of the note', async ({ page }, testInfo: TestInfo) => {
