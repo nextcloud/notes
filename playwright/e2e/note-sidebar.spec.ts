@@ -7,7 +7,8 @@ import type { Locator, Page, TestInfo } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
 import { login } from '../support/login.ts'
-import { createNote, newNoteButton, openNoteActions, setNoteMode, uniqueTitle } from '../support/note.ts'
+import { createNote, createNoteRevisions, newNoteButton, openNoteActions, setNoteMode, uniqueTitle } from '../support/note.ts'
+import { NoteEditor } from '../support/sections/NoteEditor.ts'
 
 interface EventBusWindow extends Window {
 	_nc_event_bus: {
@@ -86,6 +87,77 @@ test.describe('Note sidebar', () => {
 		})
 
 		await expect.poll(() => reloads, { timeout: 15000 }).toBeGreaterThan(0)
+	})
+
+	test('keeps the editor behind a spinner while a restored version loads', async ({ page, request }) => {
+		const noteId = await createNoteRevisions(request, [
+			'Restore spinner\n\nrevision one',
+			'Restore spinner\n\nrevision two',
+		])
+		// the editor has to hold this note, not whichever one was open before
+		await page.goto(`/index.php/apps/notes/note/${noteId}`)
+
+		// hold the restore long enough to observe what the editor does meanwhile
+		await page.route('**/remote.php/dav/versions/**', async (route) => {
+			if (route.request().method() === 'MOVE') {
+				await new Promise((resolve) => setTimeout(resolve, 3000))
+			}
+			await route.continue()
+		})
+
+		await openSidebarFromActions(page, noteId, 'Versions')
+
+		const entries = versionEntries(page)
+		await expect(entries.nth(1)).toBeVisible({ timeout: 15000 })
+
+		const editor = page.locator('.text-editor, .note-editor')
+		const spinner = page.locator('#app-content-vue.loading, .text-editor-wrapper.loading')
+		await expect(editor).toBeVisible()
+
+		await entries.last().hover()
+		await entries.last().locator('.action-item__menutoggle').first().click()
+		await page.getByRole('menuitem', { name: 'Restore version' }).click()
+
+		// the editor is gone while the restore runs, so it cannot be typed into
+		await expect(spinner).toBeVisible()
+		await expect(editor).toBeHidden()
+
+		await expect(editor).toBeVisible({ timeout: 20000 })
+		await new NoteEditor(page).expectText('Restore spinner\n\nrevision one')
+	})
+
+	test('gives the editor back when a restore fails', async ({ page, request }) => {
+		const noteId = await createNoteRevisions(request, [
+			'Restore failure\n\nrevision one',
+			'Restore failure\n\nrevision two',
+		])
+		await page.goto(`/index.php/apps/notes/note/${noteId}`)
+
+		await page.route('**/remote.php/dav/versions/**', async (route) => {
+			if (route.request().method() === 'MOVE') {
+				await new Promise((resolve) => setTimeout(resolve, 1000))
+				await route.fulfill({ status: 500 })
+				return
+			}
+			await route.continue()
+		})
+
+		await openSidebarFromActions(page, noteId, 'Versions')
+
+		const entries = versionEntries(page)
+		await expect(entries.nth(1)).toBeVisible({ timeout: 15000 })
+
+		const editor = page.locator('.text-editor, .note-editor')
+		await expect(editor).toBeVisible()
+
+		await entries.last().hover()
+		await entries.last().locator('.action-item__menutoggle').first().click()
+		await page.getByRole('menuitem', { name: 'Restore version' }).click()
+
+		await expect(page.locator('#app-content-vue.loading, .text-editor-wrapper.loading')).toBeVisible()
+
+		// a failed restore must not leave the editor behind the spinner
+		await expect(editor).toBeVisible({ timeout: 15000 })
 	})
 
 	test('shows the size, the modification date and the owner of the note', async ({ page }, testInfo: TestInfo) => {
