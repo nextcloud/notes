@@ -12,6 +12,33 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 6.0.2
+
+### Added
+
+* Zen mode [notes#1970](https://github.com/nextcloud/notes/pull/1970)
+* Add code comment conventions for AI agents to AGENTS.md [notes#1982](https://github.com/nextcloud/notes/pull/1982)
+* ai docs and helpers [notes#1981](https://github.com/nextcloud/notes/pull/1981)
+* from Vue 2 to Vue 3 [notes#1953](https://github.com/nextcloud/notes/pull/1953)
+* Pinia 2 [notes#1942](https://github.com/nextcloud/notes/pull/1942)
+
+### Changed
+
+* return 404 when attachment path resolves to a folder [notes#1923](https://github.com/nextcloud/notes/pull/1923)
+* hide dot-prefixed folders from category list [notes#1984](https://github.com/nextcloud/notes/pull/1984)
+* eslint config file and reach green CI [notes#1943](https://github.com/nextcloud/notes/pull/1943)
+* do not expose internal exception [notes#1935](https://github.com/nextcloud/notes/pull/1935)
+* pass onLoaded as option in createEditor [notes#1934](https://github.com/nextcloud/notes/pull/1934)
+
+ ### Dependencies
+
+* Update nextcloud/ocp dependency [notes#1979](https://github.com/nextcloud/notes/pull/1979)
+* Fix npm audit [notes#1980](https://github.com/nextcloud/notes/pull/1980)
+* Update nextcloud/ocp dependency [notes#1957](https://github.com/nextcloud/notes/pull/1957)
+* Fix npm audit [notes#1926](https://github.com/nextcloud/notes/pull/1926)
+* Update nextcloud/ocp dependency [notes#1941](https://github.com/nextcloud/notes/pull/1941)
+* Update nextcloud/ocp dependency [notes#1915](https://github.com/nextcloud/notes/pull/1915)
+
 ## 6.0.1
 
 ### Changed
