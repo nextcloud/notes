@@ -183,6 +183,10 @@ export const useNotesStore = defineStore('notes', {
 			const note = this.notesIds[updated.id]
 			if (note) {
 				copyNote(updated, note, ['id', 'etag', 'content'])
+				// not a note attribute, but it changes when the note moves category
+				if (updated.internalPath !== undefined) {
+					note.internalPath = updated.internalPath
+				}
 				// don't update meta-data over full data
 				if (updated.content !== undefined && updated.etag !== undefined) {
 					note.content = updated.content
