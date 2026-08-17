@@ -35,18 +35,25 @@
 				{{ actionFavoriteText }}
 			</NcActionButton>
 
-			<NcActionButton @click="onToggleSharing">
+			<NcActionButton @click="openSidebar('sharing')">
 				<template #icon>
 					<ShareVariantOutlineIcon :size="20" />
 				</template>
 				{{ t('notes', 'Share') }}
 			</NcActionButton>
 
-			<NcActionButton v-if="hasVersionsTab()" @click="onShowVersions">
+			<NcActionButton v-if="hasVersionsTab()" @click="openSidebar('files_versions')">
 				<template #icon>
 					<BackupRestoreIcon :size="20" />
 				</template>
 				{{ t('notes', 'Versions') }}
+			</NcActionButton>
+
+			<NcActionButton @click="openSidebar('notes-info')">
+				<template #icon>
+					<InformationOutlineIcon :size="20" />
+				</template>
+				{{ t('notes', 'Details') }}
 			</NcActionButton>
 
 			<NcActionButton v-if="!showCategorySelect" @click="showCategorySelect = true">
@@ -116,6 +123,7 @@ import NcListItem from '@nextcloud/vue/components/NcListItem'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import BackupRestoreIcon from 'vue-material-design-icons/BackupRestore.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
@@ -131,6 +139,7 @@ export default {
 		AlertOctagonOutlineIcon,
 		BackupRestoreIcon,
 		FolderOutlineIcon,
+		InformationOutlineIcon,
 		NcActionButton,
 		NcListItem,
 		StarIcon,
@@ -342,18 +351,13 @@ export default {
 			}
 		},
 
-		onToggleSharing() {
-			this.actionsOpen = false
-			emit('notes:sidebar:open', { noteId: this.note.id, tab: 'sharing' })
-		},
-
 		hasVersionsTab() {
 			return getSidebarTabs().some((tab) => tab?.id === 'files_versions')
 		},
 
-		onShowVersions() {
+		openSidebar(tab) {
 			this.actionsOpen = false
-			emit('notes:sidebar:open', { noteId: this.note.id, tab: 'files_versions' })
+			emit('notes:sidebar:open', { noteId: this.note.id, tab })
 		},
 
 		async onShareCreated(event) {
