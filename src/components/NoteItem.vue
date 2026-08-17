@@ -35,6 +35,13 @@
 				{{ actionFavoriteText }}
 			</NcActionButton>
 
+			<NcActionButton @click="onShowDetails">
+				<template #icon>
+					<InformationOutlineIcon :size="20" />
+				</template>
+				{{ t('notes', 'Details') }}
+			</NcActionButton>
+
 			<NcActionButton @click="onToggleSharing">
 				<template #icon>
 					<ShareVariantOutlineIcon :size="20" />
@@ -107,6 +114,7 @@ import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
@@ -121,6 +129,7 @@ export default {
 	components: {
 		AlertOctagonOutlineIcon,
 		FolderOutlineIcon,
+		InformationOutlineIcon,
 		NcActionButton,
 		NcListItem,
 		StarIcon,
@@ -330,6 +339,11 @@ export default {
 				this.loading.delete = false
 				this.actionsOpen = false
 			}
+		},
+
+		onShowDetails() {
+			this.actionsOpen = false
+			emit('notes:sidebar:open', { noteId: this.note.id, tab: 'notes-info' })
 		},
 
 		onToggleSharing() {
