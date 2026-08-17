@@ -3,12 +3,12 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "Greška",
+    "Share" : "Podjeli",
     "Files" : "Datoteke",
     "Delete" : "Delete",
     "Cancel" : "Otkaži",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Share" : "Podjeli",
     "Rename" : "Rename",
     "Edit" : "Izmjeni",
     "Today" : "Danas",

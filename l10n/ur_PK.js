@@ -3,11 +3,11 @@ OC.L10N.register(
     {
     "Notes" : "Notes",
     "Error" : "ایرر",
+    "Share" : "تقسیم",
     "Delete" : "Delete",
     "Cancel" : "منسوخ کریں",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Share" : "تقسیم",
     "Rename" : "Rename",
     "Edit" : "تدوین کریں",
     "Today" : "آج",

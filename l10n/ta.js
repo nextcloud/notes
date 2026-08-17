@@ -3,10 +3,10 @@ OC.L10N.register(
     {
     "Notes" : "குறிப்புகள்",
     "Error" : "வழு",
+    "Share" : "பகிர்வு",
     "Files" : "கோப்புகள்",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
-    "Share" : "பகிர்வு",
     "Edit" : "தொகுக்க",
     "Today" : "இன்று",
     "Yesterday" : "நேற்று",
