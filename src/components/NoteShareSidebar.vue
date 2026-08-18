@@ -185,6 +185,11 @@ export default {
 			return ids.includes(this.activeTab) ? this.activeTab : (ids[0] ?? this.activeTab)
 		},
 
+		routeNoteId() {
+			const noteId = Number(this.$route?.params?.noteId)
+			return Number.isFinite(noteId) ? noteId : null
+		},
+
 		currentView() {
 			return {
 				id: 'notes',
@@ -195,6 +200,19 @@ export default {
 
 	watch: {
 		resolvedTab: 'ensureContent',
+
+		/**
+		 * The sidebar is opened for one note but the list keeps navigating, so an
+		 * open sidebar follows whichever note is being looked at, the way the
+		 * Files sidebar does. The tab in view is kept.
+		 *
+		 * @param {number|null} noteId the note the route moved to
+		 */
+		routeNoteId(noteId) {
+			if (this.isOpen && noteId !== null && noteId !== this.noteId) {
+				this.onSidebarOpen({ noteId, tab: this.activeTab })
+			}
+		},
 	},
 
 	mounted() {

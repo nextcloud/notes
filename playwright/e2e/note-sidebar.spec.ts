@@ -143,6 +143,21 @@ test.describe('Note sidebar', () => {
 		await expect(detailRow(page, 'Reading time')).toHaveText('1 minute', { timeout: 15000 })
 	})
 
+	test('follows the note the list navigates to', async ({ page }, testInfo: TestInfo) => {
+		const first = await createSavedNote(page, uniqueTitle('sidebar-first', testInfo))
+		const second = await createSavedNote(page, uniqueTitle('sidebar-second', testInfo))
+
+		// the app is on the second note, so the sidebar starts where the route is
+		await openSidebarFromActions(page, second, 'Details')
+		const shown = await detailRow(page, 'Path').textContent()
+
+		await noteRow(page, first).getByRole('link').first().click()
+
+		// each note has a path of its own, so a different one means the sidebar moved
+		await expect(page).toHaveURL(new RegExp(`/note/${first}(\\?.*)?$`))
+		await expect(detailRow(page, 'Path')).not.toHaveText(shown ?? '')
+	})
+
 	test('marks the reading time unavailable when the note body cannot be loaded', async ({ page }, testInfo: TestInfo) => {
 		const noteId = await createSavedNote(page, uniqueTitle('sidebar-unreadable', testInfo))
 
