@@ -8,8 +8,11 @@ import { getClient, getRootPath } from '@nextcloud/files/dav'
 import { generateOcsUrl, generateUrl } from '@nextcloud/router'
 import logger from './Logger.js'
 
+/** Mimetype a note is stored as; the picker's blank card shows its icon. */
+export const NOTE_MIMETYPE = 'text/markdown'
+
 /** Mimetypes a note can be made from; the Office formats are dropped. */
-const NOTE_MIMETYPES = ['text/markdown', 'text/plain']
+const NOTE_MIMETYPES = [NOTE_MIMETYPE, 'text/plain']
 
 /** Requested size of a template card's thumbnail, in pixels. */
 const PREVIEW_SIZE = 256
@@ -60,7 +63,8 @@ export async function fetchNoteTemplates() {
 				.map((template) => ({
 					...template,
 					previewUrl: previewUrl(template),
-					iconSvgInline: creator.iconSvgInline,
+					// the card geometry follows the creator's aspect ratio
+					ratio: creator.ratio,
 				})))
 	} catch (error) {
 		logger.warn('Listing note templates has failed', { error })

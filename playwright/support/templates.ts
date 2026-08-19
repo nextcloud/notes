@@ -84,6 +84,7 @@ export async function stubTemplate(
 			extension: '.md',
 			iconSvgInline: null,
 			mimetypes: ['text/markdown'],
+			ratio: 1,
 			templates: [{
 				templateType: 'user',
 				templateId: `${TEMPLATE_FOLDER}/${basename}`,
