@@ -9,7 +9,7 @@
 		:name="t('notes', 'New note')"
 		@update:open="onClose"
 	>
-		<ul class="template-picker__list">
+		<ul class="template-picker__list" :style="style">
 			<li v-for="(option, index) in options" :key="option.key" class="template-picker__item">
 				<!--
 					A radio rather than a button: one choice out of a set. The input
@@ -27,17 +27,15 @@
 					<span class="template-picker__preview"
 						:class="{
 							'template-picker__preview--selected': selected === option.key,
-							'template-picker__preview--icon': !option.previewUrl,
+							'template-picker__preview--icon': option.isIcon,
 						}"
 					>
-						<img v-if="option.previewUrl"
-							:src="option.previewUrl"
+						<img :src="option.imageUrl"
 							alt=""
+							draggable="false"
 							class="template-picker__image"
 							@error="onPreviewFailed(option)"
 						>
-						<NcIconSvgWrapper v-else-if="option.iconSvgInline" :svg="option.iconSvgInline" :size="44" />
-						<FileOutlineIcon v-else :size="44" />
 					</span>
 					<span class="template-picker__title">{{ option.label }}</span>
 				</label>
@@ -61,21 +59,24 @@
 <script>
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDialog from '@nextcloud/vue/components/NcDialog'
-import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
-import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
-import { templateLabel } from '../TemplateService.js'
+import { NOTE_MIMETYPE, templateLabel } from '../TemplateService.js'
 
 const BLANK = 'blank'
+
+/** Card metrics of the Files template picker, in pixels. */
+const MARGIN = 8
+const BORDER = 2
+
+/** Aspect ratio to lay the cards out with when a creator reports none. */
+const FALLBACK_RATIO = 1.77
 
 export default {
 	name: 'TemplatePicker',
 
 	components: {
-		FileOutlineIcon,
 		NcButton,
 		NcDialog,
-		NcIconSvgWrapper,
 		NcLoadingIcon,
 	},
 
@@ -109,21 +110,42 @@ export default {
 					key: BLANK,
 					label: t('notes', 'Blank note'),
 					template: null,
-					previewUrl: null,
-					iconSvgInline: null,
+					imageUrl: OC.MimeType.getIconUrl(NOTE_MIMETYPE),
+					isIcon: true,
 				},
 				...this.templates.map((template) => {
 					const key = String(template.fileid ?? template.templateId)
+					const previewUrl = this.brokenPreviews.includes(key) ? null : template.previewUrl
 
 					return {
 						key,
 						label: templateLabel(template),
 						template,
-						previewUrl: this.brokenPreviews.includes(key) ? null : template.previewUrl,
-						iconSvgInline: template.iconSvgInline,
+						imageUrl: previewUrl ?? OC.MimeType.getIconUrl(template.mime),
+						isIcon: !previewUrl,
 					}
 				}),
 			]
+		},
+
+		/**
+		 * Card geometry as CSS variables, the way the Files picker sizes its own
+		 * cards: portrait templates get narrower cards than landscape ones, and
+		 * the preview is clipped to the creator's aspect ratio.
+		 *
+		 * @return {object} CSS variables for the card grid
+		 */
+		style() {
+			const ratio = this.templates.find((template) => template.ratio)?.ratio ?? FALLBACK_RATIO
+			const width = ratio > 1 ? MARGIN * 30 : MARGIN * 20
+
+			return {
+				'--margin': `${MARGIN}px`,
+				'--border': `${BORDER}px`,
+				'--width': `${width}px`,
+				'--height': `${Math.round(width / ratio)}px`,
+				'--fullwidth': `${width + 2 * MARGIN + 2 * BORDER}px`,
+			}
 		},
 	},
 
@@ -151,14 +173,15 @@ export default {
 <style lang="scss" scoped>
 .template-picker__list {
 	display: grid;
-	/* fixed card width and centred columns, like the Files template picker */
-	grid-template-columns: repeat(auto-fit, 240px);
-	/* every card in a row gets the height of the tallest preview */
+	/* at most 5 columns, centred: the gaps keep 6 card widths out of reach */
+	grid-template-columns: repeat(auto-fit, var(--fullwidth));
+	/* every card in a row gets the height of the tallest one */
 	grid-auto-rows: 1fr;
 	justify-content: center;
-	gap: calc(var(--default-grid-baseline) * 4);
-	padding: calc(var(--default-grid-baseline) * 2);
-	margin: 0;
+	max-width: calc(var(--fullwidth) * 6);
+	gap: calc(var(--margin) * 2);
+	padding: var(--margin) 0;
+	margin: 0 auto;
 }
 
 .template-picker__item {
@@ -179,25 +202,26 @@ export default {
 	flex: 1 1;
 	flex-direction: column;
 	align-items: center;
-	gap: var(--default-grid-baseline);
 	cursor: pointer;
 }
 
 .template-picker__preview {
-	display: flex;
-	flex: 1 1;
-	/* a note reads from its top, so the preview is not centred vertically */
-	align-items: flex-start;
-	justify-content: center;
-	width: 100%;
+	display: block;
+	/* the preview is clipped to the card instead of scaling it down */
 	overflow: hidden;
-	border: 2px solid var(--color-border);
+	flex: 1 1;
+	width: var(--width);
+	min-height: var(--height);
+	max-height: var(--height);
+	border: var(--border) solid var(--color-border);
 	border-radius: var(--border-radius-large);
 	background-color: var(--color-main-background);
 }
 
 .template-picker__preview--icon {
-	align-items: center;
+	/* centres the mimetype icon of a card without a thumbnail */
+	display: flex;
+	background-color: transparent;
 }
 
 .template-picker__preview--selected {
@@ -211,11 +235,19 @@ export default {
 }
 
 .template-picker__image {
-	/* the natural height keeps the whole preview visible instead of cropping it */
 	max-width: 100%;
+	object-fit: cover;
+}
+
+.template-picker__preview--icon .template-picker__image {
+	width: calc(var(--margin) * 8);
+	margin: auto;
+	object-fit: initial;
 }
 
 .template-picker__title {
+	max-width: calc(var(--width) + 2 * var(--border));
+	padding: var(--margin);
 	text-align: center;
 	overflow-wrap: anywhere;
 }

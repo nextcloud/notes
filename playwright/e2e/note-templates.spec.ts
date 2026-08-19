@@ -107,7 +107,7 @@ test.describe('Note templates', () => {
 		await expect(picker).toBeVisible()
 
 		// only the template claims a preview, the blank note keeps its icon
-		const thumbnail = picker.locator('.template-picker__image')
+		const thumbnail = picker.locator('.template-picker__preview:not(.template-picker__preview--icon) .template-picker__image')
 		await expect(thumbnail).toHaveCount(1)
 
 		// the URL has to be built from the file id, as the endpoint reports none
