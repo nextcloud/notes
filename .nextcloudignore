@@ -29,3 +29,5 @@
 /package-lock.json
 /node_modules/
 /src/
+/playwright/
+/playwright.config.ts
