@@ -73,6 +73,12 @@
 						</template>
 						{{ fullscreen ? t('notes', 'Exit full screen') : t('notes', 'Full screen') }}
 					</NcActionButton>
+					<NcActionButton @click="onOpenSidebar">
+						<template #icon>
+							<DockRightIcon :size="20" />
+						</template>
+						{{ t('notes', 'Open sidebar') }}
+					</NcActionButton>
 				</NcActions>
 				<NcActions v-if="note.readonly">
 					<NcActionButton>
@@ -112,6 +118,7 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcModal from '@nextcloud/vue/components/NcModal'
+import DockRightIcon from 'vue-material-design-icons/DockRight.vue'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import FullscreenIcon from 'vue-material-design-icons/Fullscreen.vue'
 import PencilOffOutlineIcon from 'vue-material-design-icons/PencilOffOutline.vue'
@@ -131,6 +138,7 @@ export default {
 
 	components: {
 		ConflictSolution,
+		DockRightIcon,
 		PencilOutlineIcon,
 		EyeOutlineIcon,
 		FullscreenIcon,
@@ -213,6 +221,7 @@ export default {
 		document.addEventListener('visibilitychange', this.onVisibilityChange)
 		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		subscribe('files_versions:restore:restored', this.onFileRestored)
+		subscribe('files_versions:restore:failed', this.onFileRestoreFailed)
 	},
 
 	unmounted() {
@@ -225,6 +234,7 @@ export default {
 		this.onUpdateTitle(null)
 		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		unsubscribe('files_versions:restore:restored', this.onFileRestored)
+		unsubscribe('files_versions:restore:failed', this.onFileRestoreFailed)
 	},
 
 	methods: {
@@ -266,6 +276,11 @@ export default {
 		onTogglePreview() {
 			this.preview = !this.preview
 			this.actionsOpen = false
+		},
+
+		onOpenSidebar() {
+			this.actionsOpen = false
+			emit('notes:sidebar:open', { noteId: this.noteId })
 		},
 
 		onDetectFullscreen() {
@@ -326,22 +341,23 @@ export default {
 			}, interval * 1000)
 		},
 
-		refreshNote() {
-			if (!this.note) {
-				this.startRefreshTimer()
-				return
-			}
-			if (this.note.unsaved && !this.note.conflict) {
-				this.startRefreshTimer()
-				return
-			}
-			refreshNote(parseInt(this.noteId), this.etag).then((etag) => {
+		async refreshNote() {
+			try {
+				if (!this.note) {
+					return
+				}
+				if (this.note.unsaved && !this.note.conflict) {
+					return
+				}
+
+				const etag = await refreshNote(parseInt(this.noteId), this.etag)
 				if (etag) {
 					this.etag = etag
 					this.$forceUpdate()
 				}
+			} finally {
 				this.startRefreshTimer()
-			})
+			}
 		},
 
 		onEdit(newContent) {
@@ -419,23 +435,37 @@ export default {
 			this.showConflict = false
 		},
 
-		async onFileRestoreRequested(event) {
-			const { fileInfo } = event
+		// the node of a restore carries a numeric fileid, a version a string fileId
+		isCurrentNote(fileId) {
+			return this.note && Number(fileId) === this.note.id
+		},
 
-			if (!this.note || fileInfo.id !== this.note.id) {
+		onFileRestoreRequested({ node }) {
+			if (!this.isCurrentNote(node?.fileid)) {
 				return
 			}
 
 			this.loading = true
 		},
 
-		async onFileRestored(version) {
-			if (!this.note || version.fileId !== this.note.id) {
+		onFileRestoreFailed(version) {
+			if (!this.isCurrentNote(version?.fileId)) {
 				return
 			}
 
-			this.refreshNote()
 			this.loading = false
+		},
+
+		async onFileRestored({ node }) {
+			if (!this.isCurrentNote(node?.fileid)) {
+				return
+			}
+
+			try {
+				await this.refreshNote()
+			} finally {
+				this.loading = false
+			}
 		},
 	},
 }
