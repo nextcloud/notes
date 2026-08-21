@@ -27,7 +27,23 @@
 		</template>
 	</NcAppNavigationItem>
 
-	<NcAppNavigationCaption v-show="!loading" :name="t('notes', 'Categories')" />
+	<NcAppNavigationCaption v-show="!loading"
+		:name="t('notes', 'Categories')"
+		:inline="1"
+		:class="{ 'drop-over-caption': dragOverNewCategory }"
+		@dragover="onNewCategoryDragOver($event)"
+		@dragleave="onNewCategoryDragLeave($event)"
+		@drop="onNewCategoryDrop($event)"
+	>
+		<template #actions>
+			<NcActionButton v-if="!hideNewCategoryAction" @click="startNewCategory()">
+				<template #icon>
+					<FolderPlusIcon :size="20" />
+				</template>
+				{{ t('notes', 'New category') }}
+			</NcActionButton>
+		</template>
+	</NcAppNavigationCaption>
 
 	<NcAppNavigationItem
 		v-if="newCategoryDraft"
@@ -63,7 +79,6 @@
 		:editLabel="t('notes', 'Rename category')"
 		:editPlaceholder="category.name"
 		:forceMenu="category.name !== ''"
-		:forceDisplayActions="category.name !== ''"
 		:class="{
 			'drop-over': category.name === dragOverCategory,
 			'category-no-actions': category.name === '',
@@ -106,6 +121,7 @@ import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
 import { deleteCategory as deleteCategoryRequest, getCategories, renameCategory as renameCategoryRequest, setCategory } from '../NotesService.js'
 import store from '../store.js'
@@ -122,16 +138,19 @@ export default {
 		NcCounterBubble,
 		FolderIcon,
 		FolderOutlineIcon,
+		FolderPlusIcon,
 		HistoryIcon,
 	},
 
 	props: {
 		loading: Boolean,
+		hideNewCategoryAction: Boolean,
 	},
 
 	data() {
 		return {
 			dragOverCategory: null,
+			dragOverNewCategory: false,
 			dragOverAllNotes: false,
 			newCategoryDraft: false,
 			newCategoryMonitor: null,
@@ -177,6 +196,40 @@ export default {
 				this.$refs.newCategoryItem?.handleEdit?.()
 				this.monitorNewCategoryEditing()
 			})
+		},
+
+		onNewCategoryDragOver(event) {
+			if (this.hideNewCategoryAction || !isNoteDrag(event)) {
+				return
+			}
+			event.preventDefault()
+			if (event.dataTransfer) {
+				event.dataTransfer.dropEffect = 'move'
+			}
+			this.dragOverNewCategory = true
+		},
+
+		onNewCategoryDragLeave(event) {
+			// dragleave also fires when moving onto a child element, so ignore
+			// events that are still inside the caption row
+			if (event.currentTarget?.contains(event.relatedTarget)) {
+				return
+			}
+			this.dragOverNewCategory = false
+		},
+
+		onNewCategoryDrop(event) {
+			if (this.hideNewCategoryAction) {
+				return
+			}
+			this.dragOverNewCategory = false
+			const noteId = getDraggedNoteId(event, (noteId) => store.notes.getNote(noteId))
+			if (noteId === null) {
+				return
+			}
+			event.preventDefault()
+			event.stopPropagation()
+			this.startNewCategory({ noteId })
 		},
 
 		stopNewCategoryMonitor() {
@@ -453,13 +506,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry) {
+/* The caption is not an .app-navigation-entry, so it opts into the same drop
+   hint by its own class. */
+.app-navigation-entry-wrapper.drop-over:deep(.app-navigation-entry),
+.app-navigation-caption.drop-over-caption {
 	background-color: var(--color-primary-element-light) !important;
 	outline: 2px dashed var(--color-primary-element);
 	outline-offset: -2px;
+	border-radius: var(--border-radius-element, var(--border-radius-large));
 }
 
-.app-navigation-entry-wrapper.category-no-actions:deep(.app-navigation-entry__counter-wrapper) {
-	margin-inline-end: calc(var(--default-grid-baseline) * 2 + var(--default-clickable-area));
+/* 22px is the counter bubble's diameter, so this centres a single-digit
+   bubble under the caption's icon. */
+.app-navigation-entry-wrapper:deep(.app-navigation-entry__utils) {
+	--counter-inset: calc((var(--default-clickable-area) - 22px) / 2);
+	position: relative;
+}
+
+.app-navigation-entry-wrapper:deep(.app-navigation-entry__utils .app-navigation-entry__counter-wrapper) {
+	margin-inline-end: var(--counter-inset);
+	transition: margin-inline-end var(--animation-quick) ease-in-out;
+}
+
+/* Out of the flow, so revealing it lets the counter animate aside instead of
+   being displaced instantly. */
+.app-navigation-entry-wrapper:deep(.app-navigation-entry__utils .action-item.app-navigation-entry__actions) {
+	position: absolute;
+	inset-inline-end: 0;
+}
+
+.app-navigation-entry-wrapper:not(.category-no-actions):deep(.app-navigation-entry:hover .app-navigation-entry__counter-wrapper),
+.app-navigation-entry-wrapper:not(.category-no-actions):deep(.app-navigation-entry:focus-within .app-navigation-entry__counter-wrapper),
+.app-navigation-entry-wrapper:not(.category-no-actions):deep(.app-navigation-entry.active .app-navigation-entry__counter-wrapper) {
+	margin-inline-end: calc(var(--counter-inset) + var(--default-clickable-area));
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.app-navigation-entry-wrapper:deep(.app-navigation-entry__utils .app-navigation-entry__counter-wrapper) {
+		transition: none;
+	}
 }
 </style>
