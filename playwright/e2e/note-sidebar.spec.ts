@@ -95,9 +95,9 @@ test.describe('Note sidebar', () => {
 		await expect(tabButton(page, 'notes-info').locator('.information-outline-icon')).toBeVisible()
 	})
 
-	test('falls back to the details tab when the requested one is unavailable', async ({ page }, testInfo: TestInfo) => {
+	test('falls back to the first tab when the requested one is unavailable', async ({ page }, testInfo: TestInfo) => {
 		const noteId = await createSavedNote(page, `# ${uniqueTitle('sidebar-fallback', testInfo)}\n\nfour plain words here`)
-		// a reload drops the body from the store, so the tab has to fetch it
+		// a reload drops the body from the store, so the details tab has to fetch it
 		await page.goto('/index.php/apps/notes/')
 
 		await page.evaluate((id) => {
@@ -106,8 +106,10 @@ test.describe('Note sidebar', () => {
 		}, noteId)
 
 		await expect(sidebar(page)).toBeVisible({ timeout: 15000 })
-		await expect(tabButton(page, 'notes-info')).toHaveAttribute('aria-selected', 'true')
-		// the fallback has to load the body too, not just render the tab
+		await expect(tabButton(page, 'sharing')).toHaveAttribute('aria-selected', 'true')
+
+		// moving on to the details tab after the fallback still loads the body
+		await tabButton(page, 'notes-info').click()
 		await expect(detailRow(page, 'Reading time')).toHaveText('1 minute')
 	})
 

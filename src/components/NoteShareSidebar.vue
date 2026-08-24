@@ -21,22 +21,6 @@
 			<NcDateTime v-if="subnameTimestamp" :timestamp="subnameTimestamp" />
 		</template>
 
-		<NcAppSidebarTab v-if="note"
-			id="notes-info"
-			:name="t('notes', 'Details')"
-			:order="0"
-		>
-			<template #icon>
-				<InformationIcon v-if="resolvedTab === 'notes-info'" :size="20" />
-				<InformationOutlineIcon v-else :size="20" />
-			</template>
-			<NoteInfo
-				:note="note"
-				:contentLoading="loadingContent"
-				:contentError="contentError"
-			/>
-		</NcAppSidebarTab>
-
 		<NcAppSidebarTab
 			v-if="sharingTab"
 			:id="sharingTab.id"
@@ -77,6 +61,23 @@
 			</template>
 			{{ t('notes', 'Sharing is not available right now.') }}
 		</NcEmptyContent>
+
+		<!-- the last (rightmost) tab, after any tabs the Files sidebar contributes -->
+		<NcAppSidebarTab v-if="note"
+			id="notes-info"
+			:name="t('notes', 'Details')"
+			:order="100"
+		>
+			<template #icon>
+				<InformationIcon v-if="resolvedTab === 'notes-info'" :size="20" />
+				<InformationOutlineIcon v-else :size="20" />
+			</template>
+			<NoteInfo
+				:note="note"
+				:contentLoading="loadingContent"
+				:contentError="contentError"
+			/>
+		</NcAppSidebarTab>
 	</NcAppSidebar>
 </template>
 
@@ -170,8 +171,8 @@ export default {
 		/** Ids of the tabs the sidebar renders, in the order they appear */
 		availableTabIds() {
 			return [
-				...(this.note ? ['notes-info'] : []),
 				...(this.sharingTab ? [this.sharingTab.id] : []),
+				...(this.note ? ['notes-info'] : []),
 			]
 		},
 
