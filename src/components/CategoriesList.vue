@@ -51,11 +51,7 @@
 		ref="newCategoryItem"
 		name=""
 		:draggable="false"
-		:editable="true"
-		:editLabel="t('notes', 'Rename category')"
 		:editPlaceholder="t('notes', 'New category')"
-		:forceMenu="true"
-		:forceDisplayActions="true"
 		class="category-draft"
 		@click.prevent.stop
 		@dragstart="onCategoryDragStart"
@@ -72,11 +68,10 @@
 	<NcAppNavigationItem v-for="category in categories"
 		v-show="!loading"
 		:key="category.name"
+		:ref="el => setCategoryItemRef(category.name, el)"
 		:name="categoryTitle(category.name)"
 		:active="category.name === selectedCategory"
 		:draggable="false"
-		:editable="category.name !== ''"
-		:editLabel="t('notes', 'Rename category')"
 		:editPlaceholder="category.name"
 		:forceMenu="category.name !== ''"
 		:class="{
@@ -100,6 +95,15 @@
 		<template v-if="category.name !== ''" #actions>
 			<NcActionButton
 				:closeAfterClick="true"
+				@click="onStartRenameCategory(category.name)"
+			>
+				<template #icon>
+					<PencilOutlineIcon :size="20" />
+				</template>
+				{{ t('notes', 'Rename category') }}
+			</NcActionButton>
+			<NcActionButton
+				:closeAfterClick="true"
 				@click="onDeleteCategory(category.name)"
 			>
 				<template #icon>
@@ -118,11 +122,12 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
 import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
 import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble'
-import DeleteIcon from 'vue-material-design-icons/Delete.vue'
+import DeleteIcon from 'vue-material-design-icons/DeleteOutline.vue'
 import FolderIcon from 'vue-material-design-icons/Folder.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import FolderPlusIcon from 'vue-material-design-icons/FolderPlusOutline.vue'
 import HistoryIcon from 'vue-material-design-icons/History.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import { deleteCategory as deleteCategoryRequest, getCategories, renameCategory as renameCategoryRequest, setCategory } from '../NotesService.js'
 import store from '../store.js'
 import { categoryLabel, getDraggedNoteId, isNoteDrag } from '../Util.js'
@@ -140,6 +145,7 @@ export default {
 		FolderOutlineIcon,
 		FolderPlusIcon,
 		HistoryIcon,
+		PencilOutlineIcon,
 	},
 
 	props: {
@@ -155,6 +161,7 @@ export default {
 			newCategoryDraft: false,
 			newCategoryMonitor: null,
 			newCategoryDropNoteId: null,
+			categoryItems: {},
 		}
 	},
 
@@ -182,6 +189,18 @@ export default {
 	},
 
 	methods: {
+		setCategoryItemRef(category, el) {
+			if (el) {
+				this.categoryItems[category] = el
+			} else {
+				delete this.categoryItems[category]
+			}
+		},
+
+		onStartRenameCategory(category) {
+			this.categoryItems[category]?.handleEdit?.()
+		},
+
 		categoryTitle(category) {
 			return categoryLabel(category)
 		},
