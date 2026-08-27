@@ -100,6 +100,7 @@ OC.L10N.register(
     "Last week" : "Semaine dernière",
     "This month" : "Ce mois-ci",
     "Last month" : "Le mois dernier",
+    "Could not read the template. Creating an empty note instead." : "Impossible de lire le modèle. Création d'une note vide à la place.",
     "Search for notes" : "Rechercher des notes",
     "Loading …" : "Chargement …",
     "Find in all categories" : "Rechercher dans toutes les catégories",
