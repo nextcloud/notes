@@ -5,15 +5,17 @@
 
 <template>
 	<!-- eslint-disable-next-line vue/no-v-html -->
-	<div class="note-preview" v-html="html" />
+	<div ref="preview" class="note-preview" v-html="html" />
 </template>
 
 <script>
 
+import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import MarkdownIt from 'markdown-it'
 import markdownItBidi from 'markdown-it-bidi'
 import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
+import logger from '../Logger.js'
 import { escapeHtml } from '../Util.js'
 
 export default {
@@ -56,6 +58,8 @@ export default {
 		return {
 			html: '',
 			md,
+			// attachment URL -> object URL of the retyped SVG blob
+			svgObjectUrls: {},
 		}
 	},
 
@@ -70,11 +74,62 @@ export default {
 		this.onUpdate()
 	},
 
+	mounted() {
+		// the initial onUpdate() runs before the DOM exists
+		this.hydrateSvgImages()
+	},
+
+	beforeUnmount() {
+		for (const objectUrl of Object.values(this.svgObjectUrls)) {
+			URL.revokeObjectURL(objectUrl)
+		}
+		this.svgObjectUrls = {}
+	},
+
 	methods: {
 		onUpdate() {
 			this.html = this.md.render(this.value)
+			this.$nextTick(() => this.hydrateSvgImages())
 			if (!this.readonly) {
 				setTimeout(() => this.prepareOnClickListener(), 100)
+			}
+		},
+
+		/**
+		 * Fill in the src of SVG attachments rendered by setImageRule.
+		 *
+		 * The attachment endpoint serves SVG as text/plain so that navigating to it
+		 * can never render it as a document, so it cannot be used as an <img> src
+		 * directly. Fetch it and retype the blob instead: SVG inside <img> is
+		 * rendered without scripting or external references.
+		 */
+		async hydrateSvgImages() {
+			const root = this.$refs.preview
+			if (!root) {
+				return
+			}
+
+			// claim every image synchronously so overlapping runs cannot load one twice
+			const targets = [...root.querySelectorAll('img[data-svg-src]')].map((img) => {
+				const url = img.dataset.svgSrc
+				delete img.dataset.svgSrc
+				return { img, url }
+			})
+
+			for (const { img, url } of targets) {
+				if (this.svgObjectUrls[url]) {
+					img.src = this.svgObjectUrls[url]
+					continue
+				}
+				try {
+					const response = await axios.get(url, { responseType: 'blob' })
+					const blob = response.data
+					const objectUrl = URL.createObjectURL(blob.slice(0, blob.size, 'image/svg+xml'))
+					this.svgObjectUrls[url] = objectUrl
+					img.src = objectUrl
+				} catch (e) {
+					logger.error('Could not load SVG attachment', { error: e })
+				}
 			}
 		},
 
@@ -127,6 +182,7 @@ export default {
 				const token = tokens[idx]
 				const aIndex = token.attrIndex('src')
 				let download = false
+				let svg = false
 				let path = token.attrs[aIndex][1]
 
 				if (!path.startsWith('http://')
@@ -140,7 +196,9 @@ export default {
 					)
 					token.attrs[aIndex][1] = path
 
-					if (!lowecasePath.endsWith('.jpg')
+					if (lowecasePath.endsWith('.svg')) {
+						svg = true
+					} else if (!lowecasePath.endsWith('.jpg')
 						&& !lowecasePath.endsWith('.jpeg')
 						&& !lowecasePath.endsWith('.bmp')
 						&& !lowecasePath.endsWith('.webp')
@@ -150,7 +208,15 @@ export default {
 					}
 				}
 
-				if (download) {
+				// escapeHtml() does not escape quotes, so it is not sufficient on its own
+				// for an attribute value
+				const attrValue = (str) => escapeHtml(str).replace(/"/g, '&quot;')
+
+				if (svg) {
+					// src is set by hydrateSvgImages() once the blob has been retyped
+					return '<img class="svg-attachment" data-svg-src="' + attrValue(path) + '"'
+						+ ' alt="' + attrValue(token.content) + '">'
+				} else if (download) {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
 					const tokenContent = escapeHtml(token.content)
 					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" '
@@ -258,6 +324,13 @@ export default {
 	& img {
 		width: 75%;
 		display: block;
+	}
+
+	// SVG may have no intrinsic size, so keep its own dimensions and only cap the width
+	& img.svg-attachment {
+		width: auto;
+		max-width: 75%;
+		height: auto;
 	}
 
 	.download-file {
