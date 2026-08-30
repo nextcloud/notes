@@ -333,6 +333,47 @@ class NotesService {
 	}
 
 	/**
+	 * Delete a single attachment from a note's own attachment folder.
+	 * Only files inside the note's `.attachments.<id>` folder can be removed;
+	 * basename() is used so the given path cannot traverse outside that folder.
+	 *
+	 * @throws NoteDoesNotExistException if the note or attachment does not exist
+	 * @throws NoteNotWritableException if the note is read-only
+	 * @throws InvalidPathException if the file name is invalid
+	 * @throws NotPermittedException
+	 */
+	public function deleteAttachment(string $userId, int $noteId, string $path) : void {
+		$note = $this->get($userId, $noteId);
+		$noteFile = $note->getFile();
+		$this->noteUtil->ensureNoteIsWritable($noteFile);
+
+		// restrict deletion to the note's own attachment folder;
+		// basename() strips any directory part so the path cannot traverse out
+		$fileName = basename($path);
+		$this->filenameValidator->validateFilename($fileName);
+
+		$attachmentFolderName = $this->noteUtil->getAttachmentFolderName($noteId);
+		$categoryFolder = $noteFile->getParent();
+		if (!$categoryFolder->nodeExists($attachmentFolderName)) {
+			throw new NoteDoesNotExistException();
+		}
+		$attachmentFolder = $categoryFolder->get($attachmentFolderName);
+		if (!($attachmentFolder instanceof Folder) || !$attachmentFolder->nodeExists($fileName)) {
+			throw new NoteDoesNotExistException();
+		}
+		$target = $attachmentFolder->get($fileName);
+		if (!($target instanceof File)) {
+			throw new NoteDoesNotExistException();
+		}
+		$target->delete();
+
+		// tidy up the attachment folder if it is now empty
+		if (count($attachmentFolder->getDirectoryListing()) === 0) {
+			$attachmentFolder->delete();
+		}
+	}
+
+	/**
 	 * @param $userId
 	 * @param $noteId
 	 * @param $fileDataArray
