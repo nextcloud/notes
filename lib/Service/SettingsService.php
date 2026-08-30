@@ -77,7 +77,7 @@ class SettingsService {
 			],
 			'loadRecentOnStartUp' => [
 				'default' => true,
-				'validate' => function ($value) {
+				'validate' => function (mixed $value) : bool {
 					return $value === 'true' || $value === true;
 				},
 			],
