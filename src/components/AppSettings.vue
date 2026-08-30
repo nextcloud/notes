@@ -76,7 +76,10 @@
 		</NcAppSettingsSection>
 
 		<NcAppSettingsSection id="start-up-section" :name="t('notes', 'Start Up')">
-			<NcCheckboxRadioSwitch :checked.sync="settings.loadRecentOnStartUp" @update:checked="onChangeSettings">
+			<NcCheckboxRadioSwitch
+				v-model="settings.loadRecentOnStartUp"
+				@update:modelValue="onChangeSettings"
+			>
 				{{ t('notes', 'Load recently updated note on startup') }}
 			</NcCheckboxRadioSwitch>
 		</NcAppSettingsSection>
@@ -236,17 +239,6 @@ export default {
 			this.onChangeSettings()
 				.then(() => {
 					this.$emit('reload')
-				})
-		},
-
-		onChangeStartUp(event) {
-			this.saving = true
-			this.settings.loadRecentOnStartUp = event.target.checked
-			return setSettings(this.settings)
-				.catch(() => {
-				})
-				.then(() => {
-					this.saving = false
 				})
 		},
 

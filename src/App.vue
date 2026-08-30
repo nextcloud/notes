@@ -229,16 +229,16 @@ export default {
 			fetchNotes()
 				.then((data) => {
 					if (data === null) {
+						// nothing changed
 						return
 					}
 					if (data.notes !== null) {
 						this.error = false
-						if (store.state.app.settings?.loadRecentOnStartUp) {
+						if (store.app.settings?.loadRecentOnStartUp) {
 							this.routeDefault(data.lastViewedNote)
 						} else {
 							this.routeWelcome()
 						}
-
 					} else if (this.loading.notes) {
 						// only show error state if not loading in background
 						this.error = data.errorMessage
