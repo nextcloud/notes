@@ -14,6 +14,7 @@ use OCP\Files\File;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use OCP\Files\IFilenameValidator;
+use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 
@@ -147,6 +148,7 @@ class NotesService {
 		$file = self::getFileById($customExtension, $notesFolder, $id);
 		$this->noteUtil->ensureNoteIsWritable($file);
 		$parent = $file->getParent();
+		$this->noteUtil->deleteAttachmentFolder($parent, $id);
 		$file->delete();
 		$this->noteUtil->deleteEmptyFolder($parent, $notesFolder);
 	}
@@ -259,6 +261,10 @@ class NotesService {
 			if ($hidden && !$showHidden) {
 				continue;
 			}
+			// a note's attachment folder is an implementation detail, not a category
+			if ($node instanceof Folder && preg_match('/^\.attachments\.\d+$/', $node->getName())) {
+				continue;
+			}
 			if ($node->getType() === FileInfo::TYPE_FOLDER && $node instanceof Folder) {
 				$subCategory = $categoryPrefix . $node->getName();
 				$data['categories'][] = $subCategory;
@@ -341,13 +347,15 @@ class NotesService {
 	public function createImage(string $userId, int $noteId, $fileDataArray) : array {
 		$note = $this->get($userId, $noteId);
 
-		$saveDir = $this->getAttachmentDirectoryForNote($note, $userId);
-		$fileName = self::getUniqueFileName($saveDir, $fileDataArray['name']);
-		$this->filenameValidator->validateFilename($fileName);
+		// validate the requested name before it is used in any filesystem lookup
+		$this->filenameValidator->validateFilename($fileDataArray['name']);
 
 		if ($fileDataArray['tmp_name'] === '') {
 			throw new ImageNotWritableException();
 		}
+
+		$saveDir = $this->getAttachmentDirectoryForNote($note, $userId);
+		$fileName = self::getUniqueFileName($saveDir, $fileDataArray['name']);
 
 		// read uploaded file from disk
 		$fp = fopen($fileDataArray['tmp_name'], 'r');
@@ -355,13 +363,13 @@ class NotesService {
 		fclose($fp);
 
 		$result = [];
-		$result['filename'] = '.attachments.' . $note->getId() . '/' . $fileName;
+		$result['filename'] = $this->noteUtil->getAttachmentFolderName($note->getId()) . '/' . $fileName;
 		$saveDir->newFile($fileName, $content);
 		return $result;
 	}
 
 	/**
-	 * Get unique file name in a directory. Add '(n)' suffix.
+	 * Get unique file name in a directory. Add '(n)' suffix, starting at '(1)' for the first conflict.
 	 *
 	 * @param Folder $dir
 	 * @param string $fileName
@@ -370,27 +378,24 @@ class NotesService {
 	 */
 	public static function getUniqueFileName(Folder $dir, string $fileName) : string {
 		$extension = pathinfo($fileName, PATHINFO_EXTENSION);
-		$counter = 1;
+		$counter = 0;
 		$uniqueFileName = $fileName;
-		if ($extension !== '') {
-			while ($dir->nodeExists($uniqueFileName)) {
-				$counter++;
-				$uniqueFileName = (string)preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
-			}
-		} else {
-			while ($dir->nodeExists($uniqueFileName)) {
-				$counter++;
-				$uniqueFileName = (string)preg_replace('/$/', ' (' . $counter . ')', $fileName);
+		while ($dir->nodeExists($uniqueFileName)) {
+			$counter++;
+			if ($extension !== '') {
+				$uniqueFileName = (string)preg_replace('/\.' . preg_quote($extension, '/') . '$/', ' (' . $counter . ').' . $extension, $fileName);
+			} else {
+				$uniqueFileName = $fileName . ' (' . $counter . ')';
 			}
 		}
 		return $uniqueFileName;
 	}
 
 	/**
-	 * Get or create file--specific attachment folder
+	 * Get or create note-specific attachment folder
 	 *
 	 * @param Note $note
-	 * @param string $userid
+	 * @param string $userId
 	 *
 	 * @return Folder
 	 * @throws NotFoundException
@@ -401,7 +406,7 @@ class NotesService {
 		$notesFolder = $this->getNotesFolder($userId);
 		$parentFolder = $this->noteUtil->getCategoryFolder($notesFolder, $note->getCategory());
 
-		$attachmentFolderName = '.attachments.' . $note->getId();
+		$attachmentFolderName = $this->noteUtil->getAttachmentFolderName($note->getId());
 		if ($parentFolder->nodeExists($attachmentFolderName)) {
 			$attachmentFolder = $parentFolder->get($attachmentFolderName);
 			if ($attachmentFolder instanceof Folder) {
