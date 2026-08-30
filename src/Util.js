@@ -29,6 +29,14 @@ export function categoryLabel(category) {
 	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
 }
 
+export function rootCategory(category) {
+	if (!category) {
+		return ''
+	}
+	const separator = category.indexOf('/')
+	return separator === -1 ? category : category.substring(0, separator)
+}
+
 export function routeIsNewNote($route) {
 	return Object.hasOwn($route.query, 'new')
 }

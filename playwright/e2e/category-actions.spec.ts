@@ -98,6 +98,33 @@ async function openCategoryActions(page: Page, category: string): Promise<void> 
 	await actionsButton.click()
 }
 
+async function createNoteViaApi(page: Page, category: string, title: string): Promise<number> {
+	const user = process.env.NC_USER ?? 'admin'
+	const password = process.env.NC_PASS ?? 'admin'
+	const headers = { Authorization: `Basic ${Buffer.from(`${user}:${password}`).toString('base64')}` }
+
+	const response = await page.request.post('/index.php/apps/notes/api/v1/notes', {
+		headers,
+		data: { category, content: `# ${title}` },
+	})
+	expect(response.ok(), `creating note in category "${category}"`).toBeTruthy()
+
+	const note = await response.json() as { id: number }
+	return note.id
+}
+
+async function openNoteFromList(page: Page, noteId: number): Promise<void> {
+	const previousNoteId = currentNoteId(page)
+	if (previousNoteId === noteId) {
+		return
+	}
+
+	const noteLink = page.locator(`a[href$="/note/${noteId}"]`).first()
+	await expect(noteLink).toBeVisible()
+	await noteLink.click()
+	await waitForNoteRoute(page, previousNoteId)
+}
+
 test.describe('Category actions', () => {
 	test.beforeEach(async ({ page }) => {
 		await login(page)
@@ -144,6 +171,27 @@ test.describe('Category actions', () => {
 		await expect(navigationRow(page, category)).toHaveCount(0)
 		await expectNavigationItemActive(page, 'All notes')
 		await expect(page).not.toHaveURL(deletedNoteUrl)
+	})
+
+	test('keeps All notes selected when opening a categorized note', async ({ page }, testInfo: TestInfo) => {
+		const category = uniqueTitle('all-notes', testInfo)
+		const seedNoteId = await createNoteViaApi(page, '', 'uncategorized seed')
+		const noteId = await createNoteViaApi(page, category, `${category} note`)
+
+		await openNotesApp(page)
+		await expect(navigationRow(page, category)).toBeVisible()
+
+		await navigationLink(page, 'All notes').click()
+		await expectNavigationItemActive(page, 'All notes')
+
+		// Start from an uncategorized note, then open the categorized one.
+		await openNoteFromList(page, seedNoteId)
+		await openNoteFromList(page, noteId)
+
+		// Opening a categorized note must not switch the active category away from All notes.
+		await expect(page).toHaveURL(new RegExp(`/note/${noteId}(\\?.*)?$`))
+		await expectNavigationItemActive(page, 'All notes')
+		await expect(navigationLink(page, category)).not.toHaveAttribute('aria-current', 'page')
 	})
 })
 
