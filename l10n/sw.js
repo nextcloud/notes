@@ -41,6 +41,7 @@ OC.L10N.register(
     "File extension" : "Kiendelezi cha faili",
     "Files" : "Mafaili",
     "Notes folder" : "Folda ya madokezo",
+    "Show hidden files" : "Onesha mafaili yaliyofichwa",
     "Mobile apps" : "Programu za simu",
     "Shortcuts" : "Njia za mikato",
     "Delete" : "Futa",

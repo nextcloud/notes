@@ -43,6 +43,7 @@ OC.L10N.register(
     "Custom file extension" : "خاس ھۆججەت كېڭەيتىلمىسى",
     "Files" : "ھۆججەتلەر",
     "Notes folder" : "خاتىرە قىسقۇچى",
+    "Show hidden files" : "يوشۇرۇن ھۆججەتلەرنى كۆرسەت",
     "Mobile apps" : "كۆچمە ئەپلەر",
     "Shortcuts" : "تېزلەتمە",
     "Delete" : "ئۆچۈر",

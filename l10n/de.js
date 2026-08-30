@@ -47,6 +47,7 @@ OC.L10N.register(
     "Custom file extension" : "Benutzerdefinierte Dateierweiterung",
     "Files" : "Dateien",
     "Notes folder" : "Notizenordner",
+    "Show hidden files" : "Versteckte Dateien anzeigen",
     "Mobile apps" : "Mobile-Apps",
     "Shortcuts" : "Tastaturkürzel",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Kategorie \"{category}\" und ihre {count} Notiz löschen?","Kategorie \"{category}\" und ihre {count} Notizen löschen?"],
