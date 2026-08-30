@@ -175,6 +175,7 @@ export default {
 				{ shortcut: 'Control Alt I', action: t('notes', 'Insert image') },
 				{ shortcut: 'Control /', action: t('notes', 'Switch between editor and viewer') },
 			],
+
 			initialShowHidden: Boolean(store.app.settings.showHidden),
 		}
 	},
