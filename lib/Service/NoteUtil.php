@@ -192,7 +192,7 @@ class NoteUtil {
 
 	public function getNotesFolderUserPath(string $userId, bool $saveInitial = false): ?string {
 		try {
-			$notesFolder = $this->settingsService->get($userId, 'notesPath', $saveInitial);
+			$notesFolder = $this->settingsService->getValueString($userId, 'notesPath', $saveInitial);
 			return $notesFolder;
 		} catch (NotesFolderException $e) {
 			$this->util->logger->debug("Failed to get notes folder for user $userId: " . $e->getMessage());

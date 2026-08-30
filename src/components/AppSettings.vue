@@ -71,7 +71,7 @@
 				v-model="settings.showHidden"
 				@update:modelValue="onChangeSettings"
 			>
-				{{ t('notes', 'Show hidden folders') }}
+				{{ t('notes', 'Show hidden files') }}
 			</NcCheckboxRadioSwitch>
 		</NcAppSettingsSection>
 
@@ -237,8 +237,8 @@ export default {
 			this.$emit('update:open', newValue)
 
 			if (this.settingsOpen) {
-				this.$data.initialShowHidden = Boolean(store.app.settings.showHidden)
-			} else if (this.$data.initialShowHidden !== store.app.settings.showHidden) {
+				this.initialShowHidden = Boolean(store.app.settings.showHidden)
+			} else if (this.initialShowHidden !== store.app.settings.showHidden) {
 				this.$emit('reload')
 			}
 		},
