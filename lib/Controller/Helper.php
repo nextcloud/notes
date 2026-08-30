@@ -145,6 +145,9 @@ class Helper {
 		} catch (\OCA\Notes\Service\NoteNotWritableException $e) {
 			$this->logException($e);
 			$response = $this->createErrorResponse(Http::STATUS_FORBIDDEN);
+		} catch (\OCP\Files\InvalidPathException $e) {
+			$this->logException($e);
+			$response = $this->createErrorResponse(Http::STATUS_BAD_REQUEST);
 		} catch (\OCP\Lock\LockedException $e) {
 			$this->logException($e);
 			$response = $this->createErrorResponse(Http::STATUS_LOCKED);

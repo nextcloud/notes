@@ -370,6 +370,22 @@ class NotesController extends Controller {
 		});
 	}
 
+	/**
+	 *
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function deleteAttachment(int $noteid, string $path): JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($noteid, $path) {
+			$this->notesService->deleteAttachment(
+				$this->helper->getUID(),
+				$noteid,
+				$path
+			);
+			return [];
+		});
+	}
+
 	private function inLockScope(Note $note, callable $callback) {
 		$isRichText = $this->settingsService->getValueString($this->helper->getUID(), 'noteMode') === 'rich';
 		$lockContext = new LockContext(

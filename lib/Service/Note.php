@@ -164,6 +164,7 @@ class Note {
 		// if the current path is not the new path, the file has to be renamed
 		if ($currentFilePath !== $newFilePath) {
 			$this->file->move($newFilePath);
+			$this->noteUtil->moveAttachmentFolder($oldParent, $folder, $this->getId());
 		}
 		$this->noteUtil->deleteEmptyFolder($oldParent, $this->notesFolder);
 	}
