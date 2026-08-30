@@ -73,6 +73,12 @@
 			>
 				{{ t('notes', 'Show hidden files') }}
 			</NcCheckboxRadioSwitch>
+			<NcCheckboxRadioSwitch
+				v-model="settings.loadRecentOnStartUp"
+				@update:modelValue="onChangeSettings"
+			>
+				{{ t('notes', 'Load recently updated note on startup') }}
+			</NcCheckboxRadioSwitch>
 		</NcAppSettingsSection>
 
 		<NcAppSettingsSection :name="t('notes', 'Mobile apps')">
