@@ -93,7 +93,7 @@ import logger from '../Logger.js'
 import { createNote } from '../NotesService.js'
 import store from '../store.js'
 import { fetchNoteTemplates, fetchTemplateContent } from '../TemplateService.js'
-import { categoryLabel } from '../Util.js'
+import { categoryLabel, rootCategory } from '../Util.js'
 
 export default {
 	name: 'NotesView',
@@ -146,6 +146,15 @@ export default {
 			return store.notes.getSelectedCategory()
 		},
 
+		note() {
+			const noteId = Number.parseInt(this.noteId, 10)
+			return Number.isFinite(noteId) ? store.notes.getNote(noteId) : null
+		},
+
+		noteCategory() {
+			return this.note?.category ?? null
+		},
+
 		filteredNotes() {
 			return store.notes.getFilteredNotes()
 		},
@@ -182,12 +191,30 @@ export default {
 	},
 
 	watch: {
-		category() { this.showFirstNotesOnly = true },
+		category() {
+			this.showFirstNotesOnly = true
+			this.hideVisibleNoteOutsideSelectedCategory()
+		},
+
+		noteId() {
+			this.showNote = true
+			this.updateVisibleNoteSelection()
+		},
+
+		noteCategory() {
+			this.updateVisibleNoteSelection()
+		},
+
+		showNote() {
+			this.updateVisibleNoteSelection()
+		},
+
 		searchText(value) { store.app.updateSearchText(value) },
 	},
 
 	created() {
 		this.updateTimeslots()
+		this.updateVisibleNoteSelection()
 		setInterval(this.updateTimeslots, 1000 * 60)
 	},
 
@@ -197,9 +224,46 @@ export default {
 
 	beforeUnmount() {
 		this.endOfNotesObserver.disconnect()
+		this.clearVisibleNoteSelection()
 	},
 
 	methods: {
+		clearVisibleNoteSelection() {
+			if (store.notes.getSelectedNote() !== null) {
+				store.notes.setSelectedNote(null)
+			}
+		},
+
+		updateVisibleNoteSelection() {
+			const noteId = Number.parseInt(this.noteId, 10)
+			if (!this.showNote || !Number.isFinite(noteId)) {
+				this.clearVisibleNoteSelection()
+				return
+			}
+
+			if (store.notes.getSelectedNote() !== noteId) {
+				store.notes.setSelectedNote(noteId)
+			}
+
+			if (this.note && store.notes.getSelectedCategory() !== null) {
+				const category = rootCategory(this.note.category)
+				if (store.notes.getSelectedCategory() !== category) {
+					store.notes.setSelectedCategory(category)
+				}
+			}
+		},
+
+		hideVisibleNoteOutsideSelectedCategory() {
+			if (!this.showNote || !this.note) {
+				return
+			}
+
+			const selectedCategory = store.notes.getSelectedCategory()
+			if (selectedCategory !== null && selectedCategory !== rootCategory(this.note.category)) {
+				this.showNote = false
+			}
+		},
+
 		updateTimeslots() {
 			const now = new Date()
 			// define the time groups we want to allow
