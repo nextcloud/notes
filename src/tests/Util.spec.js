@@ -13,6 +13,7 @@ import {
 	getDraggedNoteId,
 	isNoteDrag,
 	noteAttributes,
+	rootCategory,
 	routeIsNewNote,
 } from '../Util.js'
 
@@ -77,6 +78,20 @@ describe('categoryLabel', () => {
 
 	it('leaves a plain category alone', () => {
 		expect(categoryLabel('Recipes')).toBe('Recipes')
+	})
+})
+
+describe('rootCategory', () => {
+	it('returns the first category segment', () => {
+		expect(rootCategory('a/b/c')).toBe('a')
+	})
+
+	it('leaves a plain category alone', () => {
+		expect(rootCategory('Recipes')).toBe('Recipes')
+	})
+
+	it('leaves the empty category empty', () => {
+		expect(rootCategory('')).toBe('')
 	})
 })
 

@@ -244,13 +244,6 @@ export default {
 			if (store.notes.getSelectedNote() !== noteId) {
 				store.notes.setSelectedNote(noteId)
 			}
-
-			if (this.note && store.notes.getSelectedCategory() !== null) {
-				const category = rootCategory(this.note.category)
-				if (store.notes.getSelectedCategory() !== category) {
-					store.notes.setSelectedCategory(category)
-				}
-			}
 		},
 
 		hideVisibleNoteOutsideSelectedCategory() {
