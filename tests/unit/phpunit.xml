@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+ - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+<!--
+ - Unit tests: these run without a Nextcloud instance. Everything they touch is
+ - either pure logic or reachable through mocked OCP interfaces, so `composer
+ - test:unit` works on a bare checkout after `composer install`.
+ -
+ - The integration tests in tests/api/ are the complement: they need a running
+ - server and cover the HTTP contract that third-party clients depend on.
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:noNamespaceSchemaLocation="../../vendor/phpunit/phpunit/phpunit.xsd"
+		 bootstrap="bootstrap.php"
+		 colors="true"
+		 failOnWarning="true"
+		 failOnRisky="true"
+		 beStrictAboutOutputDuringTests="true"
+		 cacheDirectory=".phpunit.cache"
+>
+	<testsuites>
+		<testsuite name="notes unit tests">
+			<directory suffix="Test.php">.</directory>
+		</testsuite>
+	</testsuites>
+	<source>
+		<include>
+			<directory suffix=".php">../../lib</directory>
+		</include>
+	</source>
+</phpunit>

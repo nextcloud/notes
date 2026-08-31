@@ -324,22 +324,112 @@ class NoteUtil {
 		}
 	}
 
+	/**
+	 * Share types a note is reported as shared through, in this order.
+	 *
+	 * Deliberately a subset of IShare::TYPE_*: TYPE_USERGROUP for instance is
+	 * the per-user half of a group share and would double-report one share.
+	 *
+	 * @var list<int>
+	 */
+	private const SHARE_TYPES = [
+		IShare::TYPE_USER,
+		IShare::TYPE_GROUP,
+		IShare::TYPE_LINK,
+		IShare::TYPE_REMOTE,
+		IShare::TYPE_EMAIL,
+		IShare::TYPE_ROOM,
+		IShare::TYPE_DECK,
+		IShare::TYPE_SCIENCEMESH,
+	];
+
+	/**
+	 * Share types per file id, or null when nothing has been preloaded.
+	 *
+	 * A file id present with an empty list means "looked up, not shared" — that
+	 * is what makes the cache authoritative instead of just a hint.
+	 *
+	 * @var array<int, list<int>>|null
+	 */
+	private ?array $cachedShareTypes = null;
+
+	/**
+	 * Preload the share types for a whole notes tree.
+	 *
+	 * Without this, getShareTypes() runs one getSharesBy() query per share type
+	 * per note — eight queries for every note in the list, so a user with 500
+	 * notes produced 4000 queries just to render the "shared" indicator dot.
+	 *
+	 * getSharesInFolder() answers for every file in one folder at once, so the
+	 * cost becomes one call per folder instead of eight per note. It only ever
+	 * looks at the folder's direct children (passing $shallow = false is
+	 * rejected by the server), which is why every folder of the tree has to be
+	 * passed in rather than just the notes folder.
+	 *
+	 * Mirrors TagService::loadTags(), which solves the same problem for
+	 * favorites.
+	 *
+	 * @param list<Folder> $folders every folder of the notes tree, the notes folder included
+	 * @param list<int> $fileIds ids of the notes the caller is going to ask about
+	 */
+	public function loadShareTypes(array $folders, array $fileIds): void {
+		// an id with no entries is a note that is not shared; ids that never
+		// make it into this map fall back to a per-file lookup
+		$collected = array_fill_keys($fileIds, []);
+
+		foreach ($folders as $folder) {
+			$owner = $folder->getOwner();
+			if ($owner === null) {
+				// Without an owner there is nobody to ask for shares. Reporting
+				// "not shared" for the whole tree would be wrong, so give up on
+				// preloading entirely and let getShareTypes() query per file.
+				$this->cachedShareTypes = null;
+				return;
+			}
+
+			$sharesByFileId = $this->shareManager->getSharesInFolder($owner->getUID(), $folder, false);
+			foreach ($sharesByFileId as $fileId => $shares) {
+				if (!array_key_exists($fileId, $collected)) {
+					// a subfolder, or a file that is not a note
+					continue;
+				}
+				foreach ($shares as $share) {
+					$collected[$fileId][$share->getShareType()] = true;
+				}
+			}
+		}
+
+		// intersect against SHARE_TYPES to filter unreported types and to keep
+		// the declaration order, so the payload is unchanged by the preload
+		$this->cachedShareTypes = array_map(
+			static fn (array $present): array
+				=> array_values(array_intersect(self::SHARE_TYPES, array_keys($present))),
+			$collected,
+		);
+	}
+
+	/**
+	 * @return list<int> share types of $file, in SHARE_TYPES order
+	 */
 	public function getShareTypes(File $file): array {
+		$fileId = $file->getId();
+		if ($this->cachedShareTypes !== null && array_key_exists($fileId, $this->cachedShareTypes)) {
+			return $this->cachedShareTypes[$fileId];
+		}
+		return $this->fetchShareTypes($file);
+	}
+
+	/**
+	 * Per-file fallback for the single-note endpoints, where preloading a whole
+	 * tree would cost more than it saves.
+	 *
+	 * @return list<int>
+	 */
+	private function fetchShareTypes(File $file): array {
 		$userId = $file->getOwner()->getUID();
-		$requestedShareTypes = [
-			IShare::TYPE_USER,
-			IShare::TYPE_GROUP,
-			IShare::TYPE_LINK,
-			IShare::TYPE_REMOTE,
-			IShare::TYPE_EMAIL,
-			IShare::TYPE_ROOM,
-			IShare::TYPE_DECK,
-			// FIXME: Move to constant once Nextcloud 26 is the minimum supported version
-			15, // IShare::TYPE_SCIENCEMESH,
-		];
 		$shareTypes = [];
 
-		foreach ($requestedShareTypes as $shareType) {
+		foreach (self::SHARE_TYPES as $shareType) {
 			$shares = $this->shareManager->getSharesBy($userId, $shareType, $file, false, 1, 0);
 
 			if (count($shares)) {

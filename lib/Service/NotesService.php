@@ -36,6 +36,9 @@ class NotesService {
 			$fileIds = array_keys($data['files']);
 			// pre-load tags for all notes (performance improvement)
 			$this->noteUtil->getTagService()->loadTags($fileIds);
+			// same for share types, which are otherwise one query per share type
+			// per note (performance improvement)
+			$this->noteUtil->loadShareTypes($data['folders'], $fileIds);
 			$notes = array_map(function (File $file) use ($notesFolder) : Note {
 				return new Note($file, $notesFolder, $this->noteUtil);
 			}, $data['files']);
@@ -244,6 +247,12 @@ class NotesService {
 
 	/**
 	 * gather note files in given directory and all subdirectories
+	 *
+	 * `folders` carries every folder that was walked, the given one included.
+	 * NoteUtil::loadShareTypes() needs them because the bulk share lookup only
+	 * covers a folder's direct children.
+	 *
+	 * @return array{files: array<int, File>, categories: list<string>, folders: list<Folder>}
 	 */
 	private static function gatherNoteFiles(
 		string $customExtension,
@@ -254,6 +263,7 @@ class NotesService {
 		$data = [
 			'files' => [],
 			'categories' => [],
+			'folders' => [$folder],
 		];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
@@ -271,6 +281,7 @@ class NotesService {
 				$data_sub = self::gatherNoteFiles($customExtension, $node, $showHidden, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
 				$data['categories'] = $data['categories'] + $data_sub['categories'];
+				$data['folders'] = array_merge($data['folders'], $data_sub['folders']);
 			} elseif (self::isNote($node, $customExtension)) {
 				$data['files'][$node->getId()] = $node;
 			}

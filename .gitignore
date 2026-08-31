@@ -8,6 +8,8 @@ report
 coverage/
 clover.xml
 .php-cs-fixer.cache
+.phpunit.cache/
+.phpunit.result.cache
 appinfo/info.xsd
 
 # just sane ignores
