@@ -34,7 +34,7 @@
 		"@nextcloud/vue": "^9.8.2",
 		"diff": "^9.0.0",
 		"easymde": "^2.21.0",
-		"markdown-it": "^15.0.0",
+		"markdown-it": "^15.0.1",
 		"markdown-it-bidi": "^0.2.0",
 		"markdown-it-task-checkbox": "^1.0.6",
 		"pinia": "^4.0.3",
