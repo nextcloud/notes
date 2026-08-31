@@ -14,7 +14,7 @@
 		@click="onNoteSelected(note.id)"
 		@dragstart="onDragStart"
 	>
-		<template v-if="showCategoryTitle" #subname>
+		<template v-if="showCategoryTitle && note.category" #subname>
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
