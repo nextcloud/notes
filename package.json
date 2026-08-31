@@ -38,7 +38,7 @@
 		"markdown-it-bidi": "^0.2.0",
 		"markdown-it-task-checkbox": "^1.0.6",
 		"pinia": "^4.0.3",
-		"vue": "^3.5.41",
+		"vue": "^3.5.42",
 		"vue-material-design-icons": "^5.3.1",
 		"vue-router": "^5.2.0"
 	},
