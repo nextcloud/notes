@@ -14,7 +14,7 @@ Types of changes:
 
 ## 6.1.0
 
-## Added
+### Added
 
 * 📚 Note template support [notes#1971](https://github.com/nextcloud/notes/pull/1971)
 * Setting to show last viewed note or welcome screen on start up [notes#1578](https://github.com/nextcloud/notes/pull/1578)
@@ -24,15 +24,23 @@ Types of changes:
 * Add Nextcloud 36 support [notes#1997](https://github.com/nextcloud/notes/pull/1997)
 * 🧪 Add JS unit test setup, covering Util.js [notes#1989](https://github.com/nextcloud/notes/pull/1989)
 
-## Changed
+### Changed
 
 * ➕ Move "New category" next to the categories caption [notes#1968](https://github.com/nextcloud/notes/pull/1968)
 * Declare AGPL-3.0-or-later as SPDX identifier [notes#1992](https://github.com/nextcloud/notes/pull/1992)
 * Add playwright to .nextcloudignore [notes#1991](https://github.com/nextcloud/notes/pull/1991)
 * Add release relay job [notes#1993](https://github.com/nextcloud/notes/pull/1993)
 
+### Fixed
+
+* Notes list design feedback: hide category label for uncategorized notes, remove divider line, right-align category names [notes#2004](https://github.com/nextcloud/notes/pull/2004)
+
 ### Dependencies
 
+* Bump vue-router from 5.2.0 to 5.3.0 [notes#2009](https://github.com/nextcloud/notes/pull/2009)
+* Bump markdown-it from 15.0.0 to 15.0.1 [notes#2008](https://github.com/nextcloud/notes/pull/2008)
+* Bump vitest from 4.1.10 to 4.1.11 [notes#2005](https://github.com/nextcloud/notes/pull/2005)
+* Bump vue from 3.5.41 to 3.5.42 [notes#2006](https://github.com/nextcloud/notes/pull/2006)
 * Update nextcloud/ocp dependency [notes#2000](https://github.com/nextcloud/notes/pull/2000)
 
 ## 6.0.2
