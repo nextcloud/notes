@@ -73,7 +73,6 @@ export default {
 
 <style lang="scss" scoped>
 .notes-list:deep(.list-item__wrapper) {
-	border-block-end: 1px solid var(--color-border);
 	box-sizing: border-box;
 	padding-block: 0;
 }
