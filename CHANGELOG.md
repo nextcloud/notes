@@ -12,6 +12,29 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 6.1.0
+
+## Added
+
+* 📚 Note template support [notes#1971](https://github.com/nextcloud/notes/pull/1971)
+* Setting to show last viewed note or welcome screen on start up [notes#1578](https://github.com/nextcloud/notes/pull/1578)
+* Add highlights for notes and categories [notes#1839](https://github.com/nextcloud/notes/pull/1839)
+* Setting to show/hide hidden files [notes#1541](https://github.com/nextcloud/notes/pull/1541)
+* Improve attachment storage, add attachment deletion endpoint [notes#1998](https://github.com/nextcloud/notes/pull/1998)
+* Add Nextcloud 36 support [notes#1997](https://github.com/nextcloud/notes/pull/1997)
+* 🧪 Add JS unit test setup, covering Util.js [notes#1989](https://github.com/nextcloud/notes/pull/1989)
+
+## Changed
+
+* ➕ Move "New category" next to the categories caption [notes#1968](https://github.com/nextcloud/notes/pull/1968)
+* Declare AGPL-3.0-or-later as SPDX identifier [notes#1992](https://github.com/nextcloud/notes/pull/1992)
+* Add playwright to .nextcloudignore [notes#1991](https://github.com/nextcloud/notes/pull/1991)
+* Add release relay job [notes#1993](https://github.com/nextcloud/notes/pull/1993)
+
+### Dependencies
+
+* Update nextcloud/ocp dependency [notes#2000](https://github.com/nextcloud/notes/pull/2000)
+
 ## 6.0.2
 
 ### Added
@@ -30,7 +53,7 @@ Types of changes:
 * do not expose internal exception [notes#1935](https://github.com/nextcloud/notes/pull/1935)
 * pass onLoaded as option in createEditor [notes#1934](https://github.com/nextcloud/notes/pull/1934)
 
- ### Dependencies
+### Dependencies
 
 * Update nextcloud/ocp dependency [notes#1979](https://github.com/nextcloud/notes/pull/1979)
 * Fix npm audit [notes#1980](https://github.com/nextcloud/notes/pull/1980)
