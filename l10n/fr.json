@@ -45,6 +45,7 @@
     "Files" : "Fichiers",
     "Notes folder" : "Dossier des notes",
     "Show hidden files" : "Afficher les fichiers cachés",
+    "Load recently updated note on startup" : "Charger les notes récemment mises à jour au démarrage",
     "Mobile apps" : "Applications mobiles",
     "Shortcuts" : "Raccourcis",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Supprimer la catégorie \"{category}\" et sa {count} note ?","Supprimer la catégorie \"{category}\" et ses {count} notes ?","Supprimer la catégorie \"{category}\" et ses {count} notes ?"],

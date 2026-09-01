@@ -4,6 +4,7 @@ OC.L10N.register(
     "Notes" : "Notizen",
     "Error" : "Fehler",
     "Share" : "Deelen",
+    "Preview" : "Virschau",
     "Files" : "Fichieren",
     "Delete" : "Delete",
     "Cancel" : "Ofbriechen",

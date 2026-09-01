@@ -47,6 +47,7 @@ OC.L10N.register(
     "Files" : "Dosyalar",
     "Notes folder" : "Notlar klasörü",
     "Show hidden files" : "Gizli dosyalar görüntülensin",
+    "Load recently updated note on startup" : "Başlangıçta son güncellenen not yüklensin",
     "Mobile apps" : "Mobil uygulamalar",
     "Shortcuts" : "Kısa yollar",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["\"{category}\" kategorisi ve {count} notu silinsin mi?","\"{category}\" kategorisi ve {count} notu silinsin mi?"],

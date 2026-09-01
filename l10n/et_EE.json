@@ -44,6 +44,8 @@
     "Custom file extension" : "Sinu määratud faililaiend",
     "Files" : "Failid",
     "Notes folder" : "Märkmete kaust",
+    "Show hidden files" : "Näita peidetud faile",
+    "Load recently updated note on startup" : "Käivitamisel laadi viimatiuuendatud märge",
     "Mobile apps" : "Nutirakendused",
     "Shortcuts" : "Kiirklahvid",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Kas kustutad „{category}“ kategooria koos oma {count} märkmega?","Kas kustutad „{category}“ kategooria koos oma {count} märkmega?"],

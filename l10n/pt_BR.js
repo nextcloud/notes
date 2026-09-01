@@ -47,6 +47,7 @@ OC.L10N.register(
     "Files" : "Arquivos",
     "Notes folder" : "Pasta de notas",
     "Show hidden files" : "Mostrar arquivos ocultos",
+    "Load recently updated note on startup" : "Carregar a nota recém-atualizada na inicialização",
     "Mobile apps" : "Aplicativos móveis",
     "Shortcuts" : "Atalhos",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Excluir a categoria \"{category}\" sua {count} nota","Excluir a categoria \"{category}\" suas {count} de notas","Excluir a categoria \"{category}\" suas {count} notas"],

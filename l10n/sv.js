@@ -47,6 +47,7 @@ OC.L10N.register(
     "Files" : "Filer",
     "Notes folder" : "Anteckningsmapp",
     "Show hidden files" : "Visa dolda filer",
+    "Load recently updated note on startup" : "Läs in den senast uppdaterade anteckningen vid start",
     "Mobile apps" : "Mobilappar",
     "Shortcuts" : "Kortkommandon",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Ta bort kategorin \"{category}\" och dess {count} anteckning?","Ta bort kategorin \"{category}\" och dess {count} anteckningar?"],

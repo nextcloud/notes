@@ -47,6 +47,7 @@ OC.L10N.register(
     "Files" : "檔案<br><div><br data-mce-bogus=\"1\"></div>",
     "Notes folder" : "筆記資料夾",
     "Show hidden files" : "顯示隱藏的檔案",
+    "Load recently updated note on startup" : "啟動時載入最近更新的筆記",
     "Mobile apps" : "行動裝置應用程式",
     "Shortcuts" : "捷徑",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["刪除分類「{category}」與其 {count} 則筆記？"],
