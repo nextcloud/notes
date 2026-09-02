@@ -3,6 +3,7 @@
     "Error" : "Fehler",
     "Share" : "Deelen",
     "Preview" : "Virschau",
+    "Display" : "Usiicht",
     "Files" : "Fichieren",
     "Delete" : "Delete",
     "Cancel" : "Ofbriechen",
@@ -12,6 +13,7 @@
     "Edit" : "Änneren",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
+    "This week" : "Dës Woch",
     "Tasks" : "Tâchen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
