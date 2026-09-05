@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OCA\Notes\Controller;
 
 use OCA\Notes\Service\Note;
+use OCA\Notes\Service\NoteLinkService;
 use OCA\Notes\Service\NotesService;
 use OCA\Notes\Service\SettingsService;
 use OCP\AppFramework\Controller;
@@ -38,6 +39,7 @@ class NotesController extends Controller {
 		private IConfig $settings,
 		private IL10N $l10n,
 		private IMimeTypeDetector $mimeTypeDetector,
+		private NoteLinkService $noteLinkService,
 	) {
 		parent::__construct($AppName, $request);
 	}
@@ -260,9 +262,18 @@ class NotesController extends Controller {
 
 				case 'title':
 					if ($title !== null) {
+						$oldTitle = $note->getTitle();
 						$this->inLockScope($note, function () use ($note, $title) {
 							$note->setTitle($title);
 						});
+						// only an explicit rename refreshes link labels — autotitle
+						// fires while a new note is being typed
+						$this->noteLinkService->refreshLinkLabels(
+							$this->helper->getUID(),
+							$id,
+							$oldTitle,
+							$note->getTitle(),
+						);
 					}
 					$result = [
 						'title' => $note->getTitle(),

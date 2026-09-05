@@ -5,7 +5,7 @@
 
 <template>
 	<!-- eslint-disable-next-line vue/no-v-html -->
-	<div class="note-preview" v-html="html" />
+	<div class="note-preview" @click="onClickPreview" v-html="html" />
 </template>
 
 <script>
@@ -14,6 +14,7 @@ import { generateUrl } from '@nextcloud/router'
 import MarkdownIt from 'markdown-it'
 import markdownItBidi from 'markdown-it-bidi'
 import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
+import { parseNoteLink } from '../noteLinks.js'
 import { escapeHtml } from '../Util.js'
 
 export default {
@@ -84,6 +85,38 @@ export default {
 				items[i].removeEventListener('click', this.onClickListItem)
 				items[i].addEventListener('click', this.onClickListItem)
 			}
+		},
+
+		/**
+		 * A link to another note is navigation inside the app, so route to it
+		 * rather than letting the browser reload the whole page. Every other
+		 * link is left completely alone.
+		 *
+		 * Delegated from the container: the preview is replaced wholesale on
+		 * every edit, so per-anchor listeners would have to be re-attached each
+		 * time — which is what the task-checkbox handler already has to do.
+		 *
+		 * @param {MouseEvent} event the click
+		 */
+		onClickPreview(event) {
+			// let modified clicks do their usual thing (new tab, download, …)
+			if (event.defaultPrevented || event.button !== 0
+				|| event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+				return
+			}
+
+			const anchor = event.target?.closest?.('a[href]')
+			if (!anchor) {
+				return
+			}
+
+			const noteId = parseNoteLink(anchor.getAttribute('href'))
+			if (noteId === null) {
+				return
+			}
+
+			event.preventDefault()
+			this.$router.push({ name: 'note', params: { noteId: String(noteId) } }).catch(() => {})
 		},
 
 		onClickListItem(event) {

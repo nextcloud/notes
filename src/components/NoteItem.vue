@@ -35,6 +35,13 @@
 				{{ actionFavoriteText }}
 			</NcActionButton>
 
+			<NcActionButton @click="onCopyLink">
+				<template #icon>
+					<LinkVariantIcon :size="20" />
+				</template>
+				{{ t('notes', 'Copy link to note') }}
+			</NcActionButton>
+
 			<NcActionButton @click="onToggleSharing">
 				<template #icon>
 					<ShareVariantOutlineIcon :size="20" />
@@ -99,7 +106,7 @@
 </template>
 
 <script>
-import { showError } from '@nextcloud/dialogs'
+import { showError, showSuccess } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
@@ -107,10 +114,12 @@ import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
+import LinkVariantIcon from 'vue-material-design-icons/LinkVariant.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
 import StarIcon from 'vue-material-design-icons/Star.vue'
 import logger from '../Logger.js'
+import { noteLinkMarkdown } from '../noteLinks.js'
 import { deleteNote, fetchNote, setCategory, setFavorite, setTitle } from '../NotesService.js'
 import store from '../store.js'
 import { categoryLabel, routeIsNewNote } from '../Util.js'
@@ -121,6 +130,7 @@ export default {
 	components: {
 		AlertOctagonOutlineIcon,
 		FolderOutlineIcon,
+		LinkVariantIcon,
 		NcActionButton,
 		NcListItem,
 		StarIcon,
@@ -329,6 +339,22 @@ export default {
 				showError(this.t('notes', 'Error during preparing note for deletion.'))
 				this.loading.delete = false
 				this.actionsOpen = false
+			}
+		},
+
+		/**
+		 * Puts a ready-made markdown link on the clipboard, so linking notes is
+		 * paste rather than hand-writing a URL. Markdown rather than a bare URL
+		 * so the link arrives with the note's title as its label.
+		 */
+		async onCopyLink() {
+			this.actionsOpen = false
+			try {
+				await navigator.clipboard.writeText(noteLinkMarkdown(this.note))
+				showSuccess(this.t('notes', 'Link to note copied'))
+			} catch (error) {
+				logger.error('Copying the note link has failed', { error })
+				showError(this.t('notes', 'Could not copy the link to the note.'))
 			}
 		},
 
