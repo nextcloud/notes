@@ -47,6 +47,7 @@ OC.L10N.register(
     "Files" : "Comhaid",
     "Notes folder" : "Fillteán nótaí",
     "Show hidden files" : "Taispeáin comhaid i bhfolach",
+    "Load recently updated note on startup" : "Luchtaigh nóta a nuashonraíodh le déanaí ag am tosaithe",
     "Mobile apps" : "Aipeanna soghluaiste",
     "Shortcuts" : "Aicearraí",
     "_Delete category \"{category}\" and its {count} note?_::_Delete category \"{category}\" and its {count} notes?_" : ["Scrios an chatagóir \"{category}\" agus a nóta {count}?","Scrios an chatagóir \"{category}\" agus a nótaí {count}?","Scrios an chatagóir \"{category}\" agus a nótaí {count}?","Scrios an chatagóir \"{category}\" agus a nótaí {count}?","Scrios an chatagóir \"{category}\" agus a nótaí {count}?"],
