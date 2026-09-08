@@ -58,13 +58,15 @@ export default {
 		return {
 			html: '',
 			md,
-			// attachment URL -> object URL of the retyped SVG blob
+			// attachment URL -> Promise of the object URL of the retyped SVG blob,
+			// cleared whenever noteid changes so it does not grow across notes
 			svgObjectUrls: {},
 		}
 	},
 
 	watch: {
 		value: 'onUpdate',
+		noteid: 'clearSvgCache',
 	},
 
 	created() {
@@ -80,10 +82,7 @@ export default {
 	},
 
 	beforeUnmount() {
-		for (const objectUrl of Object.values(this.svgObjectUrls)) {
-			URL.revokeObjectURL(objectUrl)
-		}
-		this.svgObjectUrls = {}
+		this.clearSvgCache()
 	},
 
 	methods: {
@@ -93,6 +92,13 @@ export default {
 			if (!this.readonly) {
 				setTimeout(() => this.prepareOnClickListener(), 100)
 			}
+		},
+
+		clearSvgCache() {
+			for (const objectUrlPromise of Object.values(this.svgObjectUrls)) {
+				objectUrlPromise.then(URL.revokeObjectURL, () => {})
+			}
+			this.svgObjectUrls = {}
 		},
 
 		/**
@@ -117,20 +123,25 @@ export default {
 			})
 
 			for (const { img, url } of targets) {
-				if (this.svgObjectUrls[url]) {
-					img.src = this.svgObjectUrls[url]
-					continue
+				// cache the in-flight promise, not just the resolved URL, so two
+				// overlapping renders requesting the same attachment share one fetch
+				if (!this.svgObjectUrls[url]) {
+					this.svgObjectUrls[url] = this.fetchSvgObjectUrl(url).catch((e) => {
+						delete this.svgObjectUrls[url]
+						throw e
+					})
 				}
 				try {
-					const response = await axios.get(url, { responseType: 'blob' })
-					const blob = response.data
-					const objectUrl = URL.createObjectURL(blob.slice(0, blob.size, 'image/svg+xml'))
-					this.svgObjectUrls[url] = objectUrl
-					img.src = objectUrl
+					img.src = await this.svgObjectUrls[url]
 				} catch (e) {
 					logger.error('Could not load SVG attachment', { error: e })
 				}
 			}
+		},
+
+		async fetchSvgObjectUrl(url) {
+			const response = await axios.get(url, { responseType: 'blob' })
+			return URL.createObjectURL(new Blob([response.data], { type: 'image/svg+xml' }))
 		},
 
 		prepareOnClickListener() {
