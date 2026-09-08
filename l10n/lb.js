@@ -4,6 +4,8 @@ OC.L10N.register(
     "Notes" : "Notizen",
     "Error" : "Fehler",
     "Share" : "Deelen",
+    "Preview" : "Virschau",
+    "Display" : "Usiicht",
     "Files" : "Fichieren",
     "Delete" : "Delete",
     "Cancel" : "Ofbriechen",
@@ -13,6 +15,7 @@ OC.L10N.register(
     "Edit" : "Änneren",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
+    "This week" : "Dës Woch",
     "Tasks" : "Tâchen"
 },
 "nplurals=2; plural=(n != 1);");

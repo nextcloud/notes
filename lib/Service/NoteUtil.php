@@ -79,6 +79,44 @@ class NoteUtil {
 	}
 
 	/**
+	 * Name of the folder a note's attachments (uploaded via the API) are stored in.
+	 */
+	public function getAttachmentFolderName(int $noteId) : string {
+		return '.attachments.' . $noteId;
+	}
+
+	/**
+	 * Move a note's attachment folder along with the note when its category changes.
+	 */
+	public function moveAttachmentFolder(Folder $oldParent, Folder $newParent, int $noteId) : void {
+		if ($oldParent->getPath() === $newParent->getPath()) {
+			return;
+		}
+		$folderName = $this->getAttachmentFolderName($noteId);
+		if (!$oldParent->nodeExists($folderName) || $newParent->nodeExists($folderName)) {
+			return;
+		}
+		$attachmentFolder = $oldParent->get($folderName);
+		if ($attachmentFolder instanceof Folder) {
+			$attachmentFolder->move($newParent->getPath() . '/' . $folderName);
+		}
+	}
+
+	/**
+	 * Delete a note's attachment folder, if it exists.
+	 */
+	public function deleteAttachmentFolder(Folder $parent, int $noteId) : void {
+		$folderName = $this->getAttachmentFolderName($noteId);
+		if (!$parent->nodeExists($folderName)) {
+			return;
+		}
+		$attachmentFolder = $parent->get($folderName);
+		if ($attachmentFolder instanceof Folder) {
+			$attachmentFolder->delete();
+		}
+	}
+
+	/**
 	 * get path of file and the title.txt and check if they are the same
 	 * file. If not the title needs to be renamed
 	 *
@@ -192,7 +230,7 @@ class NoteUtil {
 
 	public function getNotesFolderUserPath(string $userId, bool $saveInitial = false): ?string {
 		try {
-			$notesFolder = $this->settingsService->get($userId, 'notesPath', $saveInitial);
+			$notesFolder = $this->settingsService->getValueString($userId, 'notesPath', $saveInitial);
 			return $notesFolder;
 		} catch (NotesFolderException $e) {
 			$this->util->logger->debug("Failed to get notes folder for user $userId: " . $e->getMessage());
@@ -202,7 +240,7 @@ class NoteUtil {
 
 	public function getOrCreateNotesFolder(string $userId, bool $create = true) : Folder {
 		$userFolder = $this->getRoot()->getUserFolder($userId);
-		$notesPath = $this->settingsService->get($userId, 'notesPath');
+		$notesPath = $this->settingsService->getValueString($userId, 'notesPath');
 
 		['path' => $defaultPath, 'folder' => $folder] = $this->settingsService->getDefaultNotesNode($userId);
 		$allowShared = $notesPath !== $defaultPath;

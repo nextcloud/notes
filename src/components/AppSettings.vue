@@ -67,6 +67,18 @@
 					</NcFormBoxButton>
 				</NcFormBox>
 			</NcFormGroup>
+			<NcCheckboxRadioSwitch
+				v-model="settings.showHidden"
+				@update:modelValue="onChangeSettings"
+			>
+				{{ t('notes', 'Show hidden files') }}
+			</NcCheckboxRadioSwitch>
+			<NcCheckboxRadioSwitch
+				v-model="settings.loadRecentOnStartUp"
+				@update:modelValue="onChangeSettings"
+			>
+				{{ t('notes', 'Load recently updated note on startup') }}
+			</NcCheckboxRadioSwitch>
 		</NcAppSettingsSection>
 
 		<NcAppSettingsSection :name="t('notes', 'Mobile apps')">
@@ -90,6 +102,7 @@ import { getFilePickerBuilder } from '@nextcloud/dialogs'
 import NcAppSettingsDialog from '@nextcloud/vue/components/NcAppSettingsDialog'
 import NcAppSettingsSection from '@nextcloud/vue/components/NcAppSettingsSection'
 import NcAppSettingsShortcutsSection from '@nextcloud/vue/components/NcAppSettingsShortcutsSection'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcFormBox from '@nextcloud/vue/components/NcFormBox'
 import NcFormBoxButton from '@nextcloud/vue/components/NcFormBoxButton'
 import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
@@ -113,6 +126,7 @@ export default {
 		NcTextField,
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
+		NcCheckboxRadioSwitch,
 		HelpMobile,
 		NcAppSettingsShortcutsSection,
 		NcHotkeyList,
@@ -167,6 +181,8 @@ export default {
 				{ shortcut: 'Control Alt I', action: t('notes', 'Insert image') },
 				{ shortcut: 'Control /', action: t('notes', 'Switch between editor and viewer') },
 			],
+
+			initialShowHidden: Boolean(store.app.settings.showHidden),
 		}
 	},
 
@@ -226,6 +242,12 @@ export default {
 		setSettingsOpen(newValue) {
 			this.settingsOpen = newValue
 			this.$emit('update:open', newValue)
+
+			if (this.settingsOpen) {
+				this.initialShowHidden = Boolean(store.app.settings.showHidden)
+			} else if (this.initialShowHidden !== store.app.settings.showHidden) {
+				this.$emit('reload')
+			}
 		},
 	},
 }

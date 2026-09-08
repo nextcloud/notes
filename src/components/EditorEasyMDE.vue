@@ -243,10 +243,11 @@ export default {
 				axios.post(generateUrl('apps/notes') + '/notes/' + id + '/attachment', data)
 					.then((response) => {
 						const name = response.data.filename
+						const encodedName = name.split('/').map(encodeURIComponent).join('/')
 						const position = {
 							line: cursor.line,
 						}
-						doc.replaceRange('![' + originalFilename + '](' + name + ')\n', position)
+						doc.replaceRange('![' + originalFilename + '](' + encodedName + ')\n', position)
 						cm.focus()
 					})
 					.catch((error) => {

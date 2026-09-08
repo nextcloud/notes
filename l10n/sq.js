@@ -8,6 +8,7 @@ OC.L10N.register(
     "Preview" : "Parapamje ",
     "General" : "I përgjithshëm",
     "Files" : "Skedarët",
+    "Show hidden files" : "Shfaq skedarët e fshehur",
     "Delete" : "Fshini",
     "Cancel" : "Anullo",
     "All notes" : "Të gjitha shënimet",

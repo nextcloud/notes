@@ -305,4 +305,21 @@ class NotesApiController extends ApiController {
 			);
 		});
 	}
+
+	/**
+	 *
+	 */
+	#[NoAdminRequired]
+	#[CORS]
+	#[NoCSRFRequired]
+	public function deleteAttachment(int $noteid, string $path): JSONResponse {
+		return $this->helper->handleErrorResponse(function () use ($noteid, $path): array {
+			$this->service->deleteAttachment(
+				$this->helper->getUID(),
+				$noteid,
+				$path
+			);
+			return [];
+		});
+	}
 }

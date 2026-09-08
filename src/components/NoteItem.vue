@@ -14,7 +14,7 @@
 		@click="onNoteSelected(note.id)"
 		@dragstart="onDragStart"
 	>
-		<template v-if="showCategoryTitle" #subname>
+		<template v-if="showCategoryTitle && note.category" #subname>
 			{{ categoryTitle }}
 		</template>
 		<template #icon>
@@ -358,6 +358,10 @@ export default {
 
 :deep(.list-item) {
 	padding: 0;
+}
+
+:deep(.list-item-content__subname) {
+	text-align: end;
 }
 
 :deep(.list-item__anchor) {

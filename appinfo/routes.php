@@ -115,6 +115,12 @@ return ['routes' => [
 		'verb' => 'POST',
 		'requirements' => ['noteid' => '\d+'],
 	],
+	[
+		'name' => 'notes#deleteAttachment',
+		'url' => '/notes/{noteid}/attachment',
+		'verb' => 'DELETE',
+		'requirements' => ['noteid' => '\d+'],
+	],
 
 	//////////  S E T T I N G S  //////////
 	['name' => 'settings#set', 'url' => '/settings', 'verb' => 'PUT'],
@@ -212,7 +218,7 @@ return ['routes' => [
 		'url' => '/api/{apiVersion}/attachment/{noteid}',
 		'verb' => 'GET',
 		'requirements' => [
-			'apiVersion' => '(v1.4)',
+			'apiVersion' => '(v1|v1.4)',
 			'noteid' => '\d+'
 		],
 	],
@@ -221,7 +227,16 @@ return ['routes' => [
 		'url' => '/api/{apiVersion}/attachment/{noteid}',
 		'verb' => 'POST',
 		'requirements' => [
-			'apiVersion' => '(v1.4)',
+			'apiVersion' => '(v1|v1.4)',
+			'noteid' => '\d+'
+		],
+	],
+	[
+		'name' => 'notes_api#deleteAttachment',
+		'url' => '/api/{apiVersion}/attachment/{noteid}',
+		'verb' => 'DELETE',
+		'requirements' => [
+			'apiVersion' => '(v1|v1.4)',
 			'noteid' => '\d+'
 		],
 	],
