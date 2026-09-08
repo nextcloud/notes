@@ -49,7 +49,7 @@
 		"@nextcloud/eslint-config": "^9.0.1",
 		"@nextcloud/stylelint-config": "^3.2.2",
 		"@nextcloud/webpack-vue-config": "^7.0.4",
-		"@playwright/test": "^1.62.1",
+		"@playwright/test": "^1.63.0",
 		"@vitest/coverage-v8": "^4.1.10",
 		"jsdom": "^30.0.1",
 		"terser-webpack-plugin": "^5.6.1",
