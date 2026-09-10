@@ -48,8 +48,8 @@ export default defineConfig({
 		url: "http://127.0.0.1:8089/index.php/apps/notes/",
 		timeout: 5 * 60 * 1000, // max. 5 minutes for creating the container
 		wait: {
-			// we wait for this line to appear in the output of the webserver until consider it done
-			stdout: /Nextcloud is now ready to use/,
+			// the start script prints this line once the Notes API answers requests
+			stdout: /Notes API is ready/,
 		},
 	},
 
