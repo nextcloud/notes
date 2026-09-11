@@ -46,6 +46,7 @@ OC.L10N.register(
     "Mobile apps" : "Applicazioni per dispositivi mobili",
     "Shortcuts" : "Scorciatoie",
     "Delete" : "Elimina",
+    "Cancel" : "Annulla",
     "All notes" : "Tutte le note",
     "Categories" : "Categorie",
     "Create a sample note with Markdown" : "Creare una nota di esempio con Markdown",
