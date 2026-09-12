@@ -183,6 +183,14 @@ export const useNotesStore = defineStore('notes', {
 			const note = this.notesIds[updated.id]
 			if (note) {
 				copyNote(updated, note, ['id', 'etag', 'content'])
+				// reported by the server but not note attributes, so copyNote() leaves
+				// them behind: the path changes when the note moves category, and the
+				// read-only marker when the file's permissions change
+				for (const field of ['internalPath', 'readonly']) {
+					if (updated[field] !== undefined) {
+						note[field] = updated[field]
+					}
+				}
 				// don't update meta-data over full data
 				if (updated.content !== undefined && updated.etag !== undefined) {
 					note.content = updated.content
