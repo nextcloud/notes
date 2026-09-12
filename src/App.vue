@@ -69,7 +69,7 @@
 				</template>
 			</NcButton>
 		</div>
-		<NoteShareSidebar />
+		<NoteSidebar />
 	</NcContent>
 </template>
 
@@ -89,7 +89,7 @@ import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutli
 import AppSettings from './components/AppSettings.vue'
 import CategoriesList from './components/CategoriesList.vue'
 import EditorHint from './components/Modal/EditorHint.vue'
-import NoteShareSidebar from './components/NoteShareSidebar.vue'
+import NoteSidebar from './components/NoteSidebar.vue'
 import { config } from './config.js'
 import logger from './Logger.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
@@ -116,7 +116,7 @@ export default {
 		NcButton,
 		NcContent,
 		FocusIcon,
-		NoteShareSidebar,
+		NoteSidebar,
 		ShareVariantOutlineIcon,
 	},
 
