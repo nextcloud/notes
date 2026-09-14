@@ -3,18 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Locator, Page, TestInfo } from '@playwright/test'
+import type { TestInfo } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
 import { login } from '../support/login.ts'
-import { createNote, newNoteButton, noteRow, uniqueTitle } from '../support/note.ts'
-
-async function openNoteActions(page: Page, noteId: number): Promise<Locator> {
-	const row = noteRow(page, noteId)
-	await row.hover()
-	await row.locator('.action-item__menutoggle').click()
-	return row
-}
+import { createNote, newNoteButton, noteRow, openNoteActions, uniqueTitle } from '../support/note.ts'
 
 test.describe('Note actions', () => {
 	test.beforeEach(async ({ page }) => {

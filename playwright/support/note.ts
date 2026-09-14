@@ -3,13 +3,73 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Locator, Page, TestInfo } from '@playwright/test'
+import type { APIRequestContext, Locator, Page, TestInfo } from '@playwright/test'
 
 import { expect } from '@playwright/test'
 import { NoteEditor } from './sections/NoteEditor.ts'
 
 export function uniqueTitle(prefix: string, testInfo: TestInfo): string {
 	return `Playwright ${prefix} ${testInfo.parallelIndex}-${Date.now()}`
+}
+
+function apiUser(): string {
+	return process.env.NC_USER ?? 'admin'
+}
+
+function apiHeaders(): Record<string, string> {
+	const password = process.env.NC_PASS ?? 'admin'
+	return { Authorization: `Basic ${Buffer.from(`${apiUser()}:${password}`).toString('base64')}` }
+}
+
+/**
+ * Create a note and rewrite it through WebDAV until it has one version per
+ * given revision. Writing goes around the app on purpose, so the note keeps its
+ * file name instead of being retitled from the changed content.
+ *
+ * @param request The request fixture to use
+ * @param revisions The contents to write, oldest first
+ * @return The id of the created note
+ */
+export async function createNoteRevisions(request: APIRequestContext, revisions: string[]): Promise<number> {
+	expect(revisions.length, 'revisions to write').toBeGreaterThan(0)
+
+	const created = await request.post('/index.php/apps/notes/api/v1/notes', {
+		headers: apiHeaders(),
+		data: { content: revisions[0] },
+	})
+	expect(created.ok(), 'creating the note').toBeTruthy()
+
+	const note = await created.json()
+	const path = note.internalPath.split('/').map(encodeURIComponent).join('/')
+
+	for (const content of revisions.slice(1)) {
+		// recent versions are thinned out to one per two seconds
+		await new Promise((resolve) => setTimeout(resolve, 3500))
+		const written = await request.put(`/remote.php/dav/files/${apiUser()}${path}`, {
+			headers: apiHeaders(),
+			data: content,
+		})
+		expect(written.ok(), 'writing a revision').toBeTruthy()
+	}
+
+	return note.id
+}
+
+/**
+ * Switch the editor the app renders: `rich`, `edit` or `preview`.
+ *
+ * Takes the isolated `request` fixture rather than `page.request`, whose basic
+ * auth would replace the session cookie the browser is logged in with.
+ *
+ * @param request The request fixture to use
+ * @param mode The editor mode to switch to
+ */
+export async function setNoteMode(request: APIRequestContext, mode: string): Promise<void> {
+	const response = await request.put('/index.php/apps/notes/api/v1/settings', {
+		headers: apiHeaders(),
+		data: { noteMode: mode },
+	})
+	expect(response.ok(), `switching to the ${mode} editor`).toBeTruthy()
 }
 
 export function currentNoteId(page: Page): number | null {
@@ -24,6 +84,13 @@ export function newNoteButton(page: Page): Locator {
 export function noteRow(page: Page, noteId: number): Locator {
 	return page.locator(`a[href$="/note/${noteId}"]`).first()
 		.locator('xpath=ancestor::li[1]')
+}
+
+export async function openNoteActions(page: Page, noteId: number): Promise<Locator> {
+	const row = noteRow(page, noteId)
+	await row.hover()
+	await row.locator('.action-item__menutoggle').click()
+	return row
 }
 
 export async function waitForNoteRoute(page: Page, previousNoteId: number | null): Promise<number> {
@@ -43,9 +110,7 @@ export async function waitForNoteRoute(page: Page, previousNoteId: number | null
  * @param page The page object to use
  */
 export async function deleteAllNotes(page: Page): Promise<void> {
-	const user = process.env.NC_USER ?? 'admin'
-	const password = process.env.NC_PASS ?? 'admin'
-	const headers = { Authorization: `Basic ${Buffer.from(`${user}:${password}`).toString('base64')}` }
+	const headers = apiHeaders()
 
 	const response = await page.request.get('/index.php/apps/notes/api/v1/notes', { headers })
 	expect(response.ok()).toBeTruthy()

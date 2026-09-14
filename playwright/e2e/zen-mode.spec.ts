@@ -38,7 +38,7 @@ function shareButton(page: Page): Locator {
 }
 
 function shareSidebar(page: Page): Locator {
-	return page.locator('[data-cy-notes-share-sidebar]')
+	return page.locator('[data-cy-notes-sidebar]')
 }
 
 async function expectZenMode(page: Page, active: boolean): Promise<void> {

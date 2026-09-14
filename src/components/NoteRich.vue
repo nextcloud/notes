@@ -66,6 +66,7 @@ export default {
 		subscribe('files:node:updated', this.fileUpdated)
 		subscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		subscribe('files_versions:restore:restored', this.onFileRestored)
+		subscribe('files_versions:restore:failed', this.onFileRestoreFailed)
 	},
 
 	unmounted() {
@@ -73,6 +74,7 @@ export default {
 		unsubscribe('files:node:updated', this.fileUpdated)
 		unsubscribe('files_versions:restore:requested', this.onFileRestoreRequested)
 		unsubscribe('files_versions:restore:restored', this.onFileRestored)
+		unsubscribe('files_versions:restore:failed', this.onFileRestoreFailed)
 	},
 
 	methods: {
@@ -158,36 +160,41 @@ export default {
 			return title.length > 0 ? title : t('notes', 'New note')
 		},
 
-		async onFileRestoreRequested(event) {
-			const { fileInfo } = event
+		// the node of a restore carries a numeric fileid, a version a string fileId
+		isCurrentNote(fileId) {
+			return this.note && Number(fileId) === this.note.id
+		},
 
-			if (!this.note || fileInfo.id !== this.note.id) {
+		onFileRestoreRequested({ node }) {
+			if (!this.isCurrentNote(node?.fileid)) {
 				return
 			}
 
 			this.loading = true
 		},
 
-		async onFileRestored(version) {
-			if (!this.note || version.fileId !== this.note.id) {
+		onFileRestoreFailed(version) {
+			if (!this.isCurrentNote(version?.fileId)) {
 				return
 			}
 
-			const etag = await refreshNote(parseInt(this.noteId), this.etag)
+			this.loading = false
+		},
 
-			if (etag) {
-				this.etag = etag
+		async onFileRestored({ node }) {
+			if (!this.isCurrentNote(node?.fileid)) {
+				return
 			}
 
-			const autoResolve = setInterval(() => {
-				const el = document.querySelector('[data-cy="resolveServerVersion"]')
+			try {
+				const etag = await refreshNote(parseInt(this.noteId), this.etag)
 
-				if (el) {
-					el.click()
-					clearInterval(autoResolve)
+				if (etag) {
+					this.etag = etag
 				}
-			}, 200)
-			this.loading = false
+			} finally {
+				this.loading = false
+			}
 		},
 	},
 }
