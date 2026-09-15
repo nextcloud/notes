@@ -76,6 +76,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "الملاحظة \"للقراءة فقط\". لا يمكنك تعديلها,",
     "Save failed. Click to retry." : "تعذّر الحفظ. أُنقُر لإعادة المحاولة.",
     "Update conflict. Click for resolving manually." : "تضارب في الرفع. إضغط للحلّ يدويّاً.",
+    "Owner" : "مالك",
     "Today" : "اليوم",
     "Yesterday" : "أمس",
     "This week" : "هذا الأسبوع",

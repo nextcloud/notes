@@ -84,6 +84,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "ئەسكەرتىش پەقەت ئوقۇشقىلا بولىدۇ. ئۇنى ئۆزگەرتەلمەيسىز.",
     "Save failed. Click to retry." : "ساقلاش مەغلۇب بولدى. قايتا سىناڭ.",
     "Update conflict. Click for resolving manually." : "توقۇنۇشنى يېڭىلاش. قولدا ھەل قىلىش ئۈچۈن چېكىڭ.",
+    "Owner" : "ئىگىسى",
     "Today" : "بۈگۈن",
     "Yesterday" : "تۈنۈگۈن",
     "This week" : "بۇ ھەپتە",

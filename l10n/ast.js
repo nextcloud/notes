@@ -22,6 +22,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Exit full screen" : "Colar de la pantalla completa",
     "Full screen" : "Pantalla completa",
+    "Owner" : "Propietariu",
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
     "This week" : "Esta selmana",

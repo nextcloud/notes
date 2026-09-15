@@ -83,6 +83,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "A jegyzet írásvédett. Nem változtathat rajta.",
     "Save failed. Click to retry." : "A mentés sikertelen. Próbálja újra.",
     "Update conflict. Click for resolving manually." : "Frissítési ütközés. Kattintson ide a probléma kézi megoldásához.",
+    "Owner" : "Tulajdonos",
     "Today" : "Ma",
     "Yesterday" : "Tegnap",
     "This week" : "Ez a hét",

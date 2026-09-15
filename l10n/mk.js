@@ -34,6 +34,7 @@ OC.L10N.register(
     "Exit full screen" : "Излез од цел екран",
     "Full screen" : "Цел екран",
     "Save failed. Click to retry." : "Неуспешно зачувување. Крикни за повторен обид.",
+    "Owner" : "Сопственик",
     "Today" : "Денес",
     "Yesterday" : "Вчера",
     "This week" : "Оваа недела",

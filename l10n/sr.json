@@ -75,6 +75,7 @@
     "Note is read-only. You cannot change it." : "Напомена може само да се чита. Не можете да је измените.",
     "Save failed. Click to retry." : "Грешка при чувању. Кликните да покушате поново.",
     "Update conflict. Click for resolving manually." : "Конфликт ажурирања. Кликните да ручно разрешите.",
+    "Owner" : "Owner",
     "Today" : "Данас",
     "Yesterday" : "Јуче",
     "This week" : "Ове недеље",

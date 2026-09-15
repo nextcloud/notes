@@ -17,6 +17,7 @@ OC.L10N.register(
     "Rename" : "Renombrar",
     "Delete note" : "Borrar nota",
     "Edit" : "Editar",
+    "Owner" : "Owner",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",

@@ -72,6 +72,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "La nota és de només lectura. No la podeu modificar.",
     "Save failed. Click to retry." : "S'ha produït un error en desar. Feu clic per a tornar-ho a provar.",
     "Update conflict. Click for resolving manually." : "S'ha produït un conflicte d'actualització. Feu clic per a resoldre'l manualment.",
+    "Owner" : "Propietari",
     "Today" : "Avui",
     "Yesterday" : "Ahir",
     "This week" : "Aquesta setmana",

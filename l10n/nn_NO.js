@@ -13,6 +13,7 @@ OC.L10N.register(
     "Rename" : "Gje nytt namn",
     "Delete note" : "Slett notat",
     "Edit" : "Endra",
+    "Owner" : "Owner",
     "Today" : "I dag",
     "Yesterday" : "i går",
     "Tasks" : "Oppgåver"

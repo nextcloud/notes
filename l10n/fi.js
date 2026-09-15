@@ -68,6 +68,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Muistiinpano on kirjoitussuojattu. Et voi tehdä siihen muutoksia.",
     "Save failed. Click to retry." : "Tallennus epäonnistui. Napsauta yrittääksesi uudelleen.",
     "Update conflict. Click for resolving manually." : "Konflikti päivityksessä. Klikkaa ratkaistaksesi se manuaalisesti.",
+    "Owner" : "Omistaja",
     "Today" : "Tänään",
     "Yesterday" : "Eilen",
     "This week" : "Tällä viikolla",

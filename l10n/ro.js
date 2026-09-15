@@ -70,6 +70,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Notiţa este numai pentru citire. Nu este posibil să o modifici.",
     "Save failed. Click to retry." : "Salvarea a eşuat. Click pentru a reîncerca.",
     "Update conflict. Click for resolving manually." : "Actualizează conflictul. Click pentru a resolva manual această problemă.",
+    "Owner" : "Owner",
     "Today" : "Azi",
     "Yesterday" : "Ieri",
     "This week" : "Săptămâna asta",

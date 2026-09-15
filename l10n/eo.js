@@ -20,6 +20,7 @@ OC.L10N.register(
     "Delete note" : "Forigi noton",
     "Use current version" : "Uzi nunan version",
     "Edit" : "Modifi",
+    "Owner" : "Owner",
     "Today" : "Hodiaŭ",
     "Yesterday" : "Hieraŭ",
     "Updating the note's category has failed. Is the target directory writable?" : "Ĝisdaztigo de la nota kategorio malsukcesis. Ĉu la celdosierujo skribeblas?",

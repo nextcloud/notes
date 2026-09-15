@@ -83,6 +83,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Bilješka je samo za čitanje. Ne možete je promijeniti.",
     "Save failed. Click to retry." : "Spremanje nije uspjelo. Kliknite za ponovni pokušaj.",
     "Update conflict. Click for resolving manually." : "Nepodudaranje ažuriranja. Kliknite za ručno otklanjanje nepodudaranja.",
+    "Owner" : "Vlasnik",
     "Today" : "Danas",
     "Yesterday" : "Jučer",
     "This week" : "Ovaj tjedan",

@@ -76,6 +76,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Minnispunktur er skrifvarinn. Þú getur ekki breytt honum.",
     "Save failed. Click to retry." : "Vistun mistókst. Smelltu til að reyna aftur.",
     "Update conflict. Click for resolving manually." : "Árekstur við uppfærslu. Smelltu til að leysa þetta handvirkt.",
+    "Owner" : "Eigandi",
     "Today" : "Í dag",
     "Yesterday" : "Yesterday",
     "This week" : "Í þessari viku",

@@ -64,6 +64,7 @@
     "Note is read-only. You cannot change it." : "메모가 읽기 전용이며 편집할 수 없습니다",
     "Save failed. Click to retry." : "저장을 실패했습니다. 클릭하여 다시 시도하십시오.",
     "Update conflict. Click for resolving manually." : "갱신 과정에서 충돌이 발생했습니다. 클릭하여 수동으로 문제를 해결하십시오.",
+    "Owner" : "소유자",
     "Today" : "오늘",
     "Yesterday" : "어제",
     "This week" : "이번 주",

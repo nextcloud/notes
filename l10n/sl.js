@@ -71,6 +71,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Sporočilo je le za branje in ga ni mogoče spreminjati.",
     "Save failed. Click to retry." : "Shranjevanje je spodletelo. Kliknite za ponovni poskus.",
     "Update conflict. Click for resolving manually." : "Zaznan je spor usklajevanja, ki ga je treba razrešiti ročno.",
+    "Owner" : "Lastnik",
     "Today" : "Danes",
     "Yesterday" : "Včeraj",
     "This week" : "Ta teden",

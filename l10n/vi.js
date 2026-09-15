@@ -18,6 +18,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Use current version" : "Sử dụng phiên bản hiện tại",
     "Edit" : "Chỉnh sửa",
+    "Owner" : "Owner",
     "Today" : "Hôm nay",
     "Yesterday" : "Hôm qua",
     "This week" : "Tuần này",

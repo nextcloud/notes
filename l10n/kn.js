@@ -11,6 +11,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Rename" : "Rename",
     "Edit" : "ಸಂಪಾದಿಸು",
+    "Owner" : "Owner",
     "Today" : "Today"
 },
 "nplurals=2; plural=(n > 1);");

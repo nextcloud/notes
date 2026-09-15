@@ -10,6 +10,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Rename" : "Rename",
     "Edit" : "تدوین کریں",
+    "Owner" : "Owner",
     "Today" : "آج",
     "Tasks" : "کام"
 },

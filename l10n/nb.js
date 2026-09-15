@@ -72,6 +72,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Notatet er skrivebeskyttet. Du kan ikke endre det.",
     "Save failed. Click to retry." : "Lagring mislyktes. Klikk for å prøve på nytt.",
     "Update conflict. Click for resolving manually." : "Oppdateringskonflikt. Klikk for å løse manuelt.",
+    "Owner" : "Eier",
     "Today" : "I dag",
     "Yesterday" : "I går",
     "This week" : "Denne uka",

@@ -35,6 +35,7 @@ OC.L10N.register(
     "Exit full screen" : "יציאה ממסך מלא",
     "Full screen" : "מסך מלא",
     "Save failed. Click to retry." : "השמירה נכשלה. יש ללחוץ כדי לנסות שוב.",
+    "Owner" : "Owner",
     "Today" : "היום",
     "Yesterday" : "אתמול",
     "This week" : "השבוע",

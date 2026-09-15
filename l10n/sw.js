@@ -80,6 +80,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Dokezo ni la kusoma pekee. Huwezi kuibadilisha.",
     "Save failed. Click to retry." : "Imeshindwa kuhifadhi. Bofya ili kujaribu tena.",
     "Update conflict. Click for resolving manually." : "Sasisha mzozo. Bofya ili usuluhishe wewe mwenyewe.",
+    "Owner" : "Mmiliki",
     "Today" : "Leo",
     "Yesterday" : "Jana",
     "This week" : "Wiki hii",

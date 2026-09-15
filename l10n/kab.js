@@ -9,6 +9,7 @@ OC.L10N.register(
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Rnu ismal",
     "Edit" : "Ẓreg",
+    "Owner" : "Amli",
     "Today" : "Ass-a",
     "Yesterday" : "Iḍelli",
     "This week" : "Dduṛt agi"

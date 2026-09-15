@@ -83,6 +83,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "La nota è in sola lettura. Non puoi modificarla.",
     "Save failed. Click to retry." : "Salvataggio non riuscito. Fai clic per riprovare.",
     "Update conflict. Click for resolving manually." : "Conflitto di aggiornamento. Fai clic per risolvere manualmente.",
+    "Owner" : "Proprietario",
     "Today" : "Oggi",
     "Yesterday" : "Ieri",
     "This week" : "Questa settimana",

@@ -71,6 +71,7 @@
     "Note is read-only. You cannot change it." : "ノートは読み込み専用です。変更はできません。",
     "Save failed. Click to retry." : "保存失敗, クリックで再試行",
     "Update conflict. Click for resolving manually." : "更新が衝突しました。手動で解決するためにクリック。",
+    "Owner" : "所有者",
     "Today" : "今日",
     "Yesterday" : "昨日",
     "This week" : "今週",

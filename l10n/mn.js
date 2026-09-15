@@ -83,6 +83,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Тэмдэглэл зөвхөн унших горимд байна. Та өөрчлөх боломжгүй.",
     "Save failed. Click to retry." : "Хадгалах амжилтгүй болсон. Дахин оролдохын тулд дарна уу.",
     "Update conflict. Click for resolving manually." : "Шинэчлэлтийн зөрчил. Гараар шийдвэрлэхийн тулд дарна уу.",
+    "Owner" : "–≠–∑—ç–º—à–∏–≥—á",
     "Today" : "өнөөдөр",
     "Yesterday" : "өчигдөр",
     "This week" : "7 хоног",

@@ -17,6 +17,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "ჩანაწერის გაუქმება",
     "Edit" : "ცვლილება",
+    "Owner" : "მფლობელი",
     "Today" : "დღეს",
     "Yesterday" : "გუშინ",
     "This week" : "ამ კვირაში",

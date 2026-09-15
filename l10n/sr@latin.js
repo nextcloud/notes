@@ -16,6 +16,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Rename" : "Rename",
     "Edit" : "Uredi",
+    "Owner" : "Owner",
     "Today" : "Today",
     "Yesterday" : "juče",
     "This week" : "Ove sedmice",

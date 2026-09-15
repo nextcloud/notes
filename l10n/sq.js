@@ -20,6 +20,7 @@ OC.L10N.register(
     "Delete note" : "Fshije shënimin",
     "Use current version" : "Përdor versionin aktual",
     "Edit" : "Përpuno",
+    "Owner" : "Zotëruesi",
     "Today" : "Sot",
     "Yesterday" : "Dje",
     "This week" : "Këtë javë",

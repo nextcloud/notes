@@ -13,6 +13,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "លុប​កំណត់​ចំណាំ",
     "Edit" : "កែប្រែ",
+    "Owner" : "Owner",
     "Today" : "ថ្ងៃ​នេះ",
     "Tasks" : "ភារកិច្ច"
 },

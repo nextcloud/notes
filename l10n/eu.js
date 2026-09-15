@@ -72,6 +72,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Oharra irakurtzeko soilik da. Ezin duzu aldatu.",
     "Save failed. Click to retry." : "Huts egin du gordetzean. Egin klik berriro saiatzeko.",
     "Update conflict. Click for resolving manually." : "Eguneraketa gatazka. Egin klik eskuz ebazteko.",
+    "Owner" : "Jabea",
     "Today" : "Gaur",
     "Yesterday" : "Atzo",
     "This week" : "Aste honetan",

@@ -38,6 +38,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Sa nota est a letura sola. Non faghet a dda cambiare.",
     "Save failed. Click to retry." : "Sarvamentu faddidu. Incarca pro bi torrare a proare.",
     "Update conflict. Click for resolving manually." : "Cunflitu de agiornamentu. Incarca pro isorvere a manu.",
+    "Owner" : "Mere",
     "Today" : "Oe",
     "Yesterday" : "Yesterday",
     "This week" : "Custa chida",

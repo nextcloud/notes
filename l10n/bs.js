@@ -11,6 +11,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Rename" : "Rename",
     "Edit" : "Izmjeni",
+    "Owner" : "Owner",
     "Today" : "Danas",
     "Yesterday" : "Jučer",
     "Tasks" : "Zadaci"

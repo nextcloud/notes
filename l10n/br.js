@@ -18,6 +18,7 @@ OC.L10N.register(
     "Use current version" : "Implij stumm hiziv",
     "CTRL + /" : "CTRL + /",
     "Edit" : "Cheñch",
+    "Owner" : "Perc'henner",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
     "This week" : "Er sizhun-mañ",

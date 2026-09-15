@@ -13,6 +13,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "নোট মোছ",
     "Edit" : "সম্পাদনা",
+    "Owner" : "Owner",
     "Today" : "আজ",
     "Yesterday" : "গতকাল",
     "Tasks" : "কর্ম"

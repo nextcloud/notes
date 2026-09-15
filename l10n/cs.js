@@ -86,6 +86,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Poznámka je pouze pro čtení. Nemůžete ji měnit.",
     "Save failed. Click to retry." : "Uložení se nezdařilo. Klikněte pro opětovný pokus.",
     "Update conflict. Click for resolving manually." : "Konflikt aktualizace. Pokud chcete vyřešit ručně, klikněte sem.",
+    "Owner" : "Vlastník",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
     "This week" : "Tento týden",

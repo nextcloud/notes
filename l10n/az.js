@@ -13,6 +13,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "Qeydi sil",
     "Edit" : "Dəyişiklik et",
+    "Owner" : "Owner",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Tasks" : "Tapşırıqlar"

@@ -83,6 +83,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Нататка толькі для чытання. Вы не можаце яе змяніць.",
     "Save failed. Click to retry." : "Не ўдалося захаваць. Націсніце, каб паўтарыць спробу.",
     "Update conflict. Click for resolving manually." : "Канфлікт абнаўленняў. Націсніце, каб вырашыць уручную.",
+    "Owner" : "Уладальнік",
     "Today" : "Сёння",
     "Yesterday" : "Учора",
     "This week" : "Гэты тыдзень",

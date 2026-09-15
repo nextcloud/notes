@@ -13,6 +13,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "Hapus nota",
     "Edit" : "Sunting",
+    "Owner" : "Owner",
     "Today" : "Hari ini",
     "Yesterday" : "Semalam"
 },

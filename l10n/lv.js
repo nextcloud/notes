@@ -23,6 +23,7 @@ OC.L10N.register(
     "Use current version" : "Izmantot pašreizējo versiju",
     "Edit" : "Labot",
     "Exit full screen" : "Iziet no pilnekrāna",
+    "Owner" : "Īpašnieks",
     "Today" : "Šodien",
     "Yesterday" : "Vakar",
     "This week" : "Šonedēļ",

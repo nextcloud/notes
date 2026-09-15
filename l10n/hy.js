@@ -14,6 +14,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Delete note" : "Ջնջել նոթը",
     "Edit" : "մշակել",
+    "Owner" : "Owner",
     "Today" : "այսօր",
     "Yesterday" : "երեկ",
     "This week" : "այս շաբաթ",

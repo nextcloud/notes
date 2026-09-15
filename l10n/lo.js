@@ -81,6 +81,7 @@ OC.L10N.register(
     "Note is read-only. You cannot change it." : "Note is read-only. You cannot change it.",
     "Save failed. Click to retry." : "Save failed. Click to retry.",
     "Update conflict. Click for resolving manually." : "Update conflict. Click for resolving manually.",
+    "Owner" : "ເຈົ້າຂອງ",
     "Today" : "ມື້ນີ້",
     "Yesterday" : "ມື້ວານນີ້",
     "This week" : "ທິດນີ້",

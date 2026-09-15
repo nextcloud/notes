@@ -19,6 +19,7 @@ OC.L10N.register(
     "Delete note" : "Skrap nota",
     "Use current version" : "Gebruik huidige weergawe",
     "Edit" : "Wysig",
+    "Owner" : "Eienaar",
     "Today" : "Vandag",
     "Yesterday" : "Gister",
     "This week" : "Vandeesweek",

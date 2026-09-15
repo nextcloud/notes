@@ -13,6 +13,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Rename" : "Rename",
     "Edit" : "Änneren",
+    "Owner" : "Besëtzer",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
     "This week" : "Dës Woch",

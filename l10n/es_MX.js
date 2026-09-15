@@ -24,6 +24,7 @@ OC.L10N.register(
     "Use current version" : "Usar la versión actual",
     "Edit" : "Editar",
     "Exit full screen" : "Salir de pantalla completa",
+    "Owner" : "Dueño",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
     "This week" : "Esta semana",

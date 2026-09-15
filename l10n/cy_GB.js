@@ -15,6 +15,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Rename" : "Rename",
     "Edit" : "Golygu",
+    "Owner" : "Owner",
     "Today" : "Heddiw",
     "Yesterday" : "Ddoe",
     "This week" : "Wythnos yma",

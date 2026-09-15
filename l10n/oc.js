@@ -48,6 +48,7 @@ OC.L10N.register(
     "Edit" : "Modificar",
     "Exit full screen" : "Sortir de l’ecran complèt",
     "Full screen" : "Ecran complèt",
+    "Owner" : "Owner",
     "Today" : "Uèi",
     "Yesterday" : "Ièr",
     "This week" : "Aquesta setmana",
