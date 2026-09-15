@@ -56,7 +56,26 @@
 			/>
 		</NcAppSidebarTab>
 
-		<NcEmptyContent v-if="isOpen && tabs.length === 0">
+		<NcAppSidebarTab v-if="note"
+			id="notes-info"
+			:name="t('notes', 'Details')"
+			:order="100"
+		>
+			<template #icon>
+				<InformationIcon v-if="resolvedTab === 'notes-info'" :size="20" />
+				<InformationOutlineIcon v-else :size="20" />
+			</template>
+
+			<!-- NcAppSidebarTab keeps an inactive tab mounted and hides it in CSS -->
+			<NoteInfo
+				v-if="resolvedTab === 'notes-info'"
+				:note="note"
+				:contentLoading="loadingContent"
+				:contentError="contentError"
+			/>
+		</NcAppSidebarTab>
+
+		<NcEmptyContent v-if="isOpen && tabIds.length === 0">
 			<template #icon>
 				<FileOutlineIcon :size="44" />
 			</template>
@@ -74,10 +93,14 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import FileOutlineIcon from 'vue-material-design-icons/FileOutline.vue'
+import InformationIcon from 'vue-material-design-icons/Information.vue'
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
 import ShareVariantIcon from 'vue-material-design-icons/ShareVariant.vue'
 import ShareVariantOutlineIcon from 'vue-material-design-icons/ShareVariantOutline.vue'
+import NoteInfo from './NoteInfo.vue'
 import NoteSidebarSubname from './NoteSidebarSubname.vue'
 import logger from '../Logger.js'
+import { fetchNote } from '../NotesService.js'
 import { initializeSidebarTab, selectNoteSidebarTabs } from '../sidebarTabs.js'
 import store from '../store.js'
 import { fetchDavNode } from '../WebdavService.js'
@@ -92,6 +115,9 @@ export default {
 		NcIconSvgWrapper,
 		NcLoadingIcon,
 		FileOutlineIcon,
+		InformationIcon,
+		InformationOutlineIcon,
+		NoteInfo,
 		NoteSidebarSubname,
 		ShareVariantIcon,
 		ShareVariantOutlineIcon,
@@ -100,12 +126,14 @@ export default {
 	data() {
 		return {
 			activeTab: 'sharing',
+			contentError: false,
 			contextError: '',
 			contextRequestToken: 0,
 			currentFolder: null,
 			currentNode: null,
 			failedTabs: new Set(),
 			isOpen: false,
+			loadingContentFor: null,
 			loadingContext: false,
 			loadingTab: false,
 			noteId: null,
@@ -115,6 +143,10 @@ export default {
 	computed: {
 		loading() {
 			return this.loadingContext || this.loadingTab
+		},
+
+		loadingContent() {
+			return this.loadingContentFor !== null
 		},
 
 		note() {
@@ -136,6 +168,14 @@ export default {
 			return this.availableTabs.filter((tab) => !this.failedTabs.has(tab.tagName))
 		},
 
+		/** Ids of the tabs the sidebar renders, in the order they appear */
+		tabIds() {
+			return [
+				...this.tabs.map(({ id }) => id),
+				...(this.note ? ['notes-info'] : []),
+			]
+		},
+
 		/**
 		 * NcAppSidebar falls back to its first tab when the active one is not
 		 * among them, but does not report that back, so the tab id has to be
@@ -144,10 +184,15 @@ export default {
 		 * keep naming a tab that is not on screen.
 		 */
 		resolvedTab() {
-			if (this.tabs.some(({ id }) => id === this.activeTab)) {
+			if (this.tabIds.includes(this.activeTab)) {
 				return this.activeTab
 			}
-			return this.tabs[0]?.id ?? this.activeTab
+			return this.tabIds[0] ?? this.activeTab
+		},
+
+		routeNoteId() {
+			const noteId = Number(this.$route?.params?.noteId)
+			return Number.isFinite(noteId) ? noteId : null
 		},
 
 		currentView() {
@@ -162,6 +207,16 @@ export default {
 		resolvedTab(tabId) {
 			if (tabId !== this.activeTab) {
 				this.activeTab = tabId
+			}
+			this.ensureContent()
+		},
+
+		/**
+		 * @param {number|null} noteId the note the route moved to
+		 */
+		routeNoteId(noteId) {
+			if (this.isOpen && noteId !== null && noteId !== this.noteId) {
+				this.onSidebarOpen({ noteId, tab: this.resolvedTab })
 			}
 		},
 	},
@@ -206,11 +261,52 @@ export default {
 			this.loadingTab = false
 		},
 
+		/**
+		 * The note list payload excludes content, so a note that has never been
+		 * opened has none client-side and the reading estimate has to fetch one.
+		 */
+		async ensureContent() {
+			if (this.resolvedTab !== 'notes-info') {
+				return
+			}
+			const noteId = this.noteId
+			if (!Number.isFinite(noteId) || typeof this.note?.content === 'string') {
+				return
+			}
+			if (this.loadingContentFor === noteId) {
+				return
+			}
+
+			this.loadingContentFor = noteId
+			this.contentError = false
+			try {
+				// fetchNote() only rejects on a missing note and reports anything
+				// else itself, so the content is what says whether it worked
+				const note = await fetchNote(noteId)
+				if (this.loadingContentFor !== noteId) {
+					return
+				}
+				this.contentError = typeof note?.content !== 'string'
+			} catch (error) {
+				if (this.loadingContentFor !== noteId) {
+					return
+				}
+				logger.error('Failed to load the note body for the Details tab', { error })
+				this.contentError = true
+			} finally {
+				if (this.loadingContentFor === noteId) {
+					this.loadingContentFor = null
+				}
+			}
+		},
+
 		resetContext() {
 			this.contextRequestToken += 1
+			this.contentError = false
 			this.contextError = ''
 			this.currentNode = null
 			this.currentFolder = null
+			this.loadingContentFor = null
 			this.loadingContext = false
 			this.loadingTab = false
 		},
@@ -285,14 +381,10 @@ export default {
 			this.failedTabs.clear()
 			this.activeTab = tab
 
-			if (this.availableTabs.length === 0) {
-				await this.initializeTabs()
-				return
-			}
-
 			await Promise.all([
 				this.initializeTabs(),
 				this.loadNodeContext(),
+				this.ensureContent(),
 			])
 		},
 

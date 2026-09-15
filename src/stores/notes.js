@@ -8,6 +8,13 @@ import logger from '../Logger.js'
 import { copyNote } from '../Util.js'
 import { useAppStore } from './app.js'
 
+/**
+ * Reported by the server but not note attributes, so copyNote() leaves them
+ * behind: the path changes when the note moves category, and the read-only
+ * marker when the file's permissions change.
+ */
+const SERVER_FIELDS = ['internalPath', 'readonly']
+
 export const useNotesStore = defineStore('notes', {
 	state: () => ({
 		categories: [],
@@ -183,6 +190,11 @@ export const useNotesStore = defineStore('notes', {
 			const note = this.notesIds[updated.id]
 			if (note) {
 				copyNote(updated, note, ['id', 'etag', 'content'])
+				for (const field of SERVER_FIELDS) {
+					if (updated[field] !== undefined) {
+						note[field] = updated[field]
+					}
+				}
 				// don't update meta-data over full data
 				if (updated.content !== undefined && updated.etag !== undefined) {
 					note.content = updated.content

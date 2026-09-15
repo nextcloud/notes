@@ -350,6 +350,10 @@ export function setCategory(noteId, category) {
 				handleSyncError(t('notes', 'Updating the note\'s category has failed. Is the target directory writable?'))
 			}
 			store.notes.setNoteAttribute({ noteId, attribute: 'category', value: realCategory })
+			// the endpoint answers with the category alone, but the file moves with
+			// it, so the new path has to come from a refetch, whose own failure
+			// fetchNote() has already reported
+			return fetchNote(noteId).catch(() => {})
 		})
 		.catch((err) => {
 			logger.error('Updating the category for note has failed', { noteId, error: err })
