@@ -22,6 +22,7 @@
 				<referencedMethod name="OCP\IConfig::getUserValue" />
 				<referencedMethod name="OCP\IConfig::setUserValue" />
 				<referencedMethod name="OCP\IConfig::deleteUserValue" />
+				<referencedMethod name="Doctrine\DBAL\Schema\Table::setPrimaryKey" />
 			</errorLevel>
 		</DeprecatedMethod>
 		<UndefinedClass>

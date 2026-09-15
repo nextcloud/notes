@@ -324,22 +324,126 @@ class NoteUtil {
 		}
 	}
 
+	/**
+	 * Share types a note is reported as shared through, in this order.
+	 *
+	 * TYPE_USERGROUP is left out: it is the per-user half of a group share and
+	 * would double-report one share.
+	 *
+	 * @var list<int>
+	 * @psalm-suppress DeprecatedConstant TYPE_SCIENCEMESH is reported for shares
+	 *   that already exist, so it cannot be dropped from the list
+	 */
+	private const SHARE_TYPES = [
+		IShare::TYPE_USER,
+		IShare::TYPE_GROUP,
+		IShare::TYPE_LINK,
+		IShare::TYPE_REMOTE,
+		IShare::TYPE_EMAIL,
+		IShare::TYPE_ROOM,
+		IShare::TYPE_DECK,
+		IShare::TYPE_SCIENCEMESH,
+	];
+
+	/**
+	 * Share types per file id, or null when nothing has been preloaded.
+	 *
+	 * A file id present with an empty list means "looked up, not shared".
+	 *
+	 * @var array<int, list<int>>|null
+	 */
+	private ?array $cachedShareTypes = null;
+
+	/**
+	 * Uids the preload queried as, as a set.
+	 *
+	 * getSharesInFolder() reports what one user has shared, so the cache can
+	 * only answer for notes owned by a user it was built for.
+	 *
+	 * @var array<string, true>
+	 */
+	private array $preloadedOwners = [];
+
+	/**
+	 * Preload the share types for a whole notes tree.
+	 *
+	 * Every folder has to be passed in: getSharesInFolder() only looks at a
+	 * folder's direct children and the server rejects $shallow = false.
+	 *
+	 * @param list<Folder> $folders every folder of the notes tree, the notes folder included
+	 * @param list<int> $fileIds ids of the notes the caller is going to ask about
+	 */
+	public function loadShareTypes(array $folders, array $fileIds): void {
+		$this->cachedShareTypes = null;
+		$this->preloadedOwners = [];
+
+		// one getSharesInFolder() call costs about what one note costs through
+		// the eight getSharesBy() calls it replaces
+		if (count($fileIds) < count($folders)) {
+			return;
+		}
+
+		$collected = array_fill_keys($fileIds, []);
+		$owners = [];
+
+		foreach ($folders as $folder) {
+			$owner = $folder->getOwner();
+			if ($owner === null) {
+				return;
+			}
+
+			$uid = $owner->getUID();
+			$owners[$uid] = true;
+			$sharesByFileId = $this->shareManager->getSharesInFolder($uid, $folder, false);
+			foreach ($sharesByFileId as $fileId => $shares) {
+				if (!array_key_exists($fileId, $collected)) {
+					continue;
+				}
+				foreach ($shares as $share) {
+					$collected[$fileId][$share->getShareType()] = true;
+				}
+			}
+		}
+
+		$this->preloadedOwners = $owners;
+		$this->cachedShareTypes = array_map(
+			static fn (array $present): array
+				=> array_values(array_intersect(self::SHARE_TYPES, array_keys($present))),
+			$collected,
+		);
+	}
+
+	/**
+	 * @return list<int> share types of $file, in SHARE_TYPES order
+	 */
 	public function getShareTypes(File $file): array {
-		$userId = $file->getOwner()->getUID();
-		$requestedShareTypes = [
-			IShare::TYPE_USER,
-			IShare::TYPE_GROUP,
-			IShare::TYPE_LINK,
-			IShare::TYPE_REMOTE,
-			IShare::TYPE_EMAIL,
-			IShare::TYPE_ROOM,
-			IShare::TYPE_DECK,
-			// FIXME: Move to constant once Nextcloud 26 is the minimum supported version
-			15, // IShare::TYPE_SCIENCEMESH,
-		];
+		$fileId = $file->getId();
+		$owner = $file->getOwner()?->getUID();
+		if ($this->cachedShareTypes !== null
+			&& $owner !== null
+			&& isset($this->preloadedOwners[$owner])
+			&& array_key_exists($fileId, $this->cachedShareTypes)
+		) {
+			return $this->cachedShareTypes[$fileId];
+		}
+		return $this->fetchShareTypes($file);
+	}
+
+	/**
+	 * Per-file fallback for callers that have not preloaded a tree.
+	 *
+	 * @return list<int>
+	 */
+	private function fetchShareTypes(File $file): array {
+		$owner = $file->getOwner();
+		if ($owner === null) {
+			return [];
+		}
+
+		$userId = $owner->getUID();
 		$shareTypes = [];
 
-		foreach ($requestedShareTypes as $shareType) {
+		foreach (self::SHARE_TYPES as $shareType) {
 			$shares = $this->shareManager->getSharesBy($userId, $shareType, $file, false, 1, 0);
 
 			if (count($shares)) {
