@@ -17,6 +17,8 @@ Types of changes:
 ### Added
 
 * 📚 Note template support [notes#1971](https://github.com/nextcloud/notes/pull/1971)
+* 📊 Note details tab in the sidebar [notes#1974](https://github.com/nextcloud/notes/pull/1974)
+* 🔢 Expose file versions in the sidebar [notes#1972](https://github.com/nextcloud/notes/pull/1972)
 * Setting to show last viewed note or welcome screen on start up [notes#1578](https://github.com/nextcloud/notes/pull/1578)
 * Add highlights for notes and categories [notes#1839](https://github.com/nextcloud/notes/pull/1839)
 * Setting to show/hide hidden files [notes#1541](https://github.com/nextcloud/notes/pull/1541)
@@ -30,10 +32,14 @@ Types of changes:
 * Declare AGPL-3.0-or-later as SPDX identifier [notes#1992](https://github.com/nextcloud/notes/pull/1992)
 * Add playwright to .nextcloudignore [notes#1991](https://github.com/nextcloud/notes/pull/1991)
 * Add release relay job [notes#1993](https://github.com/nextcloud/notes/pull/1993)
+* Wait for the Notes API before running the Playwright tests [notes#2027](https://github.com/nextcloud/notes/pull/2027)
+* Bump version to 6.1.0-beta.3 [notes#2010](https://github.com/nextcloud/notes/pull/2010)
+* Add changelog draft for 6.1.0 (beta2 state) [notes#2002](https://github.com/nextcloud/notes/pull/2002)
+* Bump version to 6.1.0-beta.2 and generalize author info [notes#2001](https://github.com/nextcloud/notes/pull/2001)
 
 ### Fixed
 
-* Notes list design feedback: hide category label for uncategorized notes, remove divider line, right-align category names [notes#2004](https://github.com/nextcloud/notes/pull/2004)
+* 🎨 Notes list design feedback: hide category label for uncategorized notes, remove divider line, right-align category names [notes#2004](https://github.com/nextcloud/notes/pull/2004)
 
 ### Dependencies
 
@@ -42,6 +48,10 @@ Types of changes:
 * Bump vitest from 4.1.10 to 4.1.11 [notes#2005](https://github.com/nextcloud/notes/pull/2005)
 * Bump vue from 3.5.41 to 3.5.42 [notes#2006](https://github.com/nextcloud/notes/pull/2006)
 * Update nextcloud/ocp dependency [notes#2000](https://github.com/nextcloud/notes/pull/2000)
+* Update nextcloud/ocp dependency [notes#2017](https://github.com/nextcloud/notes/pull/2017)
+* Upgrade vitest and vitest coverage together [notes#2029](https://github.com/nextcloud/notes/pull/2029)
+* Fix npm audit [notes#2018](https://github.com/nextcloud/notes/pull/2018)
+* Fix npm audit [notes#2028](https://github.com/nextcloud/notes/pull/2028)
 
 ## 6.0.2
 
