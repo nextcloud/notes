@@ -16,6 +16,7 @@ OC.L10N.register(
     "All notes" : "Todas las notas",
     "Categories" : "Categorías",
     "No notes yet" : "Aún no hay notas",
+    "Path" : "Ruta",
     "Remove from favorites" : "Eliminar de favoritos",
     "Add to favorites" : "Agregar a favoritos",
     "Error during preparing note for deletion." : "Error al preparar la nota para el borrado.",

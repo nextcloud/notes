@@ -11,6 +11,7 @@ OC.L10N.register(
     "Cancel" : "Cancelar",
     "Categories" : "Categorías",
     "No notes yet" : "Aún no hay notas",
+    "Path" : "Ruta",
     "Remove from favorites" : "Eliminar de favoritos",
     "Add to favorites" : "Agregar a tus favoritos",
     "Delete note" : "Borrar nota",

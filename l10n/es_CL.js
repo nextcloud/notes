@@ -15,6 +15,7 @@ OC.L10N.register(
     "No notes yet" : "Aún no hay notas",
     "Remove from favorites" : "Eliminar de favoritos",
     "Add to favorites" : "Agregar a tus favoritos",
+    "Details" : "Detalles",
     "Rename" : "Rename",
     "Delete note" : "Borrar nota",
     "Edit" : "Editar",

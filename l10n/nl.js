@@ -67,6 +67,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Deze optie kan later ook in de instellingen van de Notities-app worden gewijzigd.",
     "Keep plain Markdown editor" : "Eenvoudige Markdown-editor gebruiken",
     "Use rich editor" : "Rich text-editor gebruiken",
+    "Category" : "Categorie",
     "Remove from favorites" : "Verwijderen uit favorieten",
     "Add to favorites" : "Toevoegen aan favorieten",
     "Error while renaming note." : "Fout bij het hernoemen van de notitie.",

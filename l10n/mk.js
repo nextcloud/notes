@@ -21,6 +21,7 @@ OC.L10N.register(
     "All notes" : "Сите белешки",
     "Categories" : "Категории",
     "No notes yet" : "Сеуште нема забелешки",
+    "Category" : "Категорија",
     "Remove from favorites" : "Отстрани од фаворити",
     "Add to favorites" : "Додади во фаворити",
     "Error during preparing note for deletion." : "Грешка при обидот за бришење на белешката.",

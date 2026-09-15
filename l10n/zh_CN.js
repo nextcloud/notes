@@ -67,6 +67,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "稍后也可以在笔记应用程序中修改此选项。",
     "Keep plain Markdown editor" : "保留普通的 Markdown 编辑器",
     "Use rich editor" : "使用富文本编辑器",
+    "Category" : "分类",
     "Remove from favorites" : "从收藏夹移除",
     "Add to favorites" : "添加到收藏夹",
     "Error while renaming note." : "重命名笔记时出错。",

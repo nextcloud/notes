@@ -9,6 +9,7 @@ OC.L10N.register(
     "Cancel" : "Otkaži",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
+    "Details" : "Details",
     "Rename" : "Rename",
     "Edit" : "Izmjeni",
     "Owner" : "Owner",

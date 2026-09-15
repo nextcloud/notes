@@ -61,6 +61,7 @@
     "This option can also be changed later on in the Notes app settings." : "Ovu opciju možete promijeniti i kasnije u postavkama aplikacije Bilješke.",
     "Keep plain Markdown editor" : "Zadrži obični Markdown uređivač",
     "Use rich editor" : "Koristi obogaćeni uređivač",
+    "Path" : "Put",
     "Remove from favorites" : "Ukloni iz favorita",
     "Add to favorites" : "Dodaj u favorite",
     "Error while renaming note." : "Pogreška pri preimenovanju bilješke.",

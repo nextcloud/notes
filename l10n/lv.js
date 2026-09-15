@@ -16,6 +16,7 @@ OC.L10N.register(
     "No notes yet" : "Nav nevienas piezīmes",
     "Remove from favorites" : "Noņemt no izlases",
     "Add to favorites" : "Pievienot izlasei",
+    "Details" : "Informācija",
     "Rename" : "Pārdēvēt",
     "Rename note" : "Pārdēvēt piezīmi",
     "Delete note" : "Izdzēst piezīmi",

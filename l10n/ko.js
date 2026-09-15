@@ -47,6 +47,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "이 옵션은 Notes 앱 설정에서 언제든 변경할 수 있습니다.",
     "Keep plain Markdown editor" : "기본 마크다운 편집기 유지",
     "Use rich editor" : "리치 텍스트 편집기 사용",
+    "Category" : "분류",
     "Remove from favorites" : "즐겨찾기에서 제거",
     "Add to favorites" : "즐겨찾기에 추가",
     "Error while renaming note." : "메모 이름을 바꾸는 중 오류 발생",

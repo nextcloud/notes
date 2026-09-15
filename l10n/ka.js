@@ -55,6 +55,7 @@ OC.L10N.register(
     "Add to favorites" : "Add to favorites",
     "Error while renaming note." : "Error while renaming note.",
     "Error during preparing note for deletion." : "Error during preparing note for deletion.",
+    "Details" : "Details",
     "Change category" : "Change category",
     "Rename" : "Rename",
     "Rename note" : "Rename note",

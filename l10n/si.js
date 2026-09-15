@@ -7,6 +7,7 @@ OC.L10N.register(
     "Preview" : "පෙරදසුන",
     "All notes" : "සියලුම සටහන්",
     "No notes yet" : "තවම සටහන් නැත",
+    "Details" : "විස්තර",
     "Rename" : "නැවත නම් කරන්න",
     "Edit" : "සංස්කරණය",
     "Today" : "අද",

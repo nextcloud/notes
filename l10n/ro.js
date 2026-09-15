@@ -50,6 +50,7 @@ OC.L10N.register(
     "This option can also be changed later on in the Notes app settings." : "Această opțiune poate fi modificată și din setările aplicației Note",
     "Keep plain Markdown editor" : "Rămâneți în modul de editare Markdown",
     "Use rich editor" : "Utilizați editorul cu formatare",
+    "Category" : "Categorie",
     "Remove from favorites" : "Șterge din favorite",
     "Add to favorites" : "Adăugați la favorite",
     "Error while renaming note." : "Eroare la redenumirea notiței",

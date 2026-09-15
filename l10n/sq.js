@@ -14,6 +14,7 @@ OC.L10N.register(
     "All notes" : "Të gjitha shënimet",
     "Categories" : "Kategoritë",
     "No notes yet" : "Nuk ka shënime",
+    "Path" : "Adresa",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Shtoje tek të parapëlqyerat",
     "Rename" : "Rename",

@@ -8,6 +8,7 @@ OC.L10N.register(
     "Files" : "Filer",
     "Delete" : "Delete",
     "Cancel" : "Avbryt",
+    "Path" : "Vei",
     "Remove from favorites" : "Remove from favorites",
     "Add to favorites" : "Add to favorites",
     "Rename" : "Gje nytt namn",

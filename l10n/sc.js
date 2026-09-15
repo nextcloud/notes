@@ -21,6 +21,7 @@ OC.L10N.register(
     "All notes" : "Totu is notas",
     "Categories" : "Categorias",
     "No notes yet" : "Peruna nota ancora",
+    "Category" : "Categoria",
     "Remove from favorites" : "Boga·nche dae preferidos",
     "Add to favorites" : "Agiunghe a is preferidos",
     "Error during preparing note for deletion." : "Errore in s'eliminatzione de sa nota.",
