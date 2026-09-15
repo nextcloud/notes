@@ -13,6 +13,7 @@ OC.L10N.register(
     "Cancel" : "Kanselleer",
     "All notes" : "Alle notas",
     "Categories" : "Kategorieë",
+    "Path" : "Pad",
     "Remove from favorites" : "Verwyder uit gunstelinge",
     "Add to favorites" : "Voeg by gunstelinge",
     "Rename" : "Hernoem",

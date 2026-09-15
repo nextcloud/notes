@@ -16,6 +16,8 @@ OC.L10N.register(
     "All notes" : "Toles notes",
     "Categories" : "Categories",
     "No notes yet" : "Nun hai nenguna nota",
+    "Category" : "Categoría",
+    "Details" : "Detalles",
     "Rename" : "Rename",
     "Delete note" : "Desaniciar la nota",
     "CTRL + /" : "CTRL + /",
