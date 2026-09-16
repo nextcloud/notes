@@ -152,6 +152,24 @@ class NotesServiceTest extends NotesTestCase {
 		self::assertSame(['Work', 'Empty'], array_values($categories));
 	}
 
+	public function testCollectsNestedCategoriesAtEveryDepth(): void {
+		$categories = $this->gather([
+			'Work' => [
+				'Projects' => [
+					'2026' => [],
+				],
+			],
+			'Personal' => [
+				'Recipes' => [],
+			],
+		])['categories'];
+
+		self::assertSame(
+			['Work', 'Work/Projects', 'Work/Projects/2026', 'Personal', 'Personal/Recipes'],
+			array_values($categories),
+		);
+	}
+
 	/**
 	 * @return array<string, array{0: string, 1: string}>
 	 */
