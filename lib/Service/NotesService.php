@@ -270,7 +270,7 @@ class NotesService {
 				$data['categories'][] = $subCategory;
 				$data_sub = self::gatherNoteFiles($customExtension, $node, $showHidden, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
-				$data['categories'] = $data['categories'] + $data_sub['categories'];
+				$data['categories'] = array_merge($data['categories'], $data_sub['categories']);
 			} elseif (self::isNote($node, $customExtension)) {
 				$data['files'][$node->getId()] = $node;
 			}
