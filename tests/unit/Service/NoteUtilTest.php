@@ -65,6 +65,7 @@ class NoteUtilTest extends NotesTestCase {
 			'tabs become spaces' => ["A\tB", 'A B'],
 			'empty falls back' => ['', 'New note'],
 			'nothing usable falls back' => ['///', 'New note'],
+			'a bare zero is a title' => ['0', '0'],
 		];
 	}
 

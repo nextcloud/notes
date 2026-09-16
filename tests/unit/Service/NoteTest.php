@@ -100,6 +100,18 @@ class NoteTest extends NotesTestCase {
 		self::assertSame("milk\u{2003}eggs", $note->getExcerpt());
 	}
 
+	public function testExcerptStripsARepeatedTitleCaseInsensitively(): void {
+		$note = $this->note(self::NOTES_PATH . '/Sunday.md', 'SUNDAYs are quiet');
+
+		self::assertSame('s are quiet', $note->getExcerpt());
+	}
+
+	public function testExcerptKeepsContentThatOnlySharesTheFirstCharacterOfAMultibyteTitle(): void {
+		$note = $this->note(self::NOTES_PATH . '/日本語.md', '日曜日 is Sunday');
+
+		self::assertSame('日曜日 is Sunday', $note->getExcerpt());
+	}
+
 	public function testExcerptIsTruncatedWithAnEllipsis(): void {
 		$excerpt = $this->note(self::NOTES_PATH . '/a.txt', str_repeat('x', 250))->getExcerpt();
 
