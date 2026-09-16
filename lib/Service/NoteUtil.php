@@ -170,7 +170,7 @@ class NoteUtil {
 		$title = mb_substr($title, 0, self::MAX_TITLE_LENGTH, 'UTF-8');
 
 		// ensure that title is not empty
-		if (empty($title)) {
+		if ($title === '') {
 			$title = $this->util->l10n->t('New note');
 		}
 
