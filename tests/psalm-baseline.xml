@@ -110,6 +110,9 @@
     </MissingReturnType>
   </file>
   <file src="lib/Migration/Version3005Date20200528204431.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setPrimaryKey]]></code>
+    </DeprecatedMethod>
     <MissingReturnType>
       <code><![CDATA[postSchemaChange]]></code>
       <code><![CDATA[preSchemaChange]]></code>
