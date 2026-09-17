@@ -29,12 +29,22 @@ export function categoryLabel(category) {
 	return category === '' ? t('notes', 'Uncategorized') : category.replace(/\//g, ' / ')
 }
 
-export function rootCategory(category) {
-	if (!category) {
-		return ''
+/**
+ * Whether a note's category falls within the selected one.
+ *
+ * A null selection matches every note. Otherwise a note matches the selected
+ * category itself and any category nested below it.
+ *
+ * @param {string} noteCategory the note's category
+ * @param {string|null} selectedCategory the selected category, or null for all notes
+ * @return {boolean} whether the note belongs to the selection
+ */
+export function isInCategory(noteCategory, selectedCategory) {
+	if (selectedCategory === null) {
+		return true
 	}
-	const separator = category.indexOf('/')
-	return separator === -1 ? category : category.substring(0, separator)
+	return noteCategory === selectedCategory
+		|| noteCategory.startsWith(selectedCategory + '/')
 }
 
 export function routeIsNewNote($route) {
