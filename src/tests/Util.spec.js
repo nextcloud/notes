@@ -11,9 +11,9 @@ import {
 	getDefaultSampleNote,
 	getDefaultSampleNoteTitle,
 	getDraggedNoteId,
+	isInCategory,
 	isNoteDrag,
 	noteAttributes,
-	rootCategory,
 	routeIsNewNote,
 } from '../Util.js'
 
@@ -81,17 +81,31 @@ describe('categoryLabel', () => {
 	})
 })
 
-describe('rootCategory', () => {
-	it('returns the first category segment', () => {
-		expect(rootCategory('a/b/c')).toBe('a')
+describe('isInCategory', () => {
+	it('matches a note in the selected category itself', () => {
+		expect(isInCategory('Work', 'Work')).toBe(true)
 	})
 
-	it('leaves a plain category alone', () => {
-		expect(rootCategory('Recipes')).toBe('Recipes')
+	it('matches a note in a descendant of the selected category', () => {
+		expect(isInCategory('Work/Projects/2026', 'Work/Projects')).toBe(true)
 	})
 
-	it('leaves the empty category empty', () => {
-		expect(rootCategory('')).toBe('')
+	it('matches a note whose nested category is selected exactly', () => {
+		expect(isInCategory('Personal/Work', 'Personal/Work')).toBe(true)
+	})
+
+	it('does not match a sibling category sharing a name prefix', () => {
+		expect(isInCategory('Workshop', 'Work')).toBe(false)
+	})
+
+	it('matches every note when no category is selected', () => {
+		expect(isInCategory('Work/Projects', null)).toBe(true)
+		expect(isInCategory('', null)).toBe(true)
+	})
+
+	it('matches only uncategorized notes for the uncategorized selection', () => {
+		expect(isInCategory('', '')).toBe(true)
+		expect(isInCategory('Work', '')).toBe(false)
 	})
 })
 

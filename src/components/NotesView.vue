@@ -93,7 +93,7 @@ import logger from '../Logger.js'
 import { createNote } from '../NotesService.js'
 import store from '../store.js'
 import { fetchNoteTemplates, fetchTemplateContent } from '../TemplateService.js'
-import { categoryLabel, rootCategory } from '../Util.js'
+import { categoryLabel, isInCategory } from '../Util.js'
 
 export default {
 	name: 'NotesView',
@@ -252,7 +252,7 @@ export default {
 			}
 
 			const selectedCategory = store.notes.getSelectedCategory()
-			if (selectedCategory !== null && selectedCategory !== rootCategory(this.note.category)) {
+			if (!isInCategory(this.note.category, selectedCategory)) {
 				this.showNote = false
 			}
 		},
