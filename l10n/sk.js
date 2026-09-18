@@ -37,7 +37,7 @@ OC.L10N.register(
     "Insert link" : "Vložiť odkaz",
     "Insert image" : "Vložiť obrázok",
     "Switch between editor and viewer" : "Prepnúť medzi editorom a prehliadačom",
-    "Pick a notes folder" : "Vyberať adresár pre poznámky",
+    "Pick a notes folder" : "Vyberte priečinok pre poznámky",
     "Set notes folder" : "Nastaviť adresár pre poznámky",
     "General" : "Všeobecné",
     "Display" : "Display",
