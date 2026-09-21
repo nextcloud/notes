@@ -8,7 +8,6 @@ OC.L10N.register(
     "Error" : "エラー",
     "New note" : "新しいノート",
     "Distraction-free notes and writing" : "集中モードのノートと執筆",
-    "Share" : "Share",
     "Deleted {title}" : "{title}を削除しました",
     "_Deleted {number} note_::_Deleted {number} notes_" : ["{number}つのノートを削除しました"],
     "Undo Delete" : "削除取り消し",
