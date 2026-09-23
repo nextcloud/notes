@@ -101,7 +101,7 @@ OC.L10N.register(
     "Full screen" : "Vollbild",
     "Open sidebar" : "Seitenleiste öffnen",
     "Note is read-only. You cannot change it." : "Notiz ist schreibgeschützt. Sie können sie nicht ändern.",
-    "Save failed. Click to retry." : "Speichern fehlgeschlagen. Hier klicken, um es erneut zu versuchen.",
+    "Save failed. Click to retry." : "Speichern fehlgeschlagen. Klicken, um es erneut zu versuchen.",
     "Update conflict. Click for resolving manually." : "Aktualisierungskonflikt. Bitte klicken, um den Konflikt manuell zu lösen.",
     "Unable to load the selected note." : "Die gewählte Notiz konnte nicht geladen werden.",
     "Note" : "Notiz",
