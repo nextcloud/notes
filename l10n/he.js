@@ -22,6 +22,7 @@ OC.L10N.register(
     "All notes" : "כל הפתקים",
     "Categories" : "קטגוריות",
     "No notes yet" : "אין פתקים עדיין",
+    "Use rich editor" : "השתמש בעורך מתקדם",
     "Remove from favorites" : "הסרה מהמועדפים",
     "Add to favorites" : "הוספה למועדפים",
     "Error during preparing note for deletion." : "שגיאה במהלך הכנת הפתק למחיקה.",
