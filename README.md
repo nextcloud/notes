@@ -21,7 +21,7 @@ Nextcloud will notify you about possible updates. Please have a look at [CHANGEL
 Before reporting bugs:
 
 * get the newest version of the Notes app
-* please consider also installing the [latest development version](https://github.com/nextcloud/notes/archive/master.zip)
+* please consider also installing the [latest development version](https://github.com/nextcloud/notes/archive/main.zip)
 * [check if they have already been reported](https://github.com/nextcloud/notes/issues)
 
 
@@ -33,8 +33,8 @@ Before reporting bugs:
 
 ## :warning: Developer Info
 
-[![Lint](https://github.com/nextcloud/notes/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/nextcloud/notes/actions?query=workflow%3ALint+event%3Apush+branch%3Amaster)
-[![Test](https://github.com/nextcloud/notes/workflows/Test/badge.svg?branch=master&event=push)](https://github.com/nextcloud/notes/actions?query=workflow%3ATest+event%3Apush+branch%3Amaster)
+[![Test](https://github.com/nextcloud/notes/actions/workflows/test.yml/badge.svg?branch=main&event=push)](https://github.com/nextcloud/notes/actions/workflows/test.yml?query=branch%3Amain+event%3Apush)
+[![Node tests](https://github.com/nextcloud/notes/actions/workflows/node-test.yml/badge.svg?branch=main&event=push)](https://github.com/nextcloud/notes/actions/workflows/node-test.yml?query=branch%3Amain+event%3Apush)
 
 ### Building the app
 
@@ -62,6 +62,6 @@ occ config:app:set notes defaultFolder --value="Shared notes"
 
 | Setting | Property name | Default | Other available option(s) |
 |---------|---------------|---------|---------------------------|
-| Display mode for notes | noteMode | edit | preview |
-| File extension for new notes | fileSuffix | .txt | .md |
+| Display mode for notes | noteMode | rich (if the Text app is enabled), otherwise edit | edit, preview |
+| File extension for new notes | fileSuffix | .md | .txt |
 | Folder to store your notes | defaultFolder | Notes | _Custom_ |
