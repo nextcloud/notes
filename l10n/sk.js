@@ -63,7 +63,7 @@ OC.L10N.register(
     "Select an image" : "Vybrať obrázok",
     "You cannot select images outside of your notes folder. Your notes folder is: {folder}" : "Nemôžete vybrať obrázky mimo priečinka poznámok. Váš priečinok poznámok je: {folder}",
     "Wrong image" : "Chybný obrázok",
-    "The file was not uploaded. Check your server logs." : "Súbor nebol nahraný. Skontrolujte záznam o chybách serveru.",
+    "The file was not uploaded. Check your server logs." : "Súbor nebol nahraný. Skontrolujte záznamy servera.",
     "Upload image" : "Nahrať obrázok",
     "Android" : "Android",
     "iPhone and iPad" : "iPhone a iPad",
