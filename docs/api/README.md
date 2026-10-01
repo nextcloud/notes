@@ -42,7 +42,7 @@ In order to realize forward compatibility between minor versions, clients must f
 In order to realize backwards compatibility between minor versions, a client must follow the following rules:
 
 - when sending a request which uses a feature that wasn't available from beginning of the used major version, the client has to cope with the situation that the server ignores parts of the request
-- when processing the JSON response, the server may omit fields that where not available from beginning of the used major version
+- when processing the JSON response, the server may omit fields that were not available from beginning of the used major version
 
 If a client requires a certain feature, it should check the list of supported API version from server (see *Capabilities*).
 
