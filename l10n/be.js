@@ -67,6 +67,7 @@ OC.L10N.register(
     "Add to favorites" : "У абранае",
     "Error while renaming note." : "Памылка пры перайменаванні нататкі.",
     "Error during preparing note for deletion." : "Памылка падчас падрыхтоўкі нататкі да выдалення.",
+    "Details" : "Падрабязнасці",
     "Change category" : "Змяніць катэгорыю",
     "Rename" : "Перайменаваць",
     "Rename note" : "Перайменаваць нататку",
