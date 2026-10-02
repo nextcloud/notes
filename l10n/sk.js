@@ -45,7 +45,7 @@ OC.L10N.register(
     "For new notes" : "Pre nové poznámky",
     "Custom file extension" : "Vlastná prípona súboru",
     "Files" : "Súbory",
-    "Notes folder" : "Adresár pre poznámky",
+    "Notes folder" : "Priečinok s poznámkami",
     "Show hidden files" : "Zobraziť skryté súbory",
     "Load recently updated note on startup" : "Načítať pri spustení naposledy aktualizovanú poznámku",
     "Mobile apps" : "Mobilné aplikácie",
