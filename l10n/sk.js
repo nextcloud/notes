@@ -123,7 +123,7 @@ OC.L10N.register(
     "Use Markdown markups to style your text." : "Použite formát Markdown na formátovanie vášho textu.",
     "Organize your notes in categories." : "Organizujte si poznámky do kategórií.",
     "Start writing a note by clicking on “{newnote}”." : "Začnite písať poznámku kliknutím na „{newnote}“.",
-    "Note not found." : "Poznámky sa nenašli.",
+    "Note not found." : "Poznámka sa nenašla.",
     "Note is locked." : "Poznámka je zamknutá.",
     "Insufficient storage." : "Nedostatočný úložný priestor.",
     "See JavaScript console and server log for details." : "Podrobnosti nájdete v konzole JavaScriptu a protokole servera.",
