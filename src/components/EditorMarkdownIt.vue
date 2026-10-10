@@ -5,15 +5,17 @@
 
 <template>
 	<!-- eslint-disable-next-line vue/no-v-html -->
-	<div class="note-preview" v-html="html" />
+	<div ref="preview" class="note-preview" v-html="html" />
 </template>
 
 <script>
 
+import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import MarkdownIt from 'markdown-it'
 import markdownItBidi from 'markdown-it-bidi'
 import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
+import logger from '../Logger.js'
 import { escapeHtml } from '../Util.js'
 
 export default {
@@ -56,11 +58,15 @@ export default {
 		return {
 			html: '',
 			md,
+			// attachment URL -> Promise of the object URL of the retyped SVG blob,
+			// cleared whenever noteid changes so it does not grow across notes
+			svgObjectUrls: {},
 		}
 	},
 
 	watch: {
 		value: 'onUpdate',
+		noteid: 'clearSvgCache',
 	},
 
 	created() {
@@ -70,12 +76,72 @@ export default {
 		this.onUpdate()
 	},
 
+	mounted() {
+		// the initial onUpdate() runs before the DOM exists
+		this.hydrateSvgImages()
+	},
+
+	beforeUnmount() {
+		this.clearSvgCache()
+	},
+
 	methods: {
 		onUpdate() {
 			this.html = this.md.render(this.value)
+			this.$nextTick(() => this.hydrateSvgImages())
 			if (!this.readonly) {
 				setTimeout(() => this.prepareOnClickListener(), 100)
 			}
+		},
+
+		clearSvgCache() {
+			for (const objectUrlPromise of Object.values(this.svgObjectUrls)) {
+				objectUrlPromise.then(URL.revokeObjectURL, () => {})
+			}
+			this.svgObjectUrls = {}
+		},
+
+		/**
+		 * Fill in the src of SVG attachments rendered by setImageRule.
+		 *
+		 * The attachment endpoint serves SVG as text/plain so that navigating to it
+		 * can never render it as a document, so it cannot be used as an <img> src
+		 * directly. Fetch it and retype the blob instead: SVG inside <img> is
+		 * rendered without scripting or external references.
+		 */
+		async hydrateSvgImages() {
+			const root = this.$refs.preview
+			if (!root) {
+				return
+			}
+
+			// claim every image synchronously so overlapping runs cannot load one twice
+			const targets = [...root.querySelectorAll('img[data-svg-src]')].map((img) => {
+				const url = img.dataset.svgSrc
+				delete img.dataset.svgSrc
+				return { img, url }
+			})
+
+			for (const { img, url } of targets) {
+				// cache the in-flight promise, not just the resolved URL, so two
+				// overlapping renders requesting the same attachment share one fetch
+				if (!this.svgObjectUrls[url]) {
+					this.svgObjectUrls[url] = this.fetchSvgObjectUrl(url).catch((e) => {
+						delete this.svgObjectUrls[url]
+						throw e
+					})
+				}
+				try {
+					img.src = await this.svgObjectUrls[url]
+				} catch (e) {
+					logger.error('Could not load SVG attachment', { error: e })
+				}
+			}
+		},
+
+		async fetchSvgObjectUrl(url) {
+			const response = await axios.get(url, { responseType: 'blob' })
+			return URL.createObjectURL(new Blob([response.data], { type: 'image/svg+xml' }))
 		},
 
 		prepareOnClickListener() {
@@ -127,6 +193,7 @@ export default {
 				const token = tokens[idx]
 				const aIndex = token.attrIndex('src')
 				let download = false
+				let svg = false
 				let path = token.attrs[aIndex][1]
 
 				if (!path.startsWith('http://')
@@ -140,7 +207,9 @@ export default {
 					)
 					token.attrs[aIndex][1] = path
 
-					if (!lowecasePath.endsWith('.jpg')
+					if (lowecasePath.endsWith('.svg')) {
+						svg = true
+					} else if (!lowecasePath.endsWith('.jpg')
 						&& !lowecasePath.endsWith('.jpeg')
 						&& !lowecasePath.endsWith('.bmp')
 						&& !lowecasePath.endsWith('.webp')
@@ -150,7 +219,15 @@ export default {
 					}
 				}
 
-				if (download) {
+				// escapeHtml() does not escape quotes, so it is not sufficient on its own
+				// for an attribute value
+				const attrValue = (str) => escapeHtml(str).replace(/"/g, '&quot;')
+
+				if (svg) {
+					// src is set by hydrateSvgImages() once the blob has been retyped
+					return '<img class="svg-attachment" data-svg-src="' + attrValue(path) + '"'
+						+ ' alt="' + attrValue(token.content) + '">'
+				} else if (download) {
 					const dlimgpath = generateUrl('svg/core/actions/download?color=ffffff')
 					const tokenContent = escapeHtml(token.content)
 					return '<div class="download-file"><a href="' + path.replace(/"/g, '&quot;') + '"><div class="download-icon"><img class="download-icon-inner" '
@@ -258,6 +335,13 @@ export default {
 	& img {
 		width: 75%;
 		display: block;
+	}
+
+	// SVG may have no intrinsic size, so keep its own dimensions and only cap the width
+	& img.svg-attachment {
+		width: auto;
+		max-width: 75%;
+		height: auto;
 	}
 
 	.download-file {
