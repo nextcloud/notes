@@ -2,8 +2,9 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: needs discussion, feature request
+labels: 0. Needs triage, feature request, needs discussion
 assignees: ''
+type: Enhancement
 
 ---
 
