@@ -56,7 +56,7 @@ OC.L10N.register(
     "Cancel" : "Отмена",
     "All notes" : "Все заметки",
     "Categories" : "Категории",
-    "New category" : "Новая категория",
+    "New category" : "Создать категорию",
     "Rename category" : "Переименовать категорию",
     "Create a sample note with Markdown" : "Создайте образец заметки с помощью Markdown",
     "No notes yet" : "Нет ни одной заметки",
