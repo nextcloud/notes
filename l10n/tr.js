@@ -157,7 +157,7 @@ OC.L10N.register(
     "Review Steps" : "Adımları gözden geçir",
     "Turn PC off" : "Bilgisayarı kapat",
     "Turn PC on" : "Bilgisayarı aç",
-    "Then call IT" : "Sonra BT bölümünü ara",
+    "Then call IT" : "Sonra BT bölümüne çağrı yap",
     "Quotes" : "Alıntılar",
     "Nextcloud, a safe home for all your data" : "Nextcloud, tüm verileriniz için güvenli bir barınak",
     "Development Mode" : "Geliştirme kipi",
