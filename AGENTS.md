@@ -64,16 +64,16 @@ There are no PHP unit tests. Three suites exist:
 ### Backend (`lib/`)
 - Two parallel controller stacks share logic via `lib/Controller/Helper.php`:
   - `NotesController` — internal endpoints for the Vue frontend (`/notes/...`)
-  - `NotesApiController` — the **public versioned REST API** (`/api/v0.2|v1/...`, attachments on v1.4) used by the Android/iOS and third-party clients. It is a stability contract documented in `docs/api/` — changes must stay backward compatible and be reflected there (and in `lib/AppInfo/Capabilities.php` for new API versions).
+  - `NotesApiController` — the **public versioned REST API** (`/api/v0.2|v1/...`; attachment routes and `GET settings` also accept `v1.4`) used by the Android/iOS and third-party clients. It is a stability contract documented in `docs/api/` — changes must stay backward compatible and be reflected there (new API versions go into `Application::$API_VERSIONS` in `lib/AppInfo/Application.php`, exposed via `Capabilities.php` and the `X-Notes-API-Versions` header).
 - Routes are declared in `appinfo/routes.php`.
 - `lib/Service/NotesService.php` is the core: resolves the notes folder, wraps files in `Note` objects (`Note`/`MetaNote` are file wrappers, not entities). `MetaService` maintains the DB metadata cache; `NoteUtil`/`TagService` handle file/tag plumbing. Errors are communicated via typed exceptions in `lib/Service/` which `Helper` maps to HTTP status codes.
 - `ChunkCursor` + ETags implement chunked/pruned note listing for large collections (see `docs/api/README.md`).
 - App wiring (event listeners, dashboard widget, search provider, reference provider) lives in `lib/AppInfo/Application.php`.
 
 ### Frontend (`src/`)
-- Entry points: `main.js` (main app), `dashboard.js` (dashboard widget), `config.js` (admin settings) — one webpack bundle each.
+- Entry points: `main.js` (main app) and `dashboard.js` (dashboard widget) — one webpack bundle each. `config.js` only holds polling/autosave intervals.
 - State lives in three Pinia stores (`src/stores/app.js`, `notes.js`, `sync.js`), aggregated by `src/store.js`. `src/NotesService.js` contains the server-communication layer including the sync queue and conflict handling (`ConflictSolution.vue`); components dispatch through it rather than calling axios directly.
-- Note editing has three modes: `EditorEasyMDE.vue` (rich md editing), `EditorMarkdownIt.vue` (preview), `EditorPlain.vue`.
+- Note editing has three modes (`noteMode` setting): `rich` (`NoteRich.vue`, embeds the Text app's editor), `edit` (`NotePlain.vue` with `EditorEasyMDE.vue`) and `preview` (`NotePlain.vue` with `EditorMarkdownIt.vue`).
 
 ## Conventions
 
