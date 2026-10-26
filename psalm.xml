@@ -6,6 +6,9 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="tests/psalm-baseline.xml"
     phpVersion="8.2"
+    findUnusedCode="false"
+    findUnusedBaselineEntry="false"
+    findUnusedIssueHandlerSuppression="false"
 >
 	<stubs>
 		<file name="tests/stubs/ocp.php" preloadClasses="true"/>
@@ -17,6 +20,8 @@
         <directory name="vendor/nextcloud/ocp" />
     </extraFiles>
 	<issueHandlers>
+		<ClassMustBeFinal errorLevel="suppress" />
+		<MissingOverrideAttribute errorLevel="suppress" />
 		<DeprecatedMethod>
 			<errorLevel type="suppress">
 				<referencedMethod name="OCP\IConfig::getUserValue" />

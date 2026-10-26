@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+<files psalm-version="6.20.1@376425b8e67b79773add388e16b4f6be5693dc87">
   <file src="lib/AppInfo/BeforeShareCreatedListener.php">
     <MissingDependency>
       <code><![CDATA[$this->noteUtil->getRoot()]]></code>
@@ -21,9 +21,10 @@
     </UnsafeInstantiation>
   </file>
   <file src="lib/Controller/Helper.php">
-    <InvalidTemplateParam>
-      <code><![CDATA[$response->addHeader('X-Notes-API-Versions', implode(', ', Application::$API_VERSIONS))]]></code>
-    </InvalidTemplateParam>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$matchEtags]]></code>
+      <code><![CDATA[end($chunkedNotes)]]></code>
+    </PossiblyFalseArgument>
     <PossiblyNullReference>
       <code><![CDATA[getUID]]></code>
     </PossiblyNullReference>
@@ -34,15 +35,18 @@
       <code><![CDATA[$chunkCursorStr]]></code>
     </RiskyTruthyFalsyComparison>
   </file>
+  <file src="lib/Controller/NotesApiController.php">
+    <PossiblyFalseArgument>
+      <code><![CDATA[json_encode($notesData)]]></code>
+    </PossiblyFalseArgument>
+  </file>
   <file src="lib/Controller/NotesController.php">
-    <MissingClosureReturnType>
-      <code><![CDATA[function () use ($noteid, $file) {]]></code>
-    </MissingClosureReturnType>
     <MissingReturnType>
       <code><![CDATA[inLockScope]]></code>
     </MissingReturnType>
     <PossiblyFalseArgument>
       <code><![CDATA[$targetimage->fopen('rb')]]></code>
+      <code><![CDATA[json_encode($result)]]></code>
     </PossiblyFalseArgument>
     <PossiblyNullArgument>
       <code><![CDATA[$nac['lastUpdate'] ?? null]]></code>
@@ -54,7 +58,6 @@
   </file>
   <file src="lib/Controller/PageController.php">
     <PossiblyNullReference>
-      <code><![CDATA[getUID]]></code>
       <code><![CDATA[getUID]]></code>
       <code><![CDATA[getUID]]></code>
     </PossiblyNullReference>
@@ -116,6 +119,9 @@
     </MissingReturnType>
   </file>
   <file src="lib/Service/MetaService.php">
+    <PossiblyFalseArgument>
+      <code><![CDATA[json_encode($data)]]></code>
+    </PossiblyFalseArgument>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[$onError]]></code>
     </RiskyTruthyFalsyComparison>
@@ -129,11 +135,17 @@
     <MissingDependency>
       <code><![CDATA[$this->noteUtil->getRoot()]]></code>
     </MissingDependency>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$content]]></code>
+    </PossiblyFalseArgument>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[$subdir]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="lib/Service/NoteUtil.php">
+    <InvalidNullableReturnType>
+      <code><![CDATA[string]]></code>
+    </InvalidNullableReturnType>
     <MissingDependency>
       <code><![CDATA[$this->getRoot()]]></code>
       <code><![CDATA[$this->root]]></code>
@@ -145,26 +157,45 @@
       <code><![CDATA[IRootFolder]]></code>
     </MissingDependency>
     <MissingReturnType>
-      <code><![CDATA[getCategoryFolder]]></code>
       <code><![CDATA[getPathForUser]]></code>
     </MissingReturnType>
+    <NullableReturnStatement>
+      <code><![CDATA[$str]]></code>
+    </NullableReturnStatement>
+    <PossiblyInvalidArrayAccess>
+      <code><![CDATA[$splitContent[0]]]></code>
+    </PossiblyInvalidArrayAccess>
+    <PossiblyNullArgument>
+      <code><![CDATA[$baseTitle]]></code>
+      <code><![CDATA[$str]]></code>
+      <code><![CDATA[$str]]></code>
+      <code><![CDATA[$str]]></code>
+      <code><![CDATA[$str]]></code>
+      <code><![CDATA[$str]]></code>
+      <code><![CDATA[$title]]></code>
+    </PossiblyNullArgument>
     <PossiblyNullReference>
       <code><![CDATA[getUID]]></code>
       <code><![CDATA[getUID]]></code>
     </PossiblyNullReference>
   </file>
   <file src="lib/Service/NotesService.php">
-    <MissingDependency>
-      <code><![CDATA[$this->noteUtil->getRoot()]]></code>
-    </MissingDependency>
+    <InvalidOperand>
+      <code><![CDATA[$favA > $favB]]></code>
+    </InvalidOperand>
     <MissingParamType>
       <code><![CDATA[$fileDataArray]]></code>
     </MissingParamType>
     <MissingReturnType>
-      <code><![CDATA[createImage]]></code>
       <code><![CDATA[delete]]></code>
       <code><![CDATA[getCustomExtension]]></code>
     </MissingReturnType>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$content]]></code>
+      <code><![CDATA[$fp]]></code>
+      <code><![CDATA[$fp]]></code>
+      <code><![CDATA[$terms]]></code>
+    </PossiblyFalseArgument>
   </file>
   <file src="lib/Service/SettingsService.php">
     <DeprecatedMethod>
@@ -202,6 +233,9 @@
     <MoreSpecificReturnType>
       <code><![CDATA[\stdClass]]></code>
     </MoreSpecificReturnType>
+    <PossiblyFalseArgument>
+      <code><![CDATA[json_encode($settings)]]></code>
+    </PossiblyFalseArgument>
     <PossiblyInvalidArgument>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[preg_replace('/[^A-Za-z0-9.-]/', '', $value)]]></code>
@@ -236,9 +270,6 @@
     </PossiblyNullReference>
   </file>
   <file src="lib/Service/Util.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$sleep]]></code>
-    </ArgumentTypeCoercion>
     <MissingReturnType>
       <code><![CDATA[retryIfLocked]]></code>
     </MissingReturnType>
@@ -253,8 +284,5 @@
     <MissingClosureReturnType>
       <code><![CDATA[function ($data) {]]></code>
     </MissingClosureReturnType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$data->getData()]]></code>
-    </PossiblyInvalidArgument>
   </file>
 </files>
