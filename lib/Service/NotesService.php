@@ -41,9 +41,17 @@ class NotesService {
 			}, $data['files']);
 		} catch (NotesFolderException $e) {
 			$notes = [];
-			$data = [ 'categories' => [] ];
+			$data = [ 'categories' => [], 'folders' => [] ];
 		}
-		return [ 'notes' => $notes, 'categories' => $data['categories'] ];
+		return [ 'notes' => $notes, 'categories' => $data['categories'], 'folders' => $data['folders'] ];
+	}
+
+	/**
+	 * @param list<Folder> $folders the walked folders, from getAll()
+	 * @param array<int, File> $notes the notes that will be serialised, by id
+	 */
+	public function preloadShareTypes(array $folders, array $notes) : void {
+		$this->noteUtil->loadShareTypes($folders, $notes);
 	}
 
 	public function getTopNotes(string $userId) : array {
@@ -244,6 +252,8 @@ class NotesService {
 
 	/**
 	 * gather note files in given directory and all subdirectories
+	 *
+	 * @return array{files: array<int, File>, categories: array<int, string>, folders: list<Folder>}
 	 */
 	private static function gatherNoteFiles(
 		string $customExtension,
@@ -254,6 +264,7 @@ class NotesService {
 		$data = [
 			'files' => [],
 			'categories' => [],
+			'folders' => [$folder],
 		];
 		$nodes = $folder->getDirectoryListing();
 		foreach ($nodes as $node) {
@@ -271,7 +282,8 @@ class NotesService {
 				$data_sub = self::gatherNoteFiles($customExtension, $node, $showHidden, $subCategory . '/');
 				$data['files'] = $data['files'] + $data_sub['files'];
 				$data['categories'] = array_merge($data['categories'], $data_sub['categories']);
-			} elseif (self::isNote($node, $customExtension)) {
+				$data['folders'] = array_merge($data['folders'], $data_sub['folders']);
+			} elseif ($node instanceof File && self::isNote($node, $customExtension)) {
 				$data['files'][$node->getId()] = $node;
 			}
 		}
