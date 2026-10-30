@@ -63,9 +63,10 @@ class Note {
 	public function getExcerpt(int $maxlen = 100) : string {
 		$excerpt = trim($this->noteUtil->stripMarkdown($this->getContent()));
 		$title = $this->getTitle();
-		if (!empty($title)) {
+		if ($title !== '') {
 			$length = mb_strlen($title, 'utf-8');
-			if (strncasecmp($excerpt, $title, $length) === 0) {
+			$prefix = mb_substr($excerpt, 0, $length, 'utf-8');
+			if (mb_strtolower($prefix, 'utf-8') === mb_strtolower($title, 'utf-8')) {
 				$excerpt = mb_substr($excerpt, $length, null, 'utf-8');
 			}
 		}
