@@ -56,24 +56,62 @@ class Note {
 			);
 			$content = mb_convert_encoding($content, 'UTF-8');
 		}
-		$content = str_replace([ pack('H*', 'FEFF'), pack('H*', 'FFEF'), pack('H*', 'EFBBBF') ], '', $content);
+
+		// Strip Byte Order Marks (BOM) for UTF-8, UTF-16 BE, and UTF-16 LE
+		$content = str_replace(["\xEF\xBB\xBF", "\xFE\xFF", "\xFF\xFE"], '', $content);
+
 		return $content;
 	}
 
 	public function getExcerpt(int $maxlen = 100) : string {
-		$excerpt = trim($this->noteUtil->stripMarkdown($this->getContent()));
+		$excerpt = $this->noteUtil->stripMarkdown($this->getExcerptContent($maxlen));
+
 		$title = $this->getTitle();
-		if (!empty($title)) {
-			$length = mb_strlen($title, 'utf-8');
-			if (strncasecmp($excerpt, $title, $length) === 0) {
-				$excerpt = mb_substr($excerpt, $length, null, 'utf-8');
+		if ($title !== '') {
+			$titleLength = mb_strlen($title, 'utf-8');
+			if (strncasecmp($excerpt, $title, $titleLength) === 0) {
+				$excerpt = mb_substr($excerpt, $titleLength, null, 'utf-8');
 			}
 		}
+
 		$excerpt = trim($excerpt);
+
 		if (mb_strlen($excerpt, 'utf-8') > $maxlen) {
 			$excerpt = mb_substr($excerpt, 0, $maxlen, 'utf-8') . '…';
 		}
 		return str_replace("\n", "\u{2003}", $excerpt);
+	}
+
+	/**
+	 * Lightweight best-effort content reader for excerpts only.
+	 */
+	private function getExcerptContent(int $maxlen) : string {
+		$handle = $this->file->fopen('r');
+		if (!is_resource($handle)) {
+			return '';
+		}
+
+		// Over-read bytes assuming worst-case UTF-8 size (up to 4 bytes per
+		// character). This is only a heuristic for preview generation; markdown
+		// stripping may reduce the visible character count further.
+		$bytesToRead = max(512, $maxlen * 4);
+
+		try {
+			$content = fread($handle, $bytesToRead);
+			if ($content === false) {
+				return '';
+			}
+		} finally {
+			fclose($handle);
+		}
+
+		// Remove any partial trailing multibyte character from the truncated read.
+		$content = mb_strcut($content, 0, strlen($content), 'UTF-8');
+
+		// Strip Byte Order Marks (BOM) for UTF-8, UTF-16 BE, and UTF-16 LE
+		$content = str_replace(["\xEF\xBB\xBF", "\xFE\xFF", "\xFF\xFE"], '', $content);
+
+		return $content;
 	}
 
 	public function getModified() : int {
