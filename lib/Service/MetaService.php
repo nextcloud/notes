@@ -154,6 +154,9 @@ class MetaService {
 				$onError();
 				$loglevel = 'debug';
 			}
+			if ($e instanceof \OCP\DB\Exception && $e->getReason() === \OCP\DB\Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
+				$loglevel = 'debug';
+			}
 			$this->util->logger->$loglevel(
 				'Could not insert meta data for note ' . $note->getId(),
 				[ 'exception' => $e ]
