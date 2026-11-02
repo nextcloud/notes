@@ -86,7 +86,7 @@ OC.L10N.register(
     "Versions" : "版本",
     "Details" : "細節",
     "Change category" : "變更分類",
-    "Rename" : "Rename",
+    "Rename" : "重新命名",
     "Rename note" : "重新命名筆記",
     "Delete note" : "刪除筆記",
     "Error from Nextcloud server: {msg}" : "來自 Nextcloud 伺服器的錯誤通知：{msg}",
