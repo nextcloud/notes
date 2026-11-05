@@ -50,7 +50,7 @@ jobs:
       run: |
         sudo systemctl start mysql
         mysql -u root -proot -e "CREATE DATABASE nextcloud;"
-        mysql -u root -proot -e "CREATE USER 'nextcloud'@'localhost' IDENTIFIED WITH mysql_native_password BY '';"
+        mysql -u root -proot -e "CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY '';"
         mysql -u root -proot -e "GRANT ALL ON nextcloud.* TO 'nextcloud'@'localhost';"
     - name: Select stable Nextcloud server branch
       if: matrix.version == 'min'
