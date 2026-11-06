@@ -94,6 +94,7 @@ import { config } from './config.js'
 import logger from './Logger.js'
 import { fetchNotes, noteExists, undoDeleteNote } from './NotesService.js'
 import store from './store.js'
+import { queryWithCategory } from './Util.js'
 
 import '@nextcloud/dialogs/style.css'
 
@@ -159,6 +160,10 @@ export default {
 			return store.notes.getFilteredNotes()
 		},
 
+		selectedCategory() {
+			return store.notes.getSelectedCategory()
+		},
+
 		zenMode() {
 			return store.app.zenMode
 		},
@@ -192,6 +197,14 @@ export default {
 				store.app.setZenMode(false)
 			}
 		},
+
+		selectedCategory() {
+			this.syncCategoryQueryParam()
+		},
+
+		$route() {
+			this.syncCategoryQueryParam()
+		},
 	},
 
 	created() {
@@ -218,6 +231,7 @@ export default {
 					}
 					if (data.notes !== null) {
 						this.error = false
+						this.restoreCategoryQueryParam()
 						if (store.app.settings?.loadRecentOnStartUp) {
 							this.routeDefault(data.lastViewedNote)
 						} else {
@@ -274,6 +288,25 @@ export default {
 			store.sync.clearSyncCache()
 			this.loading.notes = true
 			this.loadNotes()
+		},
+
+		/**
+		 * Persist the selected category in the URL (one-way: store -> URL), so a
+		 * page reload restores the filtered view. Applied on category changes and
+		 * after every navigation, since route pushes do not carry query params.
+		 */
+		syncCategoryQueryParam() {
+			const query = queryWithCategory(this.$route.query, this.selectedCategory)
+			if (query !== null) {
+				this.$router.replace({ query }).catch(() => {})
+			}
+		},
+
+		restoreCategoryQueryParam() {
+			const category = this.$route.query.category
+			if (typeof category === 'string' && category !== '' && category !== this.selectedCategory) {
+				store.notes.setSelectedCategory(category)
+			}
 		},
 
 		routeDefault(defaultNoteId) {
