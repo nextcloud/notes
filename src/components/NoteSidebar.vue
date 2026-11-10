@@ -25,9 +25,9 @@
 			:name="tab.displayName"
 			:order="tab.order"
 		>
-			<template #icon>
+			<template #icon="{ selected }">
 				<template v-if="tab.id === 'sharing'">
-					<ShareVariantIcon v-if="resolvedTab === tab.id" :size="20" />
+					<ShareVariantIcon v-if="selected" :size="20" />
 					<ShareVariantOutlineIcon v-else :size="20" />
 				</template>
 				<NcIconSvgWrapper v-else :svg="tab.iconSvgInline" inline />
@@ -61,8 +61,8 @@
 			:name="t('notes', 'Details')"
 			:order="100"
 		>
-			<template #icon>
-				<InformationIcon v-if="resolvedTab === 'notes-info'" :size="20" />
+			<template #icon="{ selected }">
+				<InformationIcon v-if="selected" :size="20" />
 				<InformationOutlineIcon v-else :size="20" />
 			</template>
 
