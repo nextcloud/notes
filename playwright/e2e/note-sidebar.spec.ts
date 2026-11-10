@@ -29,6 +29,11 @@ function tabButton(page: Page, tabId: string): Locator {
 	return sidebar(page).locator(`#tab-button-${tabId}`)
 }
 
+// the tab button renders its icon twice, selected and unselected, and fades out the layer not in use
+function tabIconLayer(page: Page, tabId: string, iconClass: string): Locator {
+	return tabButton(page, tabId).locator(`span:has(> .${iconClass})`)
+}
+
 function versionsList(page: Page): Locator {
 	return sidebar(page).locator('[data-files-versions-versions-list]')
 }
@@ -221,13 +226,13 @@ test.describe('Note sidebar', () => {
 
 		await openSidebarFromActions(page, noteId, 'Share')
 
-		await expect(tabButton(page, 'sharing').locator('.share-variant-icon')).toBeVisible()
-		await expect(tabButton(page, 'sharing').locator('.share-variant-outline-icon')).toHaveCount(0)
+		await expect(tabIconLayer(page, 'sharing', 'share-variant-icon')).toHaveCSS('opacity', '1')
+		await expect(tabIconLayer(page, 'sharing', 'share-variant-outline-icon')).toHaveCSS('opacity', '0')
 
 		await tabButton(page, 'files_versions').click()
 
-		await expect(tabButton(page, 'sharing').locator('.share-variant-outline-icon')).toBeVisible()
-		await expect(tabButton(page, 'sharing').locator('.share-variant-icon')).toHaveCount(0)
+		await expect(tabIconLayer(page, 'sharing', 'share-variant-outline-icon')).toHaveCSS('opacity', '1')
+		await expect(tabIconLayer(page, 'sharing', 'share-variant-icon')).toHaveCSS('opacity', '0')
 	})
 
 	test('lines the tab icons up with each other', async ({ page }, testInfo: TestInfo) => {
@@ -277,13 +282,13 @@ test.describe('Note sidebar', () => {
 
 		await openSidebarFromActions(page, noteId, 'Details')
 
-		await expect(tabButton(page, 'notes-info').locator('.information-icon')).toBeVisible()
-		await expect(tabButton(page, 'notes-info').locator('.information-outline-icon')).toHaveCount(0)
+		await expect(tabIconLayer(page, 'notes-info', 'information-icon')).toHaveCSS('opacity', '1')
+		await expect(tabIconLayer(page, 'notes-info', 'information-outline-icon')).toHaveCSS('opacity', '0')
 
 		await tabButton(page, 'sharing').click()
 
-		await expect(tabButton(page, 'notes-info').locator('.information-outline-icon')).toBeVisible()
-		await expect(tabButton(page, 'notes-info').locator('.information-icon')).toHaveCount(0)
+		await expect(tabIconLayer(page, 'notes-info', 'information-outline-icon')).toHaveCSS('opacity', '1')
+		await expect(tabIconLayer(page, 'notes-info', 'information-icon')).toHaveCSS('opacity', '0')
 	})
 
 	test('estimates the reading time from the note body', async ({ page }, testInfo: TestInfo) => {
