@@ -12,6 +12,32 @@ Types of changes:
 - *Fixed* for any bug fixes.
 - *Security* in case of vulnerabilities.
 
+## 6.1.1
+
+### Added
+
+* Bulk load share types [notes#1967](https://github.com/nextcloud/notes/pull/1967)
+* Add server-free unit tests for note, path and cursor logic [notes#1966](https://github.com/nextcloud/notes/pull/1966)
+* Sync api docs with code [notes#2047](https://github.com/nextcloud/notes/pull/2047)
+* Widen notes metadata integer columns [notes#2051](https://github.com/nextcloud/notes/pull/2051)
+* Set triage labels on new issues or feature requests [notes#2080](https://github.com/nextcloud/notes/pull/2080)
+* Keep the open note visible in nested categories [notes#2036](https://github.com/nextcloud/notes/pull/2036)
+
+### Fixed
+
+* Don't log concurrent meta insert as warning [notes#2115](https://github.com/nextcloud/notes/pull/2115)
+
+### Dependencies
+
+* Bump php to 8.2.35 [notes#2105](https://github.com/nextcloud/notes/pull/2105)
+* Fix npm audit [notes#2109](https://github.com/nextcloud/notes/pull/2109)
+* Fix npm audit [notes#2103](https://github.com/nextcloud/notes/pull/2103)
+* Fix npm audit [notes#2090](https://github.com/nextcloud/notes/pull/2090)
+* Fix npm audit [notes#2079](https://github.com/nextcloud/notes/pull/2079)
+* Fix npm audit [notes#2066](https://github.com/nextcloud/notes/pull/2066)
+* Update nextcloud/ocp dependency [notes#2108](https://github.com/nextcloud/notes/pull/2108)
+* Update nextcloud/ocp dependency [notes#2065](https://github.com/nextcloud/notes/pull/2065)
+
 ## 6.1.0
 
 ### Added
