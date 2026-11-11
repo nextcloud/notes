@@ -68,7 +68,8 @@ class PageController extends Controller {
 			$this->eventDispatcher->dispatchTyped(new LoadSidebar());
 		}
 
-		if (\OCP\Server::get(IAppManager::class)->isEnabledForUser('viewer') && class_exists(LoadViewer::class)) {
+		// Loads the Viewer app on Nextcloud 35 and older; a no-op on newer versions, which ship the viewer in server
+		if (class_exists(LoadViewer::class)) {
 			$this->eventDispatcher->dispatchTyped(new LoadViewer());
 		}
 
