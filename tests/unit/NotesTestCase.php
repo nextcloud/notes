@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 abstract class NotesTestCase extends TestCase {
-	protected function createNoteUtil(): NoteUtil {
+	protected function createNoteUtil(?IManager $shareManager = null): NoteUtil {
 		$l10n = $this->createMock(IL10N::class);
 		$l10n->method('t')->willReturnArgument(0);
 
@@ -34,7 +34,7 @@ abstract class NotesTestCase extends TestCase {
 			$this->createMock(IRootFolder::class),
 			$db,
 			$this->createMock(TagService::class),
-			$this->createMock(IManager::class),
+			$shareManager ?? $this->createMock(IManager::class),
 			$this->createMock(IUserSession::class),
 			$this->createMock(SettingsService::class),
 		);
