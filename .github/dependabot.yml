@@ -8,6 +8,10 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 10
+    exclude:
+    - "nextcloud/*"
   ignore:
   - dependency-name: nextcloud/ocp
 - package-ecosystem: npm
@@ -15,10 +19,17 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  ignore: 
-    - dependency-name: "@nextcloud/vue" # until we move to vue 3
-    - dependency-name: "@nextcloud/dialogs" # until we move to vue 3
+  cooldown:
+    default-days: 10
+    exclude:
+    - "@nextcloud/*"
+  ignore:
+  # 8.x requires Nextcloud 35, info.xml min-version is 33
+  - dependency-name: "@nextcloud/dialogs"
+    versions: [">=8"]
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
     interval: weekly
+  cooldown:
+    default-days: 10
