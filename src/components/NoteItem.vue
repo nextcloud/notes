@@ -344,7 +344,7 @@ export default {
 			try {
 				confirmed = await showConfirmation({
 					name: this.t('notes', 'Delete note'),
-					text: this.t('notes', 'Delete note "{title}"?', { title: this.note.title }),
+					text: this.t('notes', 'Delete note "{title}"?', { title: this.note.title }, undefined, { escape: false }),
 					labelConfirm: this.t('notes', 'Delete'),
 					labelReject: this.t('notes', 'Cancel'),
 					severity: 'warning',
