@@ -340,14 +340,21 @@ export default {
 			if (this.loading.delete) {
 				return
 			}
-			const confirmed = await showConfirmation({
-				name: this.t('notes', 'Delete note'),
-				text: this.t('notes', 'Delete note "{title}"?', { title: this.note.title }),
-				labelConfirm: this.t('notes', 'Delete'),
-				labelReject: this.t('notes', 'Cancel'),
-				severity: 'warning',
-			})
-
+			let confirmed
+			try {
+				confirmed = await showConfirmation({
+					name: this.t('notes', 'Delete note'),
+					text: this.t('notes', 'Delete note "{title}"?', { title: this.note.title }),
+					labelConfirm: this.t('notes', 'Delete'),
+					labelReject: this.t('notes', 'Cancel'),
+					severity: 'warning',
+				})
+			} catch (error) {
+				if (error instanceof Error && error.message === 'Dialog closed') {
+					return
+				}
+				throw error
+			}
 			if (!confirmed) {
 				return
 			}
