@@ -54,6 +54,22 @@ test.describe('Note actions', () => {
 		await expect(noteRow(page, noteId)).toContainText(renamedTitle)
 	})
 
+	test('keeps a note when deletion is canceled', async ({ page }, testInfo: TestInfo) => {
+		const title = uniqueTitle('cancel-delete', testInfo)
+		const noteId = await createNote(page, title)
+
+		await openNoteActions(page, noteId)
+		await page.getByRole('menuitem', { name: 'Delete note' }).click()
+
+		const confirmationDialog = page.getByRole('dialog', { name: 'Delete note' })
+		await expect(confirmationDialog).toBeVisible()
+
+		await confirmationDialog.getByRole('button', { name: 'Cancel' }).click()
+
+		await expect(confirmationDialog).not.toBeVisible()
+		await expect(noteRow(page, noteId)).toBeVisible()
+	})
+
 	test('deletes a note and undoes the deletion', async ({ page }, testInfo: TestInfo) => {
 		const title = uniqueTitle('delete', testInfo)
 		const autotitleSettled = page.waitForResponse((response) => response.url().includes('/autotitle')).catch(() => null)
@@ -62,6 +78,14 @@ test.describe('Note actions', () => {
 
 		await openNoteActions(page, noteId)
 		await page.getByRole('menuitem', { name: 'Delete note' }).click()
+
+		const confirmationDialog = page.getByRole('dialog', { name: 'Delete note' })
+		await expect(confirmationDialog).toBeVisible()
+		await expect(confirmationDialog).toContainText(title)
+
+		await expect(noteRow(page, noteId)).toHaveCount(1)
+
+		await confirmationDialog.getByRole('button', { name: 'Delete', exact: true }).click()
 
 		await expect(noteRow(page, noteId)).toHaveCount(0)
 

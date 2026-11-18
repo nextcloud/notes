@@ -102,10 +102,14 @@
 			<NcActionSeparator />
 
 			<NcActionButton v-if="!note.readonly"
-				:icon="actionDeleteIcon"
+				class="delete-note-action"
 				:closeAfterClick="true"
 				@click="onDeleteNote"
 			>
+				<template #icon>
+					<NcLoadingIcon v-if="loading.delete" :size="20" />
+					<DeleteOutlineIcon v-else :size="20" />
+				</template>
 				{{ t('notes', 'Delete note') }}
 			</NcActionButton>
 		</template>
@@ -113,15 +117,17 @@
 </template>
 
 <script>
-import { showError } from '@nextcloud/dialogs'
+import { showConfirmation, showError } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { getSidebarTabs } from '@nextcloud/files'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
+import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import AlertOctagonOutlineIcon from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import BackupRestoreIcon from 'vue-material-design-icons/BackupRestore.vue'
+import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue'
 import FolderOutlineIcon from 'vue-material-design-icons/FolderOutline.vue'
 import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
@@ -147,6 +153,8 @@ export default {
 		NcActionInput,
 		PencilOutlineIcon,
 		ShareVariantOutlineIcon,
+		NcLoadingIcon,
+		DeleteOutlineIcon,
 	},
 
 	props: {
@@ -174,6 +182,7 @@ export default {
 				note: false,
 				category: false,
 				favorite: false,
+				delete: false,
 			},
 
 			newTitle: '',
@@ -218,10 +227,6 @@ export default {
 
 		actionCategoryText() {
 			return categoryLabel(this.note.category)
-		},
-
-		actionDeleteIcon() {
-			return 'icon-delete' + (this.loading.delete ? ' loading' : '')
 		},
 
 		categories() {
@@ -332,7 +337,30 @@ export default {
 		},
 
 		async onDeleteNote() {
+			if (this.loading.delete) {
+				return
+			}
+			let confirmed
+			try {
+				confirmed = await showConfirmation({
+					name: this.t('notes', 'Delete note'),
+					text: this.t('notes', 'Delete note "{title}"?', { title: this.note.title }, undefined, { escape: false }),
+					labelConfirm: this.t('notes', 'Delete'),
+					labelReject: this.t('notes', 'Cancel'),
+					severity: 'warning',
+				})
+			} catch (error) {
+				if (error instanceof Error && error.message === 'Dialog closed') {
+					return
+				}
+				throw error
+			}
+			if (!confirmed) {
+				return
+			}
+
 			this.loading.delete = true
+
 			try {
 				const note = await fetchNote(this.note.id)
 				if (note.errorType) {
@@ -391,5 +419,10 @@ export default {
 	box-sizing: border-box;
 	height: calc(var(--list-item-height) + 2 * var(--default-grid-baseline));
 	padding: var(--list-item-padding);
+}
+
+:global(.action.delete-note-action .action-button__text),
+:global(.action.delete-note-action .material-design-icon) {
+	color: var(--color-text-error);
 }
 </style>
