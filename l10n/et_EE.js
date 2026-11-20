@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Lisa lemmikuks",
     "Error while renaming note." : "Viga märke nime muutmisel.",
     "Delete note" : "Kustuta märge",
+    "Delete note \"{title}\"?" : "Kas kustutad „{title}“ märkme?",
     "Error during preparing note for deletion." : "Viga märkme kustutamiseks ettevalmistamisel.",
     "Versions" : "Versioonid",
     "Details" : "Üksikasjad",

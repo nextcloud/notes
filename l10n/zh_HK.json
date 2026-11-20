@@ -81,6 +81,7 @@
     "Add to favorites" : "加到我的最愛",
     "Error while renaming note." : "重新命名筆記時發生錯誤。",
     "Delete note" : "刪除筆記",
+    "Delete note \"{title}\"?" : "刪除筆記「{title}」？",
     "Error during preparing note for deletion." : "準備刪除筆記時出錯。",
     "Versions" : "版本",
     "Details" : "細節",

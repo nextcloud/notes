@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Føj til favoritter",
     "Error while renaming note." : "Fejl ved omdøbning af noten.",
     "Delete note" : "Slet note",
+    "Delete note \"{title}\"?" : "Vil du slette noten \"{title}\"?",
     "Error during preparing note for deletion." : "Fejl ved klargøring af noten til sletning.",
     "Versions" : "Versioner",
     "Details" : "Detaljer",

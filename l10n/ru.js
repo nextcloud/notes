@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Добавить в избранное",
     "Error while renaming note." : "Ошибка при переименовании заметки.",
     "Delete note" : "Удалить заметку",
+    "Delete note \"{title}\"?" : "Удалить заметку «{title}»?",
     "Error during preparing note for deletion." : "Не удалось подготовить заметку к удалению.",
     "Versions" : "Версии",
     "Details" : "Подробности",

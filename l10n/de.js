@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Zu Favoriten hinzufügen",
     "Error while renaming note." : "Fehler beim Umbenennen der Notiz",
     "Delete note" : "Notiz löschen",
+    "Delete note \"{title}\"?" : "Notiz \"{title}\" löschen?",
     "Error during preparing note for deletion." : "Fehler beim Vorbereiten der Notiz für die Löschung.",
     "Versions" : "Versionen",
     "Details" : "Details",
