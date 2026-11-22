@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Cuir le ceanáin",
     "Error while renaming note." : "Earráid agus an nóta á athainmniú.",
     "Delete note" : "Scrios nóta",
+    "Delete note \"{title}\"?" : "Scrios an nóta \"{title}\"?",
     "Error during preparing note for deletion." : "Earráid agus an nóta á ullmhú lena scriosadh.",
     "Versions" : "Leaganacha",
     "Details" : "Sonraí",

@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Sık kullanılanlara ekle",
     "Error while renaming note." : "Not yeniden adlandırılırken sorun çıktı.",
     "Delete note" : "Notu sil",
+    "Delete note \"{title}\"?" : "\"{title}\" notu silinsin mi?",
     "Error during preparing note for deletion." : "Not silinmeye hazırlanırken sorun çıktı.",
     "Versions" : "Sürümler",
     "Details" : "Ayrıntılar",
