@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Pridať do obľúbených",
     "Error while renaming note." : "Chyba pri premenovávaní poznámky.",
     "Delete note" : "Zmazať poznámku",
+    "Delete note \"{title}\"?" : "Odstrániť poznámku \"{title}\"?",
     "Error during preparing note for deletion." : "Chyba pri príprave poznámky na vymazanie.",
     "Versions" : "Verzie",
     "Details" : "Podrobnosti",
