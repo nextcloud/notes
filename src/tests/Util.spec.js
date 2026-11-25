@@ -14,6 +14,7 @@ import {
 	isInCategory,
 	isNoteDrag,
 	noteAttributes,
+	queryWithCategory,
 	routeIsNewNote,
 } from '../Util.js'
 
@@ -208,6 +209,43 @@ describe('getDefaultSampleNote', () => {
 
 	it('carries the task list the sample is meant to show off', () => {
 		expect(getDefaultSampleNote()).toContain('* [ ] ')
+	})
+})
+
+describe('queryWithCategory', () => {
+	it('adds the category to an empty query', () => {
+		expect(queryWithCategory({}, 'Work')).toEqual({ category: 'Work' })
+	})
+
+	it('keeps other query parameters', () => {
+		expect(queryWithCategory({ new: '', note: '1' }, 'Work')).toEqual({ new: '', note: '1', category: 'Work' })
+	})
+
+	it('handles nested category names', () => {
+		expect(queryWithCategory({}, 'Work/Projects')).toEqual({ category: 'Work/Projects' })
+	})
+
+	it('returns null when the category is already in the query', () => {
+		expect(queryWithCategory({ category: 'Work' }, 'Work')).toBeNull()
+	})
+
+	it('replaces a stale category', () => {
+		expect(queryWithCategory({ category: 'Old' }, 'New')).toEqual({ category: 'New' })
+	})
+
+	it('removes the category when cleared', () => {
+		expect(queryWithCategory({ category: 'Work', other: '1' }, null)).toEqual({ other: '1' })
+	})
+
+	it('returns null when there is no category to remove', () => {
+		expect(queryWithCategory({}, null)).toBeNull()
+		expect(queryWithCategory({}, '')).toBeNull()
+	})
+
+	it('does not mutate the input query', () => {
+		const query = { category: 'Old' }
+		queryWithCategory(query, 'New')
+		expect(query).toEqual({ category: 'Old' })
 	})
 })
 

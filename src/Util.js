@@ -51,6 +51,31 @@ export function routeIsNewNote($route) {
 	return Object.hasOwn($route.query, 'new')
 }
 
+/**
+ * Returns a copy of the route query with the selected category applied, or
+ * null when the query already reflects it (so callers can skip a redundant
+ * router.replace). A null/empty category removes the parameter.
+ *
+ * @param {object} query The current route query
+ * @param {string|null} category The selected category
+ * @return {object|null} The updated query, or null when unchanged
+ */
+export function queryWithCategory(query, category) {
+	const next = { ...query }
+	if (category === null || category === undefined || category === '') {
+		if (!Object.hasOwn(next, 'category')) {
+			return null
+		}
+		delete next.category
+		return next
+	}
+	if (next.category === category) {
+		return null
+	}
+	next.category = category
+	return next
+}
+
 export function isNoteDrag(event) {
 	const dt = event?.dataTransfer
 	if (!dt) {
