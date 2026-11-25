@@ -329,9 +329,7 @@ export default {
 			if (event.repeat) {
 				return
 			}
-			// `code` pins the physical key across layouts, `key` covers those with the period elsewhere.
-			const isToggle = (event.ctrlKey || event.metaKey)
-				&& (event.code === 'Period' || event.key === '.')
+			const isToggle = (event.ctrlKey || event.metaKey) && (event.key === '.')
 			const isExit = event.key === 'Escape' && this.zenMode
 			if (!isToggle && !isExit) {
 				return
