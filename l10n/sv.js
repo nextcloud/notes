@@ -83,6 +83,7 @@ OC.L10N.register(
     "Add to favorites" : "Lägg till som favorit",
     "Error while renaming note." : "Det gick inte att byta namn på anteckningen.",
     "Delete note" : "Ta bort anteckning",
+    "Delete note \"{title}\"?" : "Ta bort anteckning \"{title}\"?",
     "Error during preparing note for deletion." : "Det gick inte att förbereda anteckningen för borttagning.",
     "Versions" : "Versioner",
     "Details" : "Detaljer",
